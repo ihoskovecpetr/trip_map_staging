@@ -1,0 +1,127 @@
+/** @jsx jsx */
+import { jsx, Container, Flex, Button } from "theme-ui";
+import { keyframes } from "@emotion/core";
+// import { Link } from "react-scroll";
+import Link from "next/link";
+
+import Logo from "components/logo";
+import LogoTransparent from "assets/logo_transparent_black.png";
+import LogoWhite from "assets/trip_map_logo_white.png";
+import { DrawerProvider } from "../../contexts/drawer/drawer.provider";
+import MobileDrawer from "./mobile-drawer";
+import menuItems from "./header.data";
+
+export default function Header({ className }) {
+  return (
+    <DrawerProvider>
+      <header sx={styles.header} className={className} id="header">
+        <Container sx={styles.container}>
+          <Logo src={LogoWhite} />
+
+          <Flex as="nav" sx={styles.nav}>
+            {/* {menuItems.map(({ path, label }, i) => {
+              console.log({ hrsf: path });
+              return (
+                <Link
+                  activeClass="active"
+                  href={path}
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={500}
+                  key={i}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+            C */}
+          </Flex>
+
+          {/* <Button
+            className="donate__btn"
+            variant="secondary"
+            aria-label="Get Started"
+          >
+            Get Started
+          </Button> */}
+
+          <MobileDrawer />
+        </Container>
+      </header>
+    </DrawerProvider>
+  );
+}
+
+const positionAnim = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transition: all 0.4s ease;
+  }
+`;
+
+const styles = {
+  header: {
+    fontWeight: "normal",
+    py: 1,
+    width: "100%",
+    minHeight: "60px",
+    position: "absolute",
+    zIndex: 5,
+    top: 0,
+    left: 0,
+    transition: "all 0.5s ease",
+    animation: `${positionAnim} 0.4s ease`,
+    backgroundColor: "text_secondary",
+
+    ".donate__btn": {
+      flexShrink: 0,
+      mr: [15, 10, null, null, 0],
+      ml: ["auto", null, null, null, 0],
+    },
+    "&.sticky": {
+      position: "fixed",
+      backgroundColor: "background",
+      color: "#000000",
+      boxShadow: "0 1px 2px rgba(0, 0, 0, 0.06)",
+      py: 3,
+      "nev > a": {
+        color: "text",
+      },
+      ".donate__btn": {
+        borderColor: "primary",
+        color: "primary",
+        "&:hover": {
+          boxShadow: "rgba(31, 62, 118, 0.57) 0px 9px 20px -5px",
+          backgroundColor: "primary",
+          color: "white",
+        },
+      },
+    },
+  },
+  container: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  nav: {
+    mx: "auto",
+    // display: "none",
+    "@media screen and (min-width: 1024px)": {
+      display: "block",
+    },
+    a: {
+      fontSize: "16px",
+      fontWeight: "400",
+      px: 25,
+      cursor: "pointer",
+      lineHeight: "1.2",
+      "&.active": {
+        color: "secondary",
+      },
+    },
+  },
+};
