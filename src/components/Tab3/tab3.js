@@ -10,7 +10,9 @@ import CustomLoader from "../CustomLoader";
 
 import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 import { getVersionDescription } from "../../Lib/getVersionDescription";
-import { useGetShippingInfoPrintful } from "../../Hooks/useGetShippingInfoPrintful";
+import getPriceAlgorithm from "../../Lib/priceAlgorithm/getPriceAlgorithm";
+
+const priceAlgorithm = getPriceAlgorithm();
 
 export default function Tab3({
   map,
@@ -20,16 +22,14 @@ export default function Tab3({
   setProduct,
   activeMapStyle,
 }) {
-  const [lightbox, setLightbox] = useState({ open: false, activeSrc: null });
+  const [lightbox, setLightbox] = useState({
+    open: false,
+    activeSrc: null,
+  });
 
-  const { data: dataPrintful } = useGetDataPrintful(
+  const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
   );
-
-  const {
-    shippingInfoObject,
-    isShippingInfoLoading,
-  } = useGetShippingInfoPrintful(product.variantId);
 
   //TODO single size can have multiple vriants..could switch to different variant
   const findVariant = (newSize) => {
@@ -146,14 +146,23 @@ export default function Tab3({
               <div sx={styles.textsWrap}>
                 <p sx={styles.variantPrice}>
                   {dataPrintful[variantId]?.currency}{" "}
-                  {Math.floor(Number(dataPrintful[variantId]?.price) * 100) /
-                    100}
+                  {/* {Math.floor(Number(dataPrintful[variantId]?.price) * 100) /
+                    100} */}
+                  {
+                    priceAlgorithm.getPriceWithoutDelivery(
+                      variantId,
+                      dataPrintful
+                    ).netPrice
+                  }
                 </p>
                 <p sx={styles.variantDesc}>
                   {getVersionDescription(variantId)}
                 </p>
                 <p sx={styles.variantDelivery}>
-                  {`+ ${dataPrintful[variantId]?.shipping.currency} ${dataPrintful[variantId]?.shipping.rate} doprava`}
+                  {`+ ${dataPrintful[variantId]?.shipping.currency} ${
+                    priceAlgorithm.getPriceOfDelivery(variantId, dataPrintful)
+                      .netPrice
+                  } doprava`}
                 </p>
               </div>
             </div>
@@ -173,7 +182,7 @@ export default function Tab3({
         activeLayout={activeLayout}
         product={product}
         activeMapStyle={activeMapStyle}
-        dataPrintfulVariant={dataPrintful && dataPrintful[product.variantId]}
+        dataPrintful={dataPrintful}
       />
 
       {lightbox.open && (

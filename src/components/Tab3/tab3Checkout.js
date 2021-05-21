@@ -10,6 +10,7 @@ import { getIsVariantFramed } from "../../Lib/getIsVariantFramed";
 import { drawLayout } from "../../Lib/drawLayout";
 import CheckoutCard from "../CheckoutCard/CheckoutCard";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
+import getPriceAlgorithm from "../../Lib/priceAlgorithm/getPriceAlgorithm";
 
 import {
   getLazyUploader,
@@ -35,7 +36,7 @@ export default function Tab3Checkout({
   activeLayout,
   product,
   activeMapStyle,
-  dataPrintfulVariant,
+  dataPrintful,
 }) {
   const classes = useStyles();
 
@@ -119,7 +120,9 @@ export default function Tab3Checkout({
 
       if (response.data.secure_url) {
         console.log("✅ successful upload!");
-        toast("✔️ uloženo, můžete pokračovat", { type: "success" });
+        toast("✔️ uloženo, můžete pokračovat", {
+          type: "success",
+        });
 
         setIsUploadPending(false);
         setImageSavedResponse(response.data);
@@ -141,6 +144,13 @@ export default function Tab3Checkout({
   const backdropClose = () => {
     setBackdropOpen(false);
   };
+
+  const priceAlgorithm = getPriceAlgorithm();
+
+  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
+    product.variantId,
+    dataPrintful
+  );
   return (
     <div sx={styles.container}>
       <div sx={styles.absoluteBtnWrap}>
@@ -150,9 +160,7 @@ export default function Tab3Checkout({
             lazyUploadImage();
           }}
           margin="20px 0px 75px"
-          price={eval(
-            `${product.price} + ${dataPrintfulVariant?.shipping.rate}`
-          )} //TODO add big.js
+          price={priceWithDelivery.netPrice} //TODO add big.js
         >
           Shrnutí objednávky
         </NextTabBtn>

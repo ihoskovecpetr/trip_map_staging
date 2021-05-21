@@ -2,13 +2,21 @@
 import React from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
+import getPriceAlgorithm from "../../Lib/priceAlgorithm/getPriceAlgorithm";
 
 export default function CostsTable({
   product,
   // shippingInfoObject,
   // isShippingInfoLoading,
+  dataPrintful,
   dataPrintfulVariant,
 }) {
+  const priceAlgorithm = getPriceAlgorithm();
+
+  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
+    product.variantId,
+    dataPrintful
+  );
   return (
     <>
       <div sx={styles.costsWrap}>

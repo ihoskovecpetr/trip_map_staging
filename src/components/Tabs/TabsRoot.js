@@ -104,6 +104,8 @@ export default function SetupColumn({
             activeMapStyle={activeMapStyle}
             setActiveMapStyle={setActiveMapStyle}
             nextTab={() => handleChange(TAB_VALUES.THREE)}
+            product={product}
+            setProduct={setProduct}
           />
         </TabContentWrap>
       )}

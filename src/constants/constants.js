@@ -2,6 +2,9 @@ const IS_CLIENT = typeof window !== "undefined";
 
 const PIXEL_RATIO = 8; //  x / 96 (8 is the good value)
 
+const TAX_PERCENTAGE = 0;
+const GROSS_PROFIT_PERCENTAGE = 20;
+
 const BOTTOM_LAYOUT_SIZE = 1 / 8;
 
 const MOBILE_WIDTH_SIZE_PX = 768;
@@ -101,7 +104,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 4,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      price: 169,
       currency: "CZK",
     },
   },
@@ -115,7 +118,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 4,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      price: 169,
       currency: "CZK",
     },
   },
@@ -129,7 +132,7 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      price: 169,
       currency: "CZK",
     },
   },
@@ -144,7 +147,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 6,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      price: 169,
       currency: "CZK",
     },
   },
@@ -158,7 +161,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 6,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 799,
+      price: 569,
       currency: "CZK",
     },
   },
@@ -172,7 +175,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 6,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 799,
+      price: 569,
       currency: "CZK",
     },
   },
@@ -187,7 +190,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 8,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      price: 169,
       currency: "CZK",
     },
   },
@@ -201,7 +204,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 8,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 799,
+      price: 569,
       currency: "CZK",
     },
   },
@@ -215,7 +218,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 8,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 799,
+      price: 569,
       currency: "CZK",
     },
   },
@@ -349,6 +352,8 @@ const MAP_STYLES = {
 module.exports = {
   IS_CLIENT,
   PIXEL_RATIO,
+  TAX_PERCENTAGE,
+  GROSS_PROFIT_PERCENTAGE,
   BOTTOM_LAYOUT_SIZE,
   MOBILE_WIDTH_SIZE_PX,
   TAXES_KOEFICIENT,

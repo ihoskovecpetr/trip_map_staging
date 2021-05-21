@@ -5,7 +5,7 @@ import TextFeature from "components/text-feature";
 import Image from "components/image";
 
 import LandingPagePicture from "assets/landing-page/backgroung_landing_photo.png";
-import LandingPageBg from "assets/landing-page/backgroung_landing_photo.png";
+// import LandingPageBg from "assets/landing-page/backgroung_landing_photo.png";
 
 import Briefcase from "assets/landing-page/briefcase.svg";
 import Secure from "assets/landing-page/secure.svg";
@@ -150,7 +150,7 @@ const styles = {
             width: "100%",
             zIndex: -1,
             position: "absolute",
-            backgroundImage: [`url(${LandingPageBg})`, null, `none`],
+            backgroundImage: [`url(${LandingPagePicture})`, null, `none`],
             backgroundRepeat: "no-repeat",
             backgroundSize: ["100% auto", "cover"],
             boxShadow: [

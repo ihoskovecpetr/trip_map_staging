@@ -142,7 +142,8 @@ export function drawLayout(
 }
 
 function drawFrame(ctx, elWidth, elHeight, frWd, color) {
-  ctx.lineWidth = 7;
+  console.log({ elHeight, frWd });
+  // ctx.lineWidth = 7;
   ctx.fillStyle = color;
   ctx.fillRect(0, 0, frWd, elHeight);
   ctx.fillRect(0, 0, elWidth, frWd);

@@ -5,7 +5,7 @@ import theme from "theme";
 import SEO from "components/seo";
 import Layout from "components/layout";
 import LandingSection from "sections/landingSection";
-import KeyFeature from "sections/key-feature";
+import GallerySection from "sections/gallery-section";
 import LandingPage from "sections/landing-page";
 import Feature from "sections/feature";
 import IndexContainer from "sections/indexContainer";
@@ -17,27 +17,27 @@ import PackagesOptions from "sections/packages-options";
 import Faq from "sections/faq";
 
 export default function IndexPage() {
-  return (
-    <ThemeProvider theme={theme}>
-      <StickyProvider>
-        <Layout>
-          <SEO title="Trip Map" />
-          {/* <LandingSection /> */}
-        </Layout>
+      return (
+            <ThemeProvider theme={theme}>
+                  <StickyProvider>
+                        <Layout>
+                              <SEO title="Trip Map" />
+                              {/* <LandingSection /> */}
+                        </Layout>
 
-        {/* <IndexContainer /> */}
-        <Layout withFooter>
-          <LandingPage />
-          <WorkFlow />
-          <KeyFeature />
-          <PackagesOptions />
-          <SecurePayment />
-          <PrintfulPrint />
-          {/* <Feature />
+                        {/* <IndexContainer /> */}
+                        <Layout withFooter>
+                              <LandingPage />
+                              <WorkFlow />
+                              <GallerySection />
+                              <PackagesOptions />
+                              <SecurePayment />
+                              <PrintfulPrint />
+                              {/* <Feature />
           <TestimonialCard /> */}
-          {/* <Faq /> */}
-        </Layout>
-      </StickyProvider>
-    </ThemeProvider>
-  );
+                              {/* <Faq /> */}
+                        </Layout>
+                  </StickyProvider>
+            </ThemeProvider>
+      );
 }

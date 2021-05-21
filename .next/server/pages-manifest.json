@@ -3,6 +3,5 @@
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
   "/studio": "pages/studio.js",
-  "/": "pages/index.js",
-  "/api/stripe-checkout": "pages/api/stripe-checkout.js"
+  "/": "pages/index.js"
 }

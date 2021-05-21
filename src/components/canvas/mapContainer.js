@@ -8,6 +8,7 @@ import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 
 import { SIZES } from "../../constants/constants";
+import { orientationSwitcher } from "../../Lib/getOrientationSwitcher";
 
 export default function MapContainer({
   addZoom,
@@ -15,15 +16,16 @@ export default function MapContainer({
   setProduct,
   product,
 }) {
-  const changeSize = () => {
-    const nextSize = product.sizeObject.acceptableSizes.find(
-      (size) => size != product.sizeObject.code
-    );
+  const changeOrientation = () => {
+    orientationSwitcher(product, setProduct);
+    //     const nextSize = product.sizeObject.acceptableSizes.find(
+    //       (size) => size != product.sizeObject.code
+    //     );
 
-    setProduct((prev) => ({
-      ...prev,
-      sizeObject: SIZES.find((size) => size.code === nextSize),
-    }));
+    //     setProduct((prev) => ({
+    //       ...prev,
+    //       sizeObject: SIZES.find((size) => size.code === nextSize),
+    //     }));
   };
 
   return (
@@ -39,7 +41,7 @@ export default function MapContainer({
         </div>
 
         <div sx={styles.rotateBtn}>
-          <Rotate90DegreesCcwIcon onClick={changeSize} />
+          <Rotate90DegreesCcwIcon onClick={changeOrientation} />
         </div>
 
         <div sx={styles.rotateBtn}>

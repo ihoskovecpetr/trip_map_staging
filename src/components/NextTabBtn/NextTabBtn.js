@@ -41,7 +41,10 @@ export default function NextTabBtn({
     <div sx={styles.container} style={{ margin: margin }}>
       <div
         sx={styles.btn}
-        style={{ width: width, backgroundColor: isDisabled && "lightGrey" }}
+        style={{
+          width: width,
+          backgroundColor: isDisabled && "lightGrey",
+        }}
         onClick={onClickExtended}
       >
         {isLoading ? (

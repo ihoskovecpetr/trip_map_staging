@@ -38,13 +38,15 @@ const getShippingRateCZ = async (variantId) => {
     axiosConfig
   );
 
-  const exchangeRateCZKEUR = await getCurrencyRateToCZK({ currency: "EUR" });
+  const exchangeRateCZKEUR = await getCurrencyRateToCZK({
+    currency: "EUR",
+  });
 
   const priceEUR = new Big(response.data.result[0].rate);
   const priceCZK = priceEUR
     .times(exchangeRateCZKEUR)
-    .times(TAXES_KOEFICIENT)
-    .times(MARKUP_KOEFICIENT)
+    // .times(TAXES_KOEFICIENT) // counting in price algorithm
+    // .times(MARKUP_KOEFICIENT)
     .div(10)
     .add(1)
     .round(0)

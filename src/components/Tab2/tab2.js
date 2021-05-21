@@ -1,10 +1,6 @@
 /** @jsx jsx */
 import React from "react";
 import { jsx, Text, Button, Link } from "theme-ui";
-import {
-  MAP_STYLES_NAMES,
-  LAYOUT_STYLE_NAMES,
-} from "../../constants/constants";
 
 import borderBlurredLayoutImg from "assets/mapLayouts/borderBlurredLayout.png";
 import bottomBlurredLayoutImg from "assets/mapLayouts/bottomBlurredLayout.png";
@@ -26,6 +22,20 @@ import OldDarkBlue from "assets/mapStyles/OldDarkBlue.png";
 import OldSandyGrey from "assets/mapStyles/OldSandyGrey.png";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
+import { orientationSwitcher } from "../../Lib/getOrientationSwitcher";
+
+import {
+  MAP_STYLES_NAMES,
+  LAYOUT_STYLE_NAMES,
+  LAYOUTS,
+} from "../../constants/constants";
+
+const isProductWide = (product) => {
+  if (product.sizeObject.ratio < 1) {
+    return true;
+  }
+  return false;
+};
 
 export default function Tab2({
   map,
@@ -34,6 +44,8 @@ export default function Tab2({
   activeMapStyle,
   setActiveMapStyle,
   nextTab,
+  product,
+  setProduct,
 }) {
   const changeActiveLayout = (index) => () => {
     setActiveLayout(index);
@@ -43,7 +55,11 @@ export default function Tab2({
     setActiveMapStyle(style);
   };
 
-  const getFrameStyleImg = (frameName) => {
+  const switchOrientation = () => {
+    orientationSwitcher(product, setProduct);
+  };
+
+  const getLayoutImg = (frameName) => {
     switch (frameName) {
       case LAYOUT_STYLE_NAMES.PURE:
         return pureLayoutImg;
@@ -88,21 +104,60 @@ export default function Tab2({
     }
   };
 
+  console.log({ product });
+
   return (
     <div sx={styles.container}>
       <Text as="p" className="description" sx={styles.topDescription}>
         <b>Tip!</b> Pro změnu naspisu a podnadpisu klikněte přímo na mapu
       </Text>
       <Text as="p" className="description" sx={styles.subHeading}>
-        Vyberte Rozvržení
+        Orientace
+      </Text>
+      <div sx={styles.orientationWrap}>
+        <div sx={styles.orientationItems}>
+          <div>
+            <div
+              sx={styles.highMock}
+              onClick={switchOrientation}
+              className={!isProductWide(product) && "active"}
+            ></div>
+          </div>
+          <div>
+            <div
+              sx={styles.wideMock}
+              onClick={switchOrientation}
+              className={isProductWide(product) && "active"}
+            ></div>
+          </div>
+        </div>
+        <div sx={styles.textsItems}>
+          <p
+            onClick={switchOrientation}
+            className={!isProductWide(product) && "active"}
+          >
+            Na výšku
+          </p>
+
+          <p
+            onClick={switchOrientation}
+            className={isProductWide(product) && "active"}
+          >
+            Na šířku
+          </p>
+        </div>
+      </div>
+
+      <Text as="p" className="description" sx={styles.subHeading}>
+        Layout
       </Text>
       <div sx={styles.layoutWrap}>
-        {Object.values(LAYOUT_STYLE_NAMES).map((frame) => (
+        {Object.values(LAYOUTS).map((layoutObj) => (
           <>
             <div
-              className={activeFrame === frame && "active"}
+              className={activeFrame === layoutObj.name && "active"}
               sx={styles.layoutItem}
-              onClick={changeActiveLayout(frame)}
+              onClick={changeActiveLayout(layoutObj.name)}
             >
               <div
                 sx={{
@@ -111,15 +166,18 @@ export default function Tab2({
                   width: "100%",
                 }}
               >
-                <img sx={styles.frameImage} src={getFrameStyleImg(frame)} />
+                <img
+                  sx={styles.frameImage}
+                  src={getLayoutImg(layoutObj.name)}
+                />
               </div>
-              <p sx={styles.itemText}>{frame}</p>
+              <p sx={styles.itemText}>{layoutObj.name}</p>
             </div>
           </>
         ))}
       </div>
       <Text as="p" className="description" sx={styles.subHeading}>
-        Vyberte barevnou kombinaci
+        Barevná kombinace
       </Text>
       <div sx={styles.stylesWrap}>
         {Object.values(MAP_STYLES_NAMES).map((style) => (
@@ -158,6 +216,61 @@ const styles = {
     padding: "10px",
     pb: "90px",
   },
+  orientationWrap: {
+    display: "flex",
+    width: "100%",
+    flexWrap: "wrap",
+  },
+  orientationItems: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    "> div": {
+      width: "30%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    "> div > div": {
+      cursor: "pointer",
+    },
+    "> div > div.active": {
+      border: "2px solid",
+      borderColor: "cta_color",
+      pointerEvents: "none",
+      cursor: "default",
+    },
+  },
+  highMock: {
+    border: "1px solid black",
+    height: "50px",
+    width: "25px",
+    backgroundColor: "white",
+  },
+  wideMock: {
+    border: "1px solid black",
+    height: "25px",
+    width: "50px",
+    backgroundColor: "white",
+  },
+
+  textsItems: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    "> p": {
+      my: 1,
+      cursor: "pointer",
+    },
+    "> p.active": {
+      color: "cta_color",
+      pointerEvents: "none",
+      cursor: "default",
+    },
+  },
+
   layoutWrap: {
     display: "flex",
     width: "100%",
@@ -171,10 +284,15 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
+    cursor: "pointer",
+
     "&.active img": {
       border: "2px solid",
       borderColor: "cta_color",
       boxShadow: "3px 3px 5px #888888",
+    },
+    "&.active p": {
+      color: "cta_color",
     },
   },
   absoluteBtnWrap: {
@@ -210,10 +328,13 @@ const styles = {
     padding: "4px",
     display: "flex",
     flexDirection: "column",
-
+    cursor: "pointer",
     "&.active img": {
       border: "2px solid",
       borderColor: "cta_color",
+    },
+    "&.active p": {
+      color: "cta_color",
     },
   },
   itemStyleText: {
