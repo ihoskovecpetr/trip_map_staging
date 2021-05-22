@@ -22,7 +22,7 @@ import OldDarkBlue from "assets/mapStyles/OldDarkBlue.png";
 import OldSandyGrey from "assets/mapStyles/OldSandyGrey.png";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import { orientationSwitcher } from "../../Lib/getOrientationSwitcher";
+import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
 import {
   MAP_STYLES_NAMES,

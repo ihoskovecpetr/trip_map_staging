@@ -8,7 +8,7 @@ import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 
 import { SIZES } from "../../constants/constants";
-import { orientationSwitcher } from "../../Lib/getOrientationSwitcher";
+import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
 export default function MapContainer({
   addZoom,

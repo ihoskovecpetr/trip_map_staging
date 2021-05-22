@@ -2,16 +2,24 @@
 import React from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
-import getPriceAlgorithm from "../../Lib/priceAlgorithm/getPriceAlgorithm";
+import getPriceAlgorithm from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 
 export default function CostsTable({
   product,
-  // shippingInfoObject,
-  // isShippingInfoLoading,
   dataPrintful,
   dataPrintfulVariant,
 }) {
   const priceAlgorithm = getPriceAlgorithm();
+
+  const priceWithoutDelivery = priceAlgorithm.getPriceWithoutDelivery(
+    product.variantId,
+    dataPrintful
+  );
+
+  const priceOfDelivery = priceAlgorithm.getPriceOfDelivery(
+    product.variantId,
+    dataPrintful
+  );
 
   const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
     product.variantId,
@@ -22,23 +30,21 @@ export default function CostsTable({
       <div sx={styles.costsWrap}>
         <CostItem
           name="ZHOTOVENÍ"
-          price={dataPrintfulVariant?.price}
+          price={priceWithoutDelivery.netPrice}
           currency={dataPrintfulVariant?.currency ?? ""}
         />
 
         <CostItem
           name="DORUČENÍ"
-          price={dataPrintfulVariant?.shipping.rate}
-          currency={dataPrintfulVariant?.shipping.currency}
-          isDataLoading={dataPrintfulVariant ? false : true}
+          price={priceOfDelivery.netPrice}
+          currency={dataPrintfulVariant?.shipping.currency ?? ""}
+          //     isDataLoading={dataPrintfulVariant ? false : true}
         />
       </div>
       <CostItem
         name="CELKEM"
-        price={eval(
-          `${dataPrintfulVariant?.price} + ${dataPrintfulVariant?.shipping.rate}`
-        )} //TODO add price algorithm big.js
-        isDataLoading={dataPrintfulVariant ? false : true}
+        price={priceWithDelivery.netPrice} //TODO add price algorithm big.js
+        isDataLoading={priceWithDelivery ? false : true}
         currency="CZK"
         isLargePrice
       />

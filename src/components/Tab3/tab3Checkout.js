@@ -5,16 +5,16 @@ import { toast } from "react-toastify";
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 
-import { createUploadRequest } from "../../Lib/createUploadRequest";
-import { drawLayout } from "../../Lib/drawLayout";
+import { createUploadRequest } from "../../LibGlobal/createUploadRequest";
+import { drawLayout } from "../../LibGlobal/drawLayout";
 import CheckoutCard from "../CheckoutCard/CheckoutCard";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import getPriceAlgorithm from "../../Lib/priceAlgorithm/getPriceAlgorithm";
+import getPriceAlgorithm from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 
 import {
   getLazyUploader,
   resetPendingPromise,
-} from "../../Lib/getLazyUploader";
+} from "../../LibGlobal/getLazyUploader";
 
 toast.configure();
 

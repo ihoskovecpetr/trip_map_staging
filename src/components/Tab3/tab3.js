@@ -9,8 +9,8 @@ import Tab3Checkout from "./tab3Checkout";
 import CustomLoader from "../CustomLoader";
 
 import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
-import { getVersionDescription } from "../../Lib/getVersionDescription";
-import getPriceAlgorithm from "../../Lib/priceAlgorithm/getPriceAlgorithm";
+import { getVersionDescription } from "../../LibGlobal/getVersionDescription";
+import getPriceAlgorithm from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 
 const priceAlgorithm = getPriceAlgorithm();
 

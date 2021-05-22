@@ -7,7 +7,7 @@
     "node": "12.13.x"
   },
   "scripts": {
-    "dev": "node -r esm src/server.js",
+    "dev": "nodemon -r esm src/server.js",
     "build": "next build",
     "serve": "next start",
     "export": "next export",
@@ -39,6 +39,7 @@
     "next": "9.5.3",
     "next-compose-plugins": "^2.2.0",
     "next-optimized-images": "^2.5.4",
+    "nodemon": "^2.0.7",
     "prettier": "^2.1.2",
     "rc-drawer": "^4.1.0",
     "react": "16.13.0",

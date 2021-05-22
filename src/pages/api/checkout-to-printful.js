@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const axios = require("axios");
 
 const Order = require("../../mongoModels/order.js");
-const { getIsProduction } = require("../../Lib/getIsProduction");
+const { getIsProduction } = require("../../LibGlobal/getIsProduction");
 
 const IS_PRODUCTION = getIsProduction();
 
@@ -85,7 +85,7 @@ export default async (req, res) => {
       try {
         console.log("Hitting checkout-to-printful, await MONGO connection");
 
-        await connectToMongoose();
+        // await connectToMongoose();
 
         const sessionId = req.query.id;
         const session = await stripe.checkout.sessions.retrieve(sessionId);

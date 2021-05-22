@@ -2,10 +2,9 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
+  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
   "/studio": "pages/studio.js",
-  "/api/stripe-checkout": "pages/api/stripe-checkout.js",
-  "/api/checkout-to-printful": "pages/api/checkout-to-printful.js",
-  "/congratulation": "pages/congratulation.js",
   "/": "pages/index.js",
-  "/api/data-printful": "pages/api/data-printful.js"
+  "/api/data-printful": "pages/api/data-printful.js",
+  "/api/stripe-checkout": "pages/api/stripe-checkout.js"
 }

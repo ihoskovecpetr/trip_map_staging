@@ -1,10 +1,9 @@
 const uuid = require("uuid");
 const mongoose = require("mongoose");
-const axios = require("axios");
-const lookup = require("country-code-lookup");
 
 const Order = require("../../mongoModels/order.js");
-const { getIsProduction } = require("../../Lib/getIsProduction");
+const { getIsProduction } = require("../../LibGlobal/getIsProduction");
+const { fetchDataPrintful } = require("../../LibGlobal/fetchDataPrintful");
 
 const IS_PRODUCTION = getIsProduction();
 
@@ -45,11 +44,23 @@ export default async (req, res) => {
 
         await connectToMongoose();
 
-        console.log("✅ mongo connected ");
+        console.log("✅ mongo connected ", mongoose.connections[0].readyState);
 
-        const { product: clientProduct, token, imageObj } = req.body;
+        const {
+          product: clientProduct,
+          imageObj,
+          checkoutShownPrices,
+        } = req.body;
 
-        console.log({ imageObj });
+        const responsePrintful = await fetchDataPrintful([
+          clientProduct.variandId,
+        ]);
+
+        console.log({ responsePrintful });
+
+        const dataPrintFul = responsePrintful.data.finalResult;
+
+        console.log({ dataPrintFul });
 
         const product = await stripe.products.create({
           name: clientProduct.name,

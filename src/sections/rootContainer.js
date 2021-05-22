@@ -10,13 +10,13 @@ import produce from "immer";
 
 import { useIsMobile } from "../Hooks/useIsMobile";
 import { useElementDimensions } from "../Hooks/useElementDimensions";
-import { drawLayout } from "../Lib/drawLayout";
-import { prepareTextInput } from "../Lib/prepareTextInput";
-import { getUpdatedMapSizes } from "../Lib/getUpdatedMapSizes";
-import { getCenteringFrameWidth } from "../Lib/getCenteringFrameWidth";
-import { getIsVariantFramed } from "../Lib/getIsVariantFramed";
-import { getIsProduction } from "../Lib/getIsProduction";
-import { getCurrentPixelRatio } from "../Lib/getCurrentPixelRatio";
+import { drawLayout } from "../LibGlobal/drawLayout";
+import { prepareTextInput } from "../LibGlobal/prepareTextInput";
+import { getUpdatedMapSizes } from "../LibGlobal/getUpdatedMapSizes";
+import { getCenteringFrameWidth } from "../LibGlobal/getCenteringFrameWidth";
+import { getIsVariantFramed } from "../LibGlobal/getIsVariantFramed";
+import { getIsProduction } from "../LibGlobal/getIsProduction";
+import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
 import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 
 import {
@@ -64,7 +64,6 @@ const resizeLayout = ({
     height: cvsMap.height,
     activeLayout,
     mapTitles: !IS_PRODUCTION && mapTitles,
-    frameWidthKoef: getIsVariantFramed(product.variantId).frameWidth,
     product,
   });
 
@@ -108,7 +107,7 @@ const resizeFrameDiv = ({
       position: "absolute",
       pointerEvents: "none",
       display: "block",
-      // boxShadow: "0px 0px 25px rgba(156, 156, 156, 1)",
+      boxShadow: "0px 0px 35px rgba(116, 116, 116, 1)",
       // top: `-${extraFrame}px`,
       // left: `-${extraFrame}px`,
       top: 0,
@@ -193,7 +192,6 @@ export default function RootContainer() {
   const [mapZoom, setMapZoom] = useState(10);
   const { dataPrintful } = useGetDataPrintful();
 
-  console.log({ dataPrintful_setProd: dataPrintful });
   const [product, setProduct] = useState({
     name: "Zakázková mapa dle vlastního designu",
     price: null,
@@ -234,8 +232,6 @@ export default function RootContainer() {
     width: mapWrapWrapWidth,
   });
 
-  console.log({ productCur: productRef.current });
-
   const {
     paddingWidth,
     bottomBannerHeight,
@@ -272,7 +268,6 @@ export default function RootContainer() {
 
   useEffect(() => {
     if (dataPrintful && dataPrintful[product.variantId]?.price) {
-      console.log("Root_set_price: ", dataPrintful[product.variantId]?.price);
       setProduct((prev) => ({
         ...prev,
         // price: response.data.finalResult[product.variantId].price,
@@ -477,8 +472,6 @@ export default function RootContainer() {
         mapWrapWrapWidth: wrapperSizeRef.current.width,
       });
 
-      console.log({ updHeight4: updHeight });
-
       resizeInputsWrap({ productRef, layout, canvasMap });
 
       resizeInputs({
@@ -497,7 +490,6 @@ export default function RootContainer() {
     setMapTitles((prev) =>
       produce(prev, (draftState) => {
         const newValue = e.target.value ?? ""; // ?.toUpperCase()
-        console.log({ newValue });
         draftState[e.target.name].text = newValue;
       })
     );
