@@ -103,6 +103,7 @@ const styles = {
     alignItems: "center",
     // height: [null, null, null, "10%"],
     p: "5px",
+    mb: "10px",
   },
   zoomBtnWrapper: {
     display: "flex",

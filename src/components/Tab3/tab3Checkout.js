@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 
 import { createUploadRequest } from "../../Lib/createUploadRequest";
-import { getIsVariantFramed } from "../../Lib/getIsVariantFramed";
 import { drawLayout } from "../../Lib/drawLayout";
 import CheckoutCard from "../CheckoutCard/CheckoutCard";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
@@ -69,7 +68,6 @@ export default function Tab3Checkout({
             height: image.height,
             activeLayout,
             mapTitles,
-            frameWidthKoef: getIsVariantFramed(product.variantId).frameWidth,
             product,
             isProductionPrint: true,
           });

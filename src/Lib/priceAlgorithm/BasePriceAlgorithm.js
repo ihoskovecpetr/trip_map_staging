@@ -48,6 +48,8 @@ module.exports = class BasePriceAlgorithm {
     const basePrice = costPrice * (1 + taxPercentage / 100);
     const netPrice = basePrice * (1 + profitPercentage / 100);
 
+    console.log({ taxPercentage, bareCostPrice, basePrice, netPrice });
+
     return {
       netPrice: this.round(netPrice),
       basePrice: this.round(basePrice),

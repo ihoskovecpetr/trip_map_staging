@@ -2,7 +2,7 @@ const IS_CLIENT = typeof window !== "undefined";
 
 const PIXEL_RATIO = 8; //  x / 96 (8 is the good value)
 
-const TAX_PERCENTAGE = 0;
+const TAX_PERCENTAGE = 20; // Tax I pay in price from printful
 const GROSS_PROFIT_PERCENTAGE = 20;
 
 const BOTTOM_LAYOUT_SIZE = 1 / 8;
@@ -11,6 +11,9 @@ const MOBILE_WIDTH_SIZE_PX = 768;
 
 const TAXES_KOEFICIENT = 1.2;
 const MARKUP_KOEFICIENT = 1.2;
+
+const INSIDE_FRAME_COVER_CM = 0.5;
+const OUTSIDE_FRAME_CM = 1.4;
 
 const LAY_SINGLE_FRAME_PDNG = 0.015;
 const LAY_DOUBLE_FRAME_PDNG = 0.025;
@@ -46,6 +49,8 @@ const SIZES = [
     ratio: 30 / 40,
     name: "30 x 40 cm",
     code: sizeNames["30X40cm"],
+    height: 30,
+    width: 40,
     orientation: ORIENTATIONS.wide,
     acceptableSizes: [sizeNames["30X40cm"], sizeNames["40X30cm"]],
   },
@@ -53,6 +58,8 @@ const SIZES = [
     ratio: 40 / 30,
     name: "40 x 30 cm",
     code: sizeNames["40X30cm"],
+    height: 40,
+    width: 30,
     orientation: ORIENTATIONS.tall,
     acceptableSizes: [sizeNames["30X40cm"], sizeNames["40X30cm"]],
   },
@@ -60,6 +67,8 @@ const SIZES = [
   {
     ratio: 50 / 70,
     name: "50 x 70 cm",
+    height: 50,
+    width: 70,
     code: sizeNames["50X70cm"],
     orientation: ORIENTATIONS.wide,
     acceptableSizes: [sizeNames["50X70cm"], sizeNames["70X50cm"]],
@@ -67,6 +76,8 @@ const SIZES = [
   {
     ratio: 70 / 50,
     name: "70 x 50 cm",
+    height: 70,
+    width: 50,
     code: sizeNames["70X50cm"],
     orientation: ORIENTATIONS.tall,
     acceptableSizes: [sizeNames["70X50cm"], sizeNames["50X70cm"]],
@@ -75,6 +86,8 @@ const SIZES = [
   {
     ratio: 61 / 91,
     name: "61 x 91 cm",
+    height: 61,
+    width: 91,
     code: sizeNames["61X91cm"],
     orientation: ORIENTATIONS.wide,
     acceptableSizes: [sizeNames["61X91cm"], sizeNames["91X61cm"]],
@@ -82,6 +95,8 @@ const SIZES = [
   {
     ratio: 91 / 61,
     name: "91 x 61 cm",
+    height: 92,
+    width: 61,
     code: sizeNames["91X61cm"],
     orientation: ORIENTATIONS.tall,
     acceptableSizes: [sizeNames["61X91cm"], sizeNames["91X61cm"]],
@@ -358,6 +373,8 @@ module.exports = {
   MOBILE_WIDTH_SIZE_PX,
   TAXES_KOEFICIENT,
   MARKUP_KOEFICIENT,
+  INSIDE_FRAME_COVER_CM,
+  OUTSIDE_FRAME_CM,
   BLURRED_AREA_HEIGHT,
   FONT_TITLES,
   BOTTOM_BANNER,

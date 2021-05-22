@@ -48,7 +48,7 @@ export const getUpdatedMapSizes = ({
   // const updHeight = isHighSetup ? mapWrapWrapHeight : mapWrapWrapWidth * ratio;
 
   return {
-    updWidth: widthTry * 0.9,
-    updHeight: heightTry * 0.9,
+    updWidth: widthTry * 0.85,
+    updHeight: heightTry * 0.85,
   };
 };

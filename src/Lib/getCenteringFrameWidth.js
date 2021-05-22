@@ -2,24 +2,33 @@ import { getIsVariantFramed } from "../Lib/getIsVariantFramed";
 import { getLayoutObject } from "../Lib/getLayoutObject";
 import { getBottomBannerHeightKoef } from "../Lib/getBottomBannerHeightKoef";
 
-// import { PIXEL_RATIO } from "../constants/constants";
+import { INSIDE_FRAME_COVER_CM } from "../constants/constants";
 import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
 
 export const getCenteringFrameWidth = ({
-  variantId,
+  product,
+  // variantId,
   layout: layoutName,
   elWidth,
   elHeight,
+  // insideFrameWidth,
 }) => {
   let baseLongSize;
+  let frameCoverCoefficient;
 
-  const CURRENT_PIXEL_RATIO = getCurrentPixelRatio(variantId);
+  console.log({ product });
+
+  const CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product?.variantId);
 
   if (elHeight > elWidth) {
     baseLongSize = elHeight;
+    frameCoverCoefficient = INSIDE_FRAME_COVER_CM / product?.sizeObject.height;
   } else {
     baseLongSize = elWidth;
+    frameCoverCoefficient = INSIDE_FRAME_COVER_CM / product?.sizeObject.width;
   }
+
+  const insideFrameWidth = baseLongSize * frameCoverCoefficient;
 
   const bottomBannerHeightKoef = getBottomBannerHeightKoef(layoutName);
   const bottomBannerHeight =
@@ -27,12 +36,18 @@ export const getCenteringFrameWidth = ({
 
   const layoutObj = getLayoutObject(layoutName);
 
+  console.log({
+    insideFrameWidth,
+    only_layout: baseLongSize * layoutObj.roundPdng,
+  });
+
   // Layout padding is allways bigger than frame, so it can return regardless of presence of the frame
   if (layoutObj?.roundPdng) {
     return {
-      paddingWidth: (baseLongSize * layoutObj.roundPdng) / CURRENT_PIXEL_RATIO, // this is baseSize!! count it back from this
+      paddingWidth:
+        (baseLongSize * layoutObj.roundPdng + insideFrameWidth) /
+        CURRENT_PIXEL_RATIO, // this is baseSize!! count it back from this
       isPaddingFromFrame: false,
-      paddingCoefficient: layoutObj.roundPdng,
       bottomBannerHeight,
       bottomBannerHeightKoef,
       isBannerBlur: layoutObj.isBannerBlur,
@@ -41,13 +56,14 @@ export const getCenteringFrameWidth = ({
     };
   }
 
-  const variantFrameKoef = getIsVariantFramed(variantId).frameWidth;
+  const variantFrameKoef = getIsVariantFramed(product?.variantId); // TODO redo to
+
+  //Layout pagging has to be always larger than frame
 
   if (variantFrameKoef) {
     return {
-      paddingWidth: (baseLongSize * variantFrameKoef) / CURRENT_PIXEL_RATIO,
+      paddingWidth: insideFrameWidth / CURRENT_PIXEL_RATIO,
       isPaddingFromFrame: true,
-      paddingCoefficient: variantFrameKoef,
       bottomBannerHeight,
       bottomBannerHeightKoef,
       isBannerBlur: layoutObj.isBannerBlur,
@@ -56,9 +72,10 @@ export const getCenteringFrameWidth = ({
     };
   }
 
+  console.log("RETURN DEFAUTL VALUE");
+
   return {
     paddingWidth: 0,
-    paddingCoefficient: 0,
     bottomBannerHeight,
     bottomBannerHeightKoef,
     isBannerBlur: layoutObj.isBannerBlur,

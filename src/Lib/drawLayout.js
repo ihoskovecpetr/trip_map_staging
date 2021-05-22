@@ -2,11 +2,9 @@ import { getCenteringFrameWidth } from "../Lib/getCenteringFrameWidth";
 
 import {
   LAYOUT_STYLE_NAMES,
-  LAY_DOUBLE_FRAME_PDNG,
-  LAY_SINGLE_FRAME_PDNG,
   VARIANTS_PRINTFUL,
   FONT_TITLES,
-  PIXEL_RATIO,
+  INSIDE_FRAME_COVER_CM,
 } from "../constants/constants";
 
 import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
@@ -20,7 +18,7 @@ export function drawLayout(
     width,
     mapTitles,
     activeLayout: activeLayoutName,
-    frameWidthKoef,
+    // frameWidthKoef,
     product,
     isProductionPrint,
   }
@@ -31,7 +29,8 @@ export function drawLayout(
   let baseLngSide;
   let whitePdg;
   let whitePdgDouble;
-  let frameWidth;
+  let insideFrameWidth;
+  let frameCoverCoefficient;
 
   CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
 
@@ -43,27 +42,30 @@ export function drawLayout(
 
   if (height > width) {
     baseLngSide = height;
+    frameCoverCoefficient = INSIDE_FRAME_COVER_CM / product.sizeObject.height;
   } else {
     baseLngSide = width;
+    frameCoverCoefficient = INSIDE_FRAME_COVER_CM / product.sizeObject.width;
   }
 
-  whitePdg = baseLngSide * LAY_SINGLE_FRAME_PDNG;
-  whitePdgDouble = baseLngSide * LAY_DOUBLE_FRAME_PDNG;
-  frameWidth = baseLngSide * frameWidthKoef;
+  insideFrameWidth = baseLngSide * frameCoverCoefficient; //frameWidthKoef;
 
   const {
     paddingWidth,
     isPaddingFromFrame,
-    paddingCoefficient,
     bottomBannerHeight,
     isBannerBlur,
     layoutObj,
   } = getCenteringFrameWidth({
-    variantId: product.variantId,
+    product: product,
+    // variantId: product.variantId,
     layout: activeLayoutName,
     elWidth: width,
     elHeight: height,
+    // insideFrameWidth: insideFrameWidth,
   });
+
+  console.log(isPaddingFromFrame);
 
   if (!isPaddingFromFrame) {
     drawPaddingWrap({
@@ -87,7 +89,6 @@ export function drawLayout(
 
   drawText({
     ctx,
-    paddingCoefficient,
     paddingWidth,
     elWidth: width,
     elHeight: height,
@@ -114,30 +115,36 @@ export function drawLayout(
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BOX) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BLUR) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER_BLUR) {
-    ctx.lineWidth = 1 * CURRENT_PIXEL_RATIO;
+    ctx.lineWidth = 0.0015 * baseLngSide;
     ctx.strokeStyle = "black";
 
+    const pdgDoubleKoefficient = 0.75;
+
+    const distanceStartXYInnerFrame = paddingWidth * CURRENT_PIXEL_RATIO;
+    const distanceStartXYOuterFrame =
+      paddingWidth * CURRENT_PIXEL_RATIO * pdgDoubleKoefficient;
+
+    // inner border
     ctx.strokeRect(
-      whitePdgDouble,
-      whitePdgDouble,
-      elWidth - whitePdgDouble * 2,
-      elHeight - whitePdgDouble * 2
+      distanceStartXYInnerFrame,
+      distanceStartXYInnerFrame,
+      elWidth - distanceStartXYInnerFrame * 2,
+      elHeight - distanceStartXYInnerFrame * 2
     );
 
-    ctx.lineWidth = 2 * CURRENT_PIXEL_RATIO;
-
-    const pdgDouble = 0.75;
+    // outer border
+    ctx.lineWidth = 0.003 * baseLngSide;
 
     ctx.strokeRect(
-      whitePdgDouble * pdgDouble,
-      whitePdgDouble * pdgDouble,
-      elWidth - whitePdgDouble * 2 * pdgDouble,
-      elHeight - whitePdgDouble * 2 * pdgDouble
+      distanceStartXYOuterFrame,
+      distanceStartXYOuterFrame,
+      elWidth - distanceStartXYOuterFrame * 2,
+      elHeight - distanceStartXYOuterFrame * 2
     );
   }
 
-  if (frameWidth && !isProductionPrint) {
-    drawFrame(ctx, elWidth, elHeight, frameWidth, frameColor);
+  if (insideFrameWidth && !isProductionPrint) {
+    drawFrame(ctx, elWidth, elHeight, insideFrameWidth, frameColor);
   }
 }
 
@@ -210,7 +217,6 @@ function drawBottomBox({
 
 function drawText({
   ctx,
-  paddingCoefficient,
   paddingWidth,
   elWidth,
   elHeight,
@@ -222,8 +228,8 @@ function drawText({
   // const headingCoef = elHeight === baseLngSide ? 0.06 : 0.077;
   // const subtitleCoef = elHeight === baseLngSide ? 0.0275 : 0.033;
 
-  const headingCoef = elHeight === baseLngSide ? 0.047 : 0.071;
-  const subtitleCoef = elHeight === baseLngSide ? 0.011 : 0.018;
+  const headingCoef = elHeight === baseLngSide ? 0.047 : 0.061;
+  const subtitleCoef = elHeight === baseLngSide ? 0.015 : 0.018;
 
   const headingText =
     heading?.text && layoutObj.text.isVisible ? heading?.text : "";

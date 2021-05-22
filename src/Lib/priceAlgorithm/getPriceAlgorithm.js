@@ -6,7 +6,7 @@ const {
 } = require("../../constants/constants.js");
 
 const getPriceAlgorithm = (country) => {
-  console.log({ TAX_PERCENTAGE });
+  console.log({ TAX_PERCENTAGE, GROSS_PROFIT_PERCENTAGE });
   switch (country) {
     default:
       return new DefaultPriceAlgorithm({

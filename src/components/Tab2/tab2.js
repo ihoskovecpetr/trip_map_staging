@@ -104,8 +104,6 @@ export default function Tab2({
     }
   };
 
-  console.log({ product });
-
   return (
     <div sx={styles.container}>
       <Text as="p" className="description" sx={styles.topDescription}>

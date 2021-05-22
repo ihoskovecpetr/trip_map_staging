@@ -12,7 +12,7 @@ const data = {
   subTitle: "Informace na závěr",
   title: "Váš vlastní design je na cestě",
   description:
-    "Platba proběhla úspěšně a v současnosti pracujeme na zhotovení výsledného produktu, pokud si nás přejete dále kontaktovat, použijte sessionID pro identifikaci objednávky. Jménem TripMap Vám děkuji a přeji příjemný den",
+    "Platba proběhla úspěšně a v současnosti pracujeme na zhotovení výsledného produktu, pokud si nás přejete dále kontaktovat, použijte sessionID pro identifikaci objednávky. Jménem TripMap Vám děkuji a přeji příjemný den.",
   btnName: "Learn More",
   btnURL: "#",
 };
