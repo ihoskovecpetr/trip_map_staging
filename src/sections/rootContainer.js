@@ -197,11 +197,11 @@ export default function RootContainer() {
     price: null,
     currency: "CZK",
     sizeObject: SIZES.find(
-      (size) => size.code === VARIANTS_PRINTFUL[1].sizeName
+      (size) => size.code === VARIANTS_PRINTFUL[4].sizeName
     ),
-    variantId: VARIANTS_PRINTFUL[1].id,
+    variantId: VARIANTS_PRINTFUL[4].id,
     materialDesc: "Matný vylepšený papír",
-    shippingCode: VARIANTS_PRINTFUL[1].shipping.codeCZ,
+    shippingCode: VARIANTS_PRINTFUL[4].shipping.codeCZ,
   });
 
   const [layout, setLayout] = useState(LAYOUT_STYLE_NAMES.ISLAND_BOX);
