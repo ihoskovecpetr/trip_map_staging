@@ -2,7 +2,7 @@
 import React from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
-import getPriceAlgorithm from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 
 export default function CostsTable({
   product,

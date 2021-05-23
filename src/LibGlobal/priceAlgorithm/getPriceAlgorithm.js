@@ -16,4 +16,4 @@ const getPriceAlgorithm = (country) => {
   }
 };
 
-module.exports = getPriceAlgorithm;
+module.exports = { getPriceAlgorithm };

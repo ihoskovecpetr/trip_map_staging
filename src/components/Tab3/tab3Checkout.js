@@ -9,7 +9,7 @@ import { createUploadRequest } from "../../LibGlobal/createUploadRequest";
 import { drawLayout } from "../../LibGlobal/drawLayout";
 import CheckoutCard from "../CheckoutCard/CheckoutCard";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import getPriceAlgorithm from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 
 import {
   getLazyUploader,

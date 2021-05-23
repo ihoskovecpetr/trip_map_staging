@@ -10,7 +10,7 @@ import CustomLoader from "../CustomLoader";
 
 import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 import { getVersionDescription } from "../../LibGlobal/getVersionDescription";
-import getPriceAlgorithm from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 
 const priceAlgorithm = getPriceAlgorithm();
 
