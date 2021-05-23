@@ -17,7 +17,7 @@
 // const connectToMongoose = async () => {
 //   try {
 //     const data = await mongoose.connect(
-//       `mongodb+srv://${process.env.MONGO_user}:${process.env.MONGO_password}@cluster0.krtpb.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
+//       process.env.MONGO_CONNECTION_STRING,
 //       { useNewUrlParser: true, useUnifiedTopology: true }
 //     );
 

@@ -60,6 +60,10 @@ export default function Tab3({
       sizeObject: newSizeObject,
       variantId: newVariant.id,
       price: dataPrintful[newVariant.id]?.price,
+      priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
+        variantId,
+        dataPrintful
+      ).netPrice,
       shippingCode: newVariant.shipping.codeCZ,
     }));
   };
@@ -70,6 +74,10 @@ export default function Tab3({
       ...prev,
       variantId: variantId,
       price: dataPrintful[variantId]?.price,
+      priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
+        variantId,
+        dataPrintful
+      ).netPrice,
       shippingCode,
     }));
   };

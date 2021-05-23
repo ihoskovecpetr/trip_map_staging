@@ -95,7 +95,7 @@ const SIZES = [
   {
     ratio: 91 / 61,
     name: "91 x 61 cm",
-    height: 92,
+    height: 91,
     width: 61,
     code: sizeNames["91X61cm"],
     orientation: ORIENTATIONS.tall,

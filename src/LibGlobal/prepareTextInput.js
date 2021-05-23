@@ -18,6 +18,7 @@ export function prepareTextInput({
   element.setAttribute("type", "text");
   element.setAttribute("name", name);
   element.setAttribute("placeholder", null);
+  element.setAttribute("id", "title_input");
 
   if (textValue === false) {
     element.setAttribute("placeholder", defaultText ?? "default Text");

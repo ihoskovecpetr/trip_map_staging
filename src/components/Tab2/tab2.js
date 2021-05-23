@@ -113,7 +113,7 @@ export default function Tab2({
         Orientace
       </Text>
       <div sx={styles.orientationWrap}>
-        <div sx={styles.orientationItems}>
+        <div sx={styles.orientationShapeItems}>
           <div>
             <div
               sx={styles.highMock}
@@ -219,8 +219,8 @@ const styles = {
     width: "100%",
     flexWrap: "wrap",
   },
-  orientationItems: {
-    width: "100%",
+  orientationShapeItems: {
+    width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
@@ -254,7 +254,7 @@ const styles = {
   },
 
   textsItems: {
-    width: "100%",
+    width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
@@ -275,7 +275,7 @@ const styles = {
     flexWrap: "wrap",
   },
   layoutItem: {
-    width: ["23%", "23%", "23%", "30%", "23%", "18%"],
+    width: ["23%", "23%", "14%", "30%", "23%", "18%"],
     margin: ["1%", "1%", "1%", "1%", "1%", "1%"],
     padding: "4px",
     // height: "80px",

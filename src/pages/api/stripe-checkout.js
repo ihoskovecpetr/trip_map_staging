@@ -28,14 +28,11 @@ const connectToMongoose = async () => {
       d: process.env.MONGO_DB_NAME,
     });
 
-    const data = await mongoose.connect(
-      `mongodb+srv://${process.env.MONGO_user}:${process.env.MONGO_password}@cluster0.krtpb.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        serverSelectionTimeoutMS: 5000,
-      }
-    );
+    const data = await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+    });
 
     console.log("✅ Connected to DB");
     return data;
@@ -54,14 +51,14 @@ export default async (req, res) => {
   switch (req.method) {
     case "POST":
       try {
-        console.log(
-          "Hitting stripe-checkout, await MONGO connection",
-          mongoose.connections[0]
-        );
+        console.log("Hitting stripe-checkout, await MONGO connection");
 
         await connectToMongoose();
 
-        console.log("✅ mongo connected ", mongoose.connections[0].readyState);
+        console.log(
+          "✅ mongo connected_connestions?",
+          mongoose.connections[0].readyState
+        );
 
         const {
           product: clientProduct,

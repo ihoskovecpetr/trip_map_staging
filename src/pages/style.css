@@ -17,3 +17,17 @@
 #map {
   /* position: relative; */
 }
+
+#title_input::-webkit-input-placeholder {
+  /* Edge */
+  color: lightgrey;
+}
+
+#title_input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: lightgrey;
+}
+
+#title_input::placeholder {
+  color: lightgrey;
+}

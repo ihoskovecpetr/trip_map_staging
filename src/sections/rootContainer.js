@@ -18,6 +18,7 @@ import { getIsVariantFramed } from "../LibGlobal/getIsVariantFramed";
 import { getIsProduction } from "../LibGlobal/getIsProduction";
 import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
 import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
+import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 
 import {
   MAP_STYLES,
@@ -42,6 +43,7 @@ let mapWrapper;
 let CURRENT_PIXEL_RATIO;
 
 const IS_PRODUCTION = getIsProduction();
+const priceAlgorithm = getPriceAlgorithm();
 
 const resizeLayout = ({
   cvsLayout,
@@ -271,6 +273,10 @@ export default function RootContainer() {
       setProduct((prev) => ({
         ...prev,
         // price: response.data.finalResult[product.variantId].price,
+        priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
+          product.variantId,
+          dataPrintful
+        ).netPrice,
       }));
     }
   }, [mapTitles]);

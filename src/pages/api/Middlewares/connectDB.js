@@ -18,10 +18,10 @@ const connectDB = (handler) => async (req, res, next) => {
   // return handler(req, res);
 
   const connect = async () => {
-    await mongoose.connect(
-      `mongodb+srv://${process.env.MONGO_user}:${process.env.MONGO_password}@cluster0.krtpb.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
-      { useNewUrlParser: true, useUnifiedTopology: true }
-    );
+    await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
   };
 
   mongoose.connection.on("error", (e) => {
