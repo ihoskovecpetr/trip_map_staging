@@ -61,7 +61,7 @@ export default function Tab3({
       variantId: newVariant.id,
       price: dataPrintful[newVariant.id]?.price,
       priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
-        variantId,
+        newVariant.id,
         dataPrintful
       ).netPrice,
       shippingCode: newVariant.shipping.codeCZ,
