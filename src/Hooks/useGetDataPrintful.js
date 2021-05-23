@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
+import axios from "axios";
 import { VARIANTS_PRINTFUL } from "../constants/constants";
-import { fetchDataPrintful } from "../LibGlobal/fetchDataPrintful";
 
 import {
   getLazyDownloader,
@@ -8,6 +8,12 @@ import {
 } from "../LibGlobal/getLazyDownloader";
 
 let cachedResponse = null;
+
+const fetchDataPrintful = async (variantIdsArr) => {
+  console.log("Call data print");
+  const resp = await axios.post(`api/data-printful`, { variantIdsArr });
+  return resp;
+};
 
 export function useGetDataPrintful() {
   const [data, setData] = useState(null);
@@ -23,6 +29,8 @@ export function useGetDataPrintful() {
         )();
       };
       const response = await lazyDownloadDataPrintfull();
+
+      console.log({ response });
 
       setData(response.data.finalResult);
     } catch (e) {

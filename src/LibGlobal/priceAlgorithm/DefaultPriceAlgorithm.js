@@ -21,27 +21,37 @@ class DefaultPriceAlgorithm extends BasePriceAlgorithm {
     const shippingPrice =
       dataPrintful && dataPrintful[variantId]?.shipping.rate;
 
-    return this.getPrice(
-      shippingPrice ? shippingPrice : 0,
-      this.taxPercentage,
-      this.profitPercentage
-    );
+    // return this.getPrice(
+    //   shippingPrice ? shippingPrice : 0,
+    //   this.taxPercentage,
+    //   this.profitPercentage
+    // );
+
+    return { netPrice: Number(shippingPrice) };
   }
 
   getPriceWithDelivery(variantId, dataPrintful) {
     const variantPrice = dataPrintful && dataPrintful[variantId]?.price;
     const shippingPrice =
-      dataPrintful && dataPrintful[variantId]?.shipping.rate;
+      dataPrintful && dataPrintful[variantId]?.shipping.rate; // this is price with tax and profit
 
-    console.log({ shippingPrice });
-    return this.getPrice(
-      this.add([
-        variantPrice ? variantPrice : 0,
-        shippingPrice ? shippingPrice : 0,
-      ]),
+    const variantPriceObject = this.getPrice(
+      variantPrice ? variantPrice : 0,
       this.taxPercentage,
       this.profitPercentage
     );
+
+    console.log("Adding_those_prices: ", [
+      variantPriceObject.netPrice,
+      shippingPrice ?? 0,
+    ]);
+
+    const sumNetPricesWithDelivery = this.add([
+      variantPriceObject.netPrice,
+      shippingPrice ?? 0,
+    ]);
+
+    return { netPrice: sumNetPricesWithDelivery };
   }
 
   // getDefaultPrice(deal, appConfig) {

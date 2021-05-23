@@ -17,7 +17,7 @@ const port = process.env.PORT || 3000;
     console.log("Running_server.js");
 
     server.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
-    server.use("/api/*", connectDB());
+    server.use("api/*", connectDB());
 
     server.all("*", (req, res) => {
       return handle(req, res);

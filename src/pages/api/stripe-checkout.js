@@ -1,9 +1,14 @@
 const uuid = require("uuid");
 const mongoose = require("mongoose");
+const Big = require("big.js");
 
 const Order = require("../../mongoModels/order.js");
 const { getIsProduction } = require("../../LibGlobal/getIsProduction");
-const { fetchDataPrintful } = require("../../LibGlobal/fetchDataPrintful");
+const getPriceAlgorithm = require("../../LibGlobal/priceAlgorithm/getPriceAlgorithm");
+
+const {
+  fetchAndTransformDataPrintful,
+} = require("./Lib/fetchAndTransformDataPrintful");
 
 const IS_PRODUCTION = getIsProduction();
 
@@ -20,9 +25,14 @@ const connectToMongoose = async () => {
       c: process.env.MONGO_password,
       d: process.env.MONGO_DB_NAME,
     });
+
     const data = await mongoose.connect(
       `mongodb+srv://${process.env.MONGO_user}:${process.env.MONGO_password}@cluster0.krtpb.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
-      { useNewUrlParser: true, useUnifiedTopology: true }
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 5000,
+      }
     );
 
     console.log("✅ Connected to DB");
@@ -36,11 +46,16 @@ const connectToMongoose = async () => {
 const test_shipping_code = ["shr_1Ip7NWKQWovk2rIhdfYl73aq"];
 const test_shipping_code_czk = ["shr_1IqgqIKQWovk2rIhCDcikEM0"];
 
+const priceAlgorithm = getPriceAlgorithm();
+
 export default async (req, res) => {
   switch (req.method) {
     case "POST":
       try {
-        console.log("Hitting stripe-checkout, await MONGO connection");
+        console.log(
+          "Hitting stripe-checkout, await MONGO connection",
+          mongoose.connections[0]
+        );
 
         await connectToMongoose();
 
@@ -52,15 +67,28 @@ export default async (req, res) => {
           checkoutShownPrices,
         } = req.body;
 
-        const responsePrintful = await fetchDataPrintful([
-          clientProduct.variandId,
+        const responsePrintful = await fetchAndTransformDataPrintful([
+          clientProduct.variantId,
         ]);
 
-        console.log({ responsePrintful });
+        const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
+          clientProduct.variantId,
+          responsePrintful
+        );
+        const priceWithoutDelivery = priceAlgorithm.getPriceWithoutDelivery(
+          clientProduct.variantId,
+          responsePrintful
+        );
 
-        const dataPrintFul = responsePrintful.data.finalResult;
-
-        console.log({ dataPrintFul });
+        if (
+          priceWithDelivery?.netPrice !==
+          checkoutShownPrices.netPriceWithDelivery
+        ) {
+          console.log("❌ Prices coming from browser are wrong");
+          return res.json({ error: "❌ Prices coming from browser are wrong" });
+        } else {
+          console.log("💰✅ Prices coming from browser are correct");
+        }
 
         const product = await stripe.products.create({
           name: clientProduct.name,
@@ -68,7 +96,7 @@ export default async (req, res) => {
         });
 
         const price = await stripe.prices.create({
-          unit_amount: clientProduct.price * 100, //TODO big.js
+          unit_amount: priceWithoutDelivery.netPrice * 100, //TODO big.js
           currency: "czk",
           product: product.id,
         });
@@ -81,38 +109,28 @@ export default async (req, res) => {
           ? "http://www.tripmap.shop"
           : "http://localhost:3000";
 
-        console.log({ SHIPPING_RATE_CODE });
+        const session = await stripe.checkout.sessions.create({
+          cancel_url: BASE_DOMAIN + "/studio", //TODO get local address for redirect
+          success_url:
+            BASE_DOMAIN + "/api/checkout-to-printful?id={CHECKOUT_SESSION_ID}", //TODO get local address for redirect
 
-        const session = await stripe.checkout.sessions.create(
-          {
-            cancel_url: BASE_DOMAIN + "/studio", //TODO get local address for redirect
-            success_url:
-              BASE_DOMAIN +
-              "/api/checkout-to-printful?id={CHECKOUT_SESSION_ID}", //TODO get local address for redirect
+          locale: "cs",
+          metadata: {},
+          mode: "payment",
+          payment_method_options: {},
+          payment_method_types: ["card"],
+          shipping_rates: SHIPPING_RATE_CODE,
+          shipping_address_collection: {
+            allowed_countries: ["CZ", "PL", "DE"],
+          },
 
-            locale: "cs",
-            metadata: {},
-            mode: "payment",
-            payment_method_options: {},
-            payment_method_types: ["card"],
-            shipping_rates: SHIPPING_RATE_CODE,
-            shipping_address_collection: {
-              allowed_countries: ["CZ", "PL", "DE"],
+          line_items: [
+            {
+              price: price.id,
+              quantity: 1,
             },
-
-            line_items: [
-              {
-                price: price.id,
-                quantity: 1,
-              },
-            ],
-          }
-          // {
-          //   idempotencyKey,
-          // }
-        );
-
-        console.log({ session });
+          ],
+        });
 
         const newOrder = new Order({
           sessionId: session.id,
@@ -120,9 +138,7 @@ export default async (req, res) => {
           imageObj: imageObj,
         });
 
-        const savedOrderMongo = await newOrder.save();
-
-        console.log({ savedOrderMongo });
+        await newOrder.save();
 
         return res.json({ id: session.id });
       } catch (error) {

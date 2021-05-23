@@ -47,8 +47,8 @@ module.exports = class BasePriceAlgorithm {
 
     return {
       netPrice: this.round(netPrice),
-      basePrice: this.round(basePrice),
-      tax: this.round(this.subtract([netPrice, basePrice])),
+      // basePrice: this.round(basePrice),
+      // tax: this.round(this.subtract([netPrice, basePrice])),
     };
   }
 

@@ -7,7 +7,7 @@
     "node": "12.13.x"
   },
   "scripts": {
-    "dev": "nodemon -r esm src/server.js",
+    "dev": "node -r esm src/server.js",
     "build": "next build",
     "serve": "next start",
     "export": "next export",

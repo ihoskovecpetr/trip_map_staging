@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React, { useState, useEffect } from "react";
-import { jsx, Text } from "theme-ui";
+import { jsx } from "theme-ui";
 import { loadStripe } from "@stripe/stripe-js";
 
 import axios from "axios";
@@ -18,6 +18,7 @@ import ProductSummary from "./ProductSummary";
 import { getIsProduction } from "../../LibGlobal/getIsProduction";
 import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 import getPriceAlgorithm from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { ORIENTATIONS } from "../../constants/constants";
 
 const STRIPE_PUBLIC_KEY_LIVE =
   "pk_live_51IUQiOKQWovk2rIh0SfKkGNuHSE5J7VY6LCJaijjYh7lmjb64h8fmHcYmYoINNCNMTC5sxdsUkwnWIePd2z6vqPH00BzD2UrRm";
@@ -75,14 +76,25 @@ export default function CheckoutCard({
       },
     });
 
-    if (response?.data?.id) {
+    if (response?.data?.error) {
+      toast.error(
+        "Error: Ceny se liší, kontaktujte prosím technickou podporu",
+        {
+          position: "top-left",
+        }
+      );
+    } else if (response?.data?.id) {
       Stripe.redirectToCheckout({
         sessionId: response.data.id,
+      });
+    } else {
+      toast("Info: Něco se pokazilo, kontaktujte prosím technickou podporu", {
+        position: "top-left",
       });
     }
   }
 
-  console.log({ priceWithDelivery });
+  const variantOrientation = product.sizeObject.orientation;
 
   return (
     <Card
@@ -91,10 +103,17 @@ export default function CheckoutCard({
       onClick={(e) => e.stopPropagation()}
     >
       <div sx={styles.topStickyContainer}>
-        <div sx={styles.teaserWrapper}>
-          <div sx={styles.white_padding}>
+        <div
+          sx={styles.teaserWrapper}
+          className={isUploadPending ? "loading" : "loaded"}
+        >
+          <div
+            sx={styles.white_padding}
+            className={
+              variantOrientation === ORIENTATIONS.wide ? "wide" : "high"
+            }
+          >
             {isUploadPending ? (
-              // <CircularProgress style={{ color: "primary" }} />
               <>
                 <CustomLoader />
               </>
@@ -126,7 +145,6 @@ export default function CheckoutCard({
           <p onClick={() => backdropClose()}> X </p>
         </div>
       </div>
-
       <CardContent
         className={classes.content}
         classes={{
@@ -184,15 +202,18 @@ const styles = {
     },
   },
   teaserWrapper: {
-    // flexDirection: "column",
     display: "flex",
     justifyContent: "flex-start",
     p: "10px",
     height: "100px",
-    //
+    "&.loading div": {
+      backgroundColor: "cta_color",
+    },
+    "&.loaded div": {
+      backgroundColor: "whitish_paper_blue",
+    },
   },
   white_padding: {
-    backgroundColor: "whitish_paper_blue",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -201,12 +222,18 @@ const styles = {
     position: "relative",
     overflow: "hidden",
     borderRadius: "10px",
+    padding: "5%",
+    "&.high img": {
+      height: "100%",
+      width: "auto",
+    },
+    "&.wide img": {
+      height: "auto",
+      width: "100%",
+    },
   },
   teaserFinalImage: {
-    height: "80%",
-    width: "80%",
     zIndex: 10,
-    margin: "auto",
     cursor: "pointer",
     boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.56)",
   },

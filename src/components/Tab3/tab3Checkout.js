@@ -118,8 +118,9 @@ export default function Tab3Checkout({
 
       if (response.data.secure_url) {
         console.log("✅ successful upload!");
-        toast("✔️ uloženo, můžete pokračovat", {
+        toast("Info: ✔️ uloženo, můžete pokračovat", {
           type: "success",
+          position: "top-left",
         });
 
         setIsUploadPending(false);

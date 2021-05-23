@@ -13,19 +13,19 @@ const API_KEY = IS_PRODUCTION
 
 const stripe = require("stripe")(API_KEY);
 
-const connectToMongoose = async () => {
-  try {
-    const data = await mongoose.connect(
-      `mongodb+srv://${process.env.MONGO_user}:${process.env.MONGO_password}@cluster0.krtpb.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
-      { useNewUrlParser: true, useUnifiedTopology: true }
-    );
+// const connectToMongoose = async () => {
+//   try {
+//     const data = await mongoose.connect(
+//       `mongodb+srv://${process.env.MONGO_user}:${process.env.MONGO_password}@cluster0.krtpb.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
+//       { useNewUrlParser: true, useUnifiedTopology: true }
+//     );
 
-    console.log("✅ Connected to DB");
-    return data;
-  } catch (err) {
-    console.error("❌ could not connect to DB ", { err });
-  }
-};
+//     console.log("✅ Connected to DB", { data });
+//     return data;
+//   } catch (err) {
+//     console.error("❌ could not connect to DB ", { err });
+//   }
+// };
 
 const orderOnPrintful = async ({ shipping, product, imageObj }) => {
   try {
@@ -89,7 +89,7 @@ export default async (req, res) => {
 
         const sessionId = req.query.id;
         const session = await stripe.checkout.sessions.retrieve(sessionId);
-
+        console.log("Find data in MongoDB");
         const { clientProductObj, imageObj } = await Order.findOne({
           sessionId: sessionId,
         });

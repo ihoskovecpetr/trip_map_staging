@@ -14,10 +14,10 @@ import pureLayoutImg from "assets/mapLayouts/pureLayout.png";
 import LowContrastGreenBlue from "assets/mapStyles/LowContrastGreenBlue.png";
 import MustardBlue from "assets/mapStyles/MustardBlue.png";
 import SandyOrangeBlue from "assets/mapStyles/SandyOrangeBlue.png";
-import WhiteDarkBlue from "assets/mapStyles/WhiteDarkBlue.png";
+import SandyDark from "assets/mapStyles/SandyDark.png";
 import WhiteGrey from "assets/mapStyles/WhiteGrey.png";
 import WhiteBlue from "assets/mapStyles/WhiteBlue.png";
-import WhiteLightBlue from "assets/mapStyles/WhiteLightBlue.png";
+import WhiteBlueLowContrast from "assets/mapStyles/WhiteBlueLowContrast.png";
 import OldDarkBlue from "assets/mapStyles/OldDarkBlue.png";
 import OldSandyGrey from "assets/mapStyles/OldSandyGrey.png";
 
@@ -86,13 +86,13 @@ export default function Tab2({
         return WhiteGrey;
       case MAP_STYLES_NAMES.WHITE_BLUE:
         return WhiteBlue;
-      case MAP_STYLES_NAMES.WHITE_LIGHT_BLUE:
-        return WhiteLightBlue;
+      case MAP_STYLES_NAMES.WHITE_BLUE_LOW_CONTRAST:
+        return WhiteBlueLowContrast;
       case MAP_STYLES_NAMES.SANDY_DARK:
-        return WhiteDarkBlue;
+        return SandyDark;
       case MAP_STYLES_NAMES.MUSTARD_BLUE:
         return MustardBlue;
-      case MAP_STYLES_NAMES.OLD_SANDY_GREY:
+      case MAP_STYLES_NAMES.OLD_SANDY_BROWN:
         return OldSandyGrey;
       case MAP_STYLES_NAMES.SANDY_ORANGE_BLUE:
         return SandyOrangeBlue;

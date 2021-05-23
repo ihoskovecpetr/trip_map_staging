@@ -2,7 +2,7 @@ const IS_CLIENT = typeof window !== "undefined";
 
 const PIXEL_RATIO = 8; //  x / 96 (8 is the good value)
 
-const TAX_PERCENTAGE = 20; // Tax I pay in price from printful
+const TAX_PERCENTAGE = 21; // Tax I pay in price from printful
 const GROSS_PROFIT_PERCENTAGE = 20;
 
 const BOTTOM_LAYOUT_SIZE = 1 / 8;
@@ -119,7 +119,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 4,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 169,
+      price: 239,
       currency: "CZK",
     },
   },
@@ -133,7 +133,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 4,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 169,
+      price: 239,
       currency: "CZK",
     },
   },
@@ -147,7 +147,7 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 169,
+      price: 239,
       currency: "CZK",
     },
   },
@@ -162,7 +162,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 6,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 169,
+      price: 239,
       currency: "CZK",
     },
   },
@@ -176,7 +176,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 6,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 569,
+      price: 799,
       currency: "CZK",
     },
   },
@@ -190,7 +190,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 6,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 569,
+      price: 799,
       currency: "CZK",
     },
   },
@@ -205,7 +205,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 8,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 169,
+      price: 239,
       currency: "CZK",
     },
   },
@@ -219,7 +219,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 8,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 569,
+      price: 799,
       currency: "CZK",
     },
   },
@@ -233,7 +233,7 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: 8,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 569,
+      price: 799,
       currency: "CZK",
     },
   },
@@ -331,8 +331,8 @@ const LAYOUTS = [
 
 const MAP_STYLES_NAMES = {
   WHITE_GREY: "White Grey",
-  OLD_SANDY_GREY: "Old Sandy Grey",
-  WHITE_LIGHT_BLUE: "White Light Blue",
+  OLD_SANDY_BROWN: "Old Sandy Brown",
+  WHITE_BLUE_LOW_CONTRAST: "White Blue Low Contrast",
   WHITE_BLUE: "White Blue",
   SANDY_ORANGE_BLUE: "Sandy Orange Blue",
   LOW_CONTRAST_GREEN: "Low Contrast Green",
@@ -343,7 +343,7 @@ const MAP_STYLES_NAMES = {
 const MAP_STYLES = {
   [MAP_STYLES_NAMES.WHITE_GREY]:
     "mapbox://styles/petrhoskovec/ckmzzqlni0n5j17pbfvgf27n9",
-  [MAP_STYLES_NAMES.WHITE_LIGHT_BLUE]:
+  [MAP_STYLES_NAMES.WHITE_BLUE_LOW_CONTRAST]:
     "mapbox://styles/petrhoskovec/ckolm2l7k23ck18mwrl2jkgcg",
   [MAP_STYLES_NAMES.WHITE_BLUE]:
     "mapbox://styles/petrhoskovec/ckmzzsrsl0naa17o3ki2xzuoj",
@@ -354,7 +354,7 @@ const MAP_STYLES = {
     "mapbox://styles/petrhoskovec/ckmzyuv5w0mat17n5ybl7hxxl",
   [MAP_STYLES_NAMES.SANDY_DARK]:
     "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho",
-  [MAP_STYLES_NAMES.OLD_SANDY_GREY]:
+  [MAP_STYLES_NAMES.OLD_SANDY_BROWN]:
     "mapbox://styles/petrhoskovec/ckn0f7lbu12je17s4itrmuuh5",
 
   [MAP_STYLES_NAMES.SANDY_ORANGE_BLUE]:
