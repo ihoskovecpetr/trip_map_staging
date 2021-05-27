@@ -18,26 +18,22 @@ const TAB_VALUES = {
 
 export default function SetupColumn({
   map,
-  mapCoordinates,
   setMapCoordinates,
   activeFrame,
   setActiveLayout,
   activeMapStyle,
   setActiveMapStyle,
   mapTitles,
+  setMapTitles,
   product,
   setProduct,
 }) {
   const [activeTab, setActiveTab] = useState(TAB_VALUES.ONE);
-  const { isMobile } = useIsMobile();
-
-  const { height: headerHeight } = useElementDimensions("header");
-
   const handleChange = (newValue) => {
     // if (isMobile) {
-    const yCoordTabs =
-      document.querySelector("#tab_wrap_wrap").getBoundingClientRect().top -
-      100;
+    // const yCoordTabs =
+    //   document.querySelector("#tab_wrap_wrap").getBoundingClientRect().top -
+    //   100;
 
     // window.scrollBy({
     //   top: yCoordTabs,
@@ -86,8 +82,10 @@ export default function SetupColumn({
         >
           <Tab1
             map={map}
-            mapCoordinates={mapCoordinates}
             setMapCoordinates={setMapCoordinates}
+            product={product}
+            setProduct={setProduct}
+            setMapTitles={setMapTitles}
             nextTab={() => handleChange(TAB_VALUES.TWO)}
           />
         </TabContentWrap>

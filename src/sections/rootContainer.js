@@ -520,9 +520,9 @@ export default function RootContainer() {
               setActiveLayout={setLayout}
               activeMapStyle={activeMapStyle}
               setActiveMapStyle={setActiveMapStyle}
-              mapCoordinates={mapCoordinates}
               setMapCoordinates={setMapCoordinates}
               mapTitles={mapTitles}
+              setMapTitles={setMapTitles}
               product={product}
               setProduct={setProduct}
             />

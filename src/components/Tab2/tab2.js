@@ -22,7 +22,7 @@ import OldDarkBlue from "assets/mapStyles/OldDarkBlue.png";
 import OldSandyGrey from "assets/mapStyles/OldSandyGrey.png";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
+// import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
 import {
   MAP_STYLES_NAMES,
@@ -30,12 +30,12 @@ import {
   LAYOUTS,
 } from "../../constants/constants";
 
-const isProductWide = (product) => {
-  if (product.sizeObject.ratio < 1) {
-    return true;
-  }
-  return false;
-};
+// const isProductWide = (product) => {
+//   if (product.sizeObject.ratio < 1) {
+//     return true;
+//   }
+//   return false;
+// };
 
 export default function Tab2({
   map,
@@ -55,9 +55,9 @@ export default function Tab2({
     setActiveMapStyle(style);
   };
 
-  const switchOrientation = () => {
-    orientationSwitcher(product, setProduct);
-  };
+  // const switchOrientation = () => {
+  //   orientationSwitcher(product, setProduct);
+  // };
 
   const getLayoutImg = (frameName) => {
     switch (frameName) {
@@ -106,7 +106,7 @@ export default function Tab2({
 
   return (
     <div sx={styles.container}>
-      <Text as="p" className="description" sx={styles.topDescription}>
+      {/* <Text as="p" className="description" sx={styles.topDescription}>
         <b>Tip!</b> Pro změnu naspisu a podnadpisu klikněte přímo na mapu
       </Text>
       <Text as="p" className="description" sx={styles.subHeading}>
@@ -144,7 +144,7 @@ export default function Tab2({
             Na šířku
           </p>
         </div>
-      </div>
+      </div> */}
 
       <Text as="p" className="description" sx={styles.subHeading}>
         Layout
@@ -214,60 +214,60 @@ const styles = {
     padding: "10px",
     pb: "90px",
   },
-  orientationWrap: {
-    display: "flex",
-    width: "100%",
-    flexWrap: "wrap",
-  },
-  orientationShapeItems: {
-    width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    "> div": {
-      width: "30%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    "> div > div": {
-      cursor: "pointer",
-    },
-    "> div > div.active": {
-      border: "2px solid",
-      borderColor: "cta_color",
-      pointerEvents: "none",
-      cursor: "default",
-    },
-  },
-  highMock: {
-    border: "1px solid black",
-    height: "50px",
-    width: "25px",
-    backgroundColor: "white",
-  },
-  wideMock: {
-    border: "1px solid black",
-    height: "25px",
-    width: "50px",
-    backgroundColor: "white",
-  },
+  // orientationWrap: {
+  //   display: "flex",
+  //   width: "100%",
+  //   flexWrap: "wrap",
+  // },
+  // orientationShapeItems: {
+  //   width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
+  //   display: "flex",
+  //   justifyContent: "space-around",
+  //   alignItems: "center",
+  //   "> div": {
+  //     width: "30%",
+  //     display: "flex",
+  //     justifyContent: "center",
+  //     alignItems: "center",
+  //   },
+  //   "> div > div": {
+  //     cursor: "pointer",
+  //   },
+  //   "> div > div.active": {
+  //     border: "2px solid",
+  //     borderColor: "cta_color",
+  //     pointerEvents: "none",
+  //     cursor: "default",
+  //   },
+  // },
+  // highMock: {
+  //   border: "1px solid black",
+  //   height: "50px",
+  //   width: "25px",
+  //   backgroundColor: "white",
+  // },
+  // wideMock: {
+  //   border: "1px solid black",
+  //   height: "25px",
+  //   width: "50px",
+  //   backgroundColor: "white",
+  // },
 
-  textsItems: {
-    width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    "> p": {
-      my: 1,
-      cursor: "pointer",
-    },
-    "> p.active": {
-      color: "cta_color",
-      pointerEvents: "none",
-      cursor: "default",
-    },
-  },
+  // textsItems: {
+  //   width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
+  //   display: "flex",
+  //   justifyContent: "space-around",
+  //   alignItems: "center",
+  //   "> p": {
+  //     my: 1,
+  //     cursor: "pointer",
+  //   },
+  //   "> p.active": {
+  //     color: "cta_color",
+  //     pointerEvents: "none",
+  //     cursor: "default",
+  //   },
+  // },
 
   layoutWrap: {
     display: "flex",
@@ -352,10 +352,6 @@ const styles = {
     boxShadow: "3px 3px 5px #888888",
   },
 
-  topDescription: {
-    margin: "20px 0px",
-    fontWeight: 300,
-  },
   subHeading: {
     fontWeight: 600,
     textAlign: "left",
