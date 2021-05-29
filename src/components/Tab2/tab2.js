@@ -328,8 +328,9 @@ const styles = {
     flexDirection: "column",
     cursor: "pointer",
     "&.active img": {
-      border: "2px solid",
+      border: "3px solid",
       borderColor: "cta_color",
+      padding: "3px",
     },
     "&.active p": {
       color: "cta_color",
@@ -344,12 +345,12 @@ const styles = {
     verticalAlign: "middle",
   },
   roundImage: {
-    filter: "drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.16))",
+    // filter: "drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.16))",
     width: "72px",
     height: "72px",
     borderRadius: "50%",
-    border: "2px solid rgb(0,0,0,0.2)",
-    boxShadow: "3px 3px 5px #888888",
+    // border: "2px solid rgb(0,0,0,0.2)",
+    boxShadow: "1px 1px 3px rgba(200,200,200,0.99)",
   },
 
   subHeading: {
