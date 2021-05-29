@@ -9,6 +9,8 @@ import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
+console.log({ MAPBOX_REFRESH_TOKEN: process.env.MAPBOX_REFRESH_TOKEN });
+
 mapboxgl.accessToken = process.env.MAPBOX_REFRESH_TOKEN;
 let geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
