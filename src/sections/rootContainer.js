@@ -146,8 +146,8 @@ const resizeInputs = ({
   prepareTextInput({
     element: headlineInput,
     name: "heading",
-    textSize: mapTitles.heading.size,
-    textValue: mapTitles.heading.text,
+    textSize: mapTitles.heading?.size,
+    textValue: mapTitles.heading?.text,
     onInput: saveTitlesValue,
     height: mapHeight,
     width: mapWidth,
@@ -158,8 +158,8 @@ const resizeInputs = ({
   prepareTextInput({
     element: subtitleInput,
     name: "subtitle",
-    textSize: mapTitles.subtitle.size,
-    textValue: mapTitles.subtitle.text,
+    textSize: mapTitles.subtitle?.size,
+    textValue: mapTitles.subtitle?.text,
     // color: "grey",
     onInput: saveTitlesValue,
     height: mapHeight,
@@ -311,8 +311,6 @@ export default function RootContainer() {
         ).netPrice,
       }));
     }
-
-    getSizeOfTitle(mapTitles.heading.text);
   }, [mapTitles]);
 
   useEffect(() => {
@@ -542,7 +540,7 @@ export default function RootContainer() {
     setMapTitles((prev) =>
       produce(prev, (draftState) => {
         const newValue = e.target.value ?? ""; // ?.toUpperCase()
-        draftState[e.target.name].text = newValue;
+        draftState[e.target.name]?.text = newValue;
         // draftState.heading.text = headlineInput.innerText;
         // draftState.subtitle.text = subtitleInput.innerText;
       })
