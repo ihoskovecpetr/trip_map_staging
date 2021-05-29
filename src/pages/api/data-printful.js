@@ -9,7 +9,10 @@ export default async (req, res) => {
 
       const { variantIdsArr } = req.body;
 
-      const finalResult = await fetchAndTransformDataPrintful(variantIdsArr);
+      const finalResult = await fetchAndTransformDataPrintful(
+        variantIdsArr,
+        res
+      );
 
       res.status(200).json({
         finalResult,
