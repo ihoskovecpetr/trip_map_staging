@@ -261,7 +261,7 @@ function drawText({
 
   ctx.fillStyle = "black";
   ctx.font = `${heading?.size * 0.001 * 3 * baseLngSide}px ${FONT_TITLES}`;
-  ctx.textAlign = layoutObj.text.align ?? "center";
+  ctx.textAlign = layoutObj?.text.align ?? "center";
   ctx.fillText(
     headingText,
     elWidth * 0.5,
@@ -269,7 +269,7 @@ function drawText({
   );
   ctx.fillStyle = "black";
   ctx.font = `100 ${subtitle?.size * 0.003 * baseLngSide}px ${FONT_TITLES}`;
-  ctx.textAlign = layoutObj.text.align ?? "center";
+  ctx.textAlign = layoutObj?.text.align ?? "center";
   ctx.fillText(
     subtitleText,
     elWidth * 0.5,
