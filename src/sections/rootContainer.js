@@ -367,6 +367,12 @@ export default function RootContainer() {
   }, [layout, product, isMobile, mapAvailSpaceHeight, mapAvailSpaceWidth]);
 
   useEffect(() => {
+    console.log({
+      NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN:
+        process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+      process_env: process.env,
+    });
+
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 
     map = new mapboxgl.Map({

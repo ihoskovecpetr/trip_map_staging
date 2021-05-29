@@ -10,7 +10,8 @@ import { useIsMobile } from "../../Hooks/useIsMobile";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
 console.log({
-  MAPBOX_REFRESH_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+  NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN:
+    process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
   process_env: process.env,
   NAme: process.env.MONGO_DB_NAME,
 });
