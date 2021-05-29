@@ -1,36 +1,33 @@
 import { ContactsOutlined } from "@material-ui/icons";
-import { LAYOUT_STYLE_NAMES, FONT_TITLES } from "../constants/constants";
+import {
+  LAYOUT_STYLE_NAMES,
+  FONT_TITLES,
+  FAKE_DIV_IDS,
+} from "../constants/constants";
 
 export function prepareTextInput({
   element,
   name,
   textSize,
   textValue = "",
-  defaultText = "Default Text",
   padding,
   textAlign = "center",
   color = "black",
-  onClickFce,
+  onInput,
   height,
   width,
   layout,
 }) {
   element.setAttribute("type", "text");
   element.setAttribute("name", name);
-  element.setAttribute("placeholder", null);
+  element.setAttribute("contenteditable", "plaintext-only");
+  // element.setAttribute("placeholder", null);
   element.setAttribute("id", "title_input");
 
-  if (textValue === false) {
-    element.setAttribute("placeholder", defaultText ?? "default Text");
-  }
-  if (textValue !== false) {
-    element.setAttribute("value", textValue);
-    element.setAttribute("placeholder", "");
-  }
   element.addEventListener(
     "input",
     function (e) {
-      onClickFce(e);
+      onInput(e);
     },
     false
   );
@@ -42,10 +39,23 @@ export function prepareTextInput({
   } else {
     baseLngSide = width;
   }
+  let elementsToStyleArr = [element];
+
+  const fakeElement = document.getElementById(FAKE_DIV_IDS[name]);
+  if (fakeElement) {
+    elementsToStyleArr.push(fakeElement);
+  }
+
+  elementsToStyleArr.map((el) => {
+    Object.assign(el.style, {
+      fontSize: `${0.003 * textSize * baseLngSide}px`,
+      fontFamily: FONT_TITLES,
+    });
+  });
 
   Object.assign(element.style, {
     width: "100%",
-    // height: `${0.003 * textSize * baseLngSide}px`,
+    display: "inline-block",
     textAlign,
     fontSize: `${0.003 * textSize * baseLngSide}px`,
     fontFamily: FONT_TITLES,
@@ -54,8 +64,9 @@ export function prepareTextInput({
     border: "none",
     padding: 0,
     margin: 0,
+    position: "relative",
+    // top: name === "heading" ? "5px" : 0,
     paddingLeft: padding + "px",
-    // textTransform: "uppercase",
     display: layout === LAYOUT_STYLE_NAMES.PURE ? "none" : "block",
     WebkitBoxSizing: "border-box", // Safari/Chrome, other WebKit
     MozBoxSizing: "border-box", // Firefox, other Gecko

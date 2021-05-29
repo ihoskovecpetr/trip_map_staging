@@ -1,4 +1,4 @@
-import { getCenteringFrameWidth } from "./getCenteringFrameWidth";
+import { getCenteringLayoutDimensions } from "./getCenteringLayoutDimensions";
 
 import {
   LAYOUT_STYLE_NAMES,
@@ -8,6 +8,7 @@ import {
 } from "../constants/constants";
 
 import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
+import { getSizeOfTitle } from "./getSizeOfTitle";
 
 let CURRENT_PIXEL_RATIO;
 
@@ -27,8 +28,8 @@ export function drawLayout(
   const elHeight = height;
   const blackLineWidth = height * 0.0035;
   let baseLngSide;
-  let whitePdg;
-  let whitePdgDouble;
+  // let whitePdg;
+  // let whitePdgDouble;
   let insideFrameWidth;
   let frameCoverCoefficient;
 
@@ -56,7 +57,7 @@ export function drawLayout(
     bottomBannerHeight,
     isBannerBlur,
     layoutObj,
-  } = getCenteringFrameWidth({
+  } = getCenteringLayoutDimensions({
     product: product,
     // variantId: product.variantId,
     layout: activeLayoutName,
@@ -78,11 +79,15 @@ export function drawLayout(
   drawBottomBox({
     ctx,
     padding: paddingWidth * CURRENT_PIXEL_RATIO,
-    banner: bottomBannerHeight * CURRENT_PIXEL_RATIO,
+    bannerHeight: bottomBannerHeight * CURRENT_PIXEL_RATIO,
     elWidth: width,
     elHeight: height,
     isBannerBlur,
     isPaddingFromFrame,
+    heading,
+    subtitle,
+    activeLayoutName,
+    CURRENT_PIXEL_RATIO,
   });
 
   drawText({
@@ -111,6 +116,7 @@ export function drawLayout(
     );
     ctx.stroke();
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BOX) {
+  } else if (activeLayoutName === LAYOUT_STYLE_NAMES.ISLAND_BOX) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BLUR) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER_BLUR) {
     ctx.lineWidth = 0.0015 * baseLngSide;
@@ -169,17 +175,21 @@ function drawPaddingWrap({ ctx, padding, elWidth, elHeight, layoutObj }) {
 function drawBottomBox({
   ctx,
   padding,
-  banner,
+  bannerHeight,
   elWidth,
   elHeight,
   isBannerBlur,
   isPaddingFromFrame,
+  heading,
+  subtitle,
+  activeLayoutName,
+  CURRENT_PIXEL_RATIO,
 }) {
   const extraBlueAreaKoef = isBannerBlur ? 1.2 : 1;
 
   var gradient = ctx.createLinearGradient(
     0,
-    elHeight - padding - banner * extraBlueAreaKoef,
+    elHeight - padding - bannerHeight * extraBlueAreaKoef,
     0,
     elHeight - padding
   );
@@ -194,21 +204,35 @@ function drawBottomBox({
 
   ctx.beginPath();
 
-  if (isPaddingFromFrame) {
+  if (activeLayoutName === LAYOUT_STYLE_NAMES.ISLAND_BOX) {
+    let dynamicBannerWidth =
+      getSizeOfTitle(heading.text, subtitle.text) * CURRENT_PIXEL_RATIO * 1.2;
+    if (dynamicBannerWidth < elWidth * 0.2) {
+      dynamicBannerWidth = elWidth * 0.2;
+    }
+
+    ctx.fillRect(
+      0 + (elWidth - dynamicBannerWidth) / 2,
+      elHeight - padding - bannerHeight * extraBlueAreaKoef,
+      dynamicBannerWidth,
+      bannerHeight * extraBlueAreaKoef
+    );
+  } else if (isPaddingFromFrame) {
     ctx.fillRect(
       0,
-      elHeight - padding - banner * extraBlueAreaKoef,
+      elHeight - padding - bannerHeight * extraBlueAreaKoef,
       elWidth,
-      banner * extraBlueAreaKoef + padding
+      bannerHeight * extraBlueAreaKoef + padding
     );
   } else {
     ctx.fillRect(
       padding - 1,
-      elHeight - padding - banner * extraBlueAreaKoef,
+      elHeight - padding - bannerHeight * extraBlueAreaKoef,
       elWidth - padding * 2 + 2,
-      banner * extraBlueAreaKoef + 1
+      bannerHeight * extraBlueAreaKoef + 1
     );
   }
+
   ctx.stroke();
 }
 

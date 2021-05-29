@@ -254,7 +254,7 @@ const LAYOUTS = [
     name: LAYOUT_STYLE_NAMES.PURE,
     roundPdng: null,
     paddingColor: "white",
-    bottomBanner: null,
+    bottomBannerHeight: null,
     isBannerBlur: false,
     text: {
       isVisible: false,
@@ -265,7 +265,7 @@ const LAYOUTS = [
     name: LAYOUT_STYLE_NAMES.ISLAND_BOX,
     roundPdng: TRANSPARENT_PADDING,
     paddingColor: "transparent",
-    bottomBanner: BOTTOM_BANNER,
+    bottomBannerHeight: BOTTOM_BANNER, // this is dynamic value
     isBannerBlur: false,
     text: {
       isVisible: true,
@@ -276,7 +276,7 @@ const LAYOUTS = [
     name: LAYOUT_STYLE_NAMES.BOTTOM_BLUR,
     roundPdng: 0,
     paddingColor: "white",
-    bottomBanner: BLURRED_AREA_HEIGHT,
+    bottomBannerHeight: BLURRED_AREA_HEIGHT,
     isBannerBlur: true,
     text: {
       isVisible: true,
@@ -287,7 +287,7 @@ const LAYOUTS = [
     name: LAYOUT_STYLE_NAMES.BOTTOM_LINE,
     roundPdng: null,
     paddingColor: "white",
-    bottomBanner: BOTTOM_BANNER,
+    bottomBannerHeight: BOTTOM_BANNER,
     isBannerBlur: false,
     text: {
       isVisible: true,
@@ -298,7 +298,7 @@ const LAYOUTS = [
     name: LAYOUT_STYLE_NAMES.BORDER_BOX,
     roundPdng: null,
     paddingColor: "white",
-    bottomBanner: BOTTOM_BANNER,
+    bottomBannerHeight: BOTTOM_BANNER,
     isBannerBlur: false,
     text: {
       isVisible: true,
@@ -309,7 +309,7 @@ const LAYOUTS = [
   //   name: LAYOUT_STYLE_NAMES.BORDER_BLUR,
   //   roundPdng: LAY_SINGLE_FRAME_PDNG,
   //   paddingColor: "white",
-  //   bottomBanner: BLURRED_AREA_HEIGHT,
+  //   bottomBannerHeight: BLURRED_AREA_HEIGHT,
   //   isBannerBlur: true,
   //   text: {
   //     isVisible: true,
@@ -320,7 +320,7 @@ const LAYOUTS = [
     name: LAYOUT_STYLE_NAMES.DOUBLE_BORDER_BLUR,
     roundPdng: LAY_DOUBLE_FRAME_PDNG,
     paddingColor: "white",
-    bottomBanner: BLURRED_AREA_HEIGHT,
+    bottomBannerHeight: BLURRED_AREA_HEIGHT,
     isBannerBlur: true,
     text: {
       isVisible: true,
@@ -364,6 +364,13 @@ const MAP_STYLES = {
   // "mapbox://styles/petrhoskovec/ckn0g6q5c13qd17pesvzalp62",
 };
 
+const FAKE_DIV_IDS = {
+  heading: "fake_heading_div",
+  subtitle: "fake_subtitle_div",
+};
+
+const TITLES_DEFAULT = ["New York", "USA"];
+
 module.exports = {
   IS_CLIENT,
   PIXEL_RATIO,
@@ -388,4 +395,6 @@ module.exports = {
   LAYOUTS,
   MAP_STYLES_NAMES,
   MAP_STYLES,
+  FAKE_DIV_IDS,
+  TITLES_DEFAULT,
 };

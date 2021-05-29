@@ -52,12 +52,20 @@ export default function Tab1({
     setMapTitles((prev) =>
       produce(prev, (draftState) => {
         const placeNameArr = e.result.place_name.split(",");
+
         draftState.heading.text = placeNameArr[0] ?? "";
         draftState.subtitle.text = placeNameArr[placeNameArr.length - 1] ?? "";
       })
     );
 
-    map?.panTo(e.result.geometry.coordinates);
+    const { bbox } = e.result;
+
+    map?.fitBounds([
+      [bbox[0], bbox[1]], // southwestern corner of the bounds
+      [bbox[2], bbox[3]], // northeastern corner of the bounds
+    ]);
+
+    // map?.panTo(e.result.geometry.coordinates);
 
     geocoder.clear(); // to remove blue dot
   };

@@ -13,12 +13,13 @@ import { useElementDimensions } from "../Hooks/useElementDimensions";
 import { drawLayout } from "../LibGlobal/drawLayout";
 import { prepareTextInput } from "../LibGlobal/prepareTextInput";
 import { getUpdatedMapSizes } from "../LibGlobal/getUpdatedMapSizes";
-import { getCenteringFrameWidth } from "../LibGlobal/getCenteringFrameWidth";
+import { getCenteringLayoutDimensions } from "../LibGlobal/getCenteringLayoutDimensions";
 import { getIsVariantFramed } from "../LibGlobal/getIsVariantFramed";
 import { getIsProduction } from "../LibGlobal/getIsProduction";
 import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
 import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
 
 import {
   MAP_STYLES,
@@ -28,12 +29,14 @@ import {
   SIZES,
   VARIANTS_PRINTFUL,
   OUTSIDE_FRAME_CM,
+  TITLES_DEFAULT,
 } from "../constants/constants";
 
 let map;
 let layoutCanvas;
 let frameDiv;
 let inputWrap;
+// let inputWrapDynamicSize;
 let headlineInput;
 let subtitleInput;
 
@@ -78,16 +81,11 @@ const resizeLayout = ({
   });
 };
 
-const resizeFrameDiv = ({
-  productRef,
-  baseLongSize,
-  mapWrapWrapHeight,
-  mapWrapWrapWidth,
-}) => {
+const resizeFrameDiv = ({ productRef, baseLongSize, mapAvailSpaceRef }) => {
   const framedVariantObj = getIsVariantFramed(productRef.current.variantId);
   let frameWidthKoefficient;
 
-  if (mapWrapWrapHeight > mapWrapWrapWidth) {
+  if (productRef.current.sizeObject.ratio > 1) {
     frameWidthKoefficient =
       OUTSIDE_FRAME_CM / productRef.current.sizeObject.height;
   } else {
@@ -95,15 +93,23 @@ const resizeFrameDiv = ({
       OUTSIDE_FRAME_CM / productRef.current.sizeObject.width;
   }
 
+  console.log({ frameWidthKoefficient });
+
   const { updHeight, updWidth } = getUpdatedMapSizes({
     ratio: productRef.current.sizeObject.ratio,
-    mapWrapWrapHeight,
-    mapWrapWrapWidth,
+    mapWrapWrapHeight: mapAvailSpaceRef.current.height,
+    mapWrapWrapWidth: mapAvailSpaceRef.current.width,
   });
 
   if (framedVariantObj) {
     const extraFrame =
       (baseLongSize * frameWidthKoefficient) / CURRENT_PIXEL_RATIO;
+
+    console.log({
+      extraFrame,
+      baseLongSize,
+      CURRENT_PIXEL_RATIO,
+    });
 
     Object.assign(frameDiv.style, {
       position: "absolute",
@@ -136,13 +142,13 @@ const resizeInputs = ({
   mapWidth,
   layout,
 }) => {
+  console.log("prepareTextInput: ", { mapTitles });
   prepareTextInput({
     element: headlineInput,
     name: "heading",
     textSize: mapTitles.heading.size,
     textValue: mapTitles.heading.text,
-    defaultText: "New York City, NY",
-    onClickFce: saveTitlesValue,
+    onInput: saveTitlesValue,
     height: mapHeight,
     width: mapWidth,
     // padding: paddingWidth,
@@ -154,9 +160,8 @@ const resizeInputs = ({
     name: "subtitle",
     textSize: mapTitles.subtitle.size,
     textValue: mapTitles.subtitle.text,
-    defaultText: "léto 2021",
     // color: "grey",
-    onClickFce: saveTitlesValue,
+    onInput: saveTitlesValue,
     height: mapHeight,
     width: mapWidth,
     // padding: paddingWidth,
@@ -166,7 +171,7 @@ const resizeInputs = ({
 };
 
 const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
-  const { paddingWidth, bottomBannerHeight } = getCenteringFrameWidth({
+  const { paddingWidth, bottomBannerHeight } = getCenteringLayoutDimensions({
     product: productRef.current,
     layout,
     elWidth: canvasMap?.width,
@@ -179,11 +184,26 @@ const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
     marginBottom: paddingWidth + "px",
     display: "flex",
     flexDirection: "column",
-    alignItems: "stretch",
+    alignItems: "center",
     justifyContent: "center",
     position: "absolute",
     bottom: 0,
   });
+
+  // Object.assign(inputWrapDynamicSize.style, {
+  //   width: "auto",
+  //   height: "100%",
+  //   minWidth: "50px",
+  //   padding: "0px 5px",
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   flexDirection: "column",
+  //   alignItems: "stretch",
+  //   backgroundColor: "rgba(0,0,0,0.1)",
+  //   // justifyContent: "center",
+  //   // position: "absolute",
+  //   // bottom: 0,
+  // });
 };
 
 export default function RootContainer() {
@@ -211,15 +231,20 @@ export default function RootContainer() {
     MAP_STYLES_NAMES.WHITE_GREY
   );
   const [mapTitles, setMapTitles] = useState({
-    heading: { text: false, size: 14 },
-    subtitle: { text: false, size: 8 },
+    heading: { text: TITLES_DEFAULT[0], size: 14 },
+    subtitle: { text: TITLES_DEFAULT[1], size: 8 },
   });
 
   const { height: headerHeight } = useElementDimensions("header");
   const {
-    height: mapWrapWrapHeight,
-    width: mapWrapWrapWidth,
-  } = useElementDimensions("map_wrapper_wrapper_id");
+    height: mapAvailSpaceHeight,
+    width: mapAvailSpaceWidth,
+  } = useElementDimensions("map_available_space_id");
+
+  const {
+    height: mapWrapperHeight,
+    width: mapWrapperWidth,
+  } = useElementDimensions("map_wrapper_id");
 
   CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
   const { isMobile } = useIsMobile();
@@ -229,17 +254,24 @@ export default function RootContainer() {
   const coordinatesRef = useRef(mapCoordinates);
   const productRef = useRef(product);
   const isMobileRef = useRef(isMobile);
-  const wrapperSizeRef = useRef({
-    height: mapWrapWrapHeight,
-    width: mapWrapWrapWidth,
+  const mapAvailSpaceRef = useRef({
+    height: mapAvailSpaceHeight,
+    width: mapAvailSpaceWidth,
   });
+
+  const mapWrapperRef = useRef({
+    height: mapWrapperHeight,
+    width: mapWrapperWidth,
+  });
+
+  console.log({ mapWrapperWidth, mapWrapperHeight });
 
   const {
     paddingWidth,
-    bottomBannerHeight,
+    // bottomBannerHeight,
     layoutObj,
     baseLongSize,
-  } = getCenteringFrameWidth({
+  } = getCenteringLayoutDimensions({
     product: productRef.current,
     //     variantId: productRef.current.variantId,
     layout,
@@ -279,6 +311,8 @@ export default function RootContainer() {
         ).netPrice,
       }));
     }
+
+    getSizeOfTitle(mapTitles.heading.text);
   }, [mapTitles]);
 
   useEffect(() => {
@@ -302,11 +336,18 @@ export default function RootContainer() {
   }, [isMobile]);
 
   useEffect(() => {
-    wrapperSizeRef.current = {
-      height: mapWrapWrapHeight,
-      width: mapWrapWrapWidth,
+    mapAvailSpaceRef.current = {
+      height: mapAvailSpaceHeight,
+      width: mapAvailSpaceWidth,
     };
-  }, [mapWrapWrapHeight, mapWrapWrapWidth]);
+  }, [mapAvailSpaceHeight, mapAvailSpaceWidth]);
+
+  useEffect(() => {
+    mapWrapperRef.current = {
+      height: mapWrapperHeight,
+      width: mapWrapperWidth,
+    };
+  }, [mapWrapperHeight, mapWrapperWidth]);
 
   useEffect(() => {
     layoutRef.current = layout;
@@ -323,11 +364,10 @@ export default function RootContainer() {
       resizeFrameDiv({
         productRef,
         baseLongSize,
-        mapWrapWrapHeight: wrapperSizeRef.current.height,
-        mapWrapWrapWidth: wrapperSizeRef.current.width,
+        mapAvailSpaceRef,
       });
     }
-  }, [layout, product, isMobile, mapWrapWrapHeight, mapWrapWrapWidth]);
+  }, [layout, product, isMobile, mapAvailSpaceHeight, mapAvailSpaceWidth]);
 
   useEffect(() => {
     mapboxgl.accessToken =
@@ -351,8 +391,8 @@ export default function RootContainer() {
     if (map) {
       const { updHeight, updWidth } = getUpdatedMapSizes({
         ratio: productRef.current.sizeObject.ratio,
-        mapWrapWrapHeight: wrapperSizeRef.current.height,
-        mapWrapWrapWidth: wrapperSizeRef.current.width,
+        mapWrapWrapHeight: mapAvailSpaceRef.current.height,
+        mapWrapWrapWidth: mapAvailSpaceRef.current.width,
       });
 
       canvasMap = map.getCanvas();
@@ -368,11 +408,16 @@ export default function RootContainer() {
       frameDiv.setAttribute("id", "frame_div");
       inputWrap = document.createElement("div");
       inputWrap.setAttribute("id", "input_wrap");
+      // inputWrapDynamicSize = document.createElement("div");
+      // inputWrapDynamicSize.setAttribute("id", "input_wrap_middle");
 
       resizeInputsWrap({ productRef, layout, canvasMap });
 
       headlineInput = document.createElement("input");
       subtitleInput = document.createElement("input");
+
+      // headlineInput.innerText = TITLES_DEFAULT[0];
+      // subtitleInput.innerText = TITLES_DEFAULT[1];
 
       map.on("moveend", function () {
         setMapCoordinates(map.getCenter());
@@ -391,7 +436,7 @@ export default function RootContainer() {
         });
 
         resizeInputs({
-          mapTitles,
+          mapTitles: mapTitlesRef.current,
           saveTitlesValue,
           mapHeight: updHeight,
           mapWidth: updWidth,
@@ -405,6 +450,7 @@ export default function RootContainer() {
         mapElement.appendChild(inputWrap);
 
         resizeInputsWrap({ productRef, layout, canvasMap });
+        // inputWrap.appendChild(inputWrapDynamicSize);
 
         inputWrap.appendChild(headlineInput);
         inputWrap.appendChild(subtitleInput);
@@ -422,8 +468,7 @@ export default function RootContainer() {
         resizeFrameDiv({
           productRef,
           baseLongSize,
-          mapWrapWrapHeight: wrapperSizeRef.current.height,
-          mapWrapWrapWidth: wrapperSizeRef.current.width,
+          mapAvailSpaceRef,
         });
       });
 
@@ -449,8 +494,8 @@ export default function RootContainer() {
 
     const { updHeight, updWidth } = getUpdatedMapSizes({
       ratio: productRef.current.sizeObject.ratio,
-      mapWrapWrapHeight: wrapperSizeRef.current.height,
-      mapWrapWrapWidth: wrapperSizeRef.current.width,
+      mapWrapWrapHeight: mapAvailSpaceRef.current.height,
+      mapWrapWrapWidth: mapAvailSpaceRef.current.width,
     });
 
     Object.assign(mapWrapper.style, {
@@ -468,20 +513,20 @@ export default function RootContainer() {
     if (map) {
       map.resize();
     }
-  }, [product, map, mapWrapWrapHeight, mapWrapWrapWidth]);
+  }, [product, map, mapAvailSpaceHeight, mapAvailSpaceWidth]);
 
   useEffect(() => {
     if (headlineInput && subtitleInput) {
       const { updHeight, updWidth } = getUpdatedMapSizes({
         ratio: productRef.current.sizeObject.ratio,
-        mapWrapWrapHeight: wrapperSizeRef.current.height,
-        mapWrapWrapWidth: wrapperSizeRef.current.width,
+        mapWrapWrapHeight: mapAvailSpaceRef.current.height,
+        mapWrapWrapWidth: mapAvailSpaceRef.current.width,
       });
 
       resizeInputsWrap({ productRef, layout, canvasMap });
 
       resizeInputs({
-        mapTitles,
+        mapTitles: mapTitlesRef.current,
         saveTitlesValue,
         mapHeight: updHeight,
         mapWidth: updWidth,
@@ -490,13 +535,16 @@ export default function RootContainer() {
         paddingWidth,
       });
     }
-  }, [product, layout, mapWrapWrapHeight, mapWrapWrapWidth]);
+  }, [product, layout, mapAvailSpaceHeight, mapAvailSpaceWidth]);
 
   const saveTitlesValue = (e) => {
+    // console.log("New Value: ", headlineInput.innerText);
     setMapTitles((prev) =>
       produce(prev, (draftState) => {
         const newValue = e.target.value ?? ""; // ?.toUpperCase()
         draftState[e.target.name].text = newValue;
+        // draftState.heading.text = headlineInput.innerText;
+        // draftState.subtitle.text = subtitleInput.innerText;
       })
     );
   };
