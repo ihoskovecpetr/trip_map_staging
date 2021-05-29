@@ -62,11 +62,8 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, res) => {
     }, {});
     return finalResult;
   } catch (e) {
-    console.log("Error in fetchAndTransformDataPrintful", { e });
     res.status(420).json({
-      message: "Something went wrong",
       error: e,
-      erString: JSON.stringify(e, null, 4),
     });
   }
 };

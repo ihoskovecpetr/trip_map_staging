@@ -9,9 +9,13 @@ import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
-console.log({ MAPBOX_REFRESH_TOKEN: process.env.MAPBOX_REFRESH_TOKEN });
+console.log({
+  MAPBOX_REFRESH_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+  process_env: process.env,
+  NAme: process.env.MONGO_DB_NAME,
+});
 
-mapboxgl.accessToken = process.env.MAPBOX_REFRESH_TOKEN;
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 let geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   mapboxgl: mapboxgl,
