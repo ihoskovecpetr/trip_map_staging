@@ -10,7 +10,7 @@ import { useIsMobile } from "../../Hooks/useIsMobile";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
 mapboxgl.accessToken =
-  "pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrbHY2ZXY5eDJuaGkyb24xMXpzOHY2cXAifQ.g7wKRkK7WFwczUmDOYwCtQ";
+  "pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrbHY2aWEyZTAydDMycHJ6M3Jid3d4aG0ifQ.t-1Kq2YcQrZVVJ0ziqfufg";
 let geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   mapboxgl: mapboxgl,

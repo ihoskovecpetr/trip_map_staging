@@ -8,15 +8,19 @@ export default async (req, res) => {
       console.log("Hitting_data_printful");
 
       const { variantIdsArr } = req.body;
-
-      const finalResult = await fetchAndTransformDataPrintful(
-        variantIdsArr,
-        res
-      );
-
-      res.status(200).json({
-        finalResult,
-      });
+      try {
+        const finalResult = await fetchAndTransformDataPrintful(
+          variantIdsArr,
+          res
+        );
+        res.status(200).json({
+          finalResult,
+        });
+      } catch (e) {
+        res.status(500).json({
+          e,
+        });
+      }
 
       break;
     default:
