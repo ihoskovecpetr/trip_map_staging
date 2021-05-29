@@ -60,12 +60,16 @@ export default function Tab1({
 
     const { bbox } = e.result;
 
-    map?.fitBounds([
-      [bbox[0], bbox[1]], // southwestern corner of the bounds
-      [bbox[2], bbox[3]], // northeastern corner of the bounds
-    ]);
+    console.log({ bbox });
 
-    // map?.panTo(e.result.geometry.coordinates);
+    if (bbox) {
+      map?.fitBounds([
+        [bbox[0], bbox[1]], // southwestern corner of the bounds
+        [bbox[2], bbox[3]], // northeastern corner of the bounds
+      ]);
+    } else {
+      map?.panTo(e.result.geometry.coordinates);
+    }
 
     geocoder.clear(); // to remove blue dot
   };
