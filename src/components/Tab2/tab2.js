@@ -298,7 +298,7 @@ const styles = {
     top: ["85vh", "85vh", "85vh", "90vh"],
     left: "0px",
     height: 0,
-    width: ["100%", "100%", "100%", "40%"],
+    width: ["100%", "100%", "100%", "40%", "30%"],
   },
   frameImage: {
     height: "60px",

@@ -330,12 +330,12 @@ const LAYOUTS = [
 ];
 
 const MAP_STYLES_NAMES = {
-  WHITE_GREY: "White Grey",
-  OLD_SANDY_BROWN: "Old Sandy Brown",
-  WHITE_BLUE_LOW_CONTRAST: "White Blue Low",
   WHITE_BLUE: "White Blue",
   SANDY_ORANGE_BLUE: "Sandy Orange Blue",
   LOW_CONTRAST_GREEN: "Low Contrast Green",
+  WHITE_GREY: "White Grey",
+  OLD_SANDY_BROWN: "Old Sandy Brown",
+  WHITE_BLUE_LOW_CONTRAST: "White Blue Low",
   MUSTARD_BLUE: "Mustard Blue",
   SANDY_DARK: "Sandy Dark",
 };

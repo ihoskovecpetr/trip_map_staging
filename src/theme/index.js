@@ -2,7 +2,7 @@ export default {
   // example colors with dark mode
   colors: {
     text: "#343D48", // darkgrey - body color and primary color
-    cta_color: "#25CB9E", // "#fe6769", // red CTA color
+    cta_color: "#25CB9E", // green-blue "#fe6769", // red CTA color
     text_secondary: "#02073E", // darkdarkblue - secondary body color
     heading: "#244886", // darkblue - primary heading color
     heading_secondary: "#0F2137", // almost black - heading color
@@ -108,7 +108,7 @@ export default {
       overflow: "hidden",
       position: "relative",
       pt: 10,
-      height: [null, null, null, "90vh"],
+      height: [null, null, null, "95vh"],
     },
     faq: {
       py: [8, null, 9, null, null, 10],

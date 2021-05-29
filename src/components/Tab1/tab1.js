@@ -60,7 +60,7 @@ export default function Tab1({
 
     const { bbox } = e.result;
 
-    console.log({ bbox });
+    console.log({ bbox, result: e.result });
 
     if (bbox) {
       map?.fitBounds([
@@ -68,7 +68,12 @@ export default function Tab1({
         [bbox[2], bbox[3]], // northeastern corner of the bounds
       ]);
     } else {
-      map?.panTo(e.result.geometry.coordinates);
+      map?.flyTo({
+        center: e.result.geometry.coordinates,
+        zoom: 9,
+      });
+      // map?.panTo(e.result.geometry.coordinates);
+      // map.setZoom(13);
     }
 
     geocoder.clear(); // to remove blue dot

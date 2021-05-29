@@ -92,7 +92,7 @@ const orderOnPrintful = async ({ shipping, product, imageObj }) => {
 
       const mailOptions0 = {
         from: "Brekkie",
-        to: "ihoskovecpetr@gmail.com",
+        to: process.env.EMAIL_RECIPIENT,
         subject: emailHeading,
         template: "./src/pages/api/newsList",
         context: {

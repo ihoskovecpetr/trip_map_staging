@@ -207,7 +207,7 @@ const styles = {
     position: "fixed",
     top: "85vh",
     left: "0px",
-    width: ["100%", "100%", "100%", "40%"],
+    width: ["100%", "100%", "100%", "40%", "30%"],
   },
   resultImage: {
     width: "100%",
