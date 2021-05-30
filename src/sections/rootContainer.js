@@ -550,7 +550,7 @@ export default function RootContainer() {
       produce(prev, (draftState) => {
         const newValue = e.target.value ?? ""; // ?.toUpperCase()
         console.log("Set new title .text?? ", { draftState });
-        draftState[e.target.name].text = newValue;
+        // draftState[e.target.name].text = newValue;
         // draftState.heading.text = headlineInput.innerText;
         // draftState.subtitle.text = subtitleInput.innerText;
       })

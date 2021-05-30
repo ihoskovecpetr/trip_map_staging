@@ -8,6 +8,7 @@ import Layout from "components/layout";
 import RootContainer from "sections/rootContainer";
 
 export default function IndexPage() {
+  console.log("index/studio return");
   return (
     <ThemeProvider theme={theme}>
       <StickyProvider>
