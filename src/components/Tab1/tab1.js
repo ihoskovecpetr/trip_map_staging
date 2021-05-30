@@ -56,13 +56,23 @@ export default function Tab1({
 
     console.log({ result: e.result });
 
-    setMapTitles((prev) =>
-      produce(prev, (draftState) => {
-        const placeNameArr = e.result.place_name.split(",");
-        console.log("Is there test?? ", draftState);
-        draftState.heading?.text = placeNameArr[0] ?? "";
-        draftState.subtitle?.text = placeNameArr[placeNameArr.length - 1] ?? "";
+    setMapTitles(
+      (prev) => ({
+        heading: {
+          ...prev.heading,
+          text: placeNameArr[0] ?? "",
+        },
+        subtitle: {
+          ...prev.subtitle,
+          text: placeNameArr[placeNameArr.length - 1] ?? "",
+        },
       })
+      // produce(prev, (draftState) => {
+      //   const placeNameArr = e.result.place_name.split(",");
+      //   console.log("Is there test?? ", draftState);
+      //   draftState.heading?.text = placeNameArr[0] ?? "";
+      //   draftState.subtitle?.text = placeNameArr[placeNameArr.length - 1] ?? "";
+      // })
     );
 
     const { bbox } = e.result;
