@@ -80,14 +80,14 @@ export default function SetupColumn({
           className={activeTab === TAB_VALUES.ONE && "active"}
           sx={styles.tabBody}
         >
-          <Tab1
+          {/* <Tab1
             map={map}
             setMapCoordinates={setMapCoordinates}
             product={product}
             setProduct={setProduct}
             setMapTitles={setMapTitles}
             nextTab={() => handleChange(TAB_VALUES.TWO)}
-          />
+          /> */}
         </TabContentWrap>
       )}
       {activeTab === TAB_VALUES.TWO && (

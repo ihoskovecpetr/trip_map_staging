@@ -3,9 +3,10 @@ import { jsx, Container, Box, Grid, Text, Heading, Button } from "theme-ui";
 import Link from "next/link";
 import TextFeature from "components/text-feature";
 import Image from "components/image";
+import Carousel from "nuka-carousel";
 
 import LandingPagePicture from "assets/landing-page/landing_page_bg_double.png";
-// import LandingPageBg from "assets/landing-page/backgroung_landing_photo.png";
+import LandingPageBg from "assets/landing-page/landing_photo_bg.png";
 
 import Briefcase from "assets/landing-page/briefcase.svg";
 import Secure from "assets/landing-page/secure.svg";
@@ -42,11 +43,21 @@ export default function LandingPage() {
       </Box>
       <Container sx={styles.containerBox}>
         <Box sx={styles.thumbnail}>
-          <Image
+          {/* <Image
             sx={styles.landingImage}
             src={LandingPagePicture}
             alt="Thumbnail"
-          />
+          /> */}
+          <div sx={styles.landingImage}>
+            <Carousel autoplay={true} sx={styles.landingImage}>
+              <img src={LandingPagePicture} />
+              <img src={LandingPageBg} />
+              <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide3" />
+              <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide4" />
+              <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide5" />
+              <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide6" />
+            </Carousel>
+          </div>
         </Box>
 
         <Box sx={styles.contentBox}>

@@ -21,8 +21,6 @@ import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
 
-const mapStyles = require.context("assets/MAPS_MAPBOX", true);
-
 import {
   MAP_STYLES,
   MAP_STYLES_NAMES,
@@ -33,6 +31,8 @@ import {
   OUTSIDE_FRAME_CM,
   TITLES_DEFAULT,
 } from "../constants/constants";
+
+const mapStyles = require.context("assets/MAPS_MAPBOX", true);
 
 let map;
 let layoutCanvas;
