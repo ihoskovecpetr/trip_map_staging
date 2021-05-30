@@ -21,7 +21,7 @@ import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
 
-import WhiteGreyMap from "assets/MAPS_MAPBOX/WhiteGrey/style.json";
+const mapStyles = require.context("assets/MAPS_MAPBOX", true);
 
 import {
   MAP_STYLES,
@@ -382,7 +382,8 @@ export default function RootContainer() {
       zoom: mapZoom,
       minZoom: 0,
       center: coordinatesRef.current,
-      style: MAP_STYLES[activeMapStyle],
+      style: mapStyles(`./${MAP_STYLES[activeMapStyle]}/style.json`),
+      // style: currentMapStyle,
       // style: WhiteGreyMap, // Continue add maps WhiteGreyMap
 
       preserveDrawingBuffer: true,
