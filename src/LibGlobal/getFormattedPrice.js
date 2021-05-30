@@ -2,7 +2,7 @@ const formatNumber = require("number-format.js");
 
 const NON_BREAKING_SPACE = "\u00A0";
 
-const CODE = "EUR";
+const CODE = "CZK";
 const SYMBOL = "€";
 const FORMAT = "$ ### ### ###.##";
 

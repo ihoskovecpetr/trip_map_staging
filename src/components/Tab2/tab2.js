@@ -73,7 +73,7 @@ export default function Tab2({
         return borderBlurredLayoutImg;
       case LAYOUT_STYLE_NAMES.BOTTOM_BLUR:
         return bottomBlurredLayoutImg;
-      case LAYOUT_STYLE_NAMES.DOUBLE_BORDER_BLUR:
+      case LAYOUT_STYLE_NAMES.DOUBLE_BORDER:
         return doubleBlurredLayoutImg;
       default:
         return pureLayoutImg;
@@ -314,6 +314,7 @@ const styles = {
     marginTop: "5px",
     textAlign: "center",
     verticalAlign: "middle",
+    lineHeight: "100%",
   },
   stylesWrap: {
     display: "flex",

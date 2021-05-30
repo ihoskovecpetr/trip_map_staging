@@ -246,7 +246,7 @@ const LAYOUT_STYLE_NAMES = {
   BOTTOM_LINE: "Bottom line",
   BORDER_BOX: "Border box",
   BORDER_BLUR: "Border Blur",
-  DOUBLE_BORDER_BLUR: "Double Border Blur",
+  DOUBLE_BORDER: "Double Border",
 };
 
 const LAYOUTS = [
@@ -317,7 +317,7 @@ const LAYOUTS = [
   //   },
   // },
   {
-    name: LAYOUT_STYLE_NAMES.DOUBLE_BORDER_BLUR,
+    name: LAYOUT_STYLE_NAMES.DOUBLE_BORDER,
     roundPdng: LAY_DOUBLE_FRAME_PDNG,
     paddingColor: "white",
     bottomBannerHeight: BLURRED_AREA_HEIGHT,

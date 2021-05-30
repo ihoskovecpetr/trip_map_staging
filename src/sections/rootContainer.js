@@ -237,6 +237,8 @@ export default function RootContainer() {
     subtitle: { text: TITLES_DEFAULT[1], size: 8 },
   });
 
+  console.log({ mapTitles });
+
   const { height: headerHeight } = useElementDimensions("header");
   const {
     height: mapAvailSpaceHeight,

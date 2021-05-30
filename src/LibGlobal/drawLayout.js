@@ -118,7 +118,7 @@ export function drawLayout(
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BOX) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.ISLAND_BOX) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BLUR) {
-  } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER_BLUR) {
+  } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER) {
     ctx.lineWidth = 0.0015 * baseLngSide;
     ctx.strokeStyle = "black";
 

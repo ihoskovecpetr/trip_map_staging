@@ -158,8 +158,8 @@ const styles = {
     "> p": {
       margin: "auto",
       textAlign: "center",
-      fontFamily: "Arial",
-      fontWeight: 400,
+      // fontFamily: "Arial",
+      // fontWeight: 400,
     },
   },
   tabBody: {

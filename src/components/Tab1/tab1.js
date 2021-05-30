@@ -51,6 +51,7 @@ export default function Tab1({
   }, []);
 
   const pantoEventLocation = (e) => {
+    console.log("Pan pantoEventLocation");
     setMapCoordinates(e.result.geometry.coordinates);
 
     console.log({ result: e.result });
@@ -59,8 +60,8 @@ export default function Tab1({
       produce(prev, (draftState) => {
         const placeNameArr = e.result.place_name.split(",");
         console.log("Is there test?? ", draftState);
-        draftState.heading.text = placeNameArr[0] ?? "";
-        draftState.subtitle.text = placeNameArr[placeNameArr.length - 1] ?? "";
+        draftState.heading?.text = placeNameArr[0] ?? "";
+        draftState.subtitle?.text = placeNameArr[placeNameArr.length - 1] ?? "";
       })
     );
 

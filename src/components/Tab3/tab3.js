@@ -11,6 +11,7 @@ import CustomLoader from "../CustomLoader";
 import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 import { getVersionDescription } from "../../LibGlobal/getVersionDescription";
 import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
 
 const priceAlgorithm = getPriceAlgorithm();
 
@@ -153,24 +154,24 @@ export default function Tab3({
               </div>
               <div sx={styles.textsWrap}>
                 <p sx={styles.variantPrice}>
-                  {dataPrintful[variantId]?.currency}{" "}
-                  {/* {Math.floor(Number(dataPrintful[variantId]?.price) * 100) /
-                    100} */}
-                  {
+                  {/* {dataPrintful[variantId]?.currency}{" "} */}
+
+                  {getFormattedPrice(
                     priceAlgorithm.getPriceWithoutDelivery(
                       variantId,
                       dataPrintful
                     ).netPrice
-                  }
+                  )}
                 </p>
                 <p sx={styles.variantDesc}>
                   {getVersionDescription(variantId)}
                 </p>
                 <p sx={styles.variantDelivery}>
-                  {`+ ${dataPrintful[variantId]?.shipping.currency} ${
+                  {/* {dataPrintful[variantId]?.shipping.currency} */}
+                  {`+ ${getFormattedPrice(
                     priceAlgorithm.getPriceOfDelivery(variantId, dataPrintful)
                       .netPrice
-                  } doprava`}
+                  )} doprava`}
                 </p>
               </div>
             </div>

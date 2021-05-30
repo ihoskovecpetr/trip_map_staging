@@ -16,7 +16,6 @@ import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import ProductSummary from "./ProductSummary";
 
 import { getIsProduction } from "../../LibGlobal/getIsProduction";
-import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
 import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { ORIENTATIONS } from "../../constants/constants";
@@ -175,7 +174,7 @@ export default function CheckoutCard({
           isLoadingOnClick
           isDisabled={isUploadPending}
           disabledText={"Ukládám výsledný design"}
-          price={getFormattedPrice(priceWithDelivery.netPrice)}
+          price={priceWithDelivery.netPrice}
         >
           Adresa doručení & platba
         </NextTabBtn>
