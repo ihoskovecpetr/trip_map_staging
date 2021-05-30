@@ -20,6 +20,8 @@ import WhiteBlue from "assets/mapStyles/WhiteBlue.png";
 import WhiteBlueLowContrast from "assets/mapStyles/WhiteBlueLowContrast.png";
 import OldDarkBlue from "assets/mapStyles/OldDarkBlue.png";
 import OldSandyGrey from "assets/mapStyles/OldSandyGrey.png";
+import BlackWhite from "assets/mapStyles/BlackWhite.png";
+import BlackLand from "assets/mapStyles/BlackLand.png";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 // import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
@@ -98,6 +100,10 @@ export default function Tab2({
         return SandyOrangeBlue;
       case MAP_STYLES_NAMES.LOW_CONTRAST_GREEN:
         return LowContrastGreenBlue;
+      case MAP_STYLES_NAMES.BLACK_WHITE:
+        return BlackWhite;
+      case MAP_STYLES_NAMES.BLACK_LAND:
+        return BlackLand;
 
       default:
         return LowContrastGreenBlue;

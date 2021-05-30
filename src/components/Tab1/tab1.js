@@ -54,7 +54,7 @@ export default function Tab1({
     console.log("Pan pantoEventLocation");
     setMapCoordinates(e.result.geometry.coordinates);
 
-    console.log({ result: e.result });
+    const placeNameArr = e.result.place_name.split(",");
 
     setMapTitles(
       (prev) => ({

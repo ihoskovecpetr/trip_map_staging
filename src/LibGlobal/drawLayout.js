@@ -185,7 +185,7 @@ function drawBottomBox({
   activeLayoutName,
   CURRENT_PIXEL_RATIO,
 }) {
-  const extraBlueAreaKoef = isBannerBlur ? 1.2 : 1;
+  const extraBlueAreaKoef = isBannerBlur ? 1.4 : 1;
 
   var gradient = ctx.createLinearGradient(
     0,
@@ -195,9 +195,10 @@ function drawBottomBox({
   );
 
   gradient.addColorStop(0, "rgba(255,255,255,0.1)");
-  gradient.addColorStop(0.1, "rgba(255,255,255,0.6)");
-  gradient.addColorStop(0.2, "rgba(255,255,255,0.8)");
-  gradient.addColorStop(0.3, "rgba(255,255,255,1)");
+  gradient.addColorStop(0.1, "rgba(255,255,255,0.4)");
+  gradient.addColorStop(0.3, "rgba(255,255,255,0.6)");
+  gradient.addColorStop(0.4, "rgba(255,255,255,0.7)");
+  gradient.addColorStop(0.7, "rgba(255,255,255,0.9)");
   gradient.addColorStop(1, "rgba(255,255,255,1)");
 
   ctx.fillStyle = isBannerBlur ? gradient : "white";

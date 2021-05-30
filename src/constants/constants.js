@@ -15,7 +15,7 @@ const MARKUP_KOEFICIENT = 1.2;
 const INSIDE_FRAME_COVER_CM = 0.5;
 const OUTSIDE_FRAME_CM = 1.4;
 
-const LAY_SINGLE_FRAME_PDNG = 0.015;
+const LAY_SINGLE_FRAME_PDNG = 0.025;
 const LAY_DOUBLE_FRAME_PDNG = 0.015;
 const TRANSPARENT_PADDING = 0.025;
 
@@ -274,7 +274,7 @@ const LAYOUTS = [
   },
   {
     name: LAYOUT_STYLE_NAMES.BOTTOM_BLUR,
-    roundPdng: 0,
+    roundPdng: LAY_SINGLE_FRAME_PDNG,
     paddingColor: "white",
     bottomBannerHeight: BLURRED_AREA_HEIGHT,
     isBannerBlur: true,
@@ -330,6 +330,8 @@ const LAYOUTS = [
 ];
 
 const MAP_STYLES_NAMES = {
+  BLACK_LAND: "Black Land",
+  BLACK_WHITE: "Black White",
   WHITE_BLUE: "White Blue",
   SANDY_ORANGE_BLUE: "Sandy Orange Blue",
   LOW_CONTRAST_GREEN: "Low Contrast Green",
@@ -373,6 +375,8 @@ const MAP_STYLES = {
     "LowContrastGreenBlue(ckollex8z78ly18mu9jmefwnz)",
   // "assets/MAPS_MAPBOX/LowContrastGreenBlue(ckollex8z78ly18mu9jmefwnz)/style.json",
   // "mapbox://styles/petrhoskovec/ckollex8z78ly18mu9jmefwnz",
+  [MAP_STYLES_NAMES.BLACK_WHITE]: "BlackWhite(ckpbeqdof7li518ojkwwaqrfh)",
+  [MAP_STYLES_NAMES.BLACK_LAND]: "BlackLand(ckpbgjjxd0phz17nzanvcr6y4)",
 };
 
 const FAKE_DIV_IDS = {

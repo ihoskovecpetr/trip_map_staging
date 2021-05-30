@@ -7,6 +7,10 @@ import Carousel from "nuka-carousel";
 
 import LandingPagePicture from "assets/landing-page/landing_page_bg_double.png";
 import LandingPageBg from "assets/landing-page/landing_photo_bg.png";
+import InterierFlowers from "assets/landing-page/interier_flowers.webp";
+import InterierBlack from "assets/landing-page/interier_black.webp";
+import FramedPicture from "assets/landing-page/FramedPicture.webp";
+import FramedPictureBack from "assets/landing-page/FramedPicBack.webp";
 
 import Briefcase from "assets/landing-page/briefcase.svg";
 import Secure from "assets/landing-page/secure.svg";
@@ -48,14 +52,27 @@ export default function LandingPage() {
             src={LandingPagePicture}
             alt="Thumbnail"
           /> */}
-          <div sx={styles.landingImage}>
-            <Carousel autoplay={true} sx={styles.landingImage}>
-              <img src={LandingPagePicture} />
+          <div sx={styles.landingCarousel}>
+            <Carousel
+              autoplay={true}
+              cellAlign="center"
+              heightMode="max"
+              // heightMode={current}
+              initialSlideHeight={90}
+              // frameOverflow="visible"
+              // withoutControls
+              wrapAround
+              swiping
+              renderCenterLeftControls={() => null}
+              renderCenterRightControls={() => null}
+            >
+              <img src={InterierBlack} />
+              <img src={FramedPicture} />
+              <img src={FramedPictureBack} />
+
+              {/* <img src={LandingPagePicture} />
               <img src={LandingPageBg} />
-              <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide3" />
-              <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide4" />
-              <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide5" />
-              <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide6" />
+              <img src={InterierFlowers} /> */}
             </Carousel>
           </div>
         </Box>
@@ -145,12 +162,18 @@ const styles = {
     flexDirection: ["column", null, "row"],
   },
   thumbnail: {
+    width: ["100%", 450, 350, 350, 500, 570],
+    height: "100%",
     pl: [0, 5, 0, null, 7, 95],
     pr: [0, 5, null, null, null, 75, 95],
     order: [0, null, null, 0],
     display: ["none", null, "block"],
   },
   landingImage: {},
+  landingCarousel: {
+    width: "100%",
+    height: "100%",
+  },
   contentBox: {
     width: ["100%", 450, 350, 350, 500, 570],
     pt: [7, null, 0],
