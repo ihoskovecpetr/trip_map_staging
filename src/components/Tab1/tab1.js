@@ -59,11 +59,11 @@ export default function Tab1({
     setMapTitles(
       (prev) => ({
         heading: {
-          ...prev.heading,
+          size: 14,
           text: placeNameArr[0] ?? "",
         },
         subtitle: {
-          ...prev.subtitle,
+          size: 8,
           text: placeNameArr[placeNameArr.length - 1] ?? "",
         },
       })
