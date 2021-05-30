@@ -123,8 +123,8 @@ const resizeFrameDiv = ({ productRef, baseLongSize, mapAvailSpaceRef }) => {
       top: 0,
       left: 0,
       outline: `${extraFrame + 0}px solid ${framedVariantObj.frameColor}`,
-      width: `${Math.floor(updWidth)}px`,
-      height: `${Math.floor(updHeight)}px`,
+      width: updWidth ? `${Math.floor(updWidth)}px` : 0,
+      height: updHeight ? `${Math.floor(updHeight)}px` : 0,
     });
   }
 };
@@ -506,8 +506,8 @@ export default function RootContainer() {
     });
 
     Object.assign(mapWrapper.style, {
-      height: `${updHeight}px`,
-      width: `${updWidth}px`,
+      height: updHeight ? `${updHeight}px` : 0,
+      width: updWidth ? `${updWidth}px` : 0,
       boxShadow: "0px 0px 25px rgba(156, 156, 156, 1)",
     });
 
@@ -547,7 +547,7 @@ export default function RootContainer() {
     setMapTitles((prev) =>
       produce(prev, (draftState) => {
         const newValue = e.target.value ?? ""; // ?.toUpperCase()
-
+        console.log("Set new title .text?? ", { draftState });
         draftState[e.target.name].text = newValue;
         // draftState.heading.text = headlineInput.innerText;
         // draftState.subtitle.text = subtitleInput.innerText;

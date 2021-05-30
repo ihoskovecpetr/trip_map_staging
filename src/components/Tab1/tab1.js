@@ -58,7 +58,7 @@ export default function Tab1({
     setMapTitles((prev) =>
       produce(prev, (draftState) => {
         const placeNameArr = e.result.place_name.split(",");
-
+        console.log("Is there test?? ", draftState);
         draftState.heading.text = placeNameArr[0] ?? "";
         draftState.subtitle.text = placeNameArr[placeNameArr.length - 1] ?? "";
       })

@@ -205,8 +205,9 @@ function drawBottomBox({
   ctx.beginPath();
 
   if (activeLayoutName === LAYOUT_STYLE_NAMES.ISLAND_BOX) {
+    console.log("heading.text, subtitle.text: ", heading.text, subtitle.text);
     let dynamicBannerWidth =
-      getSizeOfTitle(heading.text, subtitle.text) * CURRENT_PIXEL_RATIO * 1.2;
+      getSizeOfTitle(heading?.text, subtitle?.text) * CURRENT_PIXEL_RATIO * 1.2;
     if (dynamicBannerWidth < elWidth * 0.2) {
       dynamicBannerWidth = elWidth * 0.2;
     }

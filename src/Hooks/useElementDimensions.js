@@ -10,10 +10,12 @@ export function useElementDimensions(element_id) {
       }
 
       setDimensions({
-        height: document.getElementById(element_id).getBoundingClientRect()
-          .height,
-        width: document.getElementById(element_id).getBoundingClientRect()
-          .width,
+        height:
+          document.getElementById(element_id).getBoundingClientRect().height ||
+          0,
+        width:
+          document.getElementById(element_id).getBoundingClientRect().width ||
+          0,
       });
     };
 

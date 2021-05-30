@@ -43,6 +43,7 @@
     "nodemailer": "^6.6.1",
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemon": "^2.0.7",
+    "number-format.js": "^2.0.9",
     "prettier": "^2.1.2",
     "rc-drawer": "^4.1.0",
     "react": "16.13.0",
