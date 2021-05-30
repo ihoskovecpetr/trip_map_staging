@@ -21,6 +21,8 @@ import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
 
+import WhiteGreyMap from "assets/MAPS_MAPBOX/WhiteGrey/style.json";
+
 import {
   MAP_STYLES,
   MAP_STYLES_NAMES,
@@ -228,7 +230,7 @@ export default function RootContainer() {
 
   const [layout, setLayout] = useState(LAYOUT_STYLE_NAMES.ISLAND_BOX);
   const [activeMapStyle, setActiveMapStyle] = useState(
-    MAP_STYLES_NAMES.WHITE_GREY
+    MAP_STYLES_NAMES.LOW_CONTRAST_GREEN
   );
   const [mapTitles, setMapTitles] = useState({
     heading: { text: TITLES_DEFAULT[0], size: 14 },
@@ -381,6 +383,8 @@ export default function RootContainer() {
       minZoom: 0,
       center: coordinatesRef.current,
       style: MAP_STYLES[activeMapStyle],
+      // style: WhiteGreyMap, // Continue add maps WhiteGreyMap
+
       preserveDrawingBuffer: true,
     });
 
