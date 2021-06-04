@@ -31,14 +31,14 @@ export default function CostsTable({
         <CostItem
           name="ZHOTOVENÍ"
           price={priceWithoutDelivery.netPrice}
-          currency={dataPrintfulVariant?.currency ?? ""}
+          currency={"CZK"}
         />
 
         <CostItem
           name="DORUČENÍ"
           price={priceOfDelivery.netPrice}
-          currency={dataPrintfulVariant?.shipping.currency ?? ""}
-          //     isDataLoading={dataPrintfulVariant ? false : true}
+          currency={"CZK"}
+          // isDataLoading={dataPrintfulVariant ? false : true}
         />
       </div>
       <CostItem

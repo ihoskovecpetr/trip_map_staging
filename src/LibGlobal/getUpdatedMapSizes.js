@@ -10,7 +10,7 @@ export const getUpdatedMapSizes = ({
   let widthTry;
 
   const wrapElemRectangle = document
-    .getElementById("map_wrapper_wrapper_id")
+    .getElementById("map_available_space_id")
     .getBoundingClientRect();
 
   const mapHeightRect = wrapElemRectangle.height;

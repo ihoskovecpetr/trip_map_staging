@@ -39,15 +39,9 @@ export function useGetDataPrintful() {
   };
 
   useEffect(() => {
-    // console.log(
-    //   { keys: Object.keys(data), variantIdsArr },
-    //   JSON.stringify(Object.keys(data)) == JSON.stringify(variantIdsArr),
-    //   { idsAlreadyFetched: idsAlreadyFetched(variantIdsArr) }
-    // );
     // if (!data) {
     //   getSetPrice();
     // }
-    console.log("useGetDataPrintful_fetch_new_prices", variantIdsArr);
     getSetPrice();
   }, [JSON.stringify(variantIdsArr)]);
 

@@ -7,7 +7,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 
-import { SIZES } from "../../constants/constants";
+import { SIZES, FAKE_DIV_IDS, TITLES_DEFAULT } from "../../constants/constants";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
 export default function MapContainer({
@@ -46,12 +46,36 @@ export default function MapContainer({
 
         <div sx={styles.rotateBtn}>
           <OpenWithIcon color="grey" style={{ color: "lightGrey" }} />
+          {/* <div
+            id="a"
+            contenteditable="plaintext-only"
+            style={{ width: "auto", display: "inline-block" }}
+          >
+            Test
+          </div> */}
         </div>
       </div>
-      <div sx={styles.map_wrapper_wrapper} id="map_wrapper_wrapper_id">
+
+      <div sx={styles.map_wrapper_wrapper} id="map_available_space_id">
         <div sx={styles.map_wrapper} id="map_wrapper_id">
           <div id="map" sx={styles.map}></div>
         </div>
+
+        {Object.keys(FAKE_DIV_IDS).map((key, index) => (
+          <div
+            id={FAKE_DIV_IDS[key]}
+            contenteditable="plaintext-only"
+            style={{
+              width: "auto",
+              display: "inline-block",
+              visibility: "hidden",
+              position: "fixed",
+              overflow: "auto",
+            }}
+          >
+            {TITLES_DEFAULT[index]}
+          </div>
+        ))}
       </div>
 
       <canvas id="canvas_merging" sx={styles.canvas_merging} />
@@ -78,6 +102,7 @@ const styles = {
   map_wrapper_wrapper: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
     width: "100%",
     height: [null, null, null, "85%"],
     minHeight: ["50vh", "50vh", "50vh"],
@@ -85,8 +110,8 @@ const styles = {
   },
   map_wrapper: {
     // margin: "30px",
-    marginBottom: "40px",
-    marginTop: "10px",
+    // marginBottom: "40px",
+    // marginTop: "10px",
   },
   map: {
     overflow: "initial",
@@ -103,7 +128,7 @@ const styles = {
     alignItems: "center",
     // height: [null, null, null, "10%"],
     p: "5px",
-    mb: "10px",
+    // mb: "10px",
   },
   zoomBtnWrapper: {
     display: "flex",

@@ -41,11 +41,6 @@ class DefaultPriceAlgorithm extends BasePriceAlgorithm {
       this.profitPercentage
     );
 
-    console.log("Adding_those_prices: ", [
-      variantPriceObject.netPrice,
-      shippingPrice ?? 0,
-    ]);
-
     const sumNetPricesWithDelivery = this.add([
       variantPriceObject.netPrice,
       shippingPrice ?? 0,
