@@ -4,6 +4,11 @@ import { jsx, Text, Button, Link } from "theme-ui";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
+
+const getFormatedPriceString = (amount) => {
+  return amount ? `| ${getFormattedPrice(amount)}` : "";
+};
 
 export default function NextTabBtn({
   onClick,
@@ -36,7 +41,6 @@ export default function NextTabBtn({
     onClick();
   }
 
-  const priceString = "| CZK " + price;
   return (
     <div sx={styles.container} style={{ margin: margin }}>
       <div
@@ -59,7 +63,7 @@ export default function NextTabBtn({
         ) : (
           <>
             {`${children}`}{" "}
-            <span sx={styles.priceText}>{`${price ? priceString : ""}`}</span>
+            <span sx={styles.priceText}>{getFormatedPriceString(price)}</span>
           </>
         )}
       </div>

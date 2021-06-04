@@ -35,7 +35,8 @@ export default function CheckoutCard({
   isUploadPending,
   setIsUploadPending,
   imageSavedResponse,
-  imageBase64,
+  imageBase64Created,
+  imageBase64Uploaded,
   backdropClose,
   percentageUpload,
 }) {
@@ -62,6 +63,15 @@ export default function CheckoutCard({
     asyncStripeInit();
   }, []);
 
+  useEffect(() => {
+    if (imageBase64Created) {
+      setLightbox({
+        open: true,
+        activeSrc: imageBase64Created,
+      });
+    }
+  }, [imageBase64Created]);
+
   const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
     product.variantId,
     dataPrintful
@@ -78,7 +88,7 @@ export default function CheckoutCard({
 
     if (response?.data?.error) {
       toast.error(
-        "Error: Ceny se liší, kontaktujte prosím technickou podporu",
+        "Error: Odlišné ceny, kontaktujte prosím technickou podporu",
         {
           position: "top-left",
         }
@@ -121,11 +131,11 @@ export default function CheckoutCard({
               <img
                 id="img_screen_shot"
                 sx={styles.teaserFinalImage}
-                src={imageBase64}
+                src={imageBase64Uploaded}
                 onClick={(e) => {
                   setLightbox({
                     open: true,
-                    activeSrc: imageBase64,
+                    activeSrc: imageBase64Uploaded,
                   });
                   e.stopPropagation();
                 }}

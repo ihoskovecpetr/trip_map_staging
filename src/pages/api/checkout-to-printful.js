@@ -92,7 +92,7 @@ const orderOnPrintful = async ({ shipping, product, imageObj }) => {
 
       const mailOptions0 = {
         from: "Brekkie",
-        to: "ihoskovecpetr@gmail.com",
+        to: process.env.EMAIL_RECIPIENT,
         subject: emailHeading,
         template: "./src/pages/api/newsList",
         context: {
@@ -102,8 +102,12 @@ const orderOnPrintful = async ({ shipping, product, imageObj }) => {
         },
       };
 
-      await smtpTransport0.sendMail(mailOptions0);
+      const resp = await smtpTransport0.sendMail(mailOptions0);
       smtpTransport0.close();
+
+      console.log(`✅ Sent email to ${process.env.EMAIL_RECIPIENT}`, {
+        resp,
+      });
 
       return true;
     }

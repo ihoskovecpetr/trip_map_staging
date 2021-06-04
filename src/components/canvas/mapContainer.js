@@ -29,7 +29,7 @@ export default function MapContainer({
   };
 
   return (
-    <Container sx={styles.canvas_bg}>
+    <div sx={styles.canvas_bg}>
       <div sx={styles.allBtnWrapper} id="map_buttons_wrapper">
         <div sx={styles.zoomBtnWrapper}>
           <div sx={styles.zoomBtn} className="left" onClick={addZoom}>
@@ -46,13 +46,6 @@ export default function MapContainer({
 
         <div sx={styles.rotateBtn}>
           <OpenWithIcon color="grey" style={{ color: "lightGrey" }} />
-          {/* <div
-            id="a"
-            contenteditable="plaintext-only"
-            style={{ width: "auto", display: "inline-block" }}
-          >
-            Test
-          </div> */}
         </div>
       </div>
 
@@ -79,7 +72,7 @@ export default function MapContainer({
       </div>
 
       <canvas id="canvas_merging" sx={styles.canvas_merging} />
-    </Container>
+    </div>
   );
 }
 
@@ -87,7 +80,6 @@ const BNT_RADIUS = 4;
 
 const styles = {
   canvas_bg: {
-    bg: "rgb(242, 242, 242)",
     px: "0 !important",
     display: "flex",
     flexDirection: "column",

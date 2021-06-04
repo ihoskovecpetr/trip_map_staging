@@ -32,6 +32,8 @@ import {
   TITLES_DEFAULT,
 } from "../constants/constants";
 
+const mapStyles = require.context("assets/MAPS_MAPBOX", true);
+
 let map;
 let layoutCanvas;
 let frameDiv;
@@ -121,8 +123,8 @@ const resizeFrameDiv = ({ productRef, baseLongSize, mapAvailSpaceRef }) => {
       top: 0,
       left: 0,
       outline: `${extraFrame + 0}px solid ${framedVariantObj.frameColor}`,
-      width: `${Math.floor(updWidth)}px`,
-      height: `${Math.floor(updHeight)}px`,
+      width: updWidth ? `${Math.floor(updWidth)}px` : 0,
+      height: updHeight ? `${Math.floor(updHeight)}px` : 0,
     });
   }
 };
@@ -146,8 +148,8 @@ const resizeInputs = ({
   prepareTextInput({
     element: headlineInput,
     name: "heading",
-    textSize: mapTitles.heading.size,
-    textValue: mapTitles.heading.text,
+    textSize: mapTitles.heading?.size,
+    textValue: mapTitles.heading?.text,
     onInput: saveTitlesValue,
     height: mapHeight,
     width: mapWidth,
@@ -158,8 +160,8 @@ const resizeInputs = ({
   prepareTextInput({
     element: subtitleInput,
     name: "subtitle",
-    textSize: mapTitles.subtitle.size,
-    textValue: mapTitles.subtitle.text,
+    textSize: mapTitles.subtitle?.size,
+    textValue: mapTitles.subtitle?.text,
     // color: "grey",
     onInput: saveTitlesValue,
     height: mapHeight,
@@ -228,12 +230,14 @@ export default function RootContainer() {
 
   const [layout, setLayout] = useState(LAYOUT_STYLE_NAMES.ISLAND_BOX);
   const [activeMapStyle, setActiveMapStyle] = useState(
-    MAP_STYLES_NAMES.WHITE_GREY
+    MAP_STYLES_NAMES.LOW_CONTRAST_GREEN
   );
   const [mapTitles, setMapTitles] = useState({
     heading: { text: TITLES_DEFAULT[0], size: 14 },
     subtitle: { text: TITLES_DEFAULT[1], size: 8 },
   });
+
+  console.log({ mapTitles });
 
   const { height: headerHeight } = useElementDimensions("header");
   const {
@@ -311,8 +315,6 @@ export default function RootContainer() {
         ).netPrice,
       }));
     }
-
-    getSizeOfTitle(mapTitles.heading.text);
   }, [mapTitles]);
 
   useEffect(() => {
@@ -351,7 +353,6 @@ export default function RootContainer() {
 
   useEffect(() => {
     layoutRef.current = layout;
-
     if (layoutCanvas && canvasMap) {
       resizeLayout({
         cvsLayout: layoutCanvas,
@@ -370,15 +371,23 @@ export default function RootContainer() {
   }, [layout, product, isMobile, mapAvailSpaceHeight, mapAvailSpaceWidth]);
 
   useEffect(() => {
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrbHY2ZXY5eDJuaGkyb24xMXpzOHY2cXAifQ.g7wKRkK7WFwczUmDOYwCtQ";
+    console.log({
+      NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN:
+        process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+      process_env: process.env,
+    });
+
+    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 
     map = new mapboxgl.Map({
       container: "map",
       zoom: mapZoom,
       minZoom: 0,
       center: coordinatesRef.current,
-      style: MAP_STYLES[activeMapStyle],
+      style: mapStyles(`./${MAP_STYLES[activeMapStyle]}/style.json`),
+      // style: currentMapStyle,
+      // style: WhiteGreyMap, // Continue add maps WhiteGreyMap
+
       preserveDrawingBuffer: true,
     });
 
@@ -499,8 +508,8 @@ export default function RootContainer() {
     });
 
     Object.assign(mapWrapper.style, {
-      height: `${updHeight}px`,
-      width: `${updWidth}px`,
+      height: updHeight ? `${updHeight}px` : 0,
+      width: updWidth ? `${updWidth}px` : 0,
       boxShadow: "0px 0px 25px rgba(156, 156, 156, 1)",
     });
 
@@ -524,7 +533,6 @@ export default function RootContainer() {
       });
 
       resizeInputsWrap({ productRef, layout, canvasMap });
-
       resizeInputs({
         mapTitles: mapTitlesRef.current,
         saveTitlesValue,
@@ -535,19 +543,21 @@ export default function RootContainer() {
         paddingWidth,
       });
     }
-  }, [product, layout, mapAvailSpaceHeight, mapAvailSpaceWidth]);
+  }, [product, layout, mapAvailSpaceHeight, mapAvailSpaceWidth, mapTitles]);
 
   const saveTitlesValue = (e) => {
-    // console.log("New Value: ", headlineInput.innerText);
     setMapTitles((prev) =>
       produce(prev, (draftState) => {
         const newValue = e.target.value ?? ""; // ?.toUpperCase()
-        draftState[e.target.name].text = newValue;
+        console.log("Set new title .text?? ", { draftState });
+        // draftState[e.target.name].text = newValue;
         // draftState.heading.text = headlineInput.innerText;
         // draftState.subtitle.text = subtitleInput.innerText;
       })
     );
   };
+
+  console.log("Rerender rootContainer");
 
   return (
     <section sx={{ marginTop: headerHeight }}>
@@ -593,15 +603,16 @@ const styles = {
   canvasBox: {
     // px: [0, null, "40px", 0],
     order: [0, 0, 0, 2],
-    width: ["100%", "100%", "100%", "60%"],
+    width: ["100%", "100%", "100%", "60%", "70%"],
     height: [null, null, null, "100%"],
+    backgroundColor: "muted",
   },
   settingsBox: {
     flexShrink: 1,
     order: [1, 1, 1, 0],
     px: [0, null, "30px", 0],
     textAlign: ["center", null, "right", "left"],
-    width: ["100%", "100%", "100%", "40%"],
+    width: ["100%", "100%", "100%", "40%", "30%"],
     mx: "auto",
     backgroundColor: "background_secondary",
     pb: ["30px", null, null, 0],

@@ -118,7 +118,7 @@ export function drawLayout(
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BOX) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.ISLAND_BOX) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BLUR) {
-  } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER_BLUR) {
+  } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER) {
     ctx.lineWidth = 0.0015 * baseLngSide;
     ctx.strokeStyle = "black";
 
@@ -185,7 +185,7 @@ function drawBottomBox({
   activeLayoutName,
   CURRENT_PIXEL_RATIO,
 }) {
-  const extraBlueAreaKoef = isBannerBlur ? 1.2 : 1;
+  const extraBlueAreaKoef = isBannerBlur ? 1.4 : 1;
 
   var gradient = ctx.createLinearGradient(
     0,
@@ -195,9 +195,10 @@ function drawBottomBox({
   );
 
   gradient.addColorStop(0, "rgba(255,255,255,0.1)");
-  gradient.addColorStop(0.1, "rgba(255,255,255,0.6)");
-  gradient.addColorStop(0.2, "rgba(255,255,255,0.8)");
-  gradient.addColorStop(0.3, "rgba(255,255,255,1)");
+  gradient.addColorStop(0.1, "rgba(255,255,255,0.4)");
+  gradient.addColorStop(0.3, "rgba(255,255,255,0.6)");
+  gradient.addColorStop(0.4, "rgba(255,255,255,0.7)");
+  gradient.addColorStop(0.7, "rgba(255,255,255,0.9)");
   gradient.addColorStop(1, "rgba(255,255,255,1)");
 
   ctx.fillStyle = isBannerBlur ? gradient : "white";
@@ -205,6 +206,7 @@ function drawBottomBox({
   ctx.beginPath();
 
   if (activeLayoutName === LAYOUT_STYLE_NAMES.ISLAND_BOX) {
+    console.log("heading.text, subtitle.text: ", heading.text, subtitle.text);
     let dynamicBannerWidth =
       getSizeOfTitle(heading?.text, subtitle?.text) * CURRENT_PIXEL_RATIO * 1.2;
     if (dynamicBannerWidth < elWidth * 0.2) {
@@ -261,7 +263,7 @@ function drawText({
 
   ctx.fillStyle = "black";
   ctx.font = `${heading?.size * 0.001 * 3 * baseLngSide}px ${FONT_TITLES}`;
-  ctx.textAlign = layoutObj.text.align ?? "center";
+  ctx.textAlign = layoutObj?.text.align ?? "center";
   ctx.fillText(
     headingText,
     elWidth * 0.5,
@@ -269,7 +271,7 @@ function drawText({
   );
   ctx.fillStyle = "black";
   ctx.font = `100 ${subtitle?.size * 0.003 * baseLngSide}px ${FONT_TITLES}`;
-  ctx.textAlign = layoutObj.text.align ?? "center";
+  ctx.textAlign = layoutObj?.text.align ?? "center";
   ctx.fillText(
     subtitleText,
     elWidth * 0.5,

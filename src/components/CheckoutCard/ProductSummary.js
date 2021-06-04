@@ -31,11 +31,11 @@ export default function ProductSummary({ product, mapTitles, dataPrintful }) {
         <ProductDetailItem name="rámování" description={productDescription} />
         <ProductDetailItem
           name="nadpis"
-          description={mapTitles?.heading.text}
+          description={mapTitles?.heading?.text}
         />
         <ProductDetailItem
           name="podnadpis"
-          description={mapTitles?.subtitle.text}
+          description={mapTitles?.subtitle?.text}
         />
       </div>
     </div>

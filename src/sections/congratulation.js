@@ -68,7 +68,7 @@ const styles = {
       null,
       "calc(50% + 625px)",
     ],
-    backgroundImage: [null, `url(${PaymentPattern})`],
+    // backgroundImage: [null, `url(${PaymentPattern})`],
     backgroundRepeat: `no-repeat`,
     backgroundPosition: "top left",
     backgroundSize: "cover",

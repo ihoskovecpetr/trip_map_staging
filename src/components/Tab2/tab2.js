@@ -20,6 +20,8 @@ import WhiteBlue from "assets/mapStyles/WhiteBlue.png";
 import WhiteBlueLowContrast from "assets/mapStyles/WhiteBlueLowContrast.png";
 import OldDarkBlue from "assets/mapStyles/OldDarkBlue.png";
 import OldSandyGrey from "assets/mapStyles/OldSandyGrey.png";
+import BlackWhite from "assets/mapStyles/BlackWhite.png";
+import BlackLand from "assets/mapStyles/BlackLand.png";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
@@ -73,7 +75,7 @@ export default function Tab2({
         return borderBlurredLayoutImg;
       case LAYOUT_STYLE_NAMES.BOTTOM_BLUR:
         return bottomBlurredLayoutImg;
-      case LAYOUT_STYLE_NAMES.DOUBLE_BORDER_BLUR:
+      case LAYOUT_STYLE_NAMES.DOUBLE_BORDER:
         return doubleBlurredLayoutImg;
       default:
         return pureLayoutImg;
@@ -98,6 +100,10 @@ export default function Tab2({
         return SandyOrangeBlue;
       case MAP_STYLES_NAMES.LOW_CONTRAST_GREEN:
         return LowContrastGreenBlue;
+      case MAP_STYLES_NAMES.BLACK_WHITE:
+        return BlackWhite;
+      case MAP_STYLES_NAMES.BLACK_LAND:
+        return BlackLand;
 
       default:
         return LowContrastGreenBlue;
@@ -298,7 +304,7 @@ const styles = {
     top: ["85vh", "85vh", "85vh", "90vh"],
     left: "0px",
     height: 0,
-    width: ["100%", "100%", "100%", "40%"],
+    width: ["100%", "100%", "100%", "40%", "30%"],
   },
   frameImage: {
     height: "60px",
@@ -314,6 +320,7 @@ const styles = {
     marginTop: "5px",
     textAlign: "center",
     verticalAlign: "middle",
+    lineHeight: "100%",
   },
   stylesWrap: {
     display: "flex",
@@ -328,8 +335,9 @@ const styles = {
     flexDirection: "column",
     cursor: "pointer",
     "&.active img": {
-      border: "2px solid",
+      border: "3px solid",
       borderColor: "cta_color",
+      padding: "3px",
     },
     "&.active p": {
       color: "cta_color",
@@ -344,12 +352,12 @@ const styles = {
     verticalAlign: "middle",
   },
   roundImage: {
-    filter: "drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.16))",
+    // filter: "drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.16))",
     width: "72px",
     height: "72px",
     borderRadius: "50%",
-    border: "2px solid rgb(0,0,0,0.2)",
-    boxShadow: "3px 3px 5px #888888",
+    // border: "2px solid rgb(0,0,0,0.2)",
+    boxShadow: "1px 1px 3px rgba(200,200,200,0.99)",
   },
 
   topDescription: {

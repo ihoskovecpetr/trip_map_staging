@@ -41,7 +41,8 @@ export default function Tab3Checkout({
 
   const [backdropOpen, setBackdropOpen] = useState(false);
   const [isUploadPending, setIsUploadPending] = useState(false);
-  const [imageBase64, setImageBase64] = useState("");
+  const [imageBase64Created, setImageBase64Created] = useState("");
+  const [imageBase64Uploaded, setImageBase64Uploaded] = useState("");
   const [imageSavedResponse, setImageSavedResponse] = useState(null);
   const [percentageUpload, setPercentageUpload] = useState(0);
 
@@ -53,8 +54,8 @@ export default function Tab3Checkout({
   const createImage = async () => {
     return new Promise((resolve, reject) => {
       takeScreenshot(map).then(function (data) {
-        console.log("takeScreenshot DONE");
-        var image = new Image();
+        console.log("takeScreenshot DONE", data);
+        const image = new Image();
 
         image.onload = function () {
           const mergerCanvas = document.getElementById("canvas_merging");
@@ -71,7 +72,11 @@ export default function Tab3Checkout({
             product,
             isProductionPrint: true,
           });
-          resolve(mergerCanvas.toDataURL());
+
+          const finalImgWithLayout = mergerCanvas.toDataURL();
+          setImageBase64Created(finalImgWithLayout);
+
+          resolve(finalImgWithLayout);
         };
 
         image.src = data;
@@ -105,7 +110,7 @@ export default function Tab3Checkout({
 
       console.log({ finalImgSrc, imgFileSizeMB });
 
-      setImageBase64(finalImgSrc);
+      setImageBase64Uploaded(finalImgSrc);
       const response = await createUploadRequest(
         finalImgSrc,
         progressCallbackFce
@@ -180,7 +185,8 @@ export default function Tab3Checkout({
           product={product}
           mapTitles={mapTitles}
           imageSavedResponse={imageSavedResponse}
-          imageBase64={imageBase64}
+          imageBase64Created={imageBase64Created}
+          imageBase64Uploaded={imageBase64Uploaded}
           // shippingInfoObject={shippingInfoObject}
           // isShippingInfoLoading={isShippingInfoLoading}
           backdropClose={backdropClose}
@@ -207,7 +213,7 @@ const styles = {
     position: "fixed",
     top: "85vh",
     left: "0px",
-    width: ["100%", "100%", "100%", "40%"],
+    width: ["100%", "100%", "100%", "40%", "30%"],
   },
   resultImage: {
     width: "100%",

@@ -15,8 +15,8 @@ const MARKUP_KOEFICIENT = 1.2;
 const INSIDE_FRAME_COVER_CM = 0.5;
 const OUTSIDE_FRAME_CM = 1.4;
 
-const LAY_SINGLE_FRAME_PDNG = 0.015;
-const LAY_DOUBLE_FRAME_PDNG = 0.025;
+const LAY_SINGLE_FRAME_PDNG = 0.025;
+const LAY_DOUBLE_FRAME_PDNG = 0.015;
 const TRANSPARENT_PADDING = 0.025;
 
 const BOTTOM_BANNER = 0.09;
@@ -246,7 +246,7 @@ const LAYOUT_STYLE_NAMES = {
   BOTTOM_LINE: "Bottom line",
   BORDER_BOX: "Border box",
   BORDER_BLUR: "Border Blur",
-  DOUBLE_BORDER_BLUR: "Double Border Blur",
+  DOUBLE_BORDER: "Double Border",
 };
 
 const LAYOUTS = [
@@ -274,7 +274,7 @@ const LAYOUTS = [
   },
   {
     name: LAYOUT_STYLE_NAMES.BOTTOM_BLUR,
-    roundPdng: 0,
+    roundPdng: LAY_SINGLE_FRAME_PDNG,
     paddingColor: "white",
     bottomBannerHeight: BLURRED_AREA_HEIGHT,
     isBannerBlur: true,
@@ -317,7 +317,7 @@ const LAYOUTS = [
   //   },
   // },
   {
-    name: LAYOUT_STYLE_NAMES.DOUBLE_BORDER_BLUR,
+    name: LAYOUT_STYLE_NAMES.DOUBLE_BORDER,
     roundPdng: LAY_DOUBLE_FRAME_PDNG,
     paddingColor: "white",
     bottomBannerHeight: BLURRED_AREA_HEIGHT,
@@ -330,38 +330,53 @@ const LAYOUTS = [
 ];
 
 const MAP_STYLES_NAMES = {
-  WHITE_GREY: "White Grey",
-  OLD_SANDY_BROWN: "Old Sandy Brown",
-  WHITE_BLUE_LOW_CONTRAST: "White Blue Low Contrast",
+  BLACK_LAND: "Black Land",
+  BLACK_WHITE: "Black White",
   WHITE_BLUE: "White Blue",
   SANDY_ORANGE_BLUE: "Sandy Orange Blue",
   LOW_CONTRAST_GREEN: "Low Contrast Green",
+  WHITE_GREY: "White Grey",
+  OLD_SANDY_BROWN: "Old Sandy Brown",
+  WHITE_BLUE_LOW_CONTRAST: "White Blue Low",
   MUSTARD_BLUE: "Mustard Blue",
   SANDY_DARK: "Sandy Dark",
 };
 
 const MAP_STYLES = {
-  [MAP_STYLES_NAMES.WHITE_GREY]:
-    "mapbox://styles/petrhoskovec/ckmzzqlni0n5j17pbfvgf27n9",
+  [MAP_STYLES_NAMES.WHITE_GREY]: "WhiteGrey",
+  // "assets/MAPS_MAPBOX/WhiteGrey/style.json",
+  // "mapbox://styles/petrhoskovec/ckmzzqlni0n5j17pbfvgf27n9",
   [MAP_STYLES_NAMES.WHITE_BLUE_LOW_CONTRAST]:
-    "mapbox://styles/petrhoskovec/ckolm2l7k23ck18mwrl2jkgcg",
-  [MAP_STYLES_NAMES.WHITE_BLUE]:
-    "mapbox://styles/petrhoskovec/ckmzzsrsl0naa17o3ki2xzuoj",
+    "WhiteBlueLowContrast(ckolm2l7k23ck18mwrl2jkgcg)",
+  // "assets/MAPS_MAPBOX/WhiteBlueLowContrast(ckolm2l7k23ck18mwrl2jkgcg)/style.json",
+  // "mapbox://styles/petrhoskovec/ckolm2l7k23ck18mwrl2jkgcg",
+  [MAP_STYLES_NAMES.WHITE_BLUE]: "WhiteBlue(ckmzzsrsl0naa17o3ki2xzuoj)",
+  // "assets/MAPS_MAPBOX/WhiteBlue(ckmzzsrsl0naa17o3ki2xzuoj)/style.json",
+  // "mapbox://styles/petrhoskovec/ckmzzsrsl0naa17o3ki2xzuoj",
   [MAP_STYLES_NAMES.MUSTARD_BLUE]:
-    "mapbox://styles/petrhoskovec/ckolmiq3f4u9217p9v8fmln15",
-  // "mapbox://styles/petrhoskovec/ckmzytwvh0m7117nzc9jvdotq",
-  [MAP_STYLES_NAMES.DARK_BLUE]:
-    "mapbox://styles/petrhoskovec/ckmzyuv5w0mat17n5ybl7hxxl",
-  [MAP_STYLES_NAMES.SANDY_DARK]:
-    "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho",
-  [MAP_STYLES_NAMES.OLD_SANDY_BROWN]:
-    "mapbox://styles/petrhoskovec/ckn0f7lbu12je17s4itrmuuh5",
+    "MustardBlueLowContrast(ckolmiq3f4u9217p9v8fmln15)",
+  // "assets/MAPS_MAPBOX/MustardBlueLowContrast(ckolmiq3f4u9217p9v8fmln15)/style.json",
+  // "mapbox://styles/petrhoskovec/ckolmiq3f4u9217p9v8fmln15",
+  // [MAP_STYLES_NAMES.DARK_BLUE]:
+  // "assets/MAPS_MAPBOX/WhiteGrey/style.json",
+  // "mapbox://styles/petrhoskovec/ckmzyuv5w0mat17n5ybl7hxxl",
+  [MAP_STYLES_NAMES.SANDY_DARK]: "SandyDark(ckmzz4z6y0mgx17s4lw0zeyho)",
+  // "assets/MAPS_MAPBOX/SandyDark(ckmzz4z6y0mgx17s4lw0zeyho)/style.json",
+  // "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho",
+  [MAP_STYLES_NAMES.OLD_SANDY_BROWN]: "OldSandyGrey(ckn0f7lbu12je17s4itrmuuh5)",
+  // "assets/MAPS_MAPBOX/OldSandyGrey(ckn0f7lbu12je17s4itrmuuh5)/style.json",
+  // "mapbox://styles/petrhoskovec/ckn0f7lbu12je17s4itrmuuh5",
 
   [MAP_STYLES_NAMES.SANDY_ORANGE_BLUE]:
-    "mapbox://styles/petrhoskovec/ckn0ffdn112v017jxv6ei1jnu",
+    "SandyOrangeBlue(ckn0ffdn112v017jxv6ei1jnu)",
+  // "assets/MAPS_MAPBOX/SandyOrangeBlue(ckn0ffdn112v017jxv6ei1jnu)/style.json",
+  // "mapbox://styles/petrhoskovec/ckn0ffdn112v017jxv6ei1jnu",
   [MAP_STYLES_NAMES.LOW_CONTRAST_GREEN]:
-    "mapbox://styles/petrhoskovec/ckollex8z78ly18mu9jmefwnz",
-  // "mapbox://styles/petrhoskovec/ckn0g6q5c13qd17pesvzalp62",
+    "LowContrastGreenBlue(ckollex8z78ly18mu9jmefwnz)",
+  // "assets/MAPS_MAPBOX/LowContrastGreenBlue(ckollex8z78ly18mu9jmefwnz)/style.json",
+  // "mapbox://styles/petrhoskovec/ckollex8z78ly18mu9jmefwnz",
+  [MAP_STYLES_NAMES.BLACK_WHITE]: "BlackWhite(ckpbeqdof7li518ojkwwaqrfh)",
+  [MAP_STYLES_NAMES.BLACK_LAND]: "BlackLand(ckpbgjjxd0phz17nzanvcr6y4)",
 };
 
 const FAKE_DIV_IDS = {

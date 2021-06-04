@@ -3,6 +3,7 @@ import React from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
 
 export default function CostsTable({
   product,
@@ -28,37 +29,26 @@ export default function CostsTable({
   return (
     <>
       <div sx={styles.costsWrap}>
-        <CostItem
-          name="ZHOTOVENÍ"
-          price={priceWithoutDelivery.netPrice}
-          currency={"CZK"}
-        />
+        <CostItem name="ZHOTOVENÍ" price={priceWithoutDelivery.netPrice} />
 
-        <CostItem
-          name="DORUČENÍ"
-          price={priceOfDelivery.netPrice}
-          currency={"CZK"}
-          // isDataLoading={dataPrintfulVariant ? false : true}
-        />
+        <CostItem name="DORUČENÍ" price={priceOfDelivery.netPrice} />
       </div>
       <CostItem
         name="CELKEM"
         price={priceWithDelivery.netPrice} //TODO add price algorithm big.js
-        isDataLoading={priceWithDelivery ? false : true}
-        currency="CZK"
         isLargePrice
       />
     </>
   );
 }
 
-function CostItem({ name, price, currency, isLargePrice, isDataLoading }) {
+function CostItem({ name, price, isLargePrice }) {
   return (
     <ItemWrap>
       <CostNameP>{name}</CostNameP>
       <div sx={styles.itemText}>
         <CostP isLargePrice={isLargePrice}>
-          {isDataLoading ? "ZJIŠTUJI..." : `${currency} ${price}`}
+          {price ? getFormattedPrice(price) : "ZJIŠTUJI..."}
         </CostP>
       </div>
     </ItemWrap>

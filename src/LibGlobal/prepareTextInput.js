@@ -21,8 +21,10 @@ export function prepareTextInput({
   element.setAttribute("type", "text");
   element.setAttribute("name", name);
   element.setAttribute("contenteditable", "plaintext-only");
-  // element.setAttribute("placeholder", null);
+  element.setAttribute("maxLength", name === "subtitle" ? 44 : 30);
   element.setAttribute("id", "title_input");
+
+  element.value = textValue;
 
   element.addEventListener(
     "input",
@@ -67,6 +69,11 @@ export function prepareTextInput({
     position: "relative",
     // top: name === "heading" ? "5px" : 0,
     paddingLeft: padding + "px",
+
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+
     display: layout === LAYOUT_STYLE_NAMES.PURE ? "none" : "block",
     WebkitBoxSizing: "border-box", // Safari/Chrome, other WebKit
     MozBoxSizing: "border-box", // Firefox, other Gecko

@@ -7,8 +7,14 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrbHY2ZXY5eDJuaGkyb24xMXpzOHY2cXAifQ.g7wKRkK7WFwczUmDOYwCtQ";
+console.log({
+  NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN:
+    process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+  process_env: process.env,
+  NAme: process.env.MONGO_DB_NAME,
+});
+
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 let geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   mapboxgl: mapboxgl,
@@ -28,27 +34,47 @@ export default function Tab1({ map, setMapCoordinates, nextTab }) {
   }, []);
 
   const pantoEventLocation = (e) => {
+    console.log("Pan pantoEventLocation");
     setMapCoordinates(e.result.geometry.coordinates);
 
-    console.log({ result: e.result });
+    const placeNameArr = e.result.place_name.split(",");
 
-    setMapTitles((prev) =>
-      produce(prev, (draftState) => {
-        const placeNameArr = e.result.place_name.split(",");
-
-        draftState.heading.text = placeNameArr[0] ?? "";
-        draftState.subtitle.text = placeNameArr[placeNameArr.length - 1] ?? "";
+    setMapTitles(
+      (prev) => ({
+        heading: {
+          size: 14,
+          text: placeNameArr[0] ?? "",
+        },
+        subtitle: {
+          size: 8,
+          text: placeNameArr[placeNameArr.length - 1] ?? "",
+        },
       })
+      // produce(prev, (draftState) => {
+      //   const placeNameArr = e.result.place_name.split(",");
+      //   console.log("Is there test?? ", draftState);
+      //   draftState.heading?.text = placeNameArr[0] ?? "";
+      //   draftState.subtitle?.text = placeNameArr[placeNameArr.length - 1] ?? "";
+      // })
     );
 
     const { bbox } = e.result;
 
-    map?.fitBounds([
-      [bbox[0], bbox[1]], // southwestern corner of the bounds
-      [bbox[2], bbox[3]], // northeastern corner of the bounds
-    ]);
+    console.log({ bbox, result: e.result });
 
-    // map?.panTo(e.result.geometry.coordinates);
+    if (bbox) {
+      map?.fitBounds([
+        [bbox[0], bbox[1]], // southwestern corner of the bounds
+        [bbox[2], bbox[3]], // northeastern corner of the bounds
+      ]);
+    } else {
+      map?.flyTo({
+        center: e.result.geometry.coordinates,
+        zoom: 9,
+      });
+      // map?.panTo(e.result.geometry.coordinates);
+      // map.setZoom(13);
+    }
 
     geocoder.clear(); // to remove blue dot
   };
