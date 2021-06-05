@@ -70,7 +70,7 @@ const resizeLayout = ({
     width: cvsMap.width,
     height: cvsMap.height,
     activeLayout,
-    mapTitles: !IS_PRODUCTION && mapTitles,
+    mapTitles: mapTitles,
     product,
   });
 
