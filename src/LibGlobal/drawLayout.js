@@ -9,6 +9,7 @@ import {
 
 import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
 import { getSizeOfTitle } from "./getSizeOfTitle";
+import { getIsProduction } from "./getIsProduction";
 
 let CURRENT_PIXEL_RATIO;
 
@@ -99,6 +100,7 @@ export function drawLayout(
     heading,
     subtitle,
     layoutObj,
+    isProductionPrint,
   });
 
   if (activeLayoutName === LAYOUT_STYLE_NAMES.PURE) {
@@ -249,9 +251,16 @@ function drawText({
   heading,
   subtitle,
   layoutObj,
+  isProductionPrint,
 }) {
   // const headingCoef = elHeight === baseLngSide ? 0.06 : 0.077;
   // const subtitleCoef = elHeight === baseLngSide ? 0.0275 : 0.033;
+
+  const IS_PRODUCTION = getIsProduction();
+
+  if (IS_PRODUCTION && !isProductionPrint) {
+    return;
+  }
 
   const headingCoef = elHeight === baseLngSide ? 0.047 : 0.061;
   const subtitleCoef = elHeight === baseLngSide ? 0.015 : 0.018;
