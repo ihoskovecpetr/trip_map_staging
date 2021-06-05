@@ -6,13 +6,7 @@ import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { useIsMobile } from "../../Hooks/useIsMobile";
-
-console.log({
-  NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN:
-    process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
-  process_env: process.env,
-  NAme: process.env.MONGO_DB_NAME,
-});
+import produce from "immer";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 let geocoder = new MapboxGeocoder({
@@ -23,7 +17,12 @@ let geocoder = new MapboxGeocoder({
   },
 });
 
-export default function Tab1({ map, setMapCoordinates, nextTab }) {
+export default function Tab1({
+  map,
+  setMapCoordinates,
+  nextTab,
+  setMapTitles,
+}) {
   const { isMobile } = useIsMobile();
 
   useEffect(() => {
@@ -39,23 +38,13 @@ export default function Tab1({ map, setMapCoordinates, nextTab }) {
 
     const placeNameArr = e.result.place_name.split(",");
 
-    setMapTitles(
-      (prev) => ({
-        heading: {
-          size: 14,
-          text: placeNameArr[0] ?? "",
-        },
-        subtitle: {
-          size: 8,
-          text: placeNameArr[placeNameArr.length - 1] ?? "",
-        },
+    setMapTitles((prev) =>
+      produce(prev, (draftState) => {
+        const placeNameArr = e.result.place_name.split(",");
+        console.log("Is there test?? ", draftState);
+        draftState.heading.text = placeNameArr[0] ?? "";
+        draftState.subtitle.text = placeNameArr[placeNameArr.length - 1] ?? "";
       })
-      // produce(prev, (draftState) => {
-      //   const placeNameArr = e.result.place_name.split(",");
-      //   console.log("Is there test?? ", draftState);
-      //   draftState.heading?.text = placeNameArr[0] ?? "";
-      //   draftState.subtitle?.text = placeNameArr[placeNameArr.length - 1] ?? "";
-      // })
     );
 
     const { bbox } = e.result;

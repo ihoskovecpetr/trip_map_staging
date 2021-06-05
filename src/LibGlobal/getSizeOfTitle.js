@@ -14,7 +14,7 @@ const getSizeOfTitle = (heading, subtitle) => {
   fakeSubtitle.innerText = subtitle;
 
   const sizes = [fakeHeading?.offsetWidth, fakeSubtitle?.offsetWidth];
-  console.log({ sizes });
+  console.log({ sizes, max: Math.max(...sizes) });
   return Math.max(...sizes);
 };
 

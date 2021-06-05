@@ -237,8 +237,6 @@ export default function RootContainer() {
     subtitle: { text: TITLES_DEFAULT[1], size: 8 },
   });
 
-  console.log({ mapTitles });
-
   const { height: headerHeight } = useElementDimensions("header");
   const {
     height: mapAvailSpaceHeight,
@@ -319,6 +317,7 @@ export default function RootContainer() {
 
   useEffect(() => {
     mapTitlesRef.current = mapTitles;
+    console.log("mapTitles:: ", mapTitles);
   }, [mapTitles]);
 
   useEffect(() => {
@@ -368,7 +367,14 @@ export default function RootContainer() {
         mapAvailSpaceRef,
       });
     }
-  }, [layout, product, isMobile, mapAvailSpaceHeight, mapAvailSpaceWidth]);
+  }, [
+    layout,
+    product,
+    isMobile,
+    mapAvailSpaceHeight,
+    mapAvailSpaceWidth,
+    mapTitles,
+  ]);
 
   useEffect(() => {
     console.log({
@@ -549,8 +555,7 @@ export default function RootContainer() {
     setMapTitles((prev) =>
       produce(prev, (draftState) => {
         const newValue = e.target.value ?? ""; // ?.toUpperCase()
-        console.log("Set new title .text?? ", { draftState });
-        // draftState[e.target.name].text = newValue;
+        draftState[e.target.name].text = newValue;
         // draftState.heading.text = headlineInput.innerText;
         // draftState.subtitle.text = subtitleInput.innerText;
       })
@@ -581,6 +586,7 @@ export default function RootContainer() {
               mapCoordinates={mapCoordinates}
               setMapCoordinates={setMapCoordinates}
               mapTitles={mapTitles}
+              setMapTitles={setMapTitles}
               product={product}
               setProduct={setProduct}
             />

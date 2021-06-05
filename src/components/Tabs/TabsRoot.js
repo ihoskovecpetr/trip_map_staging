@@ -25,6 +25,7 @@ export default function SetupColumn({
   activeMapStyle,
   setActiveMapStyle,
   mapTitles,
+  setMapTitles,
   product,
   setProduct,
 }) {
@@ -88,6 +89,7 @@ export default function SetupColumn({
             map={map}
             mapCoordinates={mapCoordinates}
             setMapCoordinates={setMapCoordinates}
+            setMapTitles={setMapTitles}
             nextTab={() => handleChange(TAB_VALUES.TWO)}
           />
         </TabContentWrap>
