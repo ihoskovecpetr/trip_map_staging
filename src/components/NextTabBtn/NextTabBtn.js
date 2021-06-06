@@ -76,6 +76,7 @@ const styles = {
     width: "100%",
     display: "flex",
     justifyContent: "center",
+    zIndex: 10,
     // margin: "20px 0",
   },
   btn: {

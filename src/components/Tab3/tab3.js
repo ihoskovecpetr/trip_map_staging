@@ -12,6 +12,7 @@ import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 import { getVersionDescription } from "../../LibGlobal/getVersionDescription";
 import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
+import { ScaleControl } from "mapbox-gl";
 
 const priceAlgorithm = getPriceAlgorithm();
 
@@ -103,6 +104,9 @@ export default function Tab3({
       <div sx={styles.sizeWrap}>
         {dataPrintful &&
           arrSingleSizeNames.map((sizeNameLocal) => {
+            const sizeObject = SIZES.find(
+              (size) => size.code === sizeNameLocal
+            );
             return (
               <div
                 className={
@@ -112,9 +116,8 @@ export default function Tab3({
                 sx={styles.sizeItem}
                 onClick={() => setNewProduct(sizeNameLocal)}
               >
-                <p sx={styles.itemText}>
-                  {SIZES.find((size) => size.code === sizeNameLocal)?.name}
-                </p>
+                <p sx={styles.itemDimensions}>{sizeObject?.name}</p>
+                <p sx={styles.itemUnit}>{sizeObject?.unit}</p>
               </div>
             );
           })}
@@ -211,9 +214,10 @@ const styles = {
     pb: "70px",
   },
   headingDesc: {
-    fontWeight: 700,
+    fontWeight: 500,
     textAlign: "left",
-    margin: "10px",
+    margin: "20px 0",
+    color: "grey",
   },
   TabWrap: {
     display: "flex",
@@ -235,26 +239,39 @@ const styles = {
     justifyContent: "flex-start",
   },
   sizeItem: {
-    margin: "2%",
+    margin: "10px",
     padding: "4px",
-    display: "flex",
-    justifyContent: "space-around",
-    border: "1px solid black",
+    // width: ["31%", "31%", "31%", "31%", "31%", "20%"],
+    // margin: ["1%", "1%", "1%", "1%", "1%", "1%"],
+    border: "1px solid transparent",
     cursor: "pointer",
     backgroundColor: "white",
+    boxShadow: "0 0 5px rgba(0,0,0,0.3)",
     "&.active": {
-      border: "2px solid",
+      border: "1px solid",
       borderColor: "cta_color",
       color: "black",
+      transform: "scale(1.2)",
+      boxShadow: "0 0 8px rgba(0,0,0,0.5)",
     },
     "&.disabled": {
       border: "0px",
       color: "lightGrey",
     },
   },
-  itemText: {
+  itemDimensions: {
     margin: 0,
     paddingTop: "5px",
+    display: "block",
+    textAlign: "center",
+
+    // width: "100%",
+  },
+  itemUnit: {
+    margin: 0,
+    display: "block",
+    textAlign: "center",
+    // width: "100%",
   },
   materialDesc: {
     textAlign: "left",
@@ -283,11 +300,11 @@ const styles = {
     boxShadow: "1px 1px 4px rgba(0,0,0,0.2)",
     // borderRadius: "2px",
     height: "100%",
-    width: ["46%", "31%", "31%", "46%", "46%", "31%"],
-    margin: ["2%", "1%", "1%", "2%", "2%", "1%"],
+    width: ["31%", "31%", "31%", "31%", "31%", "31%"],
+    margin: ["1%", "1%", "1%", "1%", "1%", "1%"],
     // padding: "4px",
     // height: "200px",
-    borderRadius: "10px",
+    // borderRadius: "10px",
     display: "flex",
     cursor: "pointer",
     flexDirection: "column",
@@ -295,10 +312,11 @@ const styles = {
     overflow: "hidden",
 
     "&.active": {
-      border: "2px solid",
+      border: "1px solid",
       borderColor: "cta_color",
-
-      boxShadow: "3px 3px 5px rgba(0,0,0,0.3)",
+      transform: "scale(1.1)",
+      zIndex: 1,
+      boxShadow: "0 0 15px rgba(0,0,0,0.5)",
     },
   },
   imageWrap: {

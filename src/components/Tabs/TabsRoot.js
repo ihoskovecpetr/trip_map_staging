@@ -11,7 +11,7 @@ import Tab2 from "../Tab2/tab2";
 import Tab3 from "../Tab3/tab3";
 
 const TAB_VALUES = {
-  ONE: "LOKALITA",
+  ONE: "MÍSTO & ORIENTACE",
   TWO: "ROZLOŽENÍ & BARVY",
   THREE: "ROZMĚRY & PLATBA",
 };
@@ -90,6 +90,8 @@ export default function SetupColumn({
             mapCoordinates={mapCoordinates}
             setMapCoordinates={setMapCoordinates}
             setMapTitles={setMapTitles}
+            product={product}
+            setProduct={setProduct}
             nextTab={() => handleChange(TAB_VALUES.TWO)}
           />
         </TabContentWrap>
@@ -144,20 +146,22 @@ const styles = {
   Tab: {
     width: "33.33%",
     px: "10px",
-    py: [null, null, "10px"],
+    py: [null, "5px", "10px"],
     display: "flex",
     justifyContent: "center",
     fontWeight: 600,
     color: "rgba(0,0,0,0.35)",
     cursor: "pointer",
     borderBottom: "1px solid lightgrey",
+    backgroundColor: "background_secondary",
+
     "&.active": {
       borderBottom: "2px solid",
-      borderColor: "primary",
-      color: "primary",
+      borderColor: "cta_color",
+      color: "cta_color",
     },
     "&:hover": {
-      backgroundColor: "#00000006",
+      backgroundColor: "#00000016",
     },
     "> p": {
       margin: "auto",

@@ -47,7 +47,8 @@ const ORIENTATIONS = { wide: "wide", tall: "tall" };
 const SIZES = [
   {
     ratio: 30 / 40,
-    name: "30 x 40 cm",
+    name: "30 x 40",
+    unit: "cm",
     code: sizeNames["30X40cm"],
     height: 30,
     width: 40,
@@ -56,7 +57,8 @@ const SIZES = [
   },
   {
     ratio: 40 / 30,
-    name: "40 x 30 cm",
+    name: "40 x 30",
+    unit: "cm",
     code: sizeNames["40X30cm"],
     height: 40,
     width: 30,
@@ -66,7 +68,8 @@ const SIZES = [
 
   {
     ratio: 50 / 70,
-    name: "50 x 70 cm",
+    name: "50 x 70",
+    unit: "cm",
     height: 50,
     width: 70,
     code: sizeNames["50X70cm"],
@@ -75,17 +78,18 @@ const SIZES = [
   },
   {
     ratio: 70 / 50,
-    name: "70 x 50 cm",
+    name: "70 x 50",
+    unit: "cm",
     height: 70,
     width: 50,
     code: sizeNames["70X50cm"],
     orientation: ORIENTATIONS.tall,
     acceptableSizes: [sizeNames["70X50cm"], sizeNames["50X70cm"]],
   },
-
   {
     ratio: 61 / 91,
-    name: "61 x 91 cm",
+    name: "61 x 91",
+    unit: "cm",
     height: 61,
     width: 91,
     code: sizeNames["61X91cm"],
@@ -94,7 +98,8 @@ const SIZES = [
   },
   {
     ratio: 91 / 61,
-    name: "91 x 61 cm",
+    name: "91 x 61",
+    unit: "cm",
     height: 91,
     width: 61,
     code: sizeNames["91X61cm"],

@@ -213,6 +213,8 @@ const styles = {
     position: "fixed",
     top: "85vh",
     left: "0px",
+    zIndex: 10,
+
     width: ["100%", "100%", "100%", "40%", "30%"],
   },
   resultImage: {

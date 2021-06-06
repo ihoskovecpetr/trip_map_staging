@@ -24,20 +24,12 @@ import BlackWhite from "assets/mapStyles/BlackWhite.png";
 import BlackLand from "assets/mapStyles/BlackLand.png";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
 import {
   MAP_STYLES_NAMES,
   LAYOUT_STYLE_NAMES,
   LAYOUTS,
 } from "../../constants/constants";
-
-const isProductWide = (product) => {
-  if (product.sizeObject.ratio < 1) {
-    return true;
-  }
-  return false;
-};
 
 export default function Tab2({
   map,
@@ -55,10 +47,6 @@ export default function Tab2({
 
   const changeActiveStyle = (style) => () => {
     setActiveMapStyle(style);
-  };
-
-  const switchOrientation = () => {
-    orientationSwitcher(product, setProduct);
   };
 
   const getLayoutImg = (frameName) => {
@@ -113,46 +101,10 @@ export default function Tab2({
   return (
     <div sx={styles.container}>
       <Text as="p" className="description" sx={styles.topDescription}>
-        <b>Tip!</b> Pro změnu naspisu a podnadpisu klikněte přímo na mapu
+        <b>Tip!</b> Pro změnu nadpisu a podnadpisu klikněte přímo na mapu
       </Text>
-      <Text as="p" className="description" sx={styles.subHeading}>
-        Orientace
-      </Text>
-      <div sx={styles.orientationWrap}>
-        <div sx={styles.orientationShapeItems}>
-          <div>
-            <div
-              sx={styles.highMock}
-              onClick={switchOrientation}
-              className={!isProductWide(product) && "active"}
-            ></div>
-          </div>
-          <div>
-            <div
-              sx={styles.wideMock}
-              onClick={switchOrientation}
-              className={isProductWide(product) && "active"}
-            ></div>
-          </div>
-        </div>
-        <div sx={styles.textsItems}>
-          <p
-            onClick={switchOrientation}
-            className={!isProductWide(product) && "active"}
-          >
-            Na výšku
-          </p>
 
-          <p
-            onClick={switchOrientation}
-            className={isProductWide(product) && "active"}
-          >
-            Na šířku
-          </p>
-        </div>
-      </div>
-
-      <Text as="p" className="description" sx={styles.subHeading}>
+      <Text as="p" className="description" sx={styles.headingDesc}>
         Layout
       </Text>
       <div sx={styles.layoutWrap}>
@@ -180,7 +132,7 @@ export default function Tab2({
           </>
         ))}
       </div>
-      <Text as="p" className="description" sx={styles.subHeading}>
+      <Text as="p" className="description" sx={styles.headingDesc}>
         Barevná kombinace
       </Text>
       <div sx={styles.stylesWrap}>
@@ -220,60 +172,6 @@ const styles = {
     padding: "10px",
     pb: "90px",
   },
-  orientationWrap: {
-    display: "flex",
-    width: "100%",
-    flexWrap: "wrap",
-  },
-  orientationShapeItems: {
-    width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    "> div": {
-      width: "30%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    "> div > div": {
-      cursor: "pointer",
-    },
-    "> div > div.active": {
-      border: "2px solid",
-      borderColor: "cta_color",
-      pointerEvents: "none",
-      cursor: "default",
-    },
-  },
-  highMock: {
-    border: "1px solid black",
-    height: "50px",
-    width: "25px",
-    backgroundColor: "white",
-  },
-  wideMock: {
-    border: "1px solid black",
-    height: "25px",
-    width: "50px",
-    backgroundColor: "white",
-  },
-
-  textsItems: {
-    width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    "> p": {
-      my: 1,
-      cursor: "pointer",
-    },
-    "> p.active": {
-      color: "cta_color",
-      pointerEvents: "none",
-      cursor: "default",
-    },
-  },
 
   layoutWrap: {
     display: "flex",
@@ -294,6 +192,7 @@ const styles = {
       border: "2px solid",
       borderColor: "cta_color",
       boxShadow: "3px 3px 5px #888888",
+      transform: "scale(1.1)",
     },
     "&.active p": {
       color: "cta_color",
@@ -338,6 +237,7 @@ const styles = {
       border: "3px solid",
       borderColor: "cta_color",
       padding: "3px",
+      transform: "scale(1.2)",
     },
     "&.active p": {
       color: "cta_color",
@@ -350,6 +250,7 @@ const styles = {
     marginTop: "5px",
     textAlign: "center",
     verticalAlign: "middle",
+    lineHeight: 1.2,
   },
   roundImage: {
     // filter: "drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.16))",
@@ -364,8 +265,10 @@ const styles = {
     margin: "20px 0px",
     fontWeight: 300,
   },
-  subHeading: {
-    fontWeight: 600,
+  headingDesc: {
+    fontWeight: 500,
     textAlign: "left",
+    color: "grey",
+    margin: "20px 0",
   },
 };

@@ -10,7 +10,7 @@
 .mapboxgl-control-container {
   position: fixed;
   bottom: 0;
-  width: 80%;
+  width: 60%;
 }
 
 #map {
