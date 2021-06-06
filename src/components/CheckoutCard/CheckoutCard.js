@@ -170,7 +170,7 @@ export default function CheckoutCard({
       <div sx={styles.bottomCtaContainer}>
         <NextTabBtn
           width="90%"
-          // onClick={() => redirectToCheckout()}
+          onClick={() => redirectToCheckout()}
           isLoadingOnClick
           isDisabled={isUploadPending}
           disabledText={"Ukládám výsledný design"}

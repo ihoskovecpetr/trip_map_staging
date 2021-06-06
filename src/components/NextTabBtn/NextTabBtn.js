@@ -39,7 +39,7 @@ function NextTabBtn({
     if (isLoadingOnClick) {
       setIsLoading(true);
     }
-    // onClick();
+    onClick();
   }
 
   return (
@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 NextTabBtn.propTypes = {
-  onClick: func, //.isRequried
+  onClick: func.isRequried,
   children: node.isRequired,
   width: string,
   isLoadingOnClick: bool,
