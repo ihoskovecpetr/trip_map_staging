@@ -154,10 +154,9 @@ export default function Tab1({
 
 const styles = {
   container: {
-    padding: "10px",
     width: "100%",
     overflow: "visible",
-    padding: "20px",
+    padding: "0 10px",
     minHeight: "100vh",
   },
   headingDesc: {
@@ -165,12 +164,14 @@ const styles = {
     textAlign: "left",
     color: "grey",
     margin: "20px 0",
+    letterSpacing: "1.1px",
   },
 
   orientationWrap: {
     display: "flex",
     width: "100%",
     flexWrap: "wrap",
+    marginBottom: "10px",
   },
   orientationShapeItems: {
     width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
@@ -193,6 +194,7 @@ const styles = {
       pointerEvents: "none",
       cursor: "default",
       boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+      transform: "scale(1.2)",
     },
   },
   highMock: {
@@ -213,6 +215,10 @@ const styles = {
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
+    letterSpacing: "1.1px",
+    fontWeight: "100",
+    textTransform: "uppercase",
+    fontSize: "14px",
     "> p": {
       my: 1,
       cursor: "pointer",

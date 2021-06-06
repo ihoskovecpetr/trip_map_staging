@@ -123,11 +123,11 @@ export default function Tab2({
                 }}
               >
                 <img
-                  sx={styles.frameImage}
+                  sx={styles.layoutImage}
                   src={getLayoutImg(layoutObj.name)}
                 />
               </div>
-              <p sx={styles.itemText}>{layoutObj.name}</p>
+              <p sx={styles.layoutItemText}>{layoutObj.name}</p>
             </div>
           </>
         ))}
@@ -140,7 +140,7 @@ export default function Tab2({
           <>
             <div
               className={activeMapStyle === style && "active"}
-              sx={styles.mapDesignItem}
+              sx={styles.mapColorsItem}
               onClick={changeActiveStyle(style)}
             >
               <div
@@ -169,8 +169,24 @@ export default function Tab2({
 const styles = {
   container: {
     width: "100%",
-    padding: "10px",
+    padding: "0 10px",
     pb: "90px",
+  },
+
+  topDescription: {
+    margin: "20px 0px",
+    fontWeight: 100,
+    "& b": {
+      color: "grey",
+      fontWeight: 500,
+    },
+  },
+  headingDesc: {
+    fontWeight: 500,
+    textAlign: "left",
+    color: "grey",
+    margin: "20px 0",
+    letterSpacing: "1.1px",
   },
 
   layoutWrap: {
@@ -192,41 +208,36 @@ const styles = {
       border: "2px solid",
       borderColor: "cta_color",
       boxShadow: "3px 3px 5px #888888",
-      transform: "scale(1.1)",
+      transform: "scale(1.2)",
     },
     "&.active p": {
       color: "cta_color",
     },
   },
-  absoluteBtnWrap: {
-    position: "fixed",
-    top: ["85vh", "85vh", "85vh", "90vh"],
-    left: "0px",
-    height: 0,
-    width: ["100%", "100%", "100%", "40%", "30%"],
-  },
-  frameImage: {
+  layoutImage: {
     height: "60px",
     boxShadow: "3px 3px 5px #888888",
     border: "1px solid grey",
   },
-  itemText: {
-    // width: "40%",
-    // wordBreak: "break-all",
+  layoutItemText: {
     overflow: "hidden",
     height: "100%",
     margin: "0",
-    marginTop: "5px",
+    marginTop: "10px",
     textAlign: "center",
     verticalAlign: "middle",
     lineHeight: "100%",
+    letterSpacing: "1.1px",
+    fontWeight: "100",
+    textTransform: "uppercase",
+    fontSize: "14px",
   },
   stylesWrap: {
     display: "flex",
     width: "100%",
     flexWrap: "wrap",
   },
-  mapDesignItem: {
+  mapColorsItem: {
     width: ["30%", "23%", "23%", "30%"],
     margin: ["1%", "1%", "1%", "1%"],
     padding: "4px",
@@ -237,7 +248,7 @@ const styles = {
       border: "3px solid",
       borderColor: "cta_color",
       padding: "3px",
-      transform: "scale(1.2)",
+      transform: "scale(1.3)",
     },
     "&.active p": {
       color: "cta_color",
@@ -247,10 +258,14 @@ const styles = {
     overflow: "hidden",
     height: "100%",
     margin: "0",
-    marginTop: "5px",
+    marginTop: "10px",
     textAlign: "center",
     verticalAlign: "middle",
     lineHeight: 1.2,
+    letterSpacing: "1.1px",
+    fontWeight: "100",
+    textTransform: "uppercase",
+    fontSize: "14px",
   },
   roundImage: {
     // filter: "drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.16))",
@@ -261,14 +276,11 @@ const styles = {
     boxShadow: "1px 1px 3px rgba(200,200,200,0.99)",
   },
 
-  topDescription: {
-    margin: "20px 0px",
-    fontWeight: 300,
-  },
-  headingDesc: {
-    fontWeight: 500,
-    textAlign: "left",
-    color: "grey",
-    margin: "20px 0",
+  absoluteBtnWrap: {
+    position: "fixed",
+    top: ["85vh", "85vh", "85vh", "90vh"],
+    left: "0px",
+    height: 0,
+    width: ["100%", "100%", "100%", "40%", "30%"],
   },
 };

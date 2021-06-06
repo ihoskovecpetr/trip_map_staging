@@ -44,14 +44,17 @@ export default function CostsTable({
 
 function CostItem({ name, price, isLargePrice }) {
   return (
-    <ItemWrap>
-      <CostNameP>{name}</CostNameP>
-      <div sx={styles.itemText}>
-        <CostP isLargePrice={isLargePrice}>
+    <div sx={styles.itemWrap}>
+      <p>
+        <StyedDescSpan>{name}</StyedDescSpan>
+      </p>
+
+      <p sx={styles.itemCost}>
+        <StyledPriceSpan isLargePrice={isLargePrice}>
           {price ? getFormattedPrice(price) : "ZJIŠTUJI..."}
-        </CostP>
-      </div>
-    </ItemWrap>
+        </StyledPriceSpan>
+      </p>
+    </div>
   );
 }
 
@@ -60,23 +63,34 @@ const ItemWrap = styled.div`
   justify-content: space-between;
   width: 100%;
 `;
-const CostNameP = styled.p`
-  font-size: 0.8rem;
-  font-weight: 400;
+const StyedDescSpan = styled.span`
+  font-size: 0.6rem;
+  font-weight: 600;
   color: grey;
+  vertical-align: middle;
 `;
 
-const CostP = styled.p`
+const StyledPriceSpan = styled.span`
+  vertical-align: middle;
   font-size: ${({ isLargePrice }) => (isLargePrice ? "1rem" : "0.8rem")};
   font-weight: 600;
 `;
 
 const styles = {
+  itemWrap: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+    "&:first-child": {},
+    "&:last-child": {
+      color: "primary",
+    },
+  },
   costsWrap: {
     borderBottom: "1px solid lightGrey",
     py: "5px",
   },
-  itemText: {
+  itemCost: {
     color: "primary",
   },
 };

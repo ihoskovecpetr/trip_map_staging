@@ -84,6 +84,7 @@ export default function SetupColumn({
         <TabContentWrap
           className={activeTab === TAB_VALUES.ONE && "active"}
           sx={styles.tabBody}
+          headerHeight={headerHeight}
         >
           <Tab1
             map={map}
@@ -171,7 +172,7 @@ const styles = {
     },
   },
   tabBody: {
-    paddingTop: ["50px", "50px", "60px", "80px"],
+    paddingTop: ["70px", "70px", "70px", "80px"],
     display: "none",
     height: ["unset", "unset", "100%"],
     overflow: "scroll",

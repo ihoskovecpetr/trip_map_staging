@@ -101,8 +101,15 @@ export default function Tab3({
         Rozměry
       </Text>
 
+      {variantsPrintfulForSize.length === 0 && (
+        <div sx={styles.loaderWrap}>
+          <CustomLoader />
+        </div>
+      )}
+
       <div sx={styles.sizeWrap}>
-        {dataPrintful &&
+        {variantsPrintfulForSize.length > 0 &&
+          dataPrintful &&
           arrSingleSizeNames.map((sizeNameLocal) => {
             const sizeObject = SIZES.find(
               (size) => size.code === sizeNameLocal
@@ -117,7 +124,7 @@ export default function Tab3({
                 onClick={() => setNewProduct(sizeNameLocal)}
               >
                 <p sx={styles.itemDimensions}>{sizeObject?.name}</p>
-                <p sx={styles.itemUnit}>{sizeObject?.unit}</p>
+                <p sx={styles.itemUnit}>[{sizeObject?.unit}]</p>
               </div>
             );
           })}
@@ -210,7 +217,7 @@ export default function Tab3({
 const styles = {
   container: {
     width: "100%",
-    padding: "10px",
+    padding: "0 10px",
     pb: "70px",
   },
   headingDesc: {
@@ -218,6 +225,7 @@ const styles = {
     textAlign: "left",
     margin: "20px 0",
     color: "grey",
+    letterSpacing: "1.1px",
   },
   TabWrap: {
     display: "flex",
@@ -271,7 +279,8 @@ const styles = {
     margin: 0,
     display: "block",
     textAlign: "center",
-    // width: "100%",
+    textTransform: "uppercase",
+    fontSize: "10px",
   },
   materialDesc: {
     textAlign: "left",

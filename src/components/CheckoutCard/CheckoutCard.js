@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import Lightbox from "react-image-lightbox";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, styled } from "@material-ui/core/styles";
 import CustomLoader from "../CustomLoader";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -144,7 +144,7 @@ export default function CheckoutCard({
           </div>
         </div>
         <div sx={styles.picture_description}>
-          <p style={{ color: "white" }}> {percentageUpload} %</p>
+          <p sx={styles.uploadingCount}>UPLOADING {percentageUpload} %</p>
           <p sx={styles.subName}>
             {isUploadPending
               ? "Ukládám design v tiskové kvalitě"
@@ -170,7 +170,7 @@ export default function CheckoutCard({
       <div sx={styles.bottomCtaContainer}>
         <NextTabBtn
           width="90%"
-          onClick={() => redirectToCheckout()}
+          // onClick={() => redirectToCheckout()}
           isLoadingOnClick
           isDisabled={isUploadPending}
           disabledText={"Ukládám výsledný design"}
@@ -258,6 +258,12 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     textAlign: "left",
+  },
+  uploadingCount: {
+    color: "white",
+    fontWeight: "100",
+    letterSpacing: "1.2px",
+    fontSize: "14px",
   },
   subName: {
     textAlign: "left",

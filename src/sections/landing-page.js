@@ -12,8 +12,8 @@ import InterierBlack from "assets/landing-page/interier_black.webp";
 import FramedPicture from "assets/landing-page/FramedPicture.webp";
 import FramedPictureBack from "assets/landing-page/FramedPicBack.webp";
 
-import Briefcase from "assets/landing-page/briefcase.svg";
-import Secure from "assets/landing-page/secure.svg";
+import Briefcase from "assets/landing-page/briefcaseBlack.svg";
+import Secure from "assets/landing-page/secureBlack.svg";
 
 const data = {
   subTitle: "",
@@ -106,8 +106,8 @@ export default function LandingPage() {
 function Cta() {
   return (
     <Box sx={styles.ctaBox}>
-      <Link href={"/studio"} sx={styles.cta} variant="default">
-        <Button variant="primary" sx={styles.btn} aria-label={"btnName"}>
+      <Link href={"/studio"} sx={styles.ctaLink} variant="default">
+        <Button variant="primary" sx={styles.ctaButton} aria-label={"btnName"}>
           ZAČNI TVOŘIT
         </Button>
       </Link>
@@ -209,15 +209,15 @@ const styles = {
     width: ["100%", "85%", null, "100%"],
     // boxShadow: "4px 4px 8px rgba(69, 88, 157, 0.07)",
     mx: "auto",
-    "&:hover": {
-      boxShadow: [
-        "0px 0px 0px rgba(0, 0, 0, 0)",
-        null,
-        null,
-        null,
-        "0px 8px 16px rgba(69, 88, 157, 0.07)",
-      ],
-    },
+    // "&:hover": {
+    //   boxShadow: [
+    //     "0px 0px 0px rgba(0, 0, 0, 0)",
+    //     null,
+    //     null,
+    //     null,
+    //     "0px 8px 16px rgba(69, 88, 157, 0.07)",
+    //   ],
+    // },
   },
 
   ctaOnlyLarge: {
@@ -233,23 +233,24 @@ const styles = {
   },
   ctaBox: {
     // width: "100%",
-    p: "2rem",
-    marginBottom: "3rem",
+    p: "2rem 0",
+    marginBottom: ["3rem", "3rem", 0],
     // display: "flex",
     // justifyContent: "center",
     // backgroundImage: ["none", "none", "none", "block"],
   },
 
-  btn: {
+  ctaButton: {
     pointerEvents: "all",
     backgroundColor: "cta_color",
     fontSize: "1rem !important",
     p: "1rem 1.5rem",
+    letterSpacing: "1.5px",
     width: "100%",
-    borderRadius: "10px",
+    borderRadius: "0px",
   },
 
-  cta: {
+  ctaLink: {
     cursor: "pointer",
     display: "flex",
     justify: "center",

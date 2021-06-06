@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import React, { useEffect, useState } from "react";
-import { jsx, Text, Button, Link } from "theme-ui";
+import { jsx } from "theme-ui";
 import { makeStyles } from "@material-ui/core/styles";
+import { string, bool, number, func, node } from "prop-types";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
@@ -10,10 +11,10 @@ const getFormatedPriceString = (amount) => {
   return amount ? `| ${getFormattedPrice(amount)}` : "";
 };
 
-export default function NextTabBtn({
+function NextTabBtn({
   onClick,
-  width = "90%",
   children,
+  width = "90%",
   isLoadingOnClick,
   isDisabled,
   disabledText,
@@ -38,13 +39,13 @@ export default function NextTabBtn({
     if (isLoadingOnClick) {
       setIsLoading(true);
     }
-    onClick();
+    // onClick();
   }
 
   return (
     <div sx={styles.container} style={{ margin: margin }}>
       <div
-        sx={styles.btn}
+        sx={styles.button}
         style={{
           width: width,
           backgroundColor: isDisabled && "lightGrey",
@@ -79,13 +80,15 @@ const styles = {
     zIndex: 10,
     // margin: "20px 0",
   },
-  btn: {
+  button: {
     backgroundColor: "cta_color",
     color: "white",
     padding: "10px",
     textAlign: "center",
     cursor: "pointer",
-    fontWeight: "600",
+    fontWeight: "200",
+    textTransform: "uppercase",
+    letterSpacing: "1.5px",
   },
   priceText: {
     color: "primary",
@@ -99,3 +102,16 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
 }));
+
+NextTabBtn.propTypes = {
+  onClick: func, //.isRequried
+  children: node.isRequired,
+  width: string,
+  isLoadingOnClick: bool,
+  isDisabled: bool,
+  disabledText: bool,
+  margin: string,
+  price: number,
+};
+
+export default NextTabBtn;

@@ -60,8 +60,8 @@ const DetailItemWrap = styled.div`
 `;
 
 const ItemName = styled.p`
-  font-size: 0.8rem;
-  font-weight: 400;
+  font-size: 0.6rem;
+  font-weight: 600;
   color: grey;
   text-transform: uppercase;
 `;
@@ -92,5 +92,7 @@ const styles = {
   },
   itemText: {
     color: "primary",
+    textTransform: "uppercase",
+    letterSpacing: "1.2px",
   },
 };

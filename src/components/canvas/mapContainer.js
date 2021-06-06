@@ -81,6 +81,7 @@ const BNT_RADIUS = 4;
 const styles = {
   canvas_bg: {
     px: "0 !important",
+    pb: "20px",
     display: "flex",
     flexDirection: "column",
     // justifyContent: "center",
