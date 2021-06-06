@@ -123,7 +123,7 @@ export default function Tab3Checkout({
 
       if (response.data.secure_url) {
         console.log("✅ successful upload!");
-        toast("Info: ✔️ uloženo, můžete pokračovat", {
+        toast(" ✔️ uloženo, můžete pokračovat", {
           type: "success",
           position: "top-left",
         });
