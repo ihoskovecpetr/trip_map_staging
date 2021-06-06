@@ -35,6 +35,7 @@ import {
 const mapStyles = require.context("assets/MAPS_MAPBOX", true);
 
 let map;
+let trueMapCanvasElement;
 let layoutCanvas;
 let frameDiv;
 let inputWrap;
@@ -65,6 +66,8 @@ const resizeLayout = ({
   cvsLayout.setAttribute("height", cvsMap.height);
 
   var ctxFrame = cvsLayout.getContext("2d");
+  console.log("Resizing_Layout");
+  console.log({ LayoutWidth: cvsMap.width, LayoutHeight: cvsMap.height });
 
   drawLayout(ctxFrame, {
     width: cvsMap.width,
@@ -78,8 +81,10 @@ const resizeLayout = ({
     position: "absolute",
     pointerEvents: "none",
     display: "block",
-    width: `${cvsMap.width / CURRENT_PIXEL_RATIO}px`,
-    height: `${cvsMap.height / CURRENT_PIXEL_RATIO}px`,
+    top: 0,
+    left: 0,
+    width: `${cvsMap.width / CURRENT_PIXEL_RATIO + 1}px`,
+    height: `${cvsMap.height / CURRENT_PIXEL_RATIO + 1}px`,
   });
 };
 
@@ -107,24 +112,18 @@ const resizeFrameDiv = ({ productRef, baseLongSize, mapAvailSpaceRef }) => {
     const extraFrame =
       (baseLongSize * frameWidthKoefficient) / CURRENT_PIXEL_RATIO;
 
-    console.log({
-      extraFrame,
-      baseLongSize,
-      CURRENT_PIXEL_RATIO,
-    });
-
-    Object.assign(frameDiv.style, {
-      position: "absolute",
-      pointerEvents: "none",
-      display: "block",
-      boxShadow: "0px 0px 35px rgba(116, 116, 116, 1)",
-      // top: `-${extraFrame}px`,
-      // left: `-${extraFrame}px`,
-      top: 0,
-      left: 0,
+    Object.assign(trueMapCanvasElement.style, {
+      // position: "absolute",
+      // pointerEvents: "none",
+      // display: "block",
+      // boxShadow: "0px 0px 35px rgba(116, 116, 116, 1)",
+      // // top: `-${extraFrame}px`,
+      // // left: `-${extraFrame}px`,
+      // top: 0,
+      // left: 0,
       outline: `${extraFrame + 0}px solid ${framedVariantObj.frameColor}`,
-      width: updWidth ? `${Math.floor(updWidth)}px` : 0,
-      height: updHeight ? `${Math.floor(updHeight)}px` : 0,
+      // width: updWidth ? `${Math.floor(updWidth)}px` : 0,
+      // height: updHeight ? `${Math.floor(updHeight)}px` : 0,
     });
   }
 };
@@ -412,7 +411,20 @@ export default function RootContainer() {
 
       canvasMap = map.getCanvas();
       ctxMap = canvasMap.getContext("webgl");
-      const mapElement = document.getElementById("map");
+      const mapWrapDivElement = document.getElementById("map");
+      trueMapCanvasElement = document.getElementsByClassName(
+        "mapboxgl-canvas"
+      )[0];
+
+      const mapCanvasWrapElement = document.getElementsByClassName(
+        "mapboxgl-canvas-container"
+      )[0];
+      mapCanvasWrapElement.style.position = "relative";
+
+      console.log({
+        mapCanvasWrapElement,
+        trueMapCanvasElement,
+      });
 
       const existingLayoutCanvas = document.getElementById("layout_canvas");
       if (existingLayoutCanvas) {
@@ -460,9 +472,9 @@ export default function RootContainer() {
           paddingWidth,
         });
 
-        mapElement.appendChild(frameDiv);
-        mapElement.appendChild(layoutCanvas);
-        mapElement.appendChild(inputWrap);
+        mapWrapDivElement.appendChild(inputWrap);
+        // mapCanvasWrapElement.appendChild(frameDiv);
+        mapCanvasWrapElement.appendChild(layoutCanvas);
 
         resizeInputsWrap({ productRef, layout, canvasMap });
         // inputWrap.appendChild(inputWrapDynamicSize);

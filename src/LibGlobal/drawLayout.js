@@ -157,10 +157,11 @@ export function drawLayout(
 function drawFrame(ctx, elWidth, elHeight, frWd, color) {
   // ctx.lineWidth = 7;
   ctx.fillStyle = color;
-  ctx.fillRect(0, 0, frWd, elHeight);
-  ctx.fillRect(0, 0, elWidth, frWd);
-  ctx.fillRect(elWidth - frWd, 0, frWd, elHeight);
-  ctx.fillRect(0, elHeight - frWd, elWidth, frWd);
+  ctx.fillRect(0, 0, frWd, elHeight + 2);
+  ctx.fillRect(0, 0, elWidth, frWd + 2);
+
+  ctx.fillRect(elWidth - frWd, 0, frWd + 2, elHeight);
+  ctx.fillRect(0, elHeight - frWd, elWidth, frWd + 2);
   ctx.stroke();
 }
 
