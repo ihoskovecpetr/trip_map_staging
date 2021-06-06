@@ -8,14 +8,14 @@ import styled from "styled-components";
 
 import LandingPagePicture from "assets/landing-page/landing_page_bg_double.png";
 import LandingPageBg from "assets/landing-page/landing_photo_bg.png";
-import InterierFlowers from "assets/landing-page/interier_flowers.webp";
-import InterierBlack from "assets/landing-page/interier_black.webp";
+import InterierBlack from "assets/landing-page/landing_img_1.png";
 import FramedPicture from "assets/landing-page/FramedPicture.webp";
 import FramedPictureBack from "assets/landing-page/FramedPicBack.webp";
 
 import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
 import { useElementDimensions } from "../Hooks/useElementDimensions";
+import { useIsMobile } from "../Hooks/useIsMobile";
 
 const data = {
   subTitle: "",
@@ -42,17 +42,21 @@ const data = {
 
 export default function LandingPage() {
   const { height: headerHeight } = useElementDimensions("header");
+  const { isMobile } = useIsMobile();
 
   return (
     <section sx={styles.sectionContainer}>
       <div sx={styles.backgroundDiv} />
-      {/* <Box sx={styles.pureCtaBox}>
+      <Box sx={styles.pureCtaBox}>
         <Cta />
-      </Box> */}
+      </Box>
       <Container sx={styles.containerBox}>
-        <div sx={styles.onlyMobile}>
-          <MobileTopPadding headerHeight={headerHeight} />
-        </div>
+        {isMobile && (
+          <div sx={styles.onlyMobile}>
+            <MobileTopPadding headerHeight={headerHeight} />
+          </div>
+        )}
+
         <Box sx={styles.carouselBox}>
           {/* <Image
             sx={styles.landingImage}
@@ -128,25 +132,25 @@ const MobileTopPadding = styled.div`
 
 const styles = {
   sectionContainer: {
-    py: [null, null, 9, null, null, 10],
-    // pt: [8, null],
-    px: [0, 0, null],
+    py: [null, null, null, 9, null, 10],
+    pt: [0, null, 10],
+    // px: [0, 0, null],
     // pointerEvents: "none",
     position: "relative",
-    "&::before": {
-      position: "absolute",
-      content: '""',
-      top: ["auto", null, null, "50%"],
-      bottom: ["100px", 0, null, "auto"],
-      left: 0,
-      background: "linear-gradient(-157deg, #F6FAFD, #F9FCFC, #FCFDFC)",
-      height: [350, 550, "60%"],
-      width: "50%",
-      zIndex: -1,
-      borderTopRightRadius: "50%",
-      borderBottomRightRadius: "50%",
-      transform: ["translateY(0)", null, null, "translateY(-50%)"],
-    },
+    // "&::before": {
+    //   position: "absolute",
+    //   content: '""',
+    //   top: ["auto", null, null, "50%"],
+    //   bottom: ["100px", 0, null, "auto"],
+    //   left: 0,
+    //   background: "linear-gradient(-157deg, #F6FAFD, #F9FCFC, #FCFDFC)",
+    //   height: [350, 550, "60%"],
+    //   width: "50%",
+    //   zIndex: -1,
+    //   borderTopRightRadius: "50%",
+    //   borderBottomRightRadius: "50%",
+    //   transform: ["translateY(0)", null, null, "translateY(-50%)"],
+    // },
 
     // backgroundImage: [`url(${LandingPageBg})`, null, `none`],
     // backgroundRepeat: "no-repeat",
@@ -159,7 +163,6 @@ const styles = {
   },
   backgroundDiv: {
     height: ["100vh", "100vh", "unset"],
-    pt: [7, null],
     width: "100%",
     zIndex: -1,
     position: "absolute",
@@ -170,17 +173,18 @@ const styles = {
     backgroundOrigin: "content-box",
   },
   containerBox: {
+    p: [0, 0],
     display: "flex",
     height: ["100%", "100%", "unset"],
     alignItems: ["center"],
-    justifyContent: ["flex-end"], //"space-between"
+    justifyContent: ["space-around"], //"space-between"
     flexDirection: ["column", null, "row"],
   },
   carouselBox: {
-    width: ["100%", 450, 350, 350, 500, 570],
+    width: ["100%", "100%", 450, 350, 350, 500, 570],
     height: "100%",
-    pl: [0, 5, 0, null, 7, 95],
-    pr: [0, 5, null, null, null, 75, 95],
+    pl: [0, 0, 5, null, 7, 95],
+    pr: [0, 0, 5, null, null, 75, 95],
     order: [0, null, null, 0],
     // display: ["none", null, "block"],
     display: "block",
@@ -246,6 +250,9 @@ const styles = {
     alignItems: "flex-end",
     flexWrap: "wrap",
     height: "100vh",
+    width: "100%",
+    position: "absolute",
+    zIndex: 100,
   },
   ctaBox: {
     // width: "100%",
