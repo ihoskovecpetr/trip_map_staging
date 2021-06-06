@@ -574,7 +574,7 @@ export default function RootContainer() {
     );
   };
 
-  console.log("Rerender rootContainer");
+  console.log("Rerender_rootContainer");
 
   return (
     <section sx={{ marginTop: headerHeight }}>

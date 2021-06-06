@@ -4,6 +4,7 @@ import Link from "next/link";
 import TextFeature from "components/text-feature";
 import Image from "components/image";
 import Carousel from "nuka-carousel";
+import styled from "styled-components";
 
 import LandingPagePicture from "assets/landing-page/landing_page_bg_double.png";
 import LandingPageBg from "assets/landing-page/landing_photo_bg.png";
@@ -14,6 +15,7 @@ import FramedPictureBack from "assets/landing-page/FramedPicBack.webp";
 
 import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
+import { useElementDimensions } from "../Hooks/useElementDimensions";
 
 const data = {
   subTitle: "",
@@ -39,14 +41,19 @@ const data = {
 };
 
 export default function LandingPage() {
+  const { height: headerHeight } = useElementDimensions("header");
+
   return (
     <section sx={styles.sectionContainer}>
       <div sx={styles.backgroundDiv} />
-      <Box sx={styles.pureCtaBox}>
+      {/* <Box sx={styles.pureCtaBox}>
         <Cta />
-      </Box>
+      </Box> */}
       <Container sx={styles.containerBox}>
-        <Box sx={styles.thumbnail}>
+        <div sx={styles.onlyMobile}>
+          <MobileTopPadding headerHeight={headerHeight} />
+        </div>
+        <Box sx={styles.carouselBox}>
           {/* <Image
             sx={styles.landingImage}
             src={LandingPagePicture}
@@ -115,10 +122,15 @@ function Cta() {
   );
 }
 
+const MobileTopPadding = styled.div`
+  height: ${({ headerHeight }) => `${headerHeight}px`};
+`;
+
 const styles = {
   sectionContainer: {
     py: [null, null, 9, null, null, 10],
     // pt: [8, null],
+    px: [0, 0, null],
     // pointerEvents: "none",
     position: "relative",
     "&::before": {
@@ -142,6 +154,9 @@ const styles = {
     // boxShadow: ["inset 0 0 0 2000px rgba(255, 255, 255, 0.1)", null, "unset"],
     // backgroundOrigin: "content-box",
   },
+  onlyMobile: {
+    display: ["block", null, "none"],
+  },
   backgroundDiv: {
     height: ["100vh", "100vh", "unset"],
     pt: [7, null],
@@ -161,13 +176,14 @@ const styles = {
     justifyContent: ["flex-end"], //"space-between"
     flexDirection: ["column", null, "row"],
   },
-  thumbnail: {
+  carouselBox: {
     width: ["100%", 450, 350, 350, 500, 570],
     height: "100%",
     pl: [0, 5, 0, null, 7, 95],
     pr: [0, 5, null, null, null, 75, 95],
     order: [0, null, null, 0],
-    display: ["none", null, "block"],
+    // display: ["none", null, "block"],
+    display: "block",
   },
   landingImage: {},
   landingCarousel: {

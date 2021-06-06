@@ -107,6 +107,7 @@ const styles = {
     // marginTop: "10px",
   },
   map: {
+    position: "relative",
     overflow: "initial",
     width: "100%",
     height: "100%",
