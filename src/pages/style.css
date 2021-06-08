@@ -11,8 +11,15 @@
 .mapboxgl-control-container {
   position: fixed;
   bottom: 0;
-  right: 0;
+  right: 100px;
   /* width: 60%; */
+}
+.mapboxgl-ctrl-bottom-right {
+  transform: scale(0.8) translateY(5px);
+}
+
+.mapboxgl-ctrl-bottom-left {
+  transform: scale(0.8);
 }
 
 #map {

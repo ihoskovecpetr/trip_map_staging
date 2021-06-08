@@ -82,6 +82,7 @@ export default function Tab1({
     }
 
     geocoder.clear(); // to remove blue dot
+    document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].blur();
   };
 
   const switchOrientation = () => {
@@ -139,7 +140,7 @@ export default function Tab1({
         </div>
       </div>
 
-      <NextTabBtn
+      {/* <NextTabBtn
         onClick={() => {
           nextTab();
         }}
@@ -147,7 +148,17 @@ export default function Tab1({
         margin="0px 0px"
       >
         Další krok
-      </NextTabBtn>
+      </NextTabBtn> */}
+      <div sx={styles.absoluteBtnWrap}>
+        <NextTabBtn
+          onClick={() => {
+            nextTab();
+          }}
+          margin="20px 0px 75px"
+        >
+          Další krok
+        </NextTabBtn>
+      </div>
     </div>
   );
 }
@@ -155,9 +166,9 @@ export default function Tab1({
 const styles = {
   container: {
     width: "100%",
-    overflow: "visible",
     padding: "0 10px",
-    minHeight: "100vh",
+    pb: "90px",
+    position: "relative",
   },
   headingDesc: {
     fontWeight: 500,
@@ -174,7 +185,7 @@ const styles = {
     marginBottom: "10px",
   },
   orientationShapeItems: {
-    width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
+    width: ["100%", "60%", "60%", "100%", "100%", "100%", "100%"],
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
@@ -211,7 +222,7 @@ const styles = {
   },
 
   textsItems: {
-    width: ["100%", "60%", "60%", "100%", "80%", "80%", "60%"],
+    width: ["100%", "60%", "60%", "100%", "100%", "100%", "100%"],
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
@@ -252,5 +263,12 @@ const styles = {
       width: "100%",
       maxWidth: "100%",
     },
+  },
+  absoluteBtnWrap: {
+    position: "fixed",
+    top: ["85vh", "85vh", "85vh", "90vh"],
+    left: "0px",
+    height: 0,
+    width: ["100%", "100%", "100%", "40%", "30%"],
   },
 };
