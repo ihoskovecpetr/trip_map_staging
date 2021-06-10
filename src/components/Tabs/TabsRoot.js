@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { jsx, Box, Heading, Text, Button, Link } from "theme-ui";
 import styled from "styled-components";
+import { makeStyles } from "@material-ui/core/styles";
+import Backdrop from "@material-ui/core/Backdrop";
 
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useElementDimensions } from "../../Hooks/useElementDimensions";
@@ -31,6 +33,8 @@ export default function SetupColumn({
 }) {
   const [activeTab, setActiveTab] = useState(TAB_VALUES.ONE);
   const { isMobile } = useIsMobile();
+  const [isSetupRolledUp, setIsSetupRolledUp] = useState(true);
+  const classes = useStyles();
 
   const { height: headerHeight } = useElementDimensions("header");
 
@@ -46,6 +50,8 @@ export default function SetupColumn({
     //   behavior: "smooth",
     // });
 
+    setIsSetupRolledUp(true);
+
     setActiveTab(newValue);
     // window.setTimeout(function () {
     // }, 500);
@@ -54,8 +60,8 @@ export default function SetupColumn({
   };
 
   return (
-    <div sx={{ width: "100%", height: "100%" }}>
-      <div sx={styles.TabWrapWrap} id="tab_wrap_wrap">
+    <div sx={styles.container} className={isSetupRolledUp && "open"}>
+      <div sx={styles.tabWrapWrap} id="tab_wrap_wrap">
         <div sx={styles.TabWrap}>
           <div
             sx={styles.Tab}
@@ -129,14 +135,32 @@ export default function SetupColumn({
           />
         </TabContentWrap>
       )}
+      <Backdrop
+        className={classes.backdrop}
+        classes={{
+          root: classes.rootBackdrop, // class name, e.g. `classes-nesting-root-x`
+        }}
+        open={isSetupRolledUp}
+        onClick={() => setIsSetupRolledUp(false)}
+      ></Backdrop>
     </div>
   );
 }
 
 const styles = {
-  TabWrapWrap: {
-    position: "relative",
+  container: {
+    width: "100%",
+    height: "100%",
     zIndex: 10,
+
+    "&.open": {
+      height: "60vh",
+      position: "fixed",
+      bottom: 0,
+    },
+  },
+  tabWrapWrap: {
+    position: "relative",
   },
   TabWrap: {
     display: "flex",
@@ -191,3 +215,9 @@ const TabContentWrap = styled.div`
     height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
   }
 `;
+
+const useStyles = makeStyles((theme) => ({
+  // rootBackdrop: {
+  //   zIndex: "5 !important",
+  // },
+}));

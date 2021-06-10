@@ -4,7 +4,6 @@ import { jsx, Container, Box } from "theme-ui";
 import SetupColumn from "components/Tabs/TabsRoot";
 import MapContainer from "components/canvas/mapContainer";
 import mapboxgl from "mapbox-gl";
-import axios from "axios";
 import styled from "styled-components";
 import produce from "immer";
 
@@ -588,6 +587,17 @@ export default function RootContainer() {
               product={product}
             />
           </Box>
+          {/* <button
+            style={{
+              display: "fixed",
+              top: "70px",
+              position: "absolute",
+              zIndex: 10,
+            }}
+            onClick={() => setIsSetupRolledUp(!isSetupRolledUp)}
+          >
+            Toggle
+          </button> */}
           <Box sx={styles.settingsBox}>
             <SetupColumn
               map={map}
@@ -610,14 +620,6 @@ export default function RootContainer() {
 }
 
 const styles = {
-  containerBox: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    flexWrap: ["wrap", null, null, "nowrap"],
-    height: "100%",
-  },
   canvasBox: {
     // px: [0, null, "40px", 0],
     order: [0, 0, 0, 2],
@@ -637,6 +639,16 @@ const styles = {
     ".description": {
       pr: [0, null, null, null, 4],
     },
+    height: ["50%", "50%", "50%", "100%"],
+    zIndex: 10,
+  },
+
+  containerBox: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    flexWrap: ["wrap", null, null, "nowrap"],
     height: "100%",
   },
 };

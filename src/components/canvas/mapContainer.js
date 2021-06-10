@@ -98,7 +98,7 @@ const styles = {
     alignItems: "center",
     width: "100%",
     height: [null, null, null, "85%"],
-    minHeight: ["50vh", "50vh", "50vh"],
+    minHeight: ["60vh", "60vh", "60vh"],
     // border: "2px dotted red",
   },
   map_wrapper: {
