@@ -7,8 +7,15 @@ import AddIcon from "@material-ui/icons/Add";
 import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 
-import { SIZES, FAKE_DIV_IDS, TITLES_DEFAULT } from "../../constants/constants";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
+import { useIsMobile } from "Hooks/useIsMobile";
+
+import {
+  SIZES,
+  FAKE_DIV_IDS,
+  TITLES_DEFAULT,
+  ORIENTATIONS,
+} from "../../constants/constants";
 
 export default function MapContainer({
   addZoom,
@@ -16,6 +23,13 @@ export default function MapContainer({
   setProduct,
   product,
 }) {
+  const { isMobile } = useIsMobile();
+
+  console.log({ product });
+
+  const isWideOrientation =
+    product?.sizeObject?.orientation === ORIENTATIONS.wide;
+
   const changeOrientation = () => {
     orientationSwitcher(product, setProduct);
     //     const nextSize = product.sizeObject.acceptableSizes.find(
@@ -49,7 +63,11 @@ export default function MapContainer({
         </div>
       </div>
 
-      <div sx={styles.map_wrapper_wrapper} id="map_available_space_id">
+      <div
+        sx={styles.map_available_space}
+        id="map_available_space_id"
+        className={isWideOrientation && "isWideOrientation"}
+      >
         <div sx={styles.map_wrapper} id="map_wrapper_id">
           <div id="map" sx={styles.map}></div>
         </div>
@@ -92,14 +110,20 @@ const styles = {
     overflow: "auto",
     // border: "2px solid green",
   },
-  map_wrapper_wrapper: {
+  map_available_space: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: ["flex-start", null, null, "center"],
+    pt: ["20px", null, null, 0],
     width: "100%",
     height: [null, null, null, "85%"],
-    minHeight: ["60vh", "60vh", "60vh"],
-    // border: "2px dotted red",
+    // minHeight: ["60vh", "60vh", "60vh"],
+    height: "60vh",
+
+    // "&.isWideOrientation": {
+    //   // minHeight: ["45vh", null],
+    //   height: "45vh",
+    // },
   },
   map_wrapper: {
     // margin: "30px",

@@ -4,9 +4,12 @@ import { jsx, Box, Heading, Text, Button, Link } from "theme-ui";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useElementDimensions } from "../../Hooks/useElementDimensions";
+
+import Stepper from "../Tabs/Stepper";
 
 import Tab1 from "../Tab1/tab1";
 import Step1Location from "../Tab1/Step1Location";
@@ -38,8 +41,10 @@ export default function SetupColumn({
   setProduct,
 }) {
   const [activeTab, setActiveTab] = useState(TAB_VALUES.ONE);
+  const [activeStep, setActiveStep] = React.useState(0);
+
   const { isMobile } = useIsMobile();
-  const [isSetupRolledUp, setIsSetupRolledUp] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   const classes = useStyles();
 
   const { height: headerHeight } = useElementDimensions("header");
@@ -56,7 +61,7 @@ export default function SetupColumn({
     //   behavior: "smooth",
     // });
 
-    setIsSetupRolledUp(true);
+    setIsOpen(true);
 
     setActiveTab(newValue);
     // window.setTimeout(function () {
@@ -65,12 +70,72 @@ export default function SetupColumn({
     // }
   };
 
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const stepElements = [
+    <Step1Location
+      map={map}
+      nextTab={() => handleChange(TAB_VALUES.TWO)}
+      setMapCoordinates={setMapCoordinates}
+      setMapTitles={setMapTitles}
+    />,
+    <Step2Orientation
+      nextTab={() => handleChange(TAB_VALUES.TWO)}
+      product={product}
+      setProduct={setProduct}
+    />,
+    <Step3Layout
+      activeFrame={activeFrame}
+      setActiveLayout={setActiveLayout}
+      nextTab={() => handleChange(TAB_VALUES.THREE)}
+    />,
+
+    <Step4Colors
+      activeMapStyle={activeMapStyle}
+      setActiveMapStyle={setActiveMapStyle}
+      nextTab={() => handleChange(TAB_VALUES.THREE)}
+    />,
+
+    <Step5Size
+      product={product}
+      setProduct={setProduct}
+      nextTab={() => handleChange(TAB_VALUES.THREE)}
+    />,
+
+    <Step6FinishVariant
+      map={map}
+      mapTitles={mapTitles}
+      activeLayout={activeFrame}
+      product={product}
+      setProduct={setProduct}
+      activeMapStyle={activeMapStyle}
+    />,
+  ];
+
   return (
-    <div
-      sx={styles.container}
-      className={isMobile && isSetupRolledUp && "open"}
-    >
-      <div sx={styles.tabWrapWrap} id="tab_wrap_wrap">
+    <div sx={styles.container} className={isMobile && isOpen && "open"}>
+      <ArrowWrap isOpen={isOpen}>
+        <ArrowForwardIosIcon
+          // width={"40px"}
+          // height={"40px"}
+          onClick={() => setIsOpen((prev) => !prev)}
+        />
+      </ArrowWrap>
+      <Stepper
+        stepElements={stepElements}
+        handleNext={handleNext}
+        handleBack={handleBack}
+        activeStep={activeStep}
+      />
+
+      {stepElements[activeStep]}
+      {/* <div sx={styles.tabWrapWrap} id="tab_wrap_wrap">
         <div sx={styles.TabWrap}>
           <div
             sx={styles.Tab}
@@ -95,7 +160,9 @@ export default function SetupColumn({
           </div>
         </div>
       </div>
-      {activeTab === TAB_VALUES.ONE && (
+      */}
+
+      {/* {activeTab === TAB_VALUES.ONE && (
         <TabContentWrap
           className={activeTab === TAB_VALUES.ONE && "active"}
           sx={styles.tabBody}
@@ -113,8 +180,8 @@ export default function SetupColumn({
             setProduct={setProduct}
           />
         </TabContentWrap>
-      )}
-      {activeTab === TAB_VALUES.TWO && (
+      )} */}
+      {/* {activeTab === TAB_VALUES.TWO && (
         <TabContentWrap
           className={`${activeTab === TAB_VALUES.TWO && "active"}`}
           sx={styles.tabBody}
@@ -130,19 +197,10 @@ export default function SetupColumn({
             setActiveMapStyle={setActiveMapStyle}
             nextTab={() => handleChange(TAB_VALUES.THREE)}
           />
-          {/* <Tab2
-            map={map}
-            activeFrame={activeFrame}
-            setActiveLayout={setActiveLayout}
-            activeMapStyle={activeMapStyle}
-            setActiveMapStyle={setActiveMapStyle}
-            nextTab={() => handleChange(TAB_VALUES.THREE)}
-            product={product}
-            setProduct={setProduct}
-          /> */}
+
         </TabContentWrap>
-      )}
-      {activeTab === TAB_VALUES.THREE && (
+      )} */}
+      {/* {activeTab === TAB_VALUES.THREE && (
         <TabContentWrap
           className={activeTab === TAB_VALUES.THREE && "active"}
           sx={styles.tabBody}
@@ -162,24 +220,17 @@ export default function SetupColumn({
             activeMapStyle={activeMapStyle}
           />
 
-          {/* <Tab3
-            map={map}
-            mapTitles={mapTitles}
-            activeLayout={activeFrame}
-            product={product}
-            setProduct={setProduct}
-            activeMapStyle={activeMapStyle}
-          /> */}
         </TabContentWrap>
-      )}
+      )} */}
+
       {isMobile && (
         <Backdrop
           className={classes.backdrop}
           classes={{
             root: classes.rootBackdrop, // class name, e.g. `classes-nesting-root-x`
           }}
-          open={isSetupRolledUp}
-          onClick={() => setIsSetupRolledUp(false)}
+          open={isOpen}
+          onClick={() => setIsOpen(false)}
         ></Backdrop>
       )}
     </div>
@@ -189,11 +240,15 @@ export default function SetupColumn({
 const styles = {
   container: {
     width: "100%",
-    height: "100%",
+    height: [null, null, null, "100%"],
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
     zIndex: 10,
+    backgroundColor: "white",
 
     "&.open": {
-      height: "50vh",
+      // height: "40vh",
       position: "fixed",
       bottom: 0,
     },
@@ -255,8 +310,25 @@ const TabContentWrap = styled.div`
   }
 `;
 
+const ArrowWrap = styled.div`
+  display: inline-flex;
+  height: 0;
+
+  & svg {
+    transform: ${({ isOpen }) => (isOpen ? "rotate(90deg)" : "rotate(-90deg)")};
+    transition-duration: 0.5s;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    top: -40px;
+    padding: 10px;
+    background-color: white;
+  }
+`;
+
 const useStyles = makeStyles((theme) => ({
-  // rootBackdrop: {
-  //   zIndex: "5 !important",
-  // },
+  rootBackdrop: {
+    // zIndex: "5 !important",
+    backgroundColor: "rgba(255,255,255,0.1)",
+  },
 }));

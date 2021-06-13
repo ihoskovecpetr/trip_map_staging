@@ -17,6 +17,8 @@ export const getUpdatedMapSizes = ({
 
   const mapWidthRect = wrapElemRectangle.width;
 
+  console.log({ mapHeightRect });
+
   const mapHeightFresh =
     mapHeightRect < mapWrapWrapHeight ? mapHeightRect : mapWrapWrapHeight;
   const mapWidthFresh =

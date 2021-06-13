@@ -11,10 +11,10 @@ export function useElementDimensions(element_id) {
 
       setDimensions({
         height:
-          document.getElementById(element_id).getBoundingClientRect().height ||
+          document.getElementById(element_id)?.getBoundingClientRect().height ||
           0,
         width:
-          document.getElementById(element_id).getBoundingClientRect().width ||
+          document.getElementById(element_id)?.getBoundingClientRect().width ||
           0,
       });
     };

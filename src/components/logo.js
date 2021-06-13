@@ -13,6 +13,7 @@ export default function Logo({ src, ...rest }) {
         mr: 15,
         height: "100%",
         position: "relative",
+        zIndex: 10,
       }}
       {...rest}
     >

@@ -1,4 +1,4 @@
-// import { getIsVariantFramed } from "./getIsVariantFramed";
+// import { getVariantObject } from "./getVariantObject";
 import { getLayoutObject } from "./getLayoutObject";
 import { getBottomBannerHeightKoef } from "./getBottomBannerHeightKoef";
 
@@ -26,7 +26,7 @@ export const getCenteringLayoutDimensions = ({
     frameCoverCoefficient = INSIDE_FRAME_COVER_CM / product?.sizeObject.width;
   }
 
-  // const framedVariantObject = getIsVariantFramed(product?.variantId); // TODO redo to
+  // const framedVariantObject = getVariantObject(product?.variantId); // TODO redo to
 
   const insideFrameWidth = baseLongSize * frameCoverCoefficient;
 

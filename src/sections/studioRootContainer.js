@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import React, { useEffect, useState, useRef } from "react";
 import { jsx, Container, Box } from "theme-ui";
-import SetupColumn from "components/Tabs/TabsRoot";
+// import SetupColumn from "components/Tabs/TabsRoot";
+import SetupColumn from "components/Tabs/TabsRootNew";
 import MapContainer from "components/canvas/mapContainer";
 import mapboxgl from "mapbox-gl";
 import styled from "styled-components";
@@ -13,12 +14,15 @@ import { drawLayout } from "../LibGlobal/drawLayout";
 import { prepareTextInput } from "../LibGlobal/prepareTextInput";
 import { getUpdatedMapSizes } from "../LibGlobal/getUpdatedMapSizes";
 import { getCenteringLayoutDimensions } from "../LibGlobal/getCenteringLayoutDimensions";
-import { getIsVariantFramed } from "../LibGlobal/getIsVariantFramed";
+import { getVariantObject } from "../LibGlobal/getVariantObject";
 import { getIsProduction } from "../LibGlobal/getIsProduction";
 import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
 import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
+
+import Logo from "components/logo";
+import LogoWhite from "assets/trip_map_logo_white.png";
 
 import {
   MAP_STYLES,
@@ -65,8 +69,6 @@ const resizeLayout = ({
   cvsLayout.setAttribute("height", cvsMap.height);
 
   var ctxFrame = cvsLayout.getContext("2d");
-  console.log("Resizing_Layout");
-  console.log({ LayoutWidth: cvsMap.width, LayoutHeight: cvsMap.height });
 
   drawLayout(ctxFrame, {
     width: cvsMap.width,
@@ -87,9 +89,10 @@ const resizeLayout = ({
   });
 };
 
-const resizeFrameDiv = ({ productRef, baseLongSize, mapAvailSpaceRef }) => {
-  const framedVariantObj = getIsVariantFramed(productRef.current.variantId);
+const resizeFrameDiv = ({ productRef, mapAvailSpaceRef }) => {
+  const variantObj = getVariantObject(productRef.current.variantId);
   let frameWidthKoefficient;
+  let baseLongerSide;
 
   if (productRef.current.sizeObject.ratio > 1) {
     frameWidthKoefficient =
@@ -99,17 +102,27 @@ const resizeFrameDiv = ({ productRef, baseLongSize, mapAvailSpaceRef }) => {
       OUTSIDE_FRAME_CM / productRef.current.sizeObject.width;
   }
 
-  console.log({ frameWidthKoefficient });
-
   const { updHeight, updWidth } = getUpdatedMapSizes({
     ratio: productRef.current.sizeObject.ratio,
     mapWrapWrapHeight: mapAvailSpaceRef.current.height,
     mapWrapWrapWidth: mapAvailSpaceRef.current.width,
   });
 
-  if (framedVariantObj) {
-    const extraFrame =
-      (baseLongSize * frameWidthKoefficient) / CURRENT_PIXEL_RATIO;
+  if (updHeight > updWidth) {
+    baseLongerSide = updHeight;
+  } else {
+    baseLongerSide = updWidth;
+  }
+
+  if (variantObj) {
+    const extraFrame = baseLongerSide * frameWidthKoefficient;
+
+    console.log(
+      { extraFrame, 2: updWidth * frameWidthKoefficient },
+      baseLongerSide,
+      frameWidthKoefficient,
+      CURRENT_PIXEL_RATIO
+    );
 
     Object.assign(trueMapCanvasElement.style, {
       // position: "absolute",
@@ -120,7 +133,7 @@ const resizeFrameDiv = ({ productRef, baseLongSize, mapAvailSpaceRef }) => {
       // // left: `-${extraFrame}px`,
       // top: 0,
       // left: 0,
-      outline: `${extraFrame + 0}px solid ${framedVariantObj.frameColor}`,
+      outline: `${extraFrame + 0}px solid ${variantObj.frameColor}`,
       // width: updWidth ? `${Math.floor(updWidth)}px` : 0,
       // height: updHeight ? `${Math.floor(updHeight)}px` : 0,
     });
@@ -142,7 +155,6 @@ const resizeInputs = ({
   mapWidth,
   layout,
 }) => {
-  console.log("prepareTextInput: ", { mapTitles });
   prepareTextInput({
     element: headlineInput,
     name: "heading",
@@ -206,7 +218,7 @@ const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
   // });
 };
 
-export default function RootContainer() {
+export default function StudioRootContainer() {
   const [mapCoordinates, setMapCoordinates] = useState([
     -73.985542,
     40.7484665,
@@ -264,8 +276,6 @@ export default function RootContainer() {
     width: mapWrapperWidth,
   });
 
-  console.log({ mapWrapperWidth, mapWrapperHeight });
-
   const {
     paddingWidth,
     // bottomBannerHeight,
@@ -315,7 +325,6 @@ export default function RootContainer() {
 
   useEffect(() => {
     mapTitlesRef.current = mapTitles;
-    console.log("mapTitles:: ", mapTitles);
   }, [mapTitles]);
 
   useEffect(() => {
@@ -358,7 +367,7 @@ export default function RootContainer() {
         mapTitles: mapTitlesRef.current,
         product: productRef.current,
       });
-
+      console.log("Eff resizeFrameDiv", { baseLongSize });
       resizeFrameDiv({
         productRef,
         baseLongSize,
@@ -375,12 +384,6 @@ export default function RootContainer() {
   ]);
 
   useEffect(() => {
-    console.log({
-      NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN:
-        process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
-      process_env: process.env,
-    });
-
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 
     map = new mapboxgl.Map({
@@ -419,11 +422,6 @@ export default function RootContainer() {
         "mapboxgl-canvas-container"
       )[0];
       mapCanvasWrapElement.style.position = "relative";
-
-      console.log({
-        mapCanvasWrapElement,
-        trueMapCanvasElement,
-      });
 
       const existingLayoutCanvas = document.getElementById("layout_canvas");
       if (existingLayoutCanvas) {
@@ -490,6 +488,8 @@ export default function RootContainer() {
           mapTitles: mapTitlesRef.current,
           product: productRef.current,
         });
+
+        console.log("resizeFrameDiv on 'resize'");
 
         resizeFrameDiv({
           productRef,
@@ -573,11 +573,14 @@ export default function RootContainer() {
     );
   };
 
-  console.log("Rerender_rootContainer");
-
   return (
-    <section sx={{ marginTop: headerHeight }}>
-      <ContainerBox headerHeight={headerHeight}>
+    <section sx={{ marginTop: isMobile ? 0 : headerHeight }}>
+      <ContainerBox headerHeight={isMobile ? 0 : headerHeight}>
+        {isMobile && (
+          <LogoWrap>
+            <Logo src={LogoWhite} />
+          </LogoWrap>
+        )}
         <div sx={styles.containerBox}>
           <Box sx={styles.canvasBox} id="map_playground_wrap">
             <MapContainer
@@ -655,4 +658,9 @@ const styles = {
 
 const ContainerBox = styled.div`
   height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
+`;
+
+const LogoWrap = styled.div`
+  position: absolute;
+  height: 0;
 `;
