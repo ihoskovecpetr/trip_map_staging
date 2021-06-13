@@ -45,6 +45,8 @@ export default function SetupColumn({
 
   const { isMobile } = useIsMobile();
   const [isOpen, setIsOpen] = useState(true);
+  const [isArrowDisabled, setIsArrowDisabled] = useState(true);
+
   const classes = useStyles();
 
   const { height: headerHeight } = useElementDimensions("header");
@@ -69,6 +71,17 @@ export default function SetupColumn({
 
     // }
   };
+
+  useEffect(() => {
+    console.log({ activeStep });
+    if (activeStep === 0) {
+      setIsOpen(false);
+      setIsArrowDisabled(true);
+      return;
+    }
+
+    setIsArrowDisabled(false);
+  }, [activeStep]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -120,7 +133,7 @@ export default function SetupColumn({
 
   return (
     <div sx={styles.container} className={isMobile && isOpen && "open"}>
-      <ArrowWrap isOpen={isOpen}>
+      <ArrowWrap isOpen={isOpen} isDisabled={isArrowDisabled}>
         <ArrowForwardIosIcon
           // width={"40px"}
           // height={"40px"}
@@ -246,6 +259,7 @@ const styles = {
     alignItems: "flex-end",
     zIndex: 10,
     backgroundColor: "white",
+    transitionDuration: "1s",
 
     "&.open": {
       // height: "40vh",
@@ -313,10 +327,13 @@ const TabContentWrap = styled.div`
 const ArrowWrap = styled.div`
   display: inline-flex;
   height: 0;
+  pointer-events: ${({ isDisabled }) => (isDisabled ? "none" : "auto")};
+  cursor: ${({ isDisabled }) => (isDisabled ? "default" : "pointer")};
 
   & svg {
+    color: ${({ isDisabled }) => (isDisabled ? "lightGrey" : "black")};
+
     transform: ${({ isOpen }) => (isOpen ? "rotate(90deg)" : "rotate(-90deg)")};
-    transition-duration: 0.5s;
     width: 40px;
     height: 40px;
     position: relative;

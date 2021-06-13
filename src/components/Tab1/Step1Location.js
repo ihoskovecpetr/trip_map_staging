@@ -87,7 +87,7 @@ export default function Step1Location({
         id="geocoder"
         class="geocoder"
         sx={styles.locationInput}
-        style={{ marginTop: isMobile ? "0px" : "20px", marginBottom: "20px" }}
+        style={{ marginTop: isMobile ? "0px" : "20px", marginBottom: "60px" }}
       ></div>
 
       {/* <NextTabBtn
@@ -116,7 +116,6 @@ export default function Step1Location({
 const styles = {
   container: {
     width: "100%",
-    position: "relative",
   },
   headingDesc: {
     fontWeight: 500,
@@ -126,19 +125,13 @@ const styles = {
     letterSpacing: "1.1px",
   },
 
-  orientationWrap: {
-    display: "flex",
-    width: "100%",
-    flexWrap: "wrap",
-    marginBottom: "10px",
-  },
-
   locationInput: {
     width: "100%",
     // boxShadow: "0 0 10px #fe6769",
     border: "2px solid",
     borderColor: "cta_color",
     borderRadius: "5px",
+
     "& div": {
       width: "100%",
       maxWidth: "100%",

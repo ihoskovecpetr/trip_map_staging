@@ -642,7 +642,7 @@ const styles = {
     ".description": {
       pr: [0, null, null, null, 4],
     },
-    height: ["50%", "50%", "50%", "100%"],
+    // height: ["50%", "50%", "50%", "100%"],
     zIndex: 10,
   },
 
