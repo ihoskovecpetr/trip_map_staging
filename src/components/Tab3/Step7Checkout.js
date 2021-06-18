@@ -16,22 +16,12 @@ export default function Step6FinishVariant({
   product,
   activeMapStyle,
 }) {
-  const { isMobile } = useIsMobile();
-
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
   );
 
   return (
     <div sx={styles.container}>
-      {!isMobile && (
-        <Text as="p" className="description" sx={styles.headingDesc}>
-          Materiál pro tisk
-        </Text>
-      )}
-
-      <p sx={styles.materialDesc}>{product.materialDesc}</p>
-
       <CheckoutWrap>
         <Tab3Checkout
           map={map}
@@ -49,8 +39,8 @@ export default function Step6FinishVariant({
 const styles = {
   container: {
     width: "100%",
-    padding: "0 10px",
-    pb: "70px",
+    // padding: "0 10px",
+    // pb: "70px",
   },
   headingDesc: {
     fontWeight: 500,

@@ -392,8 +392,8 @@ export default function StudioRootContainer() {
       minZoom: 0,
       center: coordinatesRef.current,
       // style: mapStyles(`./${MAP_STYLES[activeMapStyle]}/style.json`),
-      // style: currentMapStyle,
-      style: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho", // Continue add maps WhiteGreyMap
+      style: MAP_STYLES[activeMapStyle],
+      // style: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho", // Continue add maps WhiteGreyMap
 
       preserveDrawingBuffer: true,
     });

@@ -431,6 +431,6 @@ const ArrowWrap = styled.div`
 const useStyles = makeStyles((theme) => ({
   rootBackdrop: {
     // zIndex: "5 !important",
-    backgroundColor: "rgba(255,255,255,0.1)",
+    backgroundColor: "rgba(0,0,0,0.3)",
   },
 }));
