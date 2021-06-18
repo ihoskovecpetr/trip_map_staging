@@ -1,125 +1,29 @@
 /** @jsx jsx */
-import { useState } from "react";
+import React from "react";
 import { jsx, Text } from "theme-ui";
-import Lightbox from "react-image-lightbox";
 import styled from "styled-components";
 
-import { VARIANTS_PRINTFUL, SIZES } from "../../constants/constants";
+import { VARIANTS_PRINTFUL } from "../../constants/constants";
 import Tab3Checkout from "./tab3Checkout";
-import CustomLoader from "../CustomLoader";
 
 import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
-import { getVersionDescription } from "../../LibGlobal/getVersionDescription";
-import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
-import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
 import { useIsMobile } from "../../Hooks/useIsMobile";
-
-const priceAlgorithm = getPriceAlgorithm();
 
 export default function Step6FinishVariant({
   map,
   mapTitles,
   activeLayout,
   product,
-  setProduct,
   activeMapStyle,
 }) {
-  const [lightbox, setLightbox] = useState({
-    open: false,
-    activeSrc: null,
-  });
   const { isMobile } = useIsMobile();
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
   );
 
-  const setNewFrame = (variantId, shippingCode) => {
-    //TODO there has to be price, otherwise return?
-    setProduct((prev) => ({
-      ...prev,
-      variantId: variantId,
-      price: dataPrintful[variantId]?.price,
-      priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
-        variantId,
-        dataPrintful
-      ).netPrice,
-      shippingCode,
-    }));
-  };
-
-  const sizesArray = VARIANTS_PRINTFUL.map((variant) => variant.sizeName);
-
-  const variantsPrintfulForSize = VARIANTS_PRINTFUL.filter((variant) => {
-    const isVariantForOffer =
-      product.sizeObject.acceptableSizes.includes(variant.sizeName) &&
-      dataPrintful &&
-      dataPrintful[variant.id]?.availableEU;
-    return isVariantForOffer;
-  });
-
   return (
     <div sx={styles.container}>
-      {!isMobile && (
-        <Text as="p" className="description" sx={styles.headingDesc}>
-          Rámování
-        </Text>
-      )}
-      {variantsPrintfulForSize.length === 0 && (
-        <div sx={styles.loaderWrap}>
-          <CustomLoader />
-        </div>
-      )}
-      {variantsPrintfulForSize.length > 0 && (
-        <div sx={styles.variantWrap}>
-          {variantsPrintfulForSize.map(({ id: variantId, shipping }) => (
-            <div
-              sx={styles.borderWrap}
-              className={product.variantId === variantId && "active"}
-              onClick={() => setNewFrame(variantId, shipping.codeCZ)}
-            >
-              <div sx={styles.imageWrap}>
-                <img
-                  sx={styles.variantImage}
-                  src={dataPrintful[variantId]?.url}
-                />
-                {/* <OpenWithIcon
-                  sx={styles.openImageIcon}
-                  onClick={(e) => {
-                    setLightbox({
-                      open: true,
-                      activeSrc: dataPrintful[variantId]?.url,
-                    });
-                    e.stopPropagation();
-                  }}
-                /> */}
-              </div>
-              <div sx={styles.textsWrap}>
-                <p sx={styles.variantPrice}>
-                  {/* {dataPrintful[variantId]?.currency}{" "} */}
-
-                  {getFormattedPrice(
-                    priceAlgorithm.getPriceWithoutDelivery(
-                      variantId,
-                      dataPrintful
-                    ).netPrice
-                  )}
-                </p>
-                <p sx={styles.variantDesc}>
-                  {getVersionDescription(variantId)}
-                </p>
-                <p sx={styles.variantDelivery}>
-                  {/* {dataPrintful[variantId]?.shipping.currency} */}
-                  {`+ ${getFormattedPrice(
-                    priceAlgorithm.getPriceOfDelivery(variantId, dataPrintful)
-                      .netPrice
-                  )} doprava`}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
       {!isMobile && (
         <Text as="p" className="description" sx={styles.headingDesc}>
           Materiál pro tisk
@@ -127,7 +31,8 @@ export default function Step6FinishVariant({
       )}
 
       <p sx={styles.materialDesc}>{product.materialDesc}</p>
-      {/* <CheckoutWrap>
+
+      <CheckoutWrap>
         <Tab3Checkout
           map={map}
           mapTitles={mapTitles}
@@ -136,14 +41,7 @@ export default function Step6FinishVariant({
           activeMapStyle={activeMapStyle}
           dataPrintful={dataPrintful}
         />
-      </CheckoutWrap> */}
-
-      {lightbox.open && (
-        <Lightbox
-          mainSrc={lightbox.activeSrc}
-          onCloseRequest={() => setLightbox({ open: false })}
-        />
-      )}
+      </CheckoutWrap>
     </div>
   );
 }
@@ -161,19 +59,6 @@ const styles = {
     color: "grey",
     letterSpacing: "1.1px",
   },
-  TabWrap: {
-    display: "flex",
-    width: "100%",
-  },
-  Tab: {
-    width: "30%",
-    display: "flex",
-    justifyContent: "center",
-    "&.active": {
-      borderBottom: "3px solid black",
-    },
-  },
-
   sizeWrap: {
     display: "flex",
     width: "100%",
@@ -322,15 +207,15 @@ const styles = {
 };
 
 const CheckoutWrap = styled.div`
-  position: fixed;
-  top: 85vh;
-  left: 0;
-  height: 0;
+  // position: fixed;
+  // top: 85vh;
+  // left: 0;
+  // height: 0;
   width: 100%;
 
-  @media (max-width: 768px) {
-    height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
-    width: 40%;
-    top: 90vh;
-  }
+  // @media (max-width: 768px) {
+  //   height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
+  //   width: 40%;
+  //   top: 90vh;
+  // }
 `;

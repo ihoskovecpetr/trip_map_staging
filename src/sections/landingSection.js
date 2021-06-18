@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import ModalVideo from "react-modal-video";
 import { Link } from "components/link";
 import { FaPlayCircle } from "react-icons/fa";
-import BannerBG from "assets/bannerBg.png";
-import BannerThumb from "assets/banner-thumb.png";
+// import BannerBG from "assets/bannerBg.png";
+// import BannerThumb from "assets/banner-thumb.png";
 
 import client1 from "assets/sponsor/paypal.svg";
 import client2 from "assets/sponsor/google.svg";
@@ -84,9 +84,9 @@ export default function Banner() {
           </Flex>
         </Box>
 
-        <Box sx={styles.banner.imageBox}>
+        {/* <Box sx={styles.banner.imageBox}>
           <Image src={BannerThumb} alt="banner" />
-        </Box>
+        </Box> */}
       </Container>
     </section>
   );
@@ -95,7 +95,7 @@ export default function Banner() {
 const styles = {
   banner: {
     overflow: ["hidden", "initial", null, "hidden"],
-    backgroundImage: `url(${BannerBG})`,
+    // backgroundImage: `url(${BannerBG})`,
     backgroundRepeat: `no-repeat`,
     backgroundPosition: "top left",
     backgroundSize: "cover",

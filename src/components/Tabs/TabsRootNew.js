@@ -20,6 +20,7 @@ import Step4Colors from "../Tab2/Step4Colors";
 import Tab3 from "../Tab3/tab3";
 import Step5Size from "../Tab3/Step5Size";
 import Step6FinishVariant from "../Tab3/Step6FinishVariant";
+import Step7Checkout from "../Tab3/Step7Checkout";
 
 const TAB_VALUES = {
   ONE: "MÍSTO & ORIENTACE",
@@ -91,63 +92,144 @@ export default function SetupColumn({
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const stepElements = [
-    <Step1Location
-      map={map}
-      nextTab={() => handleChange(TAB_VALUES.TWO)}
-      setMapCoordinates={setMapCoordinates}
-      setMapTitles={setMapTitles}
-    />,
-    <Step2Orientation
-      nextTab={() => handleChange(TAB_VALUES.TWO)}
-      product={product}
-      setProduct={setProduct}
-    />,
-    <Step3Layout
-      activeFrame={activeFrame}
-      setActiveLayout={setActiveLayout}
-      nextTab={() => handleChange(TAB_VALUES.THREE)}
-    />,
+  const stepElementsDesktop = [
+    [
+      <Step1Location
+        map={map}
+        nextTab={() => handleChange(TAB_VALUES.TWO)}
+        setMapCoordinates={setMapCoordinates}
+        setMapTitles={setMapTitles}
+      />,
+      <Step2Orientation
+        nextTab={() => handleChange(TAB_VALUES.TWO)}
+        product={product}
+        setProduct={setProduct}
+      />,
+    ],
+    [
+      <Step3Layout
+        activeFrame={activeFrame}
+        setActiveLayout={setActiveLayout}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
 
-    <Step4Colors
-      activeMapStyle={activeMapStyle}
-      setActiveMapStyle={setActiveMapStyle}
-      nextTab={() => handleChange(TAB_VALUES.THREE)}
-    />,
+      <Step4Colors
+        activeMapStyle={activeMapStyle}
+        setActiveMapStyle={setActiveMapStyle}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
+    ],
 
-    <Step5Size
-      product={product}
-      setProduct={setProduct}
-      nextTab={() => handleChange(TAB_VALUES.THREE)}
-    />,
+    [
+      <Step5Size
+        product={product}
+        setProduct={setProduct}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
 
-    <Step6FinishVariant
-      map={map}
-      mapTitles={mapTitles}
-      activeLayout={activeFrame}
-      product={product}
-      setProduct={setProduct}
-      activeMapStyle={activeMapStyle}
-    />,
+      <Step6FinishVariant
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeFrame}
+        product={product}
+        setProduct={setProduct}
+        activeMapStyle={activeMapStyle}
+      />,
+    ],
+    [
+      <Step7Checkout
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeFrame}
+        product={product}
+        activeMapStyle={activeMapStyle}
+      />,
+    ],
   ];
+
+  const stepElementsMobile = [
+    [
+      <Step1Location
+        map={map}
+        nextTab={() => handleChange(TAB_VALUES.TWO)}
+        setMapCoordinates={setMapCoordinates}
+        setMapTitles={setMapTitles}
+      />,
+    ],
+    [
+      <Step2Orientation
+        nextTab={() => handleChange(TAB_VALUES.TWO)}
+        product={product}
+        setProduct={setProduct}
+      />,
+    ],
+    [
+      <Step3Layout
+        activeFrame={activeFrame}
+        setActiveLayout={setActiveLayout}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
+    ],
+
+    [
+      <Step4Colors
+        activeMapStyle={activeMapStyle}
+        setActiveMapStyle={setActiveMapStyle}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
+    ],
+
+    [
+      <Step5Size
+        product={product}
+        setProduct={setProduct}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
+    ],
+
+    [
+      <Step6FinishVariant
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeFrame}
+        product={product}
+        setProduct={setProduct}
+        activeMapStyle={activeMapStyle}
+      />,
+    ],
+    [
+      <Step7Checkout
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeFrame}
+        product={product}
+        activeMapStyle={activeMapStyle}
+      />,
+    ],
+  ];
+
+  const activeStepElements = isMobile
+    ? stepElementsMobile
+    : stepElementsDesktop;
 
   return (
     <div sx={styles.container} className={isMobile && isOpen && "open"}>
-      <ArrowWrap isOpen={isOpen} isDisabled={isArrowDisabled}>
-        <ArrowForwardIosIcon
-          // width={"40px"}
-          // height={"40px"}
-          onClick={() => setIsOpen((prev) => !prev)}
-        />
-      </ArrowWrap>
+      {isMobile && (
+        <ArrowWrap isOpen={isOpen} isDisabled={isArrowDisabled}>
+          <ArrowForwardIosIcon onClick={() => setIsOpen((prev) => !prev)} />
+        </ArrowWrap>
+      )}
       <Stepper
-        stepElements={stepElements}
+        stepElements={activeStepElements}
         handleNext={handleNext}
         handleBack={handleBack}
         activeStep={activeStep}
       />
+      {/* {isMobile && (
+        <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
+      )} */}
 
-      {stepElements[activeStep]}
+      {<>{activeStepElements[activeStep]}</>}
       {/* <div sx={styles.tabWrapWrap} id="tab_wrap_wrap">
         <div sx={styles.TabWrap}>
           <div
@@ -265,6 +347,7 @@ const styles = {
       // height: "40vh",
       position: "fixed",
       bottom: 0,
+      left: 0,
     },
   },
   tabWrapWrap: {
@@ -323,6 +406,8 @@ const TabContentWrap = styled.div`
     height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
   }
 `;
+
+const MobileTabWrap = styled.div``;
 
 const ArrowWrap = styled.div`
   display: inline-flex;

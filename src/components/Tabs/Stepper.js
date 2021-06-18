@@ -31,15 +31,21 @@ export default function Stepper({
   //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   //   };
 
+  console.log({ stepslength: stepElements.length });
+
   return (
     <MobileStepper
       variant="dots"
-      steps={6}
+      steps={stepElements.length}
       position="static"
       activeStep={activeStep}
       className={classes.root}
       nextButton={
-        <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
+        <Button
+          size="small"
+          onClick={handleNext}
+          disabled={activeStep === stepElements.length - 1}
+        >
           Next
           {theme.direction === "rtl" ? (
             <KeyboardArrowLeft />

@@ -116,9 +116,8 @@ const styles = {
     alignItems: ["flex-start", null, null, "center"],
     pt: ["20px", null, null, 0],
     width: "100%",
-    height: [null, null, null, "85%"],
+    height: ["60vh", null, null, "85%"],
     // minHeight: ["60vh", "60vh", "60vh"],
-    height: "60vh",
 
     // "&.isWideOrientation": {
     //   // minHeight: ["45vh", null],

@@ -391,9 +391,9 @@ export default function StudioRootContainer() {
       zoom: mapZoom,
       minZoom: 0,
       center: coordinatesRef.current,
-      style: mapStyles(`./${MAP_STYLES[activeMapStyle]}/style.json`),
+      // style: mapStyles(`./${MAP_STYLES[activeMapStyle]}/style.json`),
       // style: currentMapStyle,
-      // style: WhiteGreyMap, // Continue add maps WhiteGreyMap
+      style: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho", // Continue add maps WhiteGreyMap
 
       preserveDrawingBuffer: true,
     });
@@ -639,11 +639,11 @@ const styles = {
     mx: "auto",
     backgroundColor: "background_secondary",
     pb: ["30px", null, null, 0],
+    zIndex: 10,
+
     ".description": {
       pr: [0, null, null, null, 4],
     },
-    // height: ["50%", "50%", "50%", "100%"],
-    zIndex: 10,
   },
 
   containerBox: {
