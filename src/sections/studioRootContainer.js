@@ -35,7 +35,7 @@ import {
   TITLES_DEFAULT,
 } from "../constants/constants";
 
-const mapStyles = require.context("assets/MAPS_MAPBOX", true);
+// const mapStyles = require.context("assets/MAPS_MAPBOX", true);
 
 let map;
 let trueMapCanvasElement;
