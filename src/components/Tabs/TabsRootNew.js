@@ -50,7 +50,9 @@ export default function SetupColumn({
 
   const classes = useStyles();
 
-  const { height: headerHeight } = useElementDimensions("header");
+  const { height: map_segment_height } = useElementDimensions(
+    "map_studio_segment"
+  );
 
   const handleChange = (newValue) => {
     // if (isMobile) {
@@ -211,111 +213,24 @@ export default function SetupColumn({
     : stepElementsDesktop;
 
   return (
-    <div sx={styles.container} className={isMobile && isOpen && "open"}>
+    <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}>
       {isMobile && (
         <ArrowWrap isOpen={isOpen} isDisabled={isArrowDisabled}>
           <ArrowForwardIosIcon onClick={() => setIsOpen((prev) => !prev)} />
         </ArrowWrap>
       )}
-      <Stepper
-        stepElements={activeStepElements}
-        handleNext={handleNext}
-        handleBack={handleBack}
-        activeStep={activeStep}
-      />
-      {/* {isMobile && (
+      <TabSegmentWrap mapHeight={map_segment_height}>
+        <Stepper
+          stepElements={activeStepElements}
+          handleNext={handleNext}
+          handleBack={handleBack}
+          activeStep={activeStep}
+        />
+        {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
-
-      {<>{activeStepElements[activeStep]}</>}
-      {/* <div sx={styles.tabWrapWrap} id="tab_wrap_wrap">
-        <div sx={styles.TabWrap}>
-          <div
-            sx={styles.Tab}
-            className={activeTab === TAB_VALUES.ONE && "active"}
-            onClick={() => handleChange(TAB_VALUES.ONE)}
-          >
-            <p>{TAB_VALUES.ONE}</p>
-          </div>
-          <div
-            sx={styles.Tab}
-            className={activeTab === TAB_VALUES.TWO && "active"}
-            onClick={() => handleChange(TAB_VALUES.TWO)}
-          >
-            <p>{TAB_VALUES.TWO}</p>
-          </div>
-          <div
-            sx={styles.Tab}
-            className={activeTab === TAB_VALUES.THREE && "active"}
-            onClick={() => handleChange(TAB_VALUES.THREE)}
-          >
-            <p>{TAB_VALUES.THREE}</p>
-          </div>
-        </div>
-      </div>
-      */}
-
-      {/* {activeTab === TAB_VALUES.ONE && (
-        <TabContentWrap
-          className={activeTab === TAB_VALUES.ONE && "active"}
-          sx={styles.tabBody}
-          headerHeight={headerHeight}
-        >
-          <Step1Location
-            map={map}
-            nextTab={() => handleChange(TAB_VALUES.TWO)}
-            setMapCoordinates={setMapCoordinates}
-            setMapTitles={setMapTitles}
-          />
-          <Step2Orientation
-            nextTab={() => handleChange(TAB_VALUES.TWO)}
-            product={product}
-            setProduct={setProduct}
-          />
-        </TabContentWrap>
-      )} */}
-      {/* {activeTab === TAB_VALUES.TWO && (
-        <TabContentWrap
-          className={`${activeTab === TAB_VALUES.TWO && "active"}`}
-          sx={styles.tabBody}
-        >
-          <Step3Layout
-            activeFrame={activeFrame}
-            setActiveLayout={setActiveLayout}
-            nextTab={() => handleChange(TAB_VALUES.THREE)}
-          />
-
-          <Step4Colors
-            activeMapStyle={activeMapStyle}
-            setActiveMapStyle={setActiveMapStyle}
-            nextTab={() => handleChange(TAB_VALUES.THREE)}
-          />
-
-        </TabContentWrap>
-      )} */}
-      {/* {activeTab === TAB_VALUES.THREE && (
-        <TabContentWrap
-          className={activeTab === TAB_VALUES.THREE && "active"}
-          sx={styles.tabBody}
-        >
-          <Step5Size
-            product={product}
-            setProduct={setProduct}
-            nextTab={() => handleChange(TAB_VALUES.THREE)}
-          />
-
-          <Step6FinishVariant
-            map={map}
-            mapTitles={mapTitles}
-            activeLayout={activeFrame}
-            product={product}
-            setProduct={setProduct}
-            activeMapStyle={activeMapStyle}
-          />
-
-        </TabContentWrap>
-      )} */}
-
+        <TabContentWrap>{<>{activeStepElements[activeStep]}</>}</TabContentWrap>
+      </TabSegmentWrap>
       {isMobile && (
         <Backdrop
           className={classes.backdrop}
@@ -331,12 +246,12 @@ export default function SetupColumn({
 }
 
 const styles = {
-  container: {
+  tabsContainer: {
     width: "100%",
     height: [null, null, null, "100%"],
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-end",
+    alignItems: "center",
     zIndex: 10,
     backgroundColor: "white",
     transitionDuration: "1s",
@@ -399,13 +314,27 @@ const styles = {
   },
 };
 
-const TabContentWrap = styled.div`
+const TabSegmentWrap = styled.div`
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+
   @media (max-width: 768px) {
-    height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
+    height: ${({ mapHeight }) => `calc(100vh - ${mapHeight}px)`};
+    width: 100%;
+    overflow: hidden;
   }
 `;
 
-const MobileTabWrap = styled.div``;
+const TabContentWrap = styled.div`
+  border: 1px solid green;
+
+  @media (max-width: 768px) {
+    // height: 100%;
+    overflow: scroll;
+    // flex: 1;
+  }
+`;
 
 const ArrowWrap = styled.div`
   display: inline-flex;

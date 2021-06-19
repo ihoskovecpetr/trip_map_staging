@@ -623,36 +623,35 @@ export default function StudioRootContainer() {
 }
 
 const styles = {
-  canvasBox: {
-    // px: [0, null, "40px", 0],
-    order: [0, 0, 0, 2],
-    width: ["100%", "100%", "100%", "60%", "70%"],
-    height: [null, null, null, "100%"],
-    backgroundColor: "muted",
+  containerBox: {
+    display: "flex",
+    alignItems: ["flex-start", null, null, "center"],
+    justifyContent: "space-between",
+    flexDirection: ["column", null, null, "row"],
+    alignItems: "flex-start",
+    flexWrap: ["wrap", null, null, "nowrap"],
+    height: "100%",
   },
+
   settingsBox: {
     flexShrink: 1,
     order: [1, 1, 1, 0],
-    px: [0, null, "30px", 0],
     textAlign: ["center", null, "right", "left"],
     width: ["100%", "100%", "100%", "40%", "30%"],
     mx: "auto",
     backgroundColor: "background_white",
-    pb: ["30px", null, null, 0],
     zIndex: 10,
 
     ".description": {
       pr: [0, null, null, null, 4],
     },
   },
-
-  containerBox: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    flexWrap: ["wrap", null, null, "nowrap"],
-    height: "100%",
+  canvasBox: {
+    // px: [0, null, "40px", 0],
+    order: [0, 0, 0, 2],
+    width: ["100%", "100%", "100%", "60%", "70%"],
+    height: [null, null, null, "100%"],
+    backgroundColor: "muted",
   },
 };
 

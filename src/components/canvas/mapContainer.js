@@ -43,7 +43,7 @@ export default function MapContainer({
   };
 
   return (
-    <div sx={styles.canvas_bg}>
+    <div sx={styles.canvas_bg} id="map_studio_segment">
       <div sx={styles.allBtnWrapper} id="map_buttons_wrapper">
         <div sx={styles.zoomBtnWrapper}>
           <div sx={styles.zoomBtn} className="left" onClick={addZoom}>
