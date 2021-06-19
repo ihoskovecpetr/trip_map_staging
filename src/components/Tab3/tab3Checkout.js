@@ -157,13 +157,12 @@ export default function Tab3Checkout({
   );
   return (
     <div sx={styles.container}>
-      <div sx={styles.absoluteBtnWrap}>
+      <div>
         <NextTabBtn
           onClick={() => {
             setBackdropOpen(true);
             lazyUploadImage();
           }}
-          margin="20px 0px 75px"
           price={priceWithDelivery.netPrice} //TODO add big.js
         >
           Shrnutí objednávky
@@ -171,56 +170,46 @@ export default function Tab3Checkout({
       </div>
 
       <img id="img_screen_shot" sx={styles.resultImage} />
-      <Backdrop
-        className={classes.backdrop}
-        classes={{
-          root: classes.rootBackdrop, // class name, e.g. `classes-nesting-root-x`
-        }}
-        open={backdropOpen}
-        onClick={backdropClose}
-      >
-        <CheckoutCard
-          isUploadPending={isUploadPending}
-          setIsUploadPending={setIsUploadPending}
-          product={product}
-          mapTitles={mapTitles}
-          imageSavedResponse={imageSavedResponse}
-          imageBase64Created={imageBase64Created}
-          imageBase64Uploaded={imageBase64Uploaded}
-          // shippingInfoObject={shippingInfoObject}
-          // isShippingInfoLoading={isShippingInfoLoading}
-          backdropClose={backdropClose}
-          percentageUpload={percentageUpload}
-        />
-      </Backdrop>
+      {backdropOpen && (
+        <Backdrop
+          className={classes.backdrop}
+          classes={{
+            root: classes.rootBackdrop, // class name, e.g. `classes-nesting-root-x`
+          }}
+          open={backdropOpen}
+          onClick={backdropClose}
+        >
+          <CheckoutCard
+            isUploadPending={isUploadPending}
+            setIsUploadPending={setIsUploadPending}
+            product={product}
+            mapTitles={mapTitles}
+            imageSavedResponse={imageSavedResponse}
+            imageBase64Created={imageBase64Created}
+            imageBase64Uploaded={imageBase64Uploaded}
+            // shippingInfoObject={shippingInfoObject}
+            // isShippingInfoLoading={isShippingInfoLoading}
+            backdropClose={backdropClose}
+            percentageUpload={percentageUpload}
+          />
+        </Backdrop>
+      )}
     </div>
   );
 }
 
 const styles = {
   container: {
-    margin: "50px 0",
     "& p": {
       fontFamily: "Arial, sans-serif",
       margin: 0,
     },
   },
-  payRow: {
-    padding: "10px",
-    width: "100%",
-  },
-  absoluteBtnWrap: {
-    position: "fixed",
-    top: "85vh",
-    left: "0px",
-    zIndex: 10,
-
-    width: ["100%", "100%", "100%", "40%", "30%"],
-  },
   resultImage: {
     width: "100%",
     backgroundColor: "green",
     zIndex: 10,
+    display: "none",
   },
 };
 

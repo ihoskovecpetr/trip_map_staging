@@ -116,6 +116,7 @@ export default function Step1Location({
 const styles = {
   container: {
     width: "100%",
+    paddingTop: "10px",
   },
   headingDesc: {
     fontWeight: 500,

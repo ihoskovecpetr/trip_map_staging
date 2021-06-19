@@ -104,7 +104,6 @@ export default function Step4Colors({
 const styles = {
   container: {
     width: "100%",
-    padding: "0 10px",
     // pb: "90px",
   },
 
@@ -128,6 +127,7 @@ const styles = {
     display: "flex",
     width: "100%",
     overflow: "scroll",
+    padding: "10px 5px",
     flexWrap: [null, null, null, "wrap"],
   },
   mapColorsItem: {

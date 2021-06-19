@@ -152,7 +152,7 @@ const styles = {
   container: {
     width: "100%",
     padding: "0 10px",
-    pb: "70px",
+    pt: "20px",
   },
   headingDesc: {
     fontWeight: 500,

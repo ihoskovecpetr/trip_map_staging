@@ -8,6 +8,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useElementDimensions } from "../../Hooks/useElementDimensions";
+import { color, font, fontSize, fontWeight } from "../../utils";
 
 import Stepper from "../Tabs/Stepper";
 
@@ -54,6 +55,8 @@ export default function SetupColumn({
     "map_studio_segment"
   );
 
+  const { height: header_height } = useElementDimensions("header");
+
   const handleChange = (newValue) => {
     // if (isMobile) {
     const yCoordTabs =
@@ -74,10 +77,10 @@ export default function SetupColumn({
 
     // }
   };
-  const stepsWithDisabledOpenning = [0, 1, 2];
+  const stepsNumbersDisabledOpenning = [];
   useEffect(() => {
     console.log({ activeStep });
-    if (stepsWithDisabledOpenning.includes(activeStep)) {
+    if (stepsNumbersDisabledOpenning.includes(activeStep)) {
       setIsOpen(false);
       setIsArrowDisabled(true);
       return;
@@ -219,7 +222,11 @@ export default function SetupColumn({
           <ArrowForwardIosIcon onClick={() => setIsOpen((prev) => !prev)} />
         </ArrowWrap>
       )}
-      <TabSegmentWrap mapHeight={map_segment_height}>
+      <TabSegmentWrap
+        mapHeight={map_segment_height}
+        headerHeight={header_height}
+        isOpen={isOpen}
+      >
         <Stepper
           stepElements={activeStepElements}
           handleNext={handleNext}
@@ -315,25 +322,22 @@ const styles = {
 };
 
 const TabSegmentWrap = styled.div`
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  background-color: ${color("background")};
+
+  height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
 
   @media (max-width: 768px) {
-    height: ${({ mapHeight }) => `calc(100vh - ${mapHeight}px)`};
-    width: 100%;
+    height: ${({ mapHeight, isOpen }) =>
+      isOpen ? "40vh" : `calc(100vh - ${mapHeight}px)`};
     overflow: hidden;
   }
 `;
 
 const TabContentWrap = styled.div`
-  border: 1px solid green;
-
-  @media (max-width: 768px) {
-    // height: 100%;
-    overflow: scroll;
-    // flex: 1;
-  }
+  overflow: scroll;
 `;
 
 const ArrowWrap = styled.div`

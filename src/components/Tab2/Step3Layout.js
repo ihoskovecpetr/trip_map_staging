@@ -94,7 +94,7 @@ export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
 const styles = {
   container: {
     width: "100%",
-    padding: "0 10px",
+    padding: "5px 5px",
     // pb: "90px",
   },
 
