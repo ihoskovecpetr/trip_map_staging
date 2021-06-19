@@ -12,7 +12,6 @@ import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 import { getVersionDescription } from "../../LibGlobal/getVersionDescription";
 import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
-import { ScaleControl } from "mapbox-gl";
 
 const priceAlgorithm = getPriceAlgorithm();
 

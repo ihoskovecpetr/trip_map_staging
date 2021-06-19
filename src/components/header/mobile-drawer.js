@@ -6,6 +6,7 @@ import { DrawerContext } from "../../contexts/drawer/drawer.context";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
 // import { Link } from "react-scroll";
 import Link from "next/link";
+import LinkRouter from "components/LinkRouter";
 
 import {
   FaFacebookF,
@@ -65,9 +66,9 @@ const MobileDrawer = () => {
             <Box sx={styles.menu}>
               {menuItems.map(({ path, label }, i) => {
                 return (
-                  <Link
+                  <LinkRouter
                     activeClass="active"
-                    href={path}
+                    path={path}
                     // spy={true}
                     // smooth={true}
                     // offset={-70}
@@ -75,7 +76,7 @@ const MobileDrawer = () => {
                     key={i}
                   >
                     {label}
-                  </Link>
+                  </LinkRouter>
                 );
               })}
             </Box>
@@ -157,7 +158,7 @@ const styles = {
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    a: {
+    div: {
       fontSize: "16px",
       fontWeight: "300",
       textDecoration: "none",

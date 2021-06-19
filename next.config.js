@@ -13,4 +13,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 //   withPlugins([optimizedImages], nextConfiguration)
 // );
 
-module.exports = withPlugins([optimizedImages], nextConfiguration);
+module.exports = withPlugins(
+  [optimizedImages, withBundleAnalyzer],
+  nextConfiguration
+);

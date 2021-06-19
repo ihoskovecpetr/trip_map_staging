@@ -217,7 +217,7 @@ const styles = {
     color: "rgba(0,0,0,0.35)",
     cursor: "pointer",
     borderBottom: "1px solid lightgrey",
-    backgroundColor: "background_secondary",
+    backgroundColor: "background_white",
 
     "&.active": {
       borderBottom: "2px solid",
@@ -239,7 +239,7 @@ const styles = {
     display: "none",
     height: ["unset", "unset", "100%"],
     overflow: "scroll",
-    backgroundColor: "background_secondary",
+    backgroundColor: "background_white",
     "&.active": {
       display: "block",
     },

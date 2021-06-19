@@ -72,10 +72,10 @@ export default function SetupColumn({
 
     // }
   };
-
+  const stepsWithDisabledOpenning = [0, 1, 2];
   useEffect(() => {
     console.log({ activeStep });
-    if (activeStep === 0) {
+    if (stepsWithDisabledOpenning.includes(activeStep)) {
       setIsOpen(false);
       setIsArrowDisabled(true);
       return;
@@ -135,8 +135,6 @@ export default function SetupColumn({
         setProduct={setProduct}
         activeMapStyle={activeMapStyle}
       />,
-    ],
-    [
       <Step7Checkout
         map={map}
         mapTitles={mapTitles}
@@ -369,7 +367,7 @@ const styles = {
     color: "rgba(0,0,0,0.35)",
     cursor: "pointer",
     borderBottom: "1px solid lightgrey",
-    backgroundColor: "background_secondary",
+    backgroundColor: "background_white",
 
     "&.active": {
       borderBottom: "2px solid",
@@ -391,7 +389,7 @@ const styles = {
     display: "none",
     height: ["unset", "unset", "100%"],
     overflow: "scroll",
-    backgroundColor: "background_secondary",
+    backgroundColor: "background_white",
     "&.active": {
       display: "block",
     },

@@ -4,11 +4,7 @@ import { jsx, Text, Button, Link } from "theme-ui";
 import { keyframes } from "@emotion/react";
 
 export default function CustomLoader() {
-  return (
-    <>
-      <span sx={styles.loader}></span>
-    </>
-  );
+  return <span sx={styles.loader}></span>;
 }
 
 const rotation = keyframes`

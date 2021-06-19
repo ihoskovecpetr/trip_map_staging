@@ -637,7 +637,7 @@ const styles = {
     textAlign: ["center", null, "right", "left"],
     width: ["100%", "100%", "100%", "40%", "30%"],
     mx: "auto",
-    backgroundColor: "background_secondary",
+    backgroundColor: "background_white",
     pb: ["30px", null, null, 0],
     zIndex: 10,
 

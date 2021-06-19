@@ -12,6 +12,8 @@ import "./style.css";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-image-lightbox/style.css";
+import { ThemeProvider } from "styled-components";
+import theme from "../theme/theme.js";
 
 export default function CustomApp({ Component, pageProps }) {
   useEffect(() => {
@@ -20,5 +22,9 @@ export default function CustomApp({ Component, pageProps }) {
     Router.events.on("routeChangeComplete", logPageView);
   }, []);
 
-  return <Component {...pageProps} />;
+  return (
+    <ThemeProvider theme={theme}>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 }

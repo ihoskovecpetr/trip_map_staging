@@ -40,6 +40,9 @@
   color: lightgrey;
 }
 
+/* .slider-slide {
+  cursor: default !important;
+} */
 /* .slider-control-centerleft,
 .slider-control-centerright {
   display: none;

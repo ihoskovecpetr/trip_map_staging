@@ -1,10 +1,12 @@
 /** @jsx jsx */
-import { jsx, Container, Box, Grid, Text, Heading, Button } from "theme-ui";
+import React, { useState, useEffect } from "react";
+import { jsx, Container, Box, Grid, Text, Heading } from "theme-ui";
 import Link from "next/link";
 import TextFeature from "components/text-feature";
 import Image from "components/image";
 import Carousel from "nuka-carousel";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 import LandingPagePicture from "assets/landing-page/landing_page_bg_double.png";
 import LandingPageBg from "assets/landing-page/landing_photo_bg.png";
@@ -16,8 +18,10 @@ import FramedPictureBack from "assets/landing-page/FramedPicBack.webp";
 
 import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
+
 import { useElementDimensions } from "../Hooks/useElementDimensions";
 import { useIsMobile } from "../Hooks/useIsMobile";
+import Button from "components/Button";
 
 const data = {
   subTitle: "",
@@ -117,13 +121,31 @@ export default function LandingPage() {
 }
 
 function Cta() {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
+  const onClick = () => {
+    if (!isLoading) {
+      setIsLoading(true);
+      router.push("/studio");
+    }
+  };
   return (
     <Box sx={styles.ctaBox}>
-      <Link href={"/studio"} sx={styles.ctaLink} variant="default">
-        <Button variant="primary" sx={styles.ctaButton} aria-label={"btnName"}>
-          ZAČNI TVOŘIT
-        </Button>
-      </Link>
+      <Button
+        variant="primary"
+        onClick={onClick}
+        sx={styles.ctaButton}
+        isLoading={isLoading}
+        // isLoading
+        aria-label={"btnName"}
+      >
+        ZAČNI TVOŘIT
+      </Button>
     </Box>
   );
 }
@@ -168,7 +190,7 @@ const styles = {
     width: "100%",
     zIndex: -1,
     position: "absolute",
-    backgroundImage: [`url(${LandingPagePicture})`, null, `none`],
+    // backgroundImage: [`url(${LandingPagePicture})`, null, `none`],
     backgroundRepeat: "no-repeat",
     backgroundSize: ["100% auto", "cover"],
     boxShadow: ["inset 0 0 0 2000px rgba(255, 255, 255, 0.1)", null, "unset"],
@@ -190,11 +212,15 @@ const styles = {
     order: [0, null, null, 0],
     // display: ["none", null, "block"],
     display: "block",
+    cursor: "default",
   },
   landingImage: {},
   landingCarousel: {
     width: "100%",
     height: "100%",
+    li: {
+      cursor: "default",
+    },
   },
   contentBox: {
     width: ["100%", 450, 350, 350, 500, 570],
@@ -255,6 +281,7 @@ const styles = {
     width: "100%",
     position: "absolute",
     zIndex: 100,
+    pointerEvents: "none",
   },
   ctaBox: {
     // width: "100%",

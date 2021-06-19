@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import Button from "@material-ui/core/Button";
@@ -10,6 +11,9 @@ const useStyles = makeStyles({
     // maxWidth: 400,
     // flexGrow: 1,
     width: "100%",
+  },
+  rootButton: {
+    color: "#25CB9E",
   },
 });
 
@@ -44,6 +48,7 @@ export default function Stepper({
         <Button
           size="small"
           onClick={handleNext}
+          className={classes.rootButton}
           disabled={activeStep === stepElements.length - 1}
         >
           Next
@@ -67,3 +72,7 @@ export default function Stepper({
     />
   );
 }
+
+const styledButton = styled(Button)`
+  color: green;
+`;
