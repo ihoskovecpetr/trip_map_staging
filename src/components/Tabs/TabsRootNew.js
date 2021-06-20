@@ -110,22 +110,16 @@ export default function SetupColumn({
       <Step3Layout
         activeFrame={activeFrame}
         setActiveLayout={setActiveLayout}
-        nextTab={() => handleChange(TAB_VALUES.THREE)}
       />,
 
       <Step4Colors
         activeMapStyle={activeMapStyle}
         setActiveMapStyle={setActiveMapStyle}
-        nextTab={() => handleChange(TAB_VALUES.THREE)}
       />,
     ],
 
     [
-      <Step5Size
-        product={product}
-        setProduct={setProduct}
-        nextTab={() => handleChange(TAB_VALUES.THREE)}
-      />,
+      <Step5Size product={product} setProduct={setProduct} />,
 
       <Step6FinishVariant
         map={map}

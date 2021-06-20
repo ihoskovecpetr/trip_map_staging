@@ -54,26 +54,26 @@ const data = {
 
 export default function LandingPage() {
   const { height: headerHeight } = useElementDimensions("header");
+  const { height: carouselHeight } = useElementDimensions(
+    "carousel_img_photo_0"
+  );
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG({ id: "carousel_img_photo_0" });
-
+  console.log({ headerHeight, carouselHeight });
   return (
     <section sx={styles.sectionContainer}>
       <div sx={styles.backgroundDiv} />
-      <Box sx={styles.pureCtaBox}>
-        <Cta />
-      </Box>
+      <PureCtaBox maxHeightTop={headerHeight + carouselHeight}>
+        <CtaComponent />
+      </PureCtaBox>
       <Container sx={styles.containerBox}>
         {isMobile && (
           <div sx={styles.onlyMobile}>
             <MobileTopPadding headerHeight={headerHeight} />
           </div>
         )}
-        <Link href="/studio" prefetch={true}>
-          {"studio"}
-        </Link>
         <Box sx={styles.carouselBox}>
-          <div sx={styles.landingCarousel}>
+          <LandingCarousel>
             <Carousel
               autoplay={true}
               cellAlign="center"
@@ -98,7 +98,7 @@ export default function LandingPage() {
               <img src={LandingPageBg} />
               <img src={InterierFlowers} /> */}
             </Carousel>
-          </div>
+          </LandingCarousel>
         </Box>
 
         <Box sx={styles.contentBox}>
@@ -118,7 +118,7 @@ export default function LandingPage() {
               </Box>
             ))}
             <Box sx={styles.ctaOnlyLarge}>
-              <Cta />
+              <CtaComponent />
             </Box>
           </Grid>
         </Box>
@@ -127,7 +127,7 @@ export default function LandingPage() {
   );
 }
 
-function Cta() {
+function CtaComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -160,7 +160,7 @@ function Cta() {
     }
   };
   return (
-    <Box sx={styles.ctaBox}>
+    <>
       <Button
         variant="primary"
         onClick={onClick}
@@ -171,12 +171,12 @@ function Cta() {
       >
         ZAČNI TVOŘIT
       </Button>
-      <Hiden id="link_studio_id">
+      {/* <Hiden id="link_studio_id">
         <Link href="/studio" prefetch={true}>
           {"studio"}
         </Link>
-      </Hiden>
-    </Box>
+      </Hiden> */}
+    </>
   );
 }
 
@@ -185,8 +185,35 @@ const MobileTopPadding = styled.div`
 `;
 
 const Hiden = styled.div`
+  display: none;
   z-index: 100;
   cursor: pointer;
+`;
+
+const PureCtaBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 0rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  position: absolute;
+  top: ${({ maxHeightTop }) => `${maxHeightTop - 110}px`};
+  z-index: 90;
+`;
+
+const LandingCarousel = styled.div`
+  width: 100%,
+  height: 100%,
+  min-height: unset
+
+  li: {
+    cursor: default,
+  },
+
+  @media (max-width: 768px) {
+    min-height: 80vh,
+  }
 `;
 
 const styles = {
@@ -227,15 +254,15 @@ const styles = {
     display: "block",
     cursor: "default",
   },
-  landingCarousel: {
-    width: "100%",
-    height: "100%",
-    minHeight: ["80vh", null, null, "unset"],
+  // landingCarousel: {
+  //   width: "100%",
+  //   height: "100%",
+  //   minHeight: ["80vh", null, null, "unset"],
 
-    li: {
-      cursor: "default",
-    },
-  },
+  //   li: {
+  //     cursor: "default",
+  //   },
+  // },
   contentBox: {
     width: ["100%", 450, 350, 350, 500, 570],
     pt: [7, null, 0],
@@ -276,35 +303,12 @@ const styles = {
     display: ["none", "none", "block", "block"],
   },
 
-  pureCtaBox: {
-    display: ["flex", "flex", "none"],
-    justifyContent: "center",
-    alignItems: "flex-end",
-    marginTop: "2rem",
-    marginBottom: ["3rem", "3rem", 0],
-
-    flexWrap: "wrap",
-    // height: "100vh",
-    width: "100%",
-    position: "absolute",
-    bottom: "210px",
-    zIndex: 90,
-    // pointerEvents: "none",
-  },
-  ctaBox: {
-    // width: "100%",
-    // display: "flex",
-    // justifyContent: "center",
-    // backgroundImage: ["none", "none", "none", "block"],
-  },
-
   ctaButton: {
     pointerEvents: "all",
     backgroundColor: "cta_color",
     fontSize: "1rem !important",
-    p: "1rem 1.5rem",
     letterSpacing: "1.5px",
-    width: "100%",
+    width: "90%",
     borderRadius: "0px",
   },
 
