@@ -85,6 +85,7 @@ const MobileDrawer = () => {
                       // smooth={true}
                       // offset={-70}
                       // duration={500}
+                      prefetch={true}
                       key={i}
                     >
                       {label}

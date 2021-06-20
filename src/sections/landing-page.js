@@ -69,7 +69,9 @@ export default function LandingPage() {
             <MobileTopPadding headerHeight={headerHeight} />
           </div>
         )}
-
+        <Link href="/studio" prefetch={true}>
+          {"studio"}
+        </Link>
         <Box sx={styles.carouselBox}>
           <div sx={styles.landingCarousel}>
             <Carousel
@@ -131,6 +133,24 @@ function Cta() {
 
   useEffect(() => {
     setIsLoading(false);
+
+    let options = {
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+
+    let observer = new IntersectionObserver((e) => {
+      console.log("visible??", e);
+    }, options);
+
+    let target = document.getElementById("link_studio_id");
+
+    console.log({ target });
+    if (target) {
+      observer.observe(target);
+    }
+
+    console.log({ observer });
   }, []);
 
   const onClick = () => {
@@ -151,7 +171,7 @@ function Cta() {
       >
         ZAČNI TVOŘIT
       </Button>
-      <Hiden>
+      <Hiden id="link_studio_id">
         <Link href="/studio" prefetch={true}>
           {"studio"}
         </Link>
@@ -165,10 +185,8 @@ const MobileTopPadding = styled.div`
 `;
 
 const Hiden = styled.div`
-  // display: none;
   z-index: 100;
   cursor: pointer;
-  // pointer-events: auto;
 `;
 
 const styles = {
