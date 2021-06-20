@@ -189,28 +189,28 @@ const Hiden = styled.div`
 `;
 
 const PureCtaBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  margin-top: 0rem;
-  margin-bottom: 3rem;
-  width: 100%;
-  position: absolute;
-  top: ${({ maxHeightTop }) => `${maxHeightTop - 110}px`};
-  z-index: 90;
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 0rem;
+    margin-bottom: 3rem;
+    width: 100%;
+    position: absolute;
+    top: ${({ maxHeightTop }) => `${maxHeightTop - 110}px`};
+    z-index: 90;
+  }
 `;
 
 const LandingCarousel = styled.div`
-  width: 100%,
-  height: 100%,
-  min-height: unset
-
-  li: {
-    cursor: default,
-  },
+  width: 100%;
+  height: 100%;
+  min-height: unset;
 
   @media (max-width: 768px) {
-    min-height: 80vh,
+    min-height: 80vh;
   }
 `;
 
