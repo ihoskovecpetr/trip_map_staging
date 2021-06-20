@@ -157,7 +157,7 @@ function Cta() {
         ZAČNI TVOŘIT
       </Button>
       <Hiden>
-        <Link href="/studio"></Link>
+        <Link href="/studio">{"studio"}</Link>
       </Hiden>
     </Box>
   );
@@ -168,7 +168,7 @@ const MobileTopPadding = styled.div`
 `;
 
 const Hiden = styled.div`
-  display: none;
+  // display: none;
 `;
 
 const styles = {
