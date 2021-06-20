@@ -625,17 +625,17 @@ export default function StudioRootContainer() {
 const styles = {
   containerBox: {
     display: "flex",
-    alignItems: ["flex-start", null, null, "center"],
+    // alignItems: ["flex-start", null, null, "center"],
     justifyContent: "space-between",
     flexDirection: ["column", null, null, "row"],
     alignItems: "flex-start",
-    flexWrap: ["wrap", null, null, "nowrap"],
+    flexWrap: [null, null, null, "wrap"],
     height: "100%",
   },
 
   settingsBox: {
     flexShrink: 1,
-    order: [1, 1, 1, 0],
+    order: [1, 1, 1, 1, 0],
     textAlign: ["center", null, "right", "left"],
     width: ["100%", "100%", "100%", "40%", "30%"],
     mx: "auto",

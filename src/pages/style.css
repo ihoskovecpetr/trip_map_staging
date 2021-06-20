@@ -47,3 +47,7 @@
 .slider-control-centerright {
   display: none;
 } */
+
+body {
+  overflow-x: hidden;
+}

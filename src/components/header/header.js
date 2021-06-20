@@ -75,7 +75,7 @@ const styles = {
     left: 0,
     transition: "all 0.5s ease",
     animation: `${positionAnim} 0.4s ease`,
-    backgroundColor: "text_secondary",
+    backgroundColor: "heading_secondary",
 
     ".donate__btn": {
       flexShrink: 0,

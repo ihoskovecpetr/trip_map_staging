@@ -32,7 +32,7 @@ export default function Step1Location({
 
     geocoder.container.style.width = "100%";
 
-    document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
+    // document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
   }, []);
 
   useEffect(() => {
