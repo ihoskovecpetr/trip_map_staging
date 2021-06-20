@@ -8,11 +8,12 @@ import Carousel from "nuka-carousel";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-import LandingPagePicture from "assets/landing-page/landing_page_bg_double.png";
-import LandingPageBg from "assets/landing-page/landing_photo_bg.png";
-// import InterierBlack from "assets/landing-page/landing_img_1.png";
-import InterierBlack from "assets/landing-page/interier_black.webp";
+// import LandingPagePicture from "assets/landing-page/landing_page_bg_double.png";
+// import LandingPageBg from "assets/landing-page/landing_photo_bg.png";
+// // import InterierBlack from "assets/landing-page/landing_img_1.png";
+// import InterierBlack from "assets/landing-page/interier_black.webp";
 
+import Carousel1 from "assets/landing-page/landing-carousel-1.webp";
 import FramedPicture from "assets/landing-page/FramedPicture.webp";
 import FramedPictureBack from "assets/landing-page/FramedPicBack.webp";
 
@@ -83,7 +84,7 @@ export default function LandingPage() {
               renderCenterLeftControls={() => null}
               renderCenterRightControls={() => null}
             >
-              <img src={InterierBlack} />
+              <img src={Carousel1} />
               <img src={FramedPicture} />
               <img src={FramedPictureBack} />
 

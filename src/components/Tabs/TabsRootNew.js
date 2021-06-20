@@ -326,6 +326,7 @@ const TabSegmentWrap = styled.div`
   flex-direction: column;
   width: 100%;
   background-color: ${color("background")};
+  padding: 5px 5px;
 
   height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
 
@@ -333,6 +334,7 @@ const TabSegmentWrap = styled.div`
     height: ${({ mapHeight, isOpen }) =>
       isOpen ? "40vh" : `calc(100vh - ${mapHeight}px)`};
     overflow: hidden;
+    padding: 0 0;
   }
 `;
 

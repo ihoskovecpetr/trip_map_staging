@@ -122,7 +122,7 @@ const styles = {
     display: "flex",
     width: "100%",
     flexWrap: "wrap",
-    justifyContent: ["center", null, null, "flex-start"],
+    justifyContent: ["center", null, null, "center"],
   },
   sizeItem: {
     margin: "10px",

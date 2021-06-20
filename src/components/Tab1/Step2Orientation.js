@@ -63,6 +63,12 @@ export default function Step2Orientation({ nextTab, product, setProduct }) {
         </div>
       </div>
 
+      {!isMobile && (
+        <Text as="p" className="description" sx={styles.topDescription}>
+          <b>Tip!</b> Pro změnu nadpisu a podnadpisu klikněte přímo na mapu
+        </Text>
+      )}
+
       {/* <NextTabBtn
         onClick={() => {
           nextTab();
@@ -163,11 +169,20 @@ const styles = {
     },
   },
 
-  absoluteBtnWrap: {
-    position: "fixed",
-    top: ["85vh", "85vh", "85vh", "90vh"],
-    left: "0px",
-    height: 0,
-    width: ["100%", "100%", "100%", "40%", "30%"],
+  // absoluteBtnWrap: {
+  //   position: "fixed",
+  //   top: ["85vh", "85vh", "85vh", "90vh"],
+  //   left: "0px",
+  //   height: 0,
+  //   width: ["100%", "100%", "100%", "40%", "30%"],
+  // },
+
+  topDescription: {
+    margin: "20px 0px",
+    fontWeight: 100,
+    "& b": {
+      color: "grey",
+      fontWeight: 500,
+    },
   },
 };

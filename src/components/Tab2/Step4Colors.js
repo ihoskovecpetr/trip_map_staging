@@ -86,11 +86,6 @@ export default function Step4Colors({
           </>
         ))}
       </div>
-      {!isMobile && (
-        <Text as="p" className="description" sx={styles.topDescription}>
-          <b>Tip!</b> Pro změnu nadpisu a podnadpisu klikněte přímo na mapu
-        </Text>
-      )}
 
       {/* <div sx={styles.absoluteBtnWrap}>
         <NextTabBtn onClick={nextTab} margin="20px 0px 75px">
@@ -107,14 +102,6 @@ const styles = {
     // pb: "90px",
   },
 
-  topDescription: {
-    margin: "20px 0px",
-    fontWeight: 100,
-    "& b": {
-      color: "grey",
-      fontWeight: 500,
-    },
-  },
   headingDesc: {
     fontWeight: 500,
     textAlign: "left",
