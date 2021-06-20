@@ -54,9 +54,7 @@ const data = {
 
 export default function LandingPage() {
   const { height: headerHeight } = useElementDimensions("header");
-  const { height: carouselHeight } = useElementDimensions(
-    "carousel_img_photo_0"
-  );
+  const { height: carouselHeight } = useElementDimensions("carousel_wrapper");
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG({ id: "carousel_img_photo_0" });
   console.log({ headerHeight, carouselHeight });
@@ -73,7 +71,7 @@ export default function LandingPage() {
           </div>
         )}
         <Box sx={styles.carouselBox}>
-          <LandingCarousel>
+          <LandingCarousel id="carousel_wrapper">
             <Carousel
               autoplay={true}
               cellAlign="center"
