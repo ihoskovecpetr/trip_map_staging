@@ -7,7 +7,7 @@ import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
-export default function Step2Orientation({ nextTab, product, setProduct }) {
+export default function Step2Orientation({ product, setProduct }) {
   const { isMobile } = useIsMobile();
 
   const isProductWide = (product) => {

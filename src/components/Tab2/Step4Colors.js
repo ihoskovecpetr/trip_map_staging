@@ -30,11 +30,7 @@ import { MAP_STYLES_NAMES } from "../../constants/constants";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
 
-export default function Step4Colors({
-  activeMapStyle,
-  setActiveMapStyle,
-  nextTab,
-}) {
+export default function Step4Colors({ activeMapStyle, setActiveMapStyle }) {
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG({ id: "map_style_id_0" });
 

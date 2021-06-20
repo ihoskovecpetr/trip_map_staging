@@ -46,7 +46,7 @@ export default function SetupColumn({
   const [activeStep, setActiveStep] = React.useState(0);
 
   const { isMobile } = useIsMobile();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [isArrowDisabled, setIsArrowDisabled] = useState(true);
 
   const classes = useStyles();
@@ -101,15 +101,10 @@ export default function SetupColumn({
     [
       <Step1Location
         map={map}
-        nextTab={() => handleChange(TAB_VALUES.TWO)}
         setMapCoordinates={setMapCoordinates}
         setMapTitles={setMapTitles}
       />,
-      <Step2Orientation
-        nextTab={() => handleChange(TAB_VALUES.TWO)}
-        product={product}
-        setProduct={setProduct}
-      />,
+      <Step2Orientation product={product} setProduct={setProduct} />,
     ],
     [
       <Step3Layout

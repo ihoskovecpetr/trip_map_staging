@@ -26,7 +26,7 @@ import NextTabBtn from "../NextTabBtn/NextTabBtn";
 
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "../../constants/constants";
 
-export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
+export default function Step3Layout({ activeFrame, setActiveLayout }) {
   const { displayPNG } = useDisplayPNG({ id: "image_id_0" });
 
   const { isMobile } = useIsMobile();

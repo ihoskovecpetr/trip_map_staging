@@ -66,17 +66,30 @@ const MobileDrawer = () => {
             <Box sx={styles.menu}>
               {menuItems.map(({ path, label }, i) => {
                 return (
-                  <LinkRouter
-                    activeClass="active"
-                    path={path}
-                    // spy={true}
-                    // smooth={true}
-                    // offset={-70}
-                    // duration={500}
-                    key={i}
-                  >
-                    {label}
-                  </LinkRouter>
+                  <>
+                    <LinkRouter
+                      activeClass="active"
+                      path={path}
+                      // spy={true}
+                      // smooth={true}
+                      // offset={-70}
+                      // duration={500}
+                      key={i}
+                    >
+                      {label}
+                    </LinkRouter>
+                    <Link
+                      activeClass="active"
+                      path={path}
+                      // spy={true}
+                      // smooth={true}
+                      // offset={-70}
+                      // duration={500}
+                      key={i}
+                    >
+                      {label}
+                    </Link>
+                  </>
                 );
               })}
             </Box>

@@ -20,7 +20,6 @@ let geocoder = new MapboxGeocoder({
 
 export default function Step1Location({
   map,
-  nextTab,
   setMapCoordinates,
   setMapTitles,
 }) {
