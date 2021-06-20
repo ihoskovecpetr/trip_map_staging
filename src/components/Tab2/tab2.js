@@ -2,26 +2,26 @@
 import React from "react";
 import { jsx, Text, Button, Link } from "theme-ui";
 
-import borderBlurredLayoutImg from "assets/mapLayouts/borderBlurredLayout.png";
-import bottomBlurredLayoutImg from "assets/mapLayouts/bottomBlurredLayout.png";
-import bottomLineLayoutImg from "assets/mapLayouts/bottomLineLayout.png";
-import doubleBlurredLayoutImg from "assets/mapLayouts/doubleBlurredLayout.png";
-import bottomBoxLayoutImg from "assets/mapLayouts/bottomBoxLayout.png";
-import islandBoxLayoutImg from "assets/mapLayouts/islandBoxLayout.png";
-import borderBoxLayoutImg from "assets/mapLayouts/borderBoxLayout.png";
-import pureLayoutImg from "assets/mapLayouts/pureLayout.png";
+import borderBlurredLayoutImg from "assets/mapLayouts/webp/borderBlurredLayout.webp";
+import bottomBlurredLayoutImg from "assets/mapLayouts/webp/bottomBlurredLayout.webp";
+import bottomLineLayoutImg from "assets/mapLayouts/webp/bottomLineLayout.webp";
+import doubleBlurredLayoutImg from "assets/mapLayouts/webp/doubleBlurredLayout.webp";
+import bottomBoxLayoutImg from "assets/mapLayouts/webp/bottomBoxLayout.webp";
+import islandBoxLayoutImg from "assets/mapLayouts/webp/islandBoxLayout.webp";
+import borderBoxLayoutImg from "assets/mapLayouts/webp/borderBoxLayout.webp";
+import pureLayoutImg from "assets/mapLayouts/webp/pureLayout.webp";
 
-import LowContrastGreenBlue from "assets/mapStyles/LowContrastGreenBlue.png";
-import MustardBlue from "assets/mapStyles/MustardBlue.png";
-import SandyOrangeBlue from "assets/mapStyles/SandyOrangeBlue.png";
-import SandyDark from "assets/mapStyles/SandyDark.png";
-import WhiteGrey from "assets/mapStyles/WhiteGrey.png";
-import WhiteBlue from "assets/mapStyles/WhiteBlue.png";
-import WhiteBlueLowContrast from "assets/mapStyles/WhiteBlueLowContrast.png";
-import OldDarkBlue from "assets/mapStyles/OldDarkBlue.png";
-import OldSandyGrey from "assets/mapStyles/OldSandyGrey.png";
-import BlackWhite from "assets/mapStyles/BlackWhite.png";
-import BlackLand from "assets/mapStyles/BlackLand.png";
+import LowContrastGreenBlue from "assets/mapStyles/webp/LowContrastGreenBlue.webp";
+import MustardBlue from "assets/mapStyles/webp/MustardBlue.webp";
+import SandyOrangeBlue from "assets/mapStyles/webp/SandyOrangeBlue.webp";
+import SandyDark from "assets/mapStyles/webp/SandyDark.webp";
+import WhiteGrey from "assets/mapStyles/webp/WhiteGrey.webp";
+import WhiteBlue from "assets/mapStyles/webp/WhiteBlue.webp";
+import WhiteBlueLowContrast from "assets/mapStyles/webp/WhiteBlueLowContrast.webp";
+import OldDarkBlue from "assets/mapStyles/webp/OldDarkBlue.webp";
+import OldSandyGrey from "assets/mapStyles/webp/OldSandyGrey.webp";
+import BlackWhite from "assets/mapStyles/webp/BlackWhite.webp";
+import BlackLand from "assets/mapStyles/webp/BlackLand.webp";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 

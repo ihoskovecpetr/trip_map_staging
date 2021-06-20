@@ -2,14 +2,14 @@
 import React from "react";
 import { jsx, Text } from "theme-ui";
 
-import borderBlurredLayoutImg from "assets/mapLayouts/borderBlurredLayout.png";
-import bottomBlurredLayoutImg from "assets/mapLayouts/bottomBlurredLayout.png";
-import bottomLineLayoutImg from "assets/mapLayouts/bottomLineLayout.png";
-import doubleBlurredLayoutImg from "assets/mapLayouts/doubleBlurredLayout.png";
-import bottomBoxLayoutImg from "assets/mapLayouts/bottomBoxLayout.png";
-import islandBoxLayoutImg from "assets/mapLayouts/islandBoxLayout.png";
-import borderBoxLayoutImg from "assets/mapLayouts/borderBoxLayout.png";
-import pureLayoutImg from "assets/mapLayouts/pureLayout.png";
+import borderBlurredLayoutImg from "assets/mapLayouts/webp/borderBlurredLayout.webp";
+import bottomBlurredLayoutImg from "assets/mapLayouts/webp/bottomBlurredLayout.webp";
+import bottomLineLayoutImg from "assets/mapLayouts/webp/bottomLineLayout.webp";
+import doubleBlurredLayoutImg from "assets/mapLayouts/webp/doubleBlurredLayout.webp";
+import bottomBoxLayoutImg from "assets/mapLayouts/webp/bottomBoxLayout.webp";
+import islandBoxLayoutImg from "assets/mapLayouts/webp/islandBoxLayout.webp";
+import borderBoxLayoutImg from "assets/mapLayouts/webp/borderBoxLayout.webp";
+import pureLayoutImg from "assets/mapLayouts/webp/pureLayout.webp";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
