@@ -156,12 +156,19 @@ function Cta() {
       >
         ZAČNI TVOŘIT
       </Button>
+      <Hiden>
+        <Link href="/studio"></Link>
+      </Hiden>
     </Box>
   );
 }
 
 const MobileTopPadding = styled.div`
   height: ${({ headerHeight }) => `${headerHeight}px`};
+`;
+
+const Hiden = styled.div`
+  display: none;
 `;
 
 const styles = {
