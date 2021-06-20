@@ -80,7 +80,7 @@ const MobileDrawer = () => {
                     </LinkRouter>
                     <Link
                       activeClass="active"
-                      path={path}
+                      href={path}
                       // spy={true}
                       // smooth={true}
                       // offset={-70}
