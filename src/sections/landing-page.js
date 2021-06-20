@@ -199,7 +199,7 @@ const PureCtaBox = styled.div`
     margin-bottom: 3rem;
     width: 100%;
     position: absolute;
-    top: ${({ maxHeightTop }) => `${maxHeightTop - 110}px`};
+    top: ${({ maxHeightTop }) => `${maxHeightTop - 130}px`};
     z-index: 90;
   }
 `;
