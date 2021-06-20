@@ -13,15 +13,20 @@ import { useRouter } from "next/router";
 // // import InterierBlack from "assets/landing-page/landing_img_1.png";
 // import InterierBlack from "assets/landing-page/interier_black.webp";
 
-import Carousel1 from "assets/landing-page/landing-carousel-1.webp";
-import FramedPicture from "assets/landing-page/FramedPicture.webp";
-import FramedPictureBack from "assets/landing-page/FramedPicBack.webp";
+import Carousel1 from "assets/landing-page/webp/landing-carousel-1.webp";
+import Carousel2 from "assets/landing-page/webp/landing-carousel-2.webp";
+import Carousel3 from "assets/landing-page/webp/landing-carousel-3.webp";
+
+import Carousel1PNG from "assets/landing-page/jpg/1.jpg";
+import Carousel2PNG from "assets/landing-page/jpg/2.jpg";
+import Carousel3PNG from "assets/landing-page/jpg/3.jpg";
 
 import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
 
 import { useElementDimensions } from "../Hooks/useElementDimensions";
 import { useIsMobile } from "../Hooks/useIsMobile";
+import { useDisplayPNG } from "../Hooks/useDisplayPNG";
 import Button from "components/Button";
 
 const data = {
@@ -50,6 +55,7 @@ const data = {
 export default function LandingPage() {
   const { height: headerHeight } = useElementDimensions("header");
   const { isMobile } = useIsMobile();
+  const { displayPNG } = useDisplayPNG({ id: "carousel_img_photo_0" });
 
   return (
     <section sx={styles.sectionContainer}>
@@ -84,9 +90,12 @@ export default function LandingPage() {
               renderCenterLeftControls={() => null}
               renderCenterRightControls={() => null}
             >
-              <img src={Carousel1} />
-              <img src={FramedPicture} />
-              <img src={FramedPictureBack} />
+              <img
+                src={displayPNG ? Carousel1PNG : Carousel1}
+                id="carousel_img_photo_0"
+              />
+              <img src={displayPNG ? Carousel2PNG : Carousel2} />
+              <img src={displayPNG ? Carousel3PNG : Carousel3} />
 
               {/* <img src={LandingPagePicture} />
               <img src={LandingPageBg} />
@@ -219,6 +228,8 @@ const styles = {
   landingCarousel: {
     width: "100%",
     height: "100%",
+    minHeight: ["80vh", null, null, "unset"],
+
     li: {
       cursor: "default",
     },

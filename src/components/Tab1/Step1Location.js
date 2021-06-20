@@ -89,7 +89,7 @@ export default function Step1Location({
         id="geocoder"
         class="geocoder"
         sx={styles.locationInput}
-        style={{ marginTop: isMobile ? "0px" : "20px", marginBottom: "220px" }}
+        style={{ marginTop: isMobile ? "0px" : "20px" }}
       ></div>
 
       {/* <NextTabBtn
@@ -134,6 +134,7 @@ const styles = {
     border: "2px solid",
     borderColor: "cta_color",
     borderRadius: "5px",
+    marginBottom: ["210px", null, null, "10px"],
 
     "& div": {
       width: "100%",

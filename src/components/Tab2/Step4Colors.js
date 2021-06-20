@@ -13,10 +13,22 @@ import OldSandyGrey from "assets/mapStyles/webp/OldSandyGrey.webp";
 import BlackWhite from "assets/mapStyles/webp/BlackWhite.webp";
 import BlackLand from "assets/mapStyles/webp/BlackLand.webp";
 
+import LowContrastGreenBluePNG from "assets/mapStyles/png/LowContrastGreenBlue.png";
+import MustardBluePNG from "assets/mapStyles/png/MustardBlue.png";
+import SandyOrangeBluePNG from "assets/mapStyles/png/SandyOrangeBlue.png";
+import SandyDarkPNG from "assets/mapStyles/png/SandyDark.png";
+import WhiteGreyPNG from "assets/mapStyles/png/WhiteGrey.png";
+import WhiteBluePNG from "assets/mapStyles/png/WhiteBlue.png";
+import WhiteBlueLowContrastPNG from "assets/mapStyles/png/WhiteBlueLowContrast.png";
+import OldSandyGreyPNG from "assets/mapStyles/png/OldSandyGrey.png";
+import BlackWhitePNG from "assets/mapStyles/png/BlackWhite.png";
+import BlackLandPNG from "assets/mapStyles/png/BlackLand.png";
+
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 
 import { MAP_STYLES_NAMES } from "../../constants/constants";
 import { useIsMobile } from "../../Hooks/useIsMobile";
+import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
 
 export default function Step4Colors({
   activeMapStyle,
@@ -24,6 +36,7 @@ export default function Step4Colors({
   nextTab,
 }) {
   const { isMobile } = useIsMobile();
+  const { displayPNG } = useDisplayPNG({ id: "map_style_id_0" });
 
   const changeActiveStyle = (style) => () => {
     setActiveMapStyle(style);
@@ -32,28 +45,28 @@ export default function Step4Colors({
   const getMapStyleImg = (mapStyle) => {
     switch (mapStyle) {
       case MAP_STYLES_NAMES.WHITE_GREY:
-        return WhiteGrey;
+        return displayPNG ? WhiteGreyPNG : WhiteGrey;
       case MAP_STYLES_NAMES.WHITE_BLUE:
-        return WhiteBlue;
+        return displayPNG ? WhiteBluePNG : WhiteBlue;
       case MAP_STYLES_NAMES.WHITE_BLUE_LOW_CONTRAST:
-        return WhiteBlueLowContrast;
+        return displayPNG ? WhiteBlueLowContrastPNG : WhiteBlueLowContrast;
       case MAP_STYLES_NAMES.SANDY_DARK:
-        return SandyDark;
+        return displayPNG ? SandyDarkPNG : SandyDark;
       case MAP_STYLES_NAMES.MUSTARD_BLUE:
-        return MustardBlue;
+        return displayPNG ? MustardBluePNG : MustardBlue;
       case MAP_STYLES_NAMES.OLD_SANDY_BROWN:
-        return OldSandyGrey;
+        return displayPNG ? OldSandyGreyPNG : OldSandyGrey;
       case MAP_STYLES_NAMES.SANDY_ORANGE_BLUE:
-        return SandyOrangeBlue;
+        return displayPNG ? SandyOrangeBluePNG : SandyOrangeBlue;
       case MAP_STYLES_NAMES.LOW_CONTRAST_GREEN:
-        return LowContrastGreenBlue;
+        return displayPNG ? LowContrastGreenBluePNG : LowContrastGreenBlue;
       case MAP_STYLES_NAMES.BLACK_WHITE:
-        return BlackWhite;
+        return displayPNG ? BlackWhitePNG : BlackWhite;
       case MAP_STYLES_NAMES.BLACK_LAND:
-        return BlackLand;
+        return displayPNG ? BlackLandPNG : BlackLand;
 
       default:
-        return LowContrastGreenBlue;
+        return displayPNG ? LowContrastGreenBluePNG : LowContrastGreenBlue;
     }
   };
 
@@ -65,7 +78,7 @@ export default function Step4Colors({
         </Text>
       )}
       <div sx={styles.stylesWrap}>
-        {Object.values(MAP_STYLES_NAMES).map((style) => (
+        {Object.values(MAP_STYLES_NAMES).map((style, index) => (
           <>
             <div
               className={activeMapStyle === style && "active"}
@@ -79,7 +92,15 @@ export default function Step4Colors({
                   justifyContent: "center",
                 }}
               >
-                <img sx={styles.roundImage} src={getMapStyleImg(style)} />
+                <img
+                  sx={styles.roundImage}
+                  src={getMapStyleImg(style)}
+                  id={`map_style_id_${index}`}
+                  alt="Map style image"
+                  onError={(e) => {
+                    console.log("Direcimage", e);
+                  }}
+                />
               </div>
               <p sx={styles.itemStyleText}>{style}</p>
             </div>

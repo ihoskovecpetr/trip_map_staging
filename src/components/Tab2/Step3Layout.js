@@ -11,22 +11,24 @@ import islandBoxLayoutImg from "assets/mapLayouts/webp/islandBoxLayout.webp";
 import borderBoxLayoutImg from "assets/mapLayouts/webp/borderBoxLayout.webp";
 import pureLayoutImg from "assets/mapLayouts/webp/pureLayout.webp";
 
-import borderBlurredLayoutImgPNG from "assets/mapLayouts/borderBlurredLayout.png";
-import bottomBlurredLayoutImgPNG from "assets/mapLayouts/bottomBlurredLayout.png";
-import bottomLineLayoutImgPNG from "assets/mapLayouts/bottomLineLayout.png";
-import doubleBlurredLayoutImgPNG from "assets/mapLayouts/doubleBlurredLayout.png";
-import bottomBoxLayoutImgPNG from "assets/mapLayouts/bottomBoxLayout.png";
-import islandBoxLayoutImgPNG from "assets/mapLayouts/islandBoxLayout.png";
-import borderBoxLayoutImgPNG from "assets/mapLayouts/borderBoxLayout.png";
-import pureLayoutImgPNG from "assets/mapLayouts/pureLayout.png";
+import borderBlurredLayoutImgPNG from "assets/mapLayouts/png/borderBlurredLayout.png";
+import bottomBlurredLayoutImgPNG from "assets/mapLayouts/png/bottomBlurredLayout.png";
+import bottomLineLayoutImgPNG from "assets/mapLayouts/png/bottomLineLayout.png";
+import doubleBlurredLayoutImgPNG from "assets/mapLayouts/png/doubleBlurredLayout.png";
+import bottomBoxLayoutImgPNG from "assets/mapLayouts/png/bottomBoxLayout.png";
+import islandBoxLayoutImgPNG from "assets/mapLayouts/png/islandBoxLayout.png";
+import borderBoxLayoutImgPNG from "assets/mapLayouts/png/borderBoxLayout.png";
+import pureLayoutImgPNG from "assets/mapLayouts/png/pureLayout.png";
 import { useIsMobile } from "../../Hooks/useIsMobile";
+import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "../../constants/constants";
 
 export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
-  const [displayPNG, setDisplayPNG] = useState(false);
+  const { displayPNG } = useDisplayPNG({ id: "image_id_0" });
+
   const { isMobile } = useIsMobile();
   const changeActiveLayout = (index) => () => {
     setActiveLayout(index);
@@ -54,24 +56,7 @@ export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
   };
 
   useEffect(() => {
-    console.log("RWRENDE");
-    const imageEl = document.getElementById("image_id_0");
-
-    const eventCallback = (event, name) => {
-      console.log(name, "_loading_IMG: ", event);
-    };
-
-    if (imageEl) {
-      imageEl.addEventListener("error", (event) => {
-        eventCallback("Error", event);
-        setDisplayPNG(true);
-      });
-    }
-    return () => {
-      imageEl.removeEventListener("error", (event) => {
-        eventCallback("Error", event);
-      });
-    };
+    console.log({ displayPNG });
   }, []);
 
   return (
@@ -101,12 +86,12 @@ export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
                   src={getLayoutImg(layoutObj.name)}
                   alt={"Could not display this Layout"}
                   id={`image_id_${index}`}
-                  onLoad={(e) => {
-                    console.log("Image_Loaded", e);
-                  }}
-                  onError={(e) => {
-                    console.log("Image_onError", e);
-                  }}
+                  // onLoad={(e) => {
+                  //   console.log("Image_Loaded", e);
+                  // }}
+                  // onError={(e) => {
+                  //   console.log("Image_onError", e);
+                  // }}
                 />
               </div>
               <p sx={styles.layoutItemText}>{layoutObj.name}</p>
