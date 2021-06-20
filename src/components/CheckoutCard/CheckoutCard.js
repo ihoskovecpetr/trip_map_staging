@@ -148,7 +148,7 @@ export default function CheckoutCard({
           <p sx={styles.subName}>
             {isUploadPending
               ? "Ukládám design v tiskové kvalitě"
-              : "Výsledný design pro tisk (bez rámování)"}
+              : "Výsledné plátno pro tisk"}
           </p>
         </div>
         <div sx={styles.closeBackdrop}>

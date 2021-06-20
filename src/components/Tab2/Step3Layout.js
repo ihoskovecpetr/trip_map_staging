@@ -68,6 +68,7 @@ export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
                 <img
                   sx={styles.layoutImage}
                   src={getLayoutImg(layoutObj.name)}
+                  alt={"Could not display this Layout"}
                 />
               </div>
               <p sx={styles.layoutItemText}>{layoutObj.name}</p>

@@ -215,6 +215,11 @@ export default function SetupColumn({
     ? stepElementsMobile
     : stepElementsDesktop;
 
+  const isOverflowVisible =
+    isMobile && activeStep === activeStepElements.length - 1;
+
+  console.log({ isOverflowVisible });
+
   return (
     <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}>
       {isMobile && (
@@ -226,6 +231,7 @@ export default function SetupColumn({
         mapHeight={map_segment_height}
         headerHeight={header_height}
         isOpen={isOpen}
+        isOverflowVisible={isOverflowVisible}
       >
         <Stepper
           stepElements={activeStepElements}
@@ -236,7 +242,9 @@ export default function SetupColumn({
         {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
-        <TabContentWrap>{<>{activeStepElements[activeStep]}</>}</TabContentWrap>
+        <TabContentWrap isOverflowVisible={isOverflowVisible}>
+          {<>{activeStepElements[activeStep]}</>}
+        </TabContentWrap>
       </TabSegmentWrap>
       {isMobile && (
         <Backdrop
@@ -333,13 +341,15 @@ const TabSegmentWrap = styled.div`
   @media (max-width: 768px) {
     height: ${({ mapHeight, isOpen }) =>
       isOpen ? "40vh" : `calc(100vh - ${mapHeight}px)`};
-    overflow: hidden;
+    overflow: ${({ isOverflowVisible }) =>
+      isOverflowVisible ? "visible" : "hidden"};
     padding: 0 0;
   }
 `;
 
 const TabContentWrap = styled.div`
-  overflow: scroll;
+  overflow: ${({ isOverflowVisible }) =>
+    isOverflowVisible ? "visible" : "hidden"};
 `;
 
 const ArrowWrap = styled.div`
@@ -352,11 +362,11 @@ const ArrowWrap = styled.div`
     color: ${({ isDisabled }) => (isDisabled ? "lightGrey" : "black")};
 
     transform: ${({ isOpen }) => (isOpen ? "rotate(90deg)" : "rotate(-90deg)")};
-    width: 40px;
+    width: 30px;
     height: 40px;
     position: relative;
-    top: -40px;
-    padding: 10px;
+    top: -35px;
+    padding: 10px 5px;
     background-color: white;
   }
 `;

@@ -217,6 +217,7 @@ const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: "10 !important",
     color: "#fff",
+    display: "flex",
   },
   rootBackdrop: {
     zIndex: "12 !important",

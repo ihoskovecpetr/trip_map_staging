@@ -46,6 +46,7 @@ const styles = {
     left: "0px",
     zIndex: 10,
     margin: "20px 0",
+    overflow: "visible",
     width: ["100%", "100%", "100%", "40%", "30%"],
   },
 };
