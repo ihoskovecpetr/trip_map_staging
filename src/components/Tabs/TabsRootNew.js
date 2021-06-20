@@ -349,7 +349,7 @@ const TabSegmentWrap = styled.div`
 
 const TabContentWrap = styled.div`
   overflow: ${({ isOverflowVisible }) =>
-    isOverflowVisible ? "visible" : "hidden"};
+    isOverflowVisible ? "visible" : "scroll"};
 `;
 
 const ArrowWrap = styled.div`

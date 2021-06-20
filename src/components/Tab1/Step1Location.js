@@ -31,6 +31,8 @@ export default function Step1Location({
     document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
     geocoder.container.style.width = "100%";
+
+    document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
   }, []);
 
   useEffect(() => {
@@ -87,7 +89,7 @@ export default function Step1Location({
         id="geocoder"
         class="geocoder"
         sx={styles.locationInput}
-        style={{ marginTop: isMobile ? "0px" : "20px", marginBottom: "60px" }}
+        style={{ marginTop: isMobile ? "0px" : "20px", marginBottom: "220px" }}
       ></div>
 
       {/* <NextTabBtn

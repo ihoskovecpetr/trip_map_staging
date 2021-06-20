@@ -367,7 +367,7 @@ export default function StudioRootContainer() {
         mapTitles: mapTitlesRef.current,
         product: productRef.current,
       });
-      console.log("Eff resizeFrameDiv", { baseLongSize });
+
       resizeFrameDiv({
         productRef,
         baseLongSize,

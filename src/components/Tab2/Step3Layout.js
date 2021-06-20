@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { jsx, Text } from "theme-ui";
 
 import borderBlurredLayoutImg from "assets/mapLayouts/webp/borderBlurredLayout.webp";
@@ -10,6 +10,15 @@ import bottomBoxLayoutImg from "assets/mapLayouts/webp/bottomBoxLayout.webp";
 import islandBoxLayoutImg from "assets/mapLayouts/webp/islandBoxLayout.webp";
 import borderBoxLayoutImg from "assets/mapLayouts/webp/borderBoxLayout.webp";
 import pureLayoutImg from "assets/mapLayouts/webp/pureLayout.webp";
+
+import borderBlurredLayoutImgPNG from "assets/mapLayouts/borderBlurredLayout.png";
+import bottomBlurredLayoutImgPNG from "assets/mapLayouts/bottomBlurredLayout.png";
+import bottomLineLayoutImgPNG from "assets/mapLayouts/bottomLineLayout.png";
+import doubleBlurredLayoutImgPNG from "assets/mapLayouts/doubleBlurredLayout.png";
+import bottomBoxLayoutImgPNG from "assets/mapLayouts/bottomBoxLayout.png";
+import islandBoxLayoutImgPNG from "assets/mapLayouts/islandBoxLayout.png";
+import borderBoxLayoutImgPNG from "assets/mapLayouts/borderBoxLayout.png";
+import pureLayoutImgPNG from "assets/mapLayouts/pureLayout.png";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
@@ -17,6 +26,7 @@ import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "../../constants/constants";
 
 export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
+  const [displayPNG, setDisplayPNG] = useState(false);
   const { isMobile } = useIsMobile();
   const changeActiveLayout = (index) => () => {
     setActiveLayout(index);
@@ -25,23 +35,44 @@ export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
   const getLayoutImg = (frameName) => {
     switch (frameName) {
       case LAYOUT_STYLE_NAMES.PURE:
-        return pureLayoutImg;
+        return displayPNG ? pureLayoutImgPNG : pureLayoutImg;
       case LAYOUT_STYLE_NAMES.ISLAND_BOX:
-        return islandBoxLayoutImg;
+        return displayPNG ? islandBoxLayoutImgPNG : islandBoxLayoutImg;
       case LAYOUT_STYLE_NAMES.BOTTOM_LINE:
-        return bottomLineLayoutImg;
+        return displayPNG ? bottomLineLayoutImgPNG : bottomLineLayoutImg;
       case LAYOUT_STYLE_NAMES.BORDER_BOX:
-        return borderBoxLayoutImg;
+        return displayPNG ? borderBoxLayoutImgPNG : borderBoxLayoutImg;
       case LAYOUT_STYLE_NAMES.BORDER_BLUR:
-        return borderBlurredLayoutImg;
+        return displayPNG ? borderBlurredLayoutImgPNG : borderBlurredLayoutImg;
       case LAYOUT_STYLE_NAMES.BOTTOM_BLUR:
-        return bottomBlurredLayoutImg;
+        return displayPNG ? bottomBlurredLayoutImgPNG : bottomBlurredLayoutImg;
       case LAYOUT_STYLE_NAMES.DOUBLE_BORDER:
-        return doubleBlurredLayoutImg;
+        return displayPNG ? doubleBlurredLayoutImgPNG : doubleBlurredLayoutImg;
       default:
-        return pureLayoutImg;
+        return displayPNG ? pureLayoutImgPNG : pureLayoutImg;
     }
   };
+
+  useEffect(() => {
+    console.log("RWRENDE");
+    const imageEl = document.getElementById("image_id_0");
+
+    const eventCallback = (event, name) => {
+      console.log(name, "_loading_IMG: ", event);
+    };
+
+    if (imageEl) {
+      imageEl.addEventListener("error", (event) => {
+        eventCallback("Error", event);
+        setDisplayPNG(true);
+      });
+    }
+    return () => {
+      imageEl.removeEventListener("error", (event) => {
+        eventCallback("Error", event);
+      });
+    };
+  }, []);
 
   return (
     <div sx={styles.container}>
@@ -51,7 +82,7 @@ export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
         </Text>
       )}
       <div sx={styles.layoutWrap}>
-        {Object.values(LAYOUTS).map((layoutObj) => (
+        {Object.values(LAYOUTS).map((layoutObj, index) => (
           <>
             <div
               className={activeFrame === layoutObj.name && "active"}
@@ -69,6 +100,13 @@ export default function Step3Layout({ activeFrame, setActiveLayout, nextTab }) {
                   sx={styles.layoutImage}
                   src={getLayoutImg(layoutObj.name)}
                   alt={"Could not display this Layout"}
+                  id={`image_id_${index}`}
+                  onLoad={(e) => {
+                    console.log("Image_Loaded", e);
+                  }}
+                  onError={(e) => {
+                    console.log("Image_onError", e);
+                  }}
                 />
               </div>
               <p sx={styles.layoutItemText}>{layoutObj.name}</p>
