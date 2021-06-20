@@ -71,11 +71,6 @@ export default function LandingPage() {
         )}
 
         <Box sx={styles.carouselBox}>
-          {/* <Image
-            sx={styles.landingImage}
-            src={LandingPagePicture}
-            alt="Thumbnail"
-          /> */}
           <div sx={styles.landingCarousel}>
             <Carousel
               autoplay={true}
@@ -157,7 +152,9 @@ function Cta() {
         ZAČNI TVOŘIT
       </Button>
       <Hiden>
-        <Link href="/studio">{"studio"}</Link>
+        <Link href="/studio" prefetch={true}>
+          {"studio"}
+        </Link>
       </Hiden>
     </Box>
   );
@@ -169,35 +166,16 @@ const MobileTopPadding = styled.div`
 
 const Hiden = styled.div`
   // display: none;
+  z-index: 100;
+  cursor: pointer;
+  // pointer-events: auto;
 `;
 
 const styles = {
   sectionContainer: {
     py: [null, null, null, 9, null, 10],
     pt: [0, null, 10],
-    // px: [0, 0, null],
-    // pointerEvents: "none",
     position: "relative",
-    // "&::before": {
-    //   position: "absolute",
-    //   content: '""',
-    //   top: ["auto", null, null, "50%"],
-    //   bottom: ["100px", 0, null, "auto"],
-    //   left: 0,
-    //   background: "linear-gradient(-157deg, #F6FAFD, #F9FCFC, #FCFDFC)",
-    //   height: [350, 550, "60%"],
-    //   width: "50%",
-    //   zIndex: -1,
-    //   borderTopRightRadius: "50%",
-    //   borderBottomRightRadius: "50%",
-    //   transform: ["translateY(0)", null, null, "translateY(-50%)"],
-    // },
-
-    // backgroundImage: [`url(${LandingPageBg})`, null, `none`],
-    // backgroundRepeat: "no-repeat",
-    // backgroundSize: ["100% auto", "cover"],
-    // boxShadow: ["inset 0 0 0 2000px rgba(255, 255, 255, 0.1)", null, "unset"],
-    // backgroundOrigin: "content-box",
   },
   onlyMobile: {
     display: ["block", null, "none"],
@@ -231,7 +209,6 @@ const styles = {
     display: "block",
     cursor: "default",
   },
-  landingImage: {},
   landingCarousel: {
     width: "100%",
     height: "100%",
@@ -274,17 +251,7 @@ const styles = {
     borderRadius: "10px",
     transition: "all 0.3s",
     width: ["100%", "85%", null, "100%"],
-    // boxShadow: "4px 4px 8px rgba(69, 88, 157, 0.07)",
     mx: "auto",
-    // "&:hover": {
-    //   boxShadow: [
-    //     "0px 0px 0px rgba(0, 0, 0, 0)",
-    //     null,
-    //     null,
-    //     null,
-    //     "0px 8px 16px rgba(69, 88, 157, 0.07)",
-    //   ],
-    // },
   },
 
   ctaOnlyLarge: {
@@ -299,8 +266,8 @@ const styles = {
     height: "100vh",
     width: "100%",
     position: "absolute",
-    zIndex: 100,
-    pointerEvents: "none",
+    zIndex: 90,
+    // pointerEvents: "none",
   },
   ctaBox: {
     // width: "100%",
