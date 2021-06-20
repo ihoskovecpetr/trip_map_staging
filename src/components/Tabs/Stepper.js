@@ -51,7 +51,7 @@ export default function Stepper({
           className={classes.rootButton}
           disabled={activeStep === stepElements.length - 1}
         >
-          Next
+          Další
           {theme.direction === "rtl" ? (
             <KeyboardArrowLeft />
           ) : (
@@ -66,7 +66,7 @@ export default function Stepper({
           ) : (
             <KeyboardArrowLeft />
           )}
-          Back
+          Zpět
         </Button>
       }
     />
