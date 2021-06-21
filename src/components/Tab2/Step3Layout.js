@@ -20,15 +20,12 @@ import islandBoxLayoutImgPNG from "assets/mapLayouts/png/islandBoxLayout.png";
 import borderBoxLayoutImgPNG from "assets/mapLayouts/png/borderBoxLayout.png";
 import pureLayoutImgPNG from "assets/mapLayouts/png/pureLayout.png";
 import { useIsMobile } from "../../Hooks/useIsMobile";
-import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "../../constants/constants";
 
 export default function Step3Layout({ activeFrame, setActiveLayout }) {
-  const { displayPNG } = useDisplayPNG({ id: "image_id_0" });
-
   const { isMobile } = useIsMobile();
   const changeActiveLayout = (index) => () => {
     setActiveLayout(index);
@@ -37,27 +34,23 @@ export default function Step3Layout({ activeFrame, setActiveLayout }) {
   const getLayoutImg = (frameName) => {
     switch (frameName) {
       case LAYOUT_STYLE_NAMES.PURE:
-        return displayPNG ? pureLayoutImgPNG : pureLayoutImg;
+        return pureLayoutImgPNG;
       case LAYOUT_STYLE_NAMES.ISLAND_BOX:
-        return displayPNG ? islandBoxLayoutImgPNG : islandBoxLayoutImg;
+        return islandBoxLayoutImgPNG;
       case LAYOUT_STYLE_NAMES.BOTTOM_LINE:
-        return displayPNG ? bottomLineLayoutImgPNG : bottomLineLayoutImg;
+        return bottomLineLayoutImgPNG;
       case LAYOUT_STYLE_NAMES.BORDER_BOX:
-        return displayPNG ? borderBoxLayoutImgPNG : borderBoxLayoutImg;
+        return borderBoxLayoutImgPNG;
       case LAYOUT_STYLE_NAMES.BORDER_BLUR:
-        return displayPNG ? borderBlurredLayoutImgPNG : borderBlurredLayoutImg;
+        return borderBlurredLayoutImgPNG;
       case LAYOUT_STYLE_NAMES.BOTTOM_BLUR:
-        return displayPNG ? bottomBlurredLayoutImgPNG : bottomBlurredLayoutImg;
+        return bottomBlurredLayoutImgPNG;
       case LAYOUT_STYLE_NAMES.DOUBLE_BORDER:
-        return displayPNG ? doubleBlurredLayoutImgPNG : doubleBlurredLayoutImg;
+        return doubleBlurredLayoutImgPNG;
       default:
-        return displayPNG ? pureLayoutImgPNG : pureLayoutImg;
+        return pureLayoutImgPNG;
     }
   };
-
-  useEffect(() => {
-    console.log({ displayPNG });
-  }, []);
 
   return (
     <div sx={styles.container}>

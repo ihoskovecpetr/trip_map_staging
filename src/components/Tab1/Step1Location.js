@@ -79,37 +79,16 @@ export default function Step1Location({
 
   return (
     <div sx={styles.container}>
-      {!isMobile && (
-        <Text as="p" className="description" sx={styles.headingDesc}>
-          Zadejte lokalitu
-        </Text>
-      )}
+      <Text as="p" className="description" sx={styles.headingDesc}>
+        Zadejte lokalitu
+      </Text>
+
       <div
         id="geocoder"
         class="geocoder"
         sx={styles.locationInput}
         style={{ marginTop: isMobile ? "0px" : "20px" }}
       ></div>
-
-      {/* <NextTabBtn
-        onClick={() => {
-          nextTab();
-        }}
-        width="100%"
-        margin="0px 0px"
-      >
-        Další krok
-      </NextTabBtn> */}
-      {/* <div sx={styles.absoluteBtnWrap}>
-        <NextTabBtn
-          onClick={() => {
-            nextTab();
-          }}
-          margin="20px 0px 75px"
-        >
-          Další krok
-        </NextTabBtn>
-      </div> */}
     </div>
   );
 }
@@ -117,13 +96,13 @@ export default function Step1Location({
 const styles = {
   container: {
     width: "100%",
-    paddingTop: "10px",
+    // paddingTop: "10px",
   },
   headingDesc: {
     fontWeight: 500,
     textAlign: "left",
     color: "grey",
-    margin: "20px 0",
+    margin: "10px 2px",
     letterSpacing: "1.1px",
   },
 

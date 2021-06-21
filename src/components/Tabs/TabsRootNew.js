@@ -43,7 +43,7 @@ export default function SetupColumn({
   setProduct,
 }) {
   const [activeTab, setActiveTab] = useState(TAB_VALUES.ONE);
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStepNumber, setActiveStepNumber] = React.useState(0);
 
   const { isMobile } = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
@@ -79,22 +79,21 @@ export default function SetupColumn({
   };
   const stepsNumbersDisabledOpenning = [];
   useEffect(() => {
-    console.log({ activeStep });
-    if (stepsNumbersDisabledOpenning.includes(activeStep)) {
+    if (stepsNumbersDisabledOpenning.includes(activeStepNumber)) {
       setIsOpen(false);
       setIsArrowDisabled(true);
       return;
     }
 
     setIsArrowDisabled(false);
-  }, [activeStep]);
+  }, [activeStepNumber]);
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStepNumber((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStepNumber((prevActiveStep) => prevActiveStep - 1);
   };
 
   const stepElementsDesktop = [
@@ -204,8 +203,17 @@ export default function SetupColumn({
     ? stepElementsMobile
     : stepElementsDesktop;
 
+  useEffect(() => {
+    const currentTabsLength = activeStepElements.length - 1;
+    if (!isMobile && activeStepNumber > currentTabsLength) {
+      setActiveStepNumber(currentTabsLength);
+    }
+  }, [isMobile]);
+
+  const overflowingTabs = [0, activeStepElements.length - 1];
+
   const isOverflowVisible =
-    isMobile && activeStep === activeStepElements.length - 1;
+    isMobile && overflowingTabs.includes(activeStepNumber);
 
   console.log({ isOverflowVisible });
 
@@ -226,13 +234,13 @@ export default function SetupColumn({
           stepElements={activeStepElements}
           handleNext={handleNext}
           handleBack={handleBack}
-          activeStep={activeStep}
+          activeStep={activeStepNumber}
         />
         {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
         <TabContentWrap isOverflowVisible={isOverflowVisible}>
-          {<>{activeStepElements[activeStep]}</>}
+          {<>{activeStepElements[activeStepNumber]}</>}
         </TabContentWrap>
       </TabSegmentWrap>
       {isMobile && (
@@ -263,7 +271,7 @@ const styles = {
     "&.open": {
       // height: "40vh",
       position: "fixed",
-      bottom: 0,
+      top: "60vh",
       left: 0,
     },
   },
