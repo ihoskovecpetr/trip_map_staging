@@ -33,10 +33,8 @@ export default function CheckoutCard({
   product,
   mapTitles,
   isUploadPending,
-  setIsUploadPending,
   imageSavedResponse,
   imageBase64Created,
-  imageBase64Uploaded,
   backdropClose,
   percentageUpload,
 }) {
@@ -131,11 +129,11 @@ export default function CheckoutCard({
               <img
                 id="img_screen_shot"
                 sx={styles.teaserFinalImage}
-                src={imageBase64Uploaded}
+                src={imageBase64Created}
                 onClick={(e) => {
                   setLightbox({
                     open: true,
-                    activeSrc: imageBase64Uploaded,
+                    activeSrc: imageBase64Created,
                   });
                   e.stopPropagation();
                 }}

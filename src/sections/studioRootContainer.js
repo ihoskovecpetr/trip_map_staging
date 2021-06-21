@@ -238,7 +238,9 @@ export default function StudioRootContainer() {
     shippingCode: VARIANTS_PRINTFUL[4].shipping.codeCZ,
   });
 
-  const [layout, setLayout] = useState(LAYOUT_STYLE_NAMES.ISLAND_BOX);
+  const [activeLayout, setActiveLayout] = useState(
+    LAYOUT_STYLE_NAMES.ISLAND_BOX
+  );
   const [activeMapStyle, setActiveMapStyle] = useState(
     MAP_STYLES_NAMES.LOW_CONTRAST_GREEN
   );
@@ -262,7 +264,7 @@ export default function StudioRootContainer() {
   const { isMobile } = useIsMobile();
 
   const mapTitlesRef = useRef(mapTitles); // Using this due to snapshot state of state in hooks
-  const layoutRef = useRef(layout);
+  const layoutRef = useRef(activeLayout);
   const coordinatesRef = useRef(mapCoordinates);
   const productRef = useRef(product);
   const isMobileRef = useRef(isMobile);
@@ -284,7 +286,7 @@ export default function StudioRootContainer() {
   } = getCenteringLayoutDimensions({
     product: productRef.current,
     //     variantId: productRef.current.variantId,
-    layout,
+    layout: activeLayout,
     elWidth: canvasMap?.width,
     elHeight: canvasMap?.height,
   });
@@ -328,8 +330,8 @@ export default function StudioRootContainer() {
   }, [mapTitles]);
 
   useEffect(() => {
-    layoutRef.current = layout;
-  }, [layout]);
+    layoutRef.current = activeLayout;
+  }, [activeLayout]);
 
   useEffect(() => {
     coordinatesRef.current = mapCoordinates;
@@ -358,12 +360,12 @@ export default function StudioRootContainer() {
   }, [mapWrapperHeight, mapWrapperWidth]);
 
   useEffect(() => {
-    layoutRef.current = layout;
+    layoutRef.current = activeLayout;
     if (layoutCanvas && canvasMap) {
       resizeLayout({
         cvsLayout: layoutCanvas,
         cvsMap: canvasMap,
-        activeLayout: layout,
+        activeLayout: activeLayout,
         mapTitles: mapTitlesRef.current,
         product: productRef.current,
       });
@@ -375,7 +377,7 @@ export default function StudioRootContainer() {
       });
     }
   }, [
-    layout,
+    activeLayout,
     product,
     isMobile,
     mapAvailSpaceHeight,
@@ -435,7 +437,7 @@ export default function StudioRootContainer() {
       // inputWrapDynamicSize = document.createElement("div");
       // inputWrapDynamicSize.setAttribute("id", "input_wrap_middle");
 
-      resizeInputsWrap({ productRef, layout, canvasMap });
+      resizeInputsWrap({ productRef, layout: activeLayout, canvasMap });
 
       headlineInput = document.createElement("input");
       subtitleInput = document.createElement("input");
@@ -473,7 +475,7 @@ export default function StudioRootContainer() {
         // mapCanvasWrapElement.appendChild(frameDiv);
         mapCanvasWrapElement.appendChild(layoutCanvas);
 
-        resizeInputsWrap({ productRef, layout, canvasMap });
+        resizeInputsWrap({ productRef, layout: activeLayout, canvasMap });
         // inputWrap.appendChild(inputWrapDynamicSize);
 
         inputWrap.appendChild(headlineInput);
@@ -549,18 +551,24 @@ export default function StudioRootContainer() {
         mapWrapWrapWidth: mapAvailSpaceRef.current.width,
       });
 
-      resizeInputsWrap({ productRef, layout, canvasMap });
+      resizeInputsWrap({ productRef, layout: activeLayout, canvasMap });
       resizeInputs({
         mapTitles: mapTitlesRef.current,
         saveTitlesValue,
         mapHeight: updHeight,
         mapWidth: updWidth,
-        layout,
+        layout: activeLayout,
         layoutObj,
         paddingWidth,
       });
     }
-  }, [product, layout, mapAvailSpaceHeight, mapAvailSpaceWidth, mapTitles]);
+  }, [
+    product,
+    activeLayout,
+    mapAvailSpaceHeight,
+    mapAvailSpaceWidth,
+    mapTitles,
+  ]);
 
   const saveTitlesValue = (e) => {
     setMapTitles((prev) =>
@@ -584,8 +592,11 @@ export default function StudioRootContainer() {
         <div sx={styles.containerBox}>
           <Box sx={styles.canvasBox} id="map_playground_wrap">
             <MapContainer
+              map={map}
               addZoom={addZoom(map)}
               subtractZoom={subtractZoom(map)}
+              activeLayout={activeLayout}
+              mapTitles={mapTitles}
               setProduct={setProduct}
               product={product}
             />
@@ -604,8 +615,8 @@ export default function StudioRootContainer() {
           <Box sx={styles.settingsBox}>
             <SetupColumn
               map={map}
-              activeFrame={layout}
-              setActiveLayout={setLayout}
+              activeLayout={activeLayout}
+              setActiveLayout={setActiveLayout}
               activeMapStyle={activeMapStyle}
               setActiveMapStyle={setActiveMapStyle}
               mapCoordinates={mapCoordinates}

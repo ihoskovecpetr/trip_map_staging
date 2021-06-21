@@ -1,28 +1,37 @@
 /** @jsx jsx */
-import React from "react";
-import { jsx, Container } from "theme-ui";
+import React, { useState } from "react";
+import { jsx } from "theme-ui";
 
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
+import Lightbox from "react-image-lightbox";
 
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
+import { createFinalImage } from "../../LibGlobal/createFinalImage";
 import { useIsMobile } from "Hooks/useIsMobile";
 
 import {
-  SIZES,
   FAKE_DIV_IDS,
   TITLES_DEFAULT,
   ORIENTATIONS,
 } from "../../constants/constants";
 
 export default function MapContainer({
+  map,
   addZoom,
   subtractZoom,
   setProduct,
+  activeLayout,
+  mapTitles,
   product,
 }) {
+  const [imageBase64Created, setImageBase64Created] = useState("");
+  const [lightbox, setLightbox] = useState({
+    open: false,
+    activeSrc: null,
+  });
   const { isMobile } = useIsMobile();
 
   console.log({ product });
@@ -32,14 +41,22 @@ export default function MapContainer({
 
   const changeOrientation = () => {
     orientationSwitcher(product, setProduct);
-    //     const nextSize = product.sizeObject.acceptableSizes.find(
-    //       (size) => size != product.sizeObject.code
-    //     );
+  };
 
-    //     setProduct((prev) => ({
-    //       ...prev,
-    //       sizeObject: SIZES.find((size) => size.code === nextSize),
-    //     }));
+  const createPreviewImage = async () => {
+    console.log({ activeLayout });
+    const finalImgSrc = await createFinalImage(
+      map,
+      activeLayout,
+      mapTitles,
+      product
+    );
+
+    setImageBase64Created(finalImgSrc);
+    setLightbox({
+      open: true,
+      activeSrc: finalImgSrc,
+    });
   };
 
   return (
@@ -59,7 +76,7 @@ export default function MapContainer({
         </div>
 
         <div sx={styles.rotateBtn}>
-          <OpenWithIcon color="grey" style={{ color: "lightGrey" }} />
+          <OpenWithIcon color="grey" onClick={() => createPreviewImage()} />
         </div>
       </div>
 
@@ -90,6 +107,12 @@ export default function MapContainer({
       </div>
 
       <canvas id="canvas_merging" sx={styles.canvas_merging} />
+      {lightbox.open && (
+        <Lightbox
+          mainSrc={lightbox.activeSrc}
+          onCloseRequest={() => setLightbox({ open: false })}
+        />
+      )}
     </div>
   );
 }

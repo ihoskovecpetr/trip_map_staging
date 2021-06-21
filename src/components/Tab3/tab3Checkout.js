@@ -6,10 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 
 import { createUploadRequest } from "../../LibGlobal/createUploadRequest";
-import { drawLayout } from "../../LibGlobal/drawLayout";
 import CheckoutCard from "../CheckoutCard/CheckoutCard";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { createFinalImage } from "../../LibGlobal/createFinalImage";
 
 import {
   getLazyUploader,
@@ -17,17 +17,6 @@ import {
 } from "../../LibGlobal/getLazyUploader";
 
 toast.configure();
-
-function takeScreenshot(mapLocal) {
-  return new Promise(function (resolve, _) {
-    mapLocal.once("render", function () {
-      resolve(mapLocal.getCanvas().toDataURL());
-    });
-
-    /* trigger render */
-    mapLocal.setBearing(mapLocal.getBearing());
-  });
-}
 
 export default function Tab3Checkout({
   map,
@@ -42,7 +31,6 @@ export default function Tab3Checkout({
   const [backdropOpen, setBackdropOpen] = useState(false);
   const [isUploadPending, setIsUploadPending] = useState(false);
   const [imageBase64Created, setImageBase64Created] = useState("");
-  const [imageBase64Uploaded, setImageBase64Uploaded] = useState("");
   const [imageSavedResponse, setImageSavedResponse] = useState(null);
   const [percentageUpload, setPercentageUpload] = useState(0);
 
@@ -50,39 +38,6 @@ export default function Tab3Checkout({
     setImageSavedResponse(null);
     resetPendingPromise();
   }, [map, mapTitles, activeLayout, product, activeMapStyle]);
-
-  const createImage = async () => {
-    return new Promise((resolve, reject) => {
-      takeScreenshot(map).then(function (data) {
-        console.log("takeScreenshot DONE", data);
-        const image = new Image();
-
-        image.onload = function () {
-          const mergerCanvas = document.getElementById("canvas_merging");
-          mergerCanvas.setAttribute("height", image.height);
-          mergerCanvas.setAttribute("width", image.width);
-          var ctx = mergerCanvas.getContext("2d");
-          ctx.drawImage(image, 0, 0);
-
-          drawLayout(ctx, {
-            width: image.width,
-            height: image.height,
-            activeLayout,
-            mapTitles,
-            product,
-            isProductionPrint: true,
-          });
-
-          const finalImgWithLayout = mergerCanvas.toDataURL();
-          setImageBase64Created(finalImgWithLayout);
-
-          resolve(finalImgWithLayout);
-        };
-
-        image.src = data;
-      });
-    });
-  };
 
   const progressCallbackFce = (progressEvent) => {
     var percentCompleted = Math.round(
@@ -96,30 +51,25 @@ export default function Tab3Checkout({
     try {
       setBackdropOpen(true);
       setIsUploadPending(true);
-      const finalImgSrc = await createImage();
-
-      const head = "data:image/png;base64,";
-
-      const imgFileSizeMB = Math.round(
-        ((finalImgSrc.length - head.length) * 3) / 4 / 1000000
+      const finalImgSrc = await createFinalImage(
+        map,
+        activeLayout,
+        mapTitles,
+        product
       );
 
-      let originalVarId = product.variantId;
+      setImageBase64Created(finalImgSrc);
 
-      console.log({ originalVarId });
+      // const head = "data:image/png;base64,";
+      // const imgFileSizeMB = Math.round(
+      //   ((finalImgSrc.length - head.length) * 3) / 4 / 1000000
+      // );
+      // let originalVarId = product.variantId;
 
-      console.log({ finalImgSrc, imgFileSizeMB });
-
-      setImageBase64Uploaded(finalImgSrc);
       const response = await createUploadRequest(
         finalImgSrc,
         progressCallbackFce
       );
-      console.log("Ulozeni Response: ", {
-        response,
-        originalVarId,
-        prodId: product.variantId,
-      });
 
       if (response.data.secure_url) {
         console.log("✅ successful upload!");
@@ -181,14 +131,10 @@ export default function Tab3Checkout({
         >
           <CheckoutCard
             isUploadPending={isUploadPending}
-            setIsUploadPending={setIsUploadPending}
             product={product}
             mapTitles={mapTitles}
             imageSavedResponse={imageSavedResponse}
             imageBase64Created={imageBase64Created}
-            imageBase64Uploaded={imageBase64Uploaded}
-            // shippingInfoObject={shippingInfoObject}
-            // isShippingInfoLoading={isShippingInfoLoading}
             backdropClose={backdropClose}
             percentageUpload={percentageUpload}
           />

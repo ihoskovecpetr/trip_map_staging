@@ -33,7 +33,7 @@ export default function SetupColumn({
   map,
   mapCoordinates,
   setMapCoordinates,
-  activeFrame,
+  activeLayout,
   setActiveLayout,
   activeMapStyle,
   setActiveMapStyle,
@@ -107,7 +107,7 @@ export default function SetupColumn({
     ],
     [
       <Step3Layout
-        activeFrame={activeFrame}
+        activeFrame={activeLayout}
         setActiveLayout={setActiveLayout}
       />,
 
@@ -123,7 +123,7 @@ export default function SetupColumn({
       <Step6FinishVariant
         map={map}
         mapTitles={mapTitles}
-        activeLayout={activeFrame}
+        activeLayout={activeLayout}
         product={product}
         setProduct={setProduct}
         activeMapStyle={activeMapStyle}
@@ -131,7 +131,7 @@ export default function SetupColumn({
       <Step7Checkout
         map={map}
         mapTitles={mapTitles}
-        activeLayout={activeFrame}
+        activeLayout={activeLayout}
         product={product}
         activeMapStyle={activeMapStyle}
       />,
@@ -156,7 +156,7 @@ export default function SetupColumn({
     ],
     [
       <Step3Layout
-        activeFrame={activeFrame}
+        activeFrame={activeLayout}
         setActiveLayout={setActiveLayout}
         nextTab={() => handleChange(TAB_VALUES.THREE)}
       />,
@@ -182,7 +182,7 @@ export default function SetupColumn({
       <Step6FinishVariant
         map={map}
         mapTitles={mapTitles}
-        activeLayout={activeFrame}
+        activeLayout={activeLayout}
         product={product}
         setProduct={setProduct}
         activeMapStyle={activeMapStyle}
@@ -192,7 +192,7 @@ export default function SetupColumn({
       <Step7Checkout
         map={map}
         mapTitles={mapTitles}
-        activeLayout={activeFrame}
+        activeLayout={activeLayout}
         product={product}
         activeMapStyle={activeMapStyle}
       />,

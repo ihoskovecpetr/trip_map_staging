@@ -1,20 +1,21 @@
 /** @jsx jsx */
-import { jsx, Container, Box } from 'theme-ui';
-import SectionHeader from 'components/section-header';
-import Accordion from 'components/accordion/accordion';
+import { jsx, Container, Box } from "theme-ui";
+import SectionHeader from "components/section-header";
+import Accordion from "components/accordion/accordion";
 const faqs = [
   {
-    title: 'How to contact with riders emergency ?',
+    title: "Jakou kvalitu tisku a papíru mohu očekávat?",
     contents: (
       <div>
-        Get your website ads tests delivered at let collect sample from the
-        victory of the managements that supplies best design system which
-        guidelines ever with multiple features.
+        Kvalta tisku je hodna musea, tisk je proveden na těžký matný papír.
+        Museum-quality posters made on thick and durable matte paper. Each
+        poster is giclée-printed on archival, acid-free paper that yields
+        brilliant prints to brighten up any room.
       </div>
     ),
   },
   {
-    title: 'App installation failed, how to update system information?',
+    title: "App installation failed, how to update system information?",
     contents: (
       <div>
         Rhino skin maybe thick but it can be quite sensitive to sunburns and
@@ -48,18 +49,15 @@ const faqs = [
 ];
 export default function Faq() {
   return (
-    <section sx={{ variant: 'section.faq' }}>
+    <section sx={{ variant: "section.faq" }}>
       <Container>
-        <SectionHeader
-          title="Frequently asked question"
-          slogan="Get your question answer"
-        />
+        <SectionHeader title="Často kladené otázky" slogan="Získej odpovědi" />
         <Box
           sx={{
-            display: 'flex',
-            width: ['100%', null, null, '650px', '745px'],
-            flexDirection: 'column',
-            mx: 'auto',
+            display: "flex",
+            width: ["100%", null, null, "650px", "745px"],
+            flexDirection: "column",
+            mx: "auto",
             my: -4,
           }}
         >

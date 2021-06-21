@@ -17,27 +17,27 @@ import PackagesOptions from "sections/packages-options";
 import Faq from "sections/faq";
 
 export default function IndexPage() {
-      return (
-            <ThemeProvider theme={theme}>
-                  <StickyProvider>
-                        <Layout>
-                              <SEO title="Trip Map" />
-                              {/* <LandingSection /> */}
-                        </Layout>
+  return (
+    <ThemeProvider theme={theme}>
+      <StickyProvider>
+        <Layout>
+          <SEO title="Trip Map" />
+          {/* <LandingSection /> */}
+        </Layout>
 
-                        {/* <IndexContainer /> */}
-                        <Layout withFooter>
-                              <LandingPage />
-                              <WorkFlow />
-                              <GallerySection />
-                              <PackagesOptions />
-                              <SecurePayment />
-                              <PrintfulPrint />
-                              {/* <Feature />
+        {/* <IndexContainer /> */}
+        <Layout withFooter>
+          <LandingPage />
+          <WorkFlow />
+          <GallerySection />
+          <PackagesOptions />
+          <SecurePayment />
+          <PrintfulPrint />
+          {/* <Feature />
           <TestimonialCard /> */}
-                              {/* <Faq /> */}
-                        </Layout>
-                  </StickyProvider>
-            </ThemeProvider>
-      );
+          <Faq />
+        </Layout>
+      </StickyProvider>
+    </ThemeProvider>
+  );
 }
