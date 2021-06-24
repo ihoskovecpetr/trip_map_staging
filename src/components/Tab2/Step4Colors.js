@@ -142,8 +142,8 @@ const styles = {
     flexDirection: "column",
     cursor: "pointer",
     "&.active img": {
-      border: "3px solid",
-      borderColor: "cta_color",
+      // border: "3px solid",
+      // borderColor: "cta_color",
       padding: "3px",
       transform: "scale(1.3)",
     },

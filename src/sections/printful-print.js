@@ -10,7 +10,7 @@ import { SignalCellularNull } from "@material-ui/icons";
 
 const data = {
   subTitle: "Kvalitní tisk a zpracování",
-  title: "Pro tist a zaslání výsledného produktu spoléháme na Printful",
+  title: "Tist a zaslání výsledného produktu zprostředkuje Printful",
   description:
     "Společnost Printfull je celosvětový poskytovatel tisku na zakázku a důvěřují mu i takové společnosti jako Amazon, Shopify, Ebay or Square",
   btnName: "Web společnost Printful",

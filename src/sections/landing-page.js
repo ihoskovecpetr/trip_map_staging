@@ -57,13 +57,15 @@ export default function LandingPage() {
   const { height: carouselHeight } = useElementDimensions("carousel_wrapper");
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG({ id: "carousel_img_photo_0" });
-  console.log({ headerHeight, carouselHeight });
+
   return (
     <section sx={styles.sectionContainer}>
       <div sx={styles.backgroundDiv} />
-      <PureCtaBox maxHeightTop={headerHeight + carouselHeight}>
-        <CtaComponent />
-      </PureCtaBox>
+      {isMobile && (
+        <PureCtaBox maxHeightTop={headerHeight + carouselHeight}>
+          <CtaComponent />
+        </PureCtaBox>
+      )}
       <Container sx={styles.containerBox}>
         {isMobile && (
           <div sx={styles.onlyMobile}>

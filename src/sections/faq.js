@@ -7,9 +7,9 @@ const faqs = [
     title: "Jakou kvalitu tisku a papíru mohu očekávat?",
     contents: (
       <div>
-        Kvalta tisku je hodna musea, tisk je proveden na těžký matný papír.
-        Museum-quality posters made on thick and durable matte paper. Each
-        poster is giclée-printed on archival, acid-free paper that yields
+        Kvalta tisku je hodna musea, tisk je proveden na matný papír s vysokou
+        gramáží. Museum-quality posters made on thick and durable matte paper.
+        Each poster is giclée-printed on archival, acid-free paper that yields
         brilliant prints to brighten up any room.
       </div>
     ),
