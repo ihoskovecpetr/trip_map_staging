@@ -1,31 +1,40 @@
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Head, Main, NextScript } from "next/document";
+import { ServerStyleSheet } from "styled-components";
 
-class CustomDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+export default class CustomDocument extends Document {
+  static getInitialProps({ renderPage }) {
+    const sheet = new ServerStyleSheet();
+
+    function handleCollectStyles(App) {
+      return (props) => {
+        return sheet.collectStyles(<App {...props} />);
+      };
+    }
+
+    const page = renderPage((App) => handleCollectStyles(App));
+    const styleTags = sheet.getStyleElement();
+    return { ...page, styleTags };
   }
 
   render() {
     return (
-      <Html lang="en-US">
-        <Head />
-        {/* <link rel="shortcut icon" href="/public/frame.png" /> */}
-        <link
-          href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"
-          rel="stylesheet"
-        />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1"
-        ></meta>
+      <html>
+        <Head>
+          {this.props.styleTags}
+          <link
+            href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"
+            rel="stylesheet"
+          />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+          ></meta>
+        </Head>
         <body>
           <Main />
           <NextScript />
         </body>
-      </Html>
+      </html>
     );
   }
 }
-
-export default CustomDocument;
