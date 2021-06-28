@@ -1,7 +1,6 @@
-import { ContactsOutlined } from "@material-ui/icons";
 import {
   LAYOUT_STYLE_NAMES,
-  FONT_TITLES,
+  TITLES_FONT_DEFAULT,
   FAKE_DIV_IDS,
 } from "../constants/constants";
 
@@ -51,7 +50,7 @@ export function prepareTextInput({
   elementsToStyleArr.map((el) => {
     Object.assign(el.style, {
       fontSize: `${0.003 * textSize * baseLngSide}px`,
-      fontFamily: FONT_TITLES,
+      fontFamily: TITLES_FONT_DEFAULT,
     });
   });
 
@@ -60,7 +59,7 @@ export function prepareTextInput({
     display: "inline-block",
     textAlign,
     fontSize: `${0.003 * textSize * baseLngSide}px`,
-    fontFamily: FONT_TITLES,
+    fontFamily: TITLES_FONT_DEFAULT,
     color,
     backgroundColor: "transparent",
     border: "none",

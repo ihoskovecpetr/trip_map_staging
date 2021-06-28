@@ -29,14 +29,14 @@ const TAB_VALUES = {
   THREE: "ROZMĚRY & PLATBA",
 };
 
-export default function SetupColumn({
+export default function TabsRootNew({
   map,
   mapCoordinates,
   setMapCoordinates,
   activeLayout,
   setActiveLayout,
-  activeMapStyle,
   setActiveMapStyle,
+  activeMapStyleName,
   mapTitles,
   setMapTitles,
   product,
@@ -112,7 +112,7 @@ export default function SetupColumn({
       />,
 
       <Step4Colors
-        activeMapStyle={activeMapStyle}
+        activeMapStyle={activeMapStyleName}
         setActiveMapStyle={setActiveMapStyle}
       />,
     ],
@@ -126,14 +126,14 @@ export default function SetupColumn({
         activeLayout={activeLayout}
         product={product}
         setProduct={setProduct}
-        activeMapStyle={activeMapStyle}
+        activeMapStyle={activeMapStyleName}
       />,
       <Step7Checkout
         map={map}
         mapTitles={mapTitles}
         activeLayout={activeLayout}
         product={product}
-        activeMapStyle={activeMapStyle}
+        activeMapStyleName={activeMapStyleName}
       />,
     ],
   ];
@@ -164,7 +164,7 @@ export default function SetupColumn({
 
     [
       <Step4Colors
-        activeMapStyle={activeMapStyle}
+        activeMapStyle={activeMapStyleName}
         setActiveMapStyle={setActiveMapStyle}
         nextTab={() => handleChange(TAB_VALUES.THREE)}
       />,
@@ -185,7 +185,7 @@ export default function SetupColumn({
         activeLayout={activeLayout}
         product={product}
         setProduct={setProduct}
-        activeMapStyle={activeMapStyle}
+        activeMapStyle={activeMapStyleName}
       />,
     ],
     [
@@ -194,7 +194,7 @@ export default function SetupColumn({
         mapTitles={mapTitles}
         activeLayout={activeLayout}
         product={product}
-        activeMapStyle={activeMapStyle}
+        activeMapStyleName={activeMapStyleName}
       />,
     ],
   ];
@@ -229,17 +229,26 @@ export default function SetupColumn({
         headerHeight={header_height}
         isOpen={isOpen}
         isOverflowVisible={isOverflowVisible}
+        isMobile={isMobile}
       >
         <Stepper
           stepElements={activeStepElements}
           handleNext={handleNext}
           handleBack={handleBack}
           activeStep={activeStepNumber}
+          map={map}
+          mapTitles={mapTitles}
+          activeLayout={activeLayout}
+          product={product}
+          activeMapStyleName={activeMapStyleName}
         />
         {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
-        <TabContentWrap isOverflowVisible={isOverflowVisible}>
+        <TabContentWrap
+          isOverflowVisible={isOverflowVisible}
+          isMobile={isMobile}
+        >
           {<>{activeStepElements[activeStepNumber]}</>}
         </TabContentWrap>
       </TabSegmentWrap>
@@ -331,7 +340,6 @@ const TabSegmentWrap = styled.div`
   flex-direction: column;
   width: 100%;
   background-color: ${color("background")};
-  padding: 5px 5px;
 
   height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
 
@@ -345,8 +353,12 @@ const TabSegmentWrap = styled.div`
 `;
 
 const TabContentWrap = styled.div`
-  overflow: ${({ isOverflowVisible }) =>
-    isOverflowVisible ? "visible" : "scroll"};
+  padding: 5px 5px;
+
+  @media (max-width: 768px) {
+    overflow: ${({ isOverflowVisible, isMobile }) =>
+      isOverflowVisible && isMobile ? "visible" : "scroll"};
+  }
 `;
 
 const ArrowWrap = styled.div`

@@ -16,7 +16,8 @@ export const createFinalImage = async (
   mapCanvas,
   activeLayout,
   mapTitles,
-  product
+  product,
+  activeMapStyleName
 ) => {
   return new Promise((resolve, reject) => {
     takeScreenshot(mapCanvas).then(function (data) {
@@ -45,6 +46,7 @@ export const createFinalImage = async (
           mapTitles,
           product,
           isProductionPrint: true,
+          activeMapStyleName,
         });
 
         const finalImgWithLayout = mergerCanvas.toDataURL();

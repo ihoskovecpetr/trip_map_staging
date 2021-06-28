@@ -3,13 +3,16 @@ import { getCenteringLayoutDimensions } from "./getCenteringLayoutDimensions";
 import {
   LAYOUT_STYLE_NAMES,
   VARIANTS_PRINTFUL,
-  FONT_TITLES,
+  TITLES_FONT_DEFAULT,
   INSIDE_FRAME_COVER_CM,
+  MAP_STYLES,
+  PADDING_COLOR_OPTIONS,
 } from "../constants/constants";
 
 import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
 import { getSizeOfTitle } from "./getSizeOfTitle";
 import { getIsProduction } from "./getIsProduction";
+import { IoIosReturnLeft } from "react-icons/io";
 
 let CURRENT_PIXEL_RATIO;
 
@@ -23,6 +26,7 @@ export function drawLayout(
     // frameWidthKoef,
     product,
     isProductionPrint,
+    activeMapStyleName,
   }
 ) {
   const elWidth = width;
@@ -33,6 +37,8 @@ export function drawLayout(
   // let whitePdgDouble;
   let insideFrameWidth;
   let frameCoverCoefficient;
+
+  const mapStyleObject = MAP_STYLES[activeMapStyleName];
 
   CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
 
@@ -70,10 +76,11 @@ export function drawLayout(
   if (!isPaddingFromFrame) {
     drawPaddingWrap({
       ctx,
-      padding: paddingWidth * CURRENT_PIXEL_RATIO,
+      paddingSize: paddingWidth * CURRENT_PIXEL_RATIO,
+      layoutPaddingColorOption: layoutObj.paddingColor,
+      inheritMapStyleColor: mapStyleObject.landColor,
       elWidth: width,
       elHeight: height,
-      layoutObj,
     });
   }
 
@@ -89,6 +96,9 @@ export function drawLayout(
     subtitle,
     activeLayoutName,
     CURRENT_PIXEL_RATIO,
+    fillColor: mapStyleObject.landColor
+      ? `#${mapStyleObject.landColor}`
+      : undefined,
   });
 
   drawText({
@@ -101,13 +111,18 @@ export function drawLayout(
     subtitle,
     layoutObj,
     isProductionPrint,
+    textColor: mapStyleObject.roadsColor
+      ? `#${mapStyleObject.roadsColor}`
+      : null,
   });
 
   if (activeLayoutName === LAYOUT_STYLE_NAMES.PURE) {
     // Nothing
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BOTTOM_LINE) {
     ctx.beginPath();
-    ctx.fillStyle = "black";
+    ctx.fillStyle = mapStyleObject.roadsColor
+      ? `#${mapStyleObject.roadsColor}`
+      : "black";
     ctx.fillRect(
       0,
       elHeight -
@@ -122,7 +137,9 @@ export function drawLayout(
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BLUR) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER) {
     ctx.lineWidth = 0.0015 * baseLngSide;
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = mapStyleObject.roadsColor
+      ? `#${mapStyleObject.roadsColor}`
+      : "black";
 
     const pdgDoubleKoefficient = 0.75;
 
@@ -140,7 +157,6 @@ export function drawLayout(
 
     // outer border
     ctx.lineWidth = 0.003 * baseLngSide;
-
     ctx.strokeRect(
       distanceStartXYOuterFrame,
       distanceStartXYOuterFrame,
@@ -150,11 +166,11 @@ export function drawLayout(
   }
 
   if (insideFrameWidth && !isProductionPrint) {
-    drawFrame(ctx, elWidth, elHeight, insideFrameWidth, frameColor);
+    drawFrameOverhang(ctx, elWidth, elHeight, insideFrameWidth, frameColor);
   }
 }
 
-function drawFrame(ctx, elWidth, elHeight, frWd, color) {
+function drawFrameOverhang(ctx, elWidth, elHeight, frWd, color) {
   // ctx.lineWidth = 7;
   ctx.fillStyle = color;
   ctx.fillRect(0, 0, frWd, elHeight + 2);
@@ -165,13 +181,33 @@ function drawFrame(ctx, elWidth, elHeight, frWd, color) {
   ctx.stroke();
 }
 
-function drawPaddingWrap({ ctx, padding, elWidth, elHeight, layoutObj }) {
+function getPaddingColor(layoutColorOption, inheritMapStyleColor) {
+  if (layoutColorOption === PADDING_COLOR_OPTIONS.transparent) {
+    return "transparent";
+  }
+  if (inheritMapStyleColor) {
+    return `#${inheritMapStyleColor}`;
+  }
+  return "white";
+}
+
+function drawPaddingWrap({
+  ctx,
+  paddingSize,
+  layoutPaddingColorOption,
+  inheritMapStyleColor,
+  elWidth,
+  elHeight,
+}) {
   ctx.beginPath();
-  ctx.fillStyle = layoutObj.paddingColor;
-  ctx.fillRect(0, 0, padding, elHeight);
-  ctx.fillRect(0, 0, elWidth, padding);
-  ctx.fillRect(elWidth - padding, 0, padding, elHeight);
-  ctx.fillRect(0, elHeight - padding, elWidth, padding);
+  ctx.fillStyle = getPaddingColor(
+    layoutPaddingColorOption,
+    inheritMapStyleColor
+  );
+  ctx.fillRect(0, 0, paddingSize, elHeight);
+  ctx.fillRect(0, 0, elWidth, paddingSize);
+  ctx.fillRect(elWidth - paddingSize, 0, paddingSize, elHeight);
+  ctx.fillRect(0, elHeight - paddingSize, elWidth, paddingSize);
   ctx.stroke();
 }
 
@@ -187,6 +223,7 @@ function drawBottomBox({
   subtitle,
   activeLayoutName,
   CURRENT_PIXEL_RATIO,
+  fillColor = "#ffffff",
 }) {
   const extraBlueAreaKoef = isBannerBlur ? 1.4 : 1;
 
@@ -197,14 +234,21 @@ function drawBottomBox({
     elHeight - padding
   );
 
-  gradient.addColorStop(0, "rgba(255,255,255,0.1)");
-  gradient.addColorStop(0.1, "rgba(255,255,255,0.4)");
-  gradient.addColorStop(0.3, "rgba(255,255,255,0.6)");
-  gradient.addColorStop(0.4, "rgba(255,255,255,0.7)");
-  gradient.addColorStop(0.7, "rgba(255,255,255,0.9)");
-  gradient.addColorStop(1, "rgba(255,255,255,1)");
+  // gradient.addColorStop(0, "rgba(255,255,255,0.0)");
+  // gradient.addColorStop(0.1, "rgba(255,255,255,0.4)");
+  // gradient.addColorStop(0.3, "rgba(255,255,255,0.6)");
+  // gradient.addColorStop(0.4, "rgba(255,255,255,0.7)");
+  // gradient.addColorStop(0.7, "rgba(255,255,255,0.9)");
+  // gradient.addColorStop(1, "rgba(255,255,255,1)");
 
-  ctx.fillStyle = isBannerBlur ? gradient : "white";
+  gradient.addColorStop(0, `${fillColor}00`);
+  gradient.addColorStop(0.1, `${fillColor}66`);
+  gradient.addColorStop(0.3, `${fillColor}98`);
+  gradient.addColorStop(0.4, `${fillColor}B2`);
+  gradient.addColorStop(0.7, `${fillColor}E1`);
+  gradient.addColorStop(1, `${fillColor}FF`);
+
+  ctx.fillStyle = isBannerBlur ? gradient : `${fillColor}`;
 
   ctx.beginPath();
 
@@ -251,6 +295,7 @@ function drawText({
   subtitle,
   layoutObj,
   isProductionPrint,
+  textColor = "black",
 }) {
   // const headingCoef = elHeight === baseLngSide ? 0.06 : 0.077;
   // const subtitleCoef = elHeight === baseLngSide ? 0.0275 : 0.033;
@@ -260,6 +305,8 @@ function drawText({
   if (IS_PRODUCTION && !isProductionPrint) {
     return;
   }
+
+  console.log({ textColor });
 
   const headingCoef = elHeight === baseLngSide ? 0.047 : 0.061;
   const subtitleCoef = elHeight === baseLngSide ? 0.015 : 0.018;
@@ -271,16 +318,20 @@ function drawText({
 
   ctx.textBaseline = "Alphabetic";
 
-  ctx.fillStyle = "black";
-  ctx.font = `${heading?.size * 0.001 * 3 * baseLngSide}px ${FONT_TITLES}`;
+  ctx.fillStyle = textColor;
+  ctx.font = `${
+    heading?.size * 0.001 * 3 * baseLngSide
+  }px ${TITLES_FONT_DEFAULT}`;
   ctx.textAlign = layoutObj?.text.align ?? "center";
   ctx.fillText(
     headingText,
     elWidth * 0.5,
     elHeight * (1 - headingCoef) - paddingWidth * CURRENT_PIXEL_RATIO // paddingWidth * CURRENT_PIXEL_RATIO !important because paddingWidth is relative to longest side
   );
-  ctx.fillStyle = "black";
-  ctx.font = `100 ${subtitle?.size * 0.003 * baseLngSide}px ${FONT_TITLES}`;
+  ctx.fillStyle = textColor;
+  ctx.font = `100 ${
+    subtitle?.size * 0.003 * baseLngSide
+  }px ${TITLES_FONT_DEFAULT}`;
   ctx.textAlign = layoutObj?.text.align ?? "center";
   ctx.fillText(
     subtitleText,

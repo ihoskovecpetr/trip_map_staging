@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { jsx, Container, Box } from "theme-ui";
 // import SetupColumn from "components/Tabs/TabsRoot";
-import SetupColumn from "components/Tabs/TabsRootNew";
+import TabsRootNew from "components/Tabs/TabsRootNew";
 import MapContainer from "components/canvas/mapContainer";
 import mapboxgl from "mapbox-gl";
 import styled from "styled-components";
@@ -60,6 +60,7 @@ const resizeLayout = ({
   activeLayout,
   product,
   mapTitles,
+  activeMapStyleName,
 }) => {
   Object.assign(cvsLayout.style, {
     display: "none",
@@ -76,6 +77,7 @@ const resizeLayout = ({
     activeLayout,
     mapTitles: mapTitles,
     product,
+    activeMapStyleName,
   });
 
   Object.assign(cvsLayout.style, {
@@ -117,25 +119,8 @@ const resizeFrameDiv = ({ productRef, mapAvailSpaceRef }) => {
   if (variantObj) {
     const extraFrame = baseLongerSide * frameWidthKoefficient;
 
-    console.log(
-      { extraFrame, 2: updWidth * frameWidthKoefficient },
-      baseLongerSide,
-      frameWidthKoefficient,
-      CURRENT_PIXEL_RATIO
-    );
-
     Object.assign(trueMapCanvasElement.style, {
-      // position: "absolute",
-      // pointerEvents: "none",
-      // display: "block",
-      // boxShadow: "0px 0px 35px rgba(116, 116, 116, 1)",
-      // // top: `-${extraFrame}px`,
-      // // left: `-${extraFrame}px`,
-      // top: 0,
-      // left: 0,
       outline: `${extraFrame + 0}px solid ${variantObj.frameColor}`,
-      // width: updWidth ? `${Math.floor(updWidth)}px` : 0,
-      // height: updHeight ? `${Math.floor(updHeight)}px` : 0,
     });
   }
 };
@@ -154,7 +139,9 @@ const resizeInputs = ({
   mapHeight,
   mapWidth,
   layout,
+  activeMapStyleName,
 }) => {
+  const activeStyleObj = MAP_STYLES[activeMapStyleName];
   prepareTextInput({
     element: headlineInput,
     name: "heading",
@@ -166,19 +153,24 @@ const resizeInputs = ({
     // padding: paddingWidth,
     // textAlign,
     layout,
+    color: activeStyleObj.roadsColor
+      ? `#${activeStyleObj.roadsColor}`
+      : "black",
   });
   prepareTextInput({
     element: subtitleInput,
     name: "subtitle",
     textSize: mapTitles.subtitle?.size,
     textValue: mapTitles.subtitle?.text,
-    // color: "grey",
     onInput: saveTitlesValue,
     height: mapHeight,
     width: mapWidth,
     // padding: paddingWidth,
     // textAlign,
     layout,
+    color: activeStyleObj.roadsColor
+      ? `#${activeStyleObj.roadsColor}`
+      : "black",
   });
 };
 
@@ -241,7 +233,7 @@ export default function StudioRootContainer() {
   const [activeLayout, setActiveLayout] = useState(
     LAYOUT_STYLE_NAMES.ISLAND_BOX
   );
-  const [activeMapStyle, setActiveMapStyle] = useState(
+  const [activeMapStyleName, setActiveMapStyle] = useState(
     MAP_STYLES_NAMES.LOW_CONTRAST_GREEN
   );
   const [mapTitles, setMapTitles] = useState({
@@ -368,6 +360,7 @@ export default function StudioRootContainer() {
         activeLayout: activeLayout,
         mapTitles: mapTitlesRef.current,
         product: productRef.current,
+        activeMapStyleName: activeMapStyleName,
       });
 
       resizeFrameDiv({
@@ -383,6 +376,7 @@ export default function StudioRootContainer() {
     mapAvailSpaceHeight,
     mapAvailSpaceWidth,
     mapTitles,
+    activeMapStyleName,
   ]);
 
   useEffect(() => {
@@ -393,8 +387,7 @@ export default function StudioRootContainer() {
       zoom: mapZoom,
       minZoom: 0,
       center: coordinatesRef.current,
-      // style: mapStyles(`./${MAP_STYLES[activeMapStyle]}/style.json`),
-      style: MAP_STYLES[activeMapStyle],
+      style: MAP_STYLES[activeMapStyleName].url,
       // style: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho", // Continue add maps WhiteGreyMap
 
       preserveDrawingBuffer: true,
@@ -403,7 +396,7 @@ export default function StudioRootContainer() {
     return () => {
       map.remove();
     };
-  }, [activeMapStyle]);
+  }, [activeMapStyleName]);
 
   useEffect(() => {
     if (map) {
@@ -459,6 +452,7 @@ export default function StudioRootContainer() {
           activeLayout: layoutRef.current,
           mapTitles: mapTitlesRef.current,
           product: productRef.current,
+          activeMapStyleName: activeMapStyleName,
         });
 
         resizeInputs({
@@ -469,6 +463,7 @@ export default function StudioRootContainer() {
           layout: layoutRef.current,
           layoutObj,
           paddingWidth,
+          activeMapStyleName,
         });
 
         mapWrapDivElement.appendChild(inputWrap);
@@ -489,9 +484,8 @@ export default function StudioRootContainer() {
           activeLayout: layoutRef.current,
           mapTitles: mapTitlesRef.current,
           product: productRef.current,
+          activeMapStyleName: activeMapStyleName,
         });
-
-        console.log("resizeFrameDiv on 'resize'");
 
         resizeFrameDiv({
           productRef,
@@ -515,7 +509,7 @@ export default function StudioRootContainer() {
       headlineInput.remove();
       subtitleInput.remove();
     };
-  }, [map, activeMapStyle]);
+  }, [map, activeMapStyleName]);
 
   useEffect(() => {
     mapWrapper = document.getElementById("map_wrapper_id");
@@ -560,6 +554,7 @@ export default function StudioRootContainer() {
         layout: activeLayout,
         layoutObj,
         paddingWidth,
+        activeMapStyleName,
       });
     }
   }, [
@@ -599,6 +594,7 @@ export default function StudioRootContainer() {
               mapTitles={mapTitles}
               setProduct={setProduct}
               product={product}
+              activeMapStyleName={activeMapStyleName}
             />
           </Box>
           {/* <button
@@ -613,11 +609,11 @@ export default function StudioRootContainer() {
             Toggle
           </button> */}
           <Box sx={styles.settingsBox}>
-            <SetupColumn
+            <TabsRootNew
               map={map}
               activeLayout={activeLayout}
               setActiveLayout={setActiveLayout}
-              activeMapStyle={activeMapStyle}
+              activeMapStyleName={activeMapStyleName}
               setActiveMapStyle={setActiveMapStyle}
               mapCoordinates={mapCoordinates}
               setMapCoordinates={setMapCoordinates}

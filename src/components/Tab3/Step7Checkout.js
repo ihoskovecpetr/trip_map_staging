@@ -1,56 +1,49 @@
-/** @jsx jsx */
 import React from "react";
-import { jsx, Text } from "theme-ui";
 import styled from "styled-components";
 
-import { VARIANTS_PRINTFUL } from "../../constants/constants";
 import Tab3Checkout from "./tab3Checkout";
 
-import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
-import { useIsMobile } from "../../Hooks/useIsMobile";
-
-export default function Step6FinishVariant({
+export default function Step7Checkout({
   map,
   mapTitles,
   activeLayout,
   product,
-  activeMapStyle,
+  activeMapStyleName,
+  isCustomUI,
+  children,
 }) {
-  const { dataPrintful } = useGetDataPrintful(
-    VARIANTS_PRINTFUL.map((variant) => variant.id)
-  );
-
   return (
-    <div sx={styles.container}>
-      <div sx={styles.absoluteBtnWrap}>
+    <Container>
+      <AbsoluteBtnWrap>
         <Tab3Checkout
           map={map}
           mapTitles={mapTitles}
           activeLayout={activeLayout}
           product={product}
-          activeMapStyle={activeMapStyle}
-          dataPrintful={dataPrintful}
+          activeMapStyleName={activeMapStyleName}
+          isCustomUI={isCustomUI}
+          children={children}
         />
-      </div>
-    </div>
+      </AbsoluteBtnWrap>
+    </Container>
   );
 }
 
-const styles = {
-  container: {
-    width: "100%",
-  },
-  absoluteBtnWrap: {
-    position: ["relative", null, null, "fixed"],
-    bottom: "0px",
-    left: "0px",
-    zIndex: 10,
-    margin: "20px 0",
-    overflow: "visible",
-    width: ["100%", "100%", "100%", "40%", "30%"],
-  },
-};
-
-const CheckoutWrap = styled.div`
+const Container = styled.div`
   width: 100%;
+`;
+
+const AbsoluteBtnWrap = styled.div`
+  width: 100%;
+  position: relative;
+  bottom: 0px;
+  left: 0px;
+  z-index: 10;
+  overflow: visible;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    position: ${({ isCustomUI }) => (isCustomUI ? "relative" : "fixed")}
+    width: 30%;
+  }
 `;

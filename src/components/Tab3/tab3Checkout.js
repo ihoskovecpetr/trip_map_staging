@@ -4,27 +4,31 @@ import { jsx, Button } from "theme-ui";
 import { toast } from "react-toastify";
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
+import styled from "styled-components";
 
+import { VARIANTS_PRINTFUL } from "../../constants/constants";
 import { createUploadRequest } from "../../LibGlobal/createUploadRequest";
 import CheckoutCard from "../CheckoutCard/CheckoutCard";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { createFinalImage } from "../../LibGlobal/createFinalImage";
+import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 
 import {
   getLazyUploader,
   resetPendingPromise,
 } from "../../LibGlobal/getLazyUploader";
 
-toast.configure();
+// toast.configure();
 
 export default function Tab3Checkout({
   map,
   mapTitles,
   activeLayout,
   product,
-  activeMapStyle,
-  dataPrintful,
+  activeMapStyleName,
+  children,
+  isCustomUI,
 }) {
   const classes = useStyles();
 
@@ -34,10 +38,20 @@ export default function Tab3Checkout({
   const [imageSavedResponse, setImageSavedResponse] = useState(null);
   const [percentageUpload, setPercentageUpload] = useState(0);
 
+  const { dataPrintful } = useGetDataPrintful(
+    VARIANTS_PRINTFUL.map((variant) => variant.id)
+  );
+
+  console.log({ children, isCustomUI, activeMapStyle: activeMapStyleName });
+
+  useEffect(() => {
+    console.log("InitTab3Ch", { backdropOpen });
+  }, []);
+
   useEffect(() => {
     setImageSavedResponse(null);
     resetPendingPromise();
-  }, [map, mapTitles, activeLayout, product, activeMapStyle]);
+  }, [map, mapTitles, activeLayout, product, activeMapStyleName]);
 
   const progressCallbackFce = (progressEvent) => {
     var percentCompleted = Math.round(
@@ -55,7 +69,8 @@ export default function Tab3Checkout({
         map,
         activeLayout,
         mapTitles,
-        product
+        product,
+        activeMapStyleName
       );
 
       setImageBase64Created(finalImgSrc);
@@ -96,6 +111,7 @@ export default function Tab3Checkout({
   };
 
   const backdropClose = () => {
+    console.log("Closing Backdrop");
     setBackdropOpen(false);
   };
 
@@ -105,19 +121,36 @@ export default function Tab3Checkout({
     product.variantId,
     dataPrintful
   );
+
+  console.log({ backdropOpen });
   return (
-    <div sx={styles.container}>
-      <div>
-        <NextTabBtn
+    <CheckoutWrap>
+      {isCustomUI && (
+        <CustomUI
           onClick={() => {
+            console.log("settingBacOpn");
             setBackdropOpen(true);
             lazyUploadImage();
           }}
-          price={priceWithDelivery.netPrice} //TODO add big.js
         >
-          Shrnutí objednávky
-        </NextTabBtn>
-      </div>
+          {children}
+        </CustomUI>
+      )}
+      {!isCustomUI && (
+        <DefaultUI>
+          <div>
+            <NextTabBtn
+              onClick={() => {
+                setBackdropOpen(true);
+                lazyUploadImage();
+              }}
+              price={priceWithDelivery.netPrice} //TODO add big.js
+            >
+              Shrnutí objednávky
+            </NextTabBtn>
+          </div>
+        </DefaultUI>
+      )}
 
       <img id="img_screen_shot" sx={styles.resultImage} />
       {backdropOpen && (
@@ -140,17 +173,17 @@ export default function Tab3Checkout({
           />
         </Backdrop>
       )}
-    </div>
+    </CheckoutWrap>
   );
 }
 
 const styles = {
-  container: {
-    "& p": {
-      fontFamily: "Arial, sans-serif",
-      margin: 0,
-    },
-  },
+  // container: {
+  //   "& p": {
+  //     fontFamily: "Arial, sans-serif",
+  //     margin: 0,
+  //   },
+  // },
   resultImage: {
     width: "100%",
     backgroundColor: "green",
@@ -169,3 +202,20 @@ const useStyles = makeStyles((theme) => ({
     zIndex: "12 !important",
   },
 }));
+
+const CheckoutWrap = styled.div`
+  width: 100%;
+
+  & p {
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+`;
+
+const CustomUI = styled.div`
+  width: 100%;
+`;
+
+const DefaultUI = styled.div`
+  width: 100%;
+`;

@@ -21,7 +21,8 @@ const TRANSPARENT_PADDING = 0.025;
 
 const BOTTOM_BANNER = 0.09;
 const BLURRED_AREA_HEIGHT = 0.09;
-const FONT_TITLES = "Source Code Pro";
+const TITLES_FONT_DEFAULT = "Robot"; //"Source Code Pro";
+const TITLES_DEFAULT = ["New York", "USA"];
 
 const FRAME_COLOR_WHITE = "#F5F5F5";
 const FRAME_COLOR_BLACK = "black";
@@ -230,7 +231,7 @@ const VARIANTS_PRINTFUL = [
   },
   {
     id: 10299,
-    frameColor: FRAME_COLOR_WHITE,
+    frameColor: FRAME_COLOR_BLACK,
     frameWidth: 0.01,
     frameOutsideKoef: 0.01,
     sizeName: sizeNames["61X91cm"],
@@ -254,11 +255,17 @@ const LAYOUT_STYLE_NAMES = {
   DOUBLE_BORDER: "Double Border",
 };
 
+const PADDING_COLOR_OPTIONS = {
+  transparent: "transparent",
+  white: "white",
+  inherit: "inherit",
+};
+
 const LAYOUTS = [
   {
     name: LAYOUT_STYLE_NAMES.PURE,
     roundPdng: null,
-    paddingColor: "white",
+    paddingColor: PADDING_COLOR_OPTIONS.white,
     bottomBannerHeight: null,
     isBannerBlur: false,
     text: {
@@ -269,7 +276,7 @@ const LAYOUTS = [
   {
     name: LAYOUT_STYLE_NAMES.ISLAND_BOX,
     roundPdng: TRANSPARENT_PADDING,
-    paddingColor: "transparent",
+    paddingColor: PADDING_COLOR_OPTIONS.transparent,
     bottomBannerHeight: BOTTOM_BANNER, // this is dynamic value
     isBannerBlur: false,
     text: {
@@ -280,7 +287,7 @@ const LAYOUTS = [
   {
     name: LAYOUT_STYLE_NAMES.BOTTOM_BLUR,
     roundPdng: LAY_SINGLE_FRAME_PDNG,
-    paddingColor: "white",
+    paddingColor: PADDING_COLOR_OPTIONS.white,
     bottomBannerHeight: BLURRED_AREA_HEIGHT,
     isBannerBlur: true,
     text: {
@@ -291,7 +298,7 @@ const LAYOUTS = [
   {
     name: LAYOUT_STYLE_NAMES.BOTTOM_LINE,
     roundPdng: null,
-    paddingColor: "white",
+    paddingColor: PADDING_COLOR_OPTIONS.white,
     bottomBannerHeight: BOTTOM_BANNER,
     isBannerBlur: false,
     text: {
@@ -302,7 +309,7 @@ const LAYOUTS = [
   {
     name: LAYOUT_STYLE_NAMES.BORDER_BOX,
     roundPdng: null,
-    paddingColor: "white",
+    paddingColor: PADDING_COLOR_OPTIONS.white,
     bottomBannerHeight: BOTTOM_BANNER,
     isBannerBlur: false,
     text: {
@@ -324,7 +331,7 @@ const LAYOUTS = [
   {
     name: LAYOUT_STYLE_NAMES.DOUBLE_BORDER,
     roundPdng: LAY_DOUBLE_FRAME_PDNG,
-    paddingColor: "white",
+    paddingColor: PADDING_COLOR_OPTIONS.white,
     bottomBannerHeight: BLURRED_AREA_HEIGHT,
     isBannerBlur: true,
     text: {
@@ -337,67 +344,123 @@ const LAYOUTS = [
 const MAP_STYLES_NAMES = {
   BLACK_LAND: "Black Land",
   BLACK_WHITE: "Black White",
-  WHITE_BLUE: "White Blue",
-  SANDY_ORANGE_BLUE: "Sandy Orange Blue",
+  DARK_BLUE_MONOCOLOR: "Dark Blue Monocolor",
   LOW_CONTRAST_GREEN: "Low Contrast Green",
+  WHITE_BLUE: "White Blue",
+  SANDY_DARK: "Sandy Dark",
+  SANDY_ORANGE_BLUE: "Sandy Orange Blue",
   WHITE_GREY: "White Grey",
   OLD_SANDY_BROWN: "Old Sandy Brown",
   WHITE_BLUE_LOW_CONTRAST: "White Blue Low",
   MUSTARD_BLUE: "Mustard Blue",
-  SANDY_DARK: "Sandy Dark",
 };
 
 const MAP_STYLES = {
-  [MAP_STYLES_NAMES.WHITE_GREY]:
-    // "WhiteGrey",
-    // "assets/MAPS_MAPBOX/WhiteGrey/style.json",
-    "mapbox://styles/petrhoskovec/ckmzzqlni0n5j17pbfvgf27n9",
+  [MAP_STYLES_NAMES.WHITE_GREY]: {
+    url: "mapbox://styles/petrhoskovec/ckmzzqlni0n5j17pbfvgf27n9",
+    waterColor: "",
+    landColor: "",
+    roadsColor: "",
+  },
+  // "WhiteGrey",
+  // "assets/MAPS_MAPBOX/WhiteGrey/style.json",
   [MAP_STYLES_NAMES.WHITE_BLUE_LOW_CONTRAST]:
     // "WhiteBlueLowContrast(ckolm2l7k23ck18mwrl2jkgcg)",
     // "assets/MAPS_MAPBOX/WhiteBlueLowContrast(ckolm2l7k23ck18mwrl2jkgcg)/style.json",
-    "mapbox://styles/petrhoskovec/ckolm2l7k23ck18mwrl2jkgcg",
+    {
+      url: "mapbox://styles/petrhoskovec/ckolm2l7k23ck18mwrl2jkgcg",
+      waterColor: "",
+      landColor: "",
+      roadsColor: "",
+    },
   [MAP_STYLES_NAMES.WHITE_BLUE]:
     // "WhiteBlue(ckmzzsrsl0naa17o3ki2xzuoj)",
     // "assets/MAPS_MAPBOX/WhiteBlue(ckmzzsrsl0naa17o3ki2xzuoj)/style.json",
-    "mapbox://styles/petrhoskovec/ckmzzsrsl0naa17o3ki2xzuoj",
+    {
+      url: "mapbox://styles/petrhoskovec/ckmzzsrsl0naa17o3ki2xzuoj",
+      waterColor: "30bcf3",
+      landColor: "f7f5de",
+      roadsColor: "7891ab",
+    },
   [MAP_STYLES_NAMES.MUSTARD_BLUE]:
     // "MustardBlueLowContrast(ckolmiq3f4u9217p9v8fmln15)",
     // "assets/MAPS_MAPBOX/MustardBlueLowContrast(ckolmiq3f4u9217p9v8fmln15)/style.json",
-    "mapbox://styles/petrhoskovec/ckolmiq3f4u9217p9v8fmln15",
+    {
+      url: "mapbox://styles/petrhoskovec/ckolmiq3f4u9217p9v8fmln15",
+      waterColor: "32728b",
+      landColor: "cbc057",
+      roadsColor: "567495",
+    },
   // [MAP_STYLES_NAMES.DARK_BLUE]:
   // "assets/MAPS_MAPBOX/WhiteGrey/style.json",
   // "mapbox://styles/petrhoskovec/ckmzyuv5w0mat17n5ybl7hxxl",
   [MAP_STYLES_NAMES.SANDY_DARK]:
     // "SandyDark(ckmzz4z6y0mgx17s4lw0zeyho)",
     // "assets/MAPS_MAPBOX/SandyDark(ckmzz4z6y0mgx17s4lw0zeyho)/style.json",
-    "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho",
+    {
+      url: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho",
+      waterColor: "",
+      landColor: "",
+      roadsColor: "",
+    },
   [MAP_STYLES_NAMES.OLD_SANDY_BROWN]:
     // "OldSandyGrey(ckn0f7lbu12je17s4itrmuuh5)",
     // "assets/MAPS_MAPBOX/OldSandyGrey(ckn0f7lbu12je17s4itrmuuh5)/style.json",
-    "mapbox://styles/petrhoskovec/ckn0f7lbu12je17s4itrmuuh5",
+    {
+      url: "mapbox://styles/petrhoskovec/ckn0f7lbu12je17s4itrmuuh5",
+      waterColor: "",
+      landColor: "",
+      roadsColor: "",
+    },
 
   [MAP_STYLES_NAMES.SANDY_ORANGE_BLUE]:
     // "SandyOrangeBlue(ckn0ffdn112v017jxv6ei1jnu)",
     // "assets/MAPS_MAPBOX/SandyOrangeBlue(ckn0ffdn112v017jxv6ei1jnu)/style.json",
-    "mapbox://styles/petrhoskovec/ckn0ffdn112v017jxv6ei1jnu",
+    {
+      url: "mapbox://styles/petrhoskovec/ckn0ffdn112v017jxv6ei1jnu",
+      waterColor: "",
+      landColor: "",
+      roadsColor: "",
+    },
   [MAP_STYLES_NAMES.LOW_CONTRAST_GREEN]:
     // "LowContrastGreenBlue(ckollex8z78ly18mu9jmefwnz)",
     // "assets/MAPS_MAPBOX/LowContrastGreenBlue(ckollex8z78ly18mu9jmefwnz)/style.json",
-    "mapbox://styles/petrhoskovec/ckollex8z78ly18mu9jmefwnz",
+    {
+      url: "mapbox://styles/petrhoskovec/ckollex8z78ly18mu9jmefwnz",
+      waterColor: "5e96c9",
+      landColor: "e6d398",
+      roadsColor: "", //f1eae5
+    },
   [MAP_STYLES_NAMES.BLACK_WHITE]:
     // "BlackWhite(ckpbeqdof7li518ojkwwaqrfh)",
-    "mapbox://styles/petrhoskovec/ckpbeqdof7li518ojkwwaqrfh",
+    {
+      url: "mapbox://styles/petrhoskovec/ckpbeqdof7li518ojkwwaqrfh",
+      waterColor: "e8e7e3",
+      landColor: "ffffff",
+      roadsColor: "6d7378",
+    },
   [MAP_STYLES_NAMES.BLACK_LAND]:
     // "BlackLand(ckpbgjjxd0phz17nzanvcr6y4)",
-    "mapbox://styles/petrhoskovec/ckpbgjjxd0phz17nzanvcr6y4",
+    {
+      url: "mapbox://styles/petrhoskovec/ckpbgjjxd0phz17nzanvcr6y4",
+      waterColor: "f8f8f7",
+      landColor: "050505",
+      roadsColor: "f1f2f3",
+    },
+  [MAP_STYLES_NAMES.DARK_BLUE_MONOCOLOR]:
+    // "BlackLand(ckpbgjjxd0phz17nzanvcr6y4)",
+    {
+      url: "mapbox://styles/petrhoskovec/ckqexs85d1dev18pgpujhjwne",
+      waterColor: "162930",
+      landColor: "707070",
+      roadsColor: "d5d2d2",
+    },
 };
 
 const FAKE_DIV_IDS = {
   heading: "fake_heading_div",
   subtitle: "fake_subtitle_div",
 };
-
-const TITLES_DEFAULT = ["New York", "USA"];
 
 module.exports = {
   IS_CLIENT,
@@ -411,7 +474,8 @@ module.exports = {
   INSIDE_FRAME_COVER_CM,
   OUTSIDE_FRAME_CM,
   BLURRED_AREA_HEIGHT,
-  FONT_TITLES,
+  TITLES_FONT_DEFAULT,
+  TITLES_DEFAULT,
   BOTTOM_BANNER,
   LAY_SINGLE_FRAME_PDNG,
   LAY_DOUBLE_FRAME_PDNG,
@@ -420,9 +484,9 @@ module.exports = {
   ORIENTATIONS,
   VARIANTS_PRINTFUL,
   LAYOUT_STYLE_NAMES,
+  PADDING_COLOR_OPTIONS,
   LAYOUTS,
   MAP_STYLES_NAMES,
   MAP_STYLES,
   FAKE_DIV_IDS,
-  TITLES_DEFAULT,
 };

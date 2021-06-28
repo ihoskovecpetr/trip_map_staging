@@ -1,9 +1,7 @@
 /** @jsx jsx */
 import { useEffect } from "react";
 import { jsx, Text } from "theme-ui";
-import produce from "immer";
 
-import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 

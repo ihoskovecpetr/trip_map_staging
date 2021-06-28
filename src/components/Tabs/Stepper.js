@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import Button from "@material-ui/core/Button";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+
+import Tab3Checkout from "../Tab3/tab3Checkout";
 
 const useStyles = makeStyles({
   root: {
@@ -22,6 +24,11 @@ export default function Stepper({
   handleNext,
   handleBack,
   activeStep,
+  map,
+  mapTitles,
+  activeLayout,
+  product,
+  activeMapStyleName,
 }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -35,7 +42,9 @@ export default function Stepper({
   //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   //   };
 
-  console.log({ stepslength: stepElements.length });
+  console.log({ stepslength: stepElements.length, activeStep });
+
+  const isLastStep = activeStep === stepElements.length - 1;
 
   return (
     <MobileStepper
@@ -47,11 +56,24 @@ export default function Stepper({
       nextButton={
         <Button
           size="small"
-          onClick={handleNext}
+          onClick={!isLastStep && handleNext}
           className={classes.rootButton}
-          disabled={activeStep === stepElements.length - 1}
+          // disabled={activeStep === stepElements.length - 1}
         >
-          Další
+          {isLastStep ? (
+            <Tab3Checkout
+              map={map}
+              mapTitles={mapTitles}
+              activeLayout={activeLayout}
+              product={product}
+              activeMapStyleName={activeMapStyleName}
+              isCustomUI
+            >
+              Checkout
+            </Tab3Checkout>
+          ) : (
+            "Další"
+          )}
           {theme.direction === "rtl" ? (
             <KeyboardArrowLeft />
           ) : (

@@ -26,6 +26,7 @@ export default function MapContainer({
   activeLayout,
   mapTitles,
   product,
+  activeMapStyleName,
 }) {
   const [imageBase64Created, setImageBase64Created] = useState("");
   const [lightbox, setLightbox] = useState({
@@ -49,7 +50,8 @@ export default function MapContainer({
       map,
       activeLayout,
       mapTitles,
-      product
+      product,
+      activeMapStyleName
     );
 
     setImageBase64Created(finalImgSrc);
