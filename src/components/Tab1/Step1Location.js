@@ -16,6 +16,7 @@ let geocoder = new MapboxGeocoder({
   marker: {
     // color: "transparent",
   },
+  placeholder: "Zadejte lokalitu",
 });
 
 export default function Step1Location({
@@ -75,19 +76,26 @@ export default function Step1Location({
 
     geocoder.clear(); // to remove blue dot
     document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].blur();
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
     <div sx={styles.container}>
-      <Text as="p" className="description" sx={styles.headingDesc}>
-        Zadejte lokalitu
-      </Text>
+      {!isMobile && (
+        <Text as="p" className="description" sx={styles.headingDesc}>
+          Zadejte lokalitu
+        </Text>
+      )}
 
       <div
         id="geocoder"
         class="geocoder"
         sx={styles.locationInput}
-        style={{ marginTop: isMobile ? "0px" : "20px" }}
+        style={{ marginTop: isMobile ? "10px" : "20px" }}
       ></div>
     </div>
   );

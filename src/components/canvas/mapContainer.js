@@ -124,12 +124,12 @@ const BNT_RADIUS = 4;
 const styles = {
   canvas_bg: {
     px: "0 !important",
-    pb: "20px",
+    // pb: "20px",
     display: "flex",
     flexDirection: "column",
     // justifyContent: "center",
     // alignItems: "flex-start",
-    transform: "translateX(0)", // this is important
+    transform: "translateX(0)", // this is important, reset absolute position to thos element
     height: [null, null, null, "100%"],
     // pb: "100px",
     overflow: "auto",
@@ -141,13 +141,13 @@ const styles = {
     alignItems: ["flex-start", null, null, "center"],
     pt: ["20px", null, null, 0],
     width: "100%",
-    height: ["60vh", null, null, "85%"],
+    height: ["60vh", null, null, "85vh"],
     // minHeight: ["60vh", "60vh", "60vh"],
 
-    // "&.isWideOrientation": {
-    //   // minHeight: ["45vh", null],
-    //   height: "45vh",
-    // },
+    "&.isWideOrientation": {
+      // minHeight: ["45vh", null],
+      // height: "45vh",
+    },
   },
   map_wrapper: {
     // margin: "30px",

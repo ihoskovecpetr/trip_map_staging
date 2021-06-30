@@ -9,7 +9,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useElementDimensions } from "../../Hooks/useElementDimensions";
 import { color, font, fontSize, fontWeight } from "../../utils";
-
+import { ORIENTATIONS } from "@constants";
 import Stepper from "../Tabs/Stepper";
 
 import Tab1 from "../Tab1/tab1";
@@ -215,10 +215,18 @@ export default function TabsRootNew({
   const isOverflowVisible =
     isMobile && overflowingTabs.includes(activeStepNumber);
 
+  const isWideOrientation =
+    product?.sizeObject?.orientation === ORIENTATIONS.wide;
+
   console.log({ isOverflowVisible });
 
   return (
-    <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}>
+    <MainContainer
+      className={isMobile && isOpen && "open"}
+      open={isMobile && isOpen}
+      headerHeight={header_height}
+    >
+      {/* <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}> */}
       {isMobile && (
         <ArrowWrap isOpen={isOpen} isDisabled={isArrowDisabled}>
           <ArrowForwardIosIcon onClick={() => setIsOpen((prev) => !prev)} />
@@ -227,6 +235,7 @@ export default function TabsRootNew({
       <TabSegmentWrap
         mapHeight={map_segment_height}
         headerHeight={header_height}
+        isWideOrientation={isWideOrientation}
         isOpen={isOpen}
         isOverflowVisible={isOverflowVisible}
         isMobile={isMobile}
@@ -262,78 +271,29 @@ export default function TabsRootNew({
           onClick={() => setIsOpen(false)}
         ></Backdrop>
       )}
-    </div>
+      {/* </div> */}
+    </MainContainer>
   );
 }
 
-const styles = {
-  tabsContainer: {
-    width: "100%",
-    height: [null, null, null, "100%"],
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    zIndex: 10,
-    backgroundColor: "white",
-    transitionDuration: "1s",
+const MainContainer = styled.div`
+  width: 100%;
+  height: null;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  background-color: white;
+  transition-duration: 1s;
+  position: ${({ open }) => open && "fixed"};
+  top: ${({ open }) => open && "60vh"};
+  left: ${({ open }) => open && "0"};
 
-    "&.open": {
-      // height: "40vh",
-      position: "fixed",
-      top: "60vh",
-      left: 0,
-    },
-  },
-  tabWrapWrap: {
-    position: "relative",
-  },
-  TabWrap: {
-    display: "flex",
-    position: "absolute",
-    width: "100%",
-    backgroundColor: "#ffffff",
-  },
-  Tab: {
-    width: "33.33%",
-    px: "10px",
-    py: [null, "5px", "10px"],
-    display: "flex",
-    justifyContent: "center",
-    fontWeight: 600,
-    color: "rgba(0,0,0,0.35)",
-    cursor: "pointer",
-    borderBottom: "1px solid lightgrey",
-    backgroundColor: "background_white",
-
-    "&.active": {
-      borderBottom: "2px solid",
-      borderColor: "cta_color",
-      color: "cta_color",
-    },
-    "&:hover": {
-      backgroundColor: "#00000016",
-    },
-    "> p": {
-      margin: "auto",
-      textAlign: "center",
-      // fontFamily: "Arial",
-      // fontWeight: 400,
-    },
-  },
-  tabBody: {
-    paddingTop: ["70px", "70px", "70px", "80px"],
-    display: "none",
-    height: ["unset", "unset", "100%"],
-    overflow: "scroll",
-    backgroundColor: "background_white",
-    "&.active": {
-      display: "block",
-    },
-    "@media screen and (max-width: 768px)": {
-      height: "unset",
-    },
-  },
-};
+  @media (min-width: 768px) {
+    height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
+    overflow: scroll;
+  }
+`;
 
 const TabSegmentWrap = styled.div`
   display: flex;
@@ -344,8 +304,12 @@ const TabSegmentWrap = styled.div`
   height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
 
   @media (max-width: 768px) {
-    height: ${({ mapHeight, isOpen }) =>
-      isOpen ? "40vh" : `calc(100vh - ${mapHeight}px)`};
+    height: ${({ mapHeight, isOpen, isWideOrientation }) =>
+      isOpen
+        ? "40vh"
+        : `calc(100vh - ${
+            mapHeight - isWideOrientation ? mapHeight / 2 : 0
+          }px)`};
     overflow: ${({ isOverflowVisible }) =>
       isOverflowVisible ? "visible" : "hidden"};
     padding: 0 0;
