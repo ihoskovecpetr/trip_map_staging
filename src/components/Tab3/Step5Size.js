@@ -97,7 +97,7 @@ export default function Step5Size({ product, setProduct }) {
                 onClick={() => setNewSize(sizeNameLocal)}
               >
                 <p sx={styles.itemDimensions}>{sizeObject?.name}</p>
-                <p sx={styles.itemUnit}>[{sizeObject?.unit}]</p>
+                <p sx={styles.itemUnit}>[ {sizeObject?.unit} ]</p>
               </div>
             );
           })}
@@ -113,7 +113,7 @@ const styles = {
   headingDesc: {
     fontWeight: 500,
     textAlign: "left",
-    margin: "20px 0",
+    marginTop: "20px",
     color: "grey",
     letterSpacing: "1.1px",
   },
@@ -125,9 +125,9 @@ const styles = {
     justifyContent: ["center", null, null, "center"],
   },
   sizeItem: {
-    margin: "10px",
-    padding: "4px",
-    // width: ["31%", "31%", "31%", "31%", "31%", "20%"],
+    // margin: "10px",
+    // padding: "4px",
+    width: ["31%", "31%", "31%", "31%", "31%", "20%"],
     // margin: ["1%", "1%", "1%", "1%", "1%", "1%"],
     border: "1px solid transparent",
     cursor: "pointer",

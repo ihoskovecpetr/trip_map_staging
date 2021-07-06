@@ -207,7 +207,7 @@ const CheckoutWrap = styled.div`
   width: 100%;
 
   & p {
-    font-family: Arial, sans-serif;
+    // font-family: Arial, sans-serif;
     margin: 0;
   }
 `;

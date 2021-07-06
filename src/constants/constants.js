@@ -28,6 +28,9 @@ const FRAME_COLOR_WHITE = "#F5F5F5";
 const FRAME_COLOR_BLACK = "black";
 const FRAME_COLOR_TRANSPARENT = "transparent";
 
+const DEFAULT_FONT_WEIGHT_BOLD = 800;
+const DEFAULT_FONT_WEIGHT_THIN = 200;
+
 const sizeNames = {
   "61X91cm": "61X91cm",
   "91X61cm": "91X61cm",
@@ -231,7 +234,7 @@ const VARIANTS_PRINTFUL = [
   },
   {
     id: 10299,
-    frameColor: FRAME_COLOR_BLACK,
+    frameColor: FRAME_COLOR_WHITE,
     frameWidth: 0.01,
     frameOutsideKoef: 0.01,
     sizeName: sizeNames["61X91cm"],
@@ -476,6 +479,8 @@ module.exports = {
   BLURRED_AREA_HEIGHT,
   TITLES_FONT_DEFAULT,
   TITLES_DEFAULT,
+  DEFAULT_FONT_WEIGHT_BOLD,
+  DEFAULT_FONT_WEIGHT_THIN,
   BOTTOM_BANNER,
   LAY_SINGLE_FRAME_PDNG,
   LAY_DOUBLE_FRAME_PDNG,

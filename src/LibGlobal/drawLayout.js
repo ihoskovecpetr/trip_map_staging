@@ -7,6 +7,8 @@ import {
   INSIDE_FRAME_COVER_CM,
   MAP_STYLES,
   PADDING_COLOR_OPTIONS,
+  DEFAULT_FONT_WEIGHT_BOLD,
+  DEFAULT_FONT_WEIGHT_THIN,
 } from "../constants/constants";
 
 import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
@@ -113,16 +115,18 @@ export function drawLayout(
     isProductionPrint,
     textColor: mapStyleObject.roadsColor
       ? `#${mapStyleObject.roadsColor}`
-      : null,
+      : "black",
   });
 
   if (activeLayoutName === LAYOUT_STYLE_NAMES.PURE) {
     // Nothing
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BOTTOM_LINE) {
     ctx.beginPath();
+
     ctx.fillStyle = mapStyleObject.roadsColor
       ? `#${mapStyleObject.roadsColor}`
       : "black";
+
     ctx.fillRect(
       0,
       elHeight -
@@ -297,6 +301,7 @@ function drawText({
   isProductionPrint,
   textColor = "black",
 }) {
+  console.log({ textColor });
   // const headingCoef = elHeight === baseLngSide ? 0.06 : 0.077;
   // const subtitleCoef = elHeight === baseLngSide ? 0.0275 : 0.033;
 
@@ -305,8 +310,6 @@ function drawText({
   if (IS_PRODUCTION && !isProductionPrint) {
     return;
   }
-
-  console.log({ textColor });
 
   const headingCoef = elHeight === baseLngSide ? 0.047 : 0.061;
   const subtitleCoef = elHeight === baseLngSide ? 0.015 : 0.018;
@@ -319,20 +322,23 @@ function drawText({
   ctx.textBaseline = "Alphabetic";
 
   ctx.fillStyle = textColor;
-  ctx.font = `${
+  ctx.font = `${DEFAULT_FONT_WEIGHT_BOLD} ${
     heading?.size * 0.001 * 3 * baseLngSide
   }px ${TITLES_FONT_DEFAULT}`;
   ctx.textAlign = layoutObj?.text.align ?? "center";
+
   ctx.fillText(
     headingText,
     elWidth * 0.5,
     elHeight * (1 - headingCoef) - paddingWidth * CURRENT_PIXEL_RATIO // paddingWidth * CURRENT_PIXEL_RATIO !important because paddingWidth is relative to longest side
   );
+
   ctx.fillStyle = textColor;
-  ctx.font = `100 ${
+  ctx.font = `${DEFAULT_FONT_WEIGHT_THIN} ${
     subtitle?.size * 0.003 * baseLngSide
   }px ${TITLES_FONT_DEFAULT}`;
   ctx.textAlign = layoutObj?.text.align ?? "center";
+
   ctx.fillText(
     subtitleText,
     elWidth * 0.5,

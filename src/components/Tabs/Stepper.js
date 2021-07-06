@@ -16,6 +16,7 @@ const useStyles = makeStyles({
   },
   rootButton: {
     color: "#25CB9E",
+    // color: "red",
   },
 });
 
@@ -69,7 +70,7 @@ export default function Stepper({
               activeMapStyleName={activeMapStyleName}
               isCustomUI
             >
-              Checkout
+              Shrnutí
             </Tab3Checkout>
           ) : (
             "Další"

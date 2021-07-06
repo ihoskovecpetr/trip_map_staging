@@ -123,7 +123,7 @@ const styles = {
     fontWeight: 500,
     textAlign: "left",
     color: "grey",
-    margin: "20px 0",
+    marginTop: "20px",
     letterSpacing: "1.1px",
   },
 
@@ -144,7 +144,6 @@ const styles = {
     "&.active img": {
       border: "3px solid",
       borderColor: "cta_color",
-      padding: "3px",
       transform: "scale(1.3)",
     },
     "&.active p": {
@@ -155,7 +154,7 @@ const styles = {
     overflow: "hidden",
     height: "100%",
     margin: "0",
-    marginTop: "10px",
+    marginTop: "12px",
     textAlign: "center",
     verticalAlign: "middle",
     lineHeight: 1.2,

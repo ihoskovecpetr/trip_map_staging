@@ -100,7 +100,7 @@ const styles = {
     fontWeight: 500,
     textAlign: "left",
     color: "grey",
-    margin: "20px 0",
+    marginTop: "20px",
     letterSpacing: "1.1px",
   },
 

@@ -33,6 +33,7 @@ import {
   VARIANTS_PRINTFUL,
   OUTSIDE_FRAME_CM,
   TITLES_DEFAULT,
+  DEFAULT_FONT_WEIGHT_THIN,
 } from "../constants/constants";
 
 // const mapStyles = require.context("assets/MAPS_MAPBOX", true);
@@ -162,6 +163,7 @@ const resizeInputs = ({
     name: "subtitle",
     textSize: mapTitles.subtitle?.size,
     textValue: mapTitles.subtitle?.text,
+    fontWeight: DEFAULT_FONT_WEIGHT_THIN,
     onInput: saveTitlesValue,
     height: mapHeight,
     width: mapWidth,
@@ -638,6 +640,7 @@ const styles = {
     alignItems: "flex-start",
     flexWrap: [null, null, null, "wrap"],
     height: "100%",
+    backgroundColor: "white",
   },
 
   settingsBox: {

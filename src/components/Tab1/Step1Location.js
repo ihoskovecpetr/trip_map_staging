@@ -52,7 +52,9 @@ export default function Step1Location({
         const placeNameArr = e.result.place_name.split(",");
         console.log("Is there test?? ", draftState);
         draftState.heading.text = placeNameArr[0] ?? "";
-        draftState.subtitle.text = placeNameArr[placeNameArr.length - 1] ?? "";
+        draftState.subtitle.text = placeNameArr[placeNameArr.length - 1]
+          ? `— ${placeNameArr[placeNameArr.length - 1]} —`
+          : "";
       })
     );
 
@@ -95,7 +97,7 @@ export default function Step1Location({
         id="geocoder"
         class="geocoder"
         sx={styles.locationInput}
-        style={{ marginTop: isMobile ? "10px" : "20px" }}
+        style={{ marginTop: isMobile ? "10px" : "10px" }}
       ></div>
     </div>
   );
@@ -110,7 +112,7 @@ const styles = {
     fontWeight: 500,
     textAlign: "left",
     color: "grey",
-    margin: "10px 2px",
+    marginTop: "20px",
     letterSpacing: "1.1px",
   },
 

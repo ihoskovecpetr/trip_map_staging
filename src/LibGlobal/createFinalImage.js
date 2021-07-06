@@ -38,7 +38,7 @@ export const createFinalImage = async (
         mergerCanvas.setAttribute("width", image.width);
         var ctx = mergerCanvas.getContext("2d");
         ctx.drawImage(image, 0, 0);
-
+        console.log({ mapTitles });
         drawLayout(ctx, {
           width: image.width,
           height: image.height,

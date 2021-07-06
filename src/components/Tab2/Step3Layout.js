@@ -59,37 +59,29 @@ export default function Step3Layout({ activeFrame, setActiveLayout }) {
           Layout
         </Text>
       )}
-      <div sx={styles.layoutWrap}>
+      <div sx={styles.allLayoutsWrap}>
         {Object.values(LAYOUTS).map((layoutObj, index) => (
-          <>
-            <div
-              className={activeFrame === layoutObj.name && "active"}
-              sx={styles.layoutItem}
-              onClick={changeActiveLayout(layoutObj.name)}
-            >
-              <div
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "100%",
-                }}
-              >
-                <img
-                  sx={styles.layoutImage}
-                  src={getLayoutImg(layoutObj.name)}
-                  alt={"Could not display this Layout"}
-                  id={`image_id_${index}`}
-                  // onLoad={(e) => {
-                  //   console.log("Image_Loaded", e);
-                  // }}
-                  // onError={(e) => {
-                  //   console.log("Image_onError", e);
-                  // }}
-                />
-              </div>
-              <p sx={styles.layoutItemText}>{layoutObj.name}</p>
+          <div
+            className={activeFrame === layoutObj.name && "active"}
+            sx={styles.layoutItem}
+            onClick={changeActiveLayout(layoutObj.name)}
+          >
+            <div sx={styles.layoutImageWrap}>
+              <img
+                sx={styles.layoutImage}
+                src={getLayoutImg(layoutObj.name)}
+                alt={"Could not display this Layout"}
+                id={`image_id_${index}`}
+                // onLoad={(e) => {
+                //   console.log("Image_Loaded", e);
+                // }}
+                // onError={(e) => {
+                //   console.log("Image_onError", e);
+                // }}
+              />
             </div>
-          </>
+            <p sx={styles.layoutItemText}>{layoutObj.name}</p>
+          </div>
         ))}
       </div>
 
@@ -113,11 +105,16 @@ const styles = {
     fontWeight: 500,
     textAlign: "left",
     color: "grey",
-    margin: "20px 0",
+    marginTop: "20px",
     letterSpacing: "1.1px",
   },
-
-  layoutWrap: {
+  layoutImageWrap: {
+    display: "flex",
+    justifyContent: "center",
+    // width: "100%",
+    margin: "5px",
+  },
+  allLayoutsWrap: {
     display: "flex",
     width: "100%",
     overflow: "scroll",
@@ -125,8 +122,8 @@ const styles = {
   },
   layoutItem: {
     width: ["23%", "23%", "14%", "30%", "23%", "18%"],
-    margin: ["1%", "1%", "1%", "1%", "1%", "1%"],
-    padding: "4px",
+    // margin: ["1%", "1%", "1%", "1%", "1%", "1%"],
+    paddingTop: "4px",
     // height: "80px",
     display: "flex",
     justifyContent: "center",

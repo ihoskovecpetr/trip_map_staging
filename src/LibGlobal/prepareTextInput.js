@@ -2,6 +2,7 @@ import {
   LAYOUT_STYLE_NAMES,
   TITLES_FONT_DEFAULT,
   FAKE_DIV_IDS,
+  DEFAULT_FONT_WEIGHT_BOLD,
 } from "../constants/constants";
 
 export function prepareTextInput({
@@ -9,6 +10,7 @@ export function prepareTextInput({
   name,
   textSize,
   textValue = "",
+  fontWeight = DEFAULT_FONT_WEIGHT_BOLD,
   padding,
   textAlign = "center",
   color = "black",
@@ -60,6 +62,7 @@ export function prepareTextInput({
     textAlign,
     fontSize: `${0.003 * textSize * baseLngSide}px`,
     fontFamily: TITLES_FONT_DEFAULT,
+    fontWeight: fontWeight,
     color,
     backgroundColor: "transparent",
     border: "none",

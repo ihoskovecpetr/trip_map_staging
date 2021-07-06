@@ -56,6 +56,10 @@ export default function TabsRootNew({
   );
 
   const { height: header_height } = useElementDimensions("header");
+  const { height: mobile_header_height } = useElementDimensions(
+    "map_buttons_wrapper"
+  );
+  const { height: map_canvas_height } = useElementDimensions("map_wrapper_id");
 
   const handleChange = (newValue) => {
     // if (isMobile) {
@@ -223,8 +227,13 @@ export default function TabsRootNew({
   return (
     <MainContainer
       className={isMobile && isOpen && "open"}
-      open={isMobile && isOpen}
+      isMobile={isMobile}
+      isOpen={isMobile && isOpen}
       headerHeight={header_height}
+      mobileHeaderHeight={mobile_header_height}
+      mapCanvasHeight={map_canvas_height}
+      mapHeight={map_segment_height}
+      isWideOrientation={isWideOrientation}
     >
       {/* <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}> */}
       {isMobile && (
@@ -285,13 +294,18 @@ const MainContainer = styled.div`
   z-index: 10;
   background-color: white;
   transition-duration: 1s;
-  position: ${({ open }) => open && "fixed"};
-  top: ${({ open }) => open && "60vh"};
-  left: ${({ open }) => open && "0"};
+  position: ${({ isOpen }) => (isOpen ? "fixed" : "relative")};
+  top: ${({ isOpen }) => isOpen && "60vh"};
+
+  top: ${({ isOpen, isWideOrientation }) =>
+    isWideOrientation && !isOpen && "-100px"};
+
+  height: ${({ mapHeight }) => `calc(100vh - ${mapHeight}px)`};
 
   @media (min-width: 768px) {
     height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
     overflow: scroll;
+    top: unset;
   }
 `;
 
@@ -301,15 +315,14 @@ const TabSegmentWrap = styled.div`
   width: 100%;
   background-color: ${color("background")};
 
-  height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
-
   @media (max-width: 768px) {
     height: ${({ mapHeight, isOpen, isWideOrientation }) =>
       isOpen
         ? "40vh"
-        : `calc(100vh - ${
-            mapHeight - isWideOrientation ? mapHeight / 2 : 0
-          }px)`};
+        : `calc(100vh - ${mapHeight}px + ${isWideOrientation ? 100 : 0}px)`};
+
+    top: ${({ isOpen, isWideOrientation, mapHeight }) =>
+      isWideOrientation && !isOpen && `${mapHeight - 100}px`};
     overflow: ${({ isOverflowVisible }) =>
       isOverflowVisible ? "visible" : "hidden"};
     padding: 0 0;
@@ -317,9 +330,11 @@ const TabSegmentWrap = styled.div`
 `;
 
 const TabContentWrap = styled.div`
-  padding: 5px 5px;
+  padding: 0px 0.7rem;
 
   @media (max-width: 768px) {
+    padding: 0px 0.5rem;
+
     overflow: ${({ isOverflowVisible, isMobile }) =>
       isOverflowVisible && isMobile ? "visible" : "scroll"};
   }
