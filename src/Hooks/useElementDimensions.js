@@ -23,9 +23,20 @@ export function useElementDimensions(element_id) {
 
     window.addEventListener("resize", handleResize);
     window.addEventListener("load", handleResize);
+    window.addEventListener("load", () => {
+      console.log("Loaded_XX", element_id);
+    });
+
+    const timeout = setTimeout(() => {
+      console.log("TImedOut");
+      handleResize();
+    }, 500);
+
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("load", handleResize);
+
+      clearTimeout(timeout);
     };
   }, []);
 

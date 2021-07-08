@@ -109,6 +109,8 @@ export default function Step5Size({ product, setProduct }) {
 const styles = {
   container: {
     width: "100%",
+    paddingTop: "15px",
+    paddingBottom: "10px",
   },
   headingDesc: {
     fontWeight: 500,
@@ -127,7 +129,7 @@ const styles = {
   sizeItem: {
     // margin: "10px",
     // padding: "4px",
-    width: ["31%", "31%", "31%", "31%", "31%", "20%"],
+    width: ["31%", "31%", "31%", "31%", "31%", "31%"],
     // margin: ["1%", "1%", "1%", "1%", "1%", "1%"],
     border: "1px solid transparent",
     cursor: "pointer",

@@ -6,7 +6,7 @@ const theme = {
     heading: "#244886", // darkblue - primary heading color
     heading_secondary: "#0F2137", // almost black - heading color
     background: "#FFFFFF", // white -  body background color
-    background_white: "#F9FBFD", // almost white - secondary background color
+    background_almost_white: "#F9FBFD", // almost white - secondary background color
     whitish_paper_blue: "#E5ECF4", // white paper blue -  border color
     primary: "#1F3E76", // blue - primary button and link color
     secondary: "#25CB9E", // greenblue - secondary color - can be used for hover states

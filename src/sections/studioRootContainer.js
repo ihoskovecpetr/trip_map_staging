@@ -347,6 +347,7 @@ export default function StudioRootContainer() {
   }, [mapAvailSpaceHeight, mapAvailSpaceWidth]);
 
   useEffect(() => {
+    console.log({ mapWrapperHeight });
     mapWrapperRef.current = {
       height: mapWrapperHeight,
       width: mapWrapperWidth,
@@ -578,6 +579,8 @@ export default function StudioRootContainer() {
     );
   };
 
+  console.log("Header Height: ", isMobile ? 0 : headerHeight);
+
   return (
     <section sx={{ marginTop: isMobile ? 0 : headerHeight }}>
       <ContainerBox headerHeight={isMobile ? 0 : headerHeight}>
@@ -640,7 +643,7 @@ const styles = {
     alignItems: "flex-start",
     flexWrap: [null, null, null, "wrap"],
     height: "100%",
-    backgroundColor: "white",
+    width: "100%",
   },
 
   settingsBox: {
@@ -649,8 +652,9 @@ const styles = {
     textAlign: ["center", null, "right", "left"],
     width: ["100%", "100%", "100%", "40%", "30%"],
     mx: "auto",
-    backgroundColor: "background_white",
+    backgroundColor: ["white", "white", "white", "background_almost_white"],
     zIndex: 10,
+    // position: "relative",
 
     ".description": {
       pr: [0, null, null, null, 4],

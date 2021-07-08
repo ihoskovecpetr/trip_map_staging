@@ -12,10 +12,10 @@ const StyledButton = styled.button`
   background: ${color("cta_color")};
   border: solid 2px
     ${({ withBorder }) =>
-      withBorder ? color("muted") : color("background_white")};
+      withBorder ? color("muted") : color("background_almost_white")};
   border-radius: 5px;
   color: ${({ inverted, primaryColor }) =>
-    inverted ? color("background_white") : primaryColor};
+    inverted ? color("background_almost_white") : primaryColor};
   cursor: pointer;
   font-family: ${font("citroen")};
   font-size: ${({ textSize }) => fontSize(textSize ?? "default")};
@@ -34,7 +34,7 @@ const StyledButton = styled.button`
 
   &:enabled:hover {
     border-color: ${({ withBorder, primaryColor }) =>
-      withBorder ? primaryColor : color("background_white")};
+      withBorder ? primaryColor : color("background_almost_white")};
 
     background: ${({ inverted, theme, primaryColor }) =>
       inverted ? theme.colors.white : primaryColor};

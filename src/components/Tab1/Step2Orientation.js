@@ -111,7 +111,7 @@ const styles = {
     marginBottom: "10px",
   },
   orientationShapeItems: {
-    width: ["100%", "60%", "60%", "100%", "100%", "100%", "100%"],
+    width: "100%",
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
@@ -148,7 +148,7 @@ const styles = {
   },
 
   textsItems: {
-    width: ["100%", "60%", "60%", "100%", "100%", "100%", "100%"],
+    width: "100%",
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",

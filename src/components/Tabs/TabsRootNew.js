@@ -59,19 +59,19 @@ export default function TabsRootNew({
   const { height: mobile_header_height } = useElementDimensions(
     "map_buttons_wrapper"
   );
-  const { height: map_canvas_height } = useElementDimensions("map_wrapper_id");
+  const { height: map_canvas_height, width: with_ww } = useElementDimensions(
+    "map_wrapper_id"
+  );
+
+  useEffect(() => {
+    console.log("TabpeNew_rebuild", map_canvas_height, with_ww);
+  }, [map_canvas_height, with_ww]);
 
   const handleChange = (newValue) => {
     // if (isMobile) {
     const yCoordTabs =
       document.querySelector("#tab_wrap_wrap").getBoundingClientRect().top -
       100;
-
-    // window.scrollBy({
-    //   top: yCoordTabs,
-    //   left: 0,
-    //   behavior: "smooth",
-    // });
 
     setIsOpen(true);
 
@@ -192,15 +192,6 @@ export default function TabsRootNew({
         activeMapStyle={activeMapStyleName}
       />,
     ],
-    [
-      <Step7Checkout
-        map={map}
-        mapTitles={mapTitles}
-        activeLayout={activeLayout}
-        product={product}
-        activeMapStyleName={activeMapStyleName}
-      />,
-    ],
   ];
 
   const activeStepElements = isMobile
@@ -214,15 +205,8 @@ export default function TabsRootNew({
     }
   }, [isMobile]);
 
-  const overflowingTabs = [0, activeStepElements.length - 1];
-
-  const isOverflowVisible =
-    isMobile && overflowingTabs.includes(activeStepNumber);
-
   const isWideOrientation =
     product?.sizeObject?.orientation === ORIENTATIONS.wide;
-
-  console.log({ isOverflowVisible });
 
   return (
     <MainContainer
@@ -246,7 +230,6 @@ export default function TabsRootNew({
         headerHeight={header_height}
         isWideOrientation={isWideOrientation}
         isOpen={isOpen}
-        isOverflowVisible={isOverflowVisible}
         isMobile={isMobile}
       >
         <Stepper
@@ -263,10 +246,7 @@ export default function TabsRootNew({
         {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
-        <TabContentWrap
-          isOverflowVisible={isOverflowVisible}
-          isMobile={isMobile}
-        >
+        <TabContentWrap isMobile={isMobile}>
           {<>{activeStepElements[activeStepNumber]}</>}
         </TabContentWrap>
       </TabSegmentWrap>
@@ -294,11 +274,14 @@ const MainContainer = styled.div`
   z-index: 10;
   background-color: white;
   transition-duration: 1s;
-  position: ${({ isOpen }) => (isOpen ? "fixed" : "relative")};
-  top: ${({ isOpen }) => isOpen && "60vh"};
+  position: ${({ isOpen, isMobile }) =>
+    isOpen ? "fixed" : isMobile ? "absolute" : "relative"};
+  top: ${({ isOpen, mapHeight }) => (isOpen ? "60vh" : `${mapHeight}px`)};
 
-  top: ${({ isOpen, isWideOrientation }) =>
-    isWideOrientation && !isOpen && "-100px"};
+  top: ${({ isOpen, isWideOrientation, mapCanvasHeight, mobileHeaderHeight }) =>
+    isWideOrientation &&
+    !isOpen &&
+    `calc(${mobileHeaderHeight}px + ${mapCanvasHeight}px + 50px)`};
 
   height: ${({ mapHeight }) => `calc(100vh - ${mapHeight}px)`};
 
@@ -314,6 +297,7 @@ const TabSegmentWrap = styled.div`
   flex-direction: column;
   width: 100%;
   background-color: ${color("background")};
+  overflow: scroll;
 
   @media (max-width: 768px) {
     height: ${({ mapHeight, isOpen, isWideOrientation }) =>
@@ -323,20 +307,21 @@ const TabSegmentWrap = styled.div`
 
     top: ${({ isOpen, isWideOrientation, mapHeight }) =>
       isWideOrientation && !isOpen && `${mapHeight - 100}px`};
-    overflow: ${({ isOverflowVisible }) =>
-      isOverflowVisible ? "visible" : "hidden"};
+
     padding: 0 0;
+    overflow: visible;
   }
 `;
 
 const TabContentWrap = styled.div`
   padding: 0px 0.7rem;
+  overflow: scroll;
+  height: 100%;
 
   @media (max-width: 768px) {
+    height: unset;
+    overflow: visible;
     padding: 0px 0.5rem;
-
-    overflow: ${({ isOverflowVisible, isMobile }) =>
-      isOverflowVisible && isMobile ? "visible" : "scroll"};
   }
 `;
 
