@@ -37,7 +37,7 @@ export default {
   ],
   fonts: {
     // body: "'DM Sans', sans-serif",
-    // heading: "'DM Sans', sans-serif",
+    heading: "'Avenir', sans-serif",
   },
   fontSizes: [12, 15, 16, 18, 20, 22, 24, 28, 32, 36, 42, 48, 52, 64],
   fontWeights: {
@@ -143,7 +143,7 @@ export default {
   },
   text: {
     heading: {
-      fontFamily: "heading",
+      // fontFamily: "heading",
       lineHeight: "heading",
       fontWeight: "heading",
       fontSize: 4,
@@ -184,7 +184,7 @@ export default {
     },
     lead: {
       fontSize: 40,
-      fontFamily: "DM Sans",
+      // fontFamily: "DM Sans",
       fontWeight: "500",
       lineHeight: "60px",
       letterSpacing: "-1.5px",
@@ -240,7 +240,7 @@ export default {
       fontSize: ["14px", 1, null, null, 2],
       letterSpacings: ["-0.5px", null, null, null, "-0.15px"],
       padding: ["11px 20px 10px", null, null, null, "13px 30px"],
-      fontFamily: "body",
+      // fontFamily: "body",
       cursor: "pointer",
       lineHeight: 1.2,
       transition: "all 0.25s",
@@ -347,7 +347,7 @@ export default {
   styles: {
     // To add base, top-level styles to the <body> element, use theme.styles.root.
     root: {
-      fontFamily: "body",
+      // fontFamily: "body",
       lineHeight: "body",
       fontWeight: "body",
       fontSmoothing: "antialiased",

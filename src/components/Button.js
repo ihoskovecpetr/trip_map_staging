@@ -17,7 +17,7 @@ const StyledButton = styled.button`
   color: ${({ inverted, primaryColor }) =>
     inverted ? color("background_almost_white") : primaryColor};
   cursor: pointer;
-  font-family: ${font("citroen")};
+  font-family: ${font("avenir")};
   font-size: ${({ textSize }) => fontSize(textSize ?? "default")};
   padding: 1.25rem 2rem;
   min-height: 4rem;

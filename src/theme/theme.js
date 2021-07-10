@@ -24,7 +24,7 @@ const theme = {
   },
   fonts: {
     ubuntu: `'Ubuntu', sans-serif`,
-    citroen: `'Citroen', sans-serif`,
+    avenir: `'Avenir', sans-serif`,
   },
   fontWeights: {
     light: 300,

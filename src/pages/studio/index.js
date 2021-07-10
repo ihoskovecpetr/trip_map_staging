@@ -11,7 +11,7 @@ import { useIsMobile } from "../../Hooks/useIsMobile";
 
 export default function IndexPage() {
   const { isMobile } = useIsMobile();
-  console.log({ isMobile });
+
   return (
     <ThemeProvider theme={theme}>
       <StickyProvider>

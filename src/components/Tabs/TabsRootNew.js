@@ -281,7 +281,7 @@ const MainContainer = styled.div`
   top: ${({ isOpen, isWideOrientation, mapCanvasHeight, mobileHeaderHeight }) =>
     isWideOrientation &&
     !isOpen &&
-    `calc(${mobileHeaderHeight}px + ${mapCanvasHeight}px + 50px)`};
+    `calc(${mobileHeaderHeight}px + ${mapCanvasHeight}px + 80px)`};
 
   height: ${({ mapHeight }) => `calc(100vh - ${mapHeight}px)`};
 
@@ -300,10 +300,8 @@ const TabSegmentWrap = styled.div`
   overflow: scroll;
 
   @media (max-width: 768px) {
-    height: ${({ mapHeight, isOpen, isWideOrientation }) =>
-      isOpen
-        ? "40vh"
-        : `calc(100vh - ${mapHeight}px + ${isWideOrientation ? 100 : 0}px)`};
+    height: ${({ mapHeight, isWideOrientation }) =>
+      `calc(100vh - ${mapHeight}px + ${isWideOrientation ? 100 : 0}px)`};
 
     top: ${({ isOpen, isWideOrientation, mapHeight }) =>
       isWideOrientation && !isOpen && `${mapHeight - 100}px`};

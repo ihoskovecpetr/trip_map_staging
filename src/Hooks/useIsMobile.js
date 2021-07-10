@@ -5,7 +5,6 @@ export function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
 
   const handleResize = () => {
-    console.log("HandlingResize", window.innerWidth);
     if (window.innerWidth <= MOBILE_WIDTH_SIZE_PX) {
       setIsMobile(true);
     } else {
@@ -16,10 +15,6 @@ export function useIsMobile() {
   useEffect(() => {
     handleResize();
   }, []);
-
-  useEffect(() => {
-    console.log("New_Mobile_Flag: ", { isMobile });
-  }, [isMobile]);
 
   useEffect(() => {
     handleResize();

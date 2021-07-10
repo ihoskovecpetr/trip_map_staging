@@ -1,5 +1,5 @@
 body {
-  font-family: “Playfair Display”, “Didot”, "Times New Roman", Times, serif;
+  font-family: "Avenir", serif;
 }
 
 .mapboxgl-canvas {
@@ -54,11 +54,25 @@ body {
 /* .slider-slide {
   cursor: default !important;
 } */
-/* .slider-control-centerleft,
-.slider-control-centerright {
-  display: none;
-} */
 
 body {
   overflow-x: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .slider-frame {
+    height: 100vh;
+  }
+
+  .slider-list {
+    height: 100vh !important;
+  }
+
+  .slider-slide {
+    height: 100vh !important;
+  }
+
+  .slider-slide > img {
+    height: 100%;
+  }
 }

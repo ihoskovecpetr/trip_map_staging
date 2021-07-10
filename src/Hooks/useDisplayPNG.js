@@ -10,9 +10,7 @@ export function useDisplayPNG({ id }) {
   useEffect(() => {
     const imageEl = document.getElementById(id);
 
-    const eventCallback = (event, name) => {
-      console.log(name, `_loading_IMG: ${id}`, event);
-    };
+    const eventCallback = (event, name) => {};
 
     console.log({ imageEl, id });
 
@@ -28,8 +26,6 @@ export function useDisplayPNG({ id }) {
       });
     };
   }, []);
-
-  console.log("Z_hooku:", { displayPNG });
 
   const displayPNG_Memo = useMemo(() => {
     return displayPNG;

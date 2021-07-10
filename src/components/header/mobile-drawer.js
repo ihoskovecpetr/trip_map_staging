@@ -78,7 +78,7 @@ const MobileDrawer = () => {
                     >
                       {label}
                     </LinkRouter>
-                    <Link
+                    {/* <Link
                       activeClass="active"
                       href={path}
                       // spy={true}
@@ -89,7 +89,7 @@ const MobileDrawer = () => {
                       key={i}
                     >
                       {label}
-                    </Link>
+                    </Link> */}
                   </>
                 );
               })}
@@ -252,7 +252,7 @@ const styles = {
       px: 25,
       cursor: "pointer",
       textDecoration: "none",
-      color: "whitish_paper_blue",
+      color: ["whitish_paper_blue", null, null, "black"],
       lineHeight: "1.2",
       "&.active": {
         color: "secondary",

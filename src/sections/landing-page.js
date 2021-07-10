@@ -60,18 +60,18 @@ export default function LandingPage() {
 
   return (
     <section sx={styles.sectionContainer}>
-      <div sx={styles.backgroundDiv} />
+      {/* <div sx={styles.backgroundDiv} /> */}
       {isMobile && (
         <PureCtaBox maxHeightTop={headerHeight + carouselHeight}>
           <CtaComponent />
         </PureCtaBox>
       )}
       <Container sx={styles.containerBox}>
-        {isMobile && (
+        {/* {isMobile && (
           <div sx={styles.onlyMobile}>
             <MobileTopPadding headerHeight={headerHeight} />
           </div>
-        )}
+        )} */}
         <Box sx={styles.carouselBox}>
           <LandingCarousel id="carousel_wrapper">
             <Carousel
@@ -91,6 +91,7 @@ export default function LandingPage() {
                 src={displayPNG ? Carousel1PNG : Carousel1}
                 id="carousel_img_photo_0"
               />
+
               <img src={displayPNG ? Carousel2PNG : Carousel2} />
               <img src={displayPNG ? Carousel3PNG : Carousel3} />
 
@@ -137,6 +138,8 @@ function CtaComponent() {
     let options = {
       rootMargin: "0px",
       threshold: 1.0,
+      trackVisibility: true,
+      delay: 100,
     };
 
     let observer = new IntersectionObserver((e) => {
@@ -149,8 +152,6 @@ function CtaComponent() {
     if (target) {
       observer.observe(target);
     }
-
-    console.log({ observer });
   }, []);
 
   const onClick = () => {
@@ -160,23 +161,16 @@ function CtaComponent() {
     }
   };
   return (
-    <>
-      <Button
-        variant="primary"
-        onClick={onClick}
-        sx={styles.ctaButton}
-        isLoading={isLoading}
-        // isLoading
-        aria-label={"btnName"}
-      >
-        ZAČNI TVOŘIT
-      </Button>
-      {/* <Hiden id="link_studio_id">
-        <Link href="/studio" prefetch={true}>
-          {"studio"}
-        </Link>
-      </Hiden> */}
-    </>
+    <Button
+      variant="primary"
+      onClick={onClick}
+      sx={styles.ctaButton}
+      isLoading={isLoading}
+      // isLoading
+      aria-label={"btnName"}
+    >
+      Do Studia
+    </Button>
   );
 }
 
@@ -197,11 +191,10 @@ const PureCtaBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    margin-top: 0rem;
-    margin-bottom: 3rem;
     width: 100%;
     position: absolute;
     top: ${({ maxHeightTop }) => `${maxHeightTop - 130}px`};
+    top: 80vh;
     z-index: 90;
   }
 `;
@@ -212,6 +205,7 @@ const LandingCarousel = styled.div`
   min-height: unset;
 
   @media (max-width: 768px) {
+    height: 100vh;
     min-height: 80vh;
   }
 `;
@@ -219,36 +213,36 @@ const LandingCarousel = styled.div`
 const styles = {
   sectionContainer: {
     py: [null, null, null, 9, null, 10],
-    pt: [0, null, 10],
+    pt: [0, null, null, 10],
     position: "relative",
   },
   onlyMobile: {
-    display: ["block", null, "none"],
+    display: ["block", null, null, "none"],
   },
-  backgroundDiv: {
-    height: ["100vh", "100vh", "unset"],
-    width: "100%",
-    zIndex: -1,
-    position: "absolute",
-    // backgroundImage: [`url(${LandingPagePicture})`, null, `none`],
-    backgroundRepeat: "no-repeat",
-    backgroundSize: ["100% auto", "cover"],
-    boxShadow: ["inset 0 0 0 2000px rgba(255, 255, 255, 0.1)", null, "unset"],
-    backgroundOrigin: "content-box",
-  },
+  // backgroundDiv: {
+  //   height: ["100vh", "100vh", "unset"],
+  //   width: "100%",
+  //   zIndex: -1,
+  //   position: "absolute",
+  //   // backgroundImage: [`url(${LandingPagePicture})`, null, `none`],
+  //   backgroundRepeat: "no-repeat",
+  //   backgroundSize: ["100% auto", "cover"],
+  //   boxShadow: ["inset 0 0 0 2000px rgba(255, 255, 255, 0.1)", null, "unset"],
+  //   backgroundOrigin: "content-box",
+  // },
   containerBox: {
     p: [0, 0],
     display: "flex",
-    height: ["100%", "100%", "unset"],
+    height: ["100%", "100%", "100%", "unset"],
     alignItems: ["center"],
     justifyContent: ["space-around"], //"space-between"
-    flexDirection: ["column", null, "row"],
+    flexDirection: ["column", null, null, "row"],
   },
   carouselBox: {
-    width: ["100%", "100%", 450, 350, 350, 500, 570],
-    height: "100%",
-    pl: [0, 0, 5, null, 7, 95],
-    pr: [0, 0, 5, null, null, 75, 95],
+    width: ["100%", "100%", "100%", 450, 450, 570],
+    height: ["100vh", null, null, "100%"],
+    pl: [0, 0, 0, 5, 7, 95],
+    pr: [0, 0, 0, 5, null, 75, 95],
     order: [0, null, null, 0],
     // display: ["none", null, "block"],
     display: "block",
@@ -300,16 +294,18 @@ const styles = {
   },
 
   ctaOnlyLarge: {
-    display: ["none", "none", "block", "block"],
+    display: ["none", null, null, "block", "block"],
   },
 
   ctaButton: {
     pointerEvents: "all",
-    backgroundColor: "cta_color",
+    backgroundColor: "black",
     fontSize: "1rem !important",
     letterSpacing: "1.5px",
     width: "90%",
-    borderRadius: "0px",
+    borderRadius: "10px",
+    // border: "0px",
+    color: "white",
   },
 
   ctaLink: {
