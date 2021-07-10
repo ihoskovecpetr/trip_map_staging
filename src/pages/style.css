@@ -60,7 +60,7 @@ body {
 }
 
 #pure_cta_box {
-  top: calc(var(--vh, 1vh) * 80);
+  top: calc(var(--vh, 1vh) * 86);
 }
 
 @media only screen and (max-width: 600px) {
