@@ -58,6 +58,10 @@ export default function LandingPage() {
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG({ id: "carousel_img_photo_0" });
 
+  const vh = window.innerHeight * 0.01;
+  // Then we set the value in the --vh custom property to the root of the document
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+
   return (
     <section sx={styles.sectionContainer}>
       {/* <div sx={styles.backgroundDiv} /> */}
