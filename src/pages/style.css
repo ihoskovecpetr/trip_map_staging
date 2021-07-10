@@ -59,6 +59,10 @@ body {
   overflow-x: hidden;
 }
 
+#pure_cta_box {
+  top: calc(var(--vh, 1vh) * 80);
+}
+
 @media only screen and (max-width: 600px) {
   .slider-frame {
     height: 100vh;

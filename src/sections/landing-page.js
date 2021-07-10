@@ -58,15 +58,20 @@ export default function LandingPage() {
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG({ id: "carousel_img_photo_0" });
 
-  const vh = window.innerHeight * 0.01;
-  // Then we set the value in the --vh custom property to the root of the document
-  document.documentElement.style.setProperty("--vh", `${vh}px`);
+  useEffect(() => {
+    const vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }, []);
 
   return (
     <section sx={styles.sectionContainer}>
       {/* <div sx={styles.backgroundDiv} /> */}
       {isMobile && (
-        <PureCtaBox maxHeightTop={headerHeight + carouselHeight}>
+        <PureCtaBox
+          maxHeightTop={headerHeight + carouselHeight}
+          id="pure_cta_box"
+        >
           <CtaComponent />
         </PureCtaBox>
       )}
@@ -197,8 +202,7 @@ const PureCtaBox = styled.div`
     align-items: flex-end;
     width: 100%;
     position: absolute;
-    top: 80vh;
-    top: calc(var(--vh, 1vh) * 80);
+    // top: 80vh;
     z-index: 90;
   }
 `;
