@@ -229,11 +229,11 @@ function drawBottomBox({
   CURRENT_PIXEL_RATIO,
   fillColor = "#ffffff",
 }) {
-  const extraBlueAreaKoef = isBannerBlur ? 1.4 : 1;
+  const extraBlurAreaKoef = isBannerBlur ? 1.4 : 1;
 
   var gradient = ctx.createLinearGradient(
     0,
-    elHeight - padding - bannerHeight * extraBlueAreaKoef,
+    elHeight - padding - bannerHeight * extraBlurAreaKoef,
     0,
     elHeight - padding
   );
@@ -260,29 +260,41 @@ function drawBottomBox({
     let dynamicBannerWidth =
       getSizeOfTitle(heading?.text, subtitle?.text) * CURRENT_PIXEL_RATIO * 1.2;
 
-    if (dynamicBannerWidth < elWidth * 0.2) {
-      dynamicBannerWidth = elWidth * 0.2;
+    const MIN_WIDTH_BANER_KOEF = 0.2;
+
+    if (dynamicBannerWidth < elWidth * MIN_WIDTH_BANER_KOEF) {
+      dynamicBannerWidth = elWidth * MIN_WIDTH_BANER_KOEF;
     }
 
     ctx.fillRect(
       0 + (elWidth - dynamicBannerWidth) / 2,
-      elHeight - padding - bannerHeight * extraBlueAreaKoef,
+      elHeight - padding - bannerHeight * extraBlurAreaKoef,
       dynamicBannerWidth,
-      bannerHeight * extraBlueAreaKoef
+      bannerHeight * extraBlurAreaKoef
     );
+
+    drawFocusCorners({
+      ctx,
+      dynamicBannerWidth,
+      bannerHeight,
+      elWidth,
+      elHeight,
+      padding,
+      extraBlurAreaKoef,
+    });
   } else if (isPaddingFromFrame) {
     ctx.fillRect(
       0,
-      elHeight - padding - bannerHeight * extraBlueAreaKoef,
+      elHeight - padding - bannerHeight * extraBlurAreaKoef,
       elWidth,
-      bannerHeight * extraBlueAreaKoef + padding
+      bannerHeight * extraBlurAreaKoef + padding
     );
   } else {
     ctx.fillRect(
       padding - 1,
-      elHeight - padding - bannerHeight * extraBlueAreaKoef,
+      elHeight - padding - bannerHeight * extraBlurAreaKoef,
       elWidth - padding * 2 + 2,
-      bannerHeight * extraBlueAreaKoef + 1
+      bannerHeight * extraBlurAreaKoef + 1
     );
   }
 
@@ -301,7 +313,6 @@ function drawText({
   isProductionPrint,
   textColor = "black",
 }) {
-  console.log({ textColor });
   // const headingCoef = elHeight === baseLngSide ? 0.06 : 0.077;
   // const subtitleCoef = elHeight === baseLngSide ? 0.0275 : 0.033;
 
@@ -344,6 +355,59 @@ function drawText({
     elWidth * 0.5,
     elHeight * (1 - subtitleCoef) - paddingWidth * CURRENT_PIXEL_RATIO // paddingWidth * CURRENT_PIXEL_RATIO !important because paddingWidth is relative to longest side
   );
+}
+
+function drawFocusCorners({
+  ctx,
+  dynamicBannerWidth,
+  bannerHeight,
+  elWidth,
+  elHeight,
+  padding,
+  extraBlurAreaKoef,
+}) {
+  // ctx.rect(
+  //   0 + (elWidth - dynamicBannerWidth) / 2,
+  //   elHeight - padding - bannerHeight * extraBlurAreaKoef,
+  //   dynamicBannerWidth,
+  //   bannerHeight * extraBlurAreaKoef
+  // );
+  ctx.stroke();
+  const realBannerHeight = bannerHeight * extraBlurAreaKoef;
+  const lineLength = realBannerHeight / 4;
+  const leftTopX = 0 + (elWidth - dynamicBannerWidth) / 2;
+  const leftTopY = elHeight - padding - realBannerHeight;
+
+  //top-left
+  ctx.beginPath();
+  ctx.moveTo(leftTopX + lineLength, leftTopY);
+  ctx.lineTo(leftTopX, leftTopY);
+  ctx.lineTo(leftTopX, leftTopY + lineLength);
+
+  //bottom-left
+  ctx.moveTo(leftTopX, leftTopY + realBannerHeight - lineLength);
+  ctx.lineTo(leftTopX, leftTopY + realBannerHeight);
+  ctx.lineTo(leftTopX + lineLength, leftTopY + realBannerHeight);
+
+  //bottom-right
+  ctx.moveTo(
+    leftTopX + dynamicBannerWidth,
+    leftTopY + realBannerHeight - lineLength
+  );
+  ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY + realBannerHeight);
+  ctx.lineTo(
+    leftTopX + dynamicBannerWidth - lineLength,
+    leftTopY + realBannerHeight
+  );
+
+  //top-right
+  ctx.moveTo(leftTopX + dynamicBannerWidth - lineLength, leftTopY);
+  ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY);
+  ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY + lineLength);
+
+  ctx.lineWidth = 1 * CURRENT_PIXEL_RATIO;
+  ctx.strokeStyle = "black";
+  ctx.stroke();
 }
 
 module.exports = {

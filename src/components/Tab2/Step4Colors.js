@@ -23,6 +23,7 @@ import WhiteBlueLowContrastPNG from "assets/mapStyles/png/WhiteBlueLowContrast.p
 import OldSandyGreyPNG from "assets/mapStyles/png/OldSandyGrey.png";
 import BlackWhitePNG from "assets/mapStyles/png/BlackWhite.png";
 import BlackLandPNG from "assets/mapStyles/png/BlackLand.png";
+import DarkBlueMonocolorPNG from "assets/mapStyles/png/DarkBlueMonocolor.png";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 
@@ -43,23 +44,25 @@ export default function Step4Colors({ activeMapStyle, setActiveMapStyle }) {
       case MAP_STYLES_NAMES.WHITE_GREY:
         return displayPNG ? WhiteGreyPNG : WhiteGrey;
       case MAP_STYLES_NAMES.WHITE_BLUE:
-        return displayPNG ? WhiteBluePNG : WhiteBlue;
+        return WhiteBluePNG;
       case MAP_STYLES_NAMES.WHITE_BLUE_LOW_CONTRAST:
-        return displayPNG ? WhiteBlueLowContrastPNG : WhiteBlueLowContrast;
+        return WhiteBlueLowContrastPNG;
       case MAP_STYLES_NAMES.SANDY_DARK:
-        return displayPNG ? SandyDarkPNG : SandyDark;
-      case MAP_STYLES_NAMES.MUSTARD_BLUE:
-        return displayPNG ? MustardBluePNG : MustardBlue;
+        return SandyDarkPNG;
+      // case MAP_STYLES_NAMES.MUSTARD_BLUE:
+      //   return displayPNG ? MustardBluePNG : MustardBlue;
       case MAP_STYLES_NAMES.OLD_SANDY_BROWN:
         return displayPNG ? OldSandyGreyPNG : OldSandyGrey;
       case MAP_STYLES_NAMES.SANDY_ORANGE_BLUE:
         return displayPNG ? SandyOrangeBluePNG : SandyOrangeBlue;
       case MAP_STYLES_NAMES.LOW_CONTRAST_GREEN:
-        return displayPNG ? LowContrastGreenBluePNG : LowContrastGreenBlue;
+        return LowContrastGreenBluePNG;
       case MAP_STYLES_NAMES.BLACK_WHITE:
         return displayPNG ? BlackWhitePNG : BlackWhite;
       case MAP_STYLES_NAMES.BLACK_LAND:
         return displayPNG ? BlackLandPNG : BlackLand;
+      case MAP_STYLES_NAMES.DARK_BLUE_MONOCOLOR:
+        return DarkBlueMonocolorPNG;
 
       default:
         return displayPNG ? LowContrastGreenBluePNG : LowContrastGreenBlue;

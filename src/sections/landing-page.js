@@ -193,8 +193,8 @@ const PureCtaBox = styled.div`
     align-items: flex-end;
     width: 100%;
     position: absolute;
-    top: ${({ maxHeightTop }) => `${maxHeightTop - 130}px`};
     top: 80vh;
+    top: calc(var(--vh, 1vh) * 80);
     z-index: 90;
   }
 `;

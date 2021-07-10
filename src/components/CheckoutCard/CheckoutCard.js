@@ -250,6 +250,8 @@ const styles = {
     right: 0,
     top: 0,
     p: "0.3rem",
+    border: "2px solid white",
+    borderRadius: "5px",
   },
   picture_description: {
     pb: "10px",

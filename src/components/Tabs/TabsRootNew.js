@@ -63,10 +63,6 @@ export default function TabsRootNew({
     "map_wrapper_id"
   );
 
-  useEffect(() => {
-    console.log("TabpeNew_rebuild", map_canvas_height, with_ww);
-  }, [map_canvas_height, with_ww]);
-
   const handleChange = (newValue) => {
     // if (isMobile) {
     const yCoordTabs =
@@ -190,6 +186,15 @@ export default function TabsRootNew({
         product={product}
         setProduct={setProduct}
         activeMapStyle={activeMapStyleName}
+      />,
+    ],
+    [
+      <Step7Checkout
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeLayout}
+        product={product}
+        activeMapStyleName={activeMapStyleName}
       />,
     ],
   ];

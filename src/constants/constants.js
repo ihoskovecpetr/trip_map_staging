@@ -17,7 +17,7 @@ const OUTSIDE_FRAME_CM = 1.4;
 
 const LAY_SINGLE_FRAME_PDNG = 0.025;
 const LAY_DOUBLE_FRAME_PDNG = 0.015;
-const TRANSPARENT_PADDING = 0.025;
+const TRANSPARENT_PADDING = 0.015;
 
 const BOTTOM_BANNER = 0.09;
 const BLURRED_AREA_HEIGHT = 0.09;
@@ -289,8 +289,8 @@ const LAYOUTS = [
   },
   {
     name: LAYOUT_STYLE_NAMES.BOTTOM_BLUR,
-    roundPdng: LAY_SINGLE_FRAME_PDNG,
-    paddingColor: PADDING_COLOR_OPTIONS.white,
+    roundPdng: null,
+    paddingColor: PADDING_COLOR_OPTIONS.transparent,
     bottomBannerHeight: BLURRED_AREA_HEIGHT,
     isBannerBlur: true,
     text: {
@@ -311,10 +311,10 @@ const LAYOUTS = [
   },
   {
     name: LAYOUT_STYLE_NAMES.BORDER_BOX,
-    roundPdng: null,
+    roundPdng: LAY_SINGLE_FRAME_PDNG,
     paddingColor: PADDING_COLOR_OPTIONS.white,
     bottomBannerHeight: BOTTOM_BANNER,
-    isBannerBlur: false,
+    isBannerBlur: true,
     text: {
       isVisible: true,
       align: "center",
@@ -355,7 +355,7 @@ const MAP_STYLES_NAMES = {
   WHITE_GREY: "White Grey",
   OLD_SANDY_BROWN: "Old Sandy Brown",
   WHITE_BLUE_LOW_CONTRAST: "White Blue Low",
-  MUSTARD_BLUE: "Mustard Blue",
+  // MUSTARD_BLUE: "Mustard Blue",
 };
 
 const MAP_STYLES = {
@@ -402,9 +402,9 @@ const MAP_STYLES = {
     // "assets/MAPS_MAPBOX/SandyDark(ckmzz4z6y0mgx17s4lw0zeyho)/style.json",
     {
       url: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho",
-      waterColor: "",
-      landColor: "",
-      roadsColor: "",
+      waterColor: "054057",
+      landColor: "e2dd7e",
+      roadsColor: "878f97",
     },
   [MAP_STYLES_NAMES.OLD_SANDY_BROWN]:
     // "OldSandyGrey(ckn0f7lbu12je17s4itrmuuh5)",
