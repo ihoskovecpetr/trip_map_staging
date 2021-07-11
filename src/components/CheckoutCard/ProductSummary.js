@@ -93,6 +93,7 @@ const styles = {
   itemText: {
     color: "primary",
     textTransform: "uppercase",
-    letterSpacing: "1.2px",
+    fontWeight: 500,
+    // letterSpacing: "1.px",
   },
 };

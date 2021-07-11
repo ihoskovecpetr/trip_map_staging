@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { jsx } from "theme-ui";
 import { makeStyles } from "@material-ui/core/styles";
 import { string, bool, number, func, node } from "prop-types";
+import styled from "styled-components";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
+import UnderlineLoader from "components/UnderlineLoader";
 import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
 
 const getFormatedPriceString = (amount) => {
@@ -52,25 +54,31 @@ function NextTabBtn({
         }}
         onClick={onClickExtended}
       >
-        {isLoading ? (
+        {/* {isLoading ? (
           <CircularProgress
             // width={30}
             classes={{
               root: classes.spinnerRoot,
             }}
           />
-        ) : disabledText && isDisabled ? (
+        ) : */}
+        {disabledText && isDisabled ? (
           disabledText
         ) : (
-          <>
+          <TextWrap>
             {`${children}`}{" "}
             <span sx={styles.priceText}>{getFormatedPriceString(price)}</span>
-          </>
+            {isLoading && <UnderlineLoader />}
+          </TextWrap>
         )}
       </div>
     </div>
   );
 }
+
+const TextWrap = styled.div`
+  transform: translateX(0);
+`;
 
 const styles = {
   container: {
@@ -89,6 +97,7 @@ const styles = {
     fontWeight: "200",
     textTransform: "uppercase",
     letterSpacing: "1.5px",
+    transform: "translateX(0)",
   },
   priceText: {
     color: "primary",

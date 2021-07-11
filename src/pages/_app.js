@@ -26,10 +26,10 @@ export default function CustomApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <meta
+        {/* <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
-        ></meta>
+        ></meta> */}
       </Head>
       <ThemeProvider theme={theme}>
         <Component {...pageProps} />
