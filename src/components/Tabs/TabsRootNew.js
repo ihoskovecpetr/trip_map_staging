@@ -68,6 +68,10 @@ export default function TabsRootNew({
     "map_wrapper_id"
   );
 
+  const { height: stepper_height, width: stepper_width } = useElementDimensions(
+    "tabs_stepper"
+  );
+
   const { dataPrintful } = useGetDataPrintful([product.variantId]);
 
   const handleChange = (newValue) => {
@@ -279,7 +283,7 @@ export default function TabsRootNew({
         {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
-        <TabContentWrap>
+        <TabContentWrap topElementsHeight={stepper_height + header_height}>
           {<>{activeStepElements[activeStepNumber]}</>}
         </TabContentWrap>
       </TabSegmentWrap>
@@ -330,7 +334,6 @@ const TabSegmentWrap = styled.div`
   flex-direction: column;
   width: 100%;
   background-color: ${color("background")};
-  // overflow: scroll;
 
   @media (max-width: 768px) {
     height: ${({ mapHeight, isWideOrientation }) =>
@@ -346,7 +349,9 @@ const TabSegmentWrap = styled.div`
 
 const TabContentWrap = styled.div`
   padding: 0px 0.7rem;
-  height: 100%;
+  height: ${({ topElementsHeight }) =>
+    `calc(100vh - ${topElementsHeight}px - 20px)`};
+  overflow: scroll;
 
   @media (max-width: 768px) {
     height: unset;

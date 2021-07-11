@@ -52,6 +52,7 @@ export default function Stepper({
       position="static"
       activeStep={activeStep}
       className={classes.root}
+      id="tabs_stepper"
       nextButton={
         <Button
           size="small"

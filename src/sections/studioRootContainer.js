@@ -151,9 +151,7 @@ const resizeInputs = ({
     // padding: paddingWidth,
     // textAlign,
     layout,
-    color: activeStyleObj.roadsColor
-      ? `#${activeStyleObj.roadsColor}`
-      : "black",
+    color: activeStyleObj.textColor ? `#${activeStyleObj.textColor}` : "black",
   });
   prepareTextInput({
     element: subtitleInput,
@@ -167,9 +165,7 @@ const resizeInputs = ({
     // padding: paddingWidth,
     // textAlign,
     layout,
-    color: activeStyleObj.roadsColor
-      ? `#${activeStyleObj.roadsColor}`
-      : "black",
+    color: activeStyleObj.textColor ? `#${activeStyleObj.textColor}` : "black",
   });
 };
 
@@ -233,7 +229,7 @@ export default function StudioRootContainer() {
     LAYOUT_STYLE_NAMES.ISLAND_BOX
   );
   const [activeMapStyleName, setActiveMapStyle] = useState(
-    MAP_STYLES_NAMES.LOW_CONTRAST_GREEN
+    MAP_STYLES_NAMES.DARK_BLUE_MONOCOLOR
   );
   const [mapTitles, setMapTitles] = useState({
     heading: { text: TITLES_DEFAULT[0], size: 14 },

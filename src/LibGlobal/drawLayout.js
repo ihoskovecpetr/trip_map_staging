@@ -80,7 +80,7 @@ export function drawLayout(
       ctx,
       paddingSize: paddingWidth * CURRENT_PIXEL_RATIO,
       layoutPaddingColorOption: layoutObj.paddingColor,
-      inheritMapStyleColor: mapStyleObject.landColor,
+      inheritMapStyleColor: mapStyleObject.layoutColor,
       elWidth: width,
       elHeight: height,
     });
@@ -98,8 +98,8 @@ export function drawLayout(
     subtitle,
     activeLayoutName,
     CURRENT_PIXEL_RATIO,
-    fillColor: mapStyleObject.landColor
-      ? `#${mapStyleObject.landColor}`
+    fillColor: mapStyleObject.layoutColor
+      ? `#${mapStyleObject.layoutColor}`
       : undefined,
     mapStyleObject,
   });
@@ -114,8 +114,8 @@ export function drawLayout(
     subtitle,
     layoutObj,
     isProductionPrint,
-    textColor: mapStyleObject.roadsColor
-      ? `#${mapStyleObject.roadsColor}`
+    textColor: mapStyleObject.textColor
+      ? `#${mapStyleObject.textColor}`
       : "black",
   });
 
@@ -124,8 +124,8 @@ export function drawLayout(
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BOTTOM_LINE) {
     ctx.beginPath();
 
-    ctx.fillStyle = mapStyleObject.roadsColor
-      ? `#${mapStyleObject.roadsColor}`
+    ctx.fillStyle = mapStyleObject.textColor
+      ? `#${mapStyleObject.textColor}`
       : "black";
 
     ctx.fillRect(
@@ -142,8 +142,8 @@ export function drawLayout(
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BLUR) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER) {
     ctx.lineWidth = 0.0015 * baseLngSide;
-    ctx.strokeStyle = mapStyleObject.roadsColor
-      ? `#${mapStyleObject.roadsColor}`
+    ctx.strokeStyle = mapStyleObject.textColor
+      ? `#${mapStyleObject.textColor}`
       : "black";
 
     const pdgDoubleKoefficient = 0.75;
@@ -283,8 +283,8 @@ function drawBottomBox({
       elHeight,
       padding,
       extraBlurAreaKoef,
-      lineColor: mapStyleObject.roadsColor
-        ? `#${mapStyleObject.roadsColor}`
+      lineColor: mapStyleObject.textColor
+        ? `#${mapStyleObject.textColor}`
         : "black",
     });
   } else if (isPaddingFromFrame) {

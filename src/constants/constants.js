@@ -349,12 +349,13 @@ const MAP_STYLES_NAMES = {
   BLACK_WHITE: "Black White",
   DARK_BLUE_MONOCOLOR: "Dark Blue Monocolor",
   LOW_CONTRAST_GREEN: "Low Contrast Green",
-  WHITE_BLUE: "White Blue",
+  DOUBLE_BLUE: "Double Blue",
   SANDY_DARK: "Sandy Dark",
+  WHITE_BLUE: "White Blue",
   SANDY_ORANGE_BLUE: "Sandy Orange Blue",
   WHITE_GREY: "White Grey",
-  OLD_SANDY_BROWN: "Old Sandy Brown",
   WHITE_BLUE_LOW_CONTRAST: "White Blue Low",
+  // OLD_SANDY_BROWN: "Old Sandy Brown",
   // MUSTARD_BLUE: "Mustard Blue",
 };
 
@@ -385,7 +386,7 @@ const MAP_STYLES = {
       landColor: "f7f5de",
       roadsColor: "7891ab",
       layoutColor: "f7f5de",
-      textColor: "30bcf3",
+      textColor: "7891ab",
     },
   [MAP_STYLES_NAMES.MUSTARD_BLUE]:
     // "MustardBlueLowContrast(ckolmiq3f4u9217p9v8fmln15)",
@@ -395,8 +396,8 @@ const MAP_STYLES = {
       waterColor: "32728b",
       landColor: "cbc057",
       roadsColor: "567495",
-      layoutColor: "",
-      textColor: "",
+      layoutColor: "cbc057",
+      textColor: "32728b",
     },
   // [MAP_STYLES_NAMES.DARK_BLUE]:
   // "assets/MAPS_MAPBOX/WhiteGrey/style.json",
@@ -409,18 +410,16 @@ const MAP_STYLES = {
       waterColor: "054057",
       landColor: "e2dd7e",
       roadsColor: "878f97",
-      layoutColor: "",
-      textColor: "",
+      layoutColor: "e2dd7e",
+      textColor: "054057",
     },
-  [MAP_STYLES_NAMES.OLD_SANDY_BROWN]:
-    // "OldSandyGrey(ckn0f7lbu12je17s4itrmuuh5)",
-    // "assets/MAPS_MAPBOX/OldSandyGrey(ckn0f7lbu12je17s4itrmuuh5)/style.json",
-    {
-      url: "mapbox://styles/petrhoskovec/ckn0f7lbu12je17s4itrmuuh5",
-      waterColor: "",
-      landColor: "",
-      roadsColor: "",
-    },
+  // [MAP_STYLES_NAMES.OLD_SANDY_BROWN]:
+  //   {
+  //     url: "mapbox://styles/petrhoskovec/ckn0f7lbu12je17s4itrmuuh5",
+  //     waterColor: "",
+  //     landColor: "",
+  //     roadsColor: "",
+  //   },
 
   [MAP_STYLES_NAMES.SANDY_ORANGE_BLUE]:
     // "SandyOrangeBlue(ckn0ffdn112v017jxv6ei1jnu)",
@@ -430,6 +429,8 @@ const MAP_STYLES = {
       waterColor: "",
       landColor: "",
       roadsColor: "",
+      layoutColor: "",
+      textColor: "",
     },
   [MAP_STYLES_NAMES.LOW_CONTRAST_GREEN]:
     // "LowContrastGreenBlue(ckollex8z78ly18mu9jmefwnz)",
@@ -439,8 +440,8 @@ const MAP_STYLES = {
       waterColor: "5e96c9",
       landColor: "e6d398",
       roadsColor: "", //f1eae5
-      layoutColor: "",
-      textColor: "",
+      layoutColor: "e6d398",
+      textColor: "5e96c9",
     },
   [MAP_STYLES_NAMES.BLACK_WHITE]:
     // "BlackWhite(ckpbeqdof7li518ojkwwaqrfh)",
@@ -449,8 +450,8 @@ const MAP_STYLES = {
       waterColor: "e8e7e3",
       landColor: "ffffff",
       roadsColor: "6d7378",
-      layoutColor: "",
-      textColor: "",
+      layoutColor: "ffffff",
+      textColor: "6d7378",
     },
   [MAP_STYLES_NAMES.BLACK_LAND]:
     // "BlackLand(ckpbgjjxd0phz17nzanvcr6y4)",
@@ -459,8 +460,8 @@ const MAP_STYLES = {
       waterColor: "f8f8f7",
       landColor: "050505",
       roadsColor: "f1f2f3",
-      layoutColor: "",
-      textColor: "",
+      layoutColor: "050505",
+      textColor: "f1f2f3",
     },
   [MAP_STYLES_NAMES.DARK_BLUE_MONOCOLOR]:
     // "BlackLand(ckpbgjjxd0phz17nzanvcr6y4)",
@@ -469,8 +470,18 @@ const MAP_STYLES = {
       waterColor: "162930",
       landColor: "707070",
       roadsColor: "d5d2d2",
-      layoutColor: "",
-      textColor: "",
+      layoutColor: "707070",
+      textColor: "d5d2d2",
+    },
+  [MAP_STYLES_NAMES.DOUBLE_BLUE]:
+    // "BlackLand(ckpbgjjxd0phz17nzanvcr6y4)",
+    {
+      url: "mapbox://styles/petrhoskovec/ckqzcrfq0b9am18pddrl61dto",
+      waterColor: "405cb0",
+      landColor: "20439d",
+      roadsColor: "e0e4f0",
+      layoutColor: "20439d",
+      textColor: "e0e4f0",
     },
 };
 

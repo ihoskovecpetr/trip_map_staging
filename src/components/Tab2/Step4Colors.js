@@ -24,6 +24,7 @@ import OldSandyGreyPNG from "assets/mapStyles/png/OldSandyGrey.png";
 import BlackWhitePNG from "assets/mapStyles/png/BlackWhite.png";
 import BlackLandPNG from "assets/mapStyles/png/BlackLand.png";
 import DarkBlueMonocolorPNG from "assets/mapStyles/png/DarkBlueMonocolor.png";
+import DoubleBluePNG from "assets/mapStyles/png/DoubleBlue.png";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 
@@ -51,8 +52,8 @@ export default function Step4Colors({ activeMapStyle, setActiveMapStyle }) {
         return SandyDarkPNG;
       // case MAP_STYLES_NAMES.MUSTARD_BLUE:
       //   return displayPNG ? MustardBluePNG : MustardBlue;
-      case MAP_STYLES_NAMES.OLD_SANDY_BROWN:
-        return displayPNG ? OldSandyGreyPNG : OldSandyGrey;
+      // case MAP_STYLES_NAMES.OLD_SANDY_BROWN:
+      //   return displayPNG ? OldSandyGreyPNG : OldSandyGrey;
       case MAP_STYLES_NAMES.SANDY_ORANGE_BLUE:
         return displayPNG ? SandyOrangeBluePNG : SandyOrangeBlue;
       case MAP_STYLES_NAMES.LOW_CONTRAST_GREEN:
@@ -63,6 +64,8 @@ export default function Step4Colors({ activeMapStyle, setActiveMapStyle }) {
         return displayPNG ? BlackLandPNG : BlackLand;
       case MAP_STYLES_NAMES.DARK_BLUE_MONOCOLOR:
         return DarkBlueMonocolorPNG;
+      case MAP_STYLES_NAMES.DOUBLE_BLUE:
+        return DoubleBluePNG;
 
       default:
         return displayPNG ? LowContrastGreenBluePNG : LowContrastGreenBlue;

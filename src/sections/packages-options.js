@@ -5,7 +5,7 @@ import SectionHeader from "components/section-header";
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from "react-icons/io";
 import PatternBG from "assets/patternBG.png";
 import Manhattan from "assets/packages/manhattan.png";
-// import Amsterdam from "assets/packages/Amsterdam.png";
+import SanFrancicsoGrey from "assets/packages/san_francisco_grey.png";
 import SanFrancicso from "assets/packages/san_francisco.png";
 import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
@@ -18,7 +18,7 @@ const packages = [
     priceWithUnit: "$79.99", //TODO add price
     variantId: 9357,
     buttonText: "Do STUDIA",
-    img: Manhattan,
+    img: SanFrancicsoGrey, //Manhattan,
     points: [
       {
         icon: <IoIosCheckmarkCircle />,

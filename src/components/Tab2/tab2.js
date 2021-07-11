@@ -81,8 +81,8 @@ export default function Tab2({
       case MAP_STYLES_NAMES.SANDY_DARK:
         return SandyDark;
       case MAP_STYLES_NAMES.MUSTARD_BLUE:
-        return MustardBlue;
-      case MAP_STYLES_NAMES.OLD_SANDY_BROWN:
+        //   return MustardBlue;
+        // case MAP_STYLES_NAMES.OLD_SANDY_BROWN:
         return OldSandyGrey;
       case MAP_STYLES_NAMES.SANDY_ORANGE_BLUE:
         return SandyOrangeBlue;
