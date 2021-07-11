@@ -21,7 +21,7 @@ const TRANSPARENT_PADDING = 0.015;
 
 const BOTTOM_BANNER = 0.09;
 const BLURRED_AREA_HEIGHT = 0.09;
-const TITLES_FONT_DEFAULT = "Robot"; //"Source Code Pro";
+const TITLES_FONT_DEFAULT = "Garamond"; // "Robot"; //"Source Code Pro";
 const TITLES_DEFAULT = ["New York", "— USA —"];
 
 const FRAME_COLOR_WHITE = "#F5F5F5";

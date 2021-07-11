@@ -14,7 +14,6 @@ import {
 import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
 import { getSizeOfTitle } from "./getSizeOfTitle";
 import { getIsProduction } from "./getIsProduction";
-import { IoIosReturnLeft } from "react-icons/io";
 
 let CURRENT_PIXEL_RATIO;
 
