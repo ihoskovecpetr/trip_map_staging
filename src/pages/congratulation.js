@@ -8,7 +8,7 @@ import Layout from "components/layout";
 import Congratulation from "sections/congratulation";
 import SecurePayment from "sections/secure-payment";
 
-export default function Success() {
+export default function CongratulationPage() {
   return (
     <ThemeProvider theme={theme}>
       <StickyProvider>
@@ -18,7 +18,7 @@ export default function Success() {
         </Layout>
 
         {/* <IndexContainer /> */}
-        <Layout withFooter>
+        <Layout withFooter invertHeaderColor>
           <Congratulation />
           {/* <SecurePayment /> */}
         </Layout>

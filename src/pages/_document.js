@@ -25,10 +25,6 @@ export default class CustomDocument extends Document {
             href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"
             rel="stylesheet"
           />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1"
-          ></meta>
         </Head>
         <body>
           <Main />

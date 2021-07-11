@@ -24,10 +24,11 @@ import Carousel3PNG from "assets/landing-page/jpg/3.jpg";
 import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
 
+import UnderlineLoader from "components/UnderlineLoader";
+import Button from "components/Button";
 import { useElementDimensions } from "../Hooks/useElementDimensions";
 import { useIsMobile } from "../Hooks/useIsMobile";
 import { useDisplayPNG } from "../Hooks/useDisplayPNG";
-import Button from "components/Button";
 
 const data = {
   subTitle: "",
@@ -178,7 +179,7 @@ function CtaComponent() {
       // isLoading
       aria-label={"btnName"}
     >
-      Do Studia
+      <StyledText> Do Studia {isLoading && <UnderlineLoader />}</StyledText>
     </Button>
   );
 }
@@ -187,10 +188,10 @@ const MobileTopPadding = styled.div`
   height: ${({ headerHeight }) => `${headerHeight}px`};
 `;
 
-const Hiden = styled.div`
-  display: none;
-  z-index: 100;
-  cursor: pointer;
+const StyledText = styled.p`
+  display: inline-block;
+  margin: 0;
+  transform: translateX(0);
 `;
 
 const PureCtaBox = styled.div`

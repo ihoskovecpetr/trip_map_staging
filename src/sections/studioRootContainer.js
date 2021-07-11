@@ -21,9 +21,6 @@ import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
 
-import Logo from "components/logo";
-import LogoWhite from "assets/trip_map_logo_white.png";
-
 import {
   MAP_STYLES,
   MAP_STYLES_NAMES,
@@ -584,11 +581,6 @@ export default function StudioRootContainer() {
   return (
     <section sx={{ marginTop: isMobile ? 0 : headerHeight }}>
       <ContainerBox headerHeight={isMobile ? 0 : headerHeight}>
-        {isMobile && (
-          <LogoWrap>
-            <Logo src={LogoWhite} />
-          </LogoWrap>
-        )}
         <div sx={styles.containerBox}>
           <Box sx={styles.canvasBox} id="map_playground_wrap">
             <MapContainer
@@ -671,9 +663,4 @@ const styles = {
 
 const ContainerBox = styled.div`
   height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
-`;
-
-const LogoWrap = styled.div`
-  position: absolute;
-  height: 0;
 `;

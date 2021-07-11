@@ -68,8 +68,9 @@ const Button = ({
       inverted={inverted}
       {...props}
     >
-      {!isLoading && children}
-      {isLoading && (
+      {children}
+      {/* {!isLoading && children} */}
+      {/* {isLoading && (
         <StyledLoadingCircle
           width="48px"
           height="48px"
@@ -78,7 +79,7 @@ const Button = ({
         >
           <CustomLoader />
         </StyledLoadingCircle>
-      )}
+      )} */}
     </StyledButton>
   );
 };

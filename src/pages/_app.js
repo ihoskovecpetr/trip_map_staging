@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Router from "next/router";
+import Head from "next/head";
 import { initGA, logPageView } from "analytics";
 // Load DM Sans typeface
 import "typeface-dm-sans";
@@ -23,8 +24,16 @@ export default function CustomApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        ></meta>
+      </Head>
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </>
   );
 }

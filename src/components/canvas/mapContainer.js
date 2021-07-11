@@ -1,16 +1,18 @@
 /** @jsx jsx */
 import React, { useState } from "react";
 import { jsx } from "theme-ui";
-
+import styled from "styled-components";
+import Lightbox from "react-image-lightbox";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
-import Lightbox from "react-image-lightbox";
 
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 import { createFinalImage } from "../../LibGlobal/createFinalImage";
 import { useIsMobile } from "Hooks/useIsMobile";
+import Logo from "components/logo";
+import LogoWhite from "assets/logo_while.png";
 
 import {
   FAKE_DIV_IDS,
@@ -64,6 +66,12 @@ export default function MapContainer({
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
       <div sx={styles.allBtnWrapper} id="map_buttons_wrapper">
+        {isMobile && (
+          <LogoWrap>
+            <Logo src={LogoWhite} />
+          </LogoWrap>
+        )}
+        <EmptySpaceExpander></EmptySpaceExpander>
         <div sx={styles.zoomBtnWrapper}>
           <div sx={styles.zoomBtn} className="left" onClick={addZoom}>
             <AddIcon />
@@ -121,6 +129,15 @@ export default function MapContainer({
 
 const BNT_RADIUS = 4;
 
+const LogoWrap = styled.div`
+  position: absolute;
+  display: flex;
+`;
+
+const EmptySpaceExpander = styled.div`
+  flex-grow: 4;
+`;
+
 const styles = {
   canvas_bg: {
     px: "0 !important",
@@ -166,10 +183,10 @@ const styles = {
   allBtnWrapper: {
     display: "flex",
     width: "100%",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     alignItems: "center",
     // height: [null, null, null, "10%"],
-    p: "5px",
+    p: "0.5rem",
     // mb: "10px",
   },
   zoomBtnWrapper: {

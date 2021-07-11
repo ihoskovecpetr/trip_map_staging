@@ -101,6 +101,7 @@ export function drawLayout(
     fillColor: mapStyleObject.landColor
       ? `#${mapStyleObject.landColor}`
       : undefined,
+    mapStyleObject,
   });
 
   drawText({
@@ -228,6 +229,7 @@ function drawBottomBox({
   activeLayoutName,
   CURRENT_PIXEL_RATIO,
   fillColor = "#ffffff",
+  mapStyleObject,
 }) {
   const extraBlurAreaKoef = isBannerBlur ? 1.4 : 1;
 
@@ -281,6 +283,9 @@ function drawBottomBox({
       elHeight,
       padding,
       extraBlurAreaKoef,
+      lineColor: mapStyleObject.roadsColor
+        ? `#${mapStyleObject.roadsColor}`
+        : "black",
     });
   } else if (isPaddingFromFrame) {
     ctx.fillRect(
@@ -365,6 +370,7 @@ function drawFocusCorners({
   elHeight,
   padding,
   extraBlurAreaKoef,
+  lineColor,
 }) {
   // ctx.rect(
   //   0 + (elWidth - dynamicBannerWidth) / 2,
@@ -406,7 +412,7 @@ function drawFocusCorners({
   ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY + lineLength);
 
   ctx.lineWidth = 1 * CURRENT_PIXEL_RATIO;
-  ctx.strokeStyle = "black";
+  ctx.strokeStyle = lineColor;
   ctx.stroke();
 }
 

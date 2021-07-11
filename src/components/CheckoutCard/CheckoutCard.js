@@ -16,8 +16,8 @@ import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import ProductSummary from "./ProductSummary";
 
 import { getIsProduction } from "../../LibGlobal/getIsProduction";
-import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
-import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { ORIENTATIONS } from "../../constants/constants";
 
 const STRIPE_PUBLIC_KEY_LIVE =

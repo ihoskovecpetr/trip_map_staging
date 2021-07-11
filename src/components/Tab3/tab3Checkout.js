@@ -17,9 +17,7 @@ import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 import {
   getLazyUploader,
   resetPendingPromise,
-} from "../../LibGlobal/getLazyUploader";
-
-// toast.configure();
+} from "LibGlobal/getLazyUploader";
 
 export default function Tab3Checkout({
   map,
@@ -111,7 +109,6 @@ export default function Tab3Checkout({
   };
 
   const backdropClose = () => {
-    console.log("Closing Backdrop");
     setBackdropOpen(false);
   };
 
@@ -138,17 +135,15 @@ export default function Tab3Checkout({
       )}
       {!isCustomUI && (
         <DefaultUI>
-          <div>
-            <NextTabBtn
-              onClick={() => {
-                setBackdropOpen(true);
-                lazyUploadImage();
-              }}
-              price={priceWithDelivery.netPrice} //TODO add big.js
-            >
-              Shrnutí objednávky
-            </NextTabBtn>
-          </div>
+          <NextTabBtn
+            onClick={() => {
+              setBackdropOpen(true);
+              lazyUploadImage();
+            }}
+            price={priceWithDelivery.netPrice} //TODO add big.js
+          >
+            Shrnutí objednávky
+          </NextTabBtn>
         </DefaultUI>
       )}
 
@@ -218,4 +213,5 @@ const CustomUI = styled.div`
 
 const DefaultUI = styled.div`
   width: 100%;
+  padding: 15px 0;
 `;

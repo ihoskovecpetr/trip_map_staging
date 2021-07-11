@@ -43,8 +43,6 @@ export default function Stepper({
   //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   //   };
 
-  console.log({ stepslength: stepElements.length, activeStep });
-
   const isLastStep = activeStep === stepElements.length - 1;
 
   return (

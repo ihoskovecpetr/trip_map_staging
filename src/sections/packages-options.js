@@ -18,8 +18,7 @@ const packages = [
     priceWithUnit: "$79.99", //TODO add price
     variantId: 9357,
     buttonText: "Do STUDIA",
-    img:
-      "https://res.cloudinary.com/dkyt8girl/image/upload/h_380,c_scale/manhattan_p96xf9.png",
+    img: Manhattan,
     points: [
       {
         icon: <IoIosCheckmarkCircle />,

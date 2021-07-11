@@ -121,12 +121,14 @@ export default function Step6FinishVariant({
         </div>
       )}
       {!isMobile && (
-        <Text as="p" className="description" sx={styles.headingDesc}>
-          Materiál pro tisk
-        </Text>
+        <>
+          <Text as="p" className="description" sx={styles.headingDesc}>
+            Materiál pro tisk
+          </Text>
+          <p sx={styles.materialDesc}>{product.materialDesc}</p>
+        </>
       )}
 
-      <p sx={styles.materialDesc}>{product.materialDesc}</p>
       {/* <CheckoutWrap>
         <Tab3Checkout
           map={map}

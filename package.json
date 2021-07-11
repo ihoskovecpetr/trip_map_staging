@@ -91,6 +91,8 @@
   "homepage": "https://github.com/ihoskovecpetr/TripMap#readme",
   "_moduleAliases": {
     "@components": "./src/components",
-    "@constants": "./src/constants"
+    "@constants": "./src/constants",
+    "@LiGlobal": "./src/LiGlobal",
+    "@Hooks": "./src/Hooks"
   }
 }

@@ -22,12 +22,17 @@ import Tab3 from "../Tab3/tab3";
 import Step5Size from "../Tab3/Step5Size";
 import Step6FinishVariant from "../Tab3/Step6FinishVariant";
 import Step7Checkout from "../Tab3/Step7Checkout";
+import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
 const TAB_VALUES = {
   ONE: "MÍSTO & ORIENTACE",
   TWO: "ROZLOŽENÍ & BARVY",
   THREE: "ROZMĚRY & PLATBA",
 };
+
+const priceAlgorithm = getPriceAlgorithm();
 
 export default function TabsRootNew({
   map,
@@ -62,6 +67,8 @@ export default function TabsRootNew({
   const { height: map_canvas_height, width: with_ww } = useElementDimensions(
     "map_wrapper_id"
   );
+
+  const { dataPrintful } = useGetDataPrintful([product.variantId]);
 
   const handleChange = (newValue) => {
     // if (isMobile) {
@@ -210,6 +217,20 @@ export default function TabsRootNew({
     }
   }, [isMobile]);
 
+  useEffect(() => {
+    const currentTabsLength = activeStepElements.length - 1;
+    if (!isMobile && activeStepNumber > currentTabsLength) {
+      setActiveStepNumber(currentTabsLength);
+    }
+  }, [product]);
+
+  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
+    product.variantId,
+    dataPrintful
+  );
+
+  console.log({ priceWithDelivery });
+
   const isWideOrientation =
     product?.sizeObject?.orientation === ORIENTATIONS.wide;
 
@@ -225,11 +246,18 @@ export default function TabsRootNew({
       isWideOrientation={isWideOrientation}
     >
       {/* <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}> */}
-      {isMobile && (
+      {/* {isMobile && (
         <ArrowWrap isOpen={isOpen} isDisabled={isArrowDisabled}>
           <ArrowForwardIosIcon onClick={() => setIsOpen((prev) => !prev)} />
         </ArrowWrap>
+      )} */}
+
+      {isMobile && (
+        <PriceWrap>
+          <Price>celkem: {getFormattedPrice(priceWithDelivery.netPrice)}</Price>
+        </PriceWrap>
       )}
+
       <TabSegmentWrap
         mapHeight={map_segment_height}
         headerHeight={header_height}
@@ -251,7 +279,7 @@ export default function TabsRootNew({
         {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
-        <TabContentWrap isMobile={isMobile}>
+        <TabContentWrap>
           {<>{activeStepElements[activeStepNumber]}</>}
         </TabContentWrap>
       </TabSegmentWrap>
@@ -275,7 +303,7 @@ const MainContainer = styled.div`
   height: null;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   z-index: 10;
   background-color: white;
   transition-duration: 1s;
@@ -302,7 +330,7 @@ const TabSegmentWrap = styled.div`
   flex-direction: column;
   width: 100%;
   background-color: ${color("background")};
-  overflow: scroll;
+  // overflow: scroll;
 
   @media (max-width: 768px) {
     height: ${({ mapHeight, isWideOrientation }) =>
@@ -318,7 +346,6 @@ const TabSegmentWrap = styled.div`
 
 const TabContentWrap = styled.div`
   padding: 0px 0.7rem;
-  overflow: scroll;
   height: 100%;
 
   @media (max-width: 768px) {
@@ -328,23 +355,36 @@ const TabContentWrap = styled.div`
   }
 `;
 
-const ArrowWrap = styled.div`
+// const ArrowWrap = styled.div`
+//   display: inline-flex;
+//   height: 0;
+//   pointer-events: ${({ isDisabled }) => (isDisabled ? "none" : "auto")};
+//   cursor: ${({ isDisabled }) => (isDisabled ? "default" : "pointer")};
+
+//   & svg {
+//     color: ${({ isDisabled }) => (isDisabled ? "lightGrey" : "black")};
+
+//     transform: ${({ isOpen }) => (isOpen ? "rotate(90deg)" : "rotate(-90deg)")};
+//     width: 30px;
+//     height: 40px;
+//     position: relative;
+//     top: -35px;
+//     padding: 10px 5px;
+//     background-color: white;
+//   }
+// `;
+
+const PriceWrap = styled.div`
   display: inline-flex;
+
   height: 0;
-  pointer-events: ${({ isDisabled }) => (isDisabled ? "none" : "auto")};
-  cursor: ${({ isDisabled }) => (isDisabled ? "default" : "pointer")};
+`;
 
-  & svg {
-    color: ${({ isDisabled }) => (isDisabled ? "lightGrey" : "black")};
-
-    transform: ${({ isOpen }) => (isOpen ? "rotate(90deg)" : "rotate(-90deg)")};
-    width: 30px;
-    height: 40px;
-    position: relative;
-    top: -35px;
-    padding: 10px 5px;
-    background-color: white;
-  }
+const Price = styled.div`
+  position: relative;
+  color: white;
+  padding-left: 0.5rem;
+  top: -30px;
 `;
 
 const useStyles = makeStyles((theme) => ({

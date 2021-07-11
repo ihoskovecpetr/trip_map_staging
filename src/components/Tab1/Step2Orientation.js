@@ -94,7 +94,7 @@ const styles = {
   container: {
     width: "100%",
     position: "relative",
-    paddingTop: "5px",
+    paddingTop: "15px",
   },
   headingDesc: {
     fontWeight: 500,

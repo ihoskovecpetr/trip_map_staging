@@ -36,7 +36,7 @@ const social = [
   },
 ];
 
-const MobileDrawer = () => {
+const MobileDrawer = ({ invertHeaderColor }) => {
   const { state, dispatch } = useContext(DrawerContext);
 
   // Toggle drawer
@@ -45,14 +45,14 @@ const MobileDrawer = () => {
       type: "TOGGLE",
     });
   }, [dispatch]);
-
+  console.log({ invertHeaderColor });
   return (
     <>
       <Drawer
         width="320px"
         drawerHandler={
           <Box sx={styles.handler}>
-            <IoMdMenu size="26px" />
+            <IoMdMenu size="26px" color={invertHeaderColor && "black"} />
           </Box>
         }
         open={state.isOpen}
