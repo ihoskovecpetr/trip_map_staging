@@ -21,8 +21,6 @@ import borderBoxLayoutImgPNG from "assets/mapLayouts/png/borderBoxLayout.png";
 import pureLayoutImgPNG from "assets/mapLayouts/png/pureLayout.png";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 
-import NextTabBtn from "../NextTabBtn/NextTabBtn";
-
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "../../constants/constants";
 
 export default function Step3Layout({ activeFrame, setActiveLayout }) {

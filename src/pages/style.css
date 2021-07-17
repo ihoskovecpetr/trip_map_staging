@@ -1,5 +1,17 @@
+@font-face {
+  src: url("../FontFiles/Qahiri/Qahiri-Regular.ttf") format("truetype");
+  src: url("../FontFiles/Qahiri/Qahiri-Regular.ttf") format("truetype");
+  font-family: "Qahiri_local";
+}
+
+@font-face {
+  src: url("../FontFiles/Roboto/Roboto-Regular.ttf") format("truetype");
+  src: url("../FontFiles/Roboto/Roboto-Regular.ttf") format("truetype");
+  font-family: "Roboto_local";
+}
+
 body {
-  font-family: "Avenir", serif;
+  font-family: "Qahiri_local", serif;
 }
 
 .mapboxgl-canvas {

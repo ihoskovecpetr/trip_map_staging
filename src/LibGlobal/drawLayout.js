@@ -14,6 +14,7 @@ import {
 import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
 import { getSizeOfTitle } from "./getSizeOfTitle";
 import { getIsProduction } from "./getIsProduction";
+import { getLayoutColors } from "./getLayoutColors";
 
 let CURRENT_PIXEL_RATIO;
 
@@ -40,6 +41,11 @@ export function drawLayout(
   let frameCoverCoefficient;
 
   const mapStyleObject = MAP_STYLES[activeMapStyleName];
+
+  const { textLayoutColor, fillLayoutColor } = getLayoutColors({
+    product,
+    mapStyleObject,
+  });
 
   CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
 
@@ -79,7 +85,7 @@ export function drawLayout(
       ctx,
       paddingSize: paddingWidth * CURRENT_PIXEL_RATIO,
       layoutPaddingColorOption: layoutObj.paddingColor,
-      inheritMapStyleColor: mapStyleObject.layoutColor,
+      inheritMapStyleColor: fillLayoutColor,
       elWidth: width,
       elHeight: height,
     });
@@ -97,10 +103,8 @@ export function drawLayout(
     subtitle,
     activeLayoutName,
     CURRENT_PIXEL_RATIO,
-    fillColor: mapStyleObject.layoutColor
-      ? `#${mapStyleObject.layoutColor}`
-      : undefined,
-    mapStyleObject,
+    fillColor: fillLayoutColor,
+    textLayoutColor,
   });
 
   drawText({
@@ -113,9 +117,7 @@ export function drawLayout(
     subtitle,
     layoutObj,
     isProductionPrint,
-    textColor: mapStyleObject.textColor
-      ? `#${mapStyleObject.textColor}`
-      : "black",
+    textColor: textLayoutColor,
   });
 
   if (activeLayoutName === LAYOUT_STYLE_NAMES.PURE) {
@@ -123,9 +125,7 @@ export function drawLayout(
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BOTTOM_LINE) {
     ctx.beginPath();
 
-    ctx.fillStyle = mapStyleObject.textColor
-      ? `#${mapStyleObject.textColor}`
-      : "black";
+    ctx.fillStyle = textLayoutColor;
 
     ctx.fillRect(
       0,
@@ -141,9 +141,7 @@ export function drawLayout(
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BLUR) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER) {
     ctx.lineWidth = 0.0015 * baseLngSide;
-    ctx.strokeStyle = mapStyleObject.textColor
-      ? `#${mapStyleObject.textColor}`
-      : "black";
+    ctx.strokeStyle = textLayoutColor;
 
     const pdgDoubleKoefficient = 0.75;
 
@@ -227,8 +225,8 @@ function drawBottomBox({
   subtitle,
   activeLayoutName,
   CURRENT_PIXEL_RATIO,
-  fillColor = "#ffffff",
-  mapStyleObject,
+  fillColor,
+  textLayoutColor,
 }) {
   const extraBlurAreaKoef = isBannerBlur ? 1.4 : 1;
 
@@ -282,9 +280,7 @@ function drawBottomBox({
       elHeight,
       padding,
       extraBlurAreaKoef,
-      lineColor: mapStyleObject.textColor
-        ? `#${mapStyleObject.textColor}`
-        : "black",
+      lineColor: textLayoutColor,
     });
   } else if (isPaddingFromFrame) {
     ctx.fillRect(
@@ -315,7 +311,7 @@ function drawText({
   subtitle,
   layoutObj,
   isProductionPrint,
-  textColor = "black",
+  textColor,
 }) {
   // const headingCoef = elHeight === baseLngSide ? 0.06 : 0.077;
   // const subtitleCoef = elHeight === baseLngSide ? 0.0275 : 0.033;

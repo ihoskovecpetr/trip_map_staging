@@ -20,6 +20,7 @@ import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
 import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
+import { getLayoutColors } from "LibGlobal/getLayoutColors";
 
 import {
   MAP_STYLES,
@@ -138,8 +139,15 @@ const resizeInputs = ({
   mapWidth,
   layout,
   activeMapStyleName,
+  productRef,
 }) => {
   const activeStyleObj = MAP_STYLES[activeMapStyleName];
+
+  const { textLayoutColor } = getLayoutColors({
+    product: productRef.current,
+    mapStyleObject: activeStyleObj,
+  });
+  console.log("Resizing_Inputs", { textLayoutColor, productRef });
   prepareTextInput({
     element: headlineInput,
     name: "heading",
@@ -151,7 +159,7 @@ const resizeInputs = ({
     // padding: paddingWidth,
     // textAlign,
     layout,
-    color: activeStyleObj.textColor ? `#${activeStyleObj.textColor}` : "black",
+    color: textLayoutColor,
   });
   prepareTextInput({
     element: subtitleInput,
@@ -165,7 +173,7 @@ const resizeInputs = ({
     // padding: paddingWidth,
     // textAlign,
     layout,
-    color: activeStyleObj.textColor ? `#${activeStyleObj.textColor}` : "black",
+    color: textLayoutColor,
   });
 };
 
@@ -223,6 +231,7 @@ export default function StudioRootContainer() {
     variantId: VARIANTS_PRINTFUL[4].id,
     materialDesc: "Matný vylepšený papír",
     shippingCode: VARIANTS_PRINTFUL[4].shipping.codeCZ,
+    isLayoutColorSwitched: false,
   });
 
   const [activeLayout, setActiveLayout] = useState(
@@ -460,6 +469,7 @@ export default function StudioRootContainer() {
           layoutObj,
           paddingWidth,
           activeMapStyleName,
+          productRef,
         });
 
         mapWrapDivElement.appendChild(inputWrap);
@@ -551,6 +561,7 @@ export default function StudioRootContainer() {
         layoutObj,
         paddingWidth,
         activeMapStyleName,
+        productRef,
       });
     }
   }, [
@@ -571,8 +582,6 @@ export default function StudioRootContainer() {
       })
     );
   };
-
-  console.log("Header Height: ", isMobile ? 0 : headerHeight);
 
   return (
     <section sx={{ marginTop: isMobile ? 0 : headerHeight }}>

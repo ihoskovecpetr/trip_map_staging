@@ -37,8 +37,6 @@ export default function MapContainer({
   });
   const { isMobile } = useIsMobile();
 
-  console.log({ product });
-
   const isWideOrientation =
     product?.sizeObject?.orientation === ORIENTATIONS.wide;
 

@@ -17,6 +17,7 @@ import Step1Location from "../Tab1/Step1Location";
 import Step2Orientation from "../Tab1/Step2Orientation";
 import Tab2 from "../Tab2/tab2";
 import Step3Layout from "../Tab2/Step3Layout";
+import Step3BLayoutColorSwitch from "../Tab2/Step3BLayoutColorSwitch";
 import Step4Colors from "../Tab2/Step4Colors";
 import Tab3 from "../Tab3/tab3";
 import Step5Size from "../Tab3/Step5Size";
@@ -121,6 +122,11 @@ export default function TabsRootNew({
         activeFrame={activeLayout}
         setActiveLayout={setActiveLayout}
       />,
+      <Step3BLayoutColorSwitch
+        product={product}
+        setProduct={setProduct}
+        activeMapStyleName={activeMapStyleName}
+      />,
 
       <Step4Colors
         activeMapStyle={activeMapStyleName}
@@ -166,6 +172,13 @@ export default function TabsRootNew({
       />,
     ],
     [
+      <Step4Colors
+        activeMapStyle={activeMapStyleName}
+        setActiveMapStyle={setActiveMapStyle}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
+    ],
+    [
       <Step3Layout
         activeFrame={activeLayout}
         setActiveLayout={setActiveLayout}
@@ -174,10 +187,10 @@ export default function TabsRootNew({
     ],
 
     [
-      <Step4Colors
-        activeMapStyle={activeMapStyleName}
-        setActiveMapStyle={setActiveMapStyle}
-        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      <Step3BLayoutColorSwitch
+        product={product}
+        setProduct={setProduct}
+        activeMapStyleName={activeMapStyleName}
       />,
     ],
 

@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-image-lightbox/style.css";
 import { ThemeProvider } from "styled-components";
 import theme from "../theme/theme.js";
+import { GlobalStyle } from "../theme/global";
 
 export default function CustomApp({ Component, pageProps }) {
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function CustomApp({ Component, pageProps }) {
         ></meta> */}
       </Head>
       <ThemeProvider theme={theme}>
+        <GlobalStyle />
         <Component {...pageProps} />
       </ThemeProvider>
     </>
