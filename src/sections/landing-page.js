@@ -118,7 +118,7 @@ export default function LandingPage() {
                 <Image src={item.imgSrc} alt={item.altText} sx={styles.img} />
 
                 <Box sx={styles.wrapper}>
-                  <Heading sx={styles.wrapper.title}>{item.title}</Heading>
+                  <div sx={styles.wrapper.title}>{item.title}</div>
                   <Text sx={styles.wrapper.subTitle}>{item.text}</Text>
                 </Box>
               </Box>

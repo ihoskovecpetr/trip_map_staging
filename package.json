@@ -93,6 +93,7 @@
     "@components": "./src/components",
     "@constants": "./src/constants",
     "@LiGlobal": "./src/LiGlobal",
-    "@Hooks": "./src/Hooks"
+    "@Hooks": "./src/Hooks",
+    "@Utils": "./src/Utils"
   }
 }

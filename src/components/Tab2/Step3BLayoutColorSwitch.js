@@ -3,8 +3,7 @@ import React from "react";
 import { jsx, Text } from "theme-ui";
 import styled from "styled-components";
 
-import layoutSwitch1 from "assets/layoutSwitch/layout_switch_1.png";
-import layoutSwitch2 from "assets/layoutSwitch/layout_switch_2.png";
+import { color, font, fontSize, fontWeight } from "Utils";
 
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import {
@@ -33,29 +32,29 @@ export default function Step3BLayoutColorSwitch({
 
   return (
     <Container>
-      {!isMobile && (
-        <Text as="p" className="description">
-          Layout Color Switch
-        </Text>
-      )}
+      {!isMobile && <HeadingText>Layout Color Switch</HeadingText>}
       {activeMapStyleObject.layoutColor && activeMapStyleObject.textColor && (
         <ItemContainer>
-          <LayoutItem
-            active={!product.isLayoutColorSwitched}
-            onClick={() => switchLayoutColor(false)}
-            layoutColor={`#${activeMapStyleObject.layoutColor}`}
-            textColor={`#${activeMapStyleObject.textColor}`}
-          >
-            <p>P</p>
-          </LayoutItem>
-          <LayoutItem
-            active={product.isLayoutColorSwitched}
-            onClick={() => switchLayoutColor(true)}
-            layoutColor={`#${activeMapStyleObject.textColor}`}
-            textColor={`#${activeMapStyleObject.layoutColor}`}
-          >
-            <p>P</p>
-          </LayoutItem>
+          <LayoutItemWrap>
+            <LayoutItem
+              active={!product.isLayoutColorSwitched}
+              onClick={() => switchLayoutColor(false)}
+              layoutColor={`#${activeMapStyleObject.layoutColor}`}
+              textColor={`#${activeMapStyleObject.textColor}`}
+            >
+              <p>P</p>
+            </LayoutItem>
+          </LayoutItemWrap>
+          <LayoutItemWrap>
+            <LayoutItem
+              active={product.isLayoutColorSwitched}
+              onClick={() => switchLayoutColor(true)}
+              layoutColor={`#${activeMapStyleObject.textColor}`}
+              textColor={`#${activeMapStyleObject.layoutColor}`}
+            >
+              <p>P</p>
+            </LayoutItem>
+          </LayoutItemWrap>
         </ItemContainer>
       )}
     </Container>
@@ -67,8 +66,22 @@ const Container = styled.div`
   padding: 5px 5px;
 `;
 
+const HeadingText = styled.p`
+  font-weight: 600;
+  color: black;
+  text-align: left;
+  margin-top: 20px;
+  letter-spacing: 1.1px;
+`;
+
 const ItemContainer = styled.div`
   display: flex;
+`;
+const LayoutItemWrap = styled.div`
+  width: 30%;
+  margin: 1%;
+  display: flex;
+  justify-content: center;
 `;
 
 const LayoutItem = styled.div`
@@ -77,10 +90,10 @@ const LayoutItem = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.9rem;
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.26);
-
+  // margin: 0.9rem;
   background-color: ${({ layoutColor }) => layoutColor};
   color: ${({ active, layoutColor, textColor }) => textColor};
-  border: ${({ active }) => active && "2px solid green"};
+  border: 5px solid;
+  border-color: ${({ active }) =>
+    active ? color("cta_color") : "rgba(0,0,0,0.1)"};
 `;

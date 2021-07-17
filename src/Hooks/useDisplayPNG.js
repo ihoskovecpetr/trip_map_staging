@@ -17,7 +17,7 @@ export function useDisplayPNG({ id }) {
     if (imageEl) {
       imageEl.addEventListener("error", (event) => {
         eventCallback("Error_Z_hooku_pro_id", id, event);
-        setDisplayPNG(true);
+        // setDisplayPNG(true);
       });
     }
     return () => {

@@ -1,6 +1,9 @@
 /** @jsx jsx */
 import React from "react";
 import { jsx, Text } from "theme-ui";
+import styled from "styled-components";
+
+import { color } from "Utils";
 
 import { VARIANTS_PRINTFUL, SIZES } from "../../constants/constants";
 import CustomLoader from "../CustomLoader";
@@ -139,7 +142,7 @@ const styles = {
       border: "1px solid",
       borderColor: "cta_color",
       color: "black",
-      transform: "scale(1.2)",
+      // transform: "scale(1.2)",
       boxShadow: "0 0 8px rgba(0,0,0,0.5)",
     },
     "&.disabled": {
@@ -172,3 +175,11 @@ const styles = {
     alignItems: "center",
   },
 };
+
+const HeadingText = styled.p`
+  font-weight: 600;
+  color: black;
+  text-align: left;
+  margin-top: 20px;
+  letter-spacing: 1.1px;
+`;

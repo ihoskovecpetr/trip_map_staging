@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 
-const mediaQuery = name => (...styles) => {
+const mediaQuery = (name) => (...styles) => {
   return css`
     @media (min-width: ${({ theme }) => theme.breakPoints[name]}) {
       ${css(...styles)}
@@ -8,7 +8,7 @@ const mediaQuery = name => (...styles) => {
   `;
 };
 
-const getThemeFragment = key => value => ({ theme }) => {
+const getThemeFragment = (key) => (value) => ({ theme }) => {
   const availableValues = Object.keys(theme[key]);
 
   if (!availableValues.includes(value)) {
@@ -35,15 +35,9 @@ export const wideScreen = mediaQuery("wideScreen");
 
 export const desktop = mediaQuery("desktop");
 
-export const tablet = mediaQuery("tablet");
+export const mobile = mediaQuery("mobile");
 
-export const smallMobile = mediaQuery("smallMobile");
-
-export const largeMobile = mediaQuery("largeMobile");
-
-export const tabletLarge = mediaQuery("tabletLarge");
-
-export const prop = targetProp => props => props[targetProp];
+export const prop = (targetProp) => (props) => props[targetProp];
 
 export const font = getThemeFragment("fonts");
 
@@ -57,7 +51,7 @@ export const lineHeight = getThemeFragment("lineHeights");
 
 export const hyphenate = (string, regex = /\s/g) => string.replace(regex, "-");
 
-export const hashParamsBrandId = location =>
+export const hashParamsBrandId = (location) =>
   window.btoa(
     JSON.stringify({
       location,

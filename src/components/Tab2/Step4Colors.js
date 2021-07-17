@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import React from "react";
 import { jsx, Text } from "theme-ui";
+import styled from "styled-components";
 
 import LowContrastGreenBlue from "assets/mapStyles/webp/LowContrastGreenBlue.webp";
 import MustardBlue from "assets/mapStyles/webp/MustardBlue.webp";
@@ -26,11 +27,10 @@ import BlackLandPNG from "assets/mapStyles/png/BlackLand.png";
 import DarkBlueMonocolorPNG from "assets/mapStyles/png/DarkBlueMonocolor.png";
 import DoubleBluePNG from "assets/mapStyles/png/DoubleBlue.png";
 
-import NextTabBtn from "../NextTabBtn/NextTabBtn";
-
 import { MAP_STYLES_NAMES } from "../../constants/constants";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
+import { color, font, fontSize, fontWeight } from "Utils";
 
 export default function Step4Colors({ activeMapStyle, setActiveMapStyle }) {
   const { isMobile } = useIsMobile();
@@ -73,7 +73,7 @@ export default function Step4Colors({ activeMapStyle, setActiveMapStyle }) {
   };
 
   return (
-    <div sx={styles.container}>
+    <Container>
       {!isMobile && (
         <Text as="p" className="description" sx={styles.headingDesc}>
           Barevná kombinace
@@ -85,46 +85,31 @@ export default function Step4Colors({ activeMapStyle, setActiveMapStyle }) {
             <div
               className={activeMapStyle === style && "active"}
               sx={styles.mapColorsItem}
-              onClick={changeActiveStyle(style)}
             >
-              <div
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  sx={styles.roundImage}
+              <ImageWrap active={activeMapStyle === style}>
+                <StyledImage
                   src={getMapStyleImg(style)}
                   id={`map_style_id_${index}`}
+                  active={activeMapStyle === style}
                   alt="Map style image"
                   onError={(e) => {
                     console.log("Direcimage", e);
                   }}
+                  onClick={changeActiveStyle(style)}
                 />
-              </div>
-              <p sx={styles.itemStyleText}>{style}</p>
+              </ImageWrap>
+              <p sx={styles.itemStyleText} onClick={changeActiveStyle(style)}>
+                {style}
+              </p>
             </div>
           </>
         ))}
       </div>
-
-      {/* <div sx={styles.absoluteBtnWrap}>
-        <NextTabBtn onClick={nextTab} margin="20px 0px 75px">
-          Další krok
-        </NextTabBtn>
-      </div> */}
-    </div>
+    </Container>
   );
 }
 
 const styles = {
-  container: {
-    width: "100%",
-    // pb: "90px",
-  },
-
   headingDesc: {
     fontWeight: 500,
     textAlign: "left",
@@ -141,17 +126,12 @@ const styles = {
     flexWrap: [null, null, null, "wrap"],
   },
   mapColorsItem: {
-    width: ["30%", "23%", "23%", "30%"],
-    margin: ["1%", "1%", "1%", "1%"],
+    width: ["5rem", null, "23%", "30%"],
+    margin: ["4px", null, "1%", "1%"],
     padding: "4px",
     display: "flex",
     flexDirection: "column",
     cursor: "pointer",
-    "&.active img": {
-      border: "3px solid",
-      borderColor: "cta_color",
-      transform: "scale(1.3)",
-    },
     "&.active p": {
       color: "cta_color",
     },
@@ -159,30 +139,40 @@ const styles = {
   itemStyleText: {
     overflow: "hidden",
     height: "100%",
+    width: ["5rem", null, null, "unset"],
     margin: "0",
     marginTop: "12px",
     textAlign: "center",
     verticalAlign: "middle",
     lineHeight: 1.2,
     letterSpacing: "1.1px",
-    fontWeight: "100",
+    fontWeight: 400,
     textTransform: "uppercase",
     fontSize: "14px",
   },
-  roundImage: {
-    // filter: "drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.16))",
-    width: "72px",
-    height: "72px",
-    borderRadius: "50%",
-    // border: "2px solid rgb(0,0,0,0.2)",
-    boxShadow: "1px 1px 3px rgba(200,200,200,0.99)",
-  },
-
-  absoluteBtnWrap: {
-    position: "fixed",
-    top: ["85vh", "85vh", "85vh", "90vh"],
-    left: "0px",
-    height: 0,
-    width: ["100%", "100%", "100%", "40%", "30%"],
-  },
 };
+
+const Container = styled.div`
+  width: 100%;
+`;
+
+const ImageWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const StyledImage = styled.img`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 25%;
+  outline: none;
+  display: block;
+  background-color: ${({ active }) => active && color("cta_color")};
+  color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 0px 5px;
+  color: ${({ active }) => active && color("cta_color")};
+`;
+
+// background-color: ${({ active }) =>
+// active ? color("cta_color") : "rgba(0, 0, 0, 0.1)"};

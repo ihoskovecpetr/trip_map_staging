@@ -19,6 +19,27 @@ const fonts = css`
     src: url("../FontFile/Roboto/Roboto-Regular.ttf") format("truetype");
     font-family: "Roboto_local";
   }
+
+  @font-face {
+    src: url("../FontFiles/HarmoniaSans/HarmoniaSansProCyr-Bold.ttf")
+      format("truetype");
+    font-family: "HarmoniaSans_local";
+    font-weight: 600;
+  }
+
+  @font-face {
+    src: url("../FontFiles/HarmoniaSans/HarmoniaSansProCyr-Regular.ttf")
+      format("truetype");
+    font-family: "HarmoniaSans_local";
+    font-weight: 400;
+  }
+
+  @font-face {
+    src: url("../FontFiles/HarmoniaSans/HarmoniaSansProCyr-Light.ttf")
+      format("truetype");
+    font-family: "HarmoniaSans_local";
+    font-weight: 300;
+  }
 `;
 
 export const GlobalStyle = createGlobalStyle`

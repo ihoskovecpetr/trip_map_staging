@@ -13,12 +13,10 @@ const theme = {
     muted: "#7B8188", // grey - muted color
     accent: "#609", // violet - a contrast color for emphasizing UI
     yellow: "#F6C416",
+    black1: "#333333",
   },
   breakPoints: {
-    smallMobile: "375px",
-    largeMobile: "475px",
-    tablet: "640px",
-    tabletLarge: "768px",
+    mobile: "768px",
     desktop: "1024px",
     wideScreen: "1600px",
   },
@@ -28,6 +26,7 @@ const theme = {
     Qahiri_local: `'Qahiri_local', sans-serif`,
     Gramond_local: `'Gramond_local', sans-serif`,
     Roboto_local: `'Roboto_local', sans-serif`,
+    HarmoniaSans_local: `'HarmoniaSans_local', sans-serif`,
   },
   fontWeights: {
     light: 300,

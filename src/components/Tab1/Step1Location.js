@@ -4,6 +4,9 @@ import { jsx, Text } from "theme-ui";
 import produce from "immer";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import styled from "styled-components";
+
+import { color } from "Utils";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { useIsMobile } from "../../Hooks/useIsMobile";
@@ -60,8 +63,6 @@ export default function Step1Location({
 
     const { bbox } = e.result;
 
-    console.log({ bbox, result: e.result });
-
     if (bbox) {
       map?.fitBounds([
         [bbox[0], bbox[1]], // southwestern corner of the bounds
@@ -87,11 +88,7 @@ export default function Step1Location({
 
   return (
     <div sx={styles.container}>
-      {!isMobile && (
-        <Text as="p" className="description" sx={styles.headingDesc}>
-          Zadejte lokalitu
-        </Text>
-      )}
+      {!isMobile && <HeadingText>Zadejte lokalitu</HeadingText>}
 
       <div
         id="geocoder"
@@ -106,20 +103,11 @@ export default function Step1Location({
 const styles = {
   container: {
     width: "100%",
-    // paddingTop: "10px",
-  },
-  headingDesc: {
-    fontWeight: 500,
-    textAlign: "left",
-    color: "grey",
-    marginTop: "20px",
-    letterSpacing: "1.1px",
   },
 
   locationInput: {
     width: "100%",
-    // boxShadow: "0 0 10px #fe6769",
-    border: "2px solid",
+    border: "5px solid",
     borderColor: "cta_color",
     borderRadius: "5px",
     marginBottom: ["210px", null, null, "10px"],
@@ -137,3 +125,11 @@ const styles = {
     width: ["100%", "100%", "100%", "40%", "30%"],
   },
 };
+
+const HeadingText = styled.p`
+  font-weight: 600;
+  color: black;
+  text-align: left;
+  margin-top: 20px;
+  letter-spacing: 1.1px;
+`;

@@ -37,7 +37,7 @@ export default {
   ],
   fonts: {
     // body: "'DM Sans', sans-serif",
-    // heading: "'Avenir', sans-serif",
+    heading: "'HarmoniaSans_local', sans-serif",
   },
   fontSizes: [12, 15, 16, 18, 20, 22, 24, 28, 32, 36, 42, 48, 52, 64],
   fontWeights: {

@@ -8,13 +8,10 @@ import Backdrop from "@material-ui/core/Backdrop";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useElementDimensions } from "../../Hooks/useElementDimensions";
 
-import Tab1 from "../Tab1/tab1";
 import Step1Location from "../Tab1/Step1Location";
 import Step2Orientation from "../Tab1/Step2Orientation";
-import Tab2 from "../Tab2/tab2";
 import Step3Layout from "../Tab2/Step3Layout";
 import Step4Colors from "../Tab2/Step4Colors";
-import Tab3 from "../Tab3/tab3";
 import Step5Size from "../Tab3/Step5Size";
 import Step6FinishVariant from "../Tab3/Step6FinishVariant";
 

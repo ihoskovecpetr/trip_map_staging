@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, Box, Heading, Text, Button, Link } from "theme-ui";
 import styled from "styled-components";
+import { color, font, fontSize, fontWeight } from "Utils";
 
 export default function TextFeature({
   subTitle,
@@ -11,46 +12,44 @@ export default function TextFeature({
   btnURL = "#",
 }) {
   return (
-    <Container>
-      <Box sx={styles.card}>
-        <Box sx={styles.wrapper}>
-          <Text as="p" sx={styles.wrapper.subTitle}>
-            {subTitle}
-          </Text>
-          <div as="h2" sx={styles.wrapper.title}>
-            {title}
-          </div>
-        </Box>
+    <Box sx={styles.card}>
+      <Box sx={styles.wrapper}>
+        <div as="p" sx={styles.wrapper.subTitle}>
+          {subTitle}
+        </div>
+        <MainHeading as="h2" sx={styles.wrapper.title}>
+          {title}
+        </MainHeading>
+      </Box>
 
-        {description && (
-          <Text as="p" className="description" sx={styles.description}>
-            {description}
+      {description && (
+        <Text as="p" className="description" sx={styles.description}>
+          {description}
+        </Text>
+      )}
+
+      <Box sx={styles.wrapper}>
+        {sessionId && (
+          <Text as="p" sx={styles.wrapper.subTitle}>
+            session ID
           </Text>
         )}
 
-        <Box sx={styles.wrapper}>
-          {sessionId && (
-            <Text as="p" sx={styles.wrapper.subTitle}>
-              session ID
-            </Text>
-          )}
-
-          {sessionId && (
-            <Text as="p" sx={styles.wrapper.subTitleId}>
-              {sessionId}
-            </Text>
-          )}
-        </Box>
-
-        {btnName && (
-          <Link href={btnURL} target="_blank" variant="default">
-            <Button variant="primary" aria-label={btnName}>
-              {btnName}
-            </Button>
-          </Link>
+        {sessionId && (
+          <Text as="p" sx={styles.wrapper.subTitleId}>
+            {sessionId}
+          </Text>
         )}
       </Box>
-    </Container>
+
+      {btnName && (
+        <Link href={btnURL} target="_blank" variant="default">
+          <Button variant="primary" aria-label={btnName}>
+            {btnName}
+          </Button>
+        </Link>
+      )}
+    </Box>
   );
 }
 
@@ -77,27 +76,26 @@ const styles = {
     //   letterSpacing: "-.5px",
     //   mb: 5,
     // },
-
-    subTitle: {
-      fontSize: [0, null, "14px"],
-      color: "heading",
-      letterSpacing: "2px",
-      textTransform: "uppercase",
-      fontWeight: "700",
-      mb: [2, null, null, null, 3],
-      lineHeight: 1.5,
-    },
-    subTitleId: {
-      fontSize: [0, null, "14px"],
-      color: "secondary",
-      letterSpacing: "2px",
-      textTransform: "uppercase",
-      fontWeight: "700",
-      mb: [2, null, null, null, 3],
-      lineHeight: 1.5,
-      width: "100%",
-      wordWrap: "break-word",
-    },
+    // subTitle: {
+    //   fontSize: [0, null, "14px"],
+    //   color: "heading",
+    //   letterSpacing: "2px",
+    //   textTransform: "uppercase",
+    //   fontWeight: "700",
+    //   mb: [2, null, null, null, 3],
+    //   lineHeight: 1.5,
+    // },
+    // subTitleId: {
+    //   fontSize: [0, null, "14px"],
+    //   color: "secondary",
+    //   letterSpacing: "2px",
+    //   textTransform: "uppercase",
+    //   fontWeight: "700",
+    //   mb: [2, null, null, null, 3],
+    //   lineHeight: 1.5,
+    //   width: "100%",
+    //   wordWrap: "break-word",
+    // },
   },
   description: {
     fontSize: ["15px", 2, null, null, null, "17px", null, 3],
@@ -108,6 +106,6 @@ const styles = {
   },
 };
 
-const Container = styled.div`
-  font-family: Qahiri_local;
+const MainHeading = styled.div`
+  font-family: ${font("HarmoniaSans_local")};
 `;

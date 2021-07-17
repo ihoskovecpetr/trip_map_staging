@@ -195,7 +195,7 @@ const styles = {
       border: "1px solid",
       borderColor: "cta_color",
       color: "black",
-      transform: "scale(1.2)",
+      // transform: "scale(1.2)",
       boxShadow: "0 0 8px rgba(0,0,0,0.5)",
     },
     "&.disabled": {
@@ -259,7 +259,7 @@ const styles = {
     "&.active": {
       border: "1px solid",
       borderColor: "cta_color",
-      transform: "scale(1.1)",
+      // transform: "scale(1.1)",
       zIndex: 1,
       boxShadow: "0 0 15px rgba(0,0,0,0.5)",
     },

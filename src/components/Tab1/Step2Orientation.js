@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { useEffect } from "react";
 import { jsx, Text } from "theme-ui";
+import styled from "styled-components";
 
+import { color, font, fontSize, fontWeight } from "Utils";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
@@ -21,39 +23,33 @@ export default function Step2Orientation({ product, setProduct }) {
 
   return (
     <div sx={styles.container}>
-      {!isMobile && (
-        <Text as="p" className="description" sx={styles.headingDesc}>
-          Orientace
-        </Text>
-      )}
+      {!isMobile && <HeadingText>Orientace</HeadingText>}
 
       <div sx={styles.orientationWrap}>
         <div sx={styles.orientationShapeItems}>
           <div>
-            <div
-              sx={styles.highMock}
+            <HighMock
+              active={!isProductWide(product)}
               onClick={switchOrientation}
-              className={!isProductWide(product) && "active"}
-            ></div>
+            ></HighMock>
           </div>
           <div>
-            <div
-              sx={styles.wideMock}
+            <WideMock
+              active={isProductWide(product)}
               onClick={switchOrientation}
-              className={isProductWide(product) && "active"}
-            ></div>
+            ></WideMock>
           </div>
         </div>
         <div sx={styles.textsItems}>
           <p
-            onClick={switchOrientation}
+            onClick={isProductWide(product) && switchOrientation}
             className={!isProductWide(product) && "active"}
           >
             Na výšku
           </p>
 
           <p
-            onClick={switchOrientation}
+            onClick={!isProductWide(product) && switchOrientation}
             className={isProductWide(product) && "active"}
           >
             Na šířku
@@ -66,26 +62,6 @@ export default function Step2Orientation({ product, setProduct }) {
           <b>Tip!</b> Pro změnu nadpisu a podnadpisu klikněte přímo na mapu
         </Text>
       )}
-
-      {/* <NextTabBtn
-        onClick={() => {
-          nextTab();
-        }}
-        width="100%"
-        margin="0px 0px"
-      >
-        Další krok
-      </NextTabBtn> */}
-      {/* <div sx={styles.absoluteBtnWrap}>
-        <NextTabBtn
-          onClick={() => {
-            nextTab();
-          }}
-          margin="20px 0px 75px"
-        >
-          Další krok
-        </NextTabBtn>
-      </div> */}
     </div>
   );
 }
@@ -121,30 +97,6 @@ const styles = {
       justifyContent: "center",
       alignItems: "center",
     },
-    "> div > div": {
-      cursor: "pointer",
-      boxShadow: "0 0 5px rgba(0,0,0,0.2)",
-    },
-    "> div > div.active": {
-      border: "2px solid",
-      borderColor: "cta_color",
-      pointerEvents: "none",
-      cursor: "default",
-      boxShadow: "0 0 10px rgba(0,0,0,0.3)",
-      transform: "scale(1.2)",
-    },
-  },
-  highMock: {
-    border: "1px solid black",
-    height: "50px",
-    width: "25px",
-    backgroundColor: "white",
-  },
-  wideMock: {
-    border: "1px solid black",
-    height: "25px",
-    width: "50px",
-    backgroundColor: "white",
   },
 
   textsItems: {
@@ -153,7 +105,7 @@ const styles = {
     justifyContent: "space-around",
     alignItems: "center",
     letterSpacing: "1.1px",
-    fontWeight: "100",
+    fontWeight: 500,
     textTransform: "uppercase",
     fontSize: "14px",
     "> p": {
@@ -167,14 +119,6 @@ const styles = {
     },
   },
 
-  // absoluteBtnWrap: {
-  //   position: "fixed",
-  //   top: ["85vh", "85vh", "85vh", "90vh"],
-  //   left: "0px",
-  //   height: 0,
-  //   width: ["100%", "100%", "100%", "40%", "30%"],
-  // },
-
   topDescription: {
     margin: "20px 0px",
     fontWeight: 100,
@@ -184,3 +128,33 @@ const styles = {
     },
   },
 };
+
+const HeadingText = styled.p`
+  font-weight: 600;
+  color: black;
+  text-align: left;
+  margin-top: 20px;
+  letter-spacing: 1.1px;
+`;
+
+const WideMock = styled.div`
+  border: 1px solid black;
+  height: 25px;
+  width: 50px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 5px;
+  color: ${({ active }) => active && color("cta_color")};
+  pointer-events: ${({ active }) => active && "none"};
+`;
+
+const HighMock = styled.div`
+  border: 1px solid black;
+  height: 50px;
+  width: 25px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 5px;
+  color: ${({ active }) => active && color("cta_color")};
+  pointer-events: ${({ active }) => active && "none"};
+`;
