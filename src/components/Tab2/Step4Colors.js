@@ -30,7 +30,7 @@ import DoubleBluePNG from "assets/mapStyles/png/DoubleBlue.png";
 import { MAP_STYLES_NAMES } from "../../constants/constants";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
-import { color, font, fontSize, fontWeight } from "Utils";
+import { color, font, fontSize, fontWeight } from "utils";
 
 export default function Step4Colors({ activeMapStyle, setActiveMapStyle }) {
   const { isMobile } = useIsMobile();

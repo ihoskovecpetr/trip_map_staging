@@ -8,7 +8,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useElementDimensions } from "../../Hooks/useElementDimensions";
-import { color, font, fontSize, fontWeight } from "../../Utils";
+import { color, font, fontSize, fontWeight } from "../../utils";
 import { ORIENTATIONS } from "@constants";
 import Stepper from "../Tabs/Stepper";
 

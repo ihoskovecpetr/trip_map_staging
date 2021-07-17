@@ -94,6 +94,6 @@
     "@constants": "./src/constants",
     "@LiGlobal": "./src/LiGlobal",
     "@Hooks": "./src/Hooks",
-    "@Utils": "./src/Utils"
+    "@utils": "./src/utils"
   }
 }

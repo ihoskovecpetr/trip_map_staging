@@ -3,7 +3,7 @@ import React from "react";
 import { jsx, Text } from "theme-ui";
 import styled from "styled-components";
 
-import { color, font, fontSize, fontWeight } from "Utils";
+import { color, font, fontSize, fontWeight } from "utils";
 
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import {

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, Box, Heading, Text, Button, Link } from "theme-ui";
 import styled from "styled-components";
-import { color, font, fontSize, fontWeight } from "Utils";
+import { color, font, fontSize, fontWeight } from "utils";
 
 export default function TextFeature({
   subTitle,

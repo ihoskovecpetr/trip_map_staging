@@ -12,7 +12,7 @@ import islandBoxLayoutImgPNG from "assets/mapLayouts/png/islandBoxLayout.png";
 import borderBoxLayoutImgPNG from "assets/mapLayouts/png/borderBoxLayout.png";
 import pureLayoutImgPNG from "assets/mapLayouts/png/pureLayout.png";
 import { useIsMobile } from "../../Hooks/useIsMobile";
-import { color } from "Utils";
+import { color } from "utils";
 
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "../../constants/constants";
 

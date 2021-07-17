@@ -3,7 +3,7 @@ import React from "react";
 import { jsx, Text } from "theme-ui";
 import styled from "styled-components";
 
-import { color } from "Utils";
+import { color } from "utils";
 
 import { VARIANTS_PRINTFUL, SIZES } from "../../constants/constants";
 import CustomLoader from "../CustomLoader";

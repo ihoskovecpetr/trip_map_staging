@@ -6,7 +6,7 @@ import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import styled from "styled-components";
 
-import { color } from "Utils";
+import { color } from "utils";
 
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import { useIsMobile } from "../../Hooks/useIsMobile";

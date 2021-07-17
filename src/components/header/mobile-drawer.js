@@ -45,7 +45,7 @@ const MobileDrawer = ({ invertHeaderColor }) => {
       type: "TOGGLE",
     });
   }, [dispatch]);
-  console.log({ invertHeaderColor });
+
   return (
     <>
       <Drawer

@@ -5,7 +5,7 @@ import { node, bool, string, func } from "prop-types";
 import CustomLoader from "./CustomLoader";
 
 // import { usePrimaryColor } from "@hooks/usePrimaryColor";
-import { color, font, fontSize, fontWeight } from "Utils";
+import { color, font, fontSize, fontWeight } from "utils";
 
 const StyledButton = styled.button`
   position: relative;
