@@ -2,19 +2,25 @@
 import React, { useState } from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
+// import { styled } from "@material-ui/core/styles";
+
 import Lightbox from "react-image-lightbox";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 import { createFinalImage } from "../../LibGlobal/createFinalImage";
 import { useIsMobile } from "Hooks/useIsMobile";
+import { color } from "utils";
+
 import Logo from "components/logo";
 import LogoWhite from "assets/logo_while.png";
 import { useElementDimensions } from "Hooks/useElementDimensions";
 import UnderlineLoader from "components/UnderlineLoader";
+import CustomLoader from "components/CustomLoader";
 
 import { FAKE_DIV_IDS, TITLES_DEFAULT } from "../../constants/constants";
 
@@ -32,6 +38,7 @@ export default function MapContainer({
     open: false,
     activeSrc: null,
   });
+  const [isCreatingImage, setIsCreatingImage] = useState(false);
   const { isMobile } = useIsMobile();
 
   const changeOrientation = () => {
@@ -43,9 +50,9 @@ export default function MapContainer({
     width: mapWrapperWidth,
   } = useElementDimensions("map_wrap_2_id");
 
-  console.log({ New_mapWrapperHeight: mapWrapperHeight });
-
   const createPreviewImage = async () => {
+    setIsCreatingImage(true);
+
     const finalImgSrc = await createFinalImage({
       originalMapObject: map,
       activeLayoutName: activeLayout,
@@ -59,6 +66,8 @@ export default function MapContainer({
       open: true,
       activeSrc: finalImgSrc,
     });
+
+    setIsCreatingImage(false);
   };
 
   return (
@@ -84,8 +93,13 @@ export default function MapContainer({
         </div>
 
         <div sx={styles.rotateBtn}>
-          <OpenWithIcon color="grey" onClick={() => createPreviewImage()} />
-          <UnderlineLoader />
+          {isCreatingImage ? (
+            <ColorWrap>
+              <StyledCircularProgress />
+            </ColorWrap>
+          ) : (
+            <OpenWithIcon color="grey" onClick={() => createPreviewImage()} />
+          )}
         </div>
       </div>
 
@@ -139,6 +153,17 @@ const PlaceToHideBigMap = styled.div`
   height: 0px;
   overflow: hidden;
 `;
+
+const ColorWrap = styled.div`
+  color: ${color("cta_color")} !important;
+  display: flex;
+`;
+
+const StyledCircularProgress = styled(CircularProgress)({
+  height: "24px !important",
+  width: "24px !important",
+  color: "inherit !important",
+});
 
 const styles = {
   canvas_bg: {

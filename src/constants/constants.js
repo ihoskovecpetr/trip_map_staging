@@ -345,19 +345,19 @@ const LAYOUTS = [
 ];
 
 const MAP_STYLES_NAMES = {
-  BLACK_LAND: "Black Land",
   RED_BLUE: "Red Blue",
+  YELLOW_GREEN: "Yellow Green",
+  BLUE_YELLOW: "Blue Yellow",
+  GREEN_ORANGE: "Green Orange",
+  BLACK_LAND: "Black Land",
   BLACK_WHITE: "Black White",
-  DARK_BLUE_MONOCOLOR: "Dark Blue Monocolor",
-  LOW_CONTRAST_GREEN: "Low Contrast Green",
   DOUBLE_BLUE: "Double Blue",
+  GREY_BLUE: "Grey Blue",
+  PALE_BLUE: "Pale Blue",
   SANDY_DARK: "Sandy Dark",
   WHITE_BLUE: "White Blue",
   // SANDY_ORANGE_BLUE: "Sandy Orange Blue",
   // WHITE_BLUE_LOW_CONTRAST: "White Blue Low",
-  YELLOW_GREEN: "Yellow Green",
-  BLUE_YELLOW: "Blue Yellow",
-  GREEN_ORANGE: "Green Orange",
 };
 
 const MAP_STYLES = {
@@ -413,7 +413,7 @@ const MAP_STYLES = {
   //   layoutColor: "",
   //   textColor: "",
   // },
-  [MAP_STYLES_NAMES.LOW_CONTRAST_GREEN]: {
+  [MAP_STYLES_NAMES.PALE_BLUE]: {
     url: "mapbox://styles/petrhoskovec/ckollex8z78ly18mu9jmefwnz",
     waterColor: "5e96c9",
     landColor: "e6d398",
@@ -437,7 +437,7 @@ const MAP_STYLES = {
     layoutColor: "050505",
     textColor: "f1f2f3",
   },
-  [MAP_STYLES_NAMES.DARK_BLUE_MONOCOLOR]: {
+  [MAP_STYLES_NAMES.GREY_BLUE]: {
     url: "mapbox://styles/petrhoskovec/ckqexs85d1dev18pgpujhjwne",
     waterColor: "162930",
     landColor: "707070",

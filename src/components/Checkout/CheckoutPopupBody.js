@@ -11,16 +11,16 @@ import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/core/styles";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import Card from "@material-ui/core/Card";
-
-import CustomLoader from "../CustomLoader";
-
-import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import CheckoutItems from "./CheckoutItems";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { color } from "utils";
 import { getIsProduction } from "LibGlobal/getIsProduction";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
+
+import CheckoutItems from "./CheckoutItems";
+import NextTabBtn from "../NextTabBtn/NextTabBtn";
+import CustomLoader from "../CustomLoader";
 import UnderlineLoader from "components/UnderlineLoader";
 
 const STRIPE_PUBLIC_KEY_LIVE =
@@ -113,7 +113,7 @@ export default function CheckoutCard({
     <>
       {!imageBase64Created ? (
         <CustomLoaderWrap>
-          <CustomLoader />
+          <StyledCircularProgress />
         </CustomLoaderWrap>
       ) : (
         <TeaserWrap>
@@ -149,7 +149,11 @@ export default function CheckoutCard({
             {`${
               imageBase64Created ? "Design vytvořen ✅" : "Zpracovávám design"
             }`}
-            {!imageBase64Created && <UnderlineLoader />}
+            {!imageBase64Created && (
+              <WrapSpan>
+                <UnderlineLoader />
+              </WrapSpan>
+            )}
           </p>
           <p sx={styles.uploading_counter}>
             {imageBase64Created
@@ -159,7 +163,11 @@ export default function CheckoutCard({
               ` ${percentageUpload}% / ${fileSizeMB && fileSizeMB + "MB"} ${
                 imageBase64Created && !isUploadPending ? "✅" : ""
               }`}
-            {imageBase64Created && isUploadPending && <UnderlineLoader />}
+            {imageBase64Created && isUploadPending && (
+              <WrapSpan>
+                <UnderlineLoader />
+              </WrapSpan>
+            )}
           </p>
         </HeaderTextsContainer>
       </div>
@@ -220,6 +228,16 @@ const CustomLoaderWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+  height: 40px !important;
+  width: 40px !important;
+  color: ${color("cta_color")} !important;
+`;
+
+const WrapSpan = styled.span`
+  color: ${color("cta_color")} !important;
 `;
 
 const TeaserWrap = styled.div`

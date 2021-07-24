@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import React from "react";
-import { jsx, Text, Button, Link } from "theme-ui";
+import { jsx } from "theme-ui";
 import { keyframes } from "@emotion/react";
 
-export default function CustomLoader() {
+export default function CustomLoader({ height, width }) {
   return <span sx={styles.loader}></span>;
 }
 

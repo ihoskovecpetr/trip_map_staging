@@ -1,15 +1,16 @@
 export default {
   // example colors with dark mode
   colors: {
+    cta_color: "#f6aa1c", // "#EF233C", // "#25CB9E", // green-blue "#fe6769", // red CTA color
+    primary: "#001427", // "#2B2D42", // "#1F3E76", // blue - primary button and link color
+
     text: "#343D48", // darkgrey - body color and primary color
-    cta_color: "#EF233C", // "#25CB9E", // green-blue "#fe6769", // red CTA color
     text_secondary: "#02073E", // darkdarkblue - secondary body color
     heading: "#244886", // darkblue - primary heading color
     heading_secondary: "#0F2137", // almost black - heading color
     background: "#FFFFFF", // white -  body background color
     background_almost_white: "#F9FBFD", // almost white - secondary background color
     whitish_paper_blue: "#E5ECF4", // white paper blue -  border color
-    primary: "#2B2D42", // "#1F3E76", // blue - primary button and link color
     muted_primary: "#8D99AE",
     secondary: "#25CB9E", // greenblue - secondary color - can be used for hover states
     muted: "#7B8188", // grey - muted color

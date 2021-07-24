@@ -83,7 +83,7 @@ const styles = {
 
   orientationWrap: {
     display: "flex",
-    width: "100%",
+    width: "50%",
     flexWrap: "wrap",
     marginBottom: "10px",
   },
@@ -93,7 +93,6 @@ const styles = {
     justifyContent: "space-around",
     alignItems: "center",
     "> div": {
-      width: "30%",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -130,9 +129,8 @@ const HeadingText = styled.p`
 `;
 
 const WideMock = styled.div`
-  border: 1px solid black;
-  height: 25px;
-  width: 50px;
+  height: 20px;
+  width: 40px;
   background-color: white;
   color: rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 0 3px;
@@ -141,9 +139,8 @@ const WideMock = styled.div`
 `;
 
 const HighMock = styled.div`
-  border: 1px solid black;
-  height: 50px;
-  width: 25px;
+  height: 40px;
+  width: 20px;
   background-color: white;
   color: rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 0 3px;

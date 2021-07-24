@@ -5,6 +5,7 @@ import MobileStepper from "@material-ui/core/MobileStepper";
 import Button from "@material-ui/core/Button";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import { color } from "utils";
 
 import CheckoutCta from "../Checkout/CheckoutCta";
 
@@ -14,10 +15,10 @@ const useStyles = makeStyles({
     // flexGrow: 1,
     width: "100%",
   },
-  rootButton: {
-    color: "#EF233C",
-    // color: "red",
-  },
+  // rootButton: {
+  //   color: "#EF233C",
+  //   // color: "red",
+  // },
 });
 
 export default function Stepper({
@@ -54,10 +55,10 @@ export default function Stepper({
       className={classes.root}
       id="tabs_stepper"
       nextButton={
-        <Button
+        <StyledButton
           size="small"
           onClick={!isLastStep && handleNext}
-          className={classes.rootButton}
+          // className={classes.rootButton}
           // disabled={activeStep === stepElements.length - 1}
         >
           {isLastStep ? (
@@ -79,7 +80,7 @@ export default function Stepper({
           ) : (
             <KeyboardArrowRight />
           )}
-        </Button>
+        </StyledButton>
       }
       backButton={
         <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
@@ -95,6 +96,6 @@ export default function Stepper({
   );
 }
 
-const styledButton = styled(Button)`
-  color: green;
+const StyledButton = styled(Button)`
+  color: ${color("cta_color")} !important;
 `;

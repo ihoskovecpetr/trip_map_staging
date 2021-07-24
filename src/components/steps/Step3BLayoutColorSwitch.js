@@ -70,7 +70,7 @@ const HeadingText = styled.p`
   font-weight: 600;
   color: black;
   text-align: left;
-  margin-top: 20px;
+  margin-top: 15px;
   letter-spacing: 1.1px;
 `;
 
@@ -78,15 +78,15 @@ const ItemContainer = styled.div`
   display: flex;
 `;
 const LayoutItemWrap = styled.div`
-  width: 30%;
+  width: 18%;
   margin: 1%;
   display: flex;
   justify-content: center;
 `;
 
 const LayoutItem = styled.div`
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;

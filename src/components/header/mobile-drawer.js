@@ -8,7 +8,7 @@ import { IoMdClose, IoMdMenu } from "react-icons/io";
 // import { Link } from "react-scroll";
 import Link from "next/link";
 import LinkRouter from "components/LinkRouter";
-import UnderlineLoader from "components/UnderlineLoader";
+import { fontWeight } from "utils";
 
 import {
   FaFacebookF,
@@ -99,7 +99,7 @@ const MobileDrawer = ({ invertHeaderColor }) => {
               // duration={500}
               // key={i}
             >
-              <a>{label}</a>
+              <StyledAncor>{label}</StyledAncor>
             </Link>
           </>
         ))}
@@ -109,9 +109,7 @@ const MobileDrawer = ({ invertHeaderColor }) => {
 };
 
 const StyledAncor = styled.a`
-  // transform: translateX(0);
-  position: relative;
-  color: red;
+  fontweight: ${fontWeight("regular")};
 `;
 
 const styles = {

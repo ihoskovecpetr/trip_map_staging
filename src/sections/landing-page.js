@@ -297,7 +297,7 @@ const styles = {
 
   ctaButton: {
     pointerEvents: "all",
-    backgroundColor: "black",
+    backgroundColor: "primary",
     fontSize: "1rem !important",
     letterSpacing: "1.5px",
     width: "90%",
