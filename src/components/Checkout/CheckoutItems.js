@@ -119,6 +119,7 @@ const BoldText = styled.p`
   color: ${color("primary")};
   margin: 0;
   font-size: ${fontSize("sm")};
+  text-align: left;
 `;
 
 const StyledImage = styled.img`
@@ -133,6 +134,7 @@ const GreyText = styled.p`
   width: 100%;
   word-wrap: break-word;
   font-size: ${fontSize("xs")};
+  text-align: left;
 `;
 
 const StyledPriceSpan = styled.span`

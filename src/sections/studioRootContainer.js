@@ -369,6 +369,7 @@ export default function StudioRootContainer() {
 
     map.touchPitch.disable();
     // map.touchZoomRotate.disable();
+    map.touchZoomRotate.disableRotation();
     map.dragRotate.disable();
 
     return () => {
