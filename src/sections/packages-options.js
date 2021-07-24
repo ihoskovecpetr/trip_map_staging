@@ -1,14 +1,14 @@
 /** @jsx jsx */
 import { jsx, Container, Flex } from "theme-ui";
-import PriceCard from "components/price-card";
+import PackageCard from "components/package-card";
 import SectionHeader from "components/section-header";
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from "react-icons/io";
 import PatternBG from "assets/patternBG.png";
-import Manhattan from "assets/packages/manhattan.png";
-import SanFrancicsoGrey from "assets/packages/san_francisco_grey.png";
-import SanFrancicso from "assets/packages/san_francisco.png";
-import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
-import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
+
+import ProductFramed from "assets/packages/SanFrancisco_black.png";
+import ProductNoFrame from "assets/packages/Iceland_green.png";
 
 const packages = [
   {
@@ -18,7 +18,7 @@ const packages = [
     priceWithUnit: "$79.99", //TODO add price
     variantId: 9357,
     buttonText: "Do STUDIA",
-    img: SanFrancicsoGrey, //Manhattan,
+    img: ProductFramed, //Manhattan,
     points: [
       {
         icon: <IoIosCheckmarkCircle />,
@@ -53,7 +53,7 @@ const packages = [
     buttonText: "Do STUDIA",
     priceWithUnit: "$29.99", //TODO add price
     variantId: 8948,
-    img: SanFrancicso,
+    img: ProductNoFrame,
     points: [
       {
         icon: <IoIosCheckmarkCircle />,
@@ -82,7 +82,7 @@ export default function PackagesOptions() {
   const { dataPrintful } = useGetDataPrintful(IdsArr);
 
   return (
-    <section id="pricing" sx={styles.pricing}>
+    <section id="packages" sx={styles.packages}>
       <Container>
         <SectionHeader
           title="Varianty provedení"
@@ -97,7 +97,7 @@ export default function PackagesOptions() {
         >
           {dataPrintful &&
             packages.map((packageData) => (
-              <PriceCard
+              <PackageCard
                 data={packageData}
                 key={packageData.name}
                 priceFresh={`${dataPrintful[packageData.variantId]?.currency} ${
@@ -123,7 +123,7 @@ export default function PackagesOptions() {
 }
 
 const styles = {
-  pricing: {
+  packages: {
     backgroundColor: "primary",
     backgroundImage: `url(${PatternBG})`,
     backgroundRepeat: `no-repeat`,

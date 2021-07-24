@@ -8,13 +8,10 @@ import Carousel from "nuka-carousel";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-import Carousel1 from "assets/landing-page/webp/landing-carousel-1.webp";
-import Carousel2 from "assets/landing-page/webp/landing-carousel-2.webp";
-import Carousel3 from "assets/landing-page/webp/landing-carousel-3.webp";
-
-import Carousel1PNG from "assets/landing-page/jpg/1.jpg";
-import Carousel2PNG from "assets/landing-page/jpg/2.jpg";
-import Carousel3PNG from "assets/landing-page/jpg/3.jpg";
+import Carousel1 from "assets/landing-page/png/1.png";
+import Carousel2 from "assets/landing-page/png/2.png";
+import Carousel3 from "assets/landing-page/png/3.png";
+import Carousel4 from "assets/landing-page/png/4.png";
 
 import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
@@ -92,13 +89,10 @@ export default function LandingPage() {
               renderCenterLeftControls={() => null}
               renderCenterRightControls={() => null}
             >
-              <img
-                src={displayPNG ? Carousel1PNG : Carousel1}
-                id="carousel_img_photo_0"
-              />
-
-              <img src={displayPNG ? Carousel2PNG : Carousel2} />
-              <img src={displayPNG ? Carousel3PNG : Carousel3} />
+              <img src={Carousel1} id="carousel_img_photo_0" />
+              <img src={Carousel2} />
+              <img src={Carousel3} />
+              <img src={Carousel4} />
 
               {/* <img src={LandingPagePicture} />
               <img src={LandingPageBg} />

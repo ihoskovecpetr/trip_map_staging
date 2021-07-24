@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Router from "next/router";
 import Head from "next/head";
-import { initGA, logPageView } from "analytics";
+// import { initGA, logPageView } from "analytics";
 // Load DM Sans typeface
 import "typeface-dm-sans";
 
@@ -18,11 +18,11 @@ import theme from "../theme/theme.js";
 import { GlobalStyle } from "../theme/global";
 
 export default function CustomApp({ Component, pageProps }) {
-  useEffect(() => {
-    initGA();
-    logPageView();
-    Router.events.on("routeChangeComplete", logPageView);
-  }, []);
+  // useEffect(() => {
+  //   initGA();
+  //   logPageView();
+  //   Router.events.on("routeChangeComplete", logPageView);
+  // }, []);
 
   return (
     <>

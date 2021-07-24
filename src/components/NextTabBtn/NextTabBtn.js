@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { string, bool, number, func, node } from "prop-types";
 import styled from "styled-components";
 
-import CircularProgress from "@material-ui/core/CircularProgress";
 import UnderlineLoader from "components/UnderlineLoader";
 import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
 
@@ -16,15 +15,13 @@ const getFormatedPriceString = (amount) => {
 function NextTabBtn({
   onClick,
   children,
-  width = "90%",
+  width = "100%",
   isLoadingOnClick,
   isDisabled,
   disabledText,
   margin,
   price,
 }) {
-  const classes = useStyles();
-
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -54,20 +51,16 @@ function NextTabBtn({
         }}
         onClick={onClickExtended}
       >
-        {/* {isLoading ? (
-          <CircularProgress
-            // width={30}
-            classes={{
-              root: classes.spinnerRoot,
-            }}
-          />
-        ) : */}
         {disabledText && isDisabled ? (
-          disabledText
+          <TextWrap>
+            {disabledText} <UnderlineLoader />
+          </TextWrap>
         ) : (
           <TextWrap>
             {`${children}`}{" "}
-            <span sx={styles.priceText}>{getFormatedPriceString(price)}</span>
+            {price && (
+              <span sx={styles.priceText}>{getFormatedPriceString(price)}</span>
+            )}
             {isLoading && <UnderlineLoader />}
           </TextWrap>
         )}
@@ -86,7 +79,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     zIndex: 10,
-    // margin: "20px 0",
+    padding: "0px 10px",
   },
   button: {
     backgroundColor: "cta_color",
@@ -94,7 +87,7 @@ const styles = {
     padding: "10px",
     textAlign: "center",
     cursor: "pointer",
-    fontWeight: "200",
+    fontWeight: 600,
     textTransform: "uppercase",
     letterSpacing: "1.5px",
     transform: "translateX(0)",
@@ -103,14 +96,6 @@ const styles = {
     color: "primary",
   },
 };
-
-const useStyles = makeStyles((theme) => ({
-  spinnerRoot: {
-    height: "30px !important",
-    width: "30px !important",
-    color: "white",
-  },
-}));
 
 NextTabBtn.propTypes = {
   onClick: func.isRequried,

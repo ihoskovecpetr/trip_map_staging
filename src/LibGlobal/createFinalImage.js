@@ -1,9 +1,16 @@
 // import request from "superagent";
+import mapboxgl from "mapbox-gl";
+
 import { drawLayout } from "./drawLayout";
+
+import { MAP_STYLES, ORIENTATIONS } from "constants/constants";
+
+let snapshot_map_object;
 
 function takeScreenshot(mapLocal) {
   return new Promise(function (resolve, _) {
     mapLocal.once("render", function () {
+      console.log("Render_local_Screenshot", mapLocal.getCanvas().toDataURL());
       resolve(mapLocal.getCanvas().toDataURL());
     });
 
@@ -12,15 +19,74 @@ function takeScreenshot(mapLocal) {
   });
 }
 
-export const createFinalImage = async (
-  mapCanvas,
-  activeLayout,
+const resizeMapPromise = async ({ originalMapObject, mapObject, options }) => {
+  const { height, width } = options;
+  return new Promise((resolve, reject) => {
+    const originalBounds = originalMapObject.getBounds();
+
+    mapObject.on("idle", function () {
+      //TODO: find another event after fully loading image to avoid setTimeout.
+      resolve();
+      setTimeout(() => {}, 1000);
+    });
+
+    mapObject.fitBounds(originalBounds, {
+      animate: false,
+    });
+  });
+};
+
+export const createFinalImage = async ({
+  originalMapObject,
+  activeLayoutName,
   mapTitles,
   product,
-  activeMapStyleName
-) => {
-  return new Promise((resolve, reject) => {
-    takeScreenshot(mapCanvas).then(function (data) {
+  activeMapStyleName,
+  options,
+}) => {
+  const { height, width } = options;
+  return new Promise(async (resolve, reject) => {
+    let snapshotMap = document.createElement("div");
+    snapshotMap.setAttribute("id", "snapshot_map");
+
+    const isWideOrientation =
+      product?.sizeObject?.orientation === ORIENTATIONS.wide;
+
+    let multiple;
+    if (isWideOrientation) {
+      multiple = 1200 / width;
+    } else {
+      multiple = 1200 / height;
+    }
+
+    Object.assign(snapshotMap.style, {
+      width: `${width * multiple}px`,
+      height: `${height * multiple}px`,
+      // display: "none",
+      visibility: "hidden",
+    });
+    const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
+    PlaceToHideBigMap.appendChild(snapshotMap);
+
+    snapshot_map_object = new mapboxgl.Map({
+      container: "snapshot_map",
+      zoom: originalMapObject.getZoom(),
+      minZoom: 0,
+      center: originalMapObject.getCenter(),
+      style: MAP_STYLES[activeMapStyleName].url,
+      preserveDrawingBuffer: true,
+    });
+
+    await resizeMapPromise({
+      originalMapObject,
+      mapObject: snapshot_map_object,
+      options: { height, width },
+    });
+
+    takeScreenshot(snapshot_map_object).then(function (data) {
+      var div = document.getElementById("snapshot_map");
+      div.parentNode.removeChild(div);
+
       const image = new Image();
 
       image.onerror = function (e) {
@@ -33,16 +99,19 @@ export const createFinalImage = async (
       };
 
       image.onload = function () {
+        console.log("FinalImg:", { image });
+
         const mergerCanvas = document.getElementById("canvas_merging");
+
         mergerCanvas.setAttribute("height", image.height);
         mergerCanvas.setAttribute("width", image.width);
         var ctx = mergerCanvas.getContext("2d");
         ctx.drawImage(image, 0, 0);
-        console.log({ mapTitles });
+
         drawLayout(ctx, {
           width: image.width,
           height: image.height,
-          activeLayout,
+          activeLayoutName,
           mapTitles,
           product,
           isProductionPrint: true,

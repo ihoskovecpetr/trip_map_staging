@@ -1,15 +1,14 @@
 /** @jsx jsx */
 import React, { useEffect, useState, useRef } from "react";
 import { jsx, Container, Box } from "theme-ui";
-// import SetupColumn from "components/Tabs/TabsRoot";
-import TabsRootNew from "components/Tabs/TabsRootNew";
+import TabsRootNew from "components/Tabs/TabsRoot";
 import MapContainer from "components/canvas/mapContainer";
 import mapboxgl from "mapbox-gl";
 import styled from "styled-components";
 import produce from "immer";
 
 import { useIsMobile } from "../Hooks/useIsMobile";
-import { useElementDimensions } from "../Hooks/useElementDimensions";
+import { useElementDimensions } from "Hooks/useElementDimensions";
 import { drawLayout } from "../LibGlobal/drawLayout";
 import { prepareTextInput } from "../LibGlobal/prepareTextInput";
 import { getUpdatedMapSizes } from "../LibGlobal/getUpdatedMapSizes";
@@ -25,7 +24,6 @@ import { getLayoutColors } from "LibGlobal/getLayoutColors";
 import {
   MAP_STYLES,
   MAP_STYLES_NAMES,
-  // PIXEL_RATIO,
   LAYOUT_STYLE_NAMES,
   SIZES,
   VARIANTS_PRINTFUL,
@@ -73,7 +71,7 @@ const resizeLayout = ({
   drawLayout(ctxFrame, {
     width: cvsMap.width,
     height: cvsMap.height,
-    activeLayout,
+    activeLayoutName: activeLayout,
     mapTitles: mapTitles,
     product,
     activeMapStyleName,
@@ -147,7 +145,7 @@ const resizeInputs = ({
     product: productRef.current,
     mapStyleObject: activeStyleObj,
   });
-  console.log("Resizing_Inputs", { textLayoutColor, productRef });
+
   prepareTextInput({
     element: headlineInput,
     name: "heading",
@@ -196,21 +194,6 @@ const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
     position: "absolute",
     bottom: 0,
   });
-
-  // Object.assign(inputWrapDynamicSize.style, {
-  //   width: "auto",
-  //   height: "100%",
-  //   minWidth: "50px",
-  //   padding: "0px 5px",
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   flexDirection: "column",
-  //   alignItems: "stretch",
-  //   backgroundColor: "rgba(0,0,0,0.1)",
-  //   // justifyContent: "center",
-  //   // position: "absolute",
-  //   // bottom: 0,
-  // });
 };
 
 export default function StudioRootContainer() {
@@ -237,8 +220,8 @@ export default function StudioRootContainer() {
   const [activeLayout, setActiveLayout] = useState(
     LAYOUT_STYLE_NAMES.ISLAND_BOX
   );
-  const [activeMapStyleName, setActiveMapStyle] = useState(
-    MAP_STYLES_NAMES.DARK_BLUE_MONOCOLOR
+  const [activeMapStyleName, setActiveMapStyleName] = useState(
+    MAP_STYLES_NAMES.RED_BLUE
   );
   const [mapTitles, setMapTitles] = useState({
     heading: { text: TITLES_DEFAULT[0], size: 14 },
@@ -254,7 +237,7 @@ export default function StudioRootContainer() {
   const {
     height: mapWrapperHeight,
     width: mapWrapperWidth,
-  } = useElementDimensions("map_wrapper_id");
+  } = useElementDimensions("map_wrap_2_id");
 
   CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
   const { isMobile } = useIsMobile();
@@ -293,19 +276,6 @@ export default function StudioRootContainer() {
         return CURRENT_PIXEL_RATIO; // x / 96;
       },
     });
-
-    // const getAndSetPrice = async () => {
-    //   const response = await axios.post(`api/data-printful`, {
-    //     variantIdsArr: [product.variantId],
-    //   });
-
-    //   setProduct((prev) => ({
-    //     ...prev,
-    //     price: response.data.finalResult[product.variantId].price,
-    //   }));
-    // };
-
-    // getAndSetPrice();
   }, []);
 
   useEffect(() => {
@@ -349,7 +319,6 @@ export default function StudioRootContainer() {
   }, [mapAvailSpaceHeight, mapAvailSpaceWidth]);
 
   useEffect(() => {
-    console.log({ mapWrapperHeight });
     mapWrapperRef.current = {
       height: mapWrapperHeight,
       width: mapWrapperWidth,
@@ -395,8 +364,12 @@ export default function StudioRootContainer() {
       style: MAP_STYLES[activeMapStyleName].url,
       // style: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho", // Continue add maps WhiteGreyMap
 
-      preserveDrawingBuffer: true,
+      preserveDrawingBuffer: true, // to enable method toDataURL()
     });
+
+    map.touchPitch.disable();
+    map.touchZoomRotate.disable();
+    map.dragRotate.disable();
 
     return () => {
       map.remove();
@@ -518,13 +491,15 @@ export default function StudioRootContainer() {
   }, [map, activeMapStyleName]);
 
   useEffect(() => {
-    mapWrapper = document.getElementById("map_wrapper_id");
+    mapWrapper = document.getElementById("map_wrap_2_id");
 
     const { updHeight, updWidth } = getUpdatedMapSizes({
       ratio: productRef.current.sizeObject.ratio,
       mapWrapWrapHeight: mapAvailSpaceRef.current.height,
       mapWrapWrapWidth: mapAvailSpaceRef.current.width,
     });
+
+    console.log({ updHeight, updWidth });
 
     Object.assign(mapWrapper.style, {
       height: updHeight ? `${updHeight}px` : 0,
@@ -616,7 +591,7 @@ export default function StudioRootContainer() {
               activeLayout={activeLayout}
               setActiveLayout={setActiveLayout}
               activeMapStyleName={activeMapStyleName}
-              setActiveMapStyle={setActiveMapStyle}
+              setActiveMapStyleName={setActiveMapStyleName}
               mapCoordinates={mapCoordinates}
               setMapCoordinates={setMapCoordinates}
               mapTitles={mapTitles}

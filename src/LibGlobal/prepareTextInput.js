@@ -35,23 +35,23 @@ export function prepareTextInput({
     false
   );
 
-  let baseLngSide;
+  let htmlLongSideLength;
 
   if (height > width) {
-    baseLngSide = height;
+    htmlLongSideLength = height;
   } else {
-    baseLngSide = width;
+    htmlLongSideLength = width;
   }
   let elementsToStyleArr = [element];
 
-  const fakeElement = document.getElementById(FAKE_DIV_IDS[name]);
-  if (fakeElement) {
-    elementsToStyleArr.push(fakeElement);
+  const fakeTextElement = document.getElementById(FAKE_DIV_IDS[name]);
+  if (fakeTextElement) {
+    elementsToStyleArr.push(fakeTextElement);
   }
 
   elementsToStyleArr.map((el) => {
     Object.assign(el.style, {
-      fontSize: `${0.003 * textSize * baseLngSide}px`,
+      fontSize: `${0.003 * textSize * htmlLongSideLength}px`,
       fontFamily: TITLES_FONT_DEFAULT,
     });
   });
@@ -60,7 +60,7 @@ export function prepareTextInput({
     width: "100%",
     display: "inline-block",
     textAlign,
-    fontSize: `${0.003 * textSize * baseLngSide}px`,
+    fontSize: `${0.003 * textSize * htmlLongSideLength}px`,
     fontFamily: TITLES_FONT_DEFAULT,
     fontWeight: fontWeight,
     color,

@@ -1,4 +1,3 @@
-// import { getVariantObject } from "./getVariantObject";
 import { getLayoutObject } from "./getLayoutObject";
 import { getBottomBannerHeightKoef } from "./getBottomBannerHeightKoef";
 

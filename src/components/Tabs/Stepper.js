@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
-import Tab3Checkout from "../Tab3/tab3Checkout";
+import CheckoutCta from "../Checkout/CheckoutCta";
 
 const useStyles = makeStyles({
   root: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   rootButton: {
-    color: "#25CB9E",
+    color: "#EF233C",
     // color: "red",
   },
 });
@@ -61,16 +61,16 @@ export default function Stepper({
           // disabled={activeStep === stepElements.length - 1}
         >
           {isLastStep ? (
-            <Tab3Checkout
+            <CheckoutCta
               map={map}
               mapTitles={mapTitles}
-              activeLayout={activeLayout}
+              activeLayoutName={activeLayout}
               product={product}
               activeMapStyleName={activeMapStyleName}
               isCustomUI
             >
               Shrnutí
-            </Tab3Checkout>
+            </CheckoutCta>
           ) : (
             "Další"
           )}

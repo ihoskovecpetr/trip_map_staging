@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 import { Box, Flex } from "theme-ui";
 import { Scrollbars } from "react-custom-scrollbars";
 import Drawer from "components/drawer";
+import styled from "styled-components";
 import { DrawerContext } from "../../contexts/drawer/drawer.context";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
 // import { Link } from "react-scroll";
 import Link from "next/link";
 import LinkRouter from "components/LinkRouter";
+import UnderlineLoader from "components/UnderlineLoader";
 
 import {
   FaFacebookF,
@@ -66,31 +68,9 @@ const MobileDrawer = ({ invertHeaderColor }) => {
             <Box sx={styles.menu}>
               {menuItems.map(({ path, label }, i) => {
                 return (
-                  <>
-                    <LinkRouter
-                      activeClass="active"
-                      path={path}
-                      // spy={true}
-                      // smooth={true}
-                      // offset={-70}
-                      // duration={500}
-                      key={i}
-                    >
-                      {label}
-                    </LinkRouter>
-                    {/* <Link
-                      activeClass="active"
-                      href={path}
-                      // spy={true}
-                      // smooth={true}
-                      // offset={-70}
-                      // duration={500}
-                      prefetch={true}
-                      key={i}
-                    >
-                      {label}
-                    </Link> */}
-                  </>
+                  <LinkRouter activeClass="active" path={path} key={i}>
+                    {label}
+                  </LinkRouter>
                 );
               })}
             </Box>
@@ -109,22 +89,30 @@ const MobileDrawer = ({ invertHeaderColor }) => {
       </Drawer>
       <Box sx={styles.nav}>
         {menuItems.map(({ path, label }, i) => (
-          <Link
-            // activeClass="active"
-            href={path}
-            // spy={true}
-            // smooth={true}
-            // offset={-70}
-            // duration={500}
-            // key={i}
-          >
-            <a>{label}</a>
-          </Link>
+          <>
+            <Link
+              // activeClass="active"
+              href={path}
+              // spy={true}
+              // smooth={true}
+              // offset={-70}
+              // duration={500}
+              // key={i}
+            >
+              <a>{label}</a>
+            </Link>
+          </>
         ))}
       </Box>
     </>
   );
 };
+
+const StyledAncor = styled.a`
+  // transform: translateX(0);
+  position: relative;
+  color: red;
+`;
 
 const styles = {
   handler: {
@@ -220,6 +208,7 @@ const styles = {
       },
       "&:hover": {
         color: "secondary",
+        backgroundColor: "red",
       },
     },
   },

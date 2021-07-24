@@ -1,7 +1,7 @@
 const theme = {
   colors: {
     text: "#343D48", // darkgrey - body color and primary color
-    cta_color: "#25CB9E", // green-blue "#fe6769", // red CTA color
+    cta_color: "#EF233C", // "#D90429", // "#25CB9E", // green-blue "#fe6769", // red CTA color
     text_secondary: "black", // "#02073E", // darkdarkblue - secondary body color
     heading: "black", // "#244886", // darkblue - primary heading color
     heading_secondary: "#0F2137", // almost black - heading color

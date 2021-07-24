@@ -13,12 +13,10 @@ import { createFinalImage } from "../../LibGlobal/createFinalImage";
 import { useIsMobile } from "Hooks/useIsMobile";
 import Logo from "components/logo";
 import LogoWhite from "assets/logo_while.png";
+import { useElementDimensions } from "Hooks/useElementDimensions";
+import UnderlineLoader from "components/UnderlineLoader";
 
-import {
-  FAKE_DIV_IDS,
-  TITLES_DEFAULT,
-  ORIENTATIONS,
-} from "../../constants/constants";
+import { FAKE_DIV_IDS, TITLES_DEFAULT } from "../../constants/constants";
 
 export default function MapContainer({
   map,
@@ -30,31 +28,33 @@ export default function MapContainer({
   product,
   activeMapStyleName,
 }) {
-  const [imageBase64Created, setImageBase64Created] = useState("");
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
   });
   const { isMobile } = useIsMobile();
 
-  const isWideOrientation =
-    product?.sizeObject?.orientation === ORIENTATIONS.wide;
-
   const changeOrientation = () => {
     orientationSwitcher(product, setProduct);
   };
 
+  const {
+    height: mapWrapperHeight,
+    width: mapWrapperWidth,
+  } = useElementDimensions("map_wrap_2_id");
+
+  console.log({ New_mapWrapperHeight: mapWrapperHeight });
+
   const createPreviewImage = async () => {
-    console.log({ activeLayout });
-    const finalImgSrc = await createFinalImage(
-      map,
-      activeLayout,
+    const finalImgSrc = await createFinalImage({
+      originalMapObject: map,
+      activeLayoutName: activeLayout,
       mapTitles,
       product,
-      activeMapStyleName
-    );
+      activeMapStyleName,
+      options: { height: mapWrapperHeight, width: mapWrapperWidth },
+    });
 
-    setImageBase64Created(finalImgSrc);
     setLightbox({
       open: true,
       activeSrc: finalImgSrc,
@@ -85,16 +85,13 @@ export default function MapContainer({
 
         <div sx={styles.rotateBtn}>
           <OpenWithIcon color="grey" onClick={() => createPreviewImage()} />
+          <UnderlineLoader />
         </div>
       </div>
 
-      <div
-        sx={styles.map_available_space}
-        id="map_available_space_id"
-        className={isWideOrientation && "isWideOrientation"}
-      >
-        <div sx={styles.map_wrapper} id="map_wrapper_id">
-          <div id="map" sx={styles.map}></div>
+      <div sx={styles.map_available_space} id="map_available_space_id">
+        <div id="map_wrap_2_id">
+          <div id="map" sx={styles.map_wrap_1}></div>
         </div>
 
         {Object.keys(FAKE_DIV_IDS).map((key, index) => (
@@ -115,6 +112,7 @@ export default function MapContainer({
       </div>
 
       <canvas id="canvas_merging" sx={styles.canvas_merging} />
+      <PlaceToHideBigMap id="place_to_hide_big_map"></PlaceToHideBigMap>
       {lightbox.open && (
         <Lightbox
           mainSrc={lightbox.activeSrc}
@@ -136,19 +134,20 @@ const EmptySpaceExpander = styled.div`
   flex-grow: 4;
 `;
 
+const PlaceToHideBigMap = styled.div`
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+`;
+
 const styles = {
   canvas_bg: {
     px: "0 !important",
-    // pb: "20px",
     display: "flex",
     flexDirection: "column",
-    // justifyContent: "center",
-    // alignItems: "flex-start",
     transform: "translateX(0)", // this is important, reset absolute position to thos element
     height: [null, null, null, "100%"],
-    // pb: "100px",
     overflow: "auto",
-    // border: "2px solid green",
   },
   map_available_space: {
     display: "flex",
@@ -157,19 +156,9 @@ const styles = {
     pt: ["20px", null, null, 0],
     width: "100%",
     height: ["60vh", null, null, "85vh"],
-    // minHeight: ["60vh", "60vh", "60vh"],
+  },
 
-    "&.isWideOrientation": {
-      // minHeight: ["45vh", null],
-      // height: "45vh",
-    },
-  },
-  map_wrapper: {
-    // margin: "30px",
-    // marginBottom: "40px",
-    // marginTop: "10px",
-  },
-  map: {
+  map_wrap_1: {
     position: "relative",
     overflow: "initial",
     width: "100%",
@@ -183,9 +172,7 @@ const styles = {
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
-    // height: [null, null, null, "10%"],
-    p: "0.5rem",
-    // mb: "10px",
+    padding: "0.5rem",
   },
   zoomBtnWrapper: {
     display: "flex",

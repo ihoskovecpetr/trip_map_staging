@@ -24,8 +24,7 @@ export function drawLayout(
     height,
     width,
     mapTitles,
-    activeLayout: activeLayoutName,
-    // frameWidthKoef,
+    activeLayoutName,
     product,
     isProductionPrint,
     activeMapStyleName,
@@ -34,9 +33,7 @@ export function drawLayout(
   const elWidth = width;
   const elHeight = height;
   const blackLineWidth = height * 0.0035;
-  let baseLngSide;
-  // let whitePdg;
-  // let whitePdgDouble;
+  let baseLngSideRaw;
   let insideFrameWidth;
   let frameCoverCoefficient;
 
@@ -56,14 +53,14 @@ export function drawLayout(
       .frameColor ?? "red";
 
   if (height > width) {
-    baseLngSide = height;
+    baseLngSideRaw = height;
     frameCoverCoefficient = INSIDE_FRAME_COVER_CM / product.sizeObject.height;
   } else {
-    baseLngSide = width;
+    baseLngSideRaw = width;
     frameCoverCoefficient = INSIDE_FRAME_COVER_CM / product.sizeObject.width;
   }
 
-  insideFrameWidth = baseLngSide * frameCoverCoefficient; //frameWidthKoef;
+  insideFrameWidth = baseLngSideRaw * frameCoverCoefficient; //frameWidthKoef;
 
   const {
     paddingWidth,
@@ -99,12 +96,12 @@ export function drawLayout(
     elHeight: height,
     isBannerBlur,
     isPaddingFromFrame,
-    heading,
-    subtitle,
+    mapTitles,
     activeLayoutName,
     CURRENT_PIXEL_RATIO,
-    fillColor: fillLayoutColor,
+    fillLayoutColor,
     textLayoutColor,
+    baseLngSideRaw,
   });
 
   drawText({
@@ -112,7 +109,7 @@ export function drawLayout(
     paddingWidth,
     elWidth: width,
     elHeight: height,
-    baseLngSide,
+    baseLngSide: baseLngSideRaw,
     heading,
     subtitle,
     layoutObj,
@@ -140,7 +137,7 @@ export function drawLayout(
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.ISLAND_BOX) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BLUR) {
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.DOUBLE_BORDER) {
-    ctx.lineWidth = 0.0015 * baseLngSide;
+    ctx.lineWidth = 0.0015 * baseLngSideRaw;
     ctx.strokeStyle = textLayoutColor;
 
     const pdgDoubleKoefficient = 0.75;
@@ -158,7 +155,7 @@ export function drawLayout(
     );
 
     // outer border
-    ctx.lineWidth = 0.003 * baseLngSide;
+    ctx.lineWidth = 0.003 * baseLngSideRaw;
     ctx.strokeRect(
       distanceStartXYOuterFrame,
       distanceStartXYOuterFrame,
@@ -188,7 +185,7 @@ function getPaddingColor(layoutColorOption, inheritMapStyleColor) {
     return "transparent";
   }
   if (inheritMapStyleColor) {
-    return `#${inheritMapStyleColor}`;
+    return `${inheritMapStyleColor}`;
   }
   return "white";
 }
@@ -206,6 +203,7 @@ function drawPaddingWrap({
     layoutPaddingColorOption,
     inheritMapStyleColor
   );
+
   ctx.fillRect(0, 0, paddingSize, elHeight);
   ctx.fillRect(0, 0, elWidth, paddingSize);
   ctx.fillRect(elWidth - paddingSize, 0, paddingSize, elHeight);
@@ -221,12 +219,12 @@ function drawBottomBox({
   elHeight,
   isBannerBlur,
   isPaddingFromFrame,
-  heading,
-  subtitle,
+  mapTitles,
   activeLayoutName,
   CURRENT_PIXEL_RATIO,
-  fillColor,
+  fillLayoutColor,
   textLayoutColor,
+  baseLngSideRaw,
 }) {
   const extraBlurAreaKoef = isBannerBlur ? 1.4 : 1;
 
@@ -237,27 +235,22 @@ function drawBottomBox({
     elHeight - padding
   );
 
-  // gradient.addColorStop(0, "rgba(255,255,255,0.0)");
-  // gradient.addColorStop(0.1, "rgba(255,255,255,0.4)");
-  // gradient.addColorStop(0.3, "rgba(255,255,255,0.6)");
-  // gradient.addColorStop(0.4, "rgba(255,255,255,0.7)");
-  // gradient.addColorStop(0.7, "rgba(255,255,255,0.9)");
-  // gradient.addColorStop(1, "rgba(255,255,255,1)");
+  gradient.addColorStop(0, `${fillLayoutColor}00`);
+  gradient.addColorStop(0.1, `${fillLayoutColor}66`);
+  gradient.addColorStop(0.3, `${fillLayoutColor}98`);
+  gradient.addColorStop(0.4, `${fillLayoutColor}B2`);
+  gradient.addColorStop(0.7, `${fillLayoutColor}E1`);
+  gradient.addColorStop(1, `${fillLayoutColor}FF`);
 
-  gradient.addColorStop(0, `${fillColor}00`);
-  gradient.addColorStop(0.1, `${fillColor}66`);
-  gradient.addColorStop(0.3, `${fillColor}98`);
-  gradient.addColorStop(0.4, `${fillColor}B2`);
-  gradient.addColorStop(0.7, `${fillColor}E1`);
-  gradient.addColorStop(1, `${fillColor}FF`);
-
-  ctx.fillStyle = isBannerBlur ? gradient : `${fillColor}`;
+  ctx.fillStyle = isBannerBlur ? gradient : `${fillLayoutColor}`;
 
   ctx.beginPath();
 
   if (activeLayoutName === LAYOUT_STYLE_NAMES.ISLAND_BOX) {
+    const htmlLongSideLength = baseLngSideRaw / CURRENT_PIXEL_RATIO;
+
     let dynamicBannerWidth =
-      getSizeOfTitle(heading?.text, subtitle?.text) * CURRENT_PIXEL_RATIO * 1.2;
+      getSizeOfTitle(mapTitles, htmlLongSideLength) * CURRENT_PIXEL_RATIO * 1.1;
 
     const MIN_WIDTH_BANER_KOEF = 0.2;
 
@@ -313,9 +306,6 @@ function drawText({
   isProductionPrint,
   textColor,
 }) {
-  // const headingCoef = elHeight === baseLngSide ? 0.06 : 0.077;
-  // const subtitleCoef = elHeight === baseLngSide ? 0.0275 : 0.033;
-
   const IS_PRODUCTION = getIsProduction();
 
   if (IS_PRODUCTION && !isProductionPrint) {

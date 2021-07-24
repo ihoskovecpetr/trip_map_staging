@@ -1,19 +1,27 @@
 /** @jsx jsx */
 import { useState, useEffect } from "react";
-import { jsx, Box, Heading, Text, Button, Link } from "theme-ui";
+import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 
-import { useIsMobile } from "../../Hooks/useIsMobile";
-import { useElementDimensions } from "../../Hooks/useElementDimensions";
+import { useIsMobile } from "Hooks/useIsMobile";
+import { useElementDimensions } from "Hooks/useElementDimensions";
+import { color } from "utils";
+import { ORIENTATIONS } from "@constants";
+import Stepper from "./Stepper";
 
-import Step1Location from "../Tab1/Step1Location";
-import Step2Orientation from "../Tab1/Step2Orientation";
-import Step3Layout from "../Tab2/Step3Layout";
-import Step4Colors from "../Tab2/Step4Colors";
-import Step5Size from "../Tab3/Step5Size";
-import Step6FinishVariant from "../Tab3/Step6FinishVariant";
+import Step1Location from "../steps/Step1Location";
+import Step2Orientation from "../steps/Step2Orientation";
+import Step3Layout from "../steps/Step3Layout";
+import Step3BLayoutColorSwitch from "../steps/Step3BLayoutColorSwitch";
+import Step4Colors from "../steps/Step4Colors";
+import Step5Size from "../steps/Step5Size";
+import Step6FinishVariant from "../steps/Step6FinishVariant";
+import Step7Checkout from "../steps/Step7Checkout";
+import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
 const TAB_VALUES = {
   ONE: "MÍSTO & ORIENTACE",
@@ -21,25 +29,47 @@ const TAB_VALUES = {
   THREE: "ROZMĚRY & PLATBA",
 };
 
-export default function SetupColumn({
+const priceAlgorithm = getPriceAlgorithm();
+
+export default function TabsRootNew({
   map,
   mapCoordinates,
   setMapCoordinates,
-  activeFrame,
+  activeLayout,
   setActiveLayout,
-  activeMapStyle,
-  setActiveMapStyle,
+  setActiveMapStyleName,
+  activeMapStyleName,
   mapTitles,
   setMapTitles,
   product,
   setProduct,
 }) {
   const [activeTab, setActiveTab] = useState(TAB_VALUES.ONE);
+  const [activeStepNumber, setActiveStepNumber] = React.useState(0);
+
   const { isMobile } = useIsMobile();
-  const [isSetupRolledUp, setIsSetupRolledUp] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isArrowDisabled, setIsArrowDisabled] = useState(true);
+
   const classes = useStyles();
 
-  const { height: headerHeight } = useElementDimensions("header");
+  const { height: map_segment_height } = useElementDimensions(
+    "map_studio_segment"
+  );
+
+  const { height: header_height } = useElementDimensions("header");
+  const { height: mobile_header_height } = useElementDimensions(
+    "map_buttons_wrapper"
+  );
+  const { height: map_canvas_height, width: with_ww } = useElementDimensions(
+    "map_wrap_2_id"
+  );
+
+  const { height: stepper_height, width: stepper_width } = useElementDimensions(
+    "tabs_stepper"
+  );
+
+  const { dataPrintful } = useGetDataPrintful([product.variantId]);
 
   const handleChange = (newValue) => {
     // if (isMobile) {
@@ -47,13 +77,7 @@ export default function SetupColumn({
       document.querySelector("#tab_wrap_wrap").getBoundingClientRect().top -
       100;
 
-    // window.scrollBy({
-    //   top: yCoordTabs,
-    //   left: 0,
-    //   behavior: "smooth",
-    // });
-
-    setIsSetupRolledUp(true);
+    setIsOpen(true);
 
     setActiveTab(newValue);
     // window.setTimeout(function () {
@@ -61,199 +85,318 @@ export default function SetupColumn({
 
     // }
   };
+  const stepsNumbersDisabledOpenning = [];
+  useEffect(() => {
+    if (stepsNumbersDisabledOpenning.includes(activeStepNumber)) {
+      setIsOpen(false);
+      setIsArrowDisabled(true);
+      return;
+    }
+
+    setIsArrowDisabled(false);
+  }, [activeStepNumber]);
+
+  const handleNext = () => {
+    setActiveStepNumber((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStepNumber((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const stepElementsDesktop = [
+    [
+      <Step1Location
+        map={map}
+        setMapCoordinates={setMapCoordinates}
+        setMapTitles={setMapTitles}
+      />,
+      <Step2Orientation product={product} setProduct={setProduct} />,
+    ],
+    [
+      <Step3Layout
+        activeFrame={activeLayout}
+        setActiveLayout={setActiveLayout}
+      />,
+      <Step3BLayoutColorSwitch
+        product={product}
+        setProduct={setProduct}
+        activeMapStyleName={activeMapStyleName}
+      />,
+
+      <Step4Colors
+        activeMapStyle={activeMapStyleName}
+        setActiveMapStyleName={setActiveMapStyleName}
+      />,
+    ],
+
+    [
+      <Step5Size product={product} setProduct={setProduct} />,
+
+      <Step6FinishVariant
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeLayout}
+        product={product}
+        setProduct={setProduct}
+        activeMapStyle={activeMapStyleName}
+      />,
+      <Step7Checkout
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeLayout}
+        product={product}
+        activeMapStyleName={activeMapStyleName}
+      />,
+    ],
+  ];
+
+  const stepElementsMobile = [
+    [
+      <Step1Location
+        map={map}
+        nextTab={() => handleChange(TAB_VALUES.TWO)}
+        setMapCoordinates={setMapCoordinates}
+        setMapTitles={setMapTitles}
+      />,
+    ],
+    [
+      <Step2Orientation
+        nextTab={() => handleChange(TAB_VALUES.TWO)}
+        product={product}
+        setProduct={setProduct}
+      />,
+    ],
+    [
+      <Step4Colors
+        activeMapStyle={activeMapStyleName}
+        setActiveMapStyleName={setActiveMapStyleName}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
+    ],
+    [
+      <Step3Layout
+        activeFrame={activeLayout}
+        setActiveLayout={setActiveLayout}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
+    ],
+
+    [
+      <Step3BLayoutColorSwitch
+        product={product}
+        setProduct={setProduct}
+        activeMapStyleName={activeMapStyleName}
+      />,
+    ],
+
+    [
+      <Step5Size
+        product={product}
+        setProduct={setProduct}
+        nextTab={() => handleChange(TAB_VALUES.THREE)}
+      />,
+    ],
+
+    [
+      <Step6FinishVariant
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeLayout}
+        product={product}
+        setProduct={setProduct}
+        activeMapStyle={activeMapStyleName}
+      />,
+    ],
+    [
+      <Step7Checkout
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeLayout}
+        product={product}
+        activeMapStyleName={activeMapStyleName}
+      />,
+    ],
+  ];
+
+  const activeStepElements = isMobile
+    ? stepElementsMobile
+    : stepElementsDesktop;
+
+  useEffect(() => {
+    const currentTabsLength = activeStepElements.length - 1;
+    if (!isMobile && activeStepNumber > currentTabsLength) {
+      setActiveStepNumber(currentTabsLength);
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    const currentTabsLength = activeStepElements.length - 1;
+    if (!isMobile && activeStepNumber > currentTabsLength) {
+      setActiveStepNumber(currentTabsLength);
+    }
+  }, [product]);
+
+  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
+    product.variantId,
+    dataPrintful
+  );
+
+  const isWideOrientation =
+    product?.sizeObject?.orientation === ORIENTATIONS.wide;
 
   return (
-    <div
-      sx={styles.container}
-      className={isMobile && isSetupRolledUp && "open"}
+    <MainContainer
+      className={isMobile && isOpen && "open"}
+      isMobile={isMobile}
+      isOpen={isMobile && isOpen}
+      headerHeight={header_height}
+      mobileHeaderHeight={mobile_header_height}
+      mapCanvasHeight={map_canvas_height}
+      mapHeight={map_segment_height}
+      isWideOrientation={isWideOrientation}
     >
-      <div sx={styles.tabWrapWrap} id="tab_wrap_wrap">
-        <div sx={styles.TabWrap}>
-          <div
-            sx={styles.Tab}
-            className={activeTab === TAB_VALUES.ONE && "active"}
-            onClick={() => handleChange(TAB_VALUES.ONE)}
-          >
-            <p>{TAB_VALUES.ONE}</p>
-          </div>
-          <div
-            sx={styles.Tab}
-            className={activeTab === TAB_VALUES.TWO && "active"}
-            onClick={() => handleChange(TAB_VALUES.TWO)}
-          >
-            <p>{TAB_VALUES.TWO}</p>
-          </div>
-          <div
-            sx={styles.Tab}
-            className={activeTab === TAB_VALUES.THREE && "active"}
-            onClick={() => handleChange(TAB_VALUES.THREE)}
-          >
-            <p>{TAB_VALUES.THREE}</p>
-          </div>
-        </div>
-      </div>
-      {activeTab === TAB_VALUES.ONE && (
-        <TabContentWrap
-          className={activeTab === TAB_VALUES.ONE && "active"}
-          sx={styles.tabBody}
-          headerHeight={headerHeight}
-        >
-          <Step1Location
-            map={map}
-            nextTab={() => handleChange(TAB_VALUES.TWO)}
-            setMapCoordinates={setMapCoordinates}
-            setMapTitles={setMapTitles}
-          />
-          <Step2Orientation
-            nextTab={() => handleChange(TAB_VALUES.TWO)}
-            product={product}
-            setProduct={setProduct}
-          />
-        </TabContentWrap>
-      )}
-      {activeTab === TAB_VALUES.TWO && (
-        <TabContentWrap
-          className={`${activeTab === TAB_VALUES.TWO && "active"}`}
-          sx={styles.tabBody}
-        >
-          <Step3Layout
-            activeFrame={activeFrame}
-            setActiveLayout={setActiveLayout}
-            nextTab={() => handleChange(TAB_VALUES.THREE)}
-          />
+      {/* <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}> */}
 
-          <Step4Colors
-            activeMapStyle={activeMapStyle}
-            setActiveMapStyle={setActiveMapStyle}
-            nextTab={() => handleChange(TAB_VALUES.THREE)}
-          />
-          {/* <Tab2
-            map={map}
-            activeFrame={activeFrame}
-            setActiveLayout={setActiveLayout}
-            activeMapStyle={activeMapStyle}
-            setActiveMapStyle={setActiveMapStyle}
-            nextTab={() => handleChange(TAB_VALUES.THREE)}
-            product={product}
-            setProduct={setProduct}
-          /> */}
-        </TabContentWrap>
+      {isMobile && (
+        <PriceWrap>
+          <Price>celkem: {getFormattedPrice(priceWithDelivery.netPrice)}</Price>
+        </PriceWrap>
       )}
-      {activeTab === TAB_VALUES.THREE && (
-        <TabContentWrap
-          className={activeTab === TAB_VALUES.THREE && "active"}
-          sx={styles.tabBody}
-        >
-          <Step5Size
-            product={product}
-            setProduct={setProduct}
-            nextTab={() => handleChange(TAB_VALUES.THREE)}
-          />
 
-          <Step6FinishVariant
-            map={map}
-            mapTitles={mapTitles}
-            activeLayout={activeFrame}
-            product={product}
-            setProduct={setProduct}
-            activeMapStyle={activeMapStyle}
-          />
-
-          {/* <Tab3
-            map={map}
-            mapTitles={mapTitles}
-            activeLayout={activeFrame}
-            product={product}
-            setProduct={setProduct}
-            activeMapStyle={activeMapStyle}
-          /> */}
+      <TabSegmentWrap
+        mapHeight={map_segment_height}
+        headerHeight={header_height}
+        isWideOrientation={isWideOrientation}
+        isOpen={isOpen}
+        isMobile={isMobile}
+      >
+        <Stepper
+          stepElements={activeStepElements}
+          handleNext={handleNext}
+          handleBack={handleBack}
+          activeStep={activeStepNumber}
+          map={map}
+          mapTitles={mapTitles}
+          activeLayout={activeLayout}
+          product={product}
+          activeMapStyleName={activeMapStyleName}
+        />
+        {/* {isMobile && (
+        <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
+      )} */}
+        <TabContentWrap topElementsHeight={stepper_height + header_height}>
+          {<>{activeStepElements[activeStepNumber]}</>}
         </TabContentWrap>
-      )}
+      </TabSegmentWrap>
       {isMobile && (
         <Backdrop
           className={classes.backdrop}
           classes={{
             root: classes.rootBackdrop, // class name, e.g. `classes-nesting-root-x`
           }}
-          open={isSetupRolledUp}
-          onClick={() => setIsSetupRolledUp(false)}
+          open={isOpen}
+          onClick={() => setIsOpen(false)}
         ></Backdrop>
       )}
-    </div>
+      {/* </div> */}
+    </MainContainer>
   );
 }
 
-const styles = {
-  container: {
-    width: "100%",
-    height: "100%",
-    zIndex: 10,
+const MainContainer = styled.div`
+  width: 100%;
+  height: null;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 10;
+  background-color: white;
+  transition-duration: 1s;
+  position: ${({ isOpen, isMobile }) =>
+    isOpen ? "fixed" : isMobile ? "absolute" : "relative"};
+  top: ${({ isOpen, mapHeight }) => (isOpen ? "60vh" : `${mapHeight}px`)};
 
-    "&.open": {
-      height: "50vh",
-      position: "fixed",
-      bottom: 0,
-    },
-  },
-  tabWrapWrap: {
-    position: "relative",
-  },
-  TabWrap: {
-    display: "flex",
-    position: "absolute",
-    width: "100%",
-    backgroundColor: "#ffffff",
-  },
-  Tab: {
-    width: "33.33%",
-    px: "10px",
-    py: [null, "5px", "10px"],
-    display: "flex",
-    justifyContent: "center",
-    fontWeight: 600,
-    color: "rgba(0,0,0,0.35)",
-    cursor: "pointer",
-    borderBottom: "1px solid lightgrey",
-    backgroundColor: "background_almost_white",
+  top: ${({ isOpen, isWideOrientation, mapCanvasHeight, mobileHeaderHeight }) =>
+    isWideOrientation &&
+    !isOpen &&
+    `calc(${mobileHeaderHeight}px + ${mapCanvasHeight}px + 80px)`};
 
-    "&.active": {
-      borderBottom: "2px solid",
-      borderColor: "cta_color",
-      color: "cta_color",
-    },
-    "&:hover": {
-      backgroundColor: "#00000016",
-    },
-    "> p": {
-      margin: "auto",
-      textAlign: "center",
-      // fontFamily: "Arial",
-      // fontWeight: 400,
-    },
-  },
-  tabBody: {
-    paddingTop: ["70px", "70px", "70px", "80px"],
-    display: "none",
-    height: ["unset", "unset", "100%"],
-    overflow: "scroll",
-    backgroundColor: "background_almost_white",
-    "&.active": {
-      display: "block",
-    },
-    "@media screen and (max-width: 768px)": {
-      height: "unset",
-    },
-  },
-};
+  height: ${({ mapHeight }) => `calc(100vh - ${mapHeight}px)`};
 
-const TabContentWrap = styled.div`
-  @media (max-width: 768px) {
+  @media (min-width: 768px) {
     height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
+    overflow: scroll;
+    top: unset;
   }
 `;
 
+const TabSegmentWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: ${color("background")};
+
+  @media (max-width: 768px) {
+    height: ${({ mapHeight, isWideOrientation }) =>
+      `calc(100vh - ${mapHeight}px + ${isWideOrientation ? 100 : 0}px)`};
+
+    top: ${({ isOpen, isWideOrientation, mapHeight }) =>
+      isWideOrientation && !isOpen && `${mapHeight - 100}px`};
+
+    padding: 0 0;
+    overflow: visible;
+  }
+`;
+
+const TabContentWrap = styled.div`
+  padding: 0px 0.7rem;
+  height: ${({ topElementsHeight }) =>
+    `calc(100vh - ${topElementsHeight}px - 20px)`};
+  overflow: scroll;
+
+  @media (max-width: 768px) {
+    height: unset;
+    overflow: visible;
+    padding: 0px 0.5rem;
+  }
+`;
+
+// const ArrowWrap = styled.div`
+//   display: inline-flex;
+//   height: 0;
+//   pointer-events: ${({ isDisabled }) => (isDisabled ? "none" : "auto")};
+//   cursor: ${({ isDisabled }) => (isDisabled ? "default" : "pointer")};
+
+//   & svg {
+//     color: ${({ isDisabled }) => (isDisabled ? "lightGrey" : "black")};
+
+//     transform: ${({ isOpen }) => (isOpen ? "rotate(90deg)" : "rotate(-90deg)")};
+//     width: 30px;
+//     height: 40px;
+//     position: relative;
+//     top: -35px;
+//     padding: 10px 5px;
+//     background-color: white;
+//   }
+// `;
+
+const PriceWrap = styled.div`
+  display: inline-flex;
+
+  height: 0;
+`;
+
+const Price = styled.div`
+  position: relative;
+  color: white;
+  padding-left: 0.5rem;
+  top: -30px;
+`;
+
 const useStyles = makeStyles((theme) => ({
-  // rootBackdrop: {
-  //   zIndex: "5 !important",
-  // },
+  rootBackdrop: {
+    // zIndex: "5 !important",
+    backgroundColor: "rgba(0,0,0,0.3)",
+  },
 }));

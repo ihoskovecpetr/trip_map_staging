@@ -1,15 +1,29 @@
-import { FAKE_DIV_IDS } from "../constants/constants";
+import { FAKE_DIV_IDS } from "constants/constants";
 
-const getSizeOfTitle = (heading, subtitle) => {
+const getSizeOfTitle = (mapTitles, htmlLongSideLength) => {
   const fakeHeading = document.getElementById(FAKE_DIV_IDS.heading);
   const fakeSubtitle = document.getElementById(FAKE_DIV_IDS.subtitle);
+
+  const headingObject = mapTitles?.heading;
+  const subtitleObject = mapTitles?.subtitle;
 
   if (!fakeHeading || !fakeSubtitle) {
     return 0;
   }
 
-  fakeHeading.innerText = heading;
-  fakeSubtitle.innerText = subtitle;
+  const headingFontSize = headingObject.size;
+  const subtitleFontSize = subtitleObject.size;
+
+  Object.assign(fakeHeading.style, {
+    fontSize: `${0.003 * headingFontSize * htmlLongSideLength}px`,
+  });
+
+  Object.assign(fakeSubtitle.style, {
+    fontSize: `${0.003 * subtitleFontSize * htmlLongSideLength}px`,
+  });
+
+  fakeHeading.innerText = headingObject?.text;
+  fakeSubtitle.innerText = subtitleObject?.text;
 
   const sizes = [fakeHeading?.offsetWidth, fakeSubtitle?.offsetWidth];
   return Math.max(...sizes);

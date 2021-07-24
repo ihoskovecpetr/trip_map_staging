@@ -9,6 +9,8 @@ export function useElementDimensions(element_id) {
         return;
       }
 
+      console.log("Handling_resize");
+
       setDimensions({
         height:
           document.getElementById(element_id)?.getBoundingClientRect().height ||
@@ -21,20 +23,21 @@ export function useElementDimensions(element_id) {
 
     handleResize();
 
+    const measuredElement = document.getElementById(element_id);
+    const resizeObserver = new ResizeObserver(handleResize);
+
+    resizeObserver?.observe(measuredElement);
     window.addEventListener("resize", handleResize);
     window.addEventListener("load", handleResize);
-    window.addEventListener("load", () => {
-      console.log("Loaded_XX", element_id);
-    });
 
     const timeout = setTimeout(() => {
-      console.log("TImedOut");
       handleResize();
     }, 500);
 
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("load", handleResize);
+      resizeObserver?.unobserve(measuredElement);
 
       clearTimeout(timeout);
     };

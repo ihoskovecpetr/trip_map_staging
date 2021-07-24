@@ -40,6 +40,36 @@ const fonts = css`
     font-family: "HarmoniaSans_local";
     font-weight: 300;
   }
+
+  @font-face {
+    src: url("../FontFiles/Zen_Tokyo_Zoo/ZenTokyoZoo-Regular.ttf")
+      format("truetype");
+    font-family: "Zen_Tokyo_Zoo_local";
+    font-display: block;
+  }
+
+  // RobotoMono
+  @font-face {
+    src: url("../FontFiles/Roboto_Mono/RobotoMono-Bold.ttf") format("truetype");
+    font-family: "RobotoMono_local";
+    font-weight: 600;
+    font-display: block;
+  }
+
+  @font-face {
+    src: url("../FontFiles/Roboto_Mono/RobotoMono-Regular.ttf")
+      format("truetype");
+    font-family: "RobotoMono_local";
+    font-weight: 400;
+    font-display: block;
+  }
+
+  @font-face {
+    src: url("../FontFiles/Roboto_Mono/RobotoMono-Light.ttf") format("truetype");
+    font-family: "RobotoMono_local";
+    font-weight: 300;
+    font-display: block;
+  }
 `;
 
 export const GlobalStyle = createGlobalStyle`

@@ -12,7 +12,7 @@ const data = [
     id: 1,
     title: "Začínáme v sekci STUDIO zadáním hledané lokality",
     text:
-      "Do sekce studio se dostanete proklikem z horní lišty či vysouvacího menu pokud přistupujete z menšího displeje",
+      "Do sekce studio se dostanete proklikem z horní lišty nebo kliknutím na vysouvací menu v případě mobilního uživatele",
   },
   {
     id: 2,
