@@ -50,8 +50,8 @@ export default function MapContainer({
     width: mapWrapperWidth,
   } = useElementDimensions("map_wrap_2_id");
 
-  const createPreviewImage = async () => {
-    setIsCreatingImage(true);
+  const fullscreenImageRequested = async () => {
+    // setIsCreatingImage(true);
 
     const finalImgSrc = await createFinalImage({
       originalMapObject: map,
@@ -67,7 +67,7 @@ export default function MapContainer({
       activeSrc: finalImgSrc,
     });
 
-    setIsCreatingImage(false);
+    // setIsCreatingImage(false);
   };
 
   return (
@@ -98,7 +98,10 @@ export default function MapContainer({
               <StyledCircularProgress />
             </ColorWrap>
           ) : (
-            <OpenWithIcon color="grey" onClick={() => createPreviewImage()} />
+            <OpenWithIcon
+              color="grey"
+              onClick={() => fullscreenImageRequested()}
+            />
           )}
         </div>
       </div>
