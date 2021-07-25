@@ -80,7 +80,11 @@ export default function CheckoutCta({
         mapTitles,
         product,
         activeMapStyleName,
-        options: { height: mapWrapperHeight, width: mapWrapperWidth },
+        options: {
+          height: mapWrapperHeight,
+          width: mapWrapperWidth,
+          isPreview: false,
+        },
       });
 
       const img = finalImgSrc;

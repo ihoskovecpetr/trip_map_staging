@@ -2,10 +2,16 @@
 import mapboxgl from "mapbox-gl";
 
 import { drawLayout } from "./drawLayout";
+import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
+import { getCurrentPixelRatio } from "LibGlobal/getCurrentPixelRatio";
 
-import { MAP_STYLES, ORIENTATIONS } from "constants/constants";
+import {
+  MAP_STYLES,
+  ORIENTATIONS,
+  RUNTIME_PIXEL_RATIO,
+} from "constants/constants";
 
-let snapshot_map_object;
+let snapshotMapObject;
 
 function takeScreenshot(mapLocal) {
   return new Promise(function (resolve, _) {
@@ -36,6 +42,15 @@ const resizeMapPromise = async ({ originalMapObject, mapObject, options }) => {
   });
 };
 
+// export const setDevicePixelRatio = (ratio) => {
+//   console.log();
+//   Object.defineProperty(window, "devicePixelRatio", {
+//     get: function () {
+//       return ratio;
+//     },
+//   });
+// };
+
 export const createFinalImage = async ({
   originalMapObject,
   activeLayoutName,
@@ -44,7 +59,7 @@ export const createFinalImage = async ({
   activeMapStyleName,
   options,
 }) => {
-  const { height, width } = options;
+  const { height, width, isPreview } = options;
   return new Promise(async (resolve, reject) => {
     let snapshotMap = document.createElement("div");
     snapshotMap.setAttribute("id", "snapshot_map");
@@ -68,7 +83,7 @@ export const createFinalImage = async ({
     const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
     PlaceToHideBigMap.appendChild(snapshotMap);
 
-    snapshot_map_object = new mapboxgl.Map({
+    snapshotMapObject = new mapboxgl.Map({
       container: "snapshot_map",
       zoom: originalMapObject.getZoom(),
       minZoom: 0,
@@ -77,13 +92,21 @@ export const createFinalImage = async ({
       preserveDrawingBuffer: true,
     });
 
+    const CURRENT_VERSION_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
+    const CURRENT_SNAPSHOT_PIXEL_RATIO = isPreview
+      ? RUNTIME_PIXEL_RATIO
+      : CURRENT_VERSION_PIXEL_RATIO;
+    setDevicePixelRatio(CURRENT_SNAPSHOT_PIXEL_RATIO);
+
+    console.log({ CURRENT_SNAPSHOT_PIXEL_RATIO });
+
     await resizeMapPromise({
       originalMapObject,
-      mapObject: snapshot_map_object,
+      mapObject: snapshotMapObject,
       options: { height, width },
     });
 
-    takeScreenshot(snapshot_map_object).then(function (data) {
+    takeScreenshot(snapshotMapObject).then(function (data) {
       var div = document.getElementById("snapshot_map");
       div.parentNode.removeChild(div);
 
@@ -99,8 +122,6 @@ export const createFinalImage = async ({
       };
 
       image.onload = function () {
-        console.log("FinalImg:", { image });
-
         const mergerCanvas = document.getElementById("canvas_merging");
 
         mergerCanvas.setAttribute("height", image.height);
@@ -116,11 +137,14 @@ export const createFinalImage = async ({
           product,
           isProductionPrint: true,
           activeMapStyleName,
+          localPixelRatio: CURRENT_SNAPSHOT_PIXEL_RATIO,
         });
 
         const finalImgWithLayout = mergerCanvas.toDataURL();
 
         resolve(finalImgWithLayout);
+
+        setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
       };
 
       image.src = data;

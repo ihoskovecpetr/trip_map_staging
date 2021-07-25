@@ -1,21 +1,19 @@
 import { getLayoutObject } from "./getLayoutObject";
 import { getBottomBannerHeightKoef } from "./getBottomBannerHeightKoef";
+import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
 
 import { INSIDE_FRAME_COVER_CM } from "../constants/constants";
-import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
 
 export const getCenteringLayoutDimensions = ({
   product,
-  // variantId,
   layout: layoutName,
   elWidth,
   elHeight,
-  // insideFrameWidth,
 }) => {
   let baseLongSize;
   let frameCoverCoefficient;
 
-  const CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product?.variantId);
+  // const CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product?.variantId);
 
   if (elHeight > elWidth) {
     baseLongSize = elHeight;
@@ -29,17 +27,14 @@ export const getCenteringLayoutDimensions = ({
 
   const insideFrameWidth = baseLongSize * frameCoverCoefficient;
   const bottomBannerHeightKoef = getBottomBannerHeightKoef(layoutName);
-  const bottomBannerHeight =
-    (baseLongSize * bottomBannerHeightKoef) / CURRENT_PIXEL_RATIO;
+  const bottomBannerHeight = baseLongSize * bottomBannerHeightKoef;
 
   const layoutObj = getLayoutObject(layoutName);
 
   // Layout padding is allways bigger than frame, so it can return regardless of presence of the frame
   if (layoutObj?.roundPdng) {
     return {
-      paddingWidth:
-        (baseLongSize * layoutObj.roundPdng + insideFrameWidth) /
-        CURRENT_PIXEL_RATIO,
+      paddingWidth: baseLongSize * layoutObj.roundPdng + insideFrameWidth,
       isPaddingFromFrame: false,
       bottomBannerHeight,
       bottomBannerHeightKoef,
@@ -50,7 +45,7 @@ export const getCenteringLayoutDimensions = ({
   }
 
   return {
-    paddingWidth: insideFrameWidth / CURRENT_PIXEL_RATIO,
+    paddingWidth: insideFrameWidth,
     isPaddingFromFrame: true,
     bottomBannerHeight,
     bottomBannerHeightKoef,

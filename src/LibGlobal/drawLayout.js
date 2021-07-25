@@ -11,12 +11,12 @@ import {
   DEFAULT_FONT_WEIGHT_THIN,
 } from "../constants/constants";
 
-import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
+// import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
 import { getSizeOfTitle } from "./getSizeOfTitle";
 import { getIsProduction } from "./getIsProduction";
 import { getLayoutColors } from "./getLayoutColors";
 
-let CURRENT_PIXEL_RATIO;
+// let CURRENT_PIXEL_RATIO;
 
 export function drawLayout(
   ctx,
@@ -28,11 +28,12 @@ export function drawLayout(
     product,
     isProductionPrint,
     activeMapStyleName,
+    localPixelRatio,
   }
 ) {
   const elWidth = width;
   const elHeight = height;
-  const blackLineWidth = height * 0.0035;
+  const lineWidth = height * 0.0035;
   let baseLngSideRaw;
   let insideFrameWidth;
   let frameCoverCoefficient;
@@ -44,7 +45,9 @@ export function drawLayout(
     mapStyleObject,
   });
 
-  CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
+  console.log({ localPixelRatio });
+
+  // CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
 
   const heading = mapTitles?.heading;
   const subtitle = mapTitles?.subtitle;
@@ -80,7 +83,7 @@ export function drawLayout(
   if (!isPaddingFromFrame) {
     drawPaddingWrap({
       ctx,
-      paddingSize: paddingWidth * CURRENT_PIXEL_RATIO,
+      paddingSize: paddingWidth,
       layoutPaddingColorOption: layoutObj.paddingColor,
       inheritMapStyleColor: fillLayoutColor,
       elWidth: width,
@@ -90,15 +93,15 @@ export function drawLayout(
 
   drawBottomBox({
     ctx,
-    padding: paddingWidth * CURRENT_PIXEL_RATIO,
-    bannerHeight: bottomBannerHeight * CURRENT_PIXEL_RATIO,
+    padding: paddingWidth,
+    bannerHeight: bottomBannerHeight,
     elWidth: width,
     elHeight: height,
     isBannerBlur,
     isPaddingFromFrame,
     mapTitles,
     activeLayoutName,
-    CURRENT_PIXEL_RATIO,
+    localPixelRatio,
     fillLayoutColor,
     textLayoutColor,
     baseLngSideRaw,
@@ -106,7 +109,7 @@ export function drawLayout(
 
   drawText({
     ctx,
-    paddingWidth,
+    paddingWidth: paddingWidth / localPixelRatio,
     elWidth: width,
     elHeight: height,
     baseLngSide: baseLngSideRaw,
@@ -115,6 +118,7 @@ export function drawLayout(
     layoutObj,
     isProductionPrint,
     textColor: textLayoutColor,
+    localPixelRatio,
   });
 
   if (activeLayoutName === LAYOUT_STYLE_NAMES.PURE) {
@@ -126,11 +130,9 @@ export function drawLayout(
 
     ctx.fillRect(
       0,
-      elHeight -
-        paddingWidth * CURRENT_PIXEL_RATIO -
-        bottomBannerHeight * CURRENT_PIXEL_RATIO,
+      elHeight - paddingWidth - bottomBannerHeight,
       elWidth,
-      blackLineWidth
+      lineWidth
     );
     ctx.stroke();
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BOX) {
@@ -142,9 +144,8 @@ export function drawLayout(
 
     const pdgDoubleKoefficient = 0.75;
 
-    const distanceStartXYInnerFrame = paddingWidth * CURRENT_PIXEL_RATIO;
-    const distanceStartXYOuterFrame =
-      paddingWidth * CURRENT_PIXEL_RATIO * pdgDoubleKoefficient;
+    const distanceStartXYInnerFrame = paddingWidth;
+    const distanceStartXYOuterFrame = paddingWidth * pdgDoubleKoefficient;
 
     // inner border
     ctx.strokeRect(
@@ -221,7 +222,7 @@ function drawBottomBox({
   isPaddingFromFrame,
   mapTitles,
   activeLayoutName,
-  CURRENT_PIXEL_RATIO,
+  localPixelRatio,
   fillLayoutColor,
   textLayoutColor,
   baseLngSideRaw,
@@ -247,10 +248,10 @@ function drawBottomBox({
   ctx.beginPath();
 
   if (activeLayoutName === LAYOUT_STYLE_NAMES.ISLAND_BOX) {
-    const htmlLongSideLength = baseLngSideRaw / CURRENT_PIXEL_RATIO;
+    const htmlLongSideLength = baseLngSideRaw / localPixelRatio;
 
     let dynamicBannerWidth =
-      getSizeOfTitle(mapTitles, htmlLongSideLength) * CURRENT_PIXEL_RATIO * 1.1;
+      getSizeOfTitle(mapTitles, htmlLongSideLength) * localPixelRatio * 1.1;
 
     const MIN_WIDTH_BANER_KOEF = 0.2;
 
@@ -274,6 +275,7 @@ function drawBottomBox({
       padding,
       extraBlurAreaKoef,
       lineColor: textLayoutColor,
+      localPixelRatio,
     });
   } else if (isPaddingFromFrame) {
     ctx.fillRect(
@@ -305,6 +307,7 @@ function drawText({
   layoutObj,
   isProductionPrint,
   textColor,
+  localPixelRatio,
 }) {
   const IS_PRODUCTION = getIsProduction();
 
@@ -331,7 +334,7 @@ function drawText({
   ctx.fillText(
     headingText,
     elWidth * 0.5,
-    elHeight * (1 - headingCoef) - paddingWidth * CURRENT_PIXEL_RATIO // paddingWidth * CURRENT_PIXEL_RATIO !important because paddingWidth is relative to longest side
+    elHeight * (1 - headingCoef) - paddingWidth * localPixelRatio // paddingWidth * CURRENT_PIXEL_RATIO !important because paddingWidth is relative to longest side
   );
 
   ctx.fillStyle = textColor;
@@ -343,7 +346,7 @@ function drawText({
   ctx.fillText(
     subtitleText,
     elWidth * 0.5,
-    elHeight * (1 - subtitleCoef) - paddingWidth * CURRENT_PIXEL_RATIO // paddingWidth * CURRENT_PIXEL_RATIO !important because paddingWidth is relative to longest side
+    elHeight * (1 - subtitleCoef) - paddingWidth * localPixelRatio // paddingWidth * CURRENT_PIXEL_RATIO !important because paddingWidth is relative to longest side
   );
 }
 
@@ -356,6 +359,7 @@ function drawFocusCorners({
   padding,
   extraBlurAreaKoef,
   lineColor,
+  localPixelRatio,
 }) {
   // ctx.rect(
   //   0 + (elWidth - dynamicBannerWidth) / 2,
@@ -396,7 +400,7 @@ function drawFocusCorners({
   ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY);
   ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY + lineLength);
 
-  ctx.lineWidth = 1 * CURRENT_PIXEL_RATIO;
+  ctx.lineWidth = 1 * localPixelRatio;
   ctx.strokeStyle = lineColor;
   ctx.stroke();
 }

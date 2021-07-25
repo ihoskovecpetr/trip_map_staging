@@ -1,6 +1,7 @@
 const IS_CLIENT = typeof window !== "undefined";
 
 const PIXEL_RATIO = 4; //  x / 96 (8 is the good value)
+const RUNTIME_PIXEL_RATIO = 2;
 
 const TAX_PERCENTAGE = 21; // Tax I pay in price from printful
 const GROSS_PROFIT_PERCENTAGE = 20;
@@ -496,6 +497,7 @@ const FAKE_DIV_IDS = {
 module.exports = {
   IS_CLIENT,
   PIXEL_RATIO,
+  RUNTIME_PIXEL_RATIO,
   TAX_PERCENTAGE,
   GROSS_PROFIT_PERCENTAGE,
   BOTTOM_LAYOUT_SIZE,

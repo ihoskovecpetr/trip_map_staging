@@ -20,6 +20,7 @@ import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
 import { getLayoutColors } from "LibGlobal/getLayoutColors";
+import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
 
 import {
   MAP_STYLES,
@@ -30,6 +31,7 @@ import {
   OUTSIDE_FRAME_CM,
   TITLES_DEFAULT,
   DEFAULT_FONT_WEIGHT_THIN,
+  RUNTIME_PIXEL_RATIO,
 } from "../constants/constants";
 
 // const mapStyles = require.context("assets/MAPS_MAPBOX", true);
@@ -39,14 +41,12 @@ let trueMapCanvasElement;
 let layoutCanvas;
 let frameDiv;
 let inputWrap;
-// let inputWrapDynamicSize;
 let headlineInput;
 let subtitleInput;
 
 let canvasMap;
 let ctxMap;
 let mapWrapper;
-let CURRENT_PIXEL_RATIO;
 
 const IS_PRODUCTION = getIsProduction();
 const priceAlgorithm = getPriceAlgorithm();
@@ -75,6 +75,7 @@ const resizeLayout = ({
     mapTitles: mapTitles,
     product,
     activeMapStyleName,
+    localPixelRatio: RUNTIME_PIXEL_RATIO,
   });
 
   Object.assign(cvsLayout.style, {
@@ -83,8 +84,8 @@ const resizeLayout = ({
     display: "block",
     top: 0,
     left: 0,
-    width: `${cvsMap.width / CURRENT_PIXEL_RATIO + 1}px`,
-    height: `${cvsMap.height / CURRENT_PIXEL_RATIO + 1}px`,
+    width: `${cvsMap.width / RUNTIME_PIXEL_RATIO + 1}px`,
+    height: `${cvsMap.height / RUNTIME_PIXEL_RATIO + 1}px`,
   });
 };
 
@@ -154,8 +155,6 @@ const resizeInputs = ({
     onInput: saveTitlesValue,
     height: mapHeight,
     width: mapWidth,
-    // padding: paddingWidth,
-    // textAlign,
     layout,
     color: textLayoutColor,
   });
@@ -168,8 +167,6 @@ const resizeInputs = ({
     onInput: saveTitlesValue,
     height: mapHeight,
     width: mapWidth,
-    // padding: paddingWidth,
-    // textAlign,
     layout,
     color: textLayoutColor,
   });
@@ -185,8 +182,8 @@ const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
 
   Object.assign(inputWrap.style, {
     width: "100%",
-    height: bottomBannerHeight + "px", // `${frameCanvas.height}px`,
-    marginBottom: paddingWidth + "px",
+    height: bottomBannerHeight / RUNTIME_PIXEL_RATIO + "px", // `${frameCanvas.height}px`,
+    marginBottom: paddingWidth / RUNTIME_PIXEL_RATIO + "px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -239,7 +236,7 @@ export default function StudioRootContainer() {
     width: mapWrapperWidth,
   } = useElementDimensions("map_wrap_2_id");
 
-  CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
+  // CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
   const { isMobile } = useIsMobile();
 
   const mapTitlesRef = useRef(mapTitles); // Using this due to snapshot state of state in hooks
@@ -259,23 +256,17 @@ export default function StudioRootContainer() {
 
   const {
     paddingWidth,
-    // bottomBannerHeight,
     layoutObj,
     baseLongSize,
   } = getCenteringLayoutDimensions({
     product: productRef.current,
-    //     variantId: productRef.current.variantId,
     layout: activeLayout,
     elWidth: canvasMap?.width,
     elHeight: canvasMap?.height,
   });
 
   useEffect(() => {
-    Object.defineProperty(window, "devicePixelRatio", {
-      get: function () {
-        return CURRENT_PIXEL_RATIO; // x / 96;
-      },
-    });
+    setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
   }, []);
 
   useEffect(() => {
@@ -368,7 +359,6 @@ export default function StudioRootContainer() {
     });
 
     map.touchPitch.disable();
-    // map.touchZoomRotate.disable();
     map.touchZoomRotate.disableRotation();
     map.dragRotate.disable();
 
@@ -441,7 +431,7 @@ export default function StudioRootContainer() {
           mapWidth: updWidth,
           layout: layoutRef.current,
           layoutObj,
-          paddingWidth,
+          paddingWidth: paddingWidth / RUNTIME_PIXEL_RATIO,
           activeMapStyleName,
           productRef,
         });
@@ -535,7 +525,7 @@ export default function StudioRootContainer() {
         mapWidth: updWidth,
         layout: activeLayout,
         layoutObj,
-        paddingWidth,
+        paddingWidth: paddingWidth / RUNTIME_PIXEL_RATIO,
         activeMapStyleName,
         productRef,
       });

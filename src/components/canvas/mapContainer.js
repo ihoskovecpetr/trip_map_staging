@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
-// import { styled } from "@material-ui/core/styles";
 
 import Lightbox from "react-image-lightbox";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -19,8 +18,6 @@ import { color } from "utils";
 import Logo from "components/logo";
 import LogoWhite from "assets/logo_while.png";
 import { useElementDimensions } from "Hooks/useElementDimensions";
-import UnderlineLoader from "components/UnderlineLoader";
-import CustomLoader from "components/CustomLoader";
 
 import { FAKE_DIV_IDS, TITLES_DEFAULT } from "../../constants/constants";
 
@@ -51,7 +48,7 @@ export default function MapContainer({
   } = useElementDimensions("map_wrap_2_id");
 
   const fullscreenImageRequested = async () => {
-    // setIsCreatingImage(true);
+    setIsCreatingImage(true);
 
     const finalImgSrc = await createFinalImage({
       originalMapObject: map,
@@ -59,7 +56,11 @@ export default function MapContainer({
       mapTitles,
       product,
       activeMapStyleName,
-      options: { height: mapWrapperHeight, width: mapWrapperWidth },
+      options: {
+        height: mapWrapperHeight,
+        width: mapWrapperWidth,
+        isPreview: true,
+      },
     });
 
     setLightbox({
@@ -67,7 +68,7 @@ export default function MapContainer({
       activeSrc: finalImgSrc,
     });
 
-    // setIsCreatingImage(false);
+    setIsCreatingImage(false);
   };
 
   return (
