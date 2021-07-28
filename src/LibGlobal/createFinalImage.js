@@ -73,15 +73,24 @@ export const createFinalImage = async ({
     } else {
       multiple = 1200 / height;
     }
-
+    console.log("FilanWIdth: ", width * multiple);
     Object.assign(snapshotMap.style, {
       width: `${width * multiple}px`,
       height: `${height * multiple}px`,
       // display: "none",
-      visibility: "hidden",
+      // visibility: "hidden",
     });
-    const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
-    PlaceToHideBigMap.appendChild(snapshotMap);
+    // const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
+    // PlaceToHideBigMap.appendChild(snapshotMap);
+
+    document.body.appendChild(snapshotMap);
+
+    const CURRENT_VERSION_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
+    const CURRENT_SNAPSHOT_PIXEL_RATIO = isPreview
+      ? RUNTIME_PIXEL_RATIO
+      : CURRENT_VERSION_PIXEL_RATIO;
+
+    setDevicePixelRatio(CURRENT_SNAPSHOT_PIXEL_RATIO);
 
     snapshotMapObject = new mapboxgl.Map({
       container: "snapshot_map",
@@ -91,13 +100,6 @@ export const createFinalImage = async ({
       style: MAP_STYLES[activeMapStyleName].url,
       preserveDrawingBuffer: true,
     });
-
-    const CURRENT_VERSION_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
-    const CURRENT_SNAPSHOT_PIXEL_RATIO = isPreview
-      ? RUNTIME_PIXEL_RATIO
-      : CURRENT_VERSION_PIXEL_RATIO;
-
-    setDevicePixelRatio(CURRENT_SNAPSHOT_PIXEL_RATIO);
 
     console.log({ CURRENT_SNAPSHOT_PIXEL_RATIO });
 

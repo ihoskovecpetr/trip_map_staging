@@ -3,6 +3,10 @@ const IS_CLIENT = typeof window !== "undefined";
 const PIXEL_RATIO = 4; //  x / 96 (8 is the good value)
 const RUNTIME_PIXEL_RATIO = 2;
 
+const PIXEL_RATIO_SM = 2;
+const PIXEL_RATIO_MD = 4;
+const PIXEL_RATIO_LG = 5.5;
+
 const TAX_PERCENTAGE = 21; // Tax I pay in price from printful
 const GROSS_PROFIT_PERCENTAGE = 20;
 
@@ -126,7 +130,7 @@ const VARIANTS_PRINTFUL = [
     frameOutsideKoef: 0,
     sizeName: sizeNames["30X40cm"],
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
-    PIXEL_RATIO: 2,
+    PIXEL_RATIO: PIXEL_RATIO_SM,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
       price: 239,
@@ -140,7 +144,7 @@ const VARIANTS_PRINTFUL = [
     frameOutsideKoef: 0.01,
     sizeName: sizeNames["30X40cm"],
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
-    PIXEL_RATIO: 2,
+    PIXEL_RATIO: PIXEL_RATIO_SM,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
       price: 239,
@@ -153,7 +157,7 @@ const VARIANTS_PRINTFUL = [
     frameWidth: 0.01,
     frameOutsideKoef: 0.01,
     sizeName: sizeNames["30X40cm"],
-    PIXEL_RATIO: 2,
+    PIXEL_RATIO: PIXEL_RATIO_SM,
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
@@ -169,7 +173,7 @@ const VARIANTS_PRINTFUL = [
     frameOutsideKoef: 0,
     sizeName: sizeNames["50X70cm"],
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
-    PIXEL_RATIO: 4,
+    PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
       price: 239,
@@ -183,7 +187,7 @@ const VARIANTS_PRINTFUL = [
     frameOutsideKoef: 0.01,
     sizeName: sizeNames["50X70cm"],
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
-    PIXEL_RATIO: 4,
+    PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
       price: 799,
@@ -197,7 +201,7 @@ const VARIANTS_PRINTFUL = [
     frameOutsideKoef: 0.01,
     sizeName: sizeNames["50X70cm"],
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
-    PIXEL_RATIO: 4,
+    PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
       price: 799,
@@ -212,7 +216,7 @@ const VARIANTS_PRINTFUL = [
     frameOutsideKoef: 0,
     sizeName: sizeNames["61X91cm"],
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
-    PIXEL_RATIO: 5.5,
+    PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
       codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
       price: 239,
@@ -226,7 +230,7 @@ const VARIANTS_PRINTFUL = [
     frameOutsideKoef: 0.01,
     sizeName: sizeNames["61X91cm"],
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
-    PIXEL_RATIO: 5.5,
+    PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
       price: 799,
@@ -240,7 +244,7 @@ const VARIANTS_PRINTFUL = [
     frameOutsideKoef: 0.01,
     sizeName: sizeNames["61X91cm"],
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
-    PIXEL_RATIO: 5.5,
+    PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
       codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
       price: 799,

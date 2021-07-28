@@ -59,7 +59,7 @@ export default function MapContainer({
       options: {
         height: mapWrapperHeight,
         width: mapWrapperWidth,
-        isPreview: true,
+        isPreview: false,
       },
     });
 

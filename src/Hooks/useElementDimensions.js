@@ -26,7 +26,9 @@ export function useElementDimensions(element_id) {
     const measuredElement = document.getElementById(element_id);
     const resizeObserver = new ResizeObserver(handleResize);
 
-    resizeObserver?.observe(measuredElement);
+    if (measuredElement) {
+      resizeObserver?.observe(measuredElement);
+    }
     window.addEventListener("resize", handleResize);
     window.addEventListener("load", handleResize);
 
@@ -35,9 +37,12 @@ export function useElementDimensions(element_id) {
     }, 500);
 
     return () => {
+      if (measuredElement) {
+        resizeObserver?.unobserve(measuredElement);
+      }
+
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("load", handleResize);
-      resizeObserver?.unobserve(measuredElement);
 
       clearTimeout(timeout);
     };
