@@ -24,6 +24,30 @@ export default function CustomApp({ Component, pageProps }) {
   //   Router.events.on("routeChangeComplete", logPageView);
   // }, []);
 
+  const customizeForDevice = function () {
+    const ua = navigator.userAgent;
+    const checker = {
+      iphone: ua.match(/(iPhone|iPod|iPad)/),
+      blackberry: ua.match(/BlackBerry/),
+      android: ua.match(/Android/),
+    };
+    if (checker.android) {
+      console.log("customizeForDevice_Andriod device", {
+        obj: checker.android,
+      });
+    } else if (checker.iphone) {
+      console.log("customizeForDevice_iPhone device");
+    } else if (checker.blackberry) {
+      console.log("customizeForDevice_Blackberry device");
+    } else {
+      console.log("customizeForDevice_desktop");
+    }
+  };
+
+  useEffect(() => {
+    customizeForDevice();
+  }, []);
+
   return (
     <>
       <Head>

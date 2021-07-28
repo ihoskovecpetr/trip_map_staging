@@ -96,6 +96,7 @@ export const createFinalImage = async ({
     const CURRENT_SNAPSHOT_PIXEL_RATIO = isPreview
       ? RUNTIME_PIXEL_RATIO
       : CURRENT_VERSION_PIXEL_RATIO;
+
     setDevicePixelRatio(CURRENT_SNAPSHOT_PIXEL_RATIO);
 
     console.log({ CURRENT_SNAPSHOT_PIXEL_RATIO });
