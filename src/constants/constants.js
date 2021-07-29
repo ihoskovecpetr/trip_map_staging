@@ -3,8 +3,8 @@ const IS_CLIENT = typeof window !== "undefined";
 const PIXEL_RATIO = 4; //  x / 96 (8 is the good value)
 const RUNTIME_PIXEL_RATIO = 2;
 
-const PIXEL_RATIO_SM = 2;
-const PIXEL_RATIO_MD = 4;
+const PIXEL_RATIO_SM = 1.2;
+const PIXEL_RATIO_MD = 2;
 const PIXEL_RATIO_LG = 5.5;
 
 const TAX_PERCENTAGE = 21; // Tax I pay in price from printful

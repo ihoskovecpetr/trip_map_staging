@@ -424,6 +424,10 @@ export default function StudioRootContainer() {
           activeMapStyleName: activeMapStyleName,
         });
 
+        const styleJson = map.getStyle();
+
+        console.log({ styleJson });
+
         resizeInputs({
           mapTitles: mapTitlesRef.current,
           saveTitlesValue,

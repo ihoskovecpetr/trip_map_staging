@@ -69,9 +69,9 @@ export const createFinalImage = async ({
 
     let multiple;
     if (isWideOrientation) {
-      multiple = 1200 / width;
+      multiple = 200 / width;
     } else {
-      multiple = 1200 / height;
+      multiple = 2000 / height;
     }
     console.log("FilanWIdth: ", width * multiple);
     Object.assign(snapshotMap.style, {
