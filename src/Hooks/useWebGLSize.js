@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { MOBILE_WIDTH_SIZE_PX } from "../constants/constants";
+import React, { useState, useEffect } from "react";
+import { PRINT_CANVAS_BASE_PX, PIXEL_RATIO_LG } from "constants/constants";
 
 export function useWebGLSize() {
   const [maxPixels, setMaxPixels] = useState();
+  const [isLargeSizeCapable, setIsLargeSizeCapable] = useState(false);
 
   const checkWebGLMaxSize = () => {
     const canvas = document.createElement("canvas");
@@ -10,11 +11,12 @@ export function useWebGLSize() {
     return gl.getParameter(gl.MAX_TEXTURE_SIZE);
   };
 
-  console.log({ maxPixels });
-
   useEffect(() => {
-    setMaxPixels(checkWebGLMaxSize());
+    const maxSidePx = checkWebGLMaxSize();
+
+    setMaxPixels(maxSidePx);
+    setIsLargeSizeCapable(maxSidePx >= PRINT_CANVAS_BASE_PX * PIXEL_RATIO_LG);
   }, []);
 
-  return { maxPixels };
+  return { maxPixels, isLargeSizeCapable };
 }

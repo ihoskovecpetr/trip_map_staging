@@ -5,7 +5,9 @@ const RUNTIME_PIXEL_RATIO = 2;
 
 const PIXEL_RATIO_SM = 1.2;
 const PIXEL_RATIO_MD = 2;
-const PIXEL_RATIO_LG = 5.5;
+const PIXEL_RATIO_LG = 3;
+
+const PRINT_CANVAS_BASE_PX = 2048;
 
 const TAX_PERCENTAGE = 21; // Tax I pay in price from printful
 const GROSS_PROFIT_PERCENTAGE = 20;
@@ -36,7 +38,7 @@ const FRAME_COLOR_TRANSPARENT = "transparent";
 const DEFAULT_FONT_WEIGHT_BOLD = 400;
 const DEFAULT_FONT_WEIGHT_THIN = 300;
 
-const sizeNames = {
+const SIZE_NAMES = {
   "61X91cm": "61X91cm",
   "91X61cm": "91X61cm",
   "50X70cm": "50X70cm",
@@ -58,21 +60,21 @@ const SIZES = [
     ratio: 30 / 40,
     name: "30 x 40",
     unit: "cm",
-    code: sizeNames["30X40cm"],
+    code: SIZE_NAMES["30X40cm"],
     height: 30,
     width: 40,
     orientation: ORIENTATIONS.wide,
-    acceptableSizes: [sizeNames["30X40cm"], sizeNames["40X30cm"]],
+    acceptableSizes: [SIZE_NAMES["30X40cm"], SIZE_NAMES["40X30cm"]],
   },
   {
     ratio: 40 / 30,
     name: "40 x 30",
     unit: "cm",
-    code: sizeNames["40X30cm"],
+    code: SIZE_NAMES["40X30cm"],
     height: 40,
     width: 30,
     orientation: ORIENTATIONS.tall,
-    acceptableSizes: [sizeNames["30X40cm"], sizeNames["40X30cm"]],
+    acceptableSizes: [SIZE_NAMES["30X40cm"], SIZE_NAMES["40X30cm"]],
   },
 
   {
@@ -81,9 +83,9 @@ const SIZES = [
     unit: "cm",
     height: 50,
     width: 70,
-    code: sizeNames["50X70cm"],
+    code: SIZE_NAMES["50X70cm"],
     orientation: ORIENTATIONS.wide,
-    acceptableSizes: [sizeNames["50X70cm"], sizeNames["70X50cm"]],
+    acceptableSizes: [SIZE_NAMES["50X70cm"], SIZE_NAMES["70X50cm"]],
   },
   {
     ratio: 70 / 50,
@@ -91,9 +93,9 @@ const SIZES = [
     unit: "cm",
     height: 70,
     width: 50,
-    code: sizeNames["70X50cm"],
+    code: SIZE_NAMES["70X50cm"],
     orientation: ORIENTATIONS.tall,
-    acceptableSizes: [sizeNames["70X50cm"], sizeNames["50X70cm"]],
+    acceptableSizes: [SIZE_NAMES["70X50cm"], SIZE_NAMES["50X70cm"]],
   },
   {
     ratio: 61 / 91,
@@ -101,9 +103,9 @@ const SIZES = [
     unit: "cm",
     height: 61,
     width: 91,
-    code: sizeNames["61X91cm"],
+    code: SIZE_NAMES["61X91cm"],
     orientation: ORIENTATIONS.wide,
-    acceptableSizes: [sizeNames["61X91cm"], sizeNames["91X61cm"]],
+    acceptableSizes: [SIZE_NAMES["61X91cm"], SIZE_NAMES["91X61cm"]],
   },
   {
     ratio: 91 / 61,
@@ -111,9 +113,9 @@ const SIZES = [
     unit: "cm",
     height: 91,
     width: 61,
-    code: sizeNames["91X61cm"],
+    code: SIZE_NAMES["91X61cm"],
     orientation: ORIENTATIONS.tall,
-    acceptableSizes: [sizeNames["61X91cm"], sizeNames["91X61cm"]],
+    acceptableSizes: [SIZE_NAMES["61X91cm"], SIZE_NAMES["91X61cm"]],
   },
 ];
 
@@ -128,7 +130,7 @@ const VARIANTS_PRINTFUL = [
     frameColor: FRAME_COLOR_TRANSPARENT,
     frameWidth: 0,
     frameOutsideKoef: 0,
-    sizeName: sizeNames["30X40cm"],
+    sizeName: SIZE_NAMES["30X40cm"],
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_SM,
     shipping: {
@@ -142,7 +144,7 @@ const VARIANTS_PRINTFUL = [
     frameColor: FRAME_COLOR_BLACK,
     frameWidth: 0.01,
     frameOutsideKoef: 0.01,
-    sizeName: sizeNames["30X40cm"],
+    sizeName: SIZE_NAMES["30X40cm"],
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_SM,
     shipping: {
@@ -156,7 +158,7 @@ const VARIANTS_PRINTFUL = [
     frameColor: FRAME_COLOR_WHITE,
     frameWidth: 0.01,
     frameOutsideKoef: 0.01,
-    sizeName: sizeNames["30X40cm"],
+    sizeName: SIZE_NAMES["30X40cm"],
     PIXEL_RATIO: PIXEL_RATIO_SM,
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     shipping: {
@@ -171,7 +173,7 @@ const VARIANTS_PRINTFUL = [
     frameColor: FRAME_COLOR_TRANSPARENT,
     frameWidth: 0,
     frameOutsideKoef: 0,
-    sizeName: sizeNames["50X70cm"],
+    sizeName: SIZE_NAMES["50X70cm"],
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
@@ -185,7 +187,7 @@ const VARIANTS_PRINTFUL = [
     frameColor: FRAME_COLOR_BLACK,
     frameWidth: 0.01,
     frameOutsideKoef: 0.01,
-    sizeName: sizeNames["50X70cm"],
+    sizeName: SIZE_NAMES["50X70cm"],
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
@@ -199,7 +201,7 @@ const VARIANTS_PRINTFUL = [
     frameColor: FRAME_COLOR_WHITE,
     frameWidth: 0.01,
     frameOutsideKoef: 0.01,
-    sizeName: sizeNames["50X70cm"],
+    sizeName: SIZE_NAMES["50X70cm"],
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
@@ -214,7 +216,7 @@ const VARIANTS_PRINTFUL = [
     frameColor: FRAME_COLOR_TRANSPARENT,
     frameWidth: 0,
     frameOutsideKoef: 0,
-    sizeName: sizeNames["61X91cm"],
+    sizeName: SIZE_NAMES["61X91cm"],
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
@@ -228,7 +230,7 @@ const VARIANTS_PRINTFUL = [
     frameColor: FRAME_COLOR_BLACK,
     frameWidth: 0.01,
     frameOutsideKoef: 0.01,
-    sizeName: sizeNames["61X91cm"],
+    sizeName: SIZE_NAMES["61X91cm"],
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
@@ -242,7 +244,7 @@ const VARIANTS_PRINTFUL = [
     frameColor: FRAME_COLOR_WHITE,
     frameWidth: 0.01,
     frameOutsideKoef: 0.01,
-    sizeName: sizeNames["61X91cm"],
+    sizeName: SIZE_NAMES["61X91cm"],
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
@@ -502,6 +504,10 @@ module.exports = {
   IS_CLIENT,
   PIXEL_RATIO,
   RUNTIME_PIXEL_RATIO,
+  PIXEL_RATIO_SM,
+  PIXEL_RATIO_MD,
+  PIXEL_RATIO_LG,
+  PRINT_CANVAS_BASE_PX,
   TAX_PERCENTAGE,
   GROSS_PROFIT_PERCENTAGE,
   BOTTOM_LAYOUT_SIZE,
@@ -515,6 +521,7 @@ module.exports = {
   TITLES_DEFAULT,
   DEFAULT_FONT_WEIGHT_BOLD,
   DEFAULT_FONT_WEIGHT_THIN,
+  SIZE_NAMES,
   BOTTOM_BANNER,
   LAY_SINGLE_FRAME_PDNG,
   LAY_DOUBLE_FRAME_PDNG,

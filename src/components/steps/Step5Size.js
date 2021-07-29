@@ -2,22 +2,23 @@
 import React from "react";
 import { jsx, Text } from "theme-ui";
 import styled from "styled-components";
+import DoneIcon from "@material-ui/icons/Done";
 
 import { color } from "utils";
-
-import { VARIANTS_PRINTFUL, SIZES } from "../../constants/constants";
 import CustomLoader from "../CustomLoader";
+import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { useIsMobile } from "Hooks/useIsMobile";
+import { useWebGLSize } from "Hooks/useWebGLSize";
+import disabledAndroid from "assets/icons/devicesAndroidOblique.png";
 
-import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
-import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
-import { useIsMobile } from "../../Hooks/useIsMobile";
-import { useWebGLSize } from "../../Hooks/useWebGLSize";
+import { VARIANTS_PRINTFUL, SIZES, SIZE_NAMES } from "constants/constants";
 
 const priceAlgorithm = getPriceAlgorithm();
 
 export default function Step5Size({ product, setProduct }) {
   const { isMobile } = useIsMobile();
-  const { maxPixels } = useWebGLSize();
+  const { maxPixels, isLargeSizeCapable } = useWebGLSize();
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
@@ -88,20 +89,59 @@ export default function Step5Size({ product, setProduct }) {
             const sizeObject = SIZES.find(
               (size) => size.code === sizeNameLocal
             );
+            const isDisabledBtn =
+              sizeNameLocal === SIZE_NAMES["61X91cm"] && isLargeSizeCapable; // change it to !isLa..
 
             return (
-              <StyledItem
-                active={product.sizeObject.acceptableSizes.includes(
-                  sizeNameLocal
-                )}
-                onClick={() => setNewSize(sizeNameLocal)}
-              >
-                <p sx={styles.itemDimensions}>{sizeObject?.name}</p>
-                <p sx={styles.itemUnit}>[ {sizeObject?.unit} ]</p>
-              </StyledItem>
+              <MainItem>
+                <StyledItem
+                  active={product.sizeObject.acceptableSizes.includes(
+                    sizeNameLocal
+                  )}
+                  isDisabled={isDisabledBtn}
+                  onClick={() => !isDisabledBtn && setNewSize(sizeNameLocal)}
+                >
+                  <p sx={styles.itemDimensions}>
+                    {sizeObject?.name}{" "}
+                    <span sx={styles.itemUnit}>[ {sizeObject?.unit} ]</span>
+                  </p>
+                  {/* <p sx={styles.itemUnit}>[ {sizeObject?.unit} ]</p> */}
+                </StyledItem>
+                <DevicesItem>
+                  {!isDisabledBtn ? (
+                    <StyledDoneIcon />
+                  ) : (
+                    <StyledDevicesImg src={disabledAndroid} />
+                  )}
+                </DevicesItem>
+              </MainItem>
             );
           })}
       </ContainerSizes>
+
+      {/* {!isMobile && <HeadingText>Dostupnost velikostí</HeadingText>}
+
+      <ContainerSizes>
+        {variantsPrintfulForSize.length > 0 &&
+          dataPrintful &&
+          arrSingleSizeNames.map((sizeNameLocal) => {
+            const sizeObject = SIZES.find(
+              (size) => size.code === sizeNameLocal
+            );
+            const isDisabledBtn =
+              sizeNameLocal === SIZE_NAMES["61X91cm"] && isLargeSizeCapable; // change it to !isLa..
+
+            return (
+              <DevicesItem>
+                {!isDisabledBtn ? (
+                  <StyledDoneIcon />
+                ) : (
+                  <StyledDevicesImg src={disabledAndroid} />
+                )}
+              </DevicesItem>
+            );
+          })}
+      </ContainerSizes> */}
       {maxPixels}
     </div>
   );
@@ -127,8 +167,6 @@ const styles = {
     textAlign: "center",
   },
   itemUnit: {
-    margin: 0,
-    display: "block",
     textAlign: "center",
     textTransform: "uppercase",
     fontSize: "10px",
@@ -158,16 +196,38 @@ const ContainerSizes = styled.div`
   justify-content: space-between;
 `;
 
-const StyledItem = styled.div`
+const MainItem = styled.div`
   flex-basis: 30%;
+`;
+
+const StyledItem = styled.div`
   display: block;
-  width: 4rem;
+  width: 100%;
+
+  background-color: ${({ isDisabled }) => isDisabled && "rgba(0, 0, 0, 0.1)"};
   color: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 0px 3px;
   color: ${({ active }) => active && color("cta_color")};
   cursor: pointer;
 
   & > p {
-    color: black;
+    padding: 0;
+    color: ${({ isDisabled }) => (isDisabled ? "rgba(0, 0, 0, 0.1)" : "black")};
   }
+`;
+
+const DevicesItem = styled.div`
+  flex-basis: 30%;
+  width: 100%;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+`;
+
+const StyledDoneIcon = styled(DoneIcon)`
+  color: #01c301;
+`;
+
+const StyledDevicesImg = styled.img`
+  width: 80%;
 `;

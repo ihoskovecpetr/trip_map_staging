@@ -9,6 +9,7 @@ import {
   MAP_STYLES,
   ORIENTATIONS,
   RUNTIME_PIXEL_RATIO,
+  PRINT_CANVAS_BASE_PX,
 } from "constants/constants";
 
 let snapshotMapObject;
@@ -69,9 +70,9 @@ export const createFinalImage = async ({
 
     let multiple;
     if (isWideOrientation) {
-      multiple = 2000 / width;
+      multiple = PRINT_CANVAS_BASE_PX / width;
     } else {
-      multiple = 2000 / height;
+      multiple = PRINT_CANVAS_BASE_PX / height;
     }
     console.log("FilanWIdth: ", width * multiple);
     Object.assign(snapshotMap.style, {
