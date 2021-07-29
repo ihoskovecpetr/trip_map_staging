@@ -90,7 +90,7 @@ export default function Step5Size({ product, setProduct }) {
               (size) => size.code === sizeNameLocal
             );
             const isDisabledBtn =
-              sizeNameLocal === SIZE_NAMES["61X91cm"] && isLargeSizeCapable; // change it to !isLa..
+              sizeNameLocal === SIZE_NAMES["61X91cm"] && !isLargeSizeCapable; // change it to !isLa..
 
             return (
               <MainItem>
