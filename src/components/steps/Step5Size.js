@@ -11,11 +11,13 @@ import CustomLoader from "../CustomLoader";
 import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useIsMobile } from "../../Hooks/useIsMobile";
+import { useWebGlSize } from "../../Hooks/useWebGlSize";
 
 const priceAlgorithm = getPriceAlgorithm();
 
 export default function Step5Size({ product, setProduct }) {
   const { isMobile } = useIsMobile();
+  const { maxPixels } = useWebGlSize();
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
@@ -100,6 +102,7 @@ export default function Step5Size({ product, setProduct }) {
             );
           })}
       </ContainerSizes>
+      {maxPixels}
     </div>
   );
 }

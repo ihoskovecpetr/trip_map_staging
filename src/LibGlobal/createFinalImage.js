@@ -69,7 +69,7 @@ export const createFinalImage = async ({
 
     let multiple;
     if (isWideOrientation) {
-      multiple = 200 / width;
+      multiple = 2000 / width;
     } else {
       multiple = 2000 / height;
     }

@@ -8,10 +8,10 @@ import Carousel from "nuka-carousel";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-import Carousel1 from "assets/landing-page/png/1.png";
-import Carousel2 from "assets/landing-page/png/2.png";
-import Carousel3 from "assets/landing-page/png/3.png";
-import Carousel4 from "assets/landing-page/png/4.png";
+import Carousel1 from "assets/landing-page/webp/1.webp";
+import Carousel2 from "assets/landing-page/webp/2.webp";
+import Carousel3 from "assets/landing-page/webp/3.webp";
+import Carousel4 from "assets/landing-page/webp/4.webp";
 
 import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
