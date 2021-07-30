@@ -10,6 +10,7 @@ import {
   ORIENTATIONS,
   RUNTIME_PIXEL_RATIO,
   PRINT_CANVAS_BASE_PX,
+  LOW_HIGH_DEFINITION_RATIO,
 } from "constants/constants";
 
 let snapshotMapObject;
@@ -26,31 +27,25 @@ function takeScreenshot(mapLocal) {
   });
 }
 
-const resizeMapPromise = async ({ originalMapObject, mapObject, options }) => {
-  const { height, width } = options;
-  return new Promise((resolve, reject) => {
-    const originalBounds = originalMapObject.getBounds();
+const resizeMapPromise = async ({ originalMapObject, mapObject }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const originalBounds = originalMapObject.getBounds();
 
-    mapObject.on("idle", function () {
-      //TODO: find another event after fully loading image to avoid setTimeout.
-      resolve();
-      setTimeout(() => {}, 1000);
-    });
+      mapObject.on("idle", function () {
+        //TODO: find another event after fully loading image to avoid setTimeout.
+        resolve();
+        setTimeout(() => {}, 1000);
+      });
 
-    mapObject.fitBounds(originalBounds, {
-      animate: false,
-    });
+      mapObject.fitBounds(originalBounds, {
+        animate: false,
+      });
+    } catch (e) {
+      alert("resizing Error", e);
+    }
   });
 };
-
-// export const setDevicePixelRatio = (ratio) => {
-//   console.log();
-//   Object.defineProperty(window, "devicePixelRatio", {
-//     get: function () {
-//       return ratio;
-//     },
-//   });
-// };
 
 export const createFinalImage = async ({
   originalMapObject,
@@ -60,7 +55,7 @@ export const createFinalImage = async ({
   activeMapStyleName,
   options,
 }) => {
-  const { height, width, isPreview } = options;
+  const { height, width, isPreview, isLowDefinition } = options;
   return new Promise(async (resolve, reject) => {
     let snapshotMap = document.createElement("div");
     snapshotMap.setAttribute("id", "snapshot_map");
@@ -68,30 +63,43 @@ export const createFinalImage = async ({
     const isWideOrientation =
       product?.sizeObject?.orientation === ORIENTATIONS.wide;
 
+    const computedPixelBase = isLowDefinition
+      ? PRINT_CANVAS_BASE_PX / LOW_HIGH_DEFINITION_RATIO
+      : PRINT_CANVAS_BASE_PX;
+
+    const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
+
+    const computedPixelRatio = isLowDefinition
+      ? currentVersionPixelRatio * LOW_HIGH_DEFINITION_RATIO
+      : currentVersionPixelRatio;
+
+    console.log({ computedPixelRatio, computedPixelBase });
+
     let multiple;
+
     if (isWideOrientation) {
-      multiple = PRINT_CANVAS_BASE_PX / width;
+      multiple = computedPixelBase / width;
     } else {
-      multiple = PRINT_CANVAS_BASE_PX / height;
+      multiple = computedPixelBase / height;
     }
-    console.log("FilanWIdth: ", width * multiple);
+
+    console.log({
+      FInal_width: `${width * multiple}px`,
+      height: `${height * multiple}px`,
+      width,
+      height,
+    });
+
     Object.assign(snapshotMap.style, {
       width: `${width * multiple}px`,
       height: `${height * multiple}px`,
       // display: "none",
-      // visibility: "hidden",
+      visibility: "hidden",
     });
-    // const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
-    // PlaceToHideBigMap.appendChild(snapshotMap);
+    const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
+    PlaceToHideBigMap.appendChild(snapshotMap);
 
-    document.body.appendChild(snapshotMap);
-
-    const CURRENT_VERSION_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
-    const CURRENT_SNAPSHOT_PIXEL_RATIO = isPreview
-      ? RUNTIME_PIXEL_RATIO
-      : CURRENT_VERSION_PIXEL_RATIO;
-
-    setDevicePixelRatio(CURRENT_SNAPSHOT_PIXEL_RATIO);
+    setDevicePixelRatio(computedPixelRatio);
 
     snapshotMapObject = new mapboxgl.Map({
       container: "snapshot_map",
@@ -101,8 +109,6 @@ export const createFinalImage = async ({
       style: MAP_STYLES[activeMapStyleName].url,
       preserveDrawingBuffer: true,
     });
-
-    console.log({ CURRENT_SNAPSHOT_PIXEL_RATIO });
 
     await resizeMapPromise({
       originalMapObject,
@@ -141,7 +147,7 @@ export const createFinalImage = async ({
           product,
           isProductionPrint: true,
           activeMapStyleName,
-          localPixelRatio: CURRENT_SNAPSHOT_PIXEL_RATIO,
+          localPixelRatio: computedPixelRatio,
         });
 
         const finalImgWithLayout = mergerCanvas.toDataURL();

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import CheckoutCta from "../Checkout/CheckoutCta";
 import { mobile } from "utils";
 
-export default function Step7Checkout({
+export default function Step8Checkout({
   map,
   mapTitles,
   activeLayout,

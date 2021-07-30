@@ -3,11 +3,13 @@ const IS_CLIENT = typeof window !== "undefined";
 const PIXEL_RATIO = 4; //  x / 96 (8 is the good value)
 const RUNTIME_PIXEL_RATIO = 2;
 
-const PIXEL_RATIO_SM = 1.2;
-const PIXEL_RATIO_MD = 2;
-const PIXEL_RATIO_LG = 3;
+const PIXEL_RATIO_SM = 1.7;
+const PIXEL_RATIO_MD = 2.8;
+const PIXEL_RATIO_LG = 4.8;
 
-const PRINT_CANVAS_BASE_PX = 2048;
+const LOW_HIGH_DEFINITION_RATIO = 2;
+
+const PRINT_CANVAS_BASE_PX = 1400; //1024  2048;
 
 const TAX_PERCENTAGE = 21; // Tax I pay in price from printful
 const GROSS_PROFIT_PERCENTAGE = 20;
@@ -507,6 +509,7 @@ module.exports = {
   PIXEL_RATIO_SM,
   PIXEL_RATIO_MD,
   PIXEL_RATIO_LG,
+  LOW_HIGH_DEFINITION_RATIO,
   PRINT_CANVAS_BASE_PX,
   TAX_PERCENTAGE,
   GROSS_PROFIT_PERCENTAGE,

@@ -76,16 +76,15 @@ const HeadingText = styled.p`
 
 const ItemContainer = styled.div`
   display: flex;
+  justify-content: space-around;
 `;
 const LayoutItemWrap = styled.div`
-  width: 18%;
-  margin: 1%;
+  flex-basis: 40%;
   display: flex;
-  justify-content: center;
 `;
 
 const LayoutItem = styled.div`
-  width: 3rem;
+  width: 100%;
   height: 3rem;
   display: flex;
   justify-content: center;

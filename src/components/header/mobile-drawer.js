@@ -109,7 +109,7 @@ const MobileDrawer = ({ invertHeaderColor }) => {
 };
 
 const StyledAncor = styled.a`
-  fontweight: ${fontWeight("regular")};
+  font-weight: ${fontWeight("regular")} !important;
 `;
 
 const styles = {

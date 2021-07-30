@@ -4,26 +4,24 @@ import { jsx, Text } from "theme-ui";
 import Lightbox from "react-image-lightbox";
 import styled from "styled-components";
 
-import { color } from "utils";
-import { VARIANTS_PRINTFUL, SIZES } from "constants/constants";
+import { color, fontWeight } from "utils";
 import CustomLoader from "../CustomLoader";
 
-import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
+import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getVariantObject } from "LibGlobal/getVariantObject";
-import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
-import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
-import { useIsMobile } from "../../Hooks/useIsMobile";
+import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
+import { useIsMobile } from "Hooks/useIsMobile";
+
+import {
+  getPriceAlgorithm,
+  getBasePriceAlgorithm,
+} from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
+
+import { VARIANTS_PRINTFUL, FRAME_OPTION_NAMES } from "constants/constants";
 
 const priceAlgorithm = getPriceAlgorithm();
 
-export default function Step6FinishVariant({
-  map,
-  mapTitles,
-  activeLayout,
-  product,
-  setProduct,
-  activeMapStyle,
-}) {
+export default function Step6FinishVariant({ product, setProduct }) {
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
@@ -33,6 +31,7 @@ export default function Step6FinishVariant({
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
   );
+  const basePriceAlgorithm = getBasePriceAlgorithm();
 
   const setNewFrame = (variantId, shippingCode) => {
     //TODO there has to be price, otherwise return?
@@ -56,6 +55,10 @@ export default function Step6FinishVariant({
     return isVariantForOffer;
   });
 
+  const variantObjectNoFrame = variantsPrintfulForSize.find(
+    (variant) => variant.frameName === FRAME_OPTION_NAMES.NO_FRAME
+  );
+
   return (
     <div sx={styles.container}>
       {!isMobile && <HeadingText>Rámování</HeadingText>}
@@ -71,6 +74,11 @@ export default function Step6FinishVariant({
               active={product.variantId === variantId}
               onClick={() => setNewFrame(variantId, shipping.codeCZ)}
             >
+              <div sx={styles.textsWrap}>
+                <VariantDesc>
+                  {getVariantObject(variantId)?.frameName}
+                </VariantDesc>
+              </div>
               <div sx={styles.imageWrap}>
                 <img
                   sx={styles.variantImage}
@@ -79,16 +87,21 @@ export default function Step6FinishVariant({
               </div>
               <div sx={styles.textsWrap}>
                 <p sx={styles.variantPrice}>
-                  {getFormattedPrice(
-                    priceAlgorithm.getPriceWithoutDelivery(
-                      variantId,
-                      dataPrintful
-                    ).netPrice
-                  )}
+                  {`+ 
+                  ${getFormattedPrice(
+                    basePriceAlgorithm.subtract([
+                      priceAlgorithm.getPriceWithoutDelivery(
+                        variantId,
+                        dataPrintful
+                      ).netPrice,
+                      priceAlgorithm.getPriceWithoutDelivery(
+                        variantObjectNoFrame.id,
+                        dataPrintful
+                      ).netPrice,
+                    ])
+                  )}`}
                 </p>
-                <p sx={styles.variantDesc}>
-                  {getVariantObject(variantId)?.frameName}
-                </p>
+
                 <p sx={styles.variantDelivery}>
                   {`+ ${getFormattedPrice(
                     priceAlgorithm.getPriceOfDelivery(variantId, dataPrintful)
@@ -120,7 +133,7 @@ export default function Step6FinishVariant({
 const styles = {
   container: {
     width: "100%",
-    padding: "0 10px",
+    padding: "10px 10px",
   },
 
   materialDesc: {
@@ -160,6 +173,7 @@ const styles = {
     cursor: "pointer",
   },
   variantDesc: {
+    color: "primary",
     lineHeight: 1.2,
     fontSize: "0.8rem",
     fontWeight: 500,
@@ -173,6 +187,15 @@ const styles = {
     fontSize: "0.6rem",
   },
 };
+
+const VariantDesc = styled.p`
+  color: ${color("primary")};
+  line-height: 1.2;
+  font-size: 0.8rem;
+  font-weight: ${fontWeight("bold")};
+  padding-bottom: 5px;
+  margin: 0;
+`;
 
 const ExtraPaddingTop = styled.span`
   padding-top: 10px;

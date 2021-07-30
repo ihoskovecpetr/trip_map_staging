@@ -10,23 +10,23 @@ import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
-import { createFinalImage } from "../../LibGlobal/createFinalImage";
+import { orientationSwitcher } from "LibGlobal/getOrientationSwitcher";
+import { createFinalImage } from "LibGlobal/createFinalImage";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { color } from "utils";
 
 import Logo from "components/logo";
 import LogoWhite from "assets/logo_while.png";
-import { useElementDimensions } from "Hooks/useElementDimensions";
+import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 
-import { FAKE_DIV_IDS, TITLES_DEFAULT } from "../../constants/constants";
+import { FAKE_DIV_IDS, TITLES_DEFAULT } from "constants/constants";
 
 export default function MapContainer({
   map,
   addZoom,
   subtractZoom,
   setProduct,
-  activeLayout,
+  activeLayoutName,
   mapTitles,
   product,
   activeMapStyleName,
@@ -37,29 +37,24 @@ export default function MapContainer({
   });
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const { isMobile } = useIsMobile();
+  const qualityImageCreator = useQualityImageCreator();
 
   const changeOrientation = () => {
     orientationSwitcher(product, setProduct);
   };
 
-  const {
-    height: mapWrapperHeight,
-    width: mapWrapperWidth,
-  } = useElementDimensions("map_wrap_2_id");
-
   const fullscreenImageRequested = async () => {
     setIsCreatingImage(true);
 
-    const finalImgSrc = await createFinalImage({
-      originalMapObject: map,
-      activeLayoutName: activeLayout,
+    const finalImgSrc = await qualityImageCreator({
+      map,
+      activeLayoutName,
       mapTitles,
       product,
       activeMapStyleName,
       options: {
-        height: mapWrapperHeight,
-        width: mapWrapperWidth,
         isPreview: false,
+        isLowDefinition: false,
       },
     });
 

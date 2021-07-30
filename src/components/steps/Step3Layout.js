@@ -89,6 +89,7 @@ const styles = {
     overflow: "scroll",
     flexWrap: [null, null, null, "wrap"],
     paddingTop: "2px",
+    paddingBottom: ["30px", null, null, "0px"],
   },
   layoutItem: {
     width: ["4rem", null, null, "23%", "23%", "18%"],
@@ -100,13 +101,7 @@ const styles = {
     flexDirection: "column",
     cursor: "pointer",
 
-    "&.active img": {
-      // border: "5px solid",
-      // borderColor: "cta_color",
-      // boxShadow: "0px 0px 0px 5px",
-      // color: "cta_color",
-      // transform: "scale(1.2)",
-    },
+    "&.active img": {},
     "&.active p": {
       color: "cta_color",
     },

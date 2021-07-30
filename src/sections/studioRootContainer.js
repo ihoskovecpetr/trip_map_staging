@@ -562,24 +562,14 @@ export default function StudioRootContainer() {
               map={map}
               addZoom={addZoom(map)}
               subtractZoom={subtractZoom(map)}
-              activeLayout={activeLayout}
+              activeLayoutName={activeLayout}
               mapTitles={mapTitles}
               setProduct={setProduct}
               product={product}
               activeMapStyleName={activeMapStyleName}
             />
           </Box>
-          {/* <button
-            style={{
-              display: "fixed",
-              top: "70px",
-              position: "absolute",
-              zIndex: 10,
-            }}
-            onClick={() => setIsSetupRolledUp(!isSetupRolledUp)}
-          >
-            Toggle
-          </button> */}
+
           <Box sx={styles.settingsBox}>
             <TabsRootNew
               map={map}

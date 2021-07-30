@@ -18,7 +18,8 @@ import Step3BLayoutColorSwitch from "../steps/Step3BLayoutColorSwitch";
 import Step4Colors from "../steps/Step4Colors";
 import Step5Size from "../steps/Step5Size";
 import Step6FinishVariant from "../steps/Step6FinishVariant";
-import Step7Checkout from "../steps/Step7Checkout";
+import Step7MapDefinition from "../steps/Step7MapDefinition";
+import Step8Checkout from "../steps/Step8Checkout";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
@@ -141,7 +142,16 @@ export default function TabsRootNew({
         setProduct={setProduct}
         activeMapStyle={activeMapStyleName}
       />,
-      <Step7Checkout
+    ],
+    [
+      <Step7MapDefinition
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeLayout}
+        product={product}
+        activeMapStyleName={activeMapStyleName}
+      />,
+      <Step8Checkout
         map={map}
         mapTitles={mapTitles}
         activeLayout={activeLayout}
@@ -209,7 +219,16 @@ export default function TabsRootNew({
       />,
     ],
     [
-      <Step7Checkout
+      <Step7MapDefinition
+        map={map}
+        mapTitles={mapTitles}
+        activeLayout={activeLayout}
+        product={product}
+        activeMapStyleName={activeMapStyleName}
+      />,
+    ],
+    [
+      <Step8Checkout
         map={map}
         mapTitles={mapTitles}
         activeLayout={activeLayout}

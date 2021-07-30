@@ -1,4 +1,5 @@
 const DefaultPriceAlgorithm = require("./DefaultPriceAlgorithm");
+const BasePriceAlgorithm = require("./BasePriceAlgorithm");
 
 const {
   TAX_PERCENTAGE,
@@ -16,4 +17,13 @@ const getPriceAlgorithm = (country) => {
   }
 };
 
-module.exports = { getPriceAlgorithm };
+const getBasePriceAlgorithm = (country) => {
+  switch (country) {
+    default:
+      return new BasePriceAlgorithm({
+        roundingPrecision: 0,
+      });
+  }
+};
+
+module.exports = { getPriceAlgorithm, getBasePriceAlgorithm };

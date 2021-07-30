@@ -13,6 +13,11 @@ import Carousel2 from "assets/landing-page/webp/2.webp";
 import Carousel3 from "assets/landing-page/webp/3.webp";
 import Carousel4 from "assets/landing-page/webp/4.webp";
 
+import Carousel1PNG from "assets/landing-page/png/1.png";
+import Carousel2PNG from "assets/landing-page/png/2.png";
+import Carousel3PNG from "assets/landing-page/png/3.png";
+import Carousel4PNG from "assets/landing-page/png/4.png";
+
 import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
 
@@ -89,14 +94,13 @@ export default function LandingPage() {
               renderCenterLeftControls={() => null}
               renderCenterRightControls={() => null}
             >
-              <img src={Carousel1} id="carousel_img_photo_0" />
-              <img src={Carousel2} />
-              <img src={Carousel3} />
-              <img src={Carousel4} />
-
-              {/* <img src={LandingPagePicture} />
-              <img src={LandingPageBg} />
-              <img src={InterierFlowers} /> */}
+              <img
+                src={displayPNG ? Carousel1PNG : Carousel1}
+                id="carousel_img_photo_0"
+              />
+              <img src={displayPNG ? Carousel2PNG : Carousel2} />
+              <img src={displayPNG ? Carousel3PNG : Carousel2} />
+              <img src={displayPNG ? Carousel4PNG : Carousel4} />
             </Carousel>
           </LandingCarousel>
         </Box>
@@ -147,7 +151,6 @@ function CtaComponent() {
 
     let target = document.getElementById("link_studio_id");
 
-    console.log({ target });
     if (target) {
       observer.observe(target);
     }
@@ -203,8 +206,8 @@ const LandingCarousel = styled.div`
   min-height: unset;
 
   @media (max-width: 768px) {
-    height: 100vh;
     min-height: 80vh;
+    max-height: 150vw;
   }
 `;
 
@@ -245,6 +248,10 @@ const styles = {
     // display: ["none", null, "block"],
     display: "block",
     cursor: "default",
+    backgroundColor: ["primary", null, null, "unset"],
+    display: "flex",
+    alignItems: "flex-start",
+    paddingTop: "70px",
   },
   // landingCarousel: {
   //   width: "100%",

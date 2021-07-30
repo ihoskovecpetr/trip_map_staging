@@ -45,8 +45,6 @@ export function drawLayout(
     mapStyleObject,
   });
 
-  console.log({ localPixelRatio });
-
   // CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
 
   const heading = mapTitles?.heading;

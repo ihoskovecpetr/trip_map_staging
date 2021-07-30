@@ -11,14 +11,20 @@ import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useWebGLSize } from "Hooks/useWebGLSize";
 import disabledAndroid from "assets/icons/devicesAndroidOblique.png";
+import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
-import { VARIANTS_PRINTFUL, SIZES, SIZE_NAMES } from "constants/constants";
+import {
+  VARIANTS_PRINTFUL,
+  SIZES,
+  SIZE_NAMES,
+  FRAME_OPTION_NAMES,
+} from "constants/constants";
 
 const priceAlgorithm = getPriceAlgorithm();
 
 export default function Step5Size({ product, setProduct }) {
   const { isMobile } = useIsMobile();
-  const { maxPixels, isLargeSizeCapable } = useWebGLSize();
+  const { isLargeSizeCapable } = useWebGLSize();
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
@@ -72,6 +78,19 @@ export default function Step5Size({ product, setProduct }) {
     return isVariantForOffer;
   });
 
+  const getNoFrameVariantForSize = (sizeName) => {
+    return VARIANTS_PRINTFUL.find((variantObj) => {
+      if (
+        variantObj.frameName === FRAME_OPTION_NAMES.NO_FRAME &&
+        variantObj.sizeName === sizeName
+      ) {
+        return true;
+      }
+
+      return false;
+    });
+  };
+
   return (
     <div sx={styles.container}>
       {!isMobile && <HeadingText>Rozměry</HeadingText>}
@@ -89,6 +108,9 @@ export default function Step5Size({ product, setProduct }) {
             const sizeObject = SIZES.find(
               (size) => size.code === sizeNameLocal
             );
+
+            const noFrameVariant = getNoFrameVariantForSize(sizeNameLocal);
+
             const isDisabledBtn =
               sizeNameLocal === SIZE_NAMES["61X91cm"] && !isLargeSizeCapable; // change it to !isLa..
 
@@ -102,10 +124,19 @@ export default function Step5Size({ product, setProduct }) {
                   onClick={() => !isDisabledBtn && setNewSize(sizeNameLocal)}
                 >
                   <p sx={styles.itemDimensions}>
-                    {sizeObject?.name}{" "}
-                    <span sx={styles.itemUnit}>[ {sizeObject?.unit} ]</span>
+                    {sizeObject?.name}
+                    <span sx={styles.itemUnit}> [ {sizeObject?.unit} ]</span>
                   </p>
                   {/* <p sx={styles.itemUnit}>[ {sizeObject?.unit} ]</p> */}
+                  <p>
+                    {`+
+                    ${getFormattedPrice(
+                      priceAlgorithm.getPriceWithoutDelivery(
+                        noFrameVariant.id,
+                        dataPrintful
+                      ).netPrice
+                    )}`}
+                  </p>
                 </StyledItem>
                 <DevicesItem>
                   {!isDisabledBtn ? (
@@ -142,7 +173,6 @@ export default function Step5Size({ product, setProduct }) {
             );
           })}
       </ContainerSizes> */}
-      {maxPixels}
     </div>
   );
 }

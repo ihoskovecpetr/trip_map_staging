@@ -7,14 +7,13 @@ import Backdrop from "@material-ui/core/Backdrop";
 import styled from "styled-components";
 import axios from "axios";
 
-import { VARIANTS_PRINTFUL } from "../../constants/constants";
-import { createUploadRequest } from "../../LibGlobal/createUploadRequest";
+import { VARIANTS_PRINTFUL } from "constants/constants";
+import { createUploadRequest } from "LibGlobal/createUploadRequest";
 import CheckoutPopupBody from "./CheckoutPopupBody";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import { getPriceAlgorithm } from "../../LibGlobal/priceAlgorithm/getPriceAlgorithm";
-import { createFinalImage } from "../../LibGlobal/createFinalImage";
-import { useGetDataPrintful } from "../../Hooks/useGetDataPrintful";
-import { useElementDimensions } from "Hooks/useElementDimensions";
+import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 
 import {
   getLazyUploader,
@@ -43,15 +42,11 @@ export default function CheckoutCta({
   const [axiosCancelTokenSource, setAxiosCancelTokenSource] = useState(
     CancelToken.source()
   );
+  const qualityImageCreator = useQualityImageCreator();
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
   );
-
-  const {
-    height: mapWrapperHeight,
-    width: mapWrapperWidth,
-  } = useElementDimensions("map_wrap_2_id");
 
   const center = map?.getCenter().toString();
 
@@ -74,15 +69,14 @@ export default function CheckoutCta({
     try {
       setBackdropOpen(true);
       setIsUploadPending(true);
-      const finalImgSrc = await createFinalImage({
-        originalMapObject: map,
+
+      const finalImgSrc = await qualityImageCreator({
+        map,
         activeLayoutName,
         mapTitles,
         product,
         activeMapStyleName,
         options: {
-          height: mapWrapperHeight,
-          width: mapWrapperWidth,
           isPreview: false,
         },
       });
