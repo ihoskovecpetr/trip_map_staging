@@ -37,8 +37,6 @@ export default function Step7MapDefinition({
       },
     });
 
-    console.log("qualityImage_1");
-
     const imgHighDefinition = await qualityImageCreator({
       map,
       activeLayoutName: activeLayout,
@@ -50,15 +48,13 @@ export default function Step7MapDefinition({
       },
     });
 
-    console.log("qualityImage_2");
-
     setLowDefinitionImg(imgLowDefinition);
     setHighDefinitionImg(imgHighDefinition);
   };
 
   useEffect(() => {
     createFinalImage();
-  }, []);
+  }, [activeLayout]);
 
   const switchActiveLow = (bool) => {
     setIsLowDefActive(bool);
