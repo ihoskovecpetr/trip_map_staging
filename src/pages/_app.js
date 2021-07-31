@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Head from "next/head";
 // import { initGA, logPageView } from "analytics";
 // Load DM Sans typeface
@@ -21,12 +21,6 @@ import * as ga from "LibGlobal/ga";
 
 export default function CustomApp({ Component, pageProps }) {
   const router = useRouter();
-
-  // useEffect(() => {
-  //   initGA();
-  //   logPageView();
-  //   Router.events.on("routeChangeComplete", logPageView);
-  // }, []);
 
   useEffect(() => {
     const handleRouteChange = (url) => {
