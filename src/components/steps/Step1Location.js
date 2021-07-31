@@ -1,16 +1,16 @@
 /** @jsx jsx */
 import { useEffect } from "react";
-import { jsx, Text } from "theme-ui";
+import { jsx } from "theme-ui";
 import produce from "immer";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import styled from "styled-components";
+import Button from "@material-ui/core/Button";
 
 import { color } from "utils";
 
-import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import { useIsMobile } from "../../Hooks/useIsMobile";
-import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
+import { useIsMobile } from "Hooks/useIsMobile";
+import PopoverGuide from "components/PopoverGuide";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 let geocoder = new MapboxGeocoder({
@@ -87,12 +87,14 @@ export default function Step1Location({
     <div sx={styles.container}>
       {!isMobile && <HeadingText>1. Zadejte lokalitu</HeadingText>}
 
+      {/* <PopoverGuide relatedId="geocoder" legend="Začni zadáním hledaného města"> */}
       <div
         id="geocoder"
         class="geocoder"
         sx={styles.locationInput}
         style={{ marginTop: isMobile ? "10px" : "10px" }}
       ></div>
+      {/* </PopoverGuide> */}
     </div>
   );
 }
