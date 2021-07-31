@@ -37,8 +37,6 @@ export default function CustomApp({ Component, pageProps }) {
     };
   }, [router.events]);
 
-  const router = useRouter();
-
   useEffect(() => {
     const handleRouteChange = (url) => {
       ga.pageview(url);
