@@ -26,6 +26,7 @@ import Button from "components/Button";
 import { useElementDimensions } from "../Hooks/useElementDimensions";
 import { useIsMobile } from "../Hooks/useIsMobile";
 import { useDisplayPNG } from "../Hooks/useDisplayPNG";
+import { mobile } from "utils";
 
 const data = {
   subTitle: "",
@@ -64,25 +65,11 @@ export default function LandingPage() {
 
   return (
     <section sx={styles.sectionContainer}>
-      {/* <div sx={styles.backgroundDiv} /> */}
-      {isMobile && (
-        <PureCtaBox
-          maxHeightTop={headerHeight + carouselHeight}
-          id="pure_cta_box"
-        >
-          <CtaComponent />
-        </PureCtaBox>
-      )}
       <Container sx={styles.containerBox}>
-        {/* {isMobile && (
-          <div sx={styles.onlyMobile}>
-            <MobileTopPadding headerHeight={headerHeight} />
-          </div>
-        )} */}
         <Box sx={styles.carouselBox}>
           <LandingCarousel id="carousel_wrapper">
             <Carousel
-              autoplay={true}
+              // autoplay={true}
               cellAlign="center"
               heightMode="max"
               // heightMode={current}
@@ -99,9 +86,19 @@ export default function LandingPage() {
                 id="carousel_img_photo_0"
               />
               <img src={displayPNG ? Carousel2PNG : Carousel2} />
-              <img src={displayPNG ? Carousel3PNG : Carousel2} />
+              <img src={displayPNG ? Carousel3PNG : Carousel3} />
               <img src={displayPNG ? Carousel4PNG : Carousel4} />
             </Carousel>
+            {isMobile && (
+              <ZeroHeightWrap>
+                <PureCtaBox
+                  maxHeightTop={headerHeight + carouselHeight}
+                  id="pure_cta_box"
+                >
+                  <CtaComponent />
+                </PureCtaBox>
+              </ZeroHeightWrap>
+            )}
           </LandingCarousel>
         </Box>
 
@@ -176,39 +173,33 @@ function CtaComponent() {
   );
 }
 
-const MobileTopPadding = styled.div`
-  height: ${({ headerHeight }) => `${headerHeight}px`};
-`;
-
 const StyledText = styled.p`
   display: inline-block;
   margin: 0;
   transform: translateX(0);
 `;
 
-const PureCtaBox = styled.div`
-  display: none;
+const ZeroHeightWrap = styled.div`
+  height: 0;
+`;
 
-  @media (max-width: 768px) {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    width: 100%;
-    position: absolute;
-    // top: 80vh;
-    z-index: 90;
-  }
+const PureCtaBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  position: relative;
+  top: -110px;
+  z-index: 90;
+
+  ${mobile`
+    display: none;
+  `}
 `;
 
 const LandingCarousel = styled.div`
   width: 100%;
   height: 100%;
-  min-height: unset;
-
-  @media (max-width: 768px) {
-    min-height: 80vh;
-    max-height: 150vw;
-  }
 `;
 
 const styles = {
@@ -241,7 +232,7 @@ const styles = {
   },
   carouselBox: {
     width: ["100%", "100%", "100%", 450, 450, 570],
-    height: ["100vh", null, null, "100%"],
+    height: ["unset", null, null, "100%"], //"100vh"
     pl: [0, 0, 0, 5, 7, 95],
     pr: [0, 0, 0, 5, null, 75, 95],
     order: [0, null, null, 0],
@@ -251,17 +242,8 @@ const styles = {
     backgroundColor: ["primary", null, null, "unset"],
     display: "flex",
     alignItems: "flex-start",
-    paddingTop: "70px",
+    paddingTop: "15px",
   },
-  // landingCarousel: {
-  //   width: "100%",
-  //   height: "100%",
-  //   minHeight: ["80vh", null, null, "unset"],
-
-  //   li: {
-  //     cursor: "default",
-  //   },
-  // },
   contentBox: {
     width: ["100%", 450, 350, 350, 500, 570],
     pt: [7, null, 0],

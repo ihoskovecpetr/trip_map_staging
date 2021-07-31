@@ -36,6 +36,7 @@ const theme = {
     bolder: 900,
   },
   fontSizes: {
+    xxs: "0.6rem",
     xs: ".75rem",
     sm: ".875rem",
     default: "1rem",

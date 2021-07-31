@@ -85,7 +85,7 @@ export default function Step1Location({
 
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>Zadejte lokalitu</HeadingText>}
+      {!isMobile && <HeadingText>1. Zadejte lokalitu</HeadingText>}
 
       <div
         id="geocoder"
@@ -104,7 +104,7 @@ const styles = {
 
   locationInput: {
     width: "100%",
-    border: "3px solid",
+    border: "1px solid",
     borderColor: "cta_color",
     borderRadius: "5px",
     marginBottom: ["210px", null, null, "10px"],

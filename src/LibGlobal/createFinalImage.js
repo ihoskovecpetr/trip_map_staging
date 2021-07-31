@@ -55,7 +55,7 @@ export const createFinalImage = async ({
   activeMapStyleName,
   options,
 }) => {
-  const { height, width, isPreview, isLowDefinition } = options;
+  const { height, width, isPreview, definitionConstant = 1 } = options;
   return new Promise(async (resolve, reject) => {
     let snapshotMap = document.createElement("div");
     snapshotMap.setAttribute("id", "snapshot_map");
@@ -63,17 +63,20 @@ export const createFinalImage = async ({
     const isWideOrientation =
       product?.sizeObject?.orientation === ORIENTATIONS.wide;
 
-    const computedPixelBase = isLowDefinition
-      ? PRINT_CANVAS_BASE_PX / LOW_HIGH_DEFINITION_RATIO
-      : PRINT_CANVAS_BASE_PX;
+    const computedPixelBase = Math.floor(
+      PRINT_CANVAS_BASE_PX / definitionConstant
+    );
 
     const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
 
-    const computedPixelRatio = isLowDefinition
-      ? currentVersionPixelRatio * LOW_HIGH_DEFINITION_RATIO
-      : currentVersionPixelRatio;
+    const computedPixelRatio = Number(
+      (currentVersionPixelRatio * definitionConstant).toFixed(2)
+    );
 
-    console.log({ computedPixelRatio, computedPixelBase });
+    console.log({
+      computedPixelRatio,
+      computedPixelBase,
+    });
 
     let multiple;
 

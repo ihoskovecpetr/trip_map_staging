@@ -155,7 +155,7 @@ export default function CheckoutCta({
             }}
             price={priceWithDelivery.netPrice} //TODO add big.js
           >
-            Shrnutí objednávky
+            SHRNUTÍ OBJEDNÁVKY
           </NextTabBtn>
         </DefaultUI>
       )}
@@ -218,7 +218,6 @@ const CheckoutWrap = styled.div`
   width: 100%;
 
   & p {
-    // font-family: Arial, sans-serif;
     margin: 0;
   }
 `;
@@ -229,5 +228,5 @@ const CustomUI = styled.div`
 
 const DefaultUI = styled.div`
   width: 100%;
-  padding: 15px 0;
+  // padding: 15px 0;
 `;

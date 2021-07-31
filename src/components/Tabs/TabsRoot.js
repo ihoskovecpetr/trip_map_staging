@@ -45,12 +45,10 @@ export default function TabsRootNew({
   product,
   setProduct,
 }) {
-  const [activeTab, setActiveTab] = useState(TAB_VALUES.ONE);
   const [activeStepNumber, setActiveStepNumber] = React.useState(0);
 
   const { isMobile } = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
-  const [isArrowDisabled, setIsArrowDisabled] = useState(true);
 
   const classes = useStyles();
 
@@ -73,28 +71,18 @@ export default function TabsRootNew({
   const { dataPrintful } = useGetDataPrintful([product.variantId]);
 
   const handleChange = (newValue) => {
-    // if (isMobile) {
     const yCoordTabs =
       document.querySelector("#tab_wrap_wrap").getBoundingClientRect().top -
       100;
 
     setIsOpen(true);
-
-    setActiveTab(newValue);
-    // window.setTimeout(function () {
-    // }, 500);
-
-    // }
   };
   const stepsNumbersDisabledOpenning = [];
   useEffect(() => {
     if (stepsNumbersDisabledOpenning.includes(activeStepNumber)) {
       setIsOpen(false);
-      setIsArrowDisabled(true);
       return;
     }
-
-    setIsArrowDisabled(false);
   }, [activeStepNumber]);
 
   const handleNext = () => {
@@ -144,18 +132,12 @@ export default function TabsRootNew({
       />,
     ],
     [
-      <Step7MapDefinition
-        map={map}
-        mapTitles={mapTitles}
-        activeLayout={activeLayout}
-        product={product}
-        activeMapStyleName={activeMapStyleName}
-      />,
       <Step8Checkout
         map={map}
         mapTitles={mapTitles}
         activeLayout={activeLayout}
         product={product}
+        setProduct={setProduct}
         activeMapStyleName={activeMapStyleName}
       />,
     ],
@@ -219,20 +201,12 @@ export default function TabsRootNew({
       />,
     ],
     [
-      <Step7MapDefinition
-        map={map}
-        mapTitles={mapTitles}
-        activeLayout={activeLayout}
-        product={product}
-        activeMapStyleName={activeMapStyleName}
-      />,
-    ],
-    [
       <Step8Checkout
         map={map}
         mapTitles={mapTitles}
         activeLayout={activeLayout}
         product={product}
+        setProduct={setProduct}
         activeMapStyleName={activeMapStyleName}
       />,
     ],
@@ -277,11 +251,9 @@ export default function TabsRootNew({
     >
       {/* <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}> */}
 
-      {isMobile && (
-        <PriceWrap>
-          <Price>celkem: {getFormattedPrice(priceWithDelivery.netPrice)}</Price>
-        </PriceWrap>
-      )}
+      <PriceWrap>
+        <Price>celkem: {getFormattedPrice(priceWithDelivery.netPrice)}</Price>
+      </PriceWrap>
 
       <TabSegmentWrap
         mapHeight={map_segment_height}
@@ -380,25 +352,6 @@ const TabContentWrap = styled.div`
     padding: 0px 0.5rem;
   }
 `;
-
-// const ArrowWrap = styled.div`
-//   display: inline-flex;
-//   height: 0;
-//   pointer-events: ${({ isDisabled }) => (isDisabled ? "none" : "auto")};
-//   cursor: ${({ isDisabled }) => (isDisabled ? "default" : "pointer")};
-
-//   & svg {
-//     color: ${({ isDisabled }) => (isDisabled ? "lightGrey" : "black")};
-
-//     transform: ${({ isOpen }) => (isOpen ? "rotate(90deg)" : "rotate(-90deg)")};
-//     width: 30px;
-//     height: 40px;
-//     position: relative;
-//     top: -35px;
-//     padding: 10px 5px;
-//     background-color: white;
-//   }
-// `;
 
 const PriceWrap = styled.div`
   display: inline-flex;

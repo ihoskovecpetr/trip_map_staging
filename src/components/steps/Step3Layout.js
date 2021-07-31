@@ -45,7 +45,7 @@ export default function Step3Layout({ activeFrame, setActiveLayout }) {
 
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>Layout</HeadingText>}
+      {!isMobile && <HeadingText>3. Ohraničení</HeadingText>}
       <div sx={styles.allLayoutsWrap}>
         {Object.values(LAYOUTS).map((layoutObj, index) => (
           <div
@@ -139,6 +139,7 @@ const StyledImage = styled.img`
   outline: none;
   display: block;
   height: 60px;
+  border-radius: 2px;
   background-color: ${({ active }) => active && color("cta_color")};
   color: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 0px 3px;

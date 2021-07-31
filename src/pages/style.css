@@ -128,21 +128,21 @@ body {
   overflow-x: hidden;
 }
 
-#pure_cta_box {
+/* #pure_cta_box {
   top: calc(var(--vh, 1vh) * 86);
-}
+} */
 
 @media only screen and (max-width: 600px) {
   .slider-frame {
-    height: 100vh;
+    /* height: 100vh; */
   }
 
   .slider-list {
-    height: 100vh !important;
+    /* height: 100vh !important; */
   }
 
   .slider-slide {
-    max-height: 100vh !important;
+    /* max-height: 100vh !important; */
   }
 
   .slider-slide > img {

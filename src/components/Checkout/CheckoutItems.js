@@ -44,9 +44,11 @@ export default function ProductSummary({
         <ImageContainer>{ImageComponent}</ImageContainer>
         <LineTextContainer>
           <BoldText>{`${productDescription} ${product.sizeObject.code}`}</BoldText>
-          <GreyText>{`${mapTitles?.heading?.text} ${mapTitles?.subtitle?.text}`}</GreyText>
-          <GreyText>{`${product.materialDesc}`}</GreyText>
-          <GreyText>{`${activeLayoutName} ${activeMapStyleName}`}</GreyText>
+          <span>
+            <GreyText>{`${mapTitles?.heading?.text} ${mapTitles?.subtitle?.text}`}</GreyText>
+            <GreyText>{`${product.materialDesc}`}</GreyText>
+            <GreyText>{`${activeLayoutName} ${activeMapStyleName}`}</GreyText>
+          </span>
         </LineTextContainer>
         <StyledPriceSpan>
           {priceWithoutDelivery.netPrice
@@ -125,6 +127,7 @@ const BoldText = styled.p`
 const StyledImage = styled.img`
   height: 80px;
   width: 80px;
+  margin: -10px 0;
 `;
 
 const GreyText = styled.p`
@@ -145,37 +148,8 @@ const StyledPriceSpan = styled.span`
   flex: 0 0 25%;
 `;
 
-const DetailItemWrap = styled.div`
-  text-align: left;
-  width: 100%;
-  margin-top: 0.2rem;
-`;
-
-const ItemName = styled.p`
-  font-size: 0.6rem;
-  font-weight: 600;
-  color: grey;
-  text-transform: uppercase;
-`;
-
 const NewLine = styled.div`
   height: 0.05rem;
   background-color: ${color("whitish_paper_blue")};
   width: 100%;
 `;
-const styles = {
-  leftColumn: {
-    width: "100%",
-  },
-  costsWrap: {
-    borderTop: "1px solid lightGrey",
-    borderBottom: "1px solid lightGrey",
-    py: "5px",
-  },
-  itemText: {
-    color: "primary",
-    textTransform: "uppercase",
-    fontWeight: 500,
-    // letterSpacing: "1.px",
-  },
-};

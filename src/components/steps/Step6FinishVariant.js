@@ -4,7 +4,7 @@ import { jsx, Text } from "theme-ui";
 import Lightbox from "react-image-lightbox";
 import styled from "styled-components";
 
-import { color, fontWeight } from "utils";
+import { color, fontWeight, fontSize } from "utils";
 import CustomLoader from "../CustomLoader";
 
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
@@ -61,7 +61,7 @@ export default function Step6FinishVariant({ product, setProduct }) {
 
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>Rámování</HeadingText>}
+      {!isMobile && <HeadingText>7. Rámování</HeadingText>}
       {variantsPrintfulForSize.length === 0 && (
         <div sx={styles.loaderWrap}>
           <CustomLoader />
@@ -70,23 +70,25 @@ export default function Step6FinishVariant({ product, setProduct }) {
       {variantsPrintfulForSize.length > 0 && (
         <ContainerVariants>
           {variantsPrintfulForSize.map(({ id: variantId, shipping }) => (
-            <ItemVariant
-              active={product.variantId === variantId}
-              onClick={() => setNewFrame(variantId, shipping.codeCZ)}
-            >
+            <ItemWrap>
               <div sx={styles.textsWrap}>
                 <VariantDesc>
                   {getVariantObject(variantId)?.frameName}
                 </VariantDesc>
               </div>
-              <div sx={styles.imageWrap}>
-                <img
-                  sx={styles.variantImage}
-                  src={dataPrintful[variantId]?.url}
-                />
-              </div>
+              <ItemVariant
+                active={product.variantId === variantId}
+                onClick={() => setNewFrame(variantId, shipping.codeCZ)}
+              >
+                <div sx={styles.imageWrap}>
+                  <img
+                    sx={styles.variantImage}
+                    src={dataPrintful[variantId]?.url}
+                  />
+                </div>
+              </ItemVariant>
               <div sx={styles.textsWrap}>
-                <p sx={styles.variantPrice}>
+                <StyledPriceP active={product.variantId === variantId}>
                   {`+ 
                   ${getFormattedPrice(
                     basePriceAlgorithm.subtract([
@@ -100,25 +102,25 @@ export default function Step6FinishVariant({ product, setProduct }) {
                       ).netPrice,
                     ])
                   )}`}
-                </p>
+                </StyledPriceP>
 
-                <p sx={styles.variantDelivery}>
-                  {`+ ${getFormattedPrice(
+                <StyledDeliveryPriceP active={product.variantId === variantId}>
+                  {`(+ ${getFormattedPrice(
                     priceAlgorithm.getPriceOfDelivery(variantId, dataPrintful)
                       .netPrice
-                  )} doprava`}
-                </p>
+                  )} doprava)`}
+                </StyledDeliveryPriceP>
               </div>
-            </ItemVariant>
+            </ItemWrap>
           ))}
         </ContainerVariants>
       )}
-      {!isMobile && (
+      {/* {!isMobile && (
         <ExtraPaddingTop>
-          <HeadingText>Materiál pro tisk</HeadingText>
-          <p sx={styles.materialDesc}>{product.materialDesc}</p>
+          <HeadingText>8. Materiál pro tisk</HeadingText>
+          <StyledMaterialP>{product.materialDesc}</StyledMaterialP>
         </ExtraPaddingTop>
-      )}
+      )} */}
 
       {lightbox.open && (
         <Lightbox
@@ -165,28 +167,25 @@ const styles = {
     padding: "5px",
     textAlign: "left",
   },
-  variantPrice: {
-    margin: 0,
-    color: "primary",
-    fontWeight: 600,
-    borderRadius: "2px",
-    cursor: "pointer",
-  },
-  variantDesc: {
-    color: "primary",
-    lineHeight: 1.2,
-    fontSize: "0.8rem",
-    fontWeight: 500,
-    paddingBottom: "5px",
-    margin: 0,
-  },
-  variantDelivery: {
-    color: "muted",
-    m: 0,
-    fontWeight: 600,
-    fontSize: "0.6rem",
-  },
 };
+
+const StyledDeliveryPriceP = styled.p`
+  margin: 0;
+  font-size: ${fontSize("xxs")};
+  cursor: pointer;
+  color: ${({ active }) => (active ? color("cta_color") : color("muted"))};
+  font-weight: ${({ active }) => active && fontWeight("bold")};
+  text-align: right;
+`;
+
+const StyledPriceP = styled.p`
+  margin: 0;
+  font-size: ${fontSize("sm")};
+  font-weight: ${({ active }) => active && fontWeight("bold")};
+  color: ${({ active }) => active && color("cta_color")};
+  cursor: pointer;
+  text-align: right;
+`;
 
 const VariantDesc = styled.p`
   color: ${color("primary")};
@@ -197,12 +196,16 @@ const VariantDesc = styled.p`
   margin: 0;
 `;
 
-const ExtraPaddingTop = styled.span`
-  padding-top: 10px;
+const ItemWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-basis: 30%;
+  display: block;
+  width: 4rem;
 `;
 
 const HeadingText = styled.p`
-  font-weight: 600;
+  font-weight: ${fontWeight("bold")};
   color: black;
   text-align: left;
   margin-top: 20px;
@@ -216,11 +219,9 @@ const ContainerVariants = styled.div`
 `;
 
 const ItemVariant = styled.div`
-  flex-basis: 30%;
-  display: block;
-  width: 4rem;
   color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 0px 3px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 0px 1px;
   color: ${({ active }) => active && color("cta_color")};
   cursor: pointer;
   overflow: hidden;

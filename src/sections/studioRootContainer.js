@@ -212,6 +212,7 @@ export default function StudioRootContainer() {
     materialDesc: "Matný vylepšený papír",
     shippingCode: VARIANTS_PRINTFUL[4].shipping.codeCZ,
     isLayoutColorSwitched: false,
+    densityConstant: 2,
   });
 
   const [activeLayout, setActiveLayout] = useState(
@@ -494,19 +495,11 @@ export default function StudioRootContainer() {
       mapWrapWrapWidth: mapAvailSpaceRef.current.width,
     });
 
-    console.log({ updHeight, updWidth });
-
     Object.assign(mapWrapper.style, {
       height: updHeight ? `${updHeight}px` : 0,
       width: updWidth ? `${updWidth}px` : 0,
       boxShadow: "0px 0px 25px rgba(156, 156, 156, 1)",
     });
-
-    // const mapPlayground = document.getElementById("map_playground_wrap");
-
-    // Object.assign(mapPlayground.style, {
-    //   height: `${(updHeight * 1, 5)}px`,
-    // });
 
     if (map) {
       map.resize();
@@ -557,7 +550,7 @@ export default function StudioRootContainer() {
     <section sx={{ marginTop: isMobile ? 0 : headerHeight }}>
       <ContainerBox headerHeight={isMobile ? 0 : headerHeight}>
         <div sx={styles.containerBox}>
-          <Box sx={styles.canvasBox} id="map_playground_wrap">
+          <Box sx={styles.canvasBox}>
             <MapContainer
               map={map}
               addZoom={addZoom(map)}

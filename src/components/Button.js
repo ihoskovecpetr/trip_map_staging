@@ -22,7 +22,6 @@ const StyledButton = styled.button`
   padding: 1.25rem 2rem;
   min-height: 4rem;
   min-width: 12.5rem;
-  text-transform: uppercase;
   transition: background-color 0.2s ease-in-out;
   font-weight: ${fontWeight("bold")};
 

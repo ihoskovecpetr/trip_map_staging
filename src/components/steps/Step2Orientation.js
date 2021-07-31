@@ -23,39 +23,40 @@ export default function Step2Orientation({ product, setProduct }) {
 
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>Orientace</HeadingText>}
+      {!isMobile && <HeadingText>2. Orientace</HeadingText>}
 
-      <div sx={styles.orientationWrap}>
-        <div sx={styles.orientationShapeItems}>
-          <div>
-            <HighMock
-              active={!isProductWide(product)}
-              onClick={switchOrientation}
-            ></HighMock>
-          </div>
-          <div>
-            <WideMock
-              active={isProductWide(product)}
-              onClick={switchOrientation}
-            ></WideMock>
-          </div>
-        </div>
-        <div sx={styles.textsItems}>
-          <p
+      <OrientationWrap>
+        <SingleOrientationItem
+          onClick={switchOrientation}
+          active={!isProductWide(product)}
+        >
+          <IconWrap>
+            <HighMock />
+          </IconWrap>
+
+          <StyledDescriptionP
+            active={!isProductWide(product)}
             onClick={isProductWide(product) && switchOrientation}
-            className={!isProductWide(product) && "active"}
           >
             Na výšku
-          </p>
+          </StyledDescriptionP>
+        </SingleOrientationItem>
+        <SingleOrientationItem
+          onClick={switchOrientation}
+          active={isProductWide(product)}
+        >
+          <IconWrap>
+            <WideMock />
+          </IconWrap>
 
-          <p
+          <StyledDescriptionP
             onClick={!isProductWide(product) && switchOrientation}
-            className={isProductWide(product) && "active"}
+            active={isProductWide(product)}
           >
             Na šířku
-          </p>
-        </div>
-      </div>
+          </StyledDescriptionP>
+        </SingleOrientationItem>
+      </OrientationWrap>
 
       {!isMobile && (
         <TipParagraph>
@@ -73,51 +74,6 @@ const styles = {
     position: "relative",
     paddingTop: "15px",
   },
-  headingDesc: {
-    fontWeight: 500,
-    textAlign: "left",
-    color: "grey",
-    marginTop: "20px",
-    letterSpacing: "1.1px",
-  },
-
-  orientationWrap: {
-    display: "flex",
-    width: "50%",
-    flexWrap: "wrap",
-    marginBottom: "10px",
-  },
-  orientationShapeItems: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    "> div": {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-  },
-
-  textsItems: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    letterSpacing: "1.1px",
-    fontWeight: 500,
-    textTransform: "uppercase",
-    fontSize: "14px",
-    "> p": {
-      my: 1,
-      cursor: "pointer",
-    },
-    "> p.active": {
-      color: "cta_color",
-      pointerEvents: "none",
-      cursor: "default",
-    },
-  },
 };
 
 const HeadingText = styled.p`
@@ -128,24 +84,54 @@ const HeadingText = styled.p`
   letter-spacing: 1.1px;
 `;
 
+const OrientationWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+`;
+
+const SingleOrientationItem = styled.div`
+  flex-basis: 30%;
+  margin: 2%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-color: ${({ active }) => active && color("cta_color")};
+`;
+
+const IconWrap = styled.div`
+  flex-basis: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: ${({ active }) => !active && "pointer"};
+
+  & > div {
+    color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 3px;
+  }
+`;
+
 const WideMock = styled.div`
-  height: 20px;
-  width: 40px;
-  background-color: white;
-  color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 0 3px;
+  height: 30px;
+  width: 50px;
+  color: ${({ active }) => active && color("cta_color")};
+`;
+
+const HighMock = styled.div`
+  height: 50px;
+  width: 30px;
   color: ${({ active }) => active && color("cta_color")};
   pointer-events: ${({ active }) => active && "none"};
 `;
 
-const HighMock = styled.div`
-  height: 40px;
-  width: 20px;
-  background-color: white;
-  color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 0 3px;
+const StyledDescriptionP = styled.p`
+  text-align: center;
   color: ${({ active }) => active && color("cta_color")};
-  pointer-events: ${({ active }) => active && "none"};
+  font-weight: ${fontWeight("regular")};
+  margin: 3px 0;
 `;
 
 const TipParagraph = styled.p`

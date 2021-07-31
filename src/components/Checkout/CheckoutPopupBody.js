@@ -20,7 +20,6 @@ import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 
 import CheckoutItems from "./CheckoutItems";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import CustomLoader from "../CustomLoader";
 import UnderlineLoader from "components/UnderlineLoader";
 
 const STRIPE_PUBLIC_KEY_LIVE =
@@ -49,6 +48,7 @@ export default function CheckoutCard({
     open: false,
     activeSrc: null,
   });
+  const [designDisplayed, setDesignDisplayed] = useState(false);
 
   const { dataPrintful } = useGetDataPrintful([product.variantId]);
 
@@ -69,10 +69,13 @@ export default function CheckoutCard({
 
   useEffect(() => {
     if (imageBase64Created) {
-      setLightbox({
-        open: true,
-        activeSrc: imageBase64Created,
-      });
+      setTimeout(() => {
+        setLightbox({
+          open: true,
+          activeSrc: imageBase64Created,
+        });
+        setDesignDisplayed(true);
+      }, 1000);
     }
   }, [imageBase64Created]);
 
@@ -107,7 +110,6 @@ export default function CheckoutCard({
       });
     }
   }
-  const variantOrientation = product.sizeObject.orientation;
 
   const ImageUploaded = () => (
     <>
@@ -155,9 +157,22 @@ export default function CheckoutCard({
               </WrapSpan>
             )}
           </p>
+
+          <p sx={styles.uploading_counter}>
+            {`${
+              imageBase64Created && designDisplayed
+                ? "Design zobrazen ✅"
+                : "Zobrazuji design"
+            }`}
+            {imageBase64Created && !designDisplayed && (
+              <WrapSpan>
+                <UnderlineLoader />
+              </WrapSpan>
+            )}
+          </p>
           <p sx={styles.uploading_counter}>
             {imageBase64Created
-              ? `${isUploadPending ? "ukládám" : "uloženo"}`
+              ? `${isUploadPending ? "Ukládám" : "Uloženo"}`
               : "ukládání"}
             {imageBase64Created &&
               ` ${percentageUpload}% / ${fileSizeMB && fileSizeMB + "MB"} ${
@@ -180,7 +195,7 @@ export default function CheckoutCard({
         activeMapStyleName={activeMapStyleName}
       />
 
-      <StickyContainer>
+      <NextTabContainer>
         <NextTabBtn
           width="100%"
           onClick={() => redirectToCheckout()}
@@ -189,7 +204,7 @@ export default function CheckoutCard({
         >
           Adresa doručení & platba
         </NextTabBtn>
-      </StickyContainer>
+      </NextTabContainer>
       {lightbox.open && (
         <Lightbox
           mainSrc={lightbox.activeSrc}
@@ -216,11 +231,11 @@ const StyledCloseIcon = styled(CloseIcon)`
   cursor: pointer;
 `;
 
-const StickyContainer = styled.div`
+const NextTabContainer = styled.div`
   position: sticky;
   bottom: -1;
   width: 100%;
-  padding: 15px 5px;
+  padding: 15px 15px;
 `;
 
 const CustomLoaderWrap = styled.div`
@@ -243,15 +258,17 @@ const WrapSpan = styled.span`
 const TeaserWrap = styled.div`
   transform: translateX(0);
   color: ${color("whitish_paper_blue")};
+  display: flex;
 `;
 
 const StyledOpenInNewIcon = styled(OpenInNewIcon)`
   position: absolute;
   top: 0;
   right: 0;
-  // background: ${color("muted")};
   border-radius: 2px;
   cursor: pointer;
+  z-index: 11;
+  pointer-events: none;
 `;
 
 const HeaderTextsContainer = styled.div`
@@ -280,7 +297,7 @@ const styles = {
     padding: "15px 15px",
   },
   uploading_counter: {
-    textTransform: "uppercase",
+    // textTransform: "uppercase",
     color: "white",
     fontWeight: "100",
     letterSpacing: "1.2px",
@@ -306,5 +323,6 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "85vh",
     overflow: "scroll",
     backgroundColor: "whitish_paper_blue",
+    textTransform: "unset",
   },
 }));

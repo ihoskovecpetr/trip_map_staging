@@ -1,16 +1,11 @@
 /** @jsx jsx */
 import React from "react";
-import { jsx, Text } from "theme-ui";
+import { jsx } from "theme-ui";
 import styled from "styled-components";
 
-import { color, font, fontSize, fontWeight } from "utils";
-
-import { useIsMobile } from "../../Hooks/useIsMobile";
-import {
-  LAYOUT_STYLE_NAMES,
-  LAYOUTS,
-  MAP_STYLES,
-} from "../../constants/constants";
+import { color } from "utils";
+import { useIsMobile } from "Hooks/useIsMobile";
+import { MAP_STYLES } from "constants/constants";
 
 export default function Step3BLayoutColorSwitch({
   product,
@@ -32,7 +27,7 @@ export default function Step3BLayoutColorSwitch({
 
   return (
     <Container>
-      {!isMobile && <HeadingText>Layout Color Switch</HeadingText>}
+      {!isMobile && <HeadingText>4. Výplň ohraničení</HeadingText>}
       {activeMapStyleObject.layoutColor && activeMapStyleObject.textColor && (
         <ItemContainer>
           <LayoutItemWrap>
@@ -90,8 +85,9 @@ const LayoutItem = styled.div`
   justify-content: center;
   align-items: center;
   // margin: 0.9rem;
+  border-radius: 5px;
   background-color: ${({ layoutColor }) => layoutColor};
-  color: ${({ active, layoutColor, textColor }) => textColor};
+  color: ${({ textColor }) => textColor};
   border: 3px solid;
   border-color: ${({ active }) =>
     active ? color("cta_color") : "rgba(0,0,0,0.1)"};

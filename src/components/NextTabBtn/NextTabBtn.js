@@ -79,7 +79,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     zIndex: 10,
-    padding: "0px 10px",
+    padding: "0",
   },
   button: {
     backgroundColor: "cta_color",
@@ -88,7 +88,7 @@ const styles = {
     textAlign: "center",
     cursor: "pointer",
     fontWeight: 600,
-    textTransform: "uppercase",
+    textTransform: "none",
     letterSpacing: "1.5px",
     transform: "translateX(0)",
   },
