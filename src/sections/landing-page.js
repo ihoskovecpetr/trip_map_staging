@@ -69,7 +69,7 @@ export default function LandingPage() {
         <Box sx={styles.carouselBox}>
           <LandingCarousel id="carousel_wrapper">
             <Carousel
-              // autoplay={true}
+              autoplay={true}
               cellAlign="center"
               heightMode="max"
               // heightMode={current}
