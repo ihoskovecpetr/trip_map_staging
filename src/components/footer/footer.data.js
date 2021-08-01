@@ -91,7 +91,7 @@ export default [
       },
       {
         path: "/",
-        label: "Bezpčné platby",
+        label: "Bezpečné platby",
       },
     ],
   },

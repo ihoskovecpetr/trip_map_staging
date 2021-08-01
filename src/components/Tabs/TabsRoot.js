@@ -20,6 +20,8 @@ import Step5Size from "../steps/Step5Size";
 import Step6FinishVariant from "../steps/Step6FinishVariant";
 import Step7MapDefinition from "../steps/Step7MapDefinition";
 import Step8Checkout from "../steps/Step8Checkout";
+import StepTitles from "../steps/StepTitles";
+
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
@@ -101,6 +103,12 @@ export default function TabsRootNew({
         setMapTitles={setMapTitles}
       />,
       <Step2Orientation product={product} setProduct={setProduct} />,
+      // <StepTitles
+      //   product={product}
+      //   setProduct={setProduct}
+      //   mapTitles={mapTitles}
+      //   setMapTitles={setMapTitles}
+      // />,
     ],
     [
       <Step3Layout

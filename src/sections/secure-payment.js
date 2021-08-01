@@ -11,7 +11,7 @@ const data = {
   subTitle: "ZABEZPEČENÁ PLATBA",
   title: "Pro veškeré platby spoléháme na společnost Stripe, lídra v oboru",
   description:
-    "Veškeré platby a manitulace s platebními detaily jsou zprostředkovány paltformou Stripe a proto nemusíte mít sebemenší pochyby o bezpečnosti transakce",
+    "Veškeré platby a manitulace s platebními detaily jsou zprostředkovány paltformou Stripe.",
   btnName: "Web společnost Stripe",
   btnURL: "https://stripe.com/en-cz",
 };

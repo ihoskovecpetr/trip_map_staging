@@ -25,10 +25,7 @@ export default function Footer() {
         </Box>
       </Container>
       <Text sx={styles.footer.copyright}>
-        All right reserved - Design & Developed by
-        <Link path="https://redq.io/" target="_blank">
-          RedQ, Inc
-        </Link>
+        © TripMap {new Date().getFullYear()}
       </Text>
     </footer>
   );
@@ -50,7 +47,7 @@ const styles = {
       px: [0, null, null, null, 4],
     },
     menus: {
-      width: ["50%", null, null, "25%"],
+      width: ["50%", null, null, "30%"],
       display: "flex",
       flexDirection: "column",
       mb: ["40px", null, null, "60px"],
