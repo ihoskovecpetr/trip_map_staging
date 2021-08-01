@@ -103,12 +103,12 @@ export default function TabsRootNew({
         setMapTitles={setMapTitles}
       />,
       <Step2Orientation product={product} setProduct={setProduct} />,
-      <StepTitles
-        product={product}
-        setProduct={setProduct}
-        mapTitles={mapTitles}
-        setMapTitles={setMapTitles}
-      />,
+      // <StepTitles
+      //   product={product}
+      //   setProduct={setProduct}
+      //   mapTitles={mapTitles}
+      //   setMapTitles={setMapTitles}
+      // />,
     ],
     [
       <Step3Layout
