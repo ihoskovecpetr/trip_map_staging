@@ -2,6 +2,7 @@
 import { jsx } from "theme-ui";
 import { Container, Grid, Box, Heading, Text } from "theme-ui";
 import SectionHeader from "components/section-header";
+import { useRouter } from "next/router";
 
 import PatternBG from "assets/patternBG.png";
 import ArrowOdd from "assets/arrowOdd.png";
@@ -36,6 +37,8 @@ const data = [
 ];
 
 export default function WorkFlow() {
+  const router = useRouter();
+
   return (
     <section sx={styles.workflow}>
       <Container>
@@ -47,7 +50,13 @@ export default function WorkFlow() {
 
         <Grid sx={styles.grid}>
           {data.map((item) => (
-            <Box sx={styles.card} key={item.id}>
+            <Box
+              sx={styles.card}
+              key={item.id}
+              onClick={() => {
+                router.push("/studio");
+              }}
+            >
               <Box sx={styles.iconBox}>{`0${item.id}`}</Box>
               <Box sx={styles.wrapper}>
                 <Heading sx={styles.wrapper.title}>{item.title}</Heading>
@@ -109,6 +118,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     position: "relative",
+    cursor: "pointer",
     textAlign: ["center", null, "left"],
     width: ["100%", "80%", "100%"],
     mx: "auto",

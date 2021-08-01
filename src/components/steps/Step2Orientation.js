@@ -60,8 +60,8 @@ export default function Step2Orientation({ product, setProduct }) {
 
       {!isMobile && (
         <TipParagraph>
-          <StyledBold>Tip!</StyledBold> Pro změnu nadpisu a podnadpisu klikněte
-          přímo na mapu
+          <StyledBold>Tip!</StyledBold> Pro změnu hlavního a vedlejšího nadpisu
+          klikněte přímo na dotyčný text
         </TipParagraph>
       )}
     </div>

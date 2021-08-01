@@ -73,41 +73,32 @@ export default function Step4Colors({ activeMapStyle, setActiveMapStyleName }) {
   return (
     <Container>
       {!isMobile && <HeadingText>5. Barevná kombinace</HeadingText>}
-      <div sx={styles.stylesWrap}>
+      <ColorsWrap>
         {Object.values(MAP_STYLES_NAMES).map((style, index) => (
-          <>
-            <div
-              className={activeMapStyle === style && "active"}
-              sx={styles.mapColorsItem}
-            >
-              <ImageWrap active={activeMapStyle === style}>
-                <StyledImage
-                  src={getMapStyleImg(style)}
-                  id={`map_style_id_${index}`}
-                  active={activeMapStyle === style}
-                  alt="Map style image"
-                  onClick={changeActiveStyle(style)}
-                />
-              </ImageWrap>
-              <p sx={styles.itemStyleText} onClick={changeActiveStyle(style)}>
-                {style}
-              </p>
-            </div>
-          </>
+          <div
+            className={activeMapStyle === style && "active"}
+            sx={styles.mapColorsItem}
+          >
+            <ImageWrap active={activeMapStyle === style}>
+              <StyledImage
+                src={getMapStyleImg(style)}
+                id={`map_style_id_${index}`}
+                active={activeMapStyle === style}
+                alt="Map style image"
+                onClick={changeActiveStyle(style)}
+              />
+            </ImageWrap>
+            <p sx={styles.itemStyleText} onClick={changeActiveStyle(style)}>
+              {style}
+            </p>
+          </div>
         ))}
-      </div>
+      </ColorsWrap>
     </Container>
   );
 }
 
 const styles = {
-  stylesWrap: {
-    display: "flex",
-    width: "100%",
-    overflow: "scroll",
-    padding: "10px 10px",
-    flexWrap: [null, null, null, "wrap"],
-  },
   mapColorsItem: {
     width: ["5rem", null, "23%", "18%"],
     margin: ["2px", null, "1%", "1%"],
@@ -134,6 +125,13 @@ const styles = {
     fontSize: "14px",
   },
 };
+const ColorsWrap = styled.div`
+  display: flex;
+  width: 100%;
+  overflow: scroll;
+  padding: 10px 10px;
+  flex-wrap: wrap;
+`;
 
 const Container = styled.div`
   width: 100%;

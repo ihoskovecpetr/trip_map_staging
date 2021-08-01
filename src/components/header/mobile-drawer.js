@@ -2,44 +2,27 @@ import React, { useContext } from "react";
 import { Box, Flex } from "theme-ui";
 import { Scrollbars } from "react-custom-scrollbars";
 import Drawer from "components/drawer";
+import { useRouter } from "next/router";
 import styled from "styled-components";
-import { DrawerContext } from "../../contexts/drawer/drawer.context";
-import { IoMdClose, IoMdMenu } from "react-icons/io";
-// import { Link } from "react-scroll";
 import Link from "next/link";
+import { FaInstagram } from "react-icons/fa";
+import { IoMdClose, IoMdMenu } from "react-icons/io";
+
+import menuItems from "./header.data";
+import { DrawerContext } from "../../contexts/drawer/drawer.context";
 import LinkRouter from "components/LinkRouter";
 import { fontWeight } from "utils";
 
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaGithubAlt,
-  FaDribbble,
-} from "react-icons/fa";
-
-import menuItems from "./header.data";
-
 const social = [
   {
-    path: "/",
-    icon: <FaFacebookF />,
-  },
-  {
-    path: "/",
-    icon: <FaTwitter />,
-  },
-  {
-    path: "/",
-    icon: <FaGithubAlt />,
-  },
-  {
-    path: "/",
-    icon: <FaDribbble />,
+    path: "https://www.instagram.com/tripmapshop/",
+    icon: <FaInstagram />,
   },
 ];
 
 const MobileDrawer = ({ invertHeaderColor }) => {
   const { state, dispatch } = useContext(DrawerContext);
+  const router = useRouter();
 
   // Toggle drawer
   const toggleHandler = React.useCallback(() => {
@@ -69,7 +52,11 @@ const MobileDrawer = ({ invertHeaderColor }) => {
               {menuItems.map(({ path, label }, i) => {
                 return (
                   <LinkRouter activeClass="active" path={path} key={i}>
-                    {label}
+                    <ListItemP
+                      onClick={path === router.pathname && toggleHandler}
+                    >
+                      {label}
+                    </ListItemP>
                   </LinkRouter>
                 );
               })}
@@ -90,15 +77,7 @@ const MobileDrawer = ({ invertHeaderColor }) => {
       <Box sx={styles.nav}>
         {menuItems.map(({ path, label }, i) => (
           <>
-            <Link
-              // activeClass="active"
-              href={path}
-              // spy={true}
-              // smooth={true}
-              // offset={-70}
-              // duration={500}
-              // key={i}
-            >
+            <Link href={path}>
               <StyledAncor>{label}</StyledAncor>
             </Link>
           </>
@@ -110,6 +89,11 @@ const MobileDrawer = ({ invertHeaderColor }) => {
 
 const StyledAncor = styled.a`
   font-weight: ${fontWeight("regular")} !important;
+`;
+
+const ListItemP = styled.p`
+  letter-spacing: 0.3rem;
+  margin: 0;
 `;
 
 const styles = {
@@ -130,7 +114,7 @@ const styles = {
   drawer: {
     width: "100%",
     height: "100%",
-    backgroundColor: "text_secondary",
+    backgroundColor: "primary",
   },
 
   close: {

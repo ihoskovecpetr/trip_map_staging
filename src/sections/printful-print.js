@@ -6,14 +6,13 @@ import Image from "components/image";
 
 import PrintfulHIW from "assets/how-printful-works-3.svg";
 import PaymentPattern from "assets/payment-pattern.png";
-import { SignalCellularNull } from "@material-ui/icons";
 
 const data = {
-  subTitle: "Kvalitní tisk a zpracování",
+  subTitle: "Tisk a zpracování",
   title: "Tist a zaslání výsledného produktu zprostředkuje Printful",
   description:
-    "Společnost Printfull je celosvětový poskytovatel tisku na zakázku a důvěřují mu i takové společnosti jako Amazon, Shopify, Ebay or Square",
-  btnName: "Web společnost Printful",
+    "Společnost Printfull je celosvětový poskytovatel tisku na zakázku a důvěřují mu i takové společnosti jako je Amazon, Shopify, Ebay nebo Square",
+  btnName: "více o Printful",
   btnURL: "https://www.printful.com/",
 };
 

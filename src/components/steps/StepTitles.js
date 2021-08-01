@@ -7,58 +7,115 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { color, fontWeight } from "utils";
 import { useIsMobile } from "../../Hooks/useIsMobile";
-import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     borderColor: "red",
+    margin: "5px",
     color: "green",
     "& > div": {
-      borderColor: "blue",
+      borderColor: "red",
     },
   },
+
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+
+  cssLabel: {
+    color: "black",
+  },
+
+  cssOutlinedInput: {
+    "&$cssFocused $notchedOutline": {
+      borderColor: `${theme.palette.primary.main} !important`,
+    },
+  },
+
+  cssFocused: {
+    color: `black !important`,
+  },
+
   notchedOutline: {
     borderWidth: "1px",
-    borderColor: "green !important",
+    borderColor: `${theme.palette.primary.main} !important`,
   },
 }));
 
-export default function StepTitles({
-  product,
-  setProduct,
-  mapTitles,
-  setMapTitles,
-}) {
+export default function StepTitles({ mapTitles, setMapTitles }) {
   const { isMobile } = useIsMobile();
   const classes = useStyles();
-  console.log({ mapTitles });
+
+  const handleTitleChange = (e) => {
+    const targetValue = e.target.value;
+    const targetName = e.target.name;
+
+    setMapTitles((prev) => {
+      return {
+        ...prev,
+        [targetName]: {
+          text: targetValue,
+          size: prev[targetName].size,
+        },
+      };
+    });
+  };
   return (
     <div sx={styles.container}>
       {!isMobile && <HeadingText>3. Popisky</HeadingText>}
-
-      <TextField
-        classes={{
-          root: classes.root,
-        }}
-        InputProps={{
-          classes: {
-            // root: classes.cssOutlinedInput,
-            // focused: classes.cssFocused,
-            notchedOutline: classes.notchedOutline,
-          },
-          inputMode: "numeric",
-        }}
-        id="outlined-basic"
-        label="Hlavní"
-        variant="outlined"
-        value={mapTitles.heading.text}
-      />
-      <TextField
-        value={mapTitles.subtitle.text}
-        id="outlined-basic"
-        label="Vedlejší"
-        variant="outlined"
-      />
+      <TextFieldsConteiner>
+        <TextField
+          classes={{
+            root: classes.root,
+          }}
+          InputProps={{
+            classes: {
+              root: classes.cssOutlinedInput,
+              focused: classes.cssFocused,
+              notchedOutline: classes.notchedOutline,
+            },
+            inputMode: "numeric",
+          }}
+          InputLabelProps={{
+            classes: {
+              root: classes.cssLabel,
+              focused: classes.cssFocused,
+            },
+          }}
+          id="outlined-basic"
+          label="Hlavní nadpis"
+          variant="outlined"
+          name="heading"
+          value={mapTitles.heading.text}
+          onChange={handleTitleChange}
+        />
+        <TextField
+          classes={{
+            root: classes.root,
+          }}
+          InputProps={{
+            classes: {
+              root: classes.cssOutlinedInput,
+              focused: classes.cssFocused,
+              notchedOutline: classes.notchedOutline,
+            },
+          }}
+          InputLabelProps={{
+            classes: {
+              root: classes.cssLabel,
+              focused: classes.cssFocused,
+            },
+          }}
+          id="outlined-basic"
+          label="Vedlejší nadpis"
+          variant="outlined"
+          name="subtitle"
+          value={mapTitles.subtitle.text}
+          onChange={handleTitleChange}
+        />
+      </TextFieldsConteiner>
     </div>
   );
 }
@@ -79,59 +136,7 @@ const HeadingText = styled.p`
   letter-spacing: 1.1px;
 `;
 
-const StyledTextField = styled(TextField)`
-  border-color: red !important;
-`;
-
-const SingleOrientationItem = styled.div`
-  flex-basis: 30%;
-  margin: 2%;
+const TextFieldsConteiner = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-color: ${({ active }) => active && color("cta_color")};
-`;
-
-const IconWrap = styled.div`
-  flex-basis: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: ${({ active }) => !active && "pointer"};
-
-  & > div {
-    color: rgba(0, 0, 0, 0.2);
-    box-shadow: 0 0 0 3px;
-  }
-`;
-
-const WideMock = styled.div`
-  height: 30px;
-  width: 50px;
-  color: ${({ active }) => active && color("cta_color")};
-`;
-
-const HighMock = styled.div`
-  height: 50px;
-  width: 30px;
-  color: ${({ active }) => active && color("cta_color")};
-  pointer-events: ${({ active }) => active && "none"};
-`;
-
-const StyledDescriptionP = styled.p`
-  text-align: center;
-  color: ${({ active }) => active && color("cta_color")};
-  font-weight: ${fontWeight("regular")};
-  margin: 3px 0;
-`;
-
-const TipParagraph = styled.p`
-  margin: "20px 0px";
-  font-weight: ${fontWeight("light")};
-`;
-
-const StyledBold = styled.span`
-  font-weight: 600;
-  color: black;
 `;
