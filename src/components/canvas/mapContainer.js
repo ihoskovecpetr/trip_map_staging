@@ -88,16 +88,16 @@ export default function MapContainer({
           <Rotate90DegreesCcwIcon onClick={changeOrientation} />
         </div>
 
-        <div sx={styles.rotateBtn}>
+        <div
+          sx={styles.rotateBtn}
+          onClick={() => !isCreatingImage && fullscreenImageRequested()}
+        >
           {isCreatingImage ? (
             <ColorWrap>
               <StyledCircularProgress />
             </ColorWrap>
           ) : (
-            <OpenWithIcon
-              color="grey"
-              onClick={() => fullscreenImageRequested()}
-            />
+            <OpenWithIcon color="grey" />
           )}
         </div>
       </div>

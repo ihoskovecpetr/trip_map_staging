@@ -15,10 +15,11 @@ const useStyles = makeStyles({
     // flexGrow: 1,
     width: "100%",
   },
-  // rootButton: {
-  //   color: "#EF233C",
-  //   // color: "red",
-  // },
+  rootButton: {
+    backgroundColor: "#f6aa1c !important",
+    paddingLeft: "15px",
+    // color: "red",
+  },
 });
 
 export default function Stepper({
@@ -58,7 +59,7 @@ export default function Stepper({
         <StyledButton
           size="small"
           onClick={!isLastStep && handleNext}
-          // className={classes.rootButton}
+          className={classes.rootButton}
           // disabled={activeStep === stepElements.length - 1}
         >
           {isLastStep ? (
@@ -73,6 +74,14 @@ export default function Stepper({
               Shrnutí
             </CheckoutCta>
           ) : (
+            // <Button
+            //   variant="contained"
+            //   color="primary"
+            //   classes={{
+            //     root: classes.rootButton,
+            //   }}
+            // >
+            // </Button>
             "Další"
           )}
           {theme.direction === "rtl" ? (
@@ -97,5 +106,6 @@ export default function Stepper({
 }
 
 const StyledButton = styled(Button)`
-  color: ${color("cta_color")} !important;
+  color: white !important;
+  backgroundcolor: ${color("cta_color")} !important;
 `;
