@@ -4,6 +4,8 @@ import Head from "next/head";
 // import { initGA, logPageView } from "analytics";
 // Load DM Sans typeface
 import "typeface-dm-sans";
+import { createTheme } from "@material-ui/core/styles";
+import { ThemeProvider as ThemeProviderMaterialUI } from "@material-ui/styles";
 
 // Load other package css file
 import "react-multi-carousel/lib/styles.css";
@@ -18,6 +20,19 @@ import theme from "../theme/theme.js";
 import { GlobalStyle } from "../theme/global";
 
 import * as ga from "LibGlobal/ga";
+
+const themeMaterialUI = createTheme({
+  palette: {
+    primary: {
+      // Purple and green play nicely together.
+      main: "#f6aa1c",
+    },
+    secondary: {
+      // This is green.A700 as hex.
+      main: "#11cb5f",
+    },
+  },
+});
 
 export default function CustomApp({ Component, pageProps }) {
   const router = useRouter();
@@ -84,10 +99,12 @@ export default function CustomApp({ Component, pageProps }) {
           content="width=device-width, initial-scale=1, maximum-scale=1"
         ></meta> */}
       </Head>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <ThemeProviderMaterialUI theme={themeMaterialUI}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </ThemeProviderMaterialUI>
     </>
   );
 }

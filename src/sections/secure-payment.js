@@ -8,11 +8,11 @@ import PaymentThumb from "assets/paymentThumb.png";
 import PaymentPattern from "assets/payment-pattern.png";
 
 const data = {
-  subTitle: "ZABEZPEČENÁ PLATBA",
+  subTitle: "POHODLNÁ PLATBA",
   title: "Pro veškeré platby spoléháme na společnost Stripe, lídra v oboru",
   description:
-    "Veškeré platby a manitulace s platebními detaily jsou zprostředkovány paltformou Stripe.",
-  btnName: "Web společnost Stripe",
+    "Akceptujeme platby kartou VISA, Mastercard, American Express či digitální peněženkou Apple Pay a Google Pay",
+  btnName: "více o Stripe",
   btnURL: "https://stripe.com/en-cz",
 };
 
