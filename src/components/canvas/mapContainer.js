@@ -27,9 +27,9 @@ export default function MapContainer({
   subtractZoom,
   setProduct,
   activeLayoutName,
-  mapTitles,
   product,
   activeMapStyleName,
+  mapTitles,
 }) {
   const [lightbox, setLightbox] = useState({
     open: false,
@@ -49,9 +49,9 @@ export default function MapContainer({
     const finalImgSrc = await qualityImageCreator({
       map,
       activeLayoutName,
-      mapTitles,
       product,
       activeMapStyleName,
+      mapTitles,
       options: {
         isPreview: false,
         isLowDefinition: false,
@@ -114,7 +114,7 @@ export default function MapContainer({
             style={{
               width: "auto",
               display: "inline-block",
-              visibility: "hidden",
+              // visibility: "hidden",
               position: "fixed",
               overflow: "auto",
               "white-space": "nowrap",
@@ -190,7 +190,7 @@ const styles = {
     height: "100%",
   },
   canvas_merging: {
-    display: "none",
+    // display: "none",
   },
   allBtnWrapper: {
     display: "flex",

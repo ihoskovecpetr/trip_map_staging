@@ -4,7 +4,6 @@ import Lightbox from "react-image-lightbox";
 
 import CheckoutCta from "../Checkout/CheckoutCta";
 import { color, mobile } from "utils";
-import { createFinalImage } from "LibGlobal/createFinalImage";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import CustomLoader from "components/CustomLoader";
 
@@ -17,7 +16,6 @@ const HIGH_DENSITY_CONSTANT = 1;
 export default function MapDefinition({
   map,
   activeLayout,
-  mapTitles,
   product,
   setProduct,
   activeMapStyleName,
@@ -38,7 +36,6 @@ export default function MapDefinition({
     const imgLowDefinition = await qualityImageCreator({
       map,
       activeLayoutName: activeLayout,
-      mapTitles,
       product,
       activeMapStyleName,
       options: {
@@ -49,7 +46,6 @@ export default function MapDefinition({
     const imgMidDefinition = await qualityImageCreator({
       map,
       activeLayoutName: activeLayout,
-      mapTitles,
       product,
       activeMapStyleName,
       options: {
@@ -60,7 +56,6 @@ export default function MapDefinition({
     const imgHighDefinition = await qualityImageCreator({
       map,
       activeLayoutName: activeLayout,
-      mapTitles,
       product,
       activeMapStyleName,
       options: {

@@ -11,7 +11,6 @@ import { useIsMobile } from "Hooks/useIsMobile";
 export default function Step8Checkout({
   map,
   activeLayout,
-  mapTitles,
   product,
   setProduct,
   activeMapStyleName,
@@ -38,7 +37,7 @@ export default function Step8Checkout({
 
         {!isMobile && (
           <ExtraPaddingTop>
-            <HeadingText>8. Materiál pro tisk</HeadingText>
+            <HeadingText>9. Materiál pro tisk</HeadingText>
             <StyledMaterialP>{product.materialDesc}</StyledMaterialP>
           </ExtraPaddingTop>
         )}
@@ -46,18 +45,16 @@ export default function Step8Checkout({
         {!isDefaultDefinition && (
           <MapDefinition
             map={map}
-            mapTitles={mapTitles}
             activeLayout={activeLayout}
             product={product}
             setProduct={setProduct}
             activeMapStyleName={activeMapStyleName}
           />
         )}
-        {!isMobile && <HeadingText>9. Shrnutí</HeadingText>}
+        {!isMobile && <HeadingText>10. Shrnutí</HeadingText>}
 
         <CheckoutCta
           map={map}
-          mapTitles={mapTitles}
           activeLayoutName={activeLayout}
           product={product}
           activeMapStyleName={activeMapStyleName}

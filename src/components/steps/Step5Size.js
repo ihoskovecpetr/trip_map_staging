@@ -146,13 +146,12 @@ export default function Step5Size({ product, setProduct }) {
                     sizeNameLocal
                   )}
                 >
-                  {`+
-                    ${getFormattedPrice(
-                      priceAlgorithm.getPriceWithoutDelivery(
-                        noFrameVariant.id,
-                        dataPrintful
-                      ).netPrice
-                    )}`}
+                  {`${getFormattedPrice(
+                    priceAlgorithm.getPriceWithoutDelivery(
+                      noFrameVariant.id,
+                      dataPrintful
+                    ).netPrice
+                  )}`}
                 </StyledPriceP>
                 <DevicesItem>
                   {isDisabledBtn && <StyledDevicesImg src={disabledAndroid} />}

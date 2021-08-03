@@ -1,6 +1,5 @@
 const IS_CLIENT = typeof window !== "undefined";
 
-const PIXEL_RATIO = 4; //  x / 96 (8 is the good value)
 const RUNTIME_PIXEL_RATIO = 2;
 
 const PIXEL_RATIO_SM = 1.7;
@@ -497,6 +496,11 @@ const MAP_STYLES = {
   },
 };
 
+const TITLE_NAMES = {
+  TITLE: "heading",
+  SUBTITLE: "subtitle",
+};
+
 const FAKE_DIV_IDS = {
   heading: "fake_heading_div",
   subtitle: "fake_subtitle_div",
@@ -504,7 +508,6 @@ const FAKE_DIV_IDS = {
 
 module.exports = {
   IS_CLIENT,
-  PIXEL_RATIO,
   RUNTIME_PIXEL_RATIO,
   PIXEL_RATIO_SM,
   PIXEL_RATIO_MD,
@@ -537,5 +540,6 @@ module.exports = {
   LAYOUTS,
   MAP_STYLES_NAMES,
   MAP_STYLES,
+  TITLE_NAMES,
   FAKE_DIV_IDS,
 };

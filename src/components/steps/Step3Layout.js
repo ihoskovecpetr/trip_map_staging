@@ -45,7 +45,7 @@ export default function Step3Layout({ activeFrame, setActiveLayout }) {
 
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>3. Ohraničení</HeadingText>}
+      {!isMobile && <HeadingText>4. Ohraničení</HeadingText>}
       <div sx={styles.allLayoutsWrap}>
         {Object.values(LAYOUTS).map((layoutObj, index) => (
           <div

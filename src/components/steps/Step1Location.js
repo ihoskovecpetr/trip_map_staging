@@ -4,11 +4,12 @@ import { jsx } from "theme-ui";
 import produce from "immer";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 
 import { color } from "utils";
-
+import { setNewTitle, setNewSubtitle } from "redux/order/actions";
 import { useIsMobile } from "Hooks/useIsMobile";
 import PopoverGuide from "components/PopoverGuide";
 
@@ -28,6 +29,7 @@ export default function Step1Location({
   setMapTitles,
 }) {
   const { isMobile } = useIsMobile();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     document.getElementById("geocoder").innerHTML = "";
@@ -49,14 +51,18 @@ export default function Step1Location({
   const pantoEventLocation = (e) => {
     setMapCoordinates(e.result.geometry.coordinates);
 
-    setMapTitles((prev) =>
-      produce(prev, (draftState) => {
-        const placeNameArr = e.result.place_name.split(",");
-        const subtitle = placeNameArr[placeNameArr.length - 1]?.trim();
-        draftState.heading.text = placeNameArr[0] ?? "";
-        draftState.subtitle.text = subtitle ? `— ${subtitle} —` : "";
-      })
-    );
+    const placeNameArr = e.result.place_name.split(",");
+    const subtitle = placeNameArr[placeNameArr.length - 1]?.trim();
+
+    dispatch(setNewTitle(placeNameArr[0]));
+    dispatch(setNewSubtitle(subtitle ? `— ${subtitle} —` : ""));
+
+    // setMapTitles((prev) =>
+    //   produce(prev, (draftState) => {
+    //     draftState.heading.text = placeNameArr[0] ?? "";
+    //     draftState.subtitle.text = subtitle ? `— ${subtitle} —` : "";
+    //   })
+    // );
 
     const { bbox } = e.result;
 

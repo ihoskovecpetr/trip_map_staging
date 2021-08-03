@@ -10,7 +10,6 @@ import {
 let cachedResponse = null;
 
 const fetchDataPrintful = async (variantIdsArr) => {
-  console.log("Call data print");
   const resp = await axios.post(`api/data-printful`, { variantIdsArr });
   return resp;
 };
@@ -29,8 +28,6 @@ export function useGetDataPrintful() {
         )();
       };
       const response = await lazyDownloadDataPrintfull();
-
-      console.log({ response });
 
       setData(response.data.finalResult);
     } catch (e) {

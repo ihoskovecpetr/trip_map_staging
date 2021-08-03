@@ -33,7 +33,6 @@ const priceAlgorithm = getPriceAlgorithm();
 
 export default function CheckoutCard({
   product,
-  mapTitles,
   isUploadPending,
   imageSavedResponse,
   imageBase64Created,
@@ -44,6 +43,7 @@ export default function CheckoutCard({
   fileSizeMB,
 }) {
   const classes = useStyles();
+
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
@@ -188,7 +188,6 @@ export default function CheckoutCard({
       </div>
       <CheckoutItems
         product={product}
-        mapTitles={mapTitles}
         dataPrintful={dataPrintful}
         ImageComponent={<ImageUploaded />}
         activeLayoutName={activeLayoutName}

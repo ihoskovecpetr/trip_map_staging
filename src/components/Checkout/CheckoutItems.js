@@ -9,15 +9,16 @@ import { getVariantObject } from "LibGlobal/getVariantObject";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import deliveryTruck from "assets/icons/delivery-truck.png";
+import { useTitlesSelector } from "redux/order/reducer";
 
 export default function ProductSummary({
   product,
-  mapTitles,
   dataPrintful,
   ImageComponent,
   activeLayoutName,
   activeMapStyleName,
 }) {
+  const mapTitlesRedux = useTitlesSelector();
   const productDescription = getVariantObject(product.variantId)?.frameName;
   const dataPrintfulVariant = dataPrintful && dataPrintful[product.variantId];
 
@@ -45,7 +46,7 @@ export default function ProductSummary({
         <LineTextContainer>
           <BoldText>{`${productDescription} ${product.sizeObject.code}`}</BoldText>
           <span>
-            <GreyText>{`${mapTitles?.heading?.text} ${mapTitles?.subtitle?.text}`}</GreyText>
+            <GreyText>{`${mapTitlesRedux?.heading?.text} ${mapTitlesRedux?.subtitle?.text}`}</GreyText>
             <GreyText>{`${product.materialDesc}`}</GreyText>
             <GreyText>{`${activeLayoutName} ${activeMapStyleName}`}</GreyText>
           </span>

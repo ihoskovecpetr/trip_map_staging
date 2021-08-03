@@ -28,7 +28,6 @@ export default function Stepper({
   handleBack,
   activeStep,
   map,
-  mapTitles,
   activeLayout,
   product,
   activeMapStyleName,
@@ -65,7 +64,6 @@ export default function Stepper({
           {isLastStep ? (
             <CheckoutCta
               map={map}
-              mapTitles={mapTitles}
               activeLayoutName={activeLayout}
               product={product}
               activeMapStyleName={activeMapStyleName}

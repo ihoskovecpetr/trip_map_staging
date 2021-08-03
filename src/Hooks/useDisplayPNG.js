@@ -12,8 +12,6 @@ export function useDisplayPNG({ id }) {
 
     const eventCallback = (event, name) => {};
 
-    console.log({ imageEl, id });
-
     if (imageEl) {
       imageEl.addEventListener("error", (event) => {
         eventCallback("Error_Z_hooku_pro_id", id, event);

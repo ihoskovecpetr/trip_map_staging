@@ -9,8 +9,6 @@ export function useElementDimensions(element_id) {
         return;
       }
 
-      console.log("Handling_resize");
-
       setDimensions({
         height:
           document.getElementById(element_id)?.getBoundingClientRect().height ||

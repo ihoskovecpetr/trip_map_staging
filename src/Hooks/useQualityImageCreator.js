@@ -2,6 +2,7 @@ import React from "react";
 
 import { createFinalImage } from "LibGlobal/createFinalImage";
 import { useElementDimensions } from "Hooks/useElementDimensions";
+import { useTitlesSelector } from "redux/order/reducer";
 
 const mapWrapperId = "map_wrap_2_id";
 
@@ -10,22 +11,19 @@ export function useQualityImageCreator() {
     height: mapWrapperHeight,
     width: mapWrapperWidth,
   } = useElementDimensions("map_wrap_2_id");
-
-  console.log({ mapWrapperHeight, mapWrapperWidth });
+  const mapTitlesRedux = useTitlesSelector();
 
   return async ({
     map,
     activeLayoutName,
-    mapTitles,
     product,
     activeMapStyleName,
     options,
   }) => {
-    console.log("Taking_screenshot:: ", { mapWrapperHeight, mapWrapperWidth });
     return createFinalImage({
       originalMapObject: map,
       activeLayoutName,
-      mapTitles,
+      mapTitles: mapTitlesRedux, // mapTitlesRedux,
       product,
       activeMapStyleName,
       options: {

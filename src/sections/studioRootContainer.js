@@ -6,6 +6,7 @@ import MapContainer from "components/canvas/mapContainer";
 import mapboxgl from "mapbox-gl";
 import styled from "styled-components";
 import produce from "immer";
+import { useDispatch } from "react-redux";
 
 import { useIsMobile } from "../Hooks/useIsMobile";
 import { useElementDimensions } from "Hooks/useElementDimensions";
@@ -21,6 +22,8 @@ import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm
 import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
 import { getLayoutColors } from "LibGlobal/getLayoutColors";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
+import { useTitlesSelector } from "redux/order/reducer";
+import { setNewTitle, setNewSubtitle } from "redux/order/actions";
 
 import {
   MAP_STYLES,
@@ -32,6 +35,7 @@ import {
   TITLES_DEFAULT,
   DEFAULT_FONT_WEIGHT_THIN,
   RUNTIME_PIXEL_RATIO,
+  TITLE_NAMES,
 } from "../constants/constants";
 
 // const mapStyles = require.context("assets/MAPS_MAPBOX", true);
@@ -194,6 +198,8 @@ const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
 };
 
 export default function StudioRootContainer() {
+  const dispatch = useDispatch();
+
   const [mapCoordinates, setMapCoordinates] = useState([
     -73.985542,
     40.7484665,
@@ -221,10 +227,12 @@ export default function StudioRootContainer() {
   const [activeMapStyleName, setActiveMapStyleName] = useState(
     MAP_STYLES_NAMES.RED_BLUE
   );
-  const [mapTitles, setMapTitles] = useState({
-    heading: { text: TITLES_DEFAULT[0], size: 14 },
-    subtitle: { text: TITLES_DEFAULT[1], size: 8 },
-  });
+  // const [mapTitles, setMapTitles] = useState({
+  //   heading: { text: TITLES_DEFAULT[0], size: 14 },
+  //   subtitle: { text: TITLES_DEFAULT[1], size: 8 },
+  // });
+
+  const mapTitlesRedux = useTitlesSelector();
 
   const { height: headerHeight } = useElementDimensions("header");
   const {
@@ -240,7 +248,7 @@ export default function StudioRootContainer() {
   // CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
   const { isMobile } = useIsMobile();
 
-  const mapTitlesRef = useRef(mapTitles); // Using this due to snapshot state of state in hooks
+  const mapTitlesRef = useRef(mapTitlesRedux); // Using this due to snapshot state of state in hooks
   const layoutRef = useRef(activeLayout);
   const coordinatesRef = useRef(mapCoordinates);
   const productRef = useRef(product);
@@ -281,11 +289,11 @@ export default function StudioRootContainer() {
         ).netPrice,
       }));
     }
-  }, [mapTitles]);
+  }, [JSON.stringify(mapTitlesRedux)]);
 
   useEffect(() => {
-    mapTitlesRef.current = mapTitles;
-  }, [mapTitles]);
+    mapTitlesRef.current = mapTitlesRedux;
+  }, [JSON.stringify(mapTitlesRedux)]);
 
   useEffect(() => {
     layoutRef.current = activeLayout;
@@ -319,6 +327,7 @@ export default function StudioRootContainer() {
 
   useEffect(() => {
     layoutRef.current = activeLayout;
+
     if (layoutCanvas && canvasMap) {
       resizeLayout({
         cvsLayout: layoutCanvas,
@@ -341,7 +350,8 @@ export default function StudioRootContainer() {
     isMobile,
     mapAvailSpaceHeight,
     mapAvailSpaceWidth,
-    mapTitles,
+    // mapTitles,
+    JSON.stringify(mapTitlesRedux),
     activeMapStyleName,
   ]);
 
@@ -424,10 +434,6 @@ export default function StudioRootContainer() {
           product: productRef.current,
           activeMapStyleName: activeMapStyleName,
         });
-
-        const styleJson = map.getStyle();
-
-        console.log({ styleJson });
 
         resizeInputs({
           mapTitles: mapTitlesRef.current,
@@ -532,18 +538,22 @@ export default function StudioRootContainer() {
     activeLayout,
     mapAvailSpaceHeight,
     mapAvailSpaceWidth,
-    mapTitles,
+    JSON.stringify(mapTitlesRedux),
+    // mapTitles,
   ]);
 
   const saveTitlesValue = (e) => {
-    setMapTitles((prev) =>
-      produce(prev, (draftState) => {
-        const newValue = e.target.value ?? ""; // ?.toUpperCase()
-        draftState[e.target.name].text = newValue;
-        // draftState.heading.text = headlineInput.innerText;
-        // draftState.subtitle.text = subtitleInput.innerText;
-      })
-    );
+    console.log("saveTitlesValue_call_val: ", e.target.value);
+    switch (e.target.name) {
+      case TITLE_NAMES.TITLE:
+        dispatch(setNewTitle(e.target.value ?? ""));
+        return;
+      case TITLE_NAMES.SUBTITLE:
+        dispatch(setNewSubtitle(e.target.value ?? ""));
+        return;
+      default:
+        alert("Wrong input name");
+    }
   };
 
   return (
@@ -556,10 +566,10 @@ export default function StudioRootContainer() {
               addZoom={addZoom(map)}
               subtractZoom={subtractZoom(map)}
               activeLayoutName={activeLayout}
-              mapTitles={mapTitles}
               setProduct={setProduct}
               product={product}
               activeMapStyleName={activeMapStyleName}
+              mapTitles={mapTitlesRedux}
             />
           </Box>
 
@@ -572,8 +582,6 @@ export default function StudioRootContainer() {
               setActiveMapStyleName={setActiveMapStyleName}
               mapCoordinates={mapCoordinates}
               setMapCoordinates={setMapCoordinates}
-              mapTitles={mapTitles}
-              setMapTitles={setMapTitles}
               product={product}
               setProduct={setProduct}
             />

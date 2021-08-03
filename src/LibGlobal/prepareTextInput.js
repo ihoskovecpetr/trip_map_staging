@@ -27,13 +27,18 @@ export function prepareTextInput({
 
   element.value = textValue;
 
-  element.addEventListener(
-    "input",
-    function (e) {
-      onInput(e);
-    },
-    false
-  );
+  // element.addEventListener(
+  //   "input",
+  //   function (e) {
+  //     console.log("Input_change_SAME", { 1: e.target.value, 2: textValue });
+  //     onInput(e);
+  //   },
+  //   false
+  // );
+
+  element.onkeyup = (e) => {
+    onInput(e);
+  };
 
   let htmlLongSideLength;
 

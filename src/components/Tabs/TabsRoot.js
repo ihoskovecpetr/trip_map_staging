@@ -42,7 +42,6 @@ export default function TabsRootNew({
   setActiveLayout,
   setActiveMapStyleName,
   activeMapStyleName,
-  mapTitles,
   setMapTitles,
   product,
   setProduct,
@@ -97,13 +96,9 @@ export default function TabsRootNew({
 
   const stepElementsDesktop = [
     [
-      <Step1Location
-        map={map}
-        setMapCoordinates={setMapCoordinates}
-        setMapTitles={setMapTitles}
-      />,
+      <Step1Location map={map} setMapCoordinates={setMapCoordinates} />,
       <Step2Orientation product={product} setProduct={setProduct} />,
-      <StepTitles mapTitles={mapTitles} setMapTitles={setMapTitles} />,
+      <StepTitles />,
     ],
     [
       <Step3Layout
@@ -127,7 +122,6 @@ export default function TabsRootNew({
 
       <Step6FinishVariant
         map={map}
-        mapTitles={mapTitles}
         activeLayout={activeLayout}
         product={product}
         setProduct={setProduct}
@@ -137,7 +131,6 @@ export default function TabsRootNew({
     [
       <Step8Checkout
         map={map}
-        mapTitles={mapTitles}
         activeLayout={activeLayout}
         product={product}
         setProduct={setProduct}
@@ -152,7 +145,6 @@ export default function TabsRootNew({
         map={map}
         nextTab={() => handleChange(TAB_VALUES.TWO)}
         setMapCoordinates={setMapCoordinates}
-        setMapTitles={setMapTitles}
       />,
     ],
     [
@@ -162,7 +154,7 @@ export default function TabsRootNew({
         setProduct={setProduct}
       />,
     ],
-    [<StepTitles mapTitles={mapTitles} setMapTitles={setMapTitles} />],
+    [<StepTitles setMapTitles={setMapTitles} />],
     [
       <Step4Colors
         activeMapStyle={activeMapStyleName}
@@ -197,7 +189,6 @@ export default function TabsRootNew({
     [
       <Step6FinishVariant
         map={map}
-        mapTitles={mapTitles}
         activeLayout={activeLayout}
         product={product}
         setProduct={setProduct}
@@ -207,7 +198,6 @@ export default function TabsRootNew({
     [
       <Step8Checkout
         map={map}
-        mapTitles={mapTitles}
         activeLayout={activeLayout}
         product={product}
         setProduct={setProduct}
@@ -272,7 +262,6 @@ export default function TabsRootNew({
           handleBack={handleBack}
           activeStep={activeStepNumber}
           map={map}
-          mapTitles={mapTitles}
           activeLayout={activeLayout}
           product={product}
           activeMapStyleName={activeMapStyleName}
