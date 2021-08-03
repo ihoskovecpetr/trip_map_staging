@@ -117,6 +117,7 @@ export default function MapContainer({
               visibility: "hidden",
               position: "fixed",
               overflow: "auto",
+              "white-space": "nowrap",
             }}
           >
             {TITLES_DEFAULT[index]}
