@@ -15,6 +15,12 @@ import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useTitlesSelector } from "redux/order/reducer";
+import { useProductSelector } from "redux/order/reducer";
+
+import {
+  useActiveLayoutSelector,
+  useActiveMapStyleSelector,
+} from "redux/order/reducer";
 
 import {
   getLazyUploader,
@@ -23,16 +29,12 @@ import {
 
 const CancelToken = axios.CancelToken;
 
-export default function CheckoutCta({
-  map,
-  activeLayoutName,
-  product,
-  activeMapStyleName,
-  children,
-  isCustomUI,
-}) {
+export default function CheckoutCta({ map, children, isCustomUI }) {
   const classes = useStyles();
-  const mapTitlesRedux = useTitlesSelector();
+  const mapTitles = useTitlesSelector();
+  const productRedux = useProductSelector();
+  const activeLayoutNameRedux = useActiveLayoutSelector();
+  const activeMapStyleName = useActiveMapStyleSelector();
 
   const [backdropOpen, setBackdropOpen] = useState(false);
   const [isUploadPending, setIsUploadPending] = useState(false);
@@ -59,9 +61,9 @@ export default function CheckoutCta({
   }, [
     map,
     center,
-    mapTitlesRedux,
-    activeLayoutName,
-    product,
+    mapTitles,
+    activeLayoutNameRedux,
+    productRedux,
     activeMapStyleName,
   ]);
 
@@ -80,8 +82,8 @@ export default function CheckoutCta({
 
       const finalImgSrc = await qualityImageCreator({
         map,
-        activeLayoutName,
-        product,
+        activeLayoutName: activeLayoutNameRedux,
+        product: productRedux,
         activeMapStyleName,
         options: {
           isPreview: false,
@@ -136,7 +138,7 @@ export default function CheckoutCta({
   const priceAlgorithm = getPriceAlgorithm();
 
   const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-    product.variantId,
+    productRedux.variantId,
     dataPrintful
   );
 
@@ -179,12 +181,10 @@ export default function CheckoutCta({
         >
           <CheckoutPopupBody
             isUploadPending={isUploadPending}
-            product={product}
             imageSavedResponse={imageSavedResponse}
             imageBase64Created={imageBase64Created}
             backdropClose={backdropClose}
             percentageUpload={percentageUpload}
-            activeLayoutName={activeLayoutName}
             activeMapStyleName={activeMapStyleName}
             fileSizeMB={fileSizeMB}
           />

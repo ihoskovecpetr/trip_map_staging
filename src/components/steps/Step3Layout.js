@@ -2,6 +2,7 @@
 import React from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 import borderBlurredLayoutImgPNG from "assets/mapLayouts/png/borderBlurredLayout.png";
 import bottomBlurredLayoutImgPNG from "assets/mapLayouts/png/bottomBlurredLayout.png";
@@ -11,15 +12,21 @@ import bottomBoxLayoutImgPNG from "assets/mapLayouts/png/bottomBoxLayout.png";
 import islandBoxLayoutImgPNG from "assets/mapLayouts/png/islandBoxLayout.png";
 import borderBoxLayoutImgPNG from "assets/mapLayouts/png/borderBoxLayout.png";
 import pureLayoutImgPNG from "assets/mapLayouts/png/pureLayout.png";
-import { useIsMobile } from "../../Hooks/useIsMobile";
+import { useIsMobile } from "Hooks/useIsMobile";
 import { color } from "utils";
+import { setActiveLayoutAction } from "redux/order/actions";
+import { useActiveLayoutSelector } from "redux/order/reducer";
 
-import { LAYOUT_STYLE_NAMES, LAYOUTS } from "../../constants/constants";
+import { LAYOUT_STYLE_NAMES, LAYOUTS } from "constants/constants";
 
-export default function Step3Layout({ activeFrame, setActiveLayout }) {
+export default function Step3Layout() {
+  const dispatch = useDispatch();
+  const activeLayoutNameRedux = useActiveLayoutSelector();
   const { isMobile } = useIsMobile();
-  const changeActiveLayout = (index) => () => {
-    setActiveLayout(index);
+  console.log({ activeLayoutNameRedux });
+  const changeActiveLayout = (layoutName) => {
+    dispatch(setActiveLayoutAction(layoutName));
+    // setActiveLayout(layoutName);
   };
 
   const getLayoutImg = (frameName) => {
@@ -49,14 +56,14 @@ export default function Step3Layout({ activeFrame, setActiveLayout }) {
       <div sx={styles.allLayoutsWrap}>
         {Object.values(LAYOUTS).map((layoutObj, index) => (
           <div
-            className={activeFrame === layoutObj.name && "active"}
+            className={activeLayoutNameRedux === layoutObj.name && "active"}
             sx={styles.layoutItem}
-            onClick={changeActiveLayout(layoutObj.name)}
+            onClick={() => changeActiveLayout(layoutObj.name)}
           >
             <ImageWrap>
               <StyledImage
                 src={getLayoutImg(layoutObj.name)}
-                active={activeFrame === layoutObj.name}
+                active={activeLayoutNameRedux === layoutObj.name}
                 alt={"Could not display this Layout"}
                 id={`image_id_${index}`}
               />

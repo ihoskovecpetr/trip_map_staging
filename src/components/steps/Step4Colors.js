@@ -2,6 +2,7 @@
 import React from "react";
 import { jsx, Text } from "theme-ui";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 import PaleBlue from "assets/mapStyles/webp/PaleBlue.webp";
 import SandyDark from "assets/mapStyles/webp/SandyDark.webp";
@@ -31,13 +32,19 @@ import { MAP_STYLES_NAMES } from "../../constants/constants";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
 import { color, font, fontSize, fontWeight } from "utils";
+import { setActiveMapStyleAction } from "redux/order/actions";
+import { useActiveMapStyleSelector } from "redux/order/reducer";
 
-export default function Step4Colors({ activeMapStyle, setActiveMapStyleName }) {
+export default function Step4Colors() {
+  const dispatch = useDispatch();
+  const activeMapStyleName = useActiveMapStyleSelector();
+
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG({ id: "map_style_id_0" });
 
   const changeActiveStyle = (style) => () => {
-    setActiveMapStyleName(style);
+    dispatch(setActiveMapStyleAction(style));
+    // setActiveMapStyleName(style);
   };
 
   const getMapStyleImg = (mapStyle) => {
@@ -76,14 +83,14 @@ export default function Step4Colors({ activeMapStyle, setActiveMapStyleName }) {
       <ColorsWrap>
         {Object.values(MAP_STYLES_NAMES).map((style, index) => (
           <div
-            className={activeMapStyle === style && "active"}
+            className={activeMapStyleName === style && "active"}
             sx={styles.mapColorsItem}
           >
-            <ImageWrap active={activeMapStyle === style}>
+            <ImageWrap active={activeMapStyleName === style}>
               <StyledImage
                 src={getMapStyleImg(style)}
                 id={`map_style_id_${index}`}
-                active={activeMapStyle === style}
+                active={activeMapStyleName === style}
                 alt="Map style image"
                 onClick={changeActiveStyle(style)}
               />

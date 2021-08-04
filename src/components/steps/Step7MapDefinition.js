@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Lightbox from "react-image-lightbox";
+import { useDispatch } from "react-redux";
 
-import CheckoutCta from "../Checkout/CheckoutCta";
 import { color, mobile } from "utils";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import CustomLoader from "components/CustomLoader";
+import { setProductAction } from "redux/order/actions";
+import { useProductSelector } from "redux/order/reducer";
+import {
+  useActiveLayoutSelector,
+  useActiveMapStyleSelector,
+} from "redux/order/reducer";
 
 import { ORIENTATIONS } from "constants/constants";
 
@@ -13,14 +19,12 @@ const LOW_DENSITY_CONSTANT = 3;
 const MID_DENSITY_CONSTANT = 2;
 const HIGH_DENSITY_CONSTANT = 1;
 
-export default function MapDefinition({
-  map,
-  activeLayout,
-  product,
-  setProduct,
-  activeMapStyleName,
-}) {
+export default function MapDefinition({ map }) {
   const qualityImageCreator = useQualityImageCreator();
+  const dispatch = useDispatch();
+  const productRedux = useProductSelector();
+  const activeLayoutNameRedux = useActiveLayoutSelector();
+  const activeMapStyleName = useActiveMapStyleSelector();
 
   const [highDefinitionImg, setHighDefinitionImg] = useState(null);
   const [lowDefinitionImg, setLowDefinitionImg] = useState(null);
@@ -30,13 +34,13 @@ export default function MapDefinition({
     open: false,
   });
 
-  const createFinalImage = async () => {
+  const createFinalExampleImages = async () => {
     setIsLoading(true);
 
     const imgLowDefinition = await qualityImageCreator({
       map,
-      activeLayoutName: activeLayout,
-      product,
+      activeLayoutName: activeLayoutNameRedux,
+      product: productRedux,
       activeMapStyleName,
       options: {
         definitionConstant: LOW_DENSITY_CONSTANT,
@@ -45,8 +49,8 @@ export default function MapDefinition({
 
     const imgMidDefinition = await qualityImageCreator({
       map,
-      activeLayoutName: activeLayout,
-      product,
+      activeLayoutName: activeLayoutNameRedux,
+      productRedux,
       activeMapStyleName,
       options: {
         definitionConstant: MID_DENSITY_CONSTANT,
@@ -55,8 +59,8 @@ export default function MapDefinition({
 
     const imgHighDefinition = await qualityImageCreator({
       map,
-      activeLayoutName: activeLayout,
-      product,
+      activeLayoutName: activeLayoutNameRedux,
+      productRedux,
       activeMapStyleName,
       options: {
         definitionConstant: HIGH_DENSITY_CONSTANT,
@@ -73,17 +77,21 @@ export default function MapDefinition({
   const mapBounds = JSON.stringify(map.getBounds());
 
   useEffect(() => {
-    createFinalImage();
-  }, [activeLayout, mapBounds]);
+    createFinalExampleImages();
+  }, [activeLayoutNameRedux, mapBounds]);
 
   const switchActiveLow = (constant) => {
     setLightbox({ open: true });
 
-    setProduct((prev) => ({ ...prev, densityConstant: constant }));
+    dispatch(
+      setProductAction({
+        densityConstant: constant,
+      })
+    );
   };
 
   const isWideOrientation =
-    product?.sizeObject?.orientation === ORIENTATIONS.wide;
+    productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
 
   const getDensitySource = (constant) => {
     switch (constant) {
@@ -94,7 +102,7 @@ export default function MapDefinition({
       case HIGH_DENSITY_CONSTANT:
         return highDefinitionImg;
       default:
-        alert("wrong definition constant");
+        alert("wrong density constant");
     }
   };
 
@@ -108,7 +116,7 @@ export default function MapDefinition({
           ) : (
             <StyledImg
               src={lowDefinitionImg}
-              active={product.densityConstant === LOW_DENSITY_CONSTANT}
+              active={productRedux.densityConstant === LOW_DENSITY_CONSTANT}
             />
           )}
         </Item>
@@ -118,7 +126,7 @@ export default function MapDefinition({
           ) : (
             <StyledImg
               src={midDefinitionImg}
-              active={product.densityConstant === MID_DENSITY_CONSTANT}
+              active={productRedux.densityConstant === MID_DENSITY_CONSTANT}
             />
           )}
         </Item>
@@ -128,14 +136,14 @@ export default function MapDefinition({
           ) : (
             <StyledImg
               src={highDefinitionImg}
-              active={product.densityConstant === HIGH_DENSITY_CONSTANT}
+              active={productRedux.densityConstant === HIGH_DENSITY_CONSTANT}
             />
           )}
         </Item>
       </Container>
       {lightbox.open && (
         <Lightbox
-          mainSrc={getDensitySource(product.densityConstant)}
+          mainSrc={getDensitySource(productRedux.densityConstant)}
           onCloseRequest={() => setLightbox({ open: false })}
         />
       )}

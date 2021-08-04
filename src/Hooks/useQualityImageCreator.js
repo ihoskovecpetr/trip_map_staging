@@ -1,17 +1,17 @@
 import React from "react";
 
 import { createFinalImage } from "LibGlobal/createFinalImage";
-import { useElementDimensions } from "Hooks/useElementDimensions";
+// import { useElementDimensions } from "Hooks/useElementDimensions";
 import { useTitlesSelector } from "redux/order/reducer";
 
 const mapWrapperId = "map_wrap_2_id";
 
 export function useQualityImageCreator() {
-  const {
-    height: mapWrapperHeight,
-    width: mapWrapperWidth,
-  } = useElementDimensions("map_wrap_2_id");
-  const mapTitlesRedux = useTitlesSelector();
+  // const {
+  //   height: mapWrapperHeight,
+  //   width: mapWrapperWidth,
+  // } = useElementDimensions("map_wrap_2_id");
+  const mapTitles = useTitlesSelector();
 
   return async ({
     map,
@@ -23,7 +23,7 @@ export function useQualityImageCreator() {
     return createFinalImage({
       originalMapObject: map,
       activeLayoutName,
-      mapTitles: mapTitlesRedux, // mapTitlesRedux,
+      mapTitles: mapTitles,
       product,
       activeMapStyleName,
       options: {

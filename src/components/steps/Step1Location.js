@@ -6,12 +6,13 @@ import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
+import { useRouter } from "next/router";
 
 import { color } from "utils";
 import { setNewTitle, setNewSubtitle } from "redux/order/actions";
 import { useIsMobile } from "Hooks/useIsMobile";
 import PopoverGuide from "components/PopoverGuide";
+import { setMapCoordinatesAction } from "redux/order/actions";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 let geocoder = new MapboxGeocoder({
@@ -23,13 +24,10 @@ let geocoder = new MapboxGeocoder({
   placeholder: "Zadejte lokalitu",
 });
 
-export default function Step1Location({
-  map,
-  setMapCoordinates,
-  setMapTitles,
-}) {
+export default function Step1Location({ map }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     document.getElementById("geocoder").innerHTML = "";
@@ -49,20 +47,16 @@ export default function Step1Location({
   }, [map]);
 
   const pantoEventLocation = (e) => {
-    setMapCoordinates(e.result.geometry.coordinates);
+    dispatch(setMapCoordinatesAction(e.result.geometry.coordinates));
 
     const placeNameArr = e.result.place_name.split(",");
     const subtitle = placeNameArr[placeNameArr.length - 1]?.trim();
 
-    dispatch(setNewTitle(placeNameArr[0]));
-    dispatch(setNewSubtitle(subtitle ? `— ${subtitle} —` : ""));
+    const newTitle = placeNameArr[0];
+    const newSubTitle = subtitle ? `— ${subtitle} —` : "";
 
-    // setMapTitles((prev) =>
-    //   produce(prev, (draftState) => {
-    //     draftState.heading.text = placeNameArr[0] ?? "";
-    //     draftState.subtitle.text = subtitle ? `— ${subtitle} —` : "";
-    //   })
-    // );
+    dispatch(setNewTitle(newTitle));
+    dispatch(setNewSubtitle(newSubTitle));
 
     const { bbox } = e.result;
 
@@ -79,6 +73,15 @@ export default function Step1Location({
       // map?.panTo(e.result.geometry.coordinates);
       // map.setZoom(13);
     }
+
+    const newZoom = map.getZoom();
+
+    // router.query.c = JSON.stringify(e.result.geometry.coordinates);
+    // router.query.t = newTitle;
+    // router.query.s = newSubTitle;
+    // router.query.z = newZoom;
+
+    // router.push(router);
 
     geocoder.clear(); // to remove blue dot
     document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].blur();

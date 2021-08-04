@@ -53,7 +53,7 @@ export default function StepTitles() {
   const { isMobile } = useIsMobile();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const mapTitlesRedux = useTitlesSelector();
+  const mapTitles = useTitlesSelector();
 
   const handleTitleChange = (e) => {
     const targetValue = e.target.value;
@@ -96,7 +96,7 @@ export default function StepTitles() {
           label="Hlavní nadpis"
           variant="outlined"
           name="heading"
-          value={mapTitlesRedux.heading.text}
+          value={mapTitles.heading.text}
           onChange={handleTitleChange}
         />
         <TextField
@@ -120,7 +120,7 @@ export default function StepTitles() {
           label="Vedlejší nadpis"
           variant="outlined"
           name="subtitle"
-          value={mapTitlesRedux.subtitle.text}
+          value={mapTitles.subtitle.text}
           onChange={handleTitleChange}
         />
       </TextFieldsConteiner>

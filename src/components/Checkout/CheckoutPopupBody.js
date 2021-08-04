@@ -17,10 +17,10 @@ import { color } from "utils";
 import { getIsProduction } from "LibGlobal/getIsProduction";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
-
 import CheckoutItems from "./CheckoutItems";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import UnderlineLoader from "components/UnderlineLoader";
+import { useProductSelector } from "redux/order/reducer";
 
 const STRIPE_PUBLIC_KEY_LIVE =
   "pk_live_51IUQiOKQWovk2rIh0SfKkGNuHSE5J7VY6LCJaijjYh7lmjb64h8fmHcYmYoINNCNMTC5sxdsUkwnWIePd2z6vqPH00BzD2UrRm";
@@ -31,18 +31,17 @@ let Stripe;
 
 const priceAlgorithm = getPriceAlgorithm();
 
-export default function CheckoutCard({
-  product,
+export default function CheckoutPopupBody({
   isUploadPending,
   imageSavedResponse,
   imageBase64Created,
   backdropClose,
   percentageUpload,
-  activeLayoutName,
   activeMapStyleName,
   fileSizeMB,
 }) {
   const classes = useStyles();
+  const product = useProductSelector();
 
   const [lightbox, setLightbox] = useState({
     open: false,
@@ -187,10 +186,8 @@ export default function CheckoutCard({
         </HeaderTextsContainer>
       </div>
       <CheckoutItems
-        product={product}
         dataPrintful={dataPrintful}
         ImageComponent={<ImageUploaded />}
-        activeLayoutName={activeLayoutName}
         activeMapStyleName={activeMapStyleName}
       />
 

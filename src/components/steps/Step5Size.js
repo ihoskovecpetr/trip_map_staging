@@ -3,6 +3,7 @@ import React from "react";
 import { jsx, Text } from "theme-ui";
 import styled from "styled-components";
 import DoneIcon from "@material-ui/icons/Done";
+import { useDispatch } from "react-redux";
 
 import { color, fontSize, fontWeight } from "utils";
 import CustomLoader from "../CustomLoader";
@@ -12,6 +13,8 @@ import { useIsMobile } from "Hooks/useIsMobile";
 import { useWebGLSize } from "Hooks/useWebGLSize";
 import disabledAndroid from "assets/icons/devicesAndroidOblique.png";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
+import { setProductAction } from "redux/order/actions";
+import { useProductSelector } from "redux/order/reducer";
 
 import {
   VARIANTS_PRINTFUL,
@@ -22,9 +25,11 @@ import {
 
 const priceAlgorithm = getPriceAlgorithm();
 
-export default function Step5Size({ product, setProduct }) {
+export default function Step5Size() {
   const { isMobile } = useIsMobile();
   const { isLargeSizeCapable } = useWebGLSize();
+  const dispatch = useDispatch();
+  const productRedux = useProductSelector();
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
@@ -33,7 +38,7 @@ export default function Step5Size({ product, setProduct }) {
   //TODO single size can have multiple vriants..could switch to different variant
   const findVariant = (newSize) => {
     const currentFrameName = VARIANTS_PRINTFUL.find(
-      (variant) => variant.id === product.variantId
+      (variant) => variant.id === productRedux.variantId
     )?.frameName;
 
     return VARIANTS_PRINTFUL.find(
@@ -46,7 +51,7 @@ export default function Step5Size({ product, setProduct }) {
     SIZES.find(
       (size) =>
         size.acceptableSizes.includes(newSizeCode) &&
-        size.orientation === product.sizeObject.orientation
+        size.orientation === productRedux.sizeObject.orientation
     );
 
   const setNewSize = (sizeCode) => {
@@ -54,17 +59,18 @@ export default function Step5Size({ product, setProduct }) {
 
     const newSizeObject = findNewSizeSameOrientation(sizeCode);
 
-    setProduct((prev) => ({
-      ...prev,
-      sizeObject: newSizeObject,
-      variantId: newVariant.id,
-      price: dataPrintful[newVariant.id]?.price,
-      priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
-        newVariant.id,
-        dataPrintful
-      ).netPrice,
-      shippingCode: newVariant.shipping.codeCZ,
-    }));
+    dispatch(
+      setProductAction({
+        sizeObject: newSizeObject,
+        variantId: newVariant.id,
+        price: dataPrintful[newVariant.id]?.price,
+        priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
+          newVariant.id,
+          dataPrintful
+        ).netPrice,
+        shippingCode: newVariant.shipping.codeCZ,
+      })
+    );
   };
 
   const sizesArray = VARIANTS_PRINTFUL.map((variant) => variant.sizeName);
@@ -72,7 +78,7 @@ export default function Step5Size({ product, setProduct }) {
 
   const variantsPrintfulForSize = VARIANTS_PRINTFUL.filter((variant) => {
     const isVariantForOffer =
-      product.sizeObject.acceptableSizes.includes(variant.sizeName) &&
+      productRedux.sizeObject.acceptableSizes.includes(variant.sizeName) &&
       dataPrintful &&
       dataPrintful[variant.id]?.availableEU;
     return isVariantForOffer;
@@ -132,7 +138,7 @@ export default function Step5Size({ product, setProduct }) {
             return (
               <MainItem>
                 <StyledItem
-                  active={product.sizeObject.acceptableSizes.includes(
+                  active={productRedux.sizeObject.acceptableSizes.includes(
                     sizeNameLocal
                   )}
                   isDisabled={isDisabledBtn}
@@ -142,7 +148,7 @@ export default function Step5Size({ product, setProduct }) {
                   <p sx={styles.itemDimensions}>{sizeObject?.name}</p>
                 </StyledItem>
                 <StyledPriceP
-                  active={product.sizeObject.acceptableSizes.includes(
+                  active={productRedux.sizeObject.acceptableSizes.includes(
                     sizeNameLocal
                   )}
                 >

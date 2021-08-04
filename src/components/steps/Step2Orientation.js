@@ -2,13 +2,18 @@
 import React from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 import { color, fontWeight } from "utils";
 import { useIsMobile } from "../../Hooks/useIsMobile";
-import { orientationSwitcher } from "../../LibGlobal/getOrientationSwitcher";
+import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
+import { setProductAction } from "redux/order/actions";
+import { useProductSelector } from "redux/order/reducer";
 
-export default function Step2Orientation({ product, setProduct }) {
+export default function Step2Orientation() {
   const { isMobile } = useIsMobile();
+  const dispatch = useDispatch();
+  const productRedux = useProductSelector();
 
   const isProductWide = (product) => {
     if (product.sizeObject.ratio < 1) {
@@ -18,7 +23,11 @@ export default function Step2Orientation({ product, setProduct }) {
   };
 
   const switchOrientation = () => {
-    orientationSwitcher(product, setProduct);
+    dispatch(
+      setProductAction({
+        sizeObject: getFlippedSizeObject(productRedux),
+      })
+    );
   };
 
   return (
@@ -28,30 +37,30 @@ export default function Step2Orientation({ product, setProduct }) {
       <OrientationWrap>
         <SingleOrientationItem
           onClick={switchOrientation}
-          active={!isProductWide(product)}
+          active={!isProductWide(productRedux)}
         >
           <IconWrap>
             <HighMock />
           </IconWrap>
 
           <StyledDescriptionP
-            active={!isProductWide(product)}
-            onClick={isProductWide(product) && switchOrientation}
+            active={!isProductWide(productRedux)}
+            onClick={isProductWide(productRedux) && switchOrientation}
           >
             Na výšku
           </StyledDescriptionP>
         </SingleOrientationItem>
         <SingleOrientationItem
           onClick={switchOrientation}
-          active={isProductWide(product)}
+          active={isProductWide(productRedux)}
         >
           <IconWrap>
             <WideMock />
           </IconWrap>
 
           <StyledDescriptionP
-            onClick={!isProductWide(product) && switchOrientation}
-            active={isProductWide(product)}
+            onClick={!isProductWide(productRedux) && switchOrientation}
+            active={isProductWide(productRedux)}
           >
             Na šířku
           </StyledDescriptionP>

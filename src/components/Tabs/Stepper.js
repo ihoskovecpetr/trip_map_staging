@@ -11,14 +11,7 @@ import CheckoutCta from "../Checkout/CheckoutCta";
 
 const useStyles = makeStyles({
   root: {
-    // maxWidth: 400,
-    // flexGrow: 1,
     width: "100%",
-  },
-  rootButton: {
-    backgroundColor: "#f6aa1c !important",
-    paddingLeft: "15px",
-    // color: "red",
   },
 });
 
@@ -28,21 +21,10 @@ export default function Stepper({
   handleBack,
   activeStep,
   map,
-  activeLayout,
-  product,
   activeMapStyleName,
 }) {
   const classes = useStyles();
   const theme = useTheme();
-  //   const [activeStep, setActiveStep] = React.useState(0);
-
-  //   const handleNext = () => {
-  //     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  //   };
-
-  //   const handleBack = () => {
-  //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  //   };
 
   const isLastStep = activeStep === stepElements.length - 1;
 
@@ -55,31 +37,16 @@ export default function Stepper({
       className={classes.root}
       id="tabs_stepper"
       nextButton={
-        <StyledButton
-          size="small"
-          onClick={!isLastStep && handleNext}
-          className={classes.rootButton}
-          // disabled={activeStep === stepElements.length - 1}
-        >
+        <StyledButton size="small" onClick={!isLastStep && handleNext}>
           {isLastStep ? (
             <CheckoutCta
               map={map}
-              activeLayoutName={activeLayout}
-              product={product}
               activeMapStyleName={activeMapStyleName}
               isCustomUI
             >
               Shrnutí
             </CheckoutCta>
           ) : (
-            // <Button
-            //   variant="contained"
-            //   color="primary"
-            //   classes={{
-            //     root: classes.rootButton,
-            //   }}
-            // >
-            // </Button>
             "Další"
           )}
           {theme.direction === "rtl" ? (
@@ -105,5 +72,6 @@ export default function Stepper({
 
 const StyledButton = styled(Button)`
   color: white !important;
-  backgroundcolor: ${color("cta_color")} !important;
+  background-color: ${color("cta_color")} !important;
+  padding-left: 15px !important;
 `;

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { jsx, Text } from "theme-ui";
 import Lightbox from "react-image-lightbox";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 import { color, fontWeight, fontSize } from "utils";
 import CustomLoader from "../CustomLoader";
@@ -11,6 +12,8 @@ import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getVariantObject } from "LibGlobal/getVariantObject";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import { useIsMobile } from "Hooks/useIsMobile";
+import { setProductAction } from "redux/order/actions";
+import { useProductSelector } from "redux/order/reducer";
 
 import {
   getPriceAlgorithm,
@@ -21,12 +24,15 @@ import { VARIANTS_PRINTFUL, FRAME_OPTION_NAMES } from "constants/constants";
 
 const priceAlgorithm = getPriceAlgorithm();
 
-export default function Step6FinishVariant({ product, setProduct }) {
+export default function Step6FinishVariant() {
+  const { isMobile } = useIsMobile();
+  const dispatch = useDispatch();
+  const productRedux = useProductSelector();
+
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
   });
-  const { isMobile } = useIsMobile();
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
@@ -34,22 +40,24 @@ export default function Step6FinishVariant({ product, setProduct }) {
   const basePriceAlgorithm = getBasePriceAlgorithm();
 
   const setNewFrame = (variantId, shippingCode) => {
+    dispatch(
+      setProductAction({
+        variantId: variantId,
+        price: dataPrintful[variantId]?.price,
+        priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
+          variantId,
+          dataPrintful
+        ).netPrice,
+        shippingCode,
+      })
+    );
+
     //TODO there has to be price, otherwise return?
-    setProduct((prev) => ({
-      ...prev,
-      variantId: variantId,
-      price: dataPrintful[variantId]?.price,
-      priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
-        variantId,
-        dataPrintful
-      ).netPrice,
-      shippingCode,
-    }));
   };
 
   const variantsPrintfulForSize = VARIANTS_PRINTFUL.filter((variant) => {
     const isVariantForOffer =
-      product.sizeObject.acceptableSizes.includes(variant.sizeName) &&
+      productRedux.sizeObject.acceptableSizes.includes(variant.sizeName) &&
       dataPrintful &&
       dataPrintful[variant.id]?.availableEU;
     return isVariantForOffer;
@@ -77,7 +85,7 @@ export default function Step6FinishVariant({ product, setProduct }) {
                 </VariantDesc>
               </div>
               <ItemVariant
-                active={product.variantId === variantId}
+                active={productRedux.variantId === variantId}
                 onClick={() => setNewFrame(variantId, shipping.codeCZ)}
               >
                 <div sx={styles.imageWrap}>
@@ -88,7 +96,7 @@ export default function Step6FinishVariant({ product, setProduct }) {
                 </div>
               </ItemVariant>
               <div sx={styles.textsWrap}>
-                <StyledPriceP active={product.variantId === variantId}>
+                <StyledPriceP active={productRedux.variantId === variantId}>
                   {`+ 
                   ${getFormattedPrice(
                     basePriceAlgorithm.subtract([
@@ -104,7 +112,9 @@ export default function Step6FinishVariant({ product, setProduct }) {
                   )}`}
                 </StyledPriceP>
 
-                <StyledDeliveryPriceP active={product.variantId === variantId}>
+                <StyledDeliveryPriceP
+                  active={productRedux.variantId === variantId}
+                >
                   {`(+ ${getFormattedPrice(
                     priceAlgorithm.getPriceOfDelivery(variantId, dataPrintful)
                       .netPrice
@@ -115,12 +125,6 @@ export default function Step6FinishVariant({ product, setProduct }) {
           ))}
         </ContainerVariants>
       )}
-      {/* {!isMobile && (
-        <ExtraPaddingTop>
-          <HeadingText>8. Materiál pro tisk</HeadingText>
-          <StyledMaterialP>{product.materialDesc}</StyledMaterialP>
-        </ExtraPaddingTop>
-      )} */}
 
       {lightbox.open && (
         <Lightbox

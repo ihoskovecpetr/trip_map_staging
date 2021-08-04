@@ -1,11 +1,11 @@
 /** @jsx jsx */
-import React, { useEffect, useState, useRef } from "react";
-import { jsx, Container, Box } from "theme-ui";
+import React, { useEffect, useRef } from "react";
+import { jsx, Box } from "theme-ui";
 import TabsRootNew from "components/Tabs/TabsRoot";
 import MapContainer from "components/canvas/mapContainer";
 import mapboxgl from "mapbox-gl";
 import styled from "styled-components";
-import produce from "immer";
+// import produce from "immer";
 import { useDispatch } from "react-redux";
 
 import { useIsMobile } from "../Hooks/useIsMobile";
@@ -16,23 +16,38 @@ import { getUpdatedMapSizes } from "../LibGlobal/getUpdatedMapSizes";
 import { getCenteringLayoutDimensions } from "../LibGlobal/getCenteringLayoutDimensions";
 import { getVariantObject } from "../LibGlobal/getVariantObject";
 import { getIsProduction } from "../LibGlobal/getIsProduction";
-import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
-import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
-import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
-import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
+// import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
+// import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
+// import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
+// import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
 import { getLayoutColors } from "LibGlobal/getLayoutColors";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
-import { useTitlesSelector } from "redux/order/reducer";
-import { setNewTitle, setNewSubtitle } from "redux/order/actions";
+
+import {
+  useTitlesSelector,
+  useProductSelector,
+  useActiveLayoutSelector,
+  useMapCoordinatesSelector,
+  useMapZoomSelector,
+  useActiveMapStyleSelector,
+} from "redux/order/reducer";
+
+import {
+  setNewTitle,
+  setNewSubtitle,
+  setMapCoordinatesAction,
+  setMapZoomAction,
+  setActiveMapStyleAction,
+} from "redux/order/actions";
 
 import {
   MAP_STYLES,
-  MAP_STYLES_NAMES,
-  LAYOUT_STYLE_NAMES,
-  SIZES,
-  VARIANTS_PRINTFUL,
+  // MAP_STYLES_NAMES,
+  // LAYOUT_STYLE_NAMES,
+  // SIZES,
+  // VARIANTS_PRINTFUL,
   OUTSIDE_FRAME_CM,
-  TITLES_DEFAULT,
+  // TITLES_DEFAULT,
   DEFAULT_FONT_WEIGHT_THIN,
   RUNTIME_PIXEL_RATIO,
   TITLE_NAMES,
@@ -53,12 +68,12 @@ let ctxMap;
 let mapWrapper;
 
 const IS_PRODUCTION = getIsProduction();
-const priceAlgorithm = getPriceAlgorithm();
+// const priceAlgorithm = getPriceAlgorithm();
 
 const resizeLayout = ({
   cvsLayout,
   cvsMap,
-  activeLayout,
+  activeLayout: activeLayoutName,
   product,
   mapTitles,
   activeMapStyleName,
@@ -75,7 +90,7 @@ const resizeLayout = ({
   drawLayout(ctxFrame, {
     width: cvsMap.width,
     height: cvsMap.height,
-    activeLayoutName: activeLayout,
+    activeLayoutName,
     mapTitles: mapTitles,
     product,
     activeMapStyleName,
@@ -200,39 +215,17 @@ const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
 export default function StudioRootContainer() {
   const dispatch = useDispatch();
 
-  const [mapCoordinates, setMapCoordinates] = useState([
-    -73.985542,
-    40.7484665,
-  ]);
-  const [mapZoom, setMapZoom] = useState(10);
-  const { dataPrintful } = useGetDataPrintful();
+  const productRedux = useProductSelector();
+  const mapTitles = useTitlesSelector();
+  const activeLayoutRedux = useActiveLayoutSelector();
+  const mapCoordinates = useMapCoordinatesSelector();
+  const mapZoom = useMapZoomSelector();
+  const activeMapStyleName = useActiveMapStyleSelector();
+  // const { dataPrintful } = useGetDataPrintful();
 
-  const [product, setProduct] = useState({
-    name: "Zakázková mapa dle vlastního designu",
-    price: null,
-    currency: "CZK",
-    sizeObject: SIZES.find(
-      (size) => size.code === VARIANTS_PRINTFUL[4].sizeName
-    ),
-    variantId: VARIANTS_PRINTFUL[4].id,
-    materialDesc: "Matný vylepšený papír",
-    shippingCode: VARIANTS_PRINTFUL[4].shipping.codeCZ,
-    isLayoutColorSwitched: false,
-    densityConstant: 2,
-  });
-
-  const [activeLayout, setActiveLayout] = useState(
-    LAYOUT_STYLE_NAMES.ISLAND_BOX
-  );
-  const [activeMapStyleName, setActiveMapStyleName] = useState(
-    MAP_STYLES_NAMES.RED_BLUE
-  );
-  // const [mapTitles, setMapTitles] = useState({
-  //   heading: { text: TITLES_DEFAULT[0], size: 14 },
-  //   subtitle: { text: TITLES_DEFAULT[1], size: 8 },
-  // });
-
-  const mapTitlesRedux = useTitlesSelector();
+  // const [activeMapStyleName, setActiveMapStyleName] = useState(
+  //   MAP_STYLES_NAMES.RED_BLUE
+  // );
 
   const { height: headerHeight } = useElementDimensions("header");
   const {
@@ -248,10 +241,10 @@ export default function StudioRootContainer() {
   // CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
   const { isMobile } = useIsMobile();
 
-  const mapTitlesRef = useRef(mapTitlesRedux); // Using this due to snapshot state of state in hooks
-  const layoutRef = useRef(activeLayout);
-  const coordinatesRef = useRef(mapCoordinates);
-  const productRef = useRef(product);
+  const mapTitlesRef = useRef(mapTitles); // Using this due to snapshot state of state in hooks
+  const layoutRef = useRef(activeLayoutRedux);
+  const mapCoordinatesRef = useRef(mapCoordinates);
+  const productRef = useRef(productRedux);
   const isMobileRef = useRef(isMobile);
   const mapAvailSpaceRef = useRef({
     height: mapAvailSpaceHeight,
@@ -269,7 +262,7 @@ export default function StudioRootContainer() {
     baseLongSize,
   } = getCenteringLayoutDimensions({
     product: productRef.current,
-    layout: activeLayout,
+    layout: activeLayoutRedux,
     elWidth: canvasMap?.width,
     elHeight: canvasMap?.height,
   });
@@ -278,34 +271,35 @@ export default function StudioRootContainer() {
     setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
   }, []);
 
-  useEffect(() => {
-    if (dataPrintful && dataPrintful[product.variantId]?.price) {
-      setProduct((prev) => ({
-        ...prev,
-        // price: response.data.finalResult[product.variantId].price,
-        priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
-          product.variantId,
-          dataPrintful
-        ).netPrice,
-      }));
-    }
-  }, [JSON.stringify(mapTitlesRedux)]);
+  // useEffect(() => {
+  //   if (dataPrintful && dataPrintful[product.variantId]?.price) {
+  //     setProduct((prev) => ({
+  //       ...prev,
+  //       // price: response.data.finalResult[product.variantId].price,
+  //       priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
+  //         product.variantId,
+  //         dataPrintful
+  //       ).netPrice,
+  //     }));
+
+  //   }
+  // }, [JSON.stringify(mapTitles)]);
 
   useEffect(() => {
-    mapTitlesRef.current = mapTitlesRedux;
-  }, [JSON.stringify(mapTitlesRedux)]);
+    mapTitlesRef.current = mapTitles;
+  }, [JSON.stringify(mapTitles)]);
 
   useEffect(() => {
-    layoutRef.current = activeLayout;
-  }, [activeLayout]);
+    layoutRef.current = activeLayoutRedux;
+  }, [activeLayoutRedux]);
 
   useEffect(() => {
-    coordinatesRef.current = mapCoordinates;
+    mapCoordinatesRef.current = mapCoordinates;
   }, [mapCoordinates]);
 
   useEffect(() => {
-    productRef.current = product;
-  }, [product]);
+    productRef.current = productRedux;
+  }, [productRedux]);
 
   useEffect(() => {
     isMobileRef.current = isMobile;
@@ -326,13 +320,11 @@ export default function StudioRootContainer() {
   }, [mapWrapperHeight, mapWrapperWidth]);
 
   useEffect(() => {
-    layoutRef.current = activeLayout;
-
     if (layoutCanvas && canvasMap) {
       resizeLayout({
         cvsLayout: layoutCanvas,
         cvsMap: canvasMap,
-        activeLayout: activeLayout,
+        activeLayout: activeLayoutRedux,
         mapTitles: mapTitlesRef.current,
         product: productRef.current,
         activeMapStyleName: activeMapStyleName,
@@ -345,13 +337,13 @@ export default function StudioRootContainer() {
       });
     }
   }, [
-    activeLayout,
-    product,
+    activeLayoutRedux,
+    JSON.stringify(productRedux),
     isMobile,
     mapAvailSpaceHeight,
     mapAvailSpaceWidth,
     // mapTitles,
-    JSON.stringify(mapTitlesRedux),
+    JSON.stringify(mapTitles),
     activeMapStyleName,
   ]);
 
@@ -362,7 +354,7 @@ export default function StudioRootContainer() {
       container: "map",
       zoom: mapZoom,
       minZoom: 0,
-      center: coordinatesRef.current,
+      center: mapCoordinatesRef.current,
       style: MAP_STYLES[activeMapStyleName].url,
       // style: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho", // Continue add maps WhiteGreyMap
 
@@ -410,7 +402,7 @@ export default function StudioRootContainer() {
       // inputWrapDynamicSize = document.createElement("div");
       // inputWrapDynamicSize.setAttribute("id", "input_wrap_middle");
 
-      resizeInputsWrap({ productRef, layout: activeLayout, canvasMap });
+      resizeInputsWrap({ productRef, layout: activeLayoutRedux, canvasMap });
 
       headlineInput = document.createElement("input");
       subtitleInput = document.createElement("input");
@@ -419,7 +411,8 @@ export default function StudioRootContainer() {
       // subtitleInput.innerText = TITLES_DEFAULT[1];
 
       map.on("moveend", function () {
-        setMapCoordinates(map.getCenter());
+        dispatch(setMapCoordinatesAction(map.getCenter()));
+        // setMapCoordinates(map.getCenter());
       });
 
       layoutCanvas = document.createElement("canvas");
@@ -432,7 +425,7 @@ export default function StudioRootContainer() {
           activeLayout: layoutRef.current,
           mapTitles: mapTitlesRef.current,
           product: productRef.current,
-          activeMapStyleName: activeMapStyleName,
+          activeMapStyleName,
         });
 
         resizeInputs({
@@ -451,7 +444,7 @@ export default function StudioRootContainer() {
         // mapCanvasWrapElement.appendChild(frameDiv);
         mapCanvasWrapElement.appendChild(layoutCanvas);
 
-        resizeInputsWrap({ productRef, layout: activeLayout, canvasMap });
+        resizeInputsWrap({ productRef, layout: layoutRef.current, canvasMap });
         // inputWrap.appendChild(inputWrapDynamicSize);
 
         inputWrap.appendChild(headlineInput);
@@ -465,7 +458,7 @@ export default function StudioRootContainer() {
           activeLayout: layoutRef.current,
           mapTitles: mapTitlesRef.current,
           product: productRef.current,
-          activeMapStyleName: activeMapStyleName,
+          activeMapStyleName,
         });
 
         resizeFrameDiv({
@@ -476,7 +469,7 @@ export default function StudioRootContainer() {
       });
 
       map.on("zoomend", (e) => {
-        setMapZoom(e.target.getZoom());
+        dispatch(setMapZoomAction(e.target.getZoom()));
       });
 
       if (map) {
@@ -510,7 +503,7 @@ export default function StudioRootContainer() {
     if (map) {
       map.resize();
     }
-  }, [product, map, mapAvailSpaceHeight, mapAvailSpaceWidth]);
+  }, [productRedux, map, mapAvailSpaceHeight, mapAvailSpaceWidth]);
 
   useEffect(() => {
     if (headlineInput && subtitleInput) {
@@ -520,13 +513,13 @@ export default function StudioRootContainer() {
         mapWrapWrapWidth: mapAvailSpaceRef.current.width,
       });
 
-      resizeInputsWrap({ productRef, layout: activeLayout, canvasMap });
+      resizeInputsWrap({ productRef, layout: layoutRef.current, canvasMap });
       resizeInputs({
         mapTitles: mapTitlesRef.current,
         saveTitlesValue,
         mapHeight: updHeight,
         mapWidth: updWidth,
-        layout: activeLayout,
+        layout: layoutRef.current,
         layoutObj,
         paddingWidth: paddingWidth / RUNTIME_PIXEL_RATIO,
         activeMapStyleName,
@@ -534,12 +527,11 @@ export default function StudioRootContainer() {
       });
     }
   }, [
-    product,
-    activeLayout,
+    productRedux,
+    activeLayoutRedux,
     mapAvailSpaceHeight,
     mapAvailSpaceWidth,
-    JSON.stringify(mapTitlesRedux),
-    // mapTitles,
+    JSON.stringify(mapTitles),
   ]);
 
   const saveTitlesValue = (e) => {
@@ -565,26 +557,12 @@ export default function StudioRootContainer() {
               map={map}
               addZoom={addZoom(map)}
               subtractZoom={subtractZoom(map)}
-              activeLayoutName={activeLayout}
-              setProduct={setProduct}
-              product={product}
-              activeMapStyleName={activeMapStyleName}
-              mapTitles={mapTitlesRedux}
+              mapTitles={mapTitles}
             />
           </Box>
 
           <Box sx={styles.settingsBox}>
-            <TabsRootNew
-              map={map}
-              activeLayout={activeLayout}
-              setActiveLayout={setActiveLayout}
-              activeMapStyleName={activeMapStyleName}
-              setActiveMapStyleName={setActiveMapStyleName}
-              mapCoordinates={mapCoordinates}
-              setMapCoordinates={setMapCoordinates}
-              product={product}
-              setProduct={setProduct}
-            />
+            <TabsRootNew map={map} />
           </Box>
         </div>
       </ContainerBox>
