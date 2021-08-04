@@ -120,7 +120,7 @@ const styles = {
   itemStyleText: {
     overflow: "hidden",
     height: "100%",
-    width: ["5rem", null, null, "unset"],
+    width: ["100%", null, null, "unset"],
     margin: "0",
     marginTop: "12px",
     textAlign: "center",
