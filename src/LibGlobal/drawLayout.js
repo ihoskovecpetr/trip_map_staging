@@ -38,16 +38,12 @@ export function drawLayout(
   let insideFrameWidth;
   let frameCoverCoefficient;
 
-  console.log("drawLayout_play");
-
   const mapStyleObject = MAP_STYLES[activeMapStyleName];
 
   const { textLayoutColor, fillLayoutColor } = getLayoutColors({
     product,
     mapStyleObject,
   });
-
-  // CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
 
   const heading = mapTitles?.heading;
   const subtitle = mapTitles?.subtitle;
@@ -278,6 +274,7 @@ function drawBottomBox({
       extraBlurAreaKoef,
       lineColor: textLayoutColor,
       localPixelRatio,
+      baseLngSideRaw,
     });
   } else if (isPaddingFromFrame) {
     ctx.fillRect(
@@ -362,6 +359,7 @@ function drawFocusCorners({
   extraBlurAreaKoef,
   lineColor,
   localPixelRatio,
+  baseLngSideRaw,
 }) {
   // ctx.rect(
   //   0 + (elWidth - dynamicBannerWidth) / 2,
@@ -402,7 +400,7 @@ function drawFocusCorners({
   ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY);
   ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY + lineLength);
 
-  ctx.lineWidth = 1 * localPixelRatio;
+  ctx.lineWidth = 0.001 * baseLngSideRaw * localPixelRatio;
   ctx.strokeStyle = lineColor;
   ctx.stroke();
 }

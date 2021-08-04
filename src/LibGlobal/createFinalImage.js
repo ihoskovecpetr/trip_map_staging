@@ -69,7 +69,7 @@ export const createFinalImage = async ({
     );
 
     const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
-
+    console.log({ currentVersionPixelRatio });
     const computedPixelRatio = Number(
       (currentVersionPixelRatio * definitionConstant).toFixed(2)
     );
@@ -81,13 +81,6 @@ export const createFinalImage = async ({
     } else {
       multiple = computedPixelBase / height;
     }
-
-    console.log({
-      FInal_width: `${width * multiple}px`,
-      height: `${height * multiple}px`,
-      width,
-      height,
-    });
 
     Object.assign(snapshotMap.style, {
       width: `${width * multiple}px`,
@@ -140,6 +133,8 @@ export const createFinalImage = async ({
 
         var ctx = mergerCanvas.getContext("2d");
         ctx.drawImage(image, 0, 0);
+
+        console.log({ Hre_computedPixelRatio: computedPixelRatio });
 
         drawLayout(ctx, {
           width: image.width,

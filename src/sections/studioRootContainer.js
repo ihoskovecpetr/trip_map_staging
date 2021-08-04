@@ -16,7 +16,7 @@ import { getUpdatedMapSizes } from "../LibGlobal/getUpdatedMapSizes";
 import { getCenteringLayoutDimensions } from "../LibGlobal/getCenteringLayoutDimensions";
 import { getVariantObject } from "../LibGlobal/getVariantObject";
 import { getIsProduction } from "../LibGlobal/getIsProduction";
-// import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
+import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
 // import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
 // import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
 // import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
@@ -238,7 +238,6 @@ export default function StudioRootContainer() {
     width: mapWrapperWidth,
   } = useElementDimensions("map_wrap_2_id");
 
-  // CURRENT_PIXEL_RATIO = getCurrentPixelRatio(product.variantId);
   const { isMobile } = useIsMobile();
 
   const mapTitlesRef = useRef(mapTitles); // Using this due to snapshot state of state in hooks
