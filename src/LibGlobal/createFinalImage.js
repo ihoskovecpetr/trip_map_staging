@@ -55,6 +55,7 @@ export const createFinalImage = async ({
   activeMapStyleName,
   options,
 }) => {
+  console.log("Creating_FinalImage");
   const { height, width, isPreview, definitionConstant = 1 } = options;
   return new Promise(async (resolve, reject) => {
     let snapshotMap = document.createElement("div");
@@ -72,11 +73,6 @@ export const createFinalImage = async ({
     const computedPixelRatio = Number(
       (currentVersionPixelRatio * definitionConstant).toFixed(2)
     );
-
-    console.log({
-      computedPixelRatio,
-      computedPixelBase,
-    });
 
     let multiple;
 
@@ -139,6 +135,9 @@ export const createFinalImage = async ({
 
         mergerCanvas.setAttribute("height", image.height);
         mergerCanvas.setAttribute("width", image.width);
+        // mergerCanvas.style.setProperty("height", `${image.height}px`);
+        // mergerCanvas.style.setProperty("width", `${image.width}px`);
+
         var ctx = mergerCanvas.getContext("2d");
         ctx.drawImage(image, 0, 0);
 

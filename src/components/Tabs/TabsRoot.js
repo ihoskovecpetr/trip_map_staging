@@ -26,33 +26,21 @@ import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
-const TAB_VALUES = {
-  ONE: "MÍSTO & ORIENTACE",
-  TWO: "ROZLOŽENÍ & BARVY",
-  THREE: "ROZMĚRY & PLATBA",
-};
+import {
+  useProductSelector,
+  useActiveMapStyleSelector,
+} from "redux/order/reducer";
 
 const priceAlgorithm = getPriceAlgorithm();
 
-export default function TabsRootNew({
-  map,
-  mapCoordinates,
-  setMapCoordinates,
-  activeLayout,
-  setActiveLayout,
-  setActiveMapStyleName,
-  activeMapStyleName,
-  mapTitles,
-  setMapTitles,
-  product,
-  setProduct,
-}) {
-  const [activeStepNumber, setActiveStepNumber] = React.useState(0);
-
-  const { isMobile } = useIsMobile();
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function TabsRootNew({ map }) {
   const classes = useStyles();
+  const productRedux = useProductSelector();
+  const activeMapStyleName = useActiveMapStyleSelector();
+  const { isMobile } = useIsMobile();
+
+  const [activeStepNumber, setActiveStepNumber] = React.useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const { height: map_segment_height } = useElementDimensions(
     "map_studio_segment"
@@ -70,15 +58,8 @@ export default function TabsRootNew({
     "tabs_stepper"
   );
 
-  const { dataPrintful } = useGetDataPrintful([product.variantId]);
+  const { dataPrintful } = useGetDataPrintful([productRedux.variantId]);
 
-  const handleChange = (newValue) => {
-    const yCoordTabs =
-      document.querySelector("#tab_wrap_wrap").getBoundingClientRect().top -
-      100;
-
-    setIsOpen(true);
-  };
   const stepsNumbersDisabledOpenning = [];
   useEffect(() => {
     if (stepsNumbersDisabledOpenning.includes(activeStepNumber)) {
@@ -96,124 +77,24 @@ export default function TabsRootNew({
   };
 
   const stepElementsDesktop = [
-    [
-      <Step1Location
-        map={map}
-        setMapCoordinates={setMapCoordinates}
-        setMapTitles={setMapTitles}
-      />,
-      <Step2Orientation product={product} setProduct={setProduct} />,
-      <StepTitles mapTitles={mapTitles} setMapTitles={setMapTitles} />,
-    ],
-    [
-      <Step3Layout
-        activeFrame={activeLayout}
-        setActiveLayout={setActiveLayout}
-      />,
-      <Step3BLayoutColorSwitch
-        product={product}
-        setProduct={setProduct}
-        activeMapStyleName={activeMapStyleName}
-      />,
-
-      <Step4Colors
-        activeMapStyle={activeMapStyleName}
-        setActiveMapStyleName={setActiveMapStyleName}
-      />,
-    ],
-
-    [
-      <Step5Size product={product} setProduct={setProduct} />,
-
-      <Step6FinishVariant
-        map={map}
-        mapTitles={mapTitles}
-        activeLayout={activeLayout}
-        product={product}
-        setProduct={setProduct}
-        activeMapStyle={activeMapStyleName}
-      />,
-    ],
-    [
-      <Step8Checkout
-        map={map}
-        mapTitles={mapTitles}
-        activeLayout={activeLayout}
-        product={product}
-        setProduct={setProduct}
-        activeMapStyleName={activeMapStyleName}
-      />,
-    ],
+    [<Step1Location map={map} />, <Step2Orientation />, <StepTitles />],
+    [<Step3Layout />, <Step3BLayoutColorSwitch />, <Step4Colors />],
+    [<Step5Size />, <Step6FinishVariant map={map} />],
+    [<Step8Checkout map={map} activeMapStyleName={activeMapStyleName} />],
   ];
 
   const stepElementsMobile = [
-    [
-      <Step1Location
-        map={map}
-        nextTab={() => handleChange(TAB_VALUES.TWO)}
-        setMapCoordinates={setMapCoordinates}
-        setMapTitles={setMapTitles}
-      />,
-    ],
-    [
-      <Step2Orientation
-        nextTab={() => handleChange(TAB_VALUES.TWO)}
-        product={product}
-        setProduct={setProduct}
-      />,
-    ],
-    [<StepTitles mapTitles={mapTitles} setMapTitles={setMapTitles} />],
-    [
-      <Step4Colors
-        activeMapStyle={activeMapStyleName}
-        setActiveMapStyleName={setActiveMapStyleName}
-        nextTab={() => handleChange(TAB_VALUES.THREE)}
-      />,
-    ],
-    [
-      <Step3Layout
-        activeFrame={activeLayout}
-        setActiveLayout={setActiveLayout}
-        nextTab={() => handleChange(TAB_VALUES.THREE)}
-      />,
-    ],
+    [<Step1Location map={map} />],
+    [<Step2Orientation />],
+    [<StepTitles />],
+    [<Step4Colors />],
+    [<Step3Layout />],
+    [<Step3BLayoutColorSwitch />],
 
-    [
-      <Step3BLayoutColorSwitch
-        product={product}
-        setProduct={setProduct}
-        activeMapStyleName={activeMapStyleName}
-      />,
-    ],
+    [<Step5Size />],
 
-    [
-      <Step5Size
-        product={product}
-        setProduct={setProduct}
-        nextTab={() => handleChange(TAB_VALUES.THREE)}
-      />,
-    ],
-
-    [
-      <Step6FinishVariant
-        map={map}
-        mapTitles={mapTitles}
-        activeLayout={activeLayout}
-        product={product}
-        setProduct={setProduct}
-        activeMapStyle={activeMapStyleName}
-      />,
-    ],
-    [
-      <Step8Checkout
-        map={map}
-        mapTitles={mapTitles}
-        activeLayout={activeLayout}
-        product={product}
-        setProduct={setProduct}
-        activeMapStyleName={activeMapStyleName}
-      />,
-    ],
+    [<Step6FinishVariant map={map} />],
+    [<Step8Checkout map={map} activeMapStyleName={activeMapStyleName} />],
   ];
 
   const activeStepElements = isMobile
@@ -232,15 +113,15 @@ export default function TabsRootNew({
     if (!isMobile && activeStepNumber > currentTabsLength) {
       setActiveStepNumber(currentTabsLength);
     }
-  }, [product]);
+  }, [productRedux]);
 
   const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-    product.variantId,
+    productRedux.variantId,
     dataPrintful
   );
 
   const isWideOrientation =
-    product?.sizeObject?.orientation === ORIENTATIONS.wide;
+    productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
 
   return (
     <MainContainer
@@ -272,9 +153,6 @@ export default function TabsRootNew({
           handleBack={handleBack}
           activeStep={activeStepNumber}
           map={map}
-          mapTitles={mapTitles}
-          activeLayout={activeLayout}
-          product={product}
           activeMapStyleName={activeMapStyleName}
         />
         {/* {isMobile && (

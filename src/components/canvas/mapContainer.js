@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
-
+import { useDispatch } from "react-redux";
 import Lightbox from "react-image-lightbox";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
@@ -10,14 +10,18 @@ import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { orientationSwitcher } from "LibGlobal/getOrientationSwitcher";
-import { createFinalImage } from "LibGlobal/createFinalImage";
+import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { color } from "utils";
-
 import Logo from "components/logo";
 import LogoWhite from "assets/logo_while.png";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
+import { setProductAction } from "redux/order/actions";
+import {
+  useProductSelector,
+  useActiveLayoutSelector,
+  useActiveMapStyleSelector,
+} from "redux/order/reducer";
 
 import { FAKE_DIV_IDS, TITLES_DEFAULT } from "constants/constants";
 
@@ -25,12 +29,13 @@ export default function MapContainer({
   map,
   addZoom,
   subtractZoom,
-  setProduct,
-  activeLayoutName,
   mapTitles,
-  product,
-  activeMapStyleName,
 }) {
+  const dispatch = useDispatch();
+  const productRedux = useProductSelector();
+  const activeLayoutNameRedux = useActiveLayoutSelector();
+  const activeMapStyleName = useActiveMapStyleSelector();
+
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
@@ -40,7 +45,11 @@ export default function MapContainer({
   const qualityImageCreator = useQualityImageCreator();
 
   const changeOrientation = () => {
-    orientationSwitcher(product, setProduct);
+    dispatch(
+      setProductAction({
+        sizeObject: getFlippedSizeObject(productRedux),
+      })
+    );
   };
 
   const fullscreenImageRequested = async () => {
@@ -48,10 +57,10 @@ export default function MapContainer({
 
     const finalImgSrc = await qualityImageCreator({
       map,
-      activeLayoutName,
-      mapTitles,
-      product,
+      activeLayoutName: activeLayoutNameRedux,
+      product: productRedux,
       activeMapStyleName,
+      mapTitles,
       options: {
         isPreview: false,
         isLowDefinition: false,

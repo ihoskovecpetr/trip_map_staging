@@ -14,6 +14,8 @@ const getSizeOfTitle = (mapTitles, htmlLongSideLength) => {
   const headingFontSize = headingObject.size;
   const subtitleFontSize = subtitleObject.size;
 
+  console.log({ htmlLongSideLength });
+
   Object.assign(fakeHeading.style, {
     fontSize: `${0.003 * headingFontSize * htmlLongSideLength}px`,
   });
@@ -26,6 +28,7 @@ const getSizeOfTitle = (mapTitles, htmlLongSideLength) => {
   fakeSubtitle.innerText = subtitleObject?.text;
 
   const sizes = [fakeHeading?.offsetWidth, fakeSubtitle?.offsetWidth];
+  console.log({ sizes });
   return Math.max(...sizes);
 };
 

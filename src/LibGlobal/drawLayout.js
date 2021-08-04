@@ -38,6 +38,8 @@ export function drawLayout(
   let insideFrameWidth;
   let frameCoverCoefficient;
 
+  console.log("drawLayout_play");
+
   const mapStyleObject = MAP_STYLES[activeMapStyleName];
 
   const { textLayoutColor, fillLayoutColor } = getLayoutColors({
@@ -49,6 +51,7 @@ export function drawLayout(
 
   const heading = mapTitles?.heading;
   const subtitle = mapTitles?.subtitle;
+
   const frameColor =
     VARIANTS_PRINTFUL.find((variant) => variant.id === product.variantId)
       .frameColor ?? "red";
@@ -250,7 +253,7 @@ function drawBottomBox({
 
     let dynamicBannerWidth =
       getSizeOfTitle(mapTitles, htmlLongSideLength) * localPixelRatio * 1.1;
-
+    console.log({ dynamicBannerWidth });
     const MIN_WIDTH_BANER_KOEF = 0.2;
 
     if (dynamicBannerWidth < elWidth * MIN_WIDTH_BANER_KOEF) {

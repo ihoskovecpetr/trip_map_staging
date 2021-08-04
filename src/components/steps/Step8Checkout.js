@@ -7,18 +7,12 @@ import MapDefinition from "./Step7MapDefinition";
 import { mobile, color, fontWeight } from "utils";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { useIsMobile } from "Hooks/useIsMobile";
+import { useProductSelector } from "redux/order/reducer";
 
-export default function Step8Checkout({
-  map,
-  activeLayout,
-  mapTitles,
-  product,
-  setProduct,
-  activeMapStyleName,
-  children,
-}) {
+export default function Step8Checkout({ map, activeMapStyleName, children }) {
   const [isDefaultDefinition, setIsDefaultDefinition] = useState(true);
   const { isMobile } = useIsMobile();
+  const productRedux = useProductSelector();
 
   return (
     <Container>
@@ -38,31 +32,17 @@ export default function Step8Checkout({
 
         {!isMobile && (
           <ExtraPaddingTop>
-            <HeadingText>8. Materiál pro tisk</HeadingText>
-            <StyledMaterialP>{product.materialDesc}</StyledMaterialP>
+            <HeadingText>9. Materiál pro tisk</HeadingText>
+            <StyledMaterialP>{productRedux.materialDesc}</StyledMaterialP>
           </ExtraPaddingTop>
         )}
 
         {!isDefaultDefinition && (
-          <MapDefinition
-            map={map}
-            mapTitles={mapTitles}
-            activeLayout={activeLayout}
-            product={product}
-            setProduct={setProduct}
-            activeMapStyleName={activeMapStyleName}
-          />
+          <MapDefinition map={map} activeMapStyleName={activeMapStyleName} />
         )}
-        {!isMobile && <HeadingText>9. Shrnutí</HeadingText>}
+        {!isMobile && <HeadingText>10. Shrnutí</HeadingText>}
 
-        <CheckoutCta
-          map={map}
-          mapTitles={mapTitles}
-          activeLayoutName={activeLayout}
-          product={product}
-          activeMapStyleName={activeMapStyleName}
-          children={children}
-        />
+        <CheckoutCta map={map} children={children} />
       </AbsoluteBtnWrap>
     </Container>
   );

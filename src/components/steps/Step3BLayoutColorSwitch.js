@@ -2,28 +2,29 @@
 import React from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 import { color } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { MAP_STYLES } from "constants/constants";
+import { setProductAction } from "redux/order/actions";
 
-export default function Step3BLayoutColorSwitch({
-  product,
-  setProduct,
-  activeMapStyleName,
-}) {
+import {
+  useProductSelector,
+  useActiveMapStyleSelector,
+} from "redux/order/reducer";
+
+export default function Step3BLayoutColorSwitch() {
   const { isMobile } = useIsMobile();
+  const dispatch = useDispatch();
+  const productRedux = useProductSelector();
+  const activeMapStyleName = useActiveMapStyleSelector();
 
   const switchLayoutColor = (bool) => {
-    setProduct((prev) => ({
-      ...prev,
-      isLayoutColorSwitched: bool,
-    }));
+    dispatch(setProductAction({ isLayoutColorSwitched: bool }));
   };
 
   const activeMapStyleObject = MAP_STYLES[activeMapStyleName];
-
-  console.log({ product, activeMapStyleObject });
 
   return (
     <Container>
@@ -32,7 +33,7 @@ export default function Step3BLayoutColorSwitch({
         <ItemContainer>
           <LayoutItemWrap>
             <LayoutItem
-              active={!product.isLayoutColorSwitched}
+              active={!productRedux.isLayoutColorSwitched}
               onClick={() => switchLayoutColor(false)}
               layoutColor={`#${activeMapStyleObject.layoutColor}`}
               textColor={`#${activeMapStyleObject.textColor}`}
@@ -42,7 +43,7 @@ export default function Step3BLayoutColorSwitch({
           </LayoutItemWrap>
           <LayoutItemWrap>
             <LayoutItem
-              active={product.isLayoutColorSwitched}
+              active={productRedux.isLayoutColorSwitched}
               onClick={() => switchLayoutColor(true)}
               layoutColor={`#${activeMapStyleObject.textColor}`}
               textColor={`#${activeMapStyleObject.layoutColor}`}

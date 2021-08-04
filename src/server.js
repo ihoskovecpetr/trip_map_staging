@@ -22,6 +22,7 @@ const port = process.env.PORT || 3000;
     server.all("*", (req, res) => {
       return handle(req, res);
     });
+
     server.listen(port, (err) => {
       if (err) throw err;
       console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`);

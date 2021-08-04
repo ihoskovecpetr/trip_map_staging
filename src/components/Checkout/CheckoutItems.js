@@ -9,32 +9,40 @@ import { getVariantObject } from "LibGlobal/getVariantObject";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import deliveryTruck from "assets/icons/delivery-truck.png";
+import {
+  useTitlesSelector,
+  useProductSelector,
+  useActiveLayoutSelector,
+} from "redux/order/reducer";
 
-export default function ProductSummary({
-  product,
-  mapTitles,
+export default function CheckoutItems({
   dataPrintful,
   ImageComponent,
-  activeLayoutName,
   activeMapStyleName,
 }) {
-  const productDescription = getVariantObject(product.variantId)?.frameName;
-  const dataPrintfulVariant = dataPrintful && dataPrintful[product.variantId];
+  const mapTitles = useTitlesSelector();
+  const productRedux = useProductSelector();
+  const activeLayoutNameRedux = useActiveLayoutSelector();
+
+  const productDescription = getVariantObject(productRedux.variantId)
+    ?.frameName;
+  const dataPrintfulVariant =
+    dataPrintful && dataPrintful[productRedux.variantId];
 
   const priceAlgorithm = getPriceAlgorithm();
 
   const priceWithoutDelivery = priceAlgorithm.getPriceWithoutDelivery(
-    product.variantId,
+    productRedux.variantId,
     dataPrintful
   );
 
   const priceOfDelivery = priceAlgorithm.getPriceOfDelivery(
-    product.variantId,
+    productRedux.variantId,
     dataPrintful
   );
 
   const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-    product.variantId,
+    productRedux.variantId,
     dataPrintful
   );
 
@@ -43,11 +51,11 @@ export default function ProductSummary({
       <CheckoutLine>
         <ImageContainer>{ImageComponent}</ImageContainer>
         <LineTextContainer>
-          <BoldText>{`${productDescription} ${product.sizeObject.code}`}</BoldText>
+          <BoldText>{`${productDescription} ${productRedux.sizeObject.code}`}</BoldText>
           <span>
             <GreyText>{`${mapTitles?.heading?.text} ${mapTitles?.subtitle?.text}`}</GreyText>
-            <GreyText>{`${product.materialDesc}`}</GreyText>
-            <GreyText>{`${activeLayoutName} ${activeMapStyleName}`}</GreyText>
+            <GreyText>{`${productRedux.materialDesc}`}</GreyText>
+            <GreyText>{`${activeLayoutNameRedux} ${activeMapStyleName}`}</GreyText>
           </span>
         </LineTextContainer>
         <StyledPriceSpan>
