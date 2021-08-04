@@ -92,22 +92,23 @@ export function drawLayout(
     });
   }
 
-  drawBottomBox({
-    ctx,
-    padding: paddingWidth,
-    bannerHeight: bottomBannerHeight,
-    elWidth: width,
-    elHeight: height,
-    isBannerBlur,
-    isPaddingFromFrame,
-    mapTitles,
-    activeLayoutName,
-    localPixelRatio,
-    fillLayoutColor,
-    textLayoutColor,
-    baseLngSideRaw,
-  });
-
+  if (activeLayoutName !== LAYOUT_STYLE_NAMES.PURE) {
+    drawBottomBox({
+      ctx,
+      padding: paddingWidth,
+      bannerHeight: bottomBannerHeight,
+      elWidth: width,
+      elHeight: height,
+      isBannerBlur,
+      isPaddingFromFrame,
+      mapTitles,
+      activeLayoutName,
+      localPixelRatio,
+      fillLayoutColor,
+      textLayoutColor,
+      baseLngSideRaw,
+    });
+  }
   drawText({
     ctx,
     paddingWidth: paddingWidth / localPixelRatio,
