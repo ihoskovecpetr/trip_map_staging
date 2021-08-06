@@ -6,7 +6,7 @@ import { string, bool, number, func, node } from "prop-types";
 import styled from "styled-components";
 
 import UnderlineLoader from "components/UnderlineLoader";
-import { getFormattedPrice } from "../../LibGlobal/getFormattedPrice";
+import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
 const getFormatedPriceString = (amount) => {
   return amount ? `| ${getFormattedPrice(amount)}` : "";

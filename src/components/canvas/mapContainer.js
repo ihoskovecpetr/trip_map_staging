@@ -9,21 +9,34 @@ import AddIcon from "@material-ui/icons/Add";
 import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
-import { color } from "utils";
+import { color, fontWeight } from "utils";
 import Logo from "components/logo";
 import LogoWhite from "assets/logo_while.png";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { setProductAction } from "redux/order/actions";
+import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
+
 import {
   useProductSelector,
   useActiveLayoutSelector,
   useActiveMapStyleSelector,
 } from "redux/order/reducer";
 
-import { FAKE_DIV_IDS, TITLES_DEFAULT } from "constants/constants";
+import {
+  FAKE_DIV_IDS,
+  TITLES_DEFAULT,
+  VARIANTS_PRINTFUL,
+} from "constants/constants";
+
+const getFormatedPriceString = (amount) => {
+  return amount ? `| ${getFormattedPrice(amount)}` : "";
+};
 
 export default function MapContainer({
   map,
@@ -43,6 +56,16 @@ export default function MapContainer({
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const { isMobile } = useIsMobile();
   const qualityImageCreator = useQualityImageCreator();
+  const priceAlgorithm = getPriceAlgorithm();
+
+  const { dataPrintful } = useGetDataPrintful(
+    VARIANTS_PRINTFUL.map((variant) => variant.id)
+  );
+
+  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
+    productRedux.variantId,
+    dataPrintful
+  );
 
   const changeOrientation = () => {
     dispatch(
@@ -83,6 +106,12 @@ export default function MapContainer({
             <Logo src={LogoWhite} />
           </LogoWrap>
         )}
+        {!isMobile && (
+          <StyledText size="small">
+            cena {getFormatedPriceString(priceWithDelivery.netPrice)}
+          </StyledText>
+        )}
+
         <EmptySpaceExpander></EmptySpaceExpander>
         <div sx={styles.zoomBtnWrapper}>
           <div sx={styles.zoomBtn} className="left" onClick={addZoom}>
@@ -174,6 +203,13 @@ const StyledCircularProgress = styled(CircularProgress)({
   color: "inherit !important",
 });
 
+const StyledText = styled.p`
+  color: ${color("cta_color")};
+  font-weight: ${fontWeight("bold")};
+  padding-left: 15px;
+  margin: 0;
+`;
+
 const styles = {
   canvas_bg: {
     px: "0 !important",
@@ -206,7 +242,7 @@ const styles = {
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "0.5rem",
+    padding: "8px",
   },
   zoomBtnWrapper: {
     display: "flex",
