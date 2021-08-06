@@ -250,7 +250,7 @@ function drawBottomBox({
 
     let dynamicBannerWidth =
       getSizeOfTitle(mapTitles, htmlLongSideLength) * localPixelRatio * 1.1;
-    console.log({ dynamicBannerWidth });
+
     const MIN_WIDTH_BANER_KOEF = 0.2;
 
     if (dynamicBannerWidth < elWidth * MIN_WIDTH_BANER_KOEF) {
@@ -273,7 +273,6 @@ function drawBottomBox({
       padding,
       extraBlurAreaKoef,
       lineColor: textLayoutColor,
-      localPixelRatio,
       baseLngSideRaw,
     });
   } else if (isPaddingFromFrame) {
@@ -326,7 +325,7 @@ function drawText({
 
   ctx.fillStyle = textColor;
   ctx.font = `${DEFAULT_FONT_WEIGHT_BOLD} ${
-    heading?.size * 0.001 * 3 * baseLngSide
+    heading?.size * 0.003 * baseLngSide
   }px ${TITLES_FONT_DEFAULT}`;
   ctx.textAlign = layoutObj?.text.align ?? "center";
 
@@ -358,7 +357,6 @@ function drawFocusCorners({
   padding,
   extraBlurAreaKoef,
   lineColor,
-  localPixelRatio,
   baseLngSideRaw,
 }) {
   // ctx.rect(
@@ -400,7 +398,7 @@ function drawFocusCorners({
   ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY);
   ctx.lineTo(leftTopX + dynamicBannerWidth, leftTopY + lineLength);
 
-  ctx.lineWidth = 0.001 * baseLngSideRaw * localPixelRatio;
+  ctx.lineWidth = 0.001 * baseLngSideRaw;
   ctx.strokeStyle = lineColor;
   ctx.stroke();
 }
