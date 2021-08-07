@@ -242,7 +242,7 @@ const styles = {
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "8px",
+    padding: "4px",
   },
   zoomBtnWrapper: {
     display: "flex",
