@@ -1,5 +1,6 @@
 /** @jsx jsx */
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { render } from "react-dom";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -10,6 +11,7 @@ import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
+import dynamic from "next/dynamic";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -26,33 +28,44 @@ import {
   useProductSelector,
   useActiveLayoutSelector,
   useActiveMapStyleSelector,
+  useIsKonvaRenderedSelector,
 } from "redux/order/reducer";
 
 import {
   FAKE_DIV_IDS,
   TITLES_DEFAULT,
   VARIANTS_PRINTFUL,
+  RUNTIME_PIXEL_RATIO,
+  ORIENTATIONS,
+  PRINT_CANVAS_BASE_PX,
 } from "constants/constants";
 
 const getFormatedPriceString = (amount) => {
   return amount ? `| ${getFormattedPrice(amount)}` : "";
 };
 
+const KonvaStage = dynamic(() => import("components/KonvaStage"), {
+  ssr: false,
+});
+
 export default function MapContainer({
   map,
   addZoom,
   subtractZoom,
   mapTitles,
+  konvaStageRef,
 }) {
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
+  const isKonvaRendered = useIsKonvaRenderedSelector();
 
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
   });
+
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const { isMobile } = useIsMobile();
   const qualityImageCreator = useQualityImageCreator();
@@ -84,6 +97,7 @@ export default function MapContainer({
       product: productRedux,
       activeMapStyleName,
       mapTitles,
+      konvaRef: konvaStageRef,
       options: {
         isPreview: false,
         isLowDefinition: false,
@@ -97,6 +111,8 @@ export default function MapContainer({
 
     setIsCreatingImage(false);
   };
+
+  const canvasMap = map?.getCanvas();
 
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
@@ -141,7 +157,16 @@ export default function MapContainer({
       </div>
 
       <div sx={styles.map_available_space} id="map_available_space_id">
-        <div id="map_wrap_2_id">
+        <div id="map_wrap_2_id" sx={styles.map_wrap_2}>
+          {isKonvaRendered && canvasMap && (
+            <KonvaWrap>
+              <KonvaStage
+                product={productRedux}
+                width={canvasMap.width}
+                height={canvasMap.height}
+              />
+            </KonvaWrap>
+          )}
           <div id="map" sx={styles.map_wrap_1}></div>
         </div>
 
@@ -164,7 +189,17 @@ export default function MapContainer({
       </div>
 
       <canvas id="canvas_merging" sx={styles.canvas_merging} />
-      <PlaceToHideBigMap id="place_to_hide_big_map"></PlaceToHideBigMap>
+      <PlaceToHideBigMap id="place_to_hide_big_map">
+        {isKonvaRendered && canvasMap && (
+          <KonvaStage
+            product={productRedux}
+            width={canvasMap.width}
+            height={canvasMap.height}
+            forwardedRef={konvaStageRef}
+            isPrint={true}
+          />
+        )}
+      </PlaceToHideBigMap>
       {lightbox.open && (
         <Lightbox
           mainSrc={lightbox.activeSrc}
@@ -195,6 +230,14 @@ const PlaceToHideBigMap = styled.div`
 const ColorWrap = styled.div`
   color: ${color("cta_color")} !important;
   display: flex;
+`;
+
+const KonvaWrap = styled.div`
+  position: relative;
+  top: 0px;
+  height: ${({ height }) => (height ? `${height}px` : 0)};
+  width: ${({ width }) => (width ? `${width}px` : 0)};
+  z-index: 100;
 `;
 
 const StyledCircularProgress = styled(CircularProgress)({
@@ -234,6 +277,8 @@ const styles = {
     width: "100%",
     height: "100%",
   },
+
+  map_wrap_2: {},
   canvas_merging: {
     display: "none",
   },

@@ -4,5 +4,299 @@
       "id": "./node_modules/next/dist/client/dev/noop.js",
       "file": "static/chunks/0.js"
     }
+  ],
+  "components/KonvaStage": [
+    {
+      "id": "./node_modules/konva/lib/Animation.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Canvas.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Container.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Context.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Core.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/DragAndDrop.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Factory.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/FastLayer.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Global.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Group.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Layer.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Node.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/PointerEvents.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Shape.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Stage.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Tween.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Util.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/Validators.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/_CoreInternals.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/_FullInternals.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Blur.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Brighten.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Contrast.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Emboss.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Enhance.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Grayscale.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/HSL.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/HSV.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Invert.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Kaleidoscope.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Mask.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Noise.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Pixelate.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Posterize.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/RGB.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/RGBA.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Sepia.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Solarize.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/filters/Threshold.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/index.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Arc.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Arrow.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Circle.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Ellipse.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Image.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Label.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Line.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Path.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Rect.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/RegularPolygon.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Ring.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Sprite.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Star.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Text.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/TextPath.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Transformer.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/konva/lib/shapes/Wedge.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-konva/es/ReactKonva.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-konva/es/ReactKonvaCore.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-konva/es/ReactKonvaHostConfig.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-konva/es/makeUpdates.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-konva/node_modules/scheduler/cjs/scheduler.development.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-konva/node_modules/scheduler/index.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-reconciler/cjs/react-reconciler.development.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-reconciler/index.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-reconciler/node_modules/scheduler/cjs/scheduler-tracing.development.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-reconciler/node_modules/scheduler/cjs/scheduler.development.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-reconciler/node_modules/scheduler/index.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./node_modules/react-reconciler/node_modules/scheduler/tracing.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./src/LibGlobal/getResizedImage.js",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./src/assets/icons/dot.png",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./src/assets/icons/pin_real.png",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./src/components/KonvaStage.js",
+      "file": "static/chunks/1.js"
+    }
   ]
 }

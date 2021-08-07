@@ -29,7 +29,12 @@ import {
 
 const CancelToken = axios.CancelToken;
 
-export default function CheckoutCta({ map, children, isCustomUI }) {
+export default function CheckoutCta({
+  map,
+  children,
+  isCustomUI,
+  konvaStageRef,
+}) {
   const classes = useStyles();
   const mapTitles = useTitlesSelector();
   const productRedux = useProductSelector();
@@ -80,11 +85,14 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
       setBackdropOpen(true);
       setIsUploadPending(true);
 
+      console.log({ konvaStageRef });
+
       const finalImgSrc = await qualityImageCreator({
         map,
         activeLayoutName: activeLayoutNameRedux,
         product: productRedux,
         activeMapStyleName,
+        konvaRef: konvaStageRef,
         options: {
           isPreview: false,
         },

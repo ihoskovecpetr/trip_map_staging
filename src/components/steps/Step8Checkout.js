@@ -9,7 +9,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useProductSelector } from "redux/order/reducer";
 
-export default function Step8Checkout({ map, activeMapStyleName, children }) {
+export default function Step8Checkout({
+  map,
+  activeMapStyleName,
+  konvaStageRef,
+  children,
+}) {
+  console.log({ konvaStageRef });
   const [isDefaultDefinition, setIsDefaultDefinition] = useState(true);
   const { isMobile } = useIsMobile();
   const productRedux = useProductSelector();
@@ -42,7 +48,11 @@ export default function Step8Checkout({ map, activeMapStyleName, children }) {
         )}
         {!isMobile && <HeadingText>10. Shrnutí</HeadingText>}
 
-        <CheckoutCta map={map} children={children} />
+        <CheckoutCta
+          map={map}
+          children={children}
+          konvaStageRef={konvaStageRef}
+        />
       </AbsoluteBtnWrap>
     </Container>
   );

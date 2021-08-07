@@ -58,7 +58,7 @@ import {
 let map;
 let trueMapCanvasElement;
 let layoutCanvas;
-let frameDiv;
+// let frameDiv;
 let inputWrap;
 let headlineInput;
 let subtitleInput;
@@ -99,7 +99,6 @@ const resizeLayout = ({
 
   Object.assign(cvsLayout.style, {
     position: "absolute",
-    pointerEvents: "none",
     display: "block",
     top: 0,
     left: 0,
@@ -221,6 +220,8 @@ export default function StudioRootContainer() {
   const mapCoordinates = useMapCoordinatesSelector();
   const mapZoom = useMapZoomSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
+  const konvaStageRef = useRef(null);
+
   // const { dataPrintful } = useGetDataPrintful();
 
   // const [activeMapStyleName, setActiveMapStyleName] = useState(
@@ -331,7 +332,6 @@ export default function StudioRootContainer() {
 
       resizeFrameDiv({
         productRef,
-        baseLongSize,
         mapAvailSpaceRef,
       });
     }
@@ -358,6 +358,7 @@ export default function StudioRootContainer() {
       // style: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho", // Continue add maps WhiteGreyMap
 
       preserveDrawingBuffer: true, // to enable method toDataURL()
+      // attributionControl: false,
     });
 
     map.touchPitch.disable();
@@ -384,6 +385,8 @@ export default function StudioRootContainer() {
         "mapboxgl-canvas"
       )[0];
 
+      console.log({ trueMapCanvasElement });
+
       const mapCanvasWrapElement = document.getElementsByClassName(
         "mapboxgl-canvas-container"
       )[0];
@@ -394,8 +397,8 @@ export default function StudioRootContainer() {
         existingLayoutCanvas.parentNode.removeChild(existingLayoutCanvas);
       }
 
-      frameDiv = document.createElement("div");
-      frameDiv.setAttribute("id", "frame_div");
+      // frameDiv = document.createElement("div");
+      // frameDiv.setAttribute("id", "frame_div");
       inputWrap = document.createElement("div");
       inputWrap.setAttribute("id", "input_wrap");
       // inputWrapDynamicSize = document.createElement("div");
@@ -439,9 +442,13 @@ export default function StudioRootContainer() {
           productRef,
         });
 
+        const konvaWrap = document.createElement("div");
+        konvaWrap.setAttribute("id", "konva_wrap");
+
         mapWrapDivElement.appendChild(inputWrap);
         // mapCanvasWrapElement.appendChild(frameDiv);
         mapCanvasWrapElement.appendChild(layoutCanvas);
+        mapCanvasWrapElement.appendChild(konvaWrap);
 
         resizeInputsWrap({ productRef, layout: layoutRef.current, canvasMap });
         // inputWrap.appendChild(inputWrapDynamicSize);
@@ -462,7 +469,6 @@ export default function StudioRootContainer() {
 
         resizeFrameDiv({
           productRef,
-          baseLongSize,
           mapAvailSpaceRef,
         });
       });
@@ -477,7 +483,7 @@ export default function StudioRootContainer() {
     }
 
     return () => {
-      frameDiv.remove();
+      // frameDiv.remove();
       inputWrap.remove();
       headlineInput.remove();
       subtitleInput.remove();
@@ -557,11 +563,12 @@ export default function StudioRootContainer() {
               addZoom={addZoom(map)}
               subtractZoom={subtractZoom(map)}
               mapTitles={mapTitles}
+              konvaStageRef={konvaStageRef}
             />
           </Box>
 
           <Box sx={styles.settingsBox}>
-            <TabsRootNew map={map} />
+            <TabsRootNew map={map} konvaStageRef={konvaStageRef} />
           </Box>
         </div>
       </ContainerBox>

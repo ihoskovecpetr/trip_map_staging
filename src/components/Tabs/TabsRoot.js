@@ -8,7 +8,6 @@ import Backdrop from "@material-ui/core/Backdrop";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useElementDimensions } from "Hooks/useElementDimensions";
 import { color } from "utils";
-import { ORIENTATIONS } from "@constants";
 import Stepper from "./Stepper";
 
 import Step1Location from "../steps/Step1Location";
@@ -21,10 +20,12 @@ import Step6FinishVariant from "../steps/Step6FinishVariant";
 import Step7MapDefinition from "../steps/Step7MapDefinition";
 import Step8Checkout from "../steps/Step8Checkout";
 import StepTitles from "../steps/StepTitles";
+import StepAddKonvaIcons from "../steps/StepAddKonvaIcons";
 
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
+import { getIsWideOrientation } from "LibGlobal/getIsWideOrientation";
 
 import {
   useProductSelector,
@@ -33,7 +34,7 @@ import {
 
 const priceAlgorithm = getPriceAlgorithm();
 
-export default function TabsRootNew({ map }) {
+export default function TabsRootNew({ map, konvaStageRef }) {
   const classes = useStyles();
   const productRedux = useProductSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
@@ -80,7 +81,15 @@ export default function TabsRootNew({ map }) {
     [<Step1Location map={map} />, <Step2Orientation />, <StepTitles />],
     [<Step3Layout />, <Step3BLayoutColorSwitch />, <Step4Colors />],
     [<Step5Size />, <Step6FinishVariant map={map} />],
-    [<Step8Checkout map={map} activeMapStyleName={activeMapStyleName} />],
+    [
+      <StepAddKonvaIcons map={map} />,
+
+      <Step8Checkout
+        map={map}
+        activeMapStyleName={activeMapStyleName}
+        konvaStageRef={konvaStageRef}
+      />,
+    ],
   ];
 
   const stepElementsMobile = [
@@ -90,11 +99,16 @@ export default function TabsRootNew({ map }) {
     [<Step4Colors />],
     [<Step3Layout />],
     [<Step3BLayoutColorSwitch />],
-
     [<Step5Size />],
-
     [<Step6FinishVariant map={map} />],
-    [<Step8Checkout map={map} activeMapStyleName={activeMapStyleName} />],
+    [<StepAddKonvaIcons map={map} />],
+    [
+      <Step8Checkout
+        map={map}
+        activeMapStyleName={activeMapStyleName}
+        konvaStageRef={konvaStageRef}
+      />,
+    ],
   ];
 
   const activeStepElements = isMobile
@@ -120,8 +134,7 @@ export default function TabsRootNew({ map }) {
     dataPrintful
   );
 
-  const isWideOrientation =
-    productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
+  const isWideOrientation = getIsWideOrientation(productRedux);
 
   return (
     <MainContainer
@@ -154,6 +167,7 @@ export default function TabsRootNew({ map }) {
           activeStep={activeStepNumber}
           map={map}
           activeMapStyleName={activeMapStyleName}
+          konvaStageRef={konvaStageRef}
         />
         {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>

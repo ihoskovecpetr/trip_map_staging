@@ -23,7 +23,7 @@ export default function Step3Layout() {
   const dispatch = useDispatch();
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const { isMobile } = useIsMobile();
-  console.log({ activeLayoutNameRedux });
+
   const changeActiveLayout = (layoutName) => {
     dispatch(setActiveLayoutAction(layoutName));
     // setActiveLayout(layoutName);

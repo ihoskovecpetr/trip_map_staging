@@ -32,6 +32,7 @@ const orderInitialState = {
   activeMapStyleName: MAP_STYLES_NAMES.RED_BLUE,
   mapCoordinates: [-73.985542, 40.7484665],
   mapZoom: 10,
+  konva: { isRendered: false, icons: [] },
 };
 
 const order = produce((state = orderInitialState, { type, data }) => {
@@ -73,6 +74,26 @@ const order = produce((state = orderInitialState, { type, data }) => {
       state.mapZoom = data;
       return state;
 
+    case countActionTypes.SET_IS_KONVA_RENDERED:
+      state.konva.isRendered = data;
+      return state;
+
+    case countActionTypes.ADD_KONVA_ICON:
+      state.konva.icons = [...state.konva.icons, data];
+      return state;
+
+    case countActionTypes.REMOVE_KONVA_ICON:
+      const leftoverIcons = state.konva.icons.filter((icon) => icon.id != data);
+      state.konva.icons = [...leftoverIcons];
+      return state;
+
+    case countActionTypes.UPDATE_KONVA_ICON:
+      const filteredIcons = state.konva.icons.filter(
+        (icon) => icon.id != data.id
+      );
+      state.konva.icons = [...filteredIcons, data];
+      return state;
+
     default:
       return state;
   }
@@ -95,5 +116,11 @@ export const useMapCoordinatesSelector = () =>
 
 export const useMapZoomSelector = () =>
   useSelector((store) => store.order.mapZoom);
+
+export const useIsKonvaRenderedSelector = () =>
+  useSelector((store) => store.order.konva.isRendered);
+
+export const useKonvaIconsSelector = () =>
+  useSelector((store) => store.order.konva.icons);
 
 export default order;

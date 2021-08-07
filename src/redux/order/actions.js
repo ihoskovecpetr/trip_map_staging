@@ -6,6 +6,10 @@ export const countActionTypes = {
   SET_MAP_COORDINATES: "SET_MAP_COORDINATES",
   SET_MAP_ZOOM: "SET_MAP_ZOOM",
   SET_ACTIVE_MAP_STYLE: "SET_ACTIVE_MAP_STYLE",
+  SET_IS_KONVA_RENDERED: "SET_IS_KONVA_RENDERED",
+  ADD_KONVA_ICON: "ADD_KONVA_ICON",
+  REMOVE_KONVA_ICON: "REMOVE_KONVA_ICON",
+  UPDATE_KONVA_ICON: "UPDATE_KONVA_ICON",
 };
 
 export const setProductAction = (newProduct) => (dispatch) => {
@@ -48,5 +52,33 @@ export const setMapZoomAction = (newZoom) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_MAP_ZOOM,
     data: newZoom,
+  });
+};
+
+export const setIsKonvaRendered = (bool) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_IS_KONVA_RENDERED,
+    data: bool,
+  });
+};
+
+export const setAddKonvaIcon = (icon) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.ADD_KONVA_ICON,
+    data: icon,
+  });
+};
+
+export const setRemoveKonvaIcon = (iconId) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.REMOVE_KONVA_ICON,
+    data: iconId,
+  });
+};
+
+export const setUpdateKonvaIcon = (iconObj) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.UPDATE_KONVA_ICON,
+    data: iconObj,
   });
 };

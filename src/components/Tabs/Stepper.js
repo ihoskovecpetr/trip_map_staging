@@ -22,6 +22,7 @@ export default function Stepper({
   activeStep,
   map,
   activeMapStyleName,
+  konvaStageRef,
 }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -43,6 +44,7 @@ export default function Stepper({
               map={map}
               activeMapStyleName={activeMapStyleName}
               isCustomUI
+              konvaStageRef={konvaStageRef}
             >
               Shrnutí
             </CheckoutCta>

@@ -4,6 +4,7 @@ import mapboxgl from "mapbox-gl";
 import { drawLayout } from "./drawLayout";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
 import { getCurrentPixelRatio } from "LibGlobal/getCurrentPixelRatio";
+import { getIsWideOrientation } from "LibGlobal/getIsWideOrientation";
 
 import {
   MAP_STYLES,
@@ -53,23 +54,22 @@ export const createFinalImage = async ({
   mapTitles,
   product,
   activeMapStyleName,
+  konvaRef,
   options,
 }) => {
-  console.log("Creating_FinalImage");
   const { height, width, isPreview, definitionConstant = 1 } = options;
   return new Promise(async (resolve, reject) => {
     let snapshotMap = document.createElement("div");
     snapshotMap.setAttribute("id", "snapshot_map");
 
-    const isWideOrientation =
-      product?.sizeObject?.orientation === ORIENTATIONS.wide;
+    const isWideOrientation = getIsWideOrientation(product);
 
     const computedPixelBase = Math.floor(
       PRINT_CANVAS_BASE_PX / definitionConstant
     );
 
     const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
-    console.log({ currentVersionPixelRatio });
+
     const computedPixelRatio = Number(
       (currentVersionPixelRatio * definitionConstant).toFixed(2)
     );
@@ -85,9 +85,9 @@ export const createFinalImage = async ({
     Object.assign(snapshotMap.style, {
       width: `${width * multiple}px`,
       height: `${height * multiple}px`,
-      // display: "none",
       visibility: "hidden",
     });
+
     const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
     PlaceToHideBigMap.appendChild(snapshotMap);
 
@@ -109,8 +109,8 @@ export const createFinalImage = async ({
     });
 
     takeScreenshot(snapshotMapObject).then(function (data) {
-      var div = document.getElementById("snapshot_map");
-      div.parentNode.removeChild(div);
+      const mapToBeRemoved = document.getElementById("snapshot_map");
+      mapToBeRemoved.parentNode.removeChild(mapToBeRemoved);
 
       const image = new Image();
 
@@ -132,9 +132,14 @@ export const createFinalImage = async ({
         // mergerCanvas.style.setProperty("width", `${image.width}px`);
 
         var ctx = mergerCanvas.getContext("2d");
+
+        console.log({ image });
         ctx.drawImage(image, 0, 0);
 
-        console.log({ Hre_computedPixelRatio: computedPixelRatio });
+        console.log("canvas_Image", {
+          width: image.width,
+          height: image.height,
+        });
 
         drawLayout(ctx, {
           width: image.width,
@@ -147,11 +152,25 @@ export const createFinalImage = async ({
           localPixelRatio: computedPixelRatio,
         });
 
-        const finalImgWithLayout = mergerCanvas.toDataURL();
+        const konvaBase64 = konvaRef.current.toDataURL();
+        const konvaImg = new Image();
 
-        resolve(finalImgWithLayout);
+        konvaImg.onload = () => {
+          console.log("konva_Image", {
+            width: konvaImg.width,
+            height: konvaImg.height,
+          });
 
-        setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
+          ctx.drawImage(konvaImg, 0, 0);
+
+          const finalImgWithLayout = mergerCanvas.toDataURL();
+
+          resolve(finalImgWithLayout);
+
+          setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
+        };
+
+        konvaImg.src = konvaBase64;
       };
 
       image.src = data;

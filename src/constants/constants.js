@@ -3,7 +3,7 @@ const IS_CLIENT = typeof window !== "undefined";
 const RUNTIME_PIXEL_RATIO = 2;
 
 const PIXEL_RATIO_SM = 1.7;
-const PIXEL_RATIO_MD = 2.8;
+const PIXEL_RATIO_MD = 2.8; // 2.8;
 const PIXEL_RATIO_LG = 4.8;
 
 const LOW_HIGH_DEFINITION_RATIO = 2;
@@ -506,6 +506,11 @@ const FAKE_DIV_IDS = {
   subtitle: "fake_subtitle_div",
 };
 
+const MAP_ICONS = {
+  PIN_REAL: "Pin real",
+  TEXT: "Text",
+};
+
 module.exports = {
   IS_CLIENT,
   RUNTIME_PIXEL_RATIO,
@@ -542,4 +547,5 @@ module.exports = {
   MAP_STYLES,
   TITLE_NAMES,
   FAKE_DIV_IDS,
+  MAP_ICONS,
 };
