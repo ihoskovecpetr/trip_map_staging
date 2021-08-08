@@ -135,22 +135,22 @@ function CtaComponent() {
   useEffect(() => {
     setIsLoading(false);
 
-    let options = {
-      rootMargin: "0px",
-      threshold: 1.0,
-      trackVisibility: true,
-      delay: 100,
-    };
+    // let options = {
+    //   rootMargin: "0px",
+    //   threshold: 1.0,
+    //   trackVisibility: true,
+    //   delay: 100,
+    // };
 
-    let observer = new IntersectionObserver((e) => {
-      console.log("visible??", e);
-    }, options);
+    // let observer = new IntersectionObserver((e) => {
+    //   console.log("visible??", e);
+    // }, options);
 
-    let target = document.getElementById("link_studio_id");
+    // let target = document.getElementById("link_studio_id");
 
-    if (target) {
-      observer.observe(target);
-    }
+    // if (target) {
+    //   observer.observe(target);
+    // }
   }, []);
 
   const onClick = () => {

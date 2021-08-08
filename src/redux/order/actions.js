@@ -7,9 +7,11 @@ export const countActionTypes = {
   SET_MAP_ZOOM: "SET_MAP_ZOOM",
   SET_ACTIVE_MAP_STYLE: "SET_ACTIVE_MAP_STYLE",
   SET_IS_KONVA_RENDERED: "SET_IS_KONVA_RENDERED",
+  SET_IS_KONVA_ENABLED: "SET_IS_KONVA_ENABLED",
   ADD_KONVA_ICON: "ADD_KONVA_ICON",
   REMOVE_KONVA_ICON: "REMOVE_KONVA_ICON",
   UPDATE_KONVA_ICON: "UPDATE_KONVA_ICON",
+  SET_TAB_STEP_NUMBER: "SET_TAB_STEP_NUMBER",
 };
 
 export const setProductAction = (newProduct) => (dispatch) => {
@@ -62,6 +64,13 @@ export const setIsKonvaRendered = (bool) => (dispatch) => {
   });
 };
 
+export const setIsKonvaEnabled = (bool) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_IS_KONVA_ENABLED,
+    data: bool,
+  });
+};
+
 export const setAddKonvaIcon = (icon) => (dispatch) => {
   return dispatch({
     type: countActionTypes.ADD_KONVA_ICON,
@@ -80,5 +89,12 @@ export const setUpdateKonvaIcon = (iconObj) => (dispatch) => {
   return dispatch({
     type: countActionTypes.UPDATE_KONVA_ICON,
     data: iconObj,
+  });
+};
+
+export const setTabStepNumberAction = (number) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_TAB_STEP_NUMBER,
+    data: number,
   });
 };

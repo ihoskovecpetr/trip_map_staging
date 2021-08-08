@@ -39,11 +39,6 @@ export default async (req, res) => {
       //   axiosConfig
       // );
 
-      // console.log({
-      //   responseSHIPCOST: response.data.result[0],
-      //   responseSHIPCOST2: response.data.result[1],
-      // });
-
       // const exchangeRateUSD = await exchangeRates()
       //   .latest()
       //   .base("EUR")

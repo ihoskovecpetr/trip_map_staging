@@ -287,11 +287,15 @@
       "file": "static/chunks/1.js"
     },
     {
-      "id": "./src/assets/icons/dot.png",
+      "id": "./src/assets/icons/location_black.png",
       "file": "static/chunks/1.js"
     },
     {
-      "id": "./src/assets/icons/pin_real.png",
+      "id": "./src/assets/icons/pin_cartoon_2.png",
+      "file": "static/chunks/1.js"
+    },
+    {
+      "id": "./src/assets/icons/red_flag.png",
       "file": "static/chunks/1.js"
     },
     {
