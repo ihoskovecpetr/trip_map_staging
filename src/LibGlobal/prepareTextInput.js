@@ -30,7 +30,6 @@ export function prepareTextInput({
   // element.addEventListener(
   //   "input",
   //   function (e) {
-  //     console.log("Input_change_SAME", { 1: e.target.value, 2: textValue });
   //     onInput(e);
   //   },
   //   false

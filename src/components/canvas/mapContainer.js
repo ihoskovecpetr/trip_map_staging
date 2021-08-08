@@ -12,6 +12,7 @@ import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import dynamic from "next/dynamic";
+import ExploreOffIcon from "@material-ui/icons/ExploreOff";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -123,9 +124,9 @@ export default function MapContainer({
           </LogoWrap>
         )}
         {!isMobile && (
-          <StyledText size="small">
+          <StyledP size="small">
             cena {getFormatedPriceString(priceWithDelivery.netPrice)}
-          </StyledText>
+          </StyledP>
         )}
 
         <EmptySpaceExpander></EmptySpaceExpander>
@@ -158,6 +159,13 @@ export default function MapContainer({
 
       <div sx={styles.map_available_space} id="map_available_space_id">
         <div id="map_wrap_2_id" sx={styles.map_wrap_2}>
+          {isKonvaRendered && (
+            <DescContainer>
+              <FrozenMapDesc>
+                Pohybování mapou zmraženo <StyledExploreOffIcon />
+              </FrozenMapDesc>
+            </DescContainer>
+          )}
           {isKonvaRendered && canvasMap && (
             <KonvaWrap>
               <KonvaStage
@@ -236,17 +244,43 @@ const KonvaWrap = styled.div`
   position: relative;
   top: 0px;
   height: ${({ height }) => (height ? `${height}px` : 0)};
-  width: ${({ width }) => (width ? `${width}px` : 0)};
+  width: ${({ width }) => (width ? `${width}px` : "100%")};
   z-index: 100;
 `;
 
-const StyledCircularProgress = styled(CircularProgress)({
-  height: "24px !important",
-  width: "24px !important",
-  color: "inherit !important",
-});
+const DescContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 0;
+  position: relative;
+  top: -55px;
+`;
 
-const StyledText = styled.p`
+const FrozenMapDesc = styled.p`
+  margin: 0;
+  height: 40px;
+  line-height: 30px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+  height: 24px !important;
+  width: 24px !important;
+  color: inherit !important;
+`;
+
+const StyledExploreOffIcon = styled(ExploreOffIcon)`
+  height: 24px !important;
+  width: 24px !important;
+  color: inherit !important;
+  margin-left 5px;: 
+`;
+
+const StyledP = styled.p`
   color: ${color("cta_color")};
   font-weight: ${fontWeight("bold")};
   padding-left: 15px;

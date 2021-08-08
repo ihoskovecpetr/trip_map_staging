@@ -32,7 +32,8 @@ const orderInitialState = {
   activeMapStyleName: MAP_STYLES_NAMES.RED_BLUE,
   mapCoordinates: [-73.985542, 40.7484665],
   mapZoom: 10,
-  konva: { isRendered: false, icons: [] },
+  konva: { isEnabled: false, isRendered: false, icons: [] },
+  tabStepNumber: 1,
 };
 
 const order = produce((state = orderInitialState, { type, data }) => {
@@ -78,6 +79,10 @@ const order = produce((state = orderInitialState, { type, data }) => {
       state.konva.isRendered = data;
       return state;
 
+    case countActionTypes.SET_IS_KONVA_ENABLED:
+      state.konva.isEnabled = data;
+      return state;
+
     case countActionTypes.ADD_KONVA_ICON:
       state.konva.icons = [...state.konva.icons, data];
       return state;
@@ -92,6 +97,10 @@ const order = produce((state = orderInitialState, { type, data }) => {
         (icon) => icon.id != data.id
       );
       state.konva.icons = [...filteredIcons, data];
+      return state;
+
+    case countActionTypes.SET_TAB_STEP_NUMBER:
+      state.tabStepNumber = data;
       return state;
 
     default:
@@ -120,7 +129,13 @@ export const useMapZoomSelector = () =>
 export const useIsKonvaRenderedSelector = () =>
   useSelector((store) => store.order.konva.isRendered);
 
+export const useIsKonvaEnabledSelector = () =>
+  useSelector((store) => store.order.konva.isEnabled);
+
 export const useKonvaIconsSelector = () =>
   useSelector((store) => store.order.konva.icons);
+
+export const useTabStepNumberSelector = () =>
+  useSelector((store) => store.order.tabStepNumber);
 
 export default order;

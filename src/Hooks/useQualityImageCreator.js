@@ -16,7 +16,6 @@ export function useQualityImageCreator() {
     konvaRef,
     options,
   }) => {
-    console.log({ Hook_ref: konvaRef });
     return createFinalImage({
       originalMapObject: map,
       activeLayoutName,

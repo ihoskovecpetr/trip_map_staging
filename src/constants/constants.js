@@ -507,7 +507,10 @@ const FAKE_DIV_IDS = {
 };
 
 const MAP_ICONS = {
-  PIN_REAL: "Pin real",
+  PIN_REAL: "Pin Real",
+  PIN_CARTOON_2: "Pin Cartoon",
+  LOCATION_BLACK: "Location Black",
+  RED_FLAG: "Red Flag",
   TEXT: "Text",
 };
 

@@ -4,10 +4,11 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
+import { useDispatch } from "react-redux";
 
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useElementDimensions } from "Hooks/useElementDimensions";
-import { color } from "utils";
+import { color, fontWeight } from "utils";
 import Stepper from "./Stepper";
 
 import Step1Location from "../steps/Step1Location";
@@ -30,17 +31,25 @@ import { getIsWideOrientation } from "LibGlobal/getIsWideOrientation";
 import {
   useProductSelector,
   useActiveMapStyleSelector,
+  useTabStepNumberSelector,
 } from "redux/order/reducer";
 
+import { setTabStepNumberAction } from "redux/order/actions";
+
 const priceAlgorithm = getPriceAlgorithm();
+
+const getFormatedPriceString = (amount) => {
+  return amount ? `| ${getFormattedPrice(amount)}` : "";
+};
 
 export default function TabsRootNew({ map, konvaStageRef }) {
   const classes = useStyles();
   const productRedux = useProductSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
   const { isMobile } = useIsMobile();
+  const activeStepNumberRedux = useTabStepNumberSelector();
+  const dispatch = useDispatch();
 
-  const [activeStepNumber, setActiveStepNumber] = React.useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
   const { height: map_segment_height } = useElementDimensions(
@@ -63,18 +72,18 @@ export default function TabsRootNew({ map, konvaStageRef }) {
 
   const stepsNumbersDisabledOpenning = [];
   useEffect(() => {
-    if (stepsNumbersDisabledOpenning.includes(activeStepNumber)) {
+    if (stepsNumbersDisabledOpenning.includes(activeStepNumberRedux)) {
       setIsOpen(false);
       return;
     }
-  }, [activeStepNumber]);
+  }, [activeStepNumberRedux]);
 
   const handleNext = () => {
-    setActiveStepNumber((prevActiveStep) => prevActiveStep + 1);
+    dispatch(setTabStepNumberAction(activeStepNumberRedux + 1));
   };
 
   const handleBack = () => {
-    setActiveStepNumber((prevActiveStep) => prevActiveStep - 1);
+    dispatch(setTabStepNumberAction(activeStepNumberRedux - 1));
   };
 
   const stepElementsDesktop = [
@@ -82,7 +91,7 @@ export default function TabsRootNew({ map, konvaStageRef }) {
     [<Step3Layout />, <Step3BLayoutColorSwitch />, <Step4Colors />],
     [<Step5Size />, <Step6FinishVariant map={map} />],
     [
-      <StepAddKonvaIcons map={map} />,
+      // <StepAddKonvaIcons map={map} />,
 
       <Step8Checkout
         map={map}
@@ -101,7 +110,7 @@ export default function TabsRootNew({ map, konvaStageRef }) {
     [<Step3BLayoutColorSwitch />],
     [<Step5Size />],
     [<Step6FinishVariant map={map} />],
-    [<StepAddKonvaIcons map={map} />],
+    // [<StepAddKonvaIcons map={map} />],
     [
       <Step8Checkout
         map={map}
@@ -117,15 +126,15 @@ export default function TabsRootNew({ map, konvaStageRef }) {
 
   useEffect(() => {
     const currentTabsLength = activeStepElements.length - 1;
-    if (!isMobile && activeStepNumber > currentTabsLength) {
-      setActiveStepNumber(currentTabsLength);
+    if (!isMobile && activeStepNumberRedux > currentTabsLength) {
+      dispatch(setTabStepNumberAction(currentTabsLength));
     }
   }, [isMobile]);
 
   useEffect(() => {
     const currentTabsLength = activeStepElements.length - 1;
-    if (!isMobile && activeStepNumber > currentTabsLength) {
-      setActiveStepNumber(currentTabsLength);
+    if (!isMobile && activeStepNumberRedux > currentTabsLength) {
+      dispatch(setTabStepNumberAction(currentTabsLength));
     }
   }, [productRedux]);
 
@@ -150,7 +159,7 @@ export default function TabsRootNew({ map, konvaStageRef }) {
       {/* <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}> */}
 
       <PriceWrap>
-        <Price>celkem: {getFormattedPrice(priceWithDelivery.netPrice)}</Price>
+        <Price>cena {getFormatedPriceString(priceWithDelivery.netPrice)}</Price>
       </PriceWrap>
 
       <TabSegmentWrap
@@ -164,7 +173,7 @@ export default function TabsRootNew({ map, konvaStageRef }) {
           stepElements={activeStepElements}
           handleNext={handleNext}
           handleBack={handleBack}
-          activeStep={activeStepNumber}
+          activeStep={activeStepNumberRedux}
           map={map}
           activeMapStyleName={activeMapStyleName}
           konvaStageRef={konvaStageRef}
@@ -173,7 +182,7 @@ export default function TabsRootNew({ map, konvaStageRef }) {
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
         <TabContentWrap topElementsHeight={stepper_height + header_height}>
-          {<>{activeStepElements[activeStepNumber]}</>}
+          {<>{activeStepElements[activeStepNumberRedux]}</>}
         </TabContentWrap>
       </TabSegmentWrap>
       {isMobile && (
@@ -251,13 +260,13 @@ const TabContentWrap = styled.div`
 
 const PriceWrap = styled.div`
   display: inline-flex;
-
   height: 0;
 `;
 
 const Price = styled.div`
   position: relative;
-  color: white;
+  color: ${color("cta_color")};
+  font-weight: ${fontWeight("bold")};
   padding-left: 0.5rem;
   top: -30px;
 `;

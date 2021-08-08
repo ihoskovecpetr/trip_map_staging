@@ -13,7 +13,10 @@ import { getIsWideOrientation } from "LibGlobal/getIsWideOrientation";
 import { getCurrentPixelRatio } from "LibGlobal/getCurrentPixelRatio";
 
 import pin_real from "assets/icons/pin_real.png";
-import dot from "assets/icons/dot.png";
+import pin_cartoon_2 from "assets/icons/pin_cartoon_2.png";
+import location_black from "assets/icons/location_black.png";
+import red_flag from "assets/icons/red_flag.png";
+
 import {
   RUNTIME_PIXEL_RATIO,
   PRINT_CANVAS_BASE_PX,
@@ -31,7 +34,7 @@ import {
 //   }));
 // }
 
-const icon_size_constant = 0.09;
+const icon_size_constant = 0.18;
 
 const KonvaStage = ({ product, width, height, isPrint, forwardedRef }) => {
   const dispatch = useDispatch();
@@ -42,18 +45,29 @@ const KonvaStage = ({ product, width, height, isPrint, forwardedRef }) => {
   const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
 
   const stageLocalRef = useRef(null);
-  const textRef = useRef(null);
+  const layerRef = useRef(null);
+
+  useEffect(() => {
+    layerRef.current?.cache({ pixelRatio: 4 });
+
+    console.log({
+      layerRefCanvas: layerRef.current?.getCanvas(),
+    });
+  }, []);
 
   let multiple = 1;
-
-  if (isWideOrientation) {
-    multiple = PRINT_CANVAS_BASE_PX / width;
-  } else {
-    multiple = PRINT_CANVAS_BASE_PX / height;
-  }
+  let baseLongSize = 0;
 
   let realCanvasWidth = width / RUNTIME_PIXEL_RATIO;
   let realCanvasHeight = height / RUNTIME_PIXEL_RATIO;
+
+  if (isWideOrientation) {
+    multiple = PRINT_CANVAS_BASE_PX / width;
+    baseLongSize = realCanvasWidth;
+  } else {
+    multiple = PRINT_CANVAS_BASE_PX / height;
+    baseLongSize = realCanvasHeight;
+  }
 
   if (isPrint) {
     realCanvasWidth =
@@ -66,25 +80,58 @@ const KonvaStage = ({ product, width, height, isPrint, forwardedRef }) => {
       multiple *
       currentVersionPixelRatio *
       RUNTIME_PIXEL_RATIO;
+    baseLongSize =
+      baseLongSize * multiple * currentVersionPixelRatio * RUNTIME_PIXEL_RATIO;
   }
-
-  // const [stars, setStars] = useState(
-  //   generateShapes({ width: realCanvasWidth, height: realCanvasHeight })
-  // );
 
   useEffect(() => {
     const getIconBase64 = async () => {
-      const image = await getResizedImage({
-        originalImage: pin_real,
-        max_height: icon_size_constant * realCanvasWidth,
-        max_width: icon_size_constant * realCanvasWidth,
-      });
+      // const image = await getResizedImage({
+      //   originalImage: pin_real,
+      //   max_height: icon_size_constant * baseLongSize,
+      //   max_width: icon_size_constant * baseLongSize,
+      // });
 
-      setBase64Img(image);
+      const promises = [
+        getResizedImage({
+          originalImage: pin_real,
+          max_height: icon_size_constant * baseLongSize,
+          max_width: icon_size_constant * baseLongSize,
+        }),
+        getResizedImage({
+          originalImage: pin_cartoon_2,
+          max_height: icon_size_constant * baseLongSize,
+          max_width: icon_size_constant * baseLongSize,
+        }),
+        getResizedImage({
+          originalImage: location_black,
+          max_height: icon_size_constant * baseLongSize,
+          max_width: icon_size_constant * baseLongSize,
+        }),
+        getResizedImage({
+          originalImage: red_flag,
+          max_height: icon_size_constant * baseLongSize,
+          max_width: icon_size_constant * baseLongSize,
+        }),
+      ];
+
+      const [
+        pin_real_img,
+        pin_cartoon_img,
+        location_black_img,
+        red_flag_img,
+      ] = await Promise.all(promises);
+
+      setBase64Img({
+        [MAP_ICONS.PIN_REAL]: pin_real_img,
+        [MAP_ICONS.PIN_CARTOON_2]: pin_cartoon_img,
+        [MAP_ICONS.LOCATION_BLACK]: location_black_img,
+        [MAP_ICONS.RED_FLAG]: red_flag_img,
+      });
     };
 
     getIconBase64();
-  }, [realCanvasWidth]);
+  }, [baseLongSize]);
 
   const handleDragStart = (e) => {
     const id = e.target.id();
@@ -97,22 +144,12 @@ const KonvaStage = ({ product, width, height, isPrint, forwardedRef }) => {
     //   })
     // );
   };
-  const handleDragEnd = (e) => {
+  const handleDragEnd = (icon) => (e) => {
     const newPos = e.target.position();
-    console.log(
-      "DragEndE:",
-      { e, newPos },
-      {
-        x: newPos.x,
-        width: e.currentTarget.width,
-        realCanvasWidth,
-        e_currentTarget: e.currentTarget,
-      }
-    );
 
     dispatch(
       setUpdateKonvaIcon({
-        ...iconsRedux.find((icon) => icon.id === e.target.attrs.id),
+        ...icon,
 
         x: newPos.x / realCanvasWidth,
         y: newPos.y / realCanvasHeight,
@@ -128,59 +165,54 @@ const KonvaStage = ({ product, width, height, isPrint, forwardedRef }) => {
     // );
   };
 
+  const getImageComponent = (icon) => (
+    <Image
+      key={icon.id}
+      id={icon.id}
+      pixelRatio={4}
+      imageSmoothingEnabled={true}
+      hitCanvasPixelRatio={4}
+      x={icon.x * realCanvasWidth}
+      y={icon.y * realCanvasHeight}
+      image={base64Img && base64Img[icon.iconType]}
+      draggable
+      offsetX={(icon_size_constant * realCanvasWidth) / 2}
+      offsetY={(icon_size_constant * realCanvasHeight) / 2}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd(icon)}
+    />
+  );
+
   return (
     <Stage
       width={realCanvasWidth}
       height={realCanvasHeight}
       ref={forwardedRef ?? stageLocalRef}
     >
-      <Layer>
+      <Layer ref={layerRef}>
         {iconsRedux.map((star) => {
           switch (star.iconType) {
             case MAP_ICONS.TEXT:
               return (
                 <Text
-                  ref={textRef}
-                  text="Try to drag a star"
-                  draggable
-                  text="Ahoj, ja jsem clovek"
-                  fontSize={25}
-                  fontFamily="Calibri"
-                  fill="lightGreen"
-                  width={400}
-                  padding={20}
-                  align="center"
-                  // onDblClick={}
-                />
-              );
-            case MAP_ICONS.PIN_REAL:
-              return (
-                <Image
-                  key={star.id}
-                  id={star.id}
                   x={star.x * realCanvasWidth}
                   y={star.y * realCanvasHeight}
-                  image={base64Img}
-                  // numPoints={5}
-                  // innerRadius={20}
-                  // outerRadius={40}
-                  // fill="#89b717"
-                  // opacity={0.8}
                   draggable
-                  // rotation={star.rotation}
-                  // shadowColor="black"
-                  // shadowBlur={10}
-                  // shadowOpacity={0.6}
-                  // shadowOffsetX={star.isDragging ? 10 : 5}
-                  // shadowOffsetY={star.isDragging ? 10 : 5}
-                  // scaleX={star.isDragging ? 1.2 : 1}
-                  // scaleY={star.isDragging ? 1.2 : 1}
-                  offsetX={(icon_size_constant * realCanvasWidth) / 2}
-                  offsetY={(icon_size_constant * realCanvasWidth) / 2}
-                  onDragStart={handleDragStart}
-                  onDragEnd={handleDragEnd}
+                  text={star.textValue}
+                  fontSize={0.04 * realCanvasWidth}
+                  fontFamily="Calibri"
+                  fill="blue"
+                  width={0.4 * realCanvasWidth}
+                  height={0.2 * realCanvasWidth}
+                  offsetX={0.2 * realCanvasWidth}
+                  offsetY={0.2 * realCanvasHeight}
+                  padding={20}
+                  align="center"
+                  onDragEnd={handleDragEnd(star)}
                 />
               );
+            default:
+              return getImageComponent(star);
           }
         })}
       </Layer>

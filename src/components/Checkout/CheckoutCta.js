@@ -85,8 +85,6 @@ export default function CheckoutCta({
       setBackdropOpen(true);
       setIsUploadPending(true);
 
-      console.log({ konvaStageRef });
-
       const finalImgSrc = await qualityImageCreator({
         map,
         activeLayoutName: activeLayoutNameRedux,
@@ -155,7 +153,6 @@ export default function CheckoutCta({
       {isCustomUI && (
         <CustomUI
           onClick={() => {
-            console.log("settingBacOpn");
             setBackdropOpen(true);
             lazyUploadImage();
           }}

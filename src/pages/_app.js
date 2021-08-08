@@ -80,11 +80,8 @@ const MyApp = ({ Component, pageProps, store }) => {
 
 MyApp.getInitialProps = wrapper.getInitialPageProps(
   (store) => ({ pathname, req, res }) => {
-    console.log("2. Page.getInitialProps uses the store to dispatch things");
-    store.dispatch({
-      type: "TICK",
-      payload: "was set in error page " + pathname,
-    });
+    //I can dispatch here if necessary
+    // store.dispatch({});
   }
 );
 

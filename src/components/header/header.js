@@ -23,7 +23,6 @@ export default function Header({ className, invertHeaderColor }) {
 
           <Flex as="nav" sx={styles.nav}>
             {/* {menuItems.map(({ path, label }, i) => {
-              console.log({ hrsf: path });
               return (
                 <Link
                   activeClass="active"

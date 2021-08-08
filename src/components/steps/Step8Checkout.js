@@ -15,7 +15,6 @@ export default function Step8Checkout({
   konvaStageRef,
   children,
 }) {
-  console.log({ konvaStageRef });
   const [isDefaultDefinition, setIsDefaultDefinition] = useState(true);
   const { isMobile } = useIsMobile();
   const productRedux = useProductSelector();
@@ -38,7 +37,7 @@ export default function Step8Checkout({
 
         {!isMobile && (
           <ExtraPaddingTop>
-            <HeadingText>9. Materiál pro tisk</HeadingText>
+            <HeadingText>10. Materiál pro tisk</HeadingText>
             <StyledMaterialP>{productRedux.materialDesc}</StyledMaterialP>
           </ExtraPaddingTop>
         )}
@@ -46,7 +45,7 @@ export default function Step8Checkout({
         {!isDefaultDefinition && (
           <MapDefinition map={map} activeMapStyleName={activeMapStyleName} />
         )}
-        {!isMobile && <HeadingText>10. Shrnutí</HeadingText>}
+        {!isMobile && <HeadingText>11. Shrnutí</HeadingText>}
 
         <CheckoutCta
           map={map}

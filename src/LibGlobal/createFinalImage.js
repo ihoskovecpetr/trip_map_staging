@@ -19,7 +19,6 @@ let snapshotMapObject;
 function takeScreenshot(mapLocal) {
   return new Promise(function (resolve, _) {
     mapLocal.once("render", function () {
-      console.log("Render_local_Screenshot", mapLocal.getCanvas().toDataURL());
       resolve(mapLocal.getCanvas().toDataURL());
     });
 
@@ -108,72 +107,68 @@ export const createFinalImage = async ({
       options: { height, width },
     });
 
-    takeScreenshot(snapshotMapObject).then(function (data) {
+    takeScreenshot(snapshotMapObject).then(async function (
+      mapaScreenshotBase64
+    ) {
       const mapToBeRemoved = document.getElementById("snapshot_map");
       mapToBeRemoved.parentNode.removeChild(mapToBeRemoved);
 
-      const image = new Image();
+      const image = await getImageFromBase64(mapaScreenshotBase64);
 
-      image.onerror = function (e) {
+      const mergerCanvas = document.getElementById("canvas_merging");
+
+      mergerCanvas.setAttribute("height", image.height);
+      mergerCanvas.setAttribute("width", image.width);
+      // mergerCanvas.style.setProperty("height", `${image.height}px`);
+      // mergerCanvas.style.setProperty("width", `${image.width}px`);
+
+      var ctx = mergerCanvas.getContext("2d");
+
+      ctx.drawImage(image, 0, 0);
+
+      drawLayout(ctx, {
+        width: image.width,
+        height: image.height,
+        activeLayoutName,
+        mapTitles,
+        product,
+        isProductionPrint: true,
+        activeMapStyleName,
+        localPixelRatio: computedPixelRatio,
+      });
+
+      const konvaBase64 = konvaRef.current?.toDataURL();
+
+      if (konvaBase64) {
+        const konvaImgReady = await getImageFromBase64(konvaBase64);
+        ctx.drawImage(konvaImgReady, 0, 0);
+      }
+
+      const finalImgWithLayout = mergerCanvas.toDataURL();
+      resolve(finalImgWithLayout);
+      setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
+    });
+  });
+};
+
+const getImageFromBase64 = async (imageBase64) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const imgEl = new Image();
+
+      imgEl.onload = () => {
+        resolve(imgEl);
+      };
+
+      imgEl.onerror = function (e) {
         console.log("Error loading image", e);
-        toast("Něco se pokazilo", {
-          type: "error",
-          position: "top-left",
-        });
         reject("Failed to create image");
       };
 
-      image.onload = function () {
-        const mergerCanvas = document.getElementById("canvas_merging");
-
-        mergerCanvas.setAttribute("height", image.height);
-        mergerCanvas.setAttribute("width", image.width);
-        // mergerCanvas.style.setProperty("height", `${image.height}px`);
-        // mergerCanvas.style.setProperty("width", `${image.width}px`);
-
-        var ctx = mergerCanvas.getContext("2d");
-
-        console.log({ image });
-        ctx.drawImage(image, 0, 0);
-
-        console.log("canvas_Image", {
-          width: image.width,
-          height: image.height,
-        });
-
-        drawLayout(ctx, {
-          width: image.width,
-          height: image.height,
-          activeLayoutName,
-          mapTitles,
-          product,
-          isProductionPrint: true,
-          activeMapStyleName,
-          localPixelRatio: computedPixelRatio,
-        });
-
-        const konvaBase64 = konvaRef.current.toDataURL();
-        const konvaImg = new Image();
-
-        konvaImg.onload = () => {
-          console.log("konva_Image", {
-            width: konvaImg.width,
-            height: konvaImg.height,
-          });
-
-          ctx.drawImage(konvaImg, 0, 0);
-
-          const finalImgWithLayout = mergerCanvas.toDataURL();
-
-          resolve(finalImgWithLayout);
-
-          setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
-        };
-
-        konvaImg.src = konvaBase64;
-      };
-
-      image.src = data;
-    });
+      imgEl.src = imageBase64;
+    } catch (e) {
+      console.log("Error in getImageFromBase64", { e });
+      alert("Error");
+    }
   });
 };
