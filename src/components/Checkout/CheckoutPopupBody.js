@@ -22,6 +22,12 @@ import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import UnderlineLoader from "components/UnderlineLoader";
 import { useProductSelector } from "redux/order/reducer";
 
+// EUR account
+// const STRIPE_PUBLIC_KEY_LIVE =
+//   "pk_live_51IUQiOKQWovk2rIh0SfKkGNuHSE5J7VY6LCJaijjYh7lmjb64h8fmHcYmYoINNCNMTC5sxdsUkwnWIePd2z6vqPH00BzD2UrRm";
+// const STRIPE_PUBLIC_KEY_TEST =
+//   "pk_test_51IUQiOKQWovk2rIhec8u6qPLKq2TgWI9ZLLkC4jJGIfnV9RV3gi1I5Vk2wmZfRWGCIunxtJgRcBZC8wDBOIstdLL00zZVirE5R";
+
 const STRIPE_PUBLIC_KEY_LIVE =
   "pk_live_51IUQiOKQWovk2rIh0SfKkGNuHSE5J7VY6LCJaijjYh7lmjb64h8fmHcYmYoINNCNMTC5sxdsUkwnWIePd2z6vqPH00BzD2UrRm";
 const STRIPE_PUBLIC_KEY_TEST =
