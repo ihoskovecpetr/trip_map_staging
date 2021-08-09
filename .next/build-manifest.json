@@ -3,19 +3,37 @@
   "devFiles": ["static/chunks/react-refresh.js"],
   "ampDevFiles": ["static/chunks/webpack.js", "static/chunks/amp.js"],
   "lowPriorityFiles": [
-    "static/development/_buildManifest.js",
-    "static/development/_ssgManifest.js"
+    "static/MkPDgpVI6L5UWockXaLQO/_buildManifest.js",
+    "static/MkPDgpVI6L5UWockXaLQO/_ssgManifest.js"
   ],
   "pages": {
     "/": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/index.js"
+      "static/chunks/main-21ce764745e42ceee9f8.js",
+      "static/chunks/webpack-e067438c4cf4ef2ef178.js",
+      "static/chunks/framework.d6f4b26821e9a500fc3a.js",
+      "static/chunks/1bfc9850.620ee8f0de5b75fb2e3a.js",
+      "static/chunks/95b64a6e.fe147a39b35f08880f74.js",
+      "static/chunks/05d954cf.d72d9ec736833f5e5d02.js",
+      "static/chunks/commons.5888b6c7056354813970.js",
+      "static/chunks/962735646c292d6e741dd5ea2db7fe3ad88baa28.91581059d104d45dadff.js",
+      "static/chunks/6a59ccb08a7dced6c499fb3415d7b9cf0c4e1198.90fddd30429706c51de4.js",
+      "static/chunks/733403189bcf52c12520ffc5fd80eefa86070792.f2d36fce075761cbe670.js",
+      "static/chunks/e2f0bf0c664112638f05790bad06e27f44683291.e6e60ea98a265f389adc.js",
+      "static/chunks/5b96d8a2f420a900269d2834b8233e48d049776b.3aa53ebbc51dd5cc5e1c.js",
+      "static/chunks/09df26c82025b855ef53f2abe2edb4a81393ef43.302e4912ad8c2f25f097.js",
+      "static/chunks/pages/index-abd9dc0412955fff1571.js"
     ],
     "/_app": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/_app.js"
+      "static/chunks/main-21ce764745e42ceee9f8.js",
+      "static/chunks/webpack-e067438c4cf4ef2ef178.js",
+      "static/chunks/framework.d6f4b26821e9a500fc3a.js",
+      "static/chunks/commons.5888b6c7056354813970.js",
+      "static/chunks/962735646c292d6e741dd5ea2db7fe3ad88baa28.91581059d104d45dadff.js",
+      "static/chunks/733403189bcf52c12520ffc5fd80eefa86070792.f2d36fce075761cbe670.js",
+      "static/chunks/e2f0bf0c664112638f05790bad06e27f44683291.e6e60ea98a265f389adc.js",
+      "static/chunks/9e316ba6f698817f6ded3df8465f6aae93cb1275.45e87b35f8787963150e.js",
+      "static/css/da9105a4aaa9ef1140fc.css",
+      "static/chunks/pages/_app-bbe675d16b3121170118.js"
     ],
     "/_error": [
       "static/chunks/main.js",

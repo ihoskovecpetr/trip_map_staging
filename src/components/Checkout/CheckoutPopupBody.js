@@ -29,9 +29,9 @@ import { useProductSelector } from "redux/order/reducer";
 //   "pk_test_51IUQiOKQWovk2rIhec8u6qPLKq2TgWI9ZLLkC4jJGIfnV9RV3gi1I5Vk2wmZfRWGCIunxtJgRcBZC8wDBOIstdLL00zZVirE5R";
 
 const STRIPE_PUBLIC_KEY_LIVE =
-  "pk_live_51IUQiOKQWovk2rIh0SfKkGNuHSE5J7VY6LCJaijjYh7lmjb64h8fmHcYmYoINNCNMTC5sxdsUkwnWIePd2z6vqPH00BzD2UrRm";
+  "pk_live_51JMXyHCVDm94CHWQ8qbje7TzCuvsKKEeqB8S0zwg8jQ8hWhU97jrGLCS5f0fP3Gn5OSu1SoVatJW3vd9mfHMtsek00RAujkQSI";
 const STRIPE_PUBLIC_KEY_TEST =
-  "pk_test_51IUQiOKQWovk2rIhec8u6qPLKq2TgWI9ZLLkC4jJGIfnV9RV3gi1I5Vk2wmZfRWGCIunxtJgRcBZC8wDBOIstdLL00zZVirE5R";
+  "pk_test_51JMXyHCVDm94CHWQtr4H5GJ4sdJA2II0YeMO6izSpDOKUpfXncH4Fo0kdSHK9tF2ul0xBfANUsAdxBtYlsgWPB9G004bXHb5YW";
 
 let Stripe;
 
