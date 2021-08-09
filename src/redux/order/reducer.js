@@ -1,6 +1,7 @@
 import { countActionTypes } from "./actions";
 import produce from "immer";
 import { useSelector } from "react-redux";
+import { HYDRATE } from "next-redux-wrapper"; // ADD HYDRATE!!
 
 import {
   TITLES_DEFAULT,
@@ -32,10 +33,27 @@ const orderInitialState = {
   activeMapStyleName: MAP_STYLES_NAMES.RED_BLUE,
   mapCoordinates: [-73.985542, 40.7484665],
   mapZoom: 10,
+  isHydrated: false,
+  seenPopup: false,
 };
 
 const order = produce((state = orderInitialState, { type, data }) => {
   switch (type) {
+    case HYDRATE:
+      console.log("Hydrate_window: ", { window: typeof window });
+      if (typeof window !== "undefined") {
+        const storedPopupState = localStorage.getItem("seenPopup");
+
+        return { ...state, seenPopup: !!storedPopupState, isHydrated: true };
+      }
+      // const stateDiff = diff(state, action.payload) as any;
+      // const wasBumpedOnClient = stateDiff?.page?.[0]?.endsWith('X'); // or any other criteria
+      return {
+        ...state,
+        isHydrated: true,
+        // ...action.payload,
+        // page: wasBumpedOnClient ? state.page : action.payload.page, // keep existing state or use hydrated
+      };
     case countActionTypes.SET_PRODUCT:
       state.product = {
         ...state.product,

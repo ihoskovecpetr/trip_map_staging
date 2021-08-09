@@ -29,8 +29,7 @@ const data = [
   },
   {
     id: 4,
-    title:
-      "Nakonec obdržíte email s vyúčtováním a samostatný produkt do pár dní poštou",
+    title: "Nakonec obdržíte vyúčtováním emaile a samostatný produkt poštou",
     text:
       "Potvrzení o zaplacení dostanete ihned emailem a fzyický produkt k Vám dorazí poštou do několika dní",
   },

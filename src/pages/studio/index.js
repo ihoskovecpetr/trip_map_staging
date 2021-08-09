@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider } from "theme-ui";
 import { StickyProvider } from "contexts/app/app.provider";
 import theme from "theme";
@@ -11,6 +11,10 @@ import { useIsMobile } from "../../Hooks/useIsMobile";
 
 export default function IndexPage() {
   const { isMobile } = useIsMobile();
+
+  useEffect(() => {
+    localStorage.setItem("seenPopup", true);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
