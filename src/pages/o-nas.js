@@ -4,7 +4,7 @@ import { StickyProvider } from "contexts/app/app.provider";
 import theme from "theme";
 import SEO from "components/seo";
 import Layout from "components/layout";
-import About from "sections/About";
+import About from "sections/about";
 
 import Faq from "sections/faq";
 import { wrapper } from "../redux/store";

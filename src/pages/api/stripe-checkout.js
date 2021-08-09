@@ -42,8 +42,7 @@ const connectToMongoose = async () => {
   }
 };
 
-const test_shipping_code = ["shr_1Ip7NWKQWovk2rIhdfYl73aq"];
-const test_shipping_code_czk = ["shr_1IqgqIKQWovk2rIhCDcikEM0"];
+const test_shipping_code_czk = ["shr_1JMc7WCVDm94CHWQTFxCa4yY"];
 
 const priceAlgorithm = getPriceAlgorithm();
 
@@ -141,7 +140,7 @@ export default async (req, res) => {
 
         return res.json({ id: session.id });
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Stripe Error:", error);
         res.status(402);
         res.json({ error });
       }
