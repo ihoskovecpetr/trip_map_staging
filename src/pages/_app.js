@@ -1,8 +1,11 @@
-// import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import CookieConsent from "react-cookie-consent";
 // import NextApp from "next/app";
 import App, { Container } from "next/app";
+import styled, { ThemeProvider } from "styled-components";
+import { color } from "utils";
 
 // import { initGA, logPageView } from "analytics";
 // Load DM Sans typeface
@@ -19,7 +22,6 @@ import "./style.css";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-image-lightbox/style.css";
-import { ThemeProvider } from "styled-components";
 import theme from "../theme/theme.js";
 import { GlobalStyle } from "../theme/global";
 
@@ -71,6 +73,27 @@ const MyApp = ({ Component, pageProps, store }) => {
       <ThemeProviderMaterialUI theme={themeMaterialUI}>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
+          <CookieConsent
+            location="bottom"
+            buttonText="Souhlasím"
+            cookieName="myAwesomeCookieName2"
+            style={{ background: "#2B373B" }}
+            buttonStyle={{
+              background: "#f6aa1c",
+              color: "#4e503b",
+              fontSize: "13px",
+            }}
+            expires={150}
+          >
+            Tento web používá k poskytování služeb, personalizaci reklam a
+            analýze návštěvnosti soubory cookie. Používáním tohoto webu s tím
+            souhlasíte.{" "}
+            <span style={{ fontSize: "10px" }}>
+              Více o GDPR se dočtete{" "}
+              <StyledA href="/obchodni-informace">zde</StyledA>
+            </span>
+          </CookieConsent>
+
           <Component {...pageProps} />
         </ThemeProvider>
       </ThemeProviderMaterialUI>
@@ -80,12 +103,15 @@ const MyApp = ({ Component, pageProps, store }) => {
 
 MyApp.getInitialProps = wrapper.getInitialPageProps(
   (store) => ({ pathname, req, res }) => {
-    console.log("2. Page.getInitialProps uses the store to dispatch things");
-    store.dispatch({
-      type: "TICK",
-      payload: "was set in error page " + pathname,
-    });
+    // store.dispatch({
+    //   type: "TICK",
+    //   payload: "was set in error page " + pathname,
+    // });
   }
 );
+
+const StyledA = styled.a`
+  color: ${color("cta_color")};
+`;
 
 export default wrapper.withRedux(MyApp);

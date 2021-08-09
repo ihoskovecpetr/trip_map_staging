@@ -15,10 +15,7 @@ import SecurePayment from "sections/secure-payment";
 import PrintfulPrint from "sections/printful-print";
 import PackagesOptions from "sections/packages-options";
 import Faq from "sections/faq";
-import { connect } from "react-redux";
 import { wrapper } from "../redux/store";
-import { setNewTitle } from "../redux/order/actions";
-import { useDispatch } from "react-redux";
 
 const IndexPage = (props) => {
   return (

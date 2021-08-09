@@ -1,15 +1,24 @@
 /** @jsx jsx */
 import { jsx, Heading, Box, Container, Text } from "theme-ui";
 import { Link } from "components/link";
-import menuItems from "./footer.data";
+import { footerObj } from "./footer.data";
 export default function Footer() {
   return (
     <footer sx={styles.footer}>
       <Container sx={styles.footer.container}>
         <Box sx={styles.footer.footerTopArea}>
-          {menuItems.map(({ header, items }, i) => (
+          {footerObj.map(({ header, items, pathHeader }, i) => (
             <Box sx={styles.footer.menus} key={i}>
-              <Heading sx={styles.footer.heading}>{header}</Heading>
+              <Heading sx={styles.footer.heading}>
+                <Link
+                  path={pathHeader}
+                  key={i}
+                  label={header}
+                  // sx={styles.footer.link}
+                >
+                  {header}
+                </Link>
+              </Heading>
               <nav>
                 {items.map(({ path, label }, i) => (
                   <Link
@@ -59,6 +68,14 @@ const styles = {
       fontWeight: "500",
       mb: [3, 4, 5, null, 6],
       lineHeight: "1.35",
+      textDecoration: "none",
+      a: {
+        textDecoration: "none",
+        color: "inherit",
+      },
+      "&:hover": {
+        color: "cta_color",
+      },
     },
 
     link: {
@@ -72,7 +89,7 @@ const styles = {
       textDecoration: "none",
       lineHeight: [1.5, null, null, 1.6, 1.8],
       ":hover": {
-        color: "primary",
+        color: "cta_color",
       },
       ":last-child": {
         mb: "0px",
