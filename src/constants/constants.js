@@ -506,6 +506,8 @@ const FAKE_DIV_IDS = {
   subtitle: "fake_subtitle_div",
 };
 
+const VALID_DISCOUNT_CODES = [{ code: "AU65", discountKoef: 0.9 }];
+
 module.exports = {
   IS_CLIENT,
   RUNTIME_PIXEL_RATIO,
@@ -542,4 +544,5 @@ module.exports = {
   MAP_STYLES,
   TITLE_NAMES,
   FAKE_DIV_IDS,
+  VALID_DISCOUNT_CODES,
 };

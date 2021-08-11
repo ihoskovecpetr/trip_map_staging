@@ -1,5 +1,9 @@
 const BasePriceAlgorithm = require("./BasePriceAlgorithm");
+const { VALID_DISCOUNT_CODES } = require("constants/constants");
+const { checkDiscountCode } = require("LibGlobal/checkDiscountCode");
+const { getDiscountKoef } = require("LibGlobal/getDiscountKoef");
 
+const DISCOUNT_KOEF = 0.9;
 class DefaultPriceAlgorithm extends BasePriceAlgorithm {
   constructor({ roundingPrecision, taxPercentage, profitPercentage }) {
     super({ roundingPrecision, taxPercentage });
@@ -17,15 +21,28 @@ class DefaultPriceAlgorithm extends BasePriceAlgorithm {
     );
   }
 
+  getPriceWithoutDeliveryDiscounted(variantId, dataPrintful, discountCode) {
+    const printfulVariantPrice = dataPrintful && dataPrintful[variantId]?.price;
+
+    const isCodeAccepted = checkDiscountCode(discountCode);
+    const discountKoef = getDiscountKoef(discountCode);
+    const constPrice = printfulVariantPrice ? printfulVariantPrice : 0;
+
+    const priceAfterDiscount = this.times(
+      constPrice,
+      isCodeAccepted ? discountKoef : 1
+    );
+
+    return this.getPrice(
+      priceAfterDiscount,
+      this.taxPercentage,
+      this.profitPercentage
+    );
+  }
+
   getPriceOfDelivery(variantId, dataPrintful) {
     const shippingPrice =
       dataPrintful && dataPrintful[variantId]?.shipping.rate;
-
-    // return this.getPrice(
-    //   shippingPrice ? shippingPrice : 0,
-    //   this.taxPercentage,
-    //   this.profitPercentage
-    // );
 
     return { netPrice: Number(shippingPrice) };
   }
@@ -37,6 +54,30 @@ class DefaultPriceAlgorithm extends BasePriceAlgorithm {
 
     const variantPriceObject = this.getPrice(
       variantPrice ? variantPrice : 0,
+      this.taxPercentage,
+      this.profitPercentage
+    );
+
+    const sumNetPricesWithDelivery = this.add([
+      variantPriceObject.netPrice,
+      shippingPrice ?? 0,
+    ]);
+
+    return { netPrice: sumNetPricesWithDelivery };
+  }
+
+  getPriceWithDeliveryDiscounted(variantId, dataPrintful, product) {
+    const variantPrice = dataPrintful && dataPrintful[variantId]?.price;
+    const shippingPrice =
+      dataPrintful && dataPrintful[variantId]?.shipping.rate; // this is price with tax and profit
+
+    const priceAfterDiscount = this.times(
+      variantPrice ? variantPrice : 0,
+      DISCOUNT_KOEF
+    );
+
+    const variantPriceObject = this.getPrice(
+      priceAfterDiscount,
       this.taxPercentage,
       this.profitPercentage
     );

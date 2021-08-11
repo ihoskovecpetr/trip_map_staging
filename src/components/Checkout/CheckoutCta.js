@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 import styled from "styled-components";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 import { VARIANTS_PRINTFUL } from "constants/constants";
 import { createUploadRequest } from "LibGlobal/createUploadRequest";
@@ -22,6 +23,8 @@ import {
   useActiveMapStyleSelector,
 } from "redux/order/reducer";
 
+import { setUploadPercentage } from "redux/order/actions";
+
 import {
   getLazyUploader,
   resetPendingPromise,
@@ -31,6 +34,8 @@ const CancelToken = axios.CancelToken;
 
 export default function CheckoutCta({ map, children, isCustomUI }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const mapTitles = useTitlesSelector();
   const productRedux = useProductSelector();
   const activeLayoutNameRedux = useActiveLayoutSelector();
@@ -40,7 +45,6 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
   const [isUploadPending, setIsUploadPending] = useState(false);
   const [imageBase64Created, setImageBase64Created] = useState("");
   const [imageSavedResponse, setImageSavedResponse] = useState(null);
-  const [percentageUpload, setPercentageUpload] = useState(0);
   const [fileSizeMB, setFileSizeMB] = useState(0);
   const [axiosCancelTokenSource, setAxiosCancelTokenSource] = useState(
     CancelToken.source()
@@ -57,7 +61,7 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
     setImageSavedResponse(null);
     setImageBase64Created(null);
     resetPendingPromise();
-    setPercentageUpload(0);
+    dispatch(setUploadPercentage(0));
   }, [
     map,
     center,
@@ -72,7 +76,7 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
       (progressEvent.loaded * 100) / progressEvent.total
     );
 
-    setPercentageUpload(percentCompleted);
+    dispatch(setUploadPercentage(percentCompleted));
   };
 
   const uploadImage = async () => {
@@ -164,7 +168,7 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
             }}
             price={priceWithDelivery.netPrice} //TODO add big.js
           >
-            SHRNUTÍ OBJEDNÁVKY
+            Shrnutí objednávky
           </NextTabBtn>
         </DefaultUI>
       )}
@@ -184,7 +188,6 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
             imageSavedResponse={imageSavedResponse}
             imageBase64Created={imageBase64Created}
             backdropClose={backdropClose}
-            percentageUpload={percentageUpload}
             activeMapStyleName={activeMapStyleName}
             fileSizeMB={fileSizeMB}
           />
@@ -195,12 +198,6 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
 }
 
 const styles = {
-  // container: {
-  //   "& p": {
-  //     fontFamily: "Arial, sans-serif",
-  //     margin: 0,
-  //   },
-  // },
   resultImage: {
     width: "100%",
     backgroundColor: "green",

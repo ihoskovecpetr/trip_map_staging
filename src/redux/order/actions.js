@@ -6,6 +6,9 @@ export const countActionTypes = {
   SET_MAP_COORDINATES: "SET_MAP_COORDINATES",
   SET_MAP_ZOOM: "SET_MAP_ZOOM",
   SET_ACTIVE_MAP_STYLE: "SET_ACTIVE_MAP_STYLE",
+  SET_UPLOAD_PERCENTAGE: "SET_UPLOAD_PERCENTAGE",
+  SET_DISCOUNT_CODE: "SET_DISCOUNT_CODE",
+  SET_DISCOUNT_CODE_ACCEPTED: "SET_DISCOUNT_CODE_ACCEPTED",
 };
 
 export const setProductAction = (newProduct) => (dispatch) => {
@@ -48,5 +51,26 @@ export const setMapZoomAction = (newZoom) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_MAP_ZOOM,
     data: newZoom,
+  });
+};
+
+export const setUploadPercentage = (number) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_UPLOAD_PERCENTAGE,
+    data: number,
+  });
+};
+
+export const setDiscountCode = (code) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_DISCOUNT_CODE,
+    data: code,
+  });
+};
+
+export const setDiscountCodeAccepted = (bool) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_DISCOUNT_CODE_ACCEPTED,
+    data: bool,
   });
 };
