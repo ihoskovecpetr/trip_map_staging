@@ -35,6 +35,8 @@ const orderInitialState = {
   mapZoom: 10,
   isHydrated: false,
   seenPopup: false,
+  uploadPercentage: 0,
+  discount: { code: "", codeAccepted: false },
 };
 
 const order = produce((state = orderInitialState, { type, data }) => {
@@ -91,6 +93,18 @@ const order = produce((state = orderInitialState, { type, data }) => {
       state.mapZoom = data;
       return state;
 
+    case countActionTypes.SET_UPLOAD_PERCENTAGE:
+      state.uploadPercentage = data;
+      return state;
+
+    case countActionTypes.SET_DISCOUNT_CODE:
+      state.discount.code = data;
+      return state;
+
+    case countActionTypes.SET_DISCOUNT_CODE_ACCEPTED:
+      state.discount.codeAccepted = data;
+      return state;
+
     default:
       return state;
   }
@@ -113,5 +127,11 @@ export const useMapCoordinatesSelector = () =>
 
 export const useMapZoomSelector = () =>
   useSelector((store) => store.order.mapZoom);
+
+export const useUploadPercentageSelector = () =>
+  useSelector((store) => store.order.uploadPercentage);
+
+export const useDiscountSelector = () =>
+  useSelector((store) => store.order.discount);
 
 export default order;

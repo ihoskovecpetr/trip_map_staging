@@ -8,19 +8,18 @@ import { toast } from "react-toastify";
 import Lightbox from "react-image-lightbox";
 
 import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@material-ui/core/styles";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
-import Card from "@material-ui/core/Card";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { color } from "utils";
+import { color, mobile, desktop } from "utils";
 import { getIsProduction } from "LibGlobal/getIsProduction";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import CheckoutItems from "./CheckoutItems";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import UnderlineLoader from "components/UnderlineLoader";
-import { useProductSelector } from "redux/order/reducer";
+import ImageUploadSteps from "./ImageUploadSteps";
+
+import { useProductSelector, useDiscountSelector } from "redux/order/reducer";
 
 // EUR account
 // const STRIPE_PUBLIC_KEY_LIVE =
@@ -42,18 +41,19 @@ export default function CheckoutPopupBody({
   imageSavedResponse,
   imageBase64Created,
   backdropClose,
-  percentageUpload,
   activeMapStyleName,
   fileSizeMB,
 }) {
-  const classes = useStyles();
   const product = useProductSelector();
+  const discount = useDiscountSelector();
 
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
   });
   const [designDisplayed, setDesignDisplayed] = useState(false);
+
+  console.log({ imageBase64Created });
 
   const { dataPrintful } = useGetDataPrintful([product.variantId]);
 
@@ -79,7 +79,7 @@ export default function CheckoutPopupBody({
           open: true,
           activeSrc: imageBase64Created,
         });
-        setDesignDisplayed(true);
+        // setDesignDisplayed(true);
       }, 1000);
     }
   }, [imageBase64Created]);
@@ -89,13 +89,19 @@ export default function CheckoutPopupBody({
     dataPrintful
   );
 
+  const priceWithDeliveryAndDiscount = priceAlgorithm.getPriceWithDeliveryDiscounted(
+    product.variantId,
+    dataPrintful
+  );
+
   async function redirectToCheckout() {
     const response = await axios.post("api/stripe-checkout", {
       product,
       imageObj: imageSavedResponse,
       checkoutShownPrices: {
-        netPriceWithDelivery: priceWithDelivery.netPrice,
+        netPriceWithDelivery: priceWithDeliveryAndDiscount.netPrice,
       },
+      discountCode: discount.code,
     });
 
     if (response?.data?.error) {
@@ -117,17 +123,15 @@ export default function CheckoutPopupBody({
   }
 
   const ImageUploaded = () => (
-    <>
+    <ImageUploadedContainer>
       {!imageBase64Created ? (
         <CustomLoaderWrap>
           <StyledCircularProgress />
         </CustomLoaderWrap>
       ) : (
-        <TeaserWrap>
-          <StyledOpenInNewIcon />
+        <TeaserImageWrap>
           <StyledImg
             id="img_screen_shot"
-            sx={styles.teaserFinalImage}
             src={imageBase64Created} //imageBase64Created
             onClick={(e) => {
               setLightbox({
@@ -137,63 +141,30 @@ export default function CheckoutPopupBody({
               e.stopPropagation();
             }}
           />
-        </TeaserWrap>
+          <IconContainer>
+            <StyledOpenInNewIcon />
+          </IconContainer>
+        </TeaserImageWrap>
       )}
-    </>
+    </ImageUploadedContainer>
   );
 
   return (
-    <Card
-      className={classes.paper}
-      elevation={3}
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div sx={styles.heading_container}>
+    <Card onClick={(e) => e.stopPropagation()}>
+      <HeadingContainer>
         <StyledCloseIcon onClick={() => backdropClose()} />
+        <ImageStepsContainer>
+          <ImageUploaded />
 
-        <HeaderTextsContainer>
-          <p sx={styles.uploading_counter}>
-            {`${
-              imageBase64Created ? "Design vytvořen ✅" : "Zpracovávám design"
-            }`}
-            {!imageBase64Created && (
-              <WrapSpan>
-                <UnderlineLoader />
-              </WrapSpan>
-            )}
-          </p>
-
-          <p sx={styles.uploading_counter}>
-            {`${
-              imageBase64Created && designDisplayed
-                ? "Design zobrazen ✅"
-                : "Zobrazuji design"
-            }`}
-            {imageBase64Created && !designDisplayed && (
-              <WrapSpan>
-                <UnderlineLoader />
-              </WrapSpan>
-            )}
-          </p>
-          <p sx={styles.uploading_counter}>
-            {imageBase64Created
-              ? `${isUploadPending ? "Ukládám" : "Uloženo"}`
-              : "ukládání"}
-            {imageBase64Created &&
-              ` ${percentageUpload}% / ${fileSizeMB && fileSizeMB + "MB"} ${
-                imageBase64Created && !isUploadPending ? "✅" : ""
-              }`}
-            {imageBase64Created && isUploadPending && (
-              <WrapSpan>
-                <UnderlineLoader />
-              </WrapSpan>
-            )}
-          </p>
-        </HeaderTextsContainer>
-      </div>
+          <ImageUploadSteps
+            isUploadPending={isUploadPending}
+            imageBase64Created={imageBase64Created}
+            fileSizeMB={fileSizeMB}
+          />
+        </ImageStepsContainer>
+      </HeadingContainer>
       <CheckoutItems
         dataPrintful={dataPrintful}
-        ImageComponent={<ImageUploaded />}
         activeMapStyleName={activeMapStyleName}
       />
 
@@ -217,20 +188,113 @@ export default function CheckoutPopupBody({
   );
 }
 
-const StyledImg = styled.img`
-  z-index: 10;
-  cursor: pointer;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.56);
-  width: 80px;
-  height: 80px;
+const Card = styled.div`
+  background: ${color("heading_secondary")};
+  width: 400px;
+  max-height: 85vh;
+  overflow: scroll;
+  text-transform: unset;
+  border-radius: 5px;
+`;
+
+const HeadingContainer = styled.div`
+  position: sticky;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: ${color("cta_color")};
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `;
 
 const StyledCloseIcon = styled(CloseIcon)`
   padding: 0.1rem;
   color: ${color("primary")};
-  background-color: ${color("whitish_paper_blue")};
   border-radius: 5px;
+  border: 2px solid;
   cursor: pointer;
+  margin-top: 15px;
+  margin-left: 15px;
+
+  ${mobile`
+    position: absolute;
+`}
+`;
+
+const ImageStepsContainer = styled.div`
+  position: sticky;
+  top: 0;
+  // width: 100%;
+  color: white;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 15px;
+
+  ${mobile`
+    flex-direction: column;
+  `}
+`;
+
+const ImageUploadedContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  order: 0;
+  height: 120px;
+  margin-bottom: 0px;
+
+  ${mobile`
+    order: 1;
+    margin-bottom: 10px;
+    justify-content: center;
+    height: 150px;
+
+  `}
+`;
+
+const TeaserImageWrap = styled.div`
+  color: ${color("whitish_paper_blue")};
+  height: 120px;
+  display: flex;
+  align-items: flex-end;
+
+  ${mobile`
+    height: 150px;
+  `};
+`;
+
+const IconContainer = styled.span`
+  height: 0;
+  width: 0;
+  display: block;
+  position: relative;
+  top: -2em;
+  left: -2em;
+  z-index: 100;
+`;
+
+const StyledOpenInNewIcon = styled(OpenInNewIcon)`
+  pointer-events: none;
+`;
+
+const StyledImg = styled.img`
+  z-index: 10;
+  cursor: pointer;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.56);
+  display: block;
+  max-width: 100%;
+  max-height: 120px;
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+
+  ${mobile`
+    max-height: 150px;
+  `}
 `;
 
 const NextTabContainer = styled.div`
@@ -238,6 +302,7 @@ const NextTabContainer = styled.div`
   bottom: -1;
   width: 100%;
   padding: 15px 15px;
+  color: black;
 `;
 
 const CustomLoaderWrap = styled.div`
@@ -250,81 +315,5 @@ const CustomLoaderWrap = styled.div`
 const StyledCircularProgress = styled(CircularProgress)`
   height: 40px !important;
   width: 40px !important;
-  color: ${color("cta_color")} !important;
+  color: ${color("primary")} !important;
 `;
-
-const WrapSpan = styled.span`
-  color: ${color("cta_color")} !important;
-`;
-
-const TeaserWrap = styled.div`
-  transform: translateX(0);
-  color: ${color("whitish_paper_blue")};
-  display: flex;
-`;
-
-const StyledOpenInNewIcon = styled(OpenInNewIcon)`
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 2px;
-  cursor: pointer;
-  z-index: 11;
-  pointer-events: none;
-`;
-
-const HeaderTextsContainer = styled.div`
-  padding-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-`;
-
-const styles = {
-  heading_container: {
-    position: "sticky",
-    top: 0,
-    width: "100%",
-    textAlign: "right",
-    color: "white",
-    zIndex: 10,
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    backgroundColor: "primary", // "text_secondary",
-    borderBottomLeftRadius: "20px",
-    borderBottomRightRadius: "20px",
-    alignItems: "flex-start",
-    padding: "15px 15px",
-  },
-  uploading_counter: {
-    // textTransform: "uppercase",
-    color: "white",
-    fontWeight: "100",
-    letterSpacing: "1.2px",
-    fontSize: "14px",
-    transform: "translateX(0)",
-    display: "inline-block",
-    lineHeight: "145%",
-  },
-  uploading_description: {
-    textAlign: "left",
-    fontSize: "0.8rem",
-  },
-};
-
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: 10,
-    color: "#fff",
-    position: "relative",
-  },
-  paper: {
-    width: "400px",
-    maxHeight: "85vh",
-    overflow: "scroll",
-    backgroundColor: "whitish_paper_blue",
-    textTransform: "unset",
-  },
-}));

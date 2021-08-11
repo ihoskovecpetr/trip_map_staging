@@ -57,14 +57,18 @@ export default function Stepper({
         </StyledButton>
       }
       backButton={
-        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+        <StyledButtonBack
+          size="small"
+          onClick={handleBack}
+          disabled={activeStep === 0}
+        >
           {theme.direction === "rtl" ? (
             <KeyboardArrowRight />
           ) : (
             <KeyboardArrowLeft />
           )}
           Zpět
-        </Button>
+        </StyledButtonBack>
       }
     />
   );
@@ -74,4 +78,9 @@ const StyledButton = styled(Button)`
   color: white !important;
   background-color: ${color("cta_color")} !important;
   padding-left: 15px !important;
+  text-transform: unset !important;
+`;
+
+const StyledButtonBack = styled(Button)`
+  text-transform: unset !important;
 `;

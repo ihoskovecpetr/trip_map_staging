@@ -19,7 +19,7 @@ const getShippingRateCZ = async (variantId) => {
 
   const body = {
     recipient: {
-      address1: "Krasné",
+      address1: "Krasné", // TODO: dumy address, change in case of sending out of CZ
       city: "Tři Sekery",
       country_code: "CZ",
       zip: 35301,
@@ -45,8 +45,6 @@ const getShippingRateCZ = async (variantId) => {
   const priceEUR = new Big(response.data.result[0].rate);
   const priceCZK = priceEUR
     .times(exchangeRateCZKEUR)
-    // .times(TAXES_KOEFICIENT) // counting in price algorithm
-    // .times(MARKUP_KOEFICIENT)
     .div(10)
     .add(1)
     .round(0)

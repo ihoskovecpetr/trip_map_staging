@@ -4,6 +4,8 @@ const Big = require("big.js");
 
 const Order = require("../../mongoModels/order.js");
 const { getIsProduction } = require("../../LibGlobal/getIsProduction");
+const { checkDiscountCode } = require("../../LibGlobal/checkDiscountCode");
+
 const {
   getPriceAlgorithm,
 } = require("../../LibGlobal/priceAlgorithm/getPriceAlgorithm");
@@ -22,12 +24,6 @@ const stripe = require("stripe")(API_KEY);
 
 const connectToMongoose = async () => {
   try {
-    console.log({
-      MongoX: process.env.MONGO_user,
-      c: process.env.MONGO_password,
-      d: process.env.MONGO_DB_NAME,
-    });
-
     const data = await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -63,27 +59,41 @@ export default async (req, res) => {
           product: clientProduct,
           imageObj,
           checkoutShownPrices,
+          discountCode,
         } = req.body;
 
         const responsePrintful = await fetchAndTransformDataPrintful([
           clientProduct.variantId,
         ]);
 
-        const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-          clientProduct.variantId,
-          responsePrintful
-        );
         const priceWithoutDelivery = priceAlgorithm.getPriceWithoutDelivery(
           clientProduct.variantId,
           responsePrintful
         );
 
+        const priceWithoutDeliveryDiscounted = priceAlgorithm.getPriceWithoutDeliveryDiscounted(
+          clientProduct.variantId,
+          responsePrintful,
+          discountCode
+        );
+
+        const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
+          clientProduct.variantId,
+          responsePrintful
+        );
+
+        const priceWithDeliveryWithDiscount = priceAlgorithm.getPriceWithDeliveryDiscounted(
+          clientProduct.variantId,
+          responsePrintful
+        );
+
         if (
-          priceWithDelivery?.netPrice !==
+          priceWithDeliveryWithDiscount?.netPrice !==
           checkoutShownPrices.netPriceWithDelivery
         ) {
           console.log("❌ Prices coming from browser are wrong");
-          return res.json({ error: "❌ Prices coming from browser are wrong" });
+          res.status(406);
+          res.json({ error: "❌ Prices coming from browser are wrong" });
         } else {
           console.log("💰✅ Prices coming from browser are correct");
         }
@@ -94,7 +104,7 @@ export default async (req, res) => {
         });
 
         const price = await stripe.prices.create({
-          unit_amount: priceWithoutDelivery.netPrice * 100, //TODO big.js
+          unit_amount: priceWithoutDeliveryDiscounted.netPrice * 100,
           currency: "czk",
           product: product.id,
         });

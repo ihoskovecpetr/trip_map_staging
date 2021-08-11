@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { string, bool, number, func, node } from "prop-types";
 import styled from "styled-components";
 
+import { color } from "utils";
 import UnderlineLoader from "components/UnderlineLoader";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
@@ -71,6 +72,7 @@ function NextTabBtn({
 
 const TextWrap = styled.div`
   transform: translateX(0);
+  color: ${color("primary")};
 `;
 
 const styles = {
@@ -83,7 +85,7 @@ const styles = {
   },
   button: {
     backgroundColor: "cta_color",
-    color: "white",
+    // color: "white",
     padding: "10px",
     textAlign: "center",
     cursor: "pointer",

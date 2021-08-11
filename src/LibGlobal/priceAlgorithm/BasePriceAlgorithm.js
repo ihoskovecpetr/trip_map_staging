@@ -30,6 +30,12 @@ module.exports = class BasePriceAlgorithm {
     return Number(targetValue);
   }
 
+  times(base, n) {
+    const initialValue = new Big(base);
+
+    return Number(initialValue.times(n));
+  }
+
   // @see https://stackoverflow.com/a/11832950
   round(value, precision = this.roundingPrecision) {
     const precisionMultiple = Math.pow(10, precision);
