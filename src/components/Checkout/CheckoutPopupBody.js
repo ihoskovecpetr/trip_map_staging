@@ -195,6 +195,7 @@ const Card = styled.div`
   overflow: scroll;
   text-transform: unset;
   border-radius: 5px;
+  cursor: default;
 `;
 
 const HeadingContainer = styled.div`
@@ -232,6 +233,7 @@ const ImageStepsContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 15px;
+  pointer-events: none;
 
   ${mobile`
     flex-direction: column;
@@ -261,6 +263,8 @@ const TeaserImageWrap = styled.div`
   height: 120px;
   display: flex;
   align-items: flex-end;
+  cursor: pointer !important;
+  pointer-events: auto;
 
   ${mobile`
     height: 150px;
