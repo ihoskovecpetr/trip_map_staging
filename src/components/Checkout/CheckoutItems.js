@@ -1,15 +1,14 @@
 /** @jsx jsx */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
-import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import { useDispatch } from "react-redux";
 
 import { color, fontSize, fontWeight } from "utils";
 import { getVariantObject } from "LibGlobal/getVariantObject";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
-import { checkDiscountCode } from "LibGlobal/checkDiscountCode";
+import { isDiscountCodeValid } from "LibGlobal/isDiscountCodeValid";
 import { getDiscountPercentage } from "LibGlobal/getDiscountPercentage";
 
 import {
@@ -28,8 +27,12 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const discount = useDiscountSelector();
   const discountPercentage = getDiscountPercentage(discount.code);
-
+  const [discountInputOpen, setDiscountInputOpen] = useState(false);
   const [checkingCode, setCheckingCode] = useState(false);
+
+  useEffect(() => {
+    setDiscountInputOpen(discount.code ? true : false);
+  }, []);
 
   const productDescription = getVariantObject(productRedux.variantId)
     ?.frameName;
@@ -39,43 +42,44 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
 
   const priceAlgorithm = getPriceAlgorithm();
 
-  const priceWithoutDelivery = priceAlgorithm.getPriceWithoutDelivery(
-    productRedux.variantId,
-    dataPrintful
-  );
-
-  const priceWithoutDeliveryDiscounted = priceAlgorithm.getPriceWithoutDeliveryDiscounted(
-    productRedux.variantId,
-    dataPrintful,
-    discount.code
-  );
-
   const priceOfDelivery = priceAlgorithm.getPriceOfDelivery(
     productRedux.variantId,
     dataPrintful
   );
 
-  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-    productRedux.variantId,
-    dataPrintful
-  );
+  const priceWithDelivery =
+    dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
+      .netPrice ?? 0;
 
-  const priceWithDeliveryAndDiscount = priceAlgorithm.getPriceWithDeliveryDiscounted(
-    productRedux.variantId,
-    dataPrintful
-    // product
+  const priceDiscounted = priceAlgorithm.getDiscountedPrice(
+    priceWithDelivery,
+    discount.code
   );
-
-  console.log({ priceWithDeliveryAndDiscount });
 
   const typingDiscountCode = (e) => {
     setCheckingCode(true);
     dispatch(setDiscountCode(e.target.value));
-    dispatch(setDiscountCodeAccepted(checkDiscountCode(e.target.value)));
+    dispatch(setDiscountCodeAccepted(isDiscountCodeValid(e.target.value)));
 
     setTimeout(() => {
       setCheckingCode(false);
     }, 1000);
+  };
+
+  const changeDiscountInput = (e) => {
+    setDiscountInputOpen(e.target.checked);
+
+    if (!e.target.checked) {
+      dispatch(setDiscountCode(""));
+    }
+  };
+
+  const focusOnInput = (e) => {
+    console.log("FOcusL ", e);
+
+    const input = document.getElementById("cupon_input");
+
+    input.placeholder = "";
   };
 
   return (
@@ -85,21 +89,21 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
         <LineTextContainer>
           <BoldText>{`${productDescription} ${productRedux.sizeObject.code}`}</BoldText>
           <span>
-            <GreyText>{`${mapTitles?.heading?.text} ${mapTitles?.subtitle?.text}`}</GreyText>
-            <GreyText>{`${productRedux.materialDesc}`}</GreyText>
-            <GreyText>{`${activeLayoutNameRedux} ${activeMapStyleName}`}</GreyText>
+            <RegularText>{`${mapTitles?.heading?.text} ${mapTitles?.subtitle?.text}`}</RegularText>
+            <RegularText>{`${productRedux.materialDesc}`}</RegularText>
+            <RegularText>{`${activeLayoutNameRedux} layout, ${activeMapStyleName} styl`}</RegularText>
           </span>
         </LineTextContainer>
         <StyledPriceSpan>
           <StyledSpan isCrossed={discount.codeAccepted && !checkingCode}>
-            {priceWithoutDelivery.netPrice
-              ? getFormattedPrice(priceWithoutDelivery.netPrice)
+            {priceWithDelivery
+              ? getFormattedPrice(priceWithDelivery)
               : "ZJIŠTUJI..."}
           </StyledSpan>
           <span>
             {discount.codeAccepted &&
               !checkingCode &&
-              getFormattedPrice(priceWithoutDeliveryDiscounted.netPrice)}
+              getFormattedPrice(priceDiscounted.netPrice)}
           </span>
         </StyledPriceSpan>
       </CheckoutLine>
@@ -112,7 +116,7 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
         <LineTextContainer>
           <BoldText>{`Doprava`}</BoldText>
 
-          <GreyText>{`Doručení proběhne ${dataPrintfulVariant?.shipping.minDeliveryDays} - ${dataPrintfulVariant?.shipping.maxDeliveryDays} dní od zaplacení`}</GreyText>
+          <RegularText>{`Doručení proběhne ${dataPrintfulVariant?.shipping.minDeliveryDays} - ${dataPrintfulVariant?.shipping.maxDeliveryDays} dnů po zaplacení`}</RegularText>
         </LineTextContainer>
         <StyledPriceSpan>
           {getFormattedPrice(priceOfDelivery.netPrice)}
@@ -120,36 +124,57 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
       </CheckoutLine>
       <NewLine />
       <NewLine />
+
       <CheckoutLine>
         <LineTextContainer>
-          <BoldText>{`Slevový kupon`}</BoldText>
+          <BoldText>
+            {`Mám slevový kód? `}
+            <input
+              type="checkbox"
+              checked={discountInputOpen}
+              onChange={changeDiscountInput}
+            />
+          </BoldText>
         </LineTextContainer>
-        <StyledPriceSpan>
-          <span>
-            {checkingCode ? "... " : discount.codeAccepted ? "✅ " : "❌ "}
-            <StyledInput value={discount.code} onChange={typingDiscountCode} />
-          </span>
-        </StyledPriceSpan>
+        <StyledDiscountCode>
+          {discountInputOpen && (
+            <span>
+              {checkingCode ? "... " : discount.codeAccepted ? "✅ " : "❌ "}
+              <StyledInput
+                id="cupon_input"
+                value={discount.code}
+                onChange={typingDiscountCode}
+                placeholder="VÁŠ KÓD"
+                onFocus={focusOnInput}
+              />
+            </span>
+          )}
+        </StyledDiscountCode>
       </CheckoutLine>
 
       <NewLine />
 
       <CheckoutLine>
         <LineTextContainer>
-          <BoldText isCrossed={discount.codeAccepted}>{`Celkem`}</BoldText>
-          {discount.codeAccepted && (
-            <BoldText>{`Celkem po slevě ${discountPercentage} %`}</BoldText>
+          <BoldText
+            isCrossed={discount.codeAccepted && !checkingCode}
+            isLarge
+          >{`Celkem`}</BoldText>
+          {discount.codeAccepted && !checkingCode && (
+            <BoldText
+              isLarge
+            >{`Celkem po slevě ${discountPercentage}%`}</BoldText>
           )}
-          <GreyText>{`Celková cena včetně dopravy a zpracování`}</GreyText>
+          <RegularText>{`Celková cena včetně dopravy a zpracování`}</RegularText>
         </LineTextContainer>
-        <StyledPriceSpan>
+        <StyledPriceSpan isLargePrice>
           <StyledSpan isCrossed={discount.codeAccepted && !checkingCode}>
-            {getFormattedPrice(priceWithDelivery.netPrice)}
+            {getFormattedPrice(priceWithDelivery)}
           </StyledSpan>
           <span>
             {discount.codeAccepted &&
               !checkingCode &&
-              getFormattedPrice(priceWithDeliveryAndDiscount.netPrice)}
+              getFormattedPrice(priceDiscounted.netPrice)}
           </span>
         </StyledPriceSpan>
       </CheckoutLine>
@@ -171,16 +196,10 @@ const CheckoutLine = styled.span`
   justify-content: space-between;
 `;
 
-const ImageContainer = styled.span`
-  flex-grow: 1;
-  flex-basis: 50%;
-  display: flex;
-  align-items: center;
-`;
-
 const StyledSpan = styled.span`
   text-decoration: ${({ isCrossed }) => (isCrossed ? "line-through" : "unset")};
   font-weight: ${({ isCrossed }) => isCrossed && fontWeight("regular")};
+  color: ${({ isCrossed }) => (isCrossed ? color("muted") : "unset")};
 `;
 
 const LineTextContainer = styled.span`
@@ -194,24 +213,35 @@ const LineTextContainer = styled.span`
 const BoldText = styled.p`
   display: inline-block;
   margin: 0;
-  font-size: ${fontSize("sm")};
+  font-size: ${({ isLarge }) => (isLarge ? fontSize("md") : fontSize("sm"))};
+  font-weight: ${fontWeight("bold")};
   text-align: left;
   text-decoration: ${({ isCrossed }) => (isCrossed ? "line-through" : "unset")};
+  color: ${({ isCrossed }) => (isCrossed ? color("muted") : "unset")};
 `;
 
-const GreyText = styled.p`
-  color: ${color("muted")};
+const RegularText = styled.p`
+  font-size: ${fontSize("xxs")};
+  font-weight: ${fontWeight("superLight")};
+  text-align: left;
   margin: 0;
-  line-height: 100%;
+  line-height: 1.2;
   width: 100%;
   word-wrap: break-word;
-  font-size: ${fontSize("xs")};
-  text-align: left;
 `;
 
 const StyledPriceSpan = styled.span`
-  font-size: ${({ isLargePrice }) => (isLargePrice ? "1rem" : "0.8rem")};
-  font-weight: 600;
+  font-size: ${({ isLargePrice }) =>
+    isLargePrice ? fontSize("md") : fontSize("sm")};
+  font-weight: ${fontWeight("bold")};
+  text-align: right;
+  flex-grow: 1;
+  flex-basis: 35%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledDiscountCode = styled.span`
   text-align: right;
   flex-grow: 1;
   flex-basis: 50%;
@@ -220,8 +250,8 @@ const StyledPriceSpan = styled.span`
 `;
 
 const NewLine = styled.div`
-  height: 0.05rem;
-  background-color: ${color("whitish_paper_blue")};
+  height: 0.03rem;
+  background-color: ${color("muted")};
   width: 100%;
   margin-bottom: 2px;
 `;

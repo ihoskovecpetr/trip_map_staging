@@ -1,6 +1,6 @@
 import { VALID_DISCOUNT_CODES } from "../constants/constants";
 
-export const checkDiscountCode = (checkedCode) => {
+export const isDiscountCodeValid = (checkedCode) => {
   const foundCode = VALID_DISCOUNT_CODES.find(
     ({ code }) => code === checkedCode
   );

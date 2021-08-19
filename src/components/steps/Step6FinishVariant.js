@@ -40,14 +40,14 @@ export default function Step6FinishVariant() {
   const basePriceAlgorithm = getBasePriceAlgorithm();
 
   const setNewFrame = (variantId, shippingCode) => {
+    const priceWithDelivery =
+      dataPrintful?.[variantId]?.priceWithDeliveryAndProfit.netPrice ?? 0;
+
     dispatch(
       setProductAction({
         variantId: variantId,
-        price: dataPrintful[variantId]?.price,
-        priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
-          variantId,
-          dataPrintful
-        ).netPrice,
+        // price: dataPrintful[variantId]?.price,
+        priceWithDelivery: priceWithDelivery,
         shippingCode,
       })
     );
@@ -66,6 +66,10 @@ export default function Step6FinishVariant() {
   const variantObjectNoFrame = variantsPrintfulForSize.find(
     (variant) => variant.frameName === FRAME_OPTION_NAMES.NO_FRAME
   );
+
+  // const priceWithDeliveryNoFrame =
+  //   dataPrintful?.[variantObjectNoFrame.id]?.priceWithDeliveryAndProfit
+  //     .netPrice;
 
   return (
     <div sx={styles.container}>
@@ -100,14 +104,10 @@ export default function Step6FinishVariant() {
                   {`+ 
                   ${getFormattedPrice(
                     basePriceAlgorithm.subtract([
-                      priceAlgorithm.getPriceWithoutDelivery(
-                        variantId,
-                        dataPrintful
-                      ).netPrice,
-                      priceAlgorithm.getPriceWithoutDelivery(
-                        variantObjectNoFrame.id,
-                        dataPrintful
-                      ).netPrice,
+                      dataPrintful?.[variantId]?.priceWithDeliveryAndProfit
+                        .netPrice ?? 0,
+                      dataPrintful?.[variantObjectNoFrame.id]
+                        ?.priceWithDeliveryAndProfit.netPrice ?? 0,
                     ])
                   )}`}
                 </StyledPriceP>

@@ -6,6 +6,7 @@ import { IoIosCheckmarkCircle, IoIosCloseCircle } from "react-icons/io";
 import PatternBG from "assets/patternBG.png";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
+import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
 import ProductFramed from "assets/packages/SanFrancisco_black.png";
 import ProductNoFrame from "assets/packages/Iceland_green.png";
@@ -100,20 +101,11 @@ export default function PackagesOptions() {
               <PackageCard
                 data={packageData}
                 key={packageData.name}
-                priceFresh={`${dataPrintful[packageData.variantId]?.currency} ${
-                  priceAlgorithm.getPriceWithoutDelivery(
-                    packageData.variantId,
-                    dataPrintful
-                  ).netPrice
-                }`}
-                deliveryPrice={`${
-                  dataPrintful[packageData.variantId]?.shipping.currency
-                } ${
-                  priceAlgorithm.getPriceOfDelivery(
-                    packageData.variantId,
-                    dataPrintful
-                  ).netPrice
-                }`}
+                priceFresh={`${getFormattedPrice(
+                  dataPrintful?.[packageData.variantId]
+                    ?.priceWithDeliveryAndProfit.netPrice ?? 0
+                )}`}
+                deliveryPrice={`doprava zdarma`}
               />
             ))}
         </Flex>

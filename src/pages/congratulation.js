@@ -14,13 +14,10 @@ export default function CongratulationPage() {
       <StickyProvider>
         <Layout>
           <SEO title="Trip Map" />
-          {/* <LandingSection /> */}
         </Layout>
 
-        {/* <IndexContainer /> */}
         <Layout withFooter invertHeaderColor>
           <Congratulation />
-          {/* <SecurePayment /> */}
         </Layout>
       </StickyProvider>
     </ThemeProvider>

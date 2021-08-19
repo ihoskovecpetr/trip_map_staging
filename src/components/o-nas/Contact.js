@@ -11,7 +11,20 @@ export default function Contact({ name }) {
     <Container>
       <div>
         <h1>{name}</h1>
-        Kontantní informace čekají na doplnění
+        <ul>
+          <li>
+            adresa: <b>Riegrova 237, 53862 Hrochův Týnec</b>
+          </li>
+          <li>
+            e-mail: <b>ihoskovecpetr@gmail.com</b>
+          </li>
+          <li>
+            telefon: <b>+420 704 206 828</b>
+          </li>
+          <li>
+            IČO: <b>07271387</b>
+          </li>
+        </ul>
       </div>
     </Container>
   );

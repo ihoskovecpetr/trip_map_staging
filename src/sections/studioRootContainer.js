@@ -270,20 +270,6 @@ export default function StudioRootContainer() {
     setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
   }, []);
 
-  // useEffect(() => {
-  //   if (dataPrintful && dataPrintful[product.variantId]?.price) {
-  //     setProduct((prev) => ({
-  //       ...prev,
-  //       // price: response.data.finalResult[product.variantId].price,
-  //       priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
-  //         product.variantId,
-  //         dataPrintful
-  //       ).netPrice,
-  //     }));
-
-  //   }
-  // }, [JSON.stringify(mapTitles)]);
-
   useEffect(() => {
     mapTitlesRef.current = mapTitles;
   }, [JSON.stringify(mapTitles)]);

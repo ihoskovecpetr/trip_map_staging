@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { jsx } from "theme-ui";
 import { Container, Box } from "theme-ui";
-import TextFeature from "components/text-feature";
-import Image from "components/image";
+import axios from "axios";
 
+import TextFeatureCongratulation from "components/text-feature-congratulation";
+import Image from "components/image";
 import PaymentThumb from "assets/congratulation.png";
 import PaymentPattern from "assets/payment-pattern.png";
 
@@ -12,13 +13,16 @@ const data = {
   subTitle: "Informace na závěr",
   title: "Vaše mapa je na cestě",
   description:
-    "Platba proběhla úspěšně a v současnosti pracujeme na zhotovení výsledného produktu, pokud si nás přejete dále kontaktovat, použijte prosím sessionID pro identifikaci objednávky. Jménem společnosti TripMap Vám děkuji a přeji příjemný den.",
+    "Platba proběhla úspěšně a v současnosti pracujeme na zhotovení výsledného produktu. Potvrzení o platbě a shrnutí objednávky obdržíte do několika sekund na email zadaný v předchozím kroku. Pokud si nás přejete dále kontaktovat, použijte prosím sessionID pro identifikaci objednávky. Jménem společnosti TripMap Vám děkuji a přeji příjemný den.",
   btnName: "Learn More",
   btnURL: "#",
 };
 
-export default function Configuration() {
+export default function Congratulation() {
   const [sessionId, setSessionId] = useState(null);
+  const [isOrdered, setIsOrdered] = useState(false);
+  const [isOrdering, setIsOrdering] = useState(false);
+  const [isSessionMissing, setIsSessionMissing] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -26,6 +30,7 @@ export default function Configuration() {
     const sessionId = params.get("id");
     if (sessionId) {
       setSessionId(sessionId);
+    } else {
     }
   }, []);
 
@@ -37,14 +42,13 @@ export default function Configuration() {
           <Image src={PaymentThumb} alt={data.title} />
         </Box>
         <Box sx={styles.contentBox}>
-          <TextFeature
+          <TextFeatureCongratulation
             subTitle={data.subTitle}
             title={data.title}
             description={data.description}
             sessionId={sessionId}
-            // btnName={data.btnName}
-            // btnURL={data.btnURL}
           />
+          {!sessionId && "sessionId is missing"}
         </Box>
       </Container>
     </section>
@@ -53,29 +57,10 @@ export default function Configuration() {
 
 const styles = {
   bgOverlay: {
-    position: "absolute",
-    top: "80px",
-    right: 0,
-    height: "100%",
-    zIndex: -1,
-    width: [
-      "100%",
-      null,
-      null,
-      "calc(50% + 400px)",
-      "calc(50% + 480px)",
-      "calc(50% + 570px)",
-      null,
-      "calc(50% + 625px)",
-    ],
-    // backgroundImage: [null, `url(${PaymentPattern})`],
-    backgroundRepeat: `no-repeat`,
-    backgroundPosition: "top left",
-    backgroundSize: "cover",
+    marginTop: "90px",
   },
   containerBox: {
     display: "flex",
-    // alignItems: "flex-start",
     alignItems: "stretch",
     justifyContent: "space-between",
     flexWrap: ["wrap", null, null, "nowrap"],

@@ -5,7 +5,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import styled from "styled-components";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Lightbox from "react-image-lightbox";
 
 import CloseIcon from "@material-ui/icons/Close";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
@@ -19,13 +18,11 @@ import CheckoutItems from "./CheckoutItems";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import ImageUploadSteps from "./ImageUploadSteps";
 
-import { useProductSelector, useDiscountSelector } from "redux/order/reducer";
-
-// EUR account
-// const STRIPE_PUBLIC_KEY_LIVE =
-//   "pk_live_51IUQiOKQWovk2rIh0SfKkGNuHSE5J7VY6LCJaijjYh7lmjb64h8fmHcYmYoINNCNMTC5sxdsUkwnWIePd2z6vqPH00BzD2UrRm";
-// const STRIPE_PUBLIC_KEY_TEST =
-//   "pk_test_51IUQiOKQWovk2rIhec8u6qPLKq2TgWI9ZLLkC4jJGIfnV9RV3gi1I5Vk2wmZfRWGCIunxtJgRcBZC8wDBOIstdLL00zZVirE5R";
+import {
+  useProductSelector,
+  useDiscountSelector,
+  useTitlesSelector,
+} from "redux/order/reducer";
 
 const STRIPE_PUBLIC_KEY_LIVE =
   "pk_live_51JMXyHCVDm94CHWQ8qbje7TzCuvsKKEeqB8S0zwg8jQ8hWhU97jrGLCS5f0fP3Gn5OSu1SoVatJW3vd9mfHMtsek00RAujkQSI";
@@ -46,14 +43,12 @@ export default function CheckoutPopupBody({
 }) {
   const product = useProductSelector();
   const discount = useDiscountSelector();
+  const mapTitles = useTitlesSelector();
 
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
   });
-  const [designDisplayed, setDesignDisplayed] = useState(false);
-
-  console.log({ imageBase64Created });
 
   const { dataPrintful } = useGetDataPrintful([product.variantId]);
 
@@ -66,32 +61,13 @@ export default function CheckoutPopupBody({
     const asyncStripeInit = async () => {
       Stripe = await StripePromise;
     };
-
     const StripePromise = loadStripe(STRIPE_API_KEY);
-
     asyncStripeInit();
   }, []);
 
-  useEffect(() => {
-    if (imageBase64Created) {
-      setTimeout(() => {
-        setLightbox({
-          open: true,
-          activeSrc: imageBase64Created,
-        });
-        // setDesignDisplayed(true);
-      }, 1000);
-    }
-  }, [imageBase64Created]);
-
-  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-    product.variantId,
-    dataPrintful
-  );
-
-  const priceWithDeliveryAndDiscount = priceAlgorithm.getPriceWithDeliveryDiscounted(
-    product.variantId,
-    dataPrintful
+  const priceWithDeliveryAndDiscount = priceAlgorithm.getDiscountedPrice(
+    dataPrintful?.[product.variantId]?.priceWithDeliveryAndProfit.netPrice ?? 0,
+    discount.code
   );
 
   async function redirectToCheckout() {
@@ -102,6 +78,7 @@ export default function CheckoutPopupBody({
         netPriceWithDelivery: priceWithDeliveryAndDiscount.netPrice,
       },
       discountCode: discount.code,
+      mapTitles: mapTitles,
     });
 
     if (response?.data?.error) {
@@ -132,7 +109,7 @@ export default function CheckoutPopupBody({
         <TeaserImageWrap>
           <StyledImg
             id="img_screen_shot"
-            src={imageBase64Created} //imageBase64Created
+            src={imageBase64Created}
             onClick={(e) => {
               setLightbox({
                 open: true,
@@ -160,6 +137,8 @@ export default function CheckoutPopupBody({
             isUploadPending={isUploadPending}
             imageBase64Created={imageBase64Created}
             fileSizeMB={fileSizeMB}
+            lightbox={lightbox}
+            setLightbox={setLightbox}
           />
         </ImageStepsContainer>
       </HeadingContainer>
@@ -178,12 +157,6 @@ export default function CheckoutPopupBody({
           Adresa doručení & platba
         </NextTabBtn>
       </NextTabContainer>
-      {lightbox.open && (
-        <Lightbox
-          mainSrc={lightbox.activeSrc}
-          onCloseRequest={() => setLightbox({ open: false })}
-        />
-      )}
     </Card>
   );
 }
@@ -214,9 +187,11 @@ const StyledCloseIcon = styled(CloseIcon)`
   color: ${color("primary")};
   border-radius: 5px;
   border: 2px solid;
+  pointer-events: auto;
   cursor: pointer;
   margin-top: 15px;
   margin-left: 15px;
+  z-index: 100;
 
   ${mobile`
     position: absolute;
@@ -226,14 +201,12 @@ const StyledCloseIcon = styled(CloseIcon)`
 const ImageStepsContainer = styled.div`
   position: sticky;
   top: 0;
-  // width: 100%;
   color: white;
   z-index: 10;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin: 15px;
-  pointer-events: none;
 
   ${mobile`
     flex-direction: column;

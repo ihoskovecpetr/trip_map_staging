@@ -109,7 +109,6 @@ export default {
     congratulation: {
       overflow: "hidden",
       position: "relative",
-      pt: 10,
       height: [null, null, null, "95vh"],
     },
     faq: {

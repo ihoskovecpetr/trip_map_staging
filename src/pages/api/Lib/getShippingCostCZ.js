@@ -3,13 +3,9 @@ const Big = require("big.js");
 
 const { getCurrencyRateToCZK } = require("./getCurrencyRateToCZK");
 
-const {
-  TAXES_KOEFICIENT,
-  MARKUP_KOEFICIENT,
-  VARIANTS_PRINTFUL,
-} = require("../../../constants/constants");
+const { VARIANTS_PRINTFUL } = require("../../../constants/constants");
 
-const getShippingRateCZ = async (variantId) => {
+export const getShippingCostCZ = async (variantId) => {
   const axiosConfig = {
     headers: {
       Authorization: `Basic ${process.env.AUTH_KEY_PRINTFUL}`,
@@ -42,8 +38,8 @@ const getShippingRateCZ = async (variantId) => {
     currency: "EUR",
   });
 
-  const priceEUR = new Big(response.data.result[0].rate);
-  const priceCZK = priceEUR
+  const costPriceEUR = new Big(response.data.result[0].rate);
+  const costPriceCZK = costPriceEUR
     .times(exchangeRateCZKEUR)
     .div(10)
     .add(1)
@@ -57,13 +53,13 @@ const getShippingRateCZ = async (variantId) => {
 
   const constantVariantPrice = constantVariant?.shipping.price;
 
-  if (Number(constantVariantPrice) > Number(priceCZK)) {
+  if (Number(constantVariantPrice) > Number(costPriceCZK)) {
     console.log("✅ it is OK, shipping cost Printfull is in limit");
   } else {
     console.log(
       "❌ Btw. PROBLEM, shipping cost Printfull is too high",
       constantVariantPrice,
-      priceCZK,
+      costPriceCZK,
       variantId,
       { raw: response.data.result[0] }
     );
@@ -74,9 +70,6 @@ const getShippingRateCZ = async (variantId) => {
     rate: constantVariantPrice,
     currency: "CZK",
     variantId: variantId,
+    cost: costPriceCZK,
   };
-};
-
-module.exports = {
-  getShippingRateCZ,
 };

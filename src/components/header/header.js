@@ -12,15 +12,14 @@ import MobileDrawer from "./mobile-drawer";
 import menuItems from "./header.data";
 import { useIsMobile } from "Hooks/useIsMobile";
 
-export default function Header({ className, invertHeaderColor }) {
+export default function Header({ className }) {
   const { isMobile } = useIsMobile();
 
   return (
     <DrawerProvider>
       <header sx={styles.header} className={className} id="header">
         <Container sx={styles.container}>
-          <Logo src={isMobile && !invertHeaderColor ? LogoWhite : LogoBlack} />
-
+          <Logo src={LogoBlack} /> {/* isMobile ? LogoWhite */}
           <Flex as="nav" sx={styles.nav}>
             {/* {menuItems.map(({ path, label }, i) => {
               console.log({ hrsf: path });
@@ -46,7 +45,7 @@ export default function Header({ className, invertHeaderColor }) {
           >
             Get Started
           </Button> */}
-          <MobileDrawer invertHeaderColor={invertHeaderColor} />
+          <MobileDrawer />
         </Container>
       </header>
     </DrawerProvider>

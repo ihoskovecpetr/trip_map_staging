@@ -15,13 +15,15 @@ export default function ImageUploadSteps({
   isUploadPending,
   imageBase64Created,
   fileSizeMB,
+  lightbox,
+  setLightbox,
 }) {
   const [activeStep, setActiveStep] = useState(0);
 
-  const [lightbox, setLightbox] = useState({
-    open: false,
-    activeSrc: null,
-  });
+  // const [lightbox, setLightbox] = useState({
+  //   open: false,
+  //   activeSrc: null,
+  // });
   const [designDisplayed, setDesignDisplayed] = useState(false);
 
   useEffect(() => {
@@ -70,7 +72,9 @@ export default function ImageUploadSteps({
             <StyledStepLabel>
               <StepsText>
                 {`${
-                  imageBase64Created && designDisplayed
+                  !imageBase64Created
+                    ? "Čekám na design"
+                    : designDisplayed
                     ? "Design zobrazen"
                     : "Zobrazuji design"
                 }`}
@@ -89,7 +93,8 @@ export default function ImageUploadSteps({
                   ? `${isUploadPending ? "Ukládám " : "Uloženo "}`
                   : "Čekám na deisgn"}
                 {imageBase64Created && <UploadPercentageString />}
-                {imageBase64Created && `% / ${fileSizeMB && fileSizeMB + "MB"}`}
+                {imageBase64Created &&
+                  `%\u00A0/\u00A0${fileSizeMB && fileSizeMB + "MB"}`}
                 {imageBase64Created && isUploadPending && (
                   <WrapSpan>
                     <UnderlineLoader />
@@ -142,7 +147,7 @@ const StepsText = styled.p`
 
 const StyledStepLabel = styled(StepLabel)`
   .MuiStepIcon-active {
-    color: green !important;
+    color: ${color("primary")} !important;
     text {
       fill: white !important;
     }

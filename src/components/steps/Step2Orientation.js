@@ -118,7 +118,7 @@ const IconWrap = styled.div`
   cursor: ${({ active }) => !active && "pointer"};
 
   & > div {
-    color: rgba(0, 0, 0, 0.2);
+    color: ${color("muted")};
     box-shadow: 0 0 0 3px;
   }
 `;
@@ -127,6 +127,7 @@ const WideMock = styled.div`
   height: 30px;
   width: 50px;
   color: ${({ active }) => active && color("cta_color")};
+  background-color: ${color("muted")};
 `;
 
 const HighMock = styled.div`
@@ -134,6 +135,7 @@ const HighMock = styled.div`
   width: 30px;
   color: ${({ active }) => active && color("cta_color")};
   pointer-events: ${({ active }) => active && "none"};
+  background-color: ${color("muted")};
 `;
 
 const StyledDescriptionP = styled.p`

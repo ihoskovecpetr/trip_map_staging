@@ -12,7 +12,6 @@ import { VARIANTS_PRINTFUL } from "constants/constants";
 import { createUploadRequest } from "LibGlobal/createUploadRequest";
 import CheckoutPopupBody from "./CheckoutPopupBody";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
-import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useTitlesSelector } from "redux/order/reducer";
@@ -94,9 +93,9 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
         },
       });
 
-      const img = finalImgSrc;
-      const buffer = Buffer.from(img.substring(img.indexOf(",") + 1));
-
+      const buffer = Buffer.from(
+        finalImgSrc.substring(finalImgSrc.indexOf(",") + 1)
+      );
       setFileSizeMB(Number(buffer.length / 1e6).toPrecision(2));
 
       setImageBase64Created(finalImgSrc);
@@ -139,12 +138,9 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
     setAxiosCancelTokenSource(CancelToken.source());
   };
 
-  const priceAlgorithm = getPriceAlgorithm();
-
-  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-    productRedux.variantId,
-    dataPrintful
-  );
+  const priceWithDelivery =
+    dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
+      .netPrice ?? 0;
 
   return (
     <CheckoutWrap>
@@ -166,7 +162,7 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
               setBackdropOpen(true);
               lazyUploadImage();
             }}
-            price={priceWithDelivery.netPrice} //TODO add big.js
+            price={priceWithDelivery} //TODO add big.js
           >
             Shrnutí objednávky
           </NextTabBtn>

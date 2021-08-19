@@ -24,7 +24,7 @@ let geocoder = new MapboxGeocoder({
   placeholder: "Zadejte lokalitu",
 });
 
-export default function Step1Location({ map }) {
+export default function StepLocation({ map }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -35,7 +35,7 @@ export default function Step1Location({ map }) {
 
     geocoder.container.style.width = "100%";
 
-    document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
+    // document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
   }, []);
 
   useEffect(() => {

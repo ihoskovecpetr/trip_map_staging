@@ -49,7 +49,7 @@ export default function PriceCard({
                 {priceFresh}
                 {/* <sub>mo</sub> */}
               </div>
-              <div className="deliveryPrice">+ {deliveryPrice} doprava</div>
+              <div className="deliveryPrice">{deliveryPrice}</div>
             </Text>
           )}
         </Flex>

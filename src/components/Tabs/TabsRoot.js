@@ -7,11 +7,11 @@ import Backdrop from "@material-ui/core/Backdrop";
 
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useElementDimensions } from "Hooks/useElementDimensions";
-import { color } from "utils";
+import { color, fontWeight } from "utils";
 import { ORIENTATIONS } from "@constants";
 import Stepper from "./Stepper";
 
-import Step1Location from "../steps/Step1Location";
+import Step1Location from "../steps/StepLocation";
 import Step2Orientation from "../steps/Step2Orientation";
 import Step3Layout from "../steps/Step3Layout";
 import Step3BLayoutColorSwitch from "../steps/Step3BLayoutColorSwitch";
@@ -22,7 +22,6 @@ import Step7MapDefinition from "../steps/Step7MapDefinition";
 import Step8Checkout from "../steps/Step8Checkout";
 import StepTitles from "../steps/StepTitles";
 
-import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
@@ -30,8 +29,6 @@ import {
   useProductSelector,
   useActiveMapStyleSelector,
 } from "redux/order/reducer";
-
-const priceAlgorithm = getPriceAlgorithm();
 
 export default function TabsRootNew({ map }) {
   const classes = useStyles();
@@ -115,11 +112,6 @@ export default function TabsRootNew({ map }) {
     }
   }, [productRedux]);
 
-  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-    productRedux.variantId,
-    dataPrintful
-  );
-
   const isWideOrientation =
     productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
 
@@ -137,7 +129,13 @@ export default function TabsRootNew({ map }) {
       {/* <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}> */}
 
       <PriceWrap>
-        <Price>celkem: {getFormattedPrice(priceWithDelivery.netPrice)}</Price>
+        <Price>
+          {`celkem:
+          ${getFormattedPrice(
+            dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
+              .netPrice ?? 0
+          )}`}
+        </Price>
       </PriceWrap>
 
       <TabSegmentWrap
@@ -246,6 +244,8 @@ const Price = styled.div`
   color: white;
   padding-left: 0.5rem;
   top: -30px;
+  color: ${color("cta_color")};
+  font-Weight ${fontWeight("bold")}
 `;
 
 const useStyles = makeStyles((theme) => ({

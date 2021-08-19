@@ -1,7 +1,15 @@
 const axios = require("axios");
-const { getShippingRateCZ } = require("./getShippingRateCZ");
+const { getShippingCostCZ } = require("./getShippingCostCZ");
 const { getCurrencyRateToCZK } = require("./getCurrencyRateToCZK");
+const {
+  getPriceAlgorithm,
+} = require("LibGlobal/priceAlgorithm/getPriceAlgorithm");
 const Big = require("big.js");
+
+const {
+  TAX_PERCENTAGE,
+  GROSS_PROFIT_PERCENTAGE,
+} = require("constants/constants.js");
 
 const fetchAndTransformDataPrintful = async (variantIdsArr, res) => {
   try {
@@ -12,27 +20,29 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, res) => {
       },
     };
 
-    const promises = variantIdsArr.map((variantId) =>
+    const priceAlgorithm = getPriceAlgorithm();
+
+    const promisesProductCost = variantIdsArr.map((variantId) =>
       axios.get(
         `https://api.printful.com/products/variant/${variantId}`,
         axiosConfig
       )
     );
 
-    const promisesShipping = variantIdsArr.map((variantId) =>
-      getShippingRateCZ(variantId)
+    const promisesShippingCost = variantIdsArr.map((variantId) =>
+      getShippingCostCZ(variantId)
     ); //TODO: is there way how to query all in one request?
 
-    const responses = await Promise.all(promises);
-    const responsesShip = await Promise.all(promisesShipping);
+    const responsesProductCost = await Promise.all(promisesProductCost);
+    const responsesShippingCost = await Promise.all(promisesShippingCost);
 
     const exchangeRateUSDtoCZK = await getCurrencyRateToCZK({
       currency: "USD",
     });
 
-    const finalResult = responses.reduce((acc, cur) => {
-      const priceUSD = new Big(cur.data.result.variant.price);
-      const priceCZK = priceUSD
+    const finalResult = responsesProductCost.reduce((acc, cur) => {
+      const productCostUSD = new Big(cur.data.result.variant.price);
+      const productCostCZK = productCostUSD
         .times(exchangeRateUSDtoCZK)
         .div(10)
         .add(1)
@@ -40,7 +50,7 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, res) => {
         .times(10)
         .toString();
 
-      const shippingVariantObj = responsesShip.find(
+      const shippingVariantObj = responsesShippingCost.find(
         (item) => item.variantId === cur.data.result.variant.id
       );
 
@@ -49,10 +59,23 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, res) => {
           ({ region }) => region === "EU"
         ).status === "in_stock";
 
+      const costWithShipping = priceAlgorithm.add([
+        productCostCZK,
+        shippingVariantObj.cost,
+      ]);
+
+      const priceWithDeliveryAndProfit = priceAlgorithm.getPrice(
+        costWithShipping,
+        TAX_PERCENTAGE,
+        GROSS_PROFIT_PERCENTAGE
+      );
+
       return {
         ...acc,
         [cur.data.result.variant.id]: {
-          price: priceCZK,
+          price: productCostCZK,
+          costProductWithDelivery: costWithShipping,
+          priceWithDeliveryAndProfit: priceWithDeliveryAndProfit,
           url: cur.data.result.variant.image,
           currency: "CZK",
           availableEU: availableEU,
@@ -60,6 +83,7 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, res) => {
         },
       };
     }, {});
+
     return finalResult;
   } catch (e) {
     res.status(420).json({

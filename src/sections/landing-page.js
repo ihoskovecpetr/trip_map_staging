@@ -239,10 +239,10 @@ const styles = {
     // display: ["none", null, "block"],
     display: "block",
     cursor: "default",
-    backgroundColor: ["primary", null, null, "unset"],
+    backgroundColor: [null, null, "unset"], //"primary",
     display: "flex",
     alignItems: "flex-start",
-    paddingTop: "15px",
+    paddingTop: ["65px", null, null, 0],
   },
   contentBox: {
     width: ["100%", 450, 350, 350, 500, 570],
@@ -287,12 +287,14 @@ const styles = {
   ctaButton: {
     pointerEvents: "all",
     backgroundColor: "primary",
+    color: "white",
     fontSize: "1rem !important",
     letterSpacing: "1.5px",
     width: "90%",
     borderRadius: "10px",
-    // border: "0px",
-    color: "white",
+    // borderColor: "black",
+    // minHeight: "2rem",
+    // paddingTop: "0.75rem",
   },
 
   ctaLink: {

@@ -17,11 +17,11 @@ const orderInitialState = {
     price: null,
     currency: "CZK",
     sizeObject: SIZES.find(
-      (size) => size.code === VARIANTS_PRINTFUL[4].sizeName
+      (size) => size.code === VARIANTS_PRINTFUL[3].sizeName
     ),
-    variantId: VARIANTS_PRINTFUL[4].id,
+    variantId: VARIANTS_PRINTFUL[3].id,
     materialDesc: "Matný vylepšený papír",
-    shippingCode: VARIANTS_PRINTFUL[4].shipping.codeCZ,
+    shippingCode: VARIANTS_PRINTFUL[3].shipping.codeCZ,
     isLayoutColorSwitched: false,
     densityConstant: 2,
   },
@@ -42,7 +42,6 @@ const orderInitialState = {
 const order = produce((state = orderInitialState, { type, data }) => {
   switch (type) {
     case HYDRATE:
-      console.log("Hydrate_window: ", { window: typeof window });
       if (typeof window !== "undefined") {
         const storedPopupState = localStorage.getItem("seenPopup");
 

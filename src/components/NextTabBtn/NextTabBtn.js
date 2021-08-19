@@ -73,6 +73,7 @@ function NextTabBtn({
 const TextWrap = styled.div`
   transform: translateX(0);
   color: ${color("primary")};
+  display: inline-block;
 `;
 
 const styles = {

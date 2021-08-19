@@ -2,7 +2,7 @@ const IS_CLIENT = typeof window !== "undefined";
 
 const RUNTIME_PIXEL_RATIO = 2;
 
-const PIXEL_RATIO_SM = 1.7;
+const PIXEL_RATIO_SM = 1.7; // 0.3; // 1.7;
 const PIXEL_RATIO_MD = 2.8;
 const PIXEL_RATIO_LG = 4.8;
 
@@ -120,9 +120,14 @@ const SIZES = [
   },
 ];
 
-const SHIPMENT_RATES = {
+const SHIPMENT_CODES = {
   LARGE_FRAMED_CZK: "shr_1JMby5CVDm94CHWQubmAtcSu",
   SMALL_FRAMED_OR_NO_FRAME_CZK: "shr_1JMc02CVDm94CHWQejExsrb9",
+};
+
+const SHIPMENT_PRICES = {
+  LARGE_CZK: 800,
+  SMALL_CZK: 250,
 };
 
 const VARIANTS_PRINTFUL = [
@@ -135,8 +140,8 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_SM,
     shipping: {
-      codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+      price: SHIPMENT_PRICES.SMALL_CZK,
       currency: "CZK",
     },
   },
@@ -149,8 +154,8 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_SM,
     shipping: {
-      codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+      price: SHIPMENT_PRICES.SMALL_CZK,
       currency: "CZK",
     },
   },
@@ -163,8 +168,8 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: PIXEL_RATIO_SM,
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     shipping: {
-      codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+      price: SHIPMENT_PRICES.SMALL_CZK,
       currency: "CZK",
     },
   },
@@ -178,8 +183,8 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
-      codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+      price: SHIPMENT_PRICES.SMALL_CZK,
       currency: "CZK",
     },
   },
@@ -192,8 +197,8 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
-      codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 799,
+      codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
+      price: SHIPMENT_PRICES.LARGE_CZK,
       currency: "CZK",
     },
   },
@@ -206,8 +211,8 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
-      codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 799,
+      codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
+      price: SHIPMENT_PRICES.LARGE_CZK,
       currency: "CZK",
     },
   },
@@ -221,8 +226,8 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
-      codeCZ: SHIPMENT_RATES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: 239,
+      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+      price: SHIPMENT_PRICES.SMALL_CZK,
       currency: "CZK",
     },
   },
@@ -235,8 +240,8 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
-      codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 799,
+      codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
+      price: SHIPMENT_PRICES.LARGE_CZK,
       currency: "CZK",
     },
   },
@@ -249,8 +254,8 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
-      codeCZ: SHIPMENT_RATES.LARGE_FRAMED_CZK,
-      price: 799,
+      codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
+      price: SHIPMENT_PRICES.LARGE_CZK,
       currency: "CZK",
     },
   },
@@ -274,17 +279,6 @@ const PADDING_COLOR_OPTIONS = {
 
 const LAYOUTS = [
   {
-    name: LAYOUT_STYLE_NAMES.PURE,
-    roundPdng: null,
-    paddingColor: PADDING_COLOR_OPTIONS.white,
-    bottomBannerHeight: null,
-    isBannerBlur: false,
-    text: {
-      isVisible: false,
-      align: "center",
-    },
-  },
-  {
     name: LAYOUT_STYLE_NAMES.ISLAND_BOX,
     roundPdng: TRANSPARENT_PADDING,
     paddingColor: PADDING_COLOR_OPTIONS.transparent,
@@ -295,6 +289,18 @@ const LAYOUTS = [
       align: "center",
     },
   },
+  {
+    name: LAYOUT_STYLE_NAMES.DOUBLE_BORDER,
+    roundPdng: LAY_DOUBLE_FRAME_PDNG,
+    paddingColor: PADDING_COLOR_OPTIONS.white,
+    bottomBannerHeight: BLURRED_AREA_HEIGHT,
+    isBannerBlur: true,
+    text: {
+      isVisible: true,
+      align: "center",
+    },
+  },
+
   {
     name: LAYOUT_STYLE_NAMES.BOTTOM_BLUR,
     roundPdng: null,
@@ -328,25 +334,14 @@ const LAYOUTS = [
       align: "center",
     },
   },
-  // {
-  //   name: LAYOUT_STYLE_NAMES.BORDER_BLUR,
-  //   roundPdng: LAY_SINGLE_FRAME_PDNG,
-  //   paddingColor: "white",
-  //   bottomBannerHeight: BLURRED_AREA_HEIGHT,
-  //   isBannerBlur: true,
-  //   text: {
-  //     isVisible: true,
-  //     align: "center",
-  //   },
-  // },
   {
-    name: LAYOUT_STYLE_NAMES.DOUBLE_BORDER,
-    roundPdng: LAY_DOUBLE_FRAME_PDNG,
+    name: LAYOUT_STYLE_NAMES.PURE,
+    roundPdng: null,
     paddingColor: PADDING_COLOR_OPTIONS.white,
-    bottomBannerHeight: BLURRED_AREA_HEIGHT,
-    isBannerBlur: true,
+    bottomBannerHeight: null,
+    isBannerBlur: false,
     text: {
-      isVisible: true,
+      isVisible: false,
       align: "center",
     },
   },

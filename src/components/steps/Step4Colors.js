@@ -107,8 +107,8 @@ export default function Step4Colors() {
 
 const styles = {
   mapColorsItem: {
-    width: ["23%", null, "23%", "18%"],
-    margin: ["1%", null, "1%", "1%"],
+    width: ["23%", "18%", null, "23%", "18%"],
+    margin: ["1%", "1%", null, "1%", "1%"],
     padding: "0px",
     display: "flex",
     flexDirection: "column",

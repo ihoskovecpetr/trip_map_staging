@@ -14,6 +14,17 @@ const faqs = [
       </div>
     ),
   },
+  {
+    title: "Jakou příjde mapa zabalena?",
+    contents: (
+      <div>
+        Způsob jakým bude finální produkt zabalen se liší dle varianty kterou si
+        vyberete. Varianty s rámem příjdou zabaleny ve velikém boxu plnně
+        zakryty. Varianta bez rámu příjde v tubusu s trojuhelníkovým průřezem.
+        Mapa je smotaná a obalená v ochranném papíru.
+      </div>
+    ),
+  },
 ];
 export default function Faq() {
   return (

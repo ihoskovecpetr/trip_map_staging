@@ -4,7 +4,7 @@ const Big = require("big.js");
 
 const Order = require("../../mongoModels/order.js");
 const { getIsProduction } = require("../../LibGlobal/getIsProduction");
-const { checkDiscountCode } = require("../../LibGlobal/checkDiscountCode");
+const { isDiscountCodeValid } = require("../../LibGlobal/isDiscountCodeValid");
 
 const {
   getPriceAlgorithm,
@@ -60,38 +60,30 @@ export default async (req, res) => {
           imageObj,
           checkoutShownPrices,
           discountCode,
+          mapTitles,
         } = req.body;
 
         const responsePrintful = await fetchAndTransformDataPrintful([
           clientProduct.variantId,
         ]);
 
-        const priceWithoutDelivery = priceAlgorithm.getPriceWithoutDelivery(
-          clientProduct.variantId,
-          responsePrintful
-        );
+        const netPriceWithDeliv =
+          responsePrintful?.[clientProduct.variantId]
+            ?.priceWithDeliveryAndProfit.netPrice;
 
-        const priceWithoutDeliveryDiscounted = priceAlgorithm.getPriceWithoutDeliveryDiscounted(
-          clientProduct.variantId,
-          responsePrintful,
+        const priceDiscounted = priceAlgorithm.getDiscountedPrice(
+          netPriceWithDeliv,
           discountCode
         );
 
-        const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-          clientProduct.variantId,
-          responsePrintful
-        );
-
-        const priceWithDeliveryWithDiscount = priceAlgorithm.getPriceWithDeliveryDiscounted(
-          clientProduct.variantId,
-          responsePrintful
-        );
-
         if (
-          priceWithDeliveryWithDiscount?.netPrice !==
-          checkoutShownPrices.netPriceWithDelivery
+          priceDiscounted?.netPrice !== checkoutShownPrices.netPriceWithDelivery
         ) {
-          console.log("❌ Prices coming from browser are wrong");
+          console.log(
+            "❌ Prices coming from browser are wrong",
+            priceDiscounted?.netPrice,
+            checkoutShownPrices.netPriceWithDelivery
+          );
           res.status(406);
           res.json({ error: "❌ Prices coming from browser are wrong" });
         } else {
@@ -104,7 +96,7 @@ export default async (req, res) => {
         });
 
         const price = await stripe.prices.create({
-          unit_amount: priceWithoutDeliveryDiscounted.netPrice * 100,
+          unit_amount: priceDiscounted.netPrice * 100,
           currency: "czk",
           product: product.id,
         });
@@ -118,18 +110,18 @@ export default async (req, res) => {
           : "http://localhost:3000";
 
         const session = await stripe.checkout.sessions.create({
-          cancel_url: BASE_DOMAIN + "/studio", //TODO get local address for redirect
+          cancel_url: BASE_DOMAIN + "/studio",
           success_url:
-            BASE_DOMAIN + "/api/checkout-to-printful?id={CHECKOUT_SESSION_ID}", //TODO get local address for redirect
+            BASE_DOMAIN + "/api/checkout-success?id={CHECKOUT_SESSION_ID}",
 
           locale: "cs",
           metadata: {},
           mode: "payment",
           payment_method_options: {},
           payment_method_types: ["card"],
-          shipping_rates: SHIPPING_RATE_CODE,
+          // shipping_rates: SHIPPING_RATE_CODE,
           shipping_address_collection: {
-            allowed_countries: ["CZ", "PL", "DE"],
+            allowed_countries: ["CZ"], //"PL", "DE"
           },
 
           line_items: [
@@ -144,6 +136,7 @@ export default async (req, res) => {
           sessionId: session.id,
           clientProductObj: clientProduct,
           imageObj: imageObj,
+          mapTitles,
         });
 
         await newOrder.save();

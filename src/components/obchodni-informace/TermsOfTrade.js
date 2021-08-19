@@ -122,27 +122,30 @@ export default function Objection({ name }) {
               <li>
                 Před odesláním objednávky je kupujícímu umožněno kontrolovat a
                 měnit údaje, které do objednávky vložil. Objednávku kupující
-                odešle prodávajícímu kliknutím na tlačítko “dokončit a zaplatit
-                objednávku” Údaje uvedené v objednávce jsou prodávajícím
+                odešle prodávajícímu kliknutím na tlačítko "zaplatit [částka k
+                zaplacení]”. Údaje uvedené v objednávce jsou prodávajícím
                 považovány za správné.
               </li>
               <li>
                 Podmínkou platnosti objednávky je vyplnění všech povinných údajů
-                v objednávkovém formuláři a potvrzení kupujícího o tom, že se s
-                těmito obchodními podmínkami seznámil.
+                v objednávkovém formuláři.
+                {/* a potvrzení kupujícího o tom, že se s
+                těmito obchodními podmínkami seznámil. */}
               </li>
               <li>
                 Neprodleně po obdržení objednávky zašle prodávající kupujícímu
-                potvrzení o obdržení objednávky na e-mailovou adresu, kterou
-                kupující při objednání zadal. Toto potvrzení je automatické a
-                nepovažuje se za uzavření smlouvy. Přílohou potvrzení jsou
+                potvrzení o obdržení objednávky a přijetí objednávky na
+                e-mailovou adresu, kterou kupující při objednání zadal.
+                {/* Toto potvrzení je automatické a
+                nepovažuje se za uzavření smlouvy.  */}
+                {/* Přílohou potvrzení jsou
                 aktuální obchodní podmínky prodávajícího. Kupní smlouva je
-                uzavřena až po přijetí objednávky prodávajícím.
+                uzavřena až po přijetí objednávky prodávajícím. */}
               </li>
-              <li>
+              {/* <li>
                 Oznámení o přijetí objednávky je doručeno na e-mailovou adresu
                 kupujícího.
-              </li>
+              </li> */}
               <li>
                 V případě, že některý z požadavků uvedených v objednávce nemůže
                 prodávající splnit, zašle kupujícímu na jeho e-mailovou adresu
@@ -215,14 +218,15 @@ export default function Objection({ name }) {
                 Zboží je kupujícímu dodáno:
                 <ul>
                   <li>na adresu určenou kupujícím objednávce</li>
-                  <li>
+                  {/* <li>
                     prostřednictvím výdejny zásilek na adresu výdejny, kterou
                     kupující určil,
                   </li>
-                  <li>osobním odběrem v provozovně prodávajícího.</li>
+                  <li>osobním odběrem v provozovně prodávajícího.</li> */}
                 </ul>
               </li>
-              <li>Volba způsobu dodání se provádí během objednávání zboží.</li>
+              <li>Volba způsobu dodání zboží v současné době není umožněna.</li>
+              {/* <li>Volba způsobu dodání se provádí během objednávání zboží.</li> */}
               <li>
                 Náklady na dodání zboží v závislosti na způsobu odeslání a
                 převzetí zboží jsou uvedeny v objednávce kupujícího a v

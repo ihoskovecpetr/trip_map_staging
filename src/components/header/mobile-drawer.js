@@ -11,20 +11,19 @@ import { IoMdClose, IoMdMenu } from "react-icons/io";
 import menuItems from "./header.data";
 import { DrawerContext } from "../../contexts/drawer/drawer.context";
 import LinkRouter from "components/LinkRouter";
-import { fontWeight } from "utils";
+import { fontWeight, color } from "utils";
 
 const social = [
   {
-    path: "https://www.instagram.com/tripmapshop/",
+    path: "https://www.instagram.com/tripmap.shop/",
     icon: <FaInstagram />,
   },
 ];
 
-const MobileDrawer = ({ invertHeaderColor }) => {
+const MobileDrawer = () => {
   const { state, dispatch } = useContext(DrawerContext);
   const router = useRouter();
 
-  // Toggle drawer
   const toggleHandler = React.useCallback(() => {
     dispatch({
       type: "TOGGLE",
@@ -37,7 +36,7 @@ const MobileDrawer = ({ invertHeaderColor }) => {
         width="320px"
         drawerHandler={
           <Box sx={styles.handler}>
-            <IoMdMenu size="26px" color={invertHeaderColor && "black"} />
+            <IoMdMenu size="26px" color={"black"} />
           </Box>
         }
         open={state.isOpen}
@@ -66,7 +65,9 @@ const MobileDrawer = ({ invertHeaderColor }) => {
               <Box sx={styles.social}>
                 {social.map(({ path, icon }, i) => (
                   <Box as="span" key={i} sx={styles.social.icon}>
-                    <Link href={path}>{icon}</Link>
+                    <Link href={path}>
+                      <a target="_blank"> {icon}</a>
+                    </Link>
                   </Box>
                 ))}
               </Box>
@@ -89,6 +90,7 @@ const MobileDrawer = ({ invertHeaderColor }) => {
 
 const StyledAncor = styled.a`
   font-weight: ${fontWeight("regular")} !important;
+  color: black !important;
 `;
 
 const ListItemP = styled.p`
@@ -190,7 +192,7 @@ const styles = {
       },
       "&:hover": {
         color: "secondary",
-        backgroundColor: "red",
+        // backgroundColor: "red",
       },
     },
   },
@@ -210,6 +212,7 @@ const styles = {
   },
   nav: {
     // mx: "auto",
+    color: "black",
     display: "none",
     textTransform: "uppercase",
     letterSpacing: "4px",

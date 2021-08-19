@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { color, fontSize, fontWeight } from "utils";
 import CustomLoader from "../CustomLoader";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
-import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useWebGLSize } from "Hooks/useWebGLSize";
 import disabledAndroid from "assets/icons/devicesAndroidOblique.png";
@@ -22,8 +21,6 @@ import {
   SIZE_NAMES,
   FRAME_OPTION_NAMES,
 } from "constants/constants";
-
-const priceAlgorithm = getPriceAlgorithm();
 
 export default function Step5Size() {
   const { isMobile } = useIsMobile();
@@ -59,15 +56,16 @@ export default function Step5Size() {
 
     const newSizeObject = findNewSizeSameOrientation(sizeCode);
 
+    const priceWithDelivery =
+      dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
+        .netPrice ?? 0;
+
     dispatch(
       setProductAction({
         sizeObject: newSizeObject,
         variantId: newVariant.id,
-        price: dataPrintful[newVariant.id]?.price,
-        priceWithDelivery: priceAlgorithm.getPriceWithDelivery(
-          newVariant.id,
-          dataPrintful
-        ).netPrice,
+        // price: dataPrintful[newVariant.id]?.price,
+        priceWithDelivery: priceWithDelivery,
         shippingCode: newVariant.shipping.codeCZ,
       })
     );
@@ -132,6 +130,10 @@ export default function Step5Size() {
 
             const noFrameVariant = getNoFrameVariantForSize(sizeNameLocal);
 
+            const printFulVariantObj = dataPrintful?.[noFrameVariant.id];
+            const priceWithDeliveryNoFrame =
+              printFulVariantObj?.priceWithDeliveryAndProfit.netPrice ?? 0;
+
             const isDisabledBtn =
               sizeNameLocal === SIZE_NAMES["61X91cm"] && !isLargeSizeCapable; // change it to !isLa..
 
@@ -152,12 +154,7 @@ export default function Step5Size() {
                     sizeNameLocal
                   )}
                 >
-                  {`${getFormattedPrice(
-                    priceAlgorithm.getPriceWithoutDelivery(
-                      noFrameVariant.id,
-                      dataPrintful
-                    ).netPrice
-                  )}`}
+                  {`${getFormattedPrice(priceWithDeliveryNoFrame)}`}
                 </StyledPriceP>
                 <DevicesItem>
                   {isDisabledBtn && <StyledDevicesImg src={disabledAndroid} />}

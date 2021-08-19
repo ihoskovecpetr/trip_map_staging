@@ -4,7 +4,7 @@ const BasePriceAlgorithm = require("./BasePriceAlgorithm");
 const {
   TAX_PERCENTAGE,
   GROSS_PROFIT_PERCENTAGE,
-} = require("../../constants/constants.js");
+} = require("constants/constants.js");
 
 const getPriceAlgorithm = (country) => {
   switch (country) {

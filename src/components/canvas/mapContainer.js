@@ -18,7 +18,6 @@ import Logo from "components/logo";
 import LogoWhite from "assets/logo_while.png";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { setProductAction } from "redux/order/actions";
-import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
@@ -56,16 +55,14 @@ export default function MapContainer({
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const { isMobile } = useIsMobile();
   const qualityImageCreator = useQualityImageCreator();
-  const priceAlgorithm = getPriceAlgorithm();
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
   );
 
-  const priceWithDelivery = priceAlgorithm.getPriceWithDelivery(
-    productRedux.variantId,
-    dataPrintful
-  );
+  const priceWithDelivery =
+    dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
+      .netPrice ?? 0;
 
   const changeOrientation = () => {
     dispatch(
@@ -108,7 +105,8 @@ export default function MapContainer({
         )}
         {!isMobile && (
           <StyledText size="small">
-            cena {getFormatedPriceString(priceWithDelivery.netPrice)}
+            {`cena 
+            ${getFormatedPriceString(priceWithDelivery)}`}
           </StyledText>
         )}
 

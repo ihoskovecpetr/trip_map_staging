@@ -18,8 +18,8 @@ module.exports = class BasePriceAlgorithm {
     return Number(targetValue);
   }
 
-  subtract(values) {
-    const [baseInitialValue, ...restValues] = values;
+  subtract(valuesArr) {
+    const [baseInitialValue, ...restValues] = valuesArr;
     const initialValue = new Big(baseInitialValue);
 
     const targetValue = restValues.reduce(
@@ -36,6 +36,12 @@ module.exports = class BasePriceAlgorithm {
     return Number(initialValue.times(n));
   }
 
+  divide(base, n) {
+    const initialValue = new Big(base);
+
+    return Number(initialValue.div(n));
+  }
+
   // @see https://stackoverflow.com/a/11832950
   round(value, precision = this.roundingPrecision) {
     const precisionMultiple = Math.pow(10, precision);
@@ -47,14 +53,23 @@ module.exports = class BasePriceAlgorithm {
   }
 
   getPrice(bareCostPrice, taxPercentage, profitPercentage) {
-    const costPrice = bareCostPrice * (1 + taxPercentage / 100);
-    const basePrice = costPrice * (1 + taxPercentage / 100);
-    const netPrice = basePrice * (1 + profitPercentage / 100);
+    const taxMultiplayer = this.add([1, this.divide(taxPercentage, 100)]);
+    const profitMultilayer = this.add([1, this.divide(profitPercentage, 100)]);
+
+    const costBase = this.times(bareCostPrice, taxMultiplayer);
+    const costNet = this.times(costBase, taxMultiplayer);
+    const priceNet = this.times(costNet, profitMultilayer);
+
+    const polishedPrice = new Big(priceNet)
+      .div(10)
+      .add(1)
+      .round(0)
+      .times(10)
+      .add(9)
+      .toString();
 
     return {
-      netPrice: this.round(netPrice),
-      // basePrice: this.round(basePrice),
-      // tax: this.round(this.subtract([netPrice, basePrice])),
+      netPrice: this.round(Number(polishedPrice)),
     };
   }
 

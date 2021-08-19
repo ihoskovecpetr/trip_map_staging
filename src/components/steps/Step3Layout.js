@@ -99,8 +99,8 @@ const styles = {
     paddingBottom: ["30px", null, null, "0px"],
   },
   layoutItem: {
-    width: ["4rem", null, null, "23%", "18%"],
-    margin: ["5px 5px", null, null, "1%", "1%"],
+    width: ["23%", "18%", null, "23%", "18%"],
+    margin: ["1%", "1%", null, "1%", "1%"],
     // paddingTop: "4px",
     // height: "80px",
     display: "flex",

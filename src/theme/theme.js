@@ -30,6 +30,7 @@ const theme = {
     HarmoniaSans_local: `'HarmoniaSans_local', sans-serif`,
   },
   fontWeights: {
+    superLight: 200,
     light: 300,
     regular: 400,
     bold: 600,
