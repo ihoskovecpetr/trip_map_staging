@@ -8,8 +8,13 @@ const { getIsProduction } = require("../../LibGlobal/getIsProduction");
 const smtpTransportTMEmail = require("./Lib/SMTPTransportTMEmail.js");
 const { getVariantObject } = require("LibGlobal/getVariantObject");
 const { getFormattedPrice } = require("LibGlobal/getFormattedPrice");
+const {
+  getPriceAlgorithm,
+} = require("LibGlobal/priceAlgorithm/getPriceAlgorithm");
 
 const IS_PRODUCTION = getIsProduction();
+
+const priceAlgorithm = getPriceAlgorithm();
 
 const API_KEY = IS_PRODUCTION
   ? process.env.STRIPE_API_KEY
@@ -122,9 +127,7 @@ const sendEmailsHandler = async ({
   mapTitles,
 }) => {
   try {
-    const { customer_details } = session;
-
-    console.log({ product, mapTitles });
+    console.log({ getHighSession: session });
 
     const productDescription = getVariantObject(product.variantId)?.frameName;
 
@@ -140,7 +143,7 @@ const sendEmailsHandler = async ({
       }),
       smtpTransportCustommer.sendMail({
         from: "No",
-        to: customer_details.email,
+        to: session.customer_details.email,
         subject: emailHeadingCustomer,
         template: "./src/pages/api/orderCustommerConfirmation",
         context: {
@@ -148,7 +151,10 @@ const sendEmailsHandler = async ({
           product: product,
           productDescription,
           mapTitles,
-          formatedPrice: getFormattedPrice(product.priceWithDelivery ?? 0),
+          sessionId: session.id,
+          sessionAmountTotal: getFormattedPrice(
+            priceAlgorithm.divide(session.amount_total, 100) ?? 0
+          ),
         },
         attachments: [
           {
@@ -218,8 +224,6 @@ export default async (req, res) => {
           product: clientProductObj,
           mapTitles,
         });
-
-        console.log({ responsePrintful });
 
         if (responsePrintful) {
           res.redirect(`/congratulation?id=${sessionId}`);

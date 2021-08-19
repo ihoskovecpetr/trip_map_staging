@@ -24,15 +24,18 @@
 
         <b>Shrnutí</b>
 
-                <table style="width:200px">
+                <table style="width:300px">
+                    <tr>
+                        <td>SessionID</td>
+                        <td><b>{{sessionId}}</b></td>
+                    </tr>
                     <tr>
                         <td>Varianta</td>
                         <td><b>{{productDescription}}</b></td>
                     </tr>
                     <tr>
                         <td>Titul</td>
-                        <td><b>{{mapTitles.heading.text}}</b></td>
-                       
+                        <td><b>{{mapTitles.heading.text}}</b></td>   
                     </tr>
                     <tr>
                         <td>Podtitul</td>
@@ -48,7 +51,7 @@
                     </tr>
                         <tr>
                         <td>Cena včetně dopravy</td>
-                        <td><b>{{formatedPrice}} (bez možnosti odečtu)</b></td>
+                        <td><b>{{sessionAmountTotal}} (bez možnosti odečtu DPH)</b></td>
                     </tr>
                 </table>
 
