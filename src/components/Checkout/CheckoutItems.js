@@ -222,7 +222,7 @@ const BoldText = styled.p`
 `;
 
 const RegularText = styled.p`
-  font-size: ${fontSize("xxs")};
+  font-size: ${fontSize("xs")};
   font-weight: ${fontWeight("superLight")};
   text-align: left;
   margin: 0;

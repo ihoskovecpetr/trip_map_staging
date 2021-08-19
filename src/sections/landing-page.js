@@ -7,6 +7,7 @@ import Image from "components/image";
 import Carousel from "nuka-carousel";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 import Carousel1 from "assets/landing-page/webp/1.webp";
 import Carousel2 from "assets/landing-page/webp/2.webp";
@@ -91,36 +92,61 @@ export default function LandingPage() {
             </Carousel>
             {isMobile && (
               <ZeroHeightWrap>
-                <PureCtaBox
-                  maxHeightTop={headerHeight + carouselHeight}
-                  id="pure_cta_box"
+                <motion.div
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 1.6 }}
+                  initial={{ opacity: 0 }}
                 >
-                  <CtaComponent />
-                </PureCtaBox>
+                  <PureCtaBox
+                    maxHeightTop={headerHeight + carouselHeight}
+                    id="pure_cta_box"
+                  >
+                    <CtaComponent />
+                  </PureCtaBox>
+                </motion.div>
               </ZeroHeightWrap>
             )}
           </LandingCarousel>
         </Box>
 
         <Box sx={styles.contentBox}>
-          <Box sx={styles.headingTop}>
-            <TextFeature subTitle={data.subTitle} title={data.title} />
-          </Box>
+          <motion.div
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0 }}
+            initial={{ opacity: 0 }}
+          >
+            <Box sx={styles.headingTop}>
+              <TextFeature subTitle={data.subTitle} title={data.title} />
+            </Box>
+          </motion.div>
 
           <Grid gap="15px 0" columns={1} sx={styles.gridCards}>
-            {data.features.map((item) => (
-              <Box sx={styles.card} key={item.id}>
-                <Image src={item.imgSrc} alt={item.altText} sx={styles.img} />
+            {data.features.map((item, index) => (
+              <motion.div
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: (index + 1) * 0.6 }}
+                initial={{ opacity: 0 }}
+              >
+                <Box sx={styles.card} key={item.id}>
+                  <Image src={item.imgSrc} alt={item.altText} sx={styles.img} />
 
-                <Box sx={styles.wrapper}>
-                  <div sx={styles.wrapper.title}>{item.title}</div>
-                  <Text sx={styles.wrapper.subTitle}>{item.text}</Text>
+                  <Box sx={styles.wrapper}>
+                    <div sx={styles.wrapper.title}>{item.title}</div>
+                    <Text sx={styles.wrapper.subTitle}>{item.text}</Text>
+                  </Box>
                 </Box>
-              </Box>
+              </motion.div>
             ))}
-            <Box sx={styles.ctaOnlyLarge}>
-              <CtaComponent />
-            </Box>
+
+            <motion.div
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.6 }}
+              initial={{ opacity: 0 }}
+            >
+              <Box sx={styles.ctaOnlyLarge}>
+                <CtaComponent />
+              </Box>
+            </motion.div>
           </Grid>
         </Box>
       </Container>
