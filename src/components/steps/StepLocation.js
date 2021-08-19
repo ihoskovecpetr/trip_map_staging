@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { useEffect } from "react";
 import { jsx } from "theme-ui";
-import produce from "immer";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import { useDispatch } from "react-redux";
@@ -96,14 +95,12 @@ export default function StepLocation({ map }) {
     <div sx={styles.container}>
       {!isMobile && <HeadingText>1. Zadejte lokalitu</HeadingText>}
 
-      {/* <PopoverGuide relatedId="geocoder" legend="Začni zadáním hledaného města"> */}
       <div
         id="geocoder"
         class="geocoder"
         sx={styles.locationInput}
         style={{ marginTop: isMobile ? "10px" : "10px" }}
       ></div>
-      {/* </PopoverGuide> */}
     </div>
   );
 }

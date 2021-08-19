@@ -69,6 +69,12 @@ export default function PopoverGuide({ children, relatedId, legend }) {
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
+        modifiers={{
+          arrow: {
+            enabled: true,
+            // element: arrowRef,
+          },
+        }}
       >
         <Typography>{legend}</Typography>
       </Popover>

@@ -26,7 +26,7 @@ const getSizeOfTitle = (mapTitles, htmlLongSideLength) => {
   fakeSubtitle.innerText = subtitleObject?.text;
 
   const sizes = [fakeHeading?.offsetWidth, fakeSubtitle?.offsetWidth];
-  console.log({ sizes });
+
   return Math.max(...sizes);
 };
 

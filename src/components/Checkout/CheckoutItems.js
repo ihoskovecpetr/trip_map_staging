@@ -71,6 +71,7 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
 
     if (!e.target.checked) {
       dispatch(setDiscountCode(""));
+      dispatch(setDiscountCodeAccepted(false));
     }
   };
 

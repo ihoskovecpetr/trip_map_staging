@@ -86,9 +86,8 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, res) => {
 
     return finalResult;
   } catch (e) {
-    res.status(420).json({
-      error: e,
-    });
+    console.log("TransformDataPrintful_Error", { e });
+    throw e;
   }
 };
 

@@ -13,18 +13,22 @@ import Button from "@material-ui/core/Button";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
-import { color, fontWeight } from "utils";
+import { color, fontWeight, fontSize } from "utils";
 import Logo from "components/logo";
 import LogoWhite from "assets/logo_while.png";
+import LowDefinitionMap from "assets/mapDefinition/low-definition-map.png";
+import HighDefinitionMap from "assets/mapDefinition/high-definition-map.png";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { setProductAction } from "redux/order/actions";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
+import CustomTooltipWrap from "components/custom-tooltip";
 
 import {
   useProductSelector,
   useActiveLayoutSelector,
   useActiveMapStyleSelector,
+  useSeenPopupSelector,
 } from "redux/order/reducer";
 
 import {
@@ -47,11 +51,13 @@ export default function MapContainer({
   const productRedux = useProductSelector();
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
+  const seenPopup = useSeenPopupSelector();
 
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
   });
+
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const { isMobile } = useIsMobile();
   const qualityImageCreator = useQualityImageCreator();
@@ -124,16 +130,42 @@ export default function MapContainer({
           <Rotate90DegreesCcwIcon onClick={changeOrientation} />
         </div>
 
-        <div
-          sx={styles.rotateBtn}
-          onClick={() => !isCreatingImage && fullscreenImageRequested()}
-        >
+        <div sx={styles.rotateBtn}>
           {isCreatingImage ? (
             <ColorWrap>
               <StyledCircularProgress />
             </ColorWrap>
           ) : (
-            <OpenWithIcon color="grey" />
+            <>
+              <CustomTooltipWrap
+                defaultState={!seenPopup}
+                body={
+                  <TooltipBodyWrap>
+                    <p>
+                      Výsledná podrobnost mapy může být odlišná od zobrazení se
+                      studiu
+                    </p>
+                    <ImagesWrap>
+                      <StyledImg src={HighDefinitionMap} />
+                      <span>vs</span>
+                      <StyledImg src={LowDefinitionMap} />
+                    </ImagesWrap>
+
+                    <p>
+                      Finální produkt zobrazíte kliknutím na{" "}
+                      <DummyBtn>
+                        <OpenWithIcon color="grey" />
+                      </DummyBtn>
+                    </p>
+                  </TooltipBodyWrap>
+                }
+              >
+                <OpenWithIcon
+                  color="grey"
+                  onClick={() => !isCreatingImage && fullscreenImageRequested()}
+                />
+              </CustomTooltipWrap>
+            </>
           )}
         </div>
       </div>
@@ -173,6 +205,48 @@ export default function MapContainer({
   );
 }
 
+// const useStyles = makeStyles((theme) => ({
+//   customTooltip: {
+//     backgroundColor: "rgba(220, 0, 78, 0.8)",
+//   },
+//   customArrow: {
+//     color: "rgba(220, 0, 78, 0.8)",
+//   },
+// }));
+
+// const TooltipWrap = ({ children }) => {
+//   const classes = useStyles();
+//   const [isTooltipOpen, setIsTooltipOpen] = useState(true);
+
+//   const closeTooltip = () => {
+//     setIsTooltipOpen(false);
+//   };
+
+//   return (
+//     <StyledTooltip
+//       interactive
+//       classes={{
+//         tooltip: classes.customTooltip,
+//         arrow: classes.customArrow,
+//       }}
+//       title={
+//         <TooltipBody>
+//           <button onClick={() => closeTooltip()}> X </button> "Výsledná
+//           zahuštění mapy bude větší"
+//           <p>Ahoj</p>
+//         </TooltipBody>
+//       }
+//       placement="bottom-center"
+//       // content={}
+//       // PopperComponent={<StyledPopper />}
+//       arrow
+//       open={isTooltipOpen}
+//     >
+//       {children}
+//     </StyledTooltip>
+//   );
+// };
+
 const BNT_RADIUS = 4;
 
 const LogoWrap = styled.div`
@@ -195,6 +269,11 @@ const ColorWrap = styled.div`
   display: flex;
 `;
 
+const StyledImg = styled.img`
+  height: 45%;
+  width: 45%;
+`;
+
 const StyledCircularProgress = styled(CircularProgress)({
   height: "24px !important",
   width: "24px !important",
@@ -206,6 +285,33 @@ const StyledText = styled.p`
   font-weight: ${fontWeight("bold")};
   padding-left: 15px;
   margin: 0;
+`;
+
+const TooltipBodyWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  & p {
+    font-size: ${fontSize("xs")};
+  }
+`;
+
+const DummyBtn = styled.div`
+  border: 1px solid lightGrey;
+  display: inline-flex;
+  padding: 3px;
+  margin: 2px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.8);
+`;
+
+const ImagesWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const styles = {
