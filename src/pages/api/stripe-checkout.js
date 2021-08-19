@@ -4,11 +4,10 @@ const Big = require("big.js");
 
 const Order = require("../../mongoModels/order.js");
 const { getIsProduction } = require("../../LibGlobal/getIsProduction");
-const { isDiscountCodeValid } = require("../../LibGlobal/isDiscountCodeValid");
 
 const {
   getPriceAlgorithm,
-} = require("../../LibGlobal/priceAlgorithm/getPriceAlgorithm");
+} = require("LibGlobal/priceAlgorithm/getPriceAlgorithm");
 
 const {
   fetchAndTransformDataPrintful,
