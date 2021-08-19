@@ -31,11 +31,11 @@ const themeMaterialUI = createTheme({
   palette: {
     primary: {
       // Purple and green play nicely together.
-      main: "#f6aa1c",
+      main: "#001427",
     },
     secondary: {
       // This is green.A700 as hex.
-      main: "#11cb5f",
+      main: "#f6aa1c",
     },
   },
 });

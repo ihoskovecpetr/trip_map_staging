@@ -5,8 +5,6 @@ const {
 export default async (req, res) => {
   switch (req.method) {
     case "POST":
-      console.log("Hitting_data_printful");
-
       const { variantIdsArr } = req.body;
       try {
         const finalResult = await fetchAndTransformDataPrintful(
@@ -17,6 +15,7 @@ export default async (req, res) => {
           finalResult,
         });
       } catch (e) {
+        console.error("data-printful Error: ", { e });
         res.status(500).json({
           e,
         });

@@ -133,4 +133,7 @@ export const useUploadPercentageSelector = () =>
 export const useDiscountSelector = () =>
   useSelector((store) => store.order.discount);
 
+export const useSeenPopupSelector = () =>
+  useSelector((store) => store.order.seenPopup);
+
 export default order;
