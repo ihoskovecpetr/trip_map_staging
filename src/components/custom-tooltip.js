@@ -20,12 +20,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TooltipWrap({ children, body, defaultState }) {
+export default function TooltipWrap({ children, body, defaultState, onClose }) {
   const classes = useStyles();
   const [isTooltipOpen, setIsTooltipOpen] = useState(defaultState);
 
   const closeTooltip = () => {
     setIsTooltipOpen(false);
+    onClose();
   };
 
   return (

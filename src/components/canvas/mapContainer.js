@@ -19,10 +19,11 @@ import LogoWhite from "assets/logo_while.png";
 import LowDefinitionMap from "assets/mapDefinition/low-definition-map.png";
 import HighDefinitionMap from "assets/mapDefinition/high-definition-map.png";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
-import { setProductAction } from "redux/order/actions";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import CustomTooltipWrap from "components/custom-tooltip";
+
+import { setProductAction, setPopupSeen } from "redux/order/actions";
 
 import {
   useProductSelector,
@@ -139,6 +140,10 @@ export default function MapContainer({
             <>
               <CustomTooltipWrap
                 defaultState={!seenPopup}
+                onClose={() => {
+                  localStorage.setItem("seenPopup", true);
+                  dispatch(setPopupSeen(true));
+                }}
                 body={
                   <TooltipBodyWrap>
                     <p>
@@ -204,48 +209,6 @@ export default function MapContainer({
     </div>
   );
 }
-
-// const useStyles = makeStyles((theme) => ({
-//   customTooltip: {
-//     backgroundColor: "rgba(220, 0, 78, 0.8)",
-//   },
-//   customArrow: {
-//     color: "rgba(220, 0, 78, 0.8)",
-//   },
-// }));
-
-// const TooltipWrap = ({ children }) => {
-//   const classes = useStyles();
-//   const [isTooltipOpen, setIsTooltipOpen] = useState(true);
-
-//   const closeTooltip = () => {
-//     setIsTooltipOpen(false);
-//   };
-
-//   return (
-//     <StyledTooltip
-//       interactive
-//       classes={{
-//         tooltip: classes.customTooltip,
-//         arrow: classes.customArrow,
-//       }}
-//       title={
-//         <TooltipBody>
-//           <button onClick={() => closeTooltip()}> X </button> "Výsledná
-//           zahuštění mapy bude větší"
-//           <p>Ahoj</p>
-//         </TooltipBody>
-//       }
-//       placement="bottom-center"
-//       // content={}
-//       // PopperComponent={<StyledPopper />}
-//       arrow
-//       open={isTooltipOpen}
-//     >
-//       {children}
-//     </StyledTooltip>
-//   );
-// };
 
 const BNT_RADIUS = 4;
 
@@ -343,7 +306,7 @@ const styles = {
     height: "100%",
   },
   canvas_merging: {
-    display: "none",
+    // display: "none",
   },
   allBtnWrapper: {
     display: "flex",

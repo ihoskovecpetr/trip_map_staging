@@ -9,7 +9,7 @@ import { color, fontSize, fontWeight } from "utils";
 import CustomLoader from "../CustomLoader";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { useIsMobile } from "Hooks/useIsMobile";
-import { useWebGLSize } from "Hooks/useWebGLSize";
+import { useIsSizeWebGLSizeCapable } from "Hooks/useIsSizeWebGLCapable";
 import disabledAndroid from "assets/icons/devicesAndroidOblique.png";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import { setProductAction } from "redux/order/actions";
@@ -24,7 +24,7 @@ import {
 
 export default function Step5Size() {
   const { isMobile } = useIsMobile();
-  const { isLargeSizeCapable } = useWebGLSize();
+  const { isLargeSizeCapable, isMidSizeCapable } = useIsSizeWebGLSizeCapable();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
 
@@ -135,7 +135,9 @@ export default function Step5Size() {
               printFulVariantObj?.priceWithDeliveryAndProfit.netPrice ?? 0;
 
             const isDisabledBtn =
-              sizeNameLocal === SIZE_NAMES["61X91cm"] && !isLargeSizeCapable; // change it to !isLa..
+              (sizeNameLocal === SIZE_NAMES["61X91cm"] &&
+                !isLargeSizeCapable) ||
+              (sizeNameLocal === SIZE_NAMES["50X70cm"] && !isMidSizeCapable); // change it to !isLa..
 
             return (
               <MainItem>

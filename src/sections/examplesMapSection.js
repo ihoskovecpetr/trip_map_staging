@@ -11,15 +11,16 @@ import { FaPlayCircle } from "react-icons/fa";
 
 import CarouselJapanPNG from "assets/mapExamples/Japan_karaoke.png";
 import CarouselNYWhitePNG from "assets/mapExamples/NY_white.png";
-import CarouselNYBlack3PNG from "assets/mapExamples/NYC_black.png";
-import CarouselRioPNG from "assets/mapExamples/rio_yellow_blue.png";
-import CarouselRioGreen5PNG from "assets/mapExamples/rio_yellow_green.png";
+import CarouselRioCopacabanaPNG from "assets/mapExamples/Rio_copacabana.png";
+import CarouselHKDragonPNG from "assets/mapExamples/HK_Dragons_back.png";
+import CarouselSFAlcatrazPNG from "assets/mapExamples/San_francisco_alcatraz.png";
 import CarouselSydneyPNG from "assets/mapExamples/Sydney_surfing.png";
 
-import { fontSize } from "utils";
+import { fontSize, mobile } from "utils";
 
 export default function Examples() {
   const [videoOpen, setVideoOpen] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const router = useRouter();
 
   const handleClick = (e) => {
@@ -30,6 +31,27 @@ export default function Examples() {
   return (
     <section sx={styles.banner} id="home">
       <Container sx={styles.banner.container}>
+        <CarouselWrap>
+          <Carousel
+            autoplay={true}
+            cellAlign="center"
+            heightMode="max"
+            // heightMode={current}
+            initialSlideHeight={90}
+            // frameOverflow="visible"
+            withoutControls
+            wrapAround
+            swiping
+            renderCenterLeftControls={() => null}
+            renderCenterRightControls={() => null}
+          >
+            <img src={CarouselRioCopacabanaPNG} />
+            <img src={CarouselJapanPNG} id="carousel_img_photo_0" />
+            <img src={CarouselSydneyPNG} />
+            <img src={CarouselSFAlcatrazPNG} />
+            <img src={CarouselHKDragonPNG} />
+          </Carousel>
+        </CarouselWrap>
         <Box sx={styles.banner.contentBox}>
           <StyledHeading>Zvěčni si své dobrodružství</StyledHeading>
           <Text as="p" variant="heroSecondary">
@@ -63,27 +85,6 @@ export default function Examples() {
             </>
           </Flex>
         </Box>
-
-        <Carousel
-          autoplay={true}
-          cellAlign="center"
-          heightMode="max"
-          // heightMode={current}
-          initialSlideHeight={90}
-          // frameOverflow="visible"
-          // withoutControls
-          wrapAround
-          swiping
-          renderCenterLeftControls={() => null}
-          renderCenterRightControls={() => null}
-        >
-          <img src={CarouselJapanPNG} id="carousel_img_photo_0" />
-          <img src={CarouselRioPNG} />
-          <img src={CarouselSydneyPNG} />
-          {/* <img src={CarouselNYWhitePNG} /> */}
-          {/* <img src={CarouselNYBlack3PNG} /> */}
-          <img src={CarouselRioGreen5PNG} />
-        </Carousel>
       </Container>
     </section>
   );
@@ -102,6 +103,7 @@ const styles = {
     backgroundColor: "primary",
     container: {
       display: "flex",
+      flexDirection: ["column", null, null, "row"],
     },
     contentBox: {
       width: ["100%", null, "85%", "55%", "50%", "55%"],
@@ -120,4 +122,13 @@ const StyledHeading = styled.h2`
   font-size: ${fontSize("xl")};
   font-weight: 700;
   margin-bottom: 10px;
+`;
+
+const CarouselWrap = styled.div`
+  width: 100%;
+  margin-bottom: 20px;
+
+  ${mobile`
+    margin-bottom: 0px;
+  `}
 `;

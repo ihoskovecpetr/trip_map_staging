@@ -10,7 +10,6 @@ import {
   ORIENTATIONS,
   RUNTIME_PIXEL_RATIO,
   PRINT_CANVAS_BASE_PX,
-  LOW_HIGH_DEFINITION_RATIO,
 } from "constants/constants";
 
 let snapshotMapObject;
@@ -19,6 +18,7 @@ function takeScreenshot(mapLocal) {
   return new Promise(function (resolve, _) {
     mapLocal.once("render", function () {
       console.log("Render_local_Screenshot", mapLocal.getCanvas().toDataURL());
+      alert("mapDataUrl OK");
       resolve(mapLocal.getCanvas().toDataURL());
     });
 
@@ -121,6 +121,8 @@ export const createFinalImage = async ({
 
       var ctx = mergerCanvas.getContext("2d");
       ctx.drawImage(image, 0, 0);
+
+      alert("image_Drawn OK");
 
       drawLayout(ctx, {
         width: image.width,

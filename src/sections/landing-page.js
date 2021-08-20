@@ -94,7 +94,7 @@ export default function LandingPage() {
               <ZeroHeightWrap>
                 <motion.div
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 1.6 }}
+                  transition={{ duration: 1, delay: 0.6 }}
                   initial={{ opacity: 0 }}
                 >
                   <PureCtaBox

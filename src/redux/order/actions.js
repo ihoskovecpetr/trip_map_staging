@@ -9,6 +9,7 @@ export const countActionTypes = {
   SET_UPLOAD_PERCENTAGE: "SET_UPLOAD_PERCENTAGE",
   SET_DISCOUNT_CODE: "SET_DISCOUNT_CODE",
   SET_DISCOUNT_CODE_ACCEPTED: "SET_DISCOUNT_CODE_ACCEPTED",
+  SET_POPUP_SEEN: "SET_POPUP_SEEN",
 };
 
 export const setProductAction = (newProduct) => (dispatch) => {
@@ -71,6 +72,13 @@ export const setDiscountCode = (code) => (dispatch) => {
 export const setDiscountCodeAccepted = (bool) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_DISCOUNT_CODE_ACCEPTED,
+    data: bool,
+  });
+};
+
+export const setPopupSeen = (bool) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_POPUP_SEEN,
     data: bool,
   });
 };
