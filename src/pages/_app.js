@@ -30,11 +30,12 @@ import * as ga from "LibGlobal/ga";
 const themeMaterialUI = createTheme({
   palette: {
     primary: {
-      // Purple and green play nicely together.
       main: "#001427",
     },
     secondary: {
-      // This is green.A700 as hex.
+      main: "#f6aa1c",
+    },
+    cta_color: {
       main: "#f6aa1c",
     },
   },

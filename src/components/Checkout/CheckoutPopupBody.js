@@ -99,7 +99,7 @@ export default function CheckoutPopupBody({
     }
   }
 
-  const ImageUploaded = () => (
+  const ImageUploadTeaser = () => (
     <ImageUploadedContainer>
       {!imageBase64Created ? (
         <CustomLoaderWrap>
@@ -131,7 +131,7 @@ export default function CheckoutPopupBody({
       <HeadingContainer>
         <StyledCloseIcon onClick={() => backdropClose()} />
         <ImageStepsContainer>
-          <ImageUploaded />
+          <ImageUploadTeaser />
 
           <ImageUploadSteps
             isUploadPending={isUploadPending}
@@ -195,7 +195,7 @@ const StyledCloseIcon = styled(CloseIcon)`
 
   ${mobile`
     position: absolute;
-`}
+  `}
 `;
 
 const ImageStepsContainer = styled.div`
@@ -209,7 +209,7 @@ const ImageStepsContainer = styled.div`
   margin: 15px;
 
   ${mobile`
-    flex-direction: column;
+    flex-direction: row;
   `}
 `;
 
@@ -276,7 +276,7 @@ const StyledImg = styled.img`
 
 const NextTabContainer = styled.div`
   position: sticky;
-  bottom: -1;
+  bottom: 0px;
   width: 100%;
   padding: 15px 15px;
   color: black;

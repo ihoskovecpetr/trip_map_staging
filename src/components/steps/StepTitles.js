@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
   cssOutlinedInput: {
     "&$cssFocused $notchedOutline": {
-      borderColor: `${theme.palette.primary.main} !important`,
+      borderColor: `${theme.palette.cta_color.main} !important`,
     },
   },
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
   notchedOutline: {
     borderWidth: "1px",
-    borderColor: `${theme.palette.primary.main} !important`,
+    borderColor: `${theme.palette.cta_color.main} !important`,
   },
 }));
 
@@ -95,6 +95,7 @@ export default function StepTitles() {
           id="outlined-basic"
           label="Hlavní nadpis"
           variant="outlined"
+          color="cta_color"
           name="heading"
           value={mapTitles.heading.text}
           onChange={handleTitleChange}

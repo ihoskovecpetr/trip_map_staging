@@ -2,16 +2,14 @@ const IS_CLIENT = typeof window !== "undefined";
 
 const RUNTIME_PIXEL_RATIO = 2;
 
-const PIXEL_RATIO_SM = 1.7; // 0.3; // 1.7;
-const PIXEL_RATIO_MD = 2.8;
-const PIXEL_RATIO_LG = 4.8;
+const PIXEL_RATIO_SM = 1.15; // 1.7
+const PIXEL_RATIO_MD = 2.0; // 2.8
+const PIXEL_RATIO_LG = 3.2; // 4.2
 
-const LOW_HIGH_DEFINITION_RATIO = 2;
-
-const PRINT_CANVAS_BASE_PX = 1400; //1024  2048;
+const PRINT_CANVAS_BASE_PX = 2100; // 1400 //1024  2048;
 
 const TAX_PERCENTAGE = 21; // Tax I pay in price from printful
-const GROSS_PROFIT_PERCENTAGE = 20;
+const GROSS_PROFIT_PERCENTAGE = 30;
 
 const BOTTOM_LAYOUT_SIZE = 1 / 8;
 
@@ -354,8 +352,9 @@ const MAP_STYLES_NAMES = {
   GREEN_ORANGE: "Green Orange",
   BLACK_LAND: "Black Land",
   BLACK_WHITE: "Black White",
+  RED_WHITE: "Red White",
   DOUBLE_BLUE: "Double Blue",
-  GREY_BLUE: "Grey Blue",
+  // GREY_BLUE: "Grey Blue",
   PALE_BLUE: "Pale Blue",
   SANDY_DARK: "Sandy Dark",
   WHITE_BLUE: "White Blue",
@@ -376,6 +375,14 @@ const MAP_STYLES = {
   //   landColor: "",
   //   roadsColor: "",
   // },
+  [MAP_STYLES_NAMES.RED_WHITE]: {
+    url: "mapbox://styles/petrhoskovec/cksk4tz3xa8zs18rhk21fgll2",
+    waterColor: "e8e7e3",
+    landColor: "bc002d",
+    roadsColor: "ffffff",
+    layoutColor: "ffffff",
+    textColor: "bc002d",
+  },
   [MAP_STYLES_NAMES.WHITE_BLUE]: {
     url: "mapbox://styles/petrhoskovec/ckmzzsrsl0naa17o3ki2xzuoj",
     waterColor: "30bcf3",
@@ -396,9 +403,9 @@ const MAP_STYLES = {
     url: "mapbox://styles/petrhoskovec/ckrazk0zr02dg17pnd1rv62m3",
     waterColor: "054057",
     landColor: "e2dd7e",
-    roadsColor: "878f97",
+    roadsColor: "000000",
     layoutColor: "e2dd7e",
-    textColor: "054057",
+    textColor: "000000",
   },
   // [MAP_STYLES_NAMES.OLD_SANDY_BROWN]:
   //   {
@@ -440,14 +447,14 @@ const MAP_STYLES = {
     layoutColor: "050505",
     textColor: "f1f2f3",
   },
-  [MAP_STYLES_NAMES.GREY_BLUE]: {
-    url: "mapbox://styles/petrhoskovec/ckqexs85d1dev18pgpujhjwne",
-    waterColor: "162930",
-    landColor: "707070",
-    roadsColor: "d5d2d2",
-    layoutColor: "707070",
-    textColor: "d5d2d2",
-  },
+  // [MAP_STYLES_NAMES.GREY_BLUE]: {
+  //   url: "mapbox://styles/petrhoskovec/ckqexs85d1dev18pgpujhjwne",
+  //   waterColor: "162930",
+  //   landColor: "707070",
+  //   roadsColor: "d5d2d2",
+  //   layoutColor: "707070",
+  //   textColor: "d5d2d2",
+  // },
   [MAP_STYLES_NAMES.DOUBLE_BLUE]: {
     url: "mapbox://styles/petrhoskovec/ckqzcrfq0b9am18pddrl61dto",
     waterColor: "405cb0",
@@ -509,7 +516,6 @@ module.exports = {
   PIXEL_RATIO_SM,
   PIXEL_RATIO_MD,
   PIXEL_RATIO_LG,
-  LOW_HIGH_DEFINITION_RATIO,
   PRINT_CANVAS_BASE_PX,
   TAX_PERCENTAGE,
   GROSS_PROFIT_PERCENTAGE,

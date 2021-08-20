@@ -15,6 +15,7 @@ import RedBlue from "assets/mapStyles/webp/RedBlue.webp";
 import YellowGreen from "assets/mapStyles/webp/YellowGreen.webp";
 import BlueYellow from "assets/mapStyles/webp/BlueYellow.webp";
 import GreenOrange from "assets/mapStyles/webp/GreenOrange.webp";
+import RedWhite from "assets/mapStyles/webp/RedWhite.webp";
 
 import PaleBluePNG from "assets/mapStyles/png/PaleBlue.png";
 import SandyDarkPNG from "assets/mapStyles/png/SandyDark.png";
@@ -27,6 +28,7 @@ import RedBluePNG from "assets/mapStyles/png/RedBlue.png";
 import GreenOrangePNG from "assets/mapStyles/png/GreenOrange.png";
 import BlueYellowPNG from "assets/mapStyles/png/BlueYellow.png";
 import YellowGreenPNG from "assets/mapStyles/png/YellowGreen.png";
+import RedWhitePNG from "assets/mapStyles/png/RedWhite.png";
 
 import { MAP_STYLES_NAMES } from "../../constants/constants";
 import { useIsMobile } from "../../Hooks/useIsMobile";
@@ -71,6 +73,8 @@ export default function Step4Colors() {
         return displayPNG ? BlueYellowPNG : BlueYellow;
       case MAP_STYLES_NAMES.GREEN_ORANGE:
         return displayPNG ? GreenOrangePNG : GreenOrange;
+      case MAP_STYLES_NAMES.RED_WHITE:
+        return displayPNG ? RedWhitePNG : RedWhite;
 
       default:
         return displayPNG ? PaleBluePNG : PaleBlue;
@@ -96,7 +100,7 @@ export default function Step4Colors() {
               />
             </ImageWrap>
             <p sx={styles.itemStyleText} onClick={changeActiveStyle(style)}>
-              {style}
+              {!isMobile && style}
             </p>
           </div>
         ))}

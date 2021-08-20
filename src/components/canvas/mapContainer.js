@@ -127,7 +127,7 @@ export default function MapContainer({
         </div>
 
         <div sx={styles.rotateBtn}>
-          <Rotate90DegreesCcwIcon onClick={changeOrientation} />
+          <StyledRotateIcon onClick={changeOrientation} />
         </div>
 
         <div sx={styles.rotateBtn}>
@@ -274,11 +274,15 @@ const StyledImg = styled.img`
   width: 45%;
 `;
 
-const StyledCircularProgress = styled(CircularProgress)({
-  height: "24px !important",
-  width: "24px !important",
-  color: "inherit !important",
-});
+const StyledRotateIcon = styled(Rotate90DegreesCcwIcon)`
+  transform: rotate(-45deg);
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+  height: 24px !important;
+  width: 24px !important;
+  color: inherit !important;
+`;
 
 const StyledText = styled.p`
   color: ${color("cta_color")};

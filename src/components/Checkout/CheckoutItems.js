@@ -92,7 +92,7 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
           <span>
             <RegularText>{`${mapTitles?.heading?.text} ${mapTitles?.subtitle?.text}`}</RegularText>
             <RegularText>{`${productRedux.materialDesc}`}</RegularText>
-            <RegularText>{`${activeLayoutNameRedux} layout, ${activeMapStyleName} styl`}</RegularText>
+            <RegularText>{`rozvržení: ${activeLayoutNameRedux}, zbarvení: ${activeMapStyleName}`}</RegularText>
           </span>
         </LineTextContainer>
         <StyledPriceSpan>
