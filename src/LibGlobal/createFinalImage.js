@@ -112,6 +112,8 @@ export const createFinalImage = async ({
         const div = document.getElementById("snapshot_map");
         div.parentNode.removeChild(div);
 
+        alert({ data });
+
         const image = await getImageFromBase64(data);
 
         const mergerCanvas = document.getElementById("canvas_merging");
@@ -141,6 +143,7 @@ export const createFinalImage = async ({
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
       } catch (e) {
         alert("Failed while creating Taking screenshot and creating Image");
+        alert(JSON.stringify(e));
         console.log({ e });
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
       }
@@ -159,6 +162,8 @@ const getImageFromBase64 = async (blob) => {
 
       imgEl.onerror = function (e) {
         console.log("Error loading image", e);
+        alert(JSON.stringify(e));
+
         reject("Failed to create image");
       };
       console.log({ BlobHere: blob });
@@ -167,6 +172,7 @@ const getImageFromBase64 = async (blob) => {
       // });
 
       const objectURL = URL.createObjectURL(blob);
+      alert(JSON.stringify({ objectURL: objectURL }));
 
       imgEl.src = objectURL;
       // imgEl.src = imageBase64;
