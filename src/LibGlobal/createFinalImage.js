@@ -17,7 +17,7 @@ let snapshotMapObject;
 function takeScreenshot(mapLocal) {
   return new Promise(function (resolve, _) {
     mapLocal.once("render", function () {
-      console.log("Render_local_Screenshot", mapLocal.getCanvas().toDataURL());
+      // console.log("Render_local_Screenshot", mapLocal.getCanvas().toDataURL());
 
       mapLocal.getCanvas().toBlob((blob) => resolve(blob));
       // resolve(mapLocal.getCanvas().toBlob());
@@ -118,8 +118,6 @@ export const createFinalImage = async ({
 
         mergerCanvas.setAttribute("height", image.height);
         mergerCanvas.setAttribute("width", image.width);
-        // mergerCanvas.style.setProperty("height", `${image.height}px`);
-        // mergerCanvas.style.setProperty("width", `${image.width}px`);
 
         var ctx = mergerCanvas.getContext("2d");
 
