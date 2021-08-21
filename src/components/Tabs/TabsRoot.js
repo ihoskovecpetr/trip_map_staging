@@ -231,6 +231,10 @@ const TabContentWrap = styled.div`
     overflow: visible;
     padding: 0px 0.5rem;
   }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const PriceWrap = styled.div`

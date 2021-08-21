@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Box, Flex } from "theme-ui";
 import { Scrollbars } from "react-custom-scrollbars";
 import Drawer from "components/drawer";
@@ -12,6 +12,7 @@ import menuItems from "./header.data";
 import { DrawerContext } from "../../contexts/drawer/drawer.context";
 import LinkRouter from "components/LinkRouter";
 import { fontWeight, color } from "utils";
+import UnderlineLoader from "components/UnderlineLoader";
 
 const social = [
   {
@@ -23,6 +24,12 @@ const social = [
 const MobileDrawer = () => {
   const { state, dispatch } = useContext(DrawerContext);
   const router = useRouter();
+
+  const [loadingIndex, setLoadingIndex] = useState(null);
+
+  useEffect(() => {
+    setLoadingIndex(null);
+  }, [router]);
 
   const toggleHandler = React.useCallback(() => {
     dispatch({
@@ -76,12 +83,17 @@ const MobileDrawer = () => {
         </Scrollbars>
       </Drawer>
       <Box sx={styles.nav}>
-        {menuItems.map(({ path, label }, i) => (
-          <>
-            <Link href={path}>
+        {menuItems.map(({ path, label }, index) => (
+          <Link href={path}>
+            <StyledContainer
+              onClick={() => {
+                setLoadingIndex(index);
+              }}
+            >
               <StyledAncor>{label}</StyledAncor>
-            </Link>
-          </>
+              {index === loadingIndex && <UnderlineLoader />}
+            </StyledContainer>
+          </Link>
         ))}
       </Box>
     </>
@@ -91,6 +103,13 @@ const MobileDrawer = () => {
 const StyledAncor = styled.a`
   font-weight: ${fontWeight("regular")} !important;
   color: black !important;
+  position: relative;
+`;
+
+const StyledContainer = styled.div`
+  position: relative;
+  margin: 0 5px;
+  cursor: pointer;
 `;
 
 const ListItemP = styled.p`
@@ -217,20 +236,20 @@ const styles = {
     textTransform: "uppercase",
     letterSpacing: "4px",
     "@media screen and (min-width: 624px)": {
-      display: "block",
+      display: "flex",
     },
     a: {
-      mx: "5px",
-      fontSize: "16px",
-      fontWeight: "200",
-      px: 25,
-      cursor: "pointer",
-      textDecoration: "none",
-      color: ["whitish_paper_blue", null, null, "black"],
-      lineHeight: "1.2",
-      "&.active": {
-        color: "secondary",
-      },
+      // mx: "5px",
+      // fontSize: "16px",
+      // fontWeight: "200",
+      // px: 25,
+      // cursor: "pointer",
+      // textDecoration: "none",
+      // color: ["whitish_paper_blue", null, null, "black"],
+      // lineHeight: "1.2",
+      // "&.active": {
+      //   color: "secondary",
+      // },
     },
   },
 };

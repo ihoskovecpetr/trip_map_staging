@@ -1,8 +1,11 @@
+import React, { useState } from "react";
 import { Box, Card, Text, Flex, Heading, Button, Image } from "theme-ui";
-import React from "react";
 import List from "./list";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import styled from "styled-components";
+
+import UnderlineLoader from "./UnderlineLoader";
 
 export default function PriceCard({
   data: {
@@ -18,6 +21,7 @@ export default function PriceCard({
   priceFresh,
 }) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Card className={header ? "active" : null} sx={styles.packageBox}>
@@ -65,9 +69,12 @@ export default function PriceCard({
             aria-label={buttonText}
             onClick={() => {
               router.push("/studio");
+              setIsLoading(true);
             }}
           >
-            {buttonText}
+            <StyledP>
+              {buttonText} {isLoading && <UnderlineLoader />}
+            </StyledP>
           </Button>
         </Box>
       </Box>
@@ -202,3 +209,7 @@ const styles = {
     },
   },
 };
+
+const StyledP = styled.p`
+  position: relative;
+`;
