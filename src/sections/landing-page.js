@@ -58,6 +58,7 @@ export default function LandingPage() {
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG({ id: "carousel_img_photo_0" });
 
+  console.log("displayPNG", displayPNG);
   useEffect(() => {
     const vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
@@ -85,6 +86,9 @@ export default function LandingPage() {
               <img
                 src={displayPNG ? Carousel1PNG : Carousel1}
                 id="carousel_img_photo_0"
+                onLoad={(e) => {
+                  console.log("Image_loaded", { e });
+                }}
               />
               <img src={displayPNG ? Carousel2PNG : Carousel2} />
               <img src={displayPNG ? Carousel3PNG : Carousel3} />

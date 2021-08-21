@@ -155,6 +155,7 @@ const getImageFromBase64 = async (blob) => {
   return new Promise(async (resolve, reject) => {
     try {
       const imgEl = new Image();
+      alert("Created_Img");
 
       imgEl.onload = () => {
         resolve(imgEl);
@@ -170,8 +171,11 @@ const getImageFromBase64 = async (blob) => {
       // const theBlob = new Blob([window.atob(imageBase64)], {
       //   type: "image/png",
       // });
+      alert("Creating_objectURL");
 
       const objectURL = URL.createObjectURL(blob);
+      alert("Created_objectURL");
+
       alert(JSON.stringify({ objectURL: objectURL }));
 
       imgEl.src = objectURL;
