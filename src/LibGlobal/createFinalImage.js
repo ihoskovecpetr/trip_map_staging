@@ -162,16 +162,15 @@ const getImageFromBase64 = async (imageBase64) => {
       };
 
       imgEl.onerror = function (e) {
-        alert({ e1: e });
+        alert(JSON.stringify(e));
         console.log("Error loading image", e);
         reject("Failed to create image");
       };
 
       imgEl.src = imageBase64;
-    } catch (e) {
-      alert({ e2: e });
-      console.log("Error in getImageFromBase64", { e });
-      alert("Error");
+    } catch (Error) {
+      alert(JSON.stringify(Error));
+      console.log("Error in getImageFromBase64", { Error });
     }
   });
 };

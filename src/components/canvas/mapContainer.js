@@ -15,6 +15,7 @@ import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { color, fontWeight, fontSize } from "utils";
 import Logo from "components/logo";
+import BackdropLoader from "components/backdropLoader";
 import LogoWhite from "assets/logo_while.png";
 import LowDefinitionMap from "assets/mapDefinition/low-definition-map.png";
 import HighDefinitionMap from "assets/mapDefinition/high-definition-map.png";
@@ -53,6 +54,7 @@ export default function MapContainer({
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
   const seenPopup = useSeenPopupSelector();
+  const [openBackdrop, setOpenBackdrop] = useState();
 
   const [lightbox, setLightbox] = useState({
     open: false,
@@ -100,6 +102,17 @@ export default function MapContainer({
     });
 
     setIsCreatingImage(false);
+    return
+  };
+
+  const openTeaserImage = () => {
+    if (isCreatingImage) {
+      return;
+    }
+    setOpenBackdrop(true);
+    await fullscreenImageRequested();
+    setOpenBackdrop(false);
+
   };
 
   return (
@@ -165,10 +178,7 @@ export default function MapContainer({
                   </TooltipBodyWrap>
                 }
               >
-                <OpenWithIcon
-                  color="grey"
-                  onClick={() => !isCreatingImage && fullscreenImageRequested()}
-                />
+                <OpenWithIcon color="grey" onClick={openTeaserImage} />
               </CustomTooltipWrap>
             </>
           )}
@@ -206,6 +216,8 @@ export default function MapContainer({
           onCloseRequest={() => setLightbox({ open: false })}
         />
       )}
+
+      {openBackdrop && <BackdropLoader />}
     </div>
   );
 }
