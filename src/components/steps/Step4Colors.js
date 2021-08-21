@@ -42,7 +42,7 @@ export default function Step4Colors() {
   const activeMapStyleName = useActiveMapStyleSelector();
 
   const { isMobile } = useIsMobile();
-  const { displayPNG } = useDisplayPNG({ id: "map_style_id_0" });
+  const { displayPNG } = useDisplayPNG();
 
   const changeActiveStyle = (style) => () => {
     dispatch(setActiveMapStyleAction(style));
@@ -93,7 +93,7 @@ export default function Step4Colors() {
             <ImageWrap active={activeMapStyleName === style}>
               <StyledImage
                 src={getMapStyleImg(style)}
-                id={`map_style_id_${index}`}
+                id={`id_${index}`}
                 active={activeMapStyleName === style}
                 alt="Map style image"
                 onClick={changeActiveStyle(style)}

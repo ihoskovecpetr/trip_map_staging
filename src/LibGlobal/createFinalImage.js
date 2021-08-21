@@ -112,7 +112,7 @@ export const createFinalImage = async ({
         const div = document.getElementById("snapshot_map");
         div.parentNode.removeChild(div);
 
-        alert({ data });
+        alert(JSON.stringify(data));
 
         const image = await getImageFromBase64(data);
 
