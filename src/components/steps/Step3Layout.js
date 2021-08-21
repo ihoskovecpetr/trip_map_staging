@@ -148,7 +148,7 @@ const StyledImage = styled.img`
 
 const AllLayoutsContainer = styled.div`
   display: flex;
-  overflow: scroll;
+  overflow: auto;
   flex-wrap: wrap;
   padding-top: 2px;
   padding-bottom: 0px;

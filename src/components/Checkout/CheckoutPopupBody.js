@@ -164,7 +164,7 @@ const Card = styled.div`
   background: ${color("heading_secondary")};
   width: 400px;
   max-height: 85vh;
-  overflow: scroll;
+  overflow: auto;
   text-transform: unset;
   border-radius: 5px;
   cursor: default;

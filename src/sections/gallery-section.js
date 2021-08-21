@@ -118,15 +118,86 @@ const InterierWallBerlin = {
     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/wall_brick_berlin_hfq8uv.jpg",
 };
 
+const WorkChairWhiteOrange = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629565561/Finished%20Interiers/work_home_multi_zwqpni.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/work_home_multi_zwqpni.jpg",
+};
+
+const WorkMacSippinRio = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629565512/Finished%20Interiers/workdesk_rio_blue_nejmk7.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/workdesk_rio_blue_nejmk7.jpg",
+};
+
+const GreenSofaRio = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629565270/Finished%20Interiers/green_sofa_sao_psjfsv.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/green_sofa_sao_psjfsv.jpg",
+};
+
+const LivingRoomTokyo = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629565244/Finished%20Interiers/living_room_2_tokyo_nsuugl.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/living_room_2_tokyo_nsuugl.jpg",
+};
+
+const LivingRoomOrleans = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629565250/Finished%20Interiers/living_room_2_orleans_orange_npjuvc.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/living_room_2_orleans_orange_npjuvc.jpg",
+};
+
+const WhiteBedBoston = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629565303/Finished%20Interiers/living_room_boston_mqsxm9.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/living_room_boston_mqsxm9.jpg",
+};
+
+const RebuildHouseTokyo = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629565356/Finished%20Interiers/rebuild_black_dehgzu.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/rebuild_black_dehgzu.jpg",
+};
+
+const RedWallBoston = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1000,c_scale/Finished%20Interiers/red_window_white_pslvnb.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/red_window_white_pslvnb.jpg",
+};
+
+const RestaurantGreenRio = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629572741/Finished%20Interiers/restaurant_rio_green_pgbrlw.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/restaurant_rio_green_pgbrlw.jpg",
+};
+
+const MessyWallSao = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629565439/Finished%20Interiers/wall_brick_sao_paolo_ozakzo.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/wall_brick_sao_paolo_ozakzo.jpg",
+};
 const imagesArr = [
-  InterierChair1,
-  InterierPink2,
-  InterierBike1,
+  // InterierChair1,
+  WorkMacSippinRio,
+  WhiteBedBoston,
+  RestaurantGreenRio,
+  RedWallBoston,
   InterierYellow1,
   InterierChair2,
-  InterierBike2,
+  // InterierBike2,
   InterierBike3,
-  InterierChair3,
+  // InterierChair3,
   //   InterierYellow2,
   InterierPink1,
   //   InterierPink3,
@@ -135,6 +206,14 @@ const imagesArr = [
   InterierGlassy3,
   //   InterierGlassy4,
   InterierWallBerlin,
+  WorkChairWhiteOrange,
+  RebuildHouseTokyo,
+  GreenSofaRio,
+  LivingRoomTokyo,
+  LivingRoomOrleans,
+  InterierBike1,
+  InterierPink2,
+  MessyWallSao,
 ];
 
 export default function KeyFeature() {
