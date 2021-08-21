@@ -122,17 +122,11 @@ const WrapSpan = styled.span`
 
 const HeaderTextsContainer = styled.div`
   width: 100%;
-  // padding-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: left;
-  order: -1;
-
-  ${mobile`
-  order: 1;
-`};
 `;
 
 const StepsText = styled.p`

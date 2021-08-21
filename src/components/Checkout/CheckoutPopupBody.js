@@ -100,7 +100,7 @@ export default function CheckoutPopupBody({
   }
 
   const ImageUploadTeaser = () => (
-    <ImageUploadedContainer>
+    <TeaserContainer>
       {!imageBase64Created ? (
         <CustomLoaderWrap>
           <StyledCircularProgress />
@@ -123,7 +123,7 @@ export default function CheckoutPopupBody({
           </IconContainer>
         </TeaserImageWrap>
       )}
-    </ImageUploadedContainer>
+    </TeaserContainer>
   );
 
   return (
@@ -131,8 +131,6 @@ export default function CheckoutPopupBody({
       <HeadingContainer>
         <StyledCloseIcon onClick={() => backdropClose()} />
         <ImageStepsContainer>
-          <ImageUploadTeaser />
-
           <ImageUploadSteps
             isUploadPending={isUploadPending}
             imageBase64Created={imageBase64Created}
@@ -140,6 +138,7 @@ export default function CheckoutPopupBody({
             lightbox={lightbox}
             setLightbox={setLightbox}
           />
+          <ImageUploadTeaser />
         </ImageStepsContainer>
       </HeadingContainer>
       <CheckoutItems
@@ -192,10 +191,6 @@ const StyledCloseIcon = styled(CloseIcon)`
   margin-top: 15px;
   margin-left: 15px;
   z-index: 100;
-
-  ${mobile`
-    position: absolute;
-  `}
 `;
 
 const ImageStepsContainer = styled.div`
@@ -213,17 +208,16 @@ const ImageStepsContainer = styled.div`
   `}
 `;
 
-const ImageUploadedContainer = styled.div`
+const TeaserContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
   align-items: center;
-  order: 0;
   height: 120px;
   margin-bottom: 0px;
+  margin-left: 5px;
 
   ${mobile`
-    order: 1;
     margin-bottom: 10px;
     justify-content: center;
     height: 150px;

@@ -1,6 +1,5 @@
 // import request from "superagent";
 import mapboxgl from "mapbox-gl";
-import atob from "atob";
 
 import { drawLayout } from "./drawLayout";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
