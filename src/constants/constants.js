@@ -3,8 +3,8 @@ const IS_CLIENT = typeof window !== "undefined";
 const RUNTIME_PIXEL_RATIO = 2;
 
 const PIXEL_RATIO_SM = 1.7; // 1.7
-const PIXEL_RATIO_MD = 2.8; // 2.8
-const PIXEL_RATIO_LG = 4.2; // 4.2
+const PIXEL_RATIO_MD = 2; // 2.8
+const PIXEL_RATIO_LG = 2.5; // 4.2
 
 const PRINT_CANVAS_BASE_PX = 1400; // 1400 //1024  2048;
 

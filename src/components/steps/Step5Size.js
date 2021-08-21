@@ -138,7 +138,7 @@ export default function Step5Size() {
               (sizeNameLocal === SIZE_NAMES["61X91cm"] &&
                 !isLargeSizeCapable) ||
               (sizeNameLocal === SIZE_NAMES["50X70cm"] && !isMidSizeCapable); // change it to !isLa..
-
+            // const isDisabledBtn = sizeNameLocal === SIZE_NAMES["61X91cm"];
             return (
               <MainItem>
                 <StyledItem

@@ -1,5 +1,6 @@
 // import request from "superagent";
 import mapboxgl from "mapbox-gl";
+import atobX from "atob";
 
 import { drawLayout } from "./drawLayout";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
@@ -19,8 +20,8 @@ function takeScreenshot(mapLocal) {
     mapLocal.once("render", function () {
       // console.log("Render_local_Screenshot", mapLocal.getCanvas().toDataURL());
 
-      mapLocal.getCanvas().toBlob((blob) => resolve(blob));
-      // resolve(mapLocal.getCanvas().toBlob());
+      // mapLocal.getCanvas().toBlob((blob) => resolve(blob));
+      resolve(mapLocal.getCanvas().toDataURL());
     });
 
     /* trigger render */
@@ -112,7 +113,7 @@ export const createFinalImage = async ({
         const div = document.getElementById("snapshot_map");
         div.parentNode.removeChild(div);
 
-        alert(JSON.stringify(data));
+        // alert(JSON.stringify(data));
 
         const image = await getImageFromBase64(data);
 
@@ -143,7 +144,7 @@ export const createFinalImage = async ({
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
       } catch (e) {
         alert("Failed while creating Taking screenshot and creating Image");
-        alert(JSON.stringify(e));
+        // alert(JSON.stringify(e));
         console.log({ e });
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
       }
@@ -151,11 +152,11 @@ export const createFinalImage = async ({
   });
 };
 
-const getImageFromBase64 = async (blob) => {
+const getImageFromBase64 = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const imgEl = new Image();
-      alert("Created_Img");
+      // alert("Created_Img");
 
       imgEl.onload = () => {
         resolve(imgEl);
@@ -163,23 +164,27 @@ const getImageFromBase64 = async (blob) => {
 
       imgEl.onerror = function (e) {
         console.log("Error loading image", e);
-        alert(JSON.stringify(e));
+        // alert(JSON.stringify(e));
 
         reject("Failed to create image");
       };
-      console.log({ BlobHere: blob });
-      // const theBlob = new Blob([window.atob(imageBase64)], {
+
+      // function b64_to_utf8(str) {
+      //   return decodeURIComponent(escape(atobX(str)));
+      // }
+      console.log(JSON.stringify(data));
+      // const theBlob = new Blob([atobX(data)], {
       //   type: "image/png",
       // });
-      alert("Creating_objectURL");
+      // alert("Creating_objectURL", theBlob);
 
-      const objectURL = URL.createObjectURL(blob);
-      alert("Created_objectURL");
+      // const objectURL = URL.createObjectURL(theBlob);
+      // alert("Created_objectURL");
 
-      alert(JSON.stringify({ objectURL: objectURL }));
+      // alert(JSON.stringify({ objectURL: objectURL }));
 
-      imgEl.src = objectURL;
-      // imgEl.src = imageBase64;
+      // imgEl.src = b64_to_utf8(data);
+      imgEl.src = data;
     } catch (Error) {
       console.log("Error in getImageFromBase64", { Error });
     }
