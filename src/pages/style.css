@@ -71,6 +71,14 @@ body {
   font-family: "HarmoniaSans_local", serif;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.div::-webkit-scrollbar {
+  display: none;
+}
+
 .mapboxgl-canvas {
   position: relative !important;
   outline: 5px solid green;

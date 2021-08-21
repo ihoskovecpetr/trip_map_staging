@@ -169,7 +169,7 @@ export default function MapContainer({
                     </ImagesWrap>
 
                     <p>
-                      Finální produkt zobrazíte kliknutím na{" "}
+                      Finální produkt zobrazíte kliknutím na tlačítko{" "}
                       <DummyBtn>
                         <OpenWithIcon color="grey" />
                       </DummyBtn>
