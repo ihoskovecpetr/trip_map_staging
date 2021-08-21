@@ -1,5 +1,6 @@
 // import request from "superagent";
 import mapboxgl from "mapbox-gl";
+import atob from "atob";
 
 import { drawLayout } from "./drawLayout";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
@@ -18,8 +19,9 @@ function takeScreenshot(mapLocal) {
   return new Promise(function (resolve, _) {
     mapLocal.once("render", function () {
       console.log("Render_local_Screenshot", mapLocal.getCanvas().toDataURL());
-      alert("mapDataUrl OK");
-      resolve(mapLocal.getCanvas().toDataURL());
+
+      mapLocal.getCanvas().toBlob((blob) => resolve(blob));
+      // resolve(mapLocal.getCanvas().toBlob());
     });
 
     /* trigger render */
@@ -110,14 +112,10 @@ export const createFinalImage = async ({
       try {
         const div = document.getElementById("snapshot_map");
         div.parentNode.removeChild(div);
-        alert("remove_snapshot_map OK");
 
         const image = await getImageFromBase64(data);
-        alert("created_image OK");
 
         const mergerCanvas = document.getElementById("canvas_merging");
-
-        alert("created_canvas OK");
 
         mergerCanvas.setAttribute("height", image.height);
         mergerCanvas.setAttribute("width", image.width);
@@ -125,11 +123,8 @@ export const createFinalImage = async ({
         // mergerCanvas.style.setProperty("width", `${image.width}px`);
 
         var ctx = mergerCanvas.getContext("2d");
-        alert("canvas_context OK");
 
         ctx.drawImage(image, 0, 0);
-
-        alert("image_Drawn OK");
 
         drawLayout(ctx, {
           width: image.width,
@@ -149,32 +144,36 @@ export const createFinalImage = async ({
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
       } catch (e) {
         alert("Failed while creating Taking screenshot and creating Image");
+        console.log({ e });
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
       }
     });
   });
 };
 
-const getImageFromBase64 = async (imageBase64) => {
+const getImageFromBase64 = async (blob) => {
   return new Promise(async (resolve, reject) => {
     try {
       const imgEl = new Image();
-
-      alert("created_image OK");
 
       imgEl.onload = () => {
         resolve(imgEl);
       };
 
       imgEl.onerror = function (e) {
-        alert(JSON.stringify(e));
         console.log("Error loading image", e);
         reject("Failed to create image");
       };
+      console.log({ BlobHere: blob });
+      // const theBlob = new Blob([window.atob(imageBase64)], {
+      //   type: "image/png",
+      // });
 
-      imgEl.src = imageBase64;
+      const objectURL = URL.createObjectURL(blob);
+
+      imgEl.src = objectURL;
+      // imgEl.src = imageBase64;
     } catch (Error) {
-      alert(JSON.stringify(Error));
       console.log("Error in getImageFromBase64", { Error });
     }
   });

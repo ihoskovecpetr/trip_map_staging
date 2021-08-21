@@ -317,7 +317,7 @@ const styles = {
     height: "100%",
   },
   canvas_merging: {
-    // display: "none",
+    display: "none",
   },
   allBtnWrapper: {
     display: "flex",

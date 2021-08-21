@@ -19,8 +19,6 @@ export function useIsSizeWebGLSizeCapable() {
   useEffect(() => {
     const maxSidePx = checkWebGLMaxSize();
 
-    alert(maxSidePx);
-
     setMaxPixels(maxSidePx);
     setIsLargeSizeCapable(maxSidePx >= PRINT_CANVAS_BASE_PX * PIXEL_RATIO_LG);
     setIsMidSizeCapable(maxSidePx >= PRINT_CANVAS_BASE_PX * PIXEL_RATIO_MD);
