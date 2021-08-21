@@ -109,10 +109,14 @@ export const createFinalImage = async ({
     takeScreenshot(snapshotMapObject).then(async function (data) {
       var div = document.getElementById("snapshot_map");
       div.parentNode.removeChild(div);
+      alert("remove_snapshot_map OK");
 
       const image = await getImageFromBase64(data);
+      alert("created_image OK");
 
       const mergerCanvas = document.getElementById("canvas_merging");
+
+      alert("created_canvas OK");
 
       mergerCanvas.setAttribute("height", image.height);
       mergerCanvas.setAttribute("width", image.width);
@@ -120,6 +124,8 @@ export const createFinalImage = async ({
       // mergerCanvas.style.setProperty("width", `${image.width}px`);
 
       var ctx = mergerCanvas.getContext("2d");
+      alert("canvas_context OK");
+
       ctx.drawImage(image, 0, 0);
 
       alert("image_Drawn OK");
