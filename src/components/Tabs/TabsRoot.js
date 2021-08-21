@@ -197,7 +197,7 @@ const MainContainer = styled.div`
 
   @media (min-width: 768px) {
     height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
-    overflow: scroll;
+    overflow: auto;
     top: unset;
   }
 `;
@@ -224,7 +224,7 @@ const TabContentWrap = styled.div`
   padding: 0px 0.7rem;
   height: ${({ topElementsHeight }) =>
     `calc(100vh - ${topElementsHeight}px - 20px)`};
-  overflow: scroll;
+  overflow: auto;
 
   @media (max-width: 768px) {
     height: unset;

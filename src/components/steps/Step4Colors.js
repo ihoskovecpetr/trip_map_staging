@@ -139,7 +139,7 @@ const styles = {
 const ColorsWrap = styled.div`
   display: flex;
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
   padding: 10px 10px;
   flex-wrap: wrap;
 `;

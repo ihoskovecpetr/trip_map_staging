@@ -111,6 +111,13 @@ const InterierGlassy4 = {
     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/int_glass__white_f7g8h1.jpg",
 };
 
+const InterierWallBerlin = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/v1629565425/Finished%20Interiers/wall_brick_berlin_hfq8uv.jpg",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/wall_brick_berlin_hfq8uv.jpg",
+};
+
 const imagesArr = [
   InterierChair1,
   InterierPink2,
@@ -127,6 +134,7 @@ const imagesArr = [
   //   InterierGlassy2,
   InterierGlassy3,
   //   InterierGlassy4,
+  InterierWallBerlin,
 ];
 
 export default function KeyFeature() {

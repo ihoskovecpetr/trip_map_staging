@@ -108,7 +108,7 @@ const StyledAncor = styled.a`
 
 const StyledContainer = styled.div`
   position: relative;
-  margin: 0 5px;
+  margin: 0 15px;
   cursor: pointer;
 `;
 

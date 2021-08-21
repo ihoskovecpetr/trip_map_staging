@@ -3,6 +3,7 @@ import React from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { mobile } from "utils";
 
 import borderBlurredLayoutImgPNG from "assets/mapLayouts/png/borderBlurredLayout.png";
 import bottomBlurredLayoutImgPNG from "assets/mapLayouts/png/bottomBlurredLayout.png";
@@ -53,7 +54,7 @@ export default function Step3Layout() {
   return (
     <div sx={styles.container}>
       {!isMobile && <HeadingText>4. Ohraničení</HeadingText>}
-      <div sx={styles.allLayoutsWrap}>
+      <AllLayoutsContainer>
         {Object.values(LAYOUTS).map((layoutObj, index) => (
           <div
             className={activeLayoutNameRedux === layoutObj.name && "active"}
@@ -71,7 +72,7 @@ export default function Step3Layout() {
             <p sx={styles.layoutItemText}>{layoutObj.name}</p>
           </div>
         ))}
-      </div>
+      </AllLayoutsContainer>
     </div>
   );
 }
@@ -89,14 +90,6 @@ const styles = {
     color: "grey",
     marginTop: "20px",
     letterSpacing: "1.1px",
-  },
-  allLayoutsWrap: {
-    display: "flex",
-    // width: "100%",
-    overflow: "scroll",
-    flexWrap: "wrap",
-    paddingTop: "2px",
-    paddingBottom: ["30px", null, null, "0px"],
   },
   layoutItem: {
     width: ["23%", "18%", null, "23%", "18%"],
@@ -151,4 +144,20 @@ const StyledImage = styled.img`
   color: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 0px 3px;
   color: ${({ active }) => active && color("cta_color")};
+`;
+
+const AllLayoutsContainer = styled.div`
+  display: flex;
+  overflow: scroll;
+  flex-wrap: wrap;
+  padding-top: 2px;
+  padding-bottom: 0px;
+
+  ${mobile`
+    padding-bottom: 30px;
+  `}
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

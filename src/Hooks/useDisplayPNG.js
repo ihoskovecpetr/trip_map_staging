@@ -15,7 +15,6 @@ export function useDisplayPNG() {
       });
 
       imageEl.addEventListener("load", (event) => {
-        console.log("IMG_Image_has_fully_loaded", { event });
         setDisplayPNG(false);
       });
     }
