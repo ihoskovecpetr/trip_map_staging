@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import React from "react";
+import React, { useState } from "react";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
@@ -12,21 +11,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function backdropLoader() {
+export default function BackdropLoader({ defaultState }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(defaultState);
   const handleClose = () => {
     setOpen(false);
   };
-  const handleToggle = () => {
-    setOpen(!open);
-  };
+  // const handleToggle = () => {
+  //   setOpen(!open);
+  // };
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleToggle}>
-        Show backdrop
-      </Button>
       <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
         <CircularProgress color="inherit" />
       </Backdrop>

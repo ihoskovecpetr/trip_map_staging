@@ -54,7 +54,7 @@ export default function MapContainer({
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
   const seenPopup = useSeenPopupSelector();
-  const [openBackdrop, setOpenBackdrop] = useState();
+  const [openBackdrop, setOpenBackdrop] = useState(false);
 
   const [lightbox, setLightbox] = useState({
     open: false,
@@ -102,17 +102,16 @@ export default function MapContainer({
     });
 
     setIsCreatingImage(false);
-    return
+    return;
   };
 
-  const openTeaserImage = () => {
+  const openTeaserImage = async () => {
     if (isCreatingImage) {
       return;
     }
     setOpenBackdrop(true);
     await fullscreenImageRequested();
     setOpenBackdrop(false);
-
   };
 
   return (
@@ -217,7 +216,7 @@ export default function MapContainer({
         />
       )}
 
-      {openBackdrop && <BackdropLoader />}
+      {openBackdrop && <BackdropLoader defaultState={true} />}
     </div>
   );
 }

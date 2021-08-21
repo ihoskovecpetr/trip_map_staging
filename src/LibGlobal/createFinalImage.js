@@ -107,45 +107,50 @@ export const createFinalImage = async ({
     });
 
     takeScreenshot(snapshotMapObject).then(async function (data) {
-      var div = document.getElementById("snapshot_map");
-      div.parentNode.removeChild(div);
-      alert("remove_snapshot_map OK");
+      try {
+        const div = document.getElementById("snapshot_map");
+        div.parentNode.removeChild(div);
+        alert("remove_snapshot_map OK");
 
-      const image = await getImageFromBase64(data);
-      alert("created_image OK");
+        const image = await getImageFromBase64(data);
+        alert("created_image OK");
 
-      const mergerCanvas = document.getElementById("canvas_merging");
+        const mergerCanvas = document.getElementById("canvas_merging");
 
-      alert("created_canvas OK");
+        alert("created_canvas OK");
 
-      mergerCanvas.setAttribute("height", image.height);
-      mergerCanvas.setAttribute("width", image.width);
-      // mergerCanvas.style.setProperty("height", `${image.height}px`);
-      // mergerCanvas.style.setProperty("width", `${image.width}px`);
+        mergerCanvas.setAttribute("height", image.height);
+        mergerCanvas.setAttribute("width", image.width);
+        // mergerCanvas.style.setProperty("height", `${image.height}px`);
+        // mergerCanvas.style.setProperty("width", `${image.width}px`);
 
-      var ctx = mergerCanvas.getContext("2d");
-      alert("canvas_context OK");
+        var ctx = mergerCanvas.getContext("2d");
+        alert("canvas_context OK");
 
-      ctx.drawImage(image, 0, 0);
+        ctx.drawImage(image, 0, 0);
 
-      alert("image_Drawn OK");
+        alert("image_Drawn OK");
 
-      drawLayout(ctx, {
-        width: image.width,
-        height: image.height,
-        activeLayoutName,
-        mapTitles,
-        product,
-        isProductionPrint: true,
-        activeMapStyleName,
-        localPixelRatio: computedPixelRatio,
-      });
+        drawLayout(ctx, {
+          width: image.width,
+          height: image.height,
+          activeLayoutName,
+          mapTitles,
+          product,
+          isProductionPrint: true,
+          activeMapStyleName,
+          localPixelRatio: computedPixelRatio,
+        });
 
-      const finalImgWithLayout = mergerCanvas.toDataURL();
+        const finalImgWithLayout = mergerCanvas.toDataURL();
 
-      resolve(finalImgWithLayout);
+        resolve(finalImgWithLayout);
 
-      setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
+        setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
+      } catch (e) {
+        alert("Failed while creating Taking screenshot and creating Image");
+        setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
+      }
     });
   });
 };
