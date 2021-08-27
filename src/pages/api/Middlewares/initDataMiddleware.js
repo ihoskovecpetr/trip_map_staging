@@ -38,7 +38,7 @@ const initDataMiddleware = () => async (req, res, next) => {
 
   const cookieStoreId = req.cookies[REDUX_COOKIE_NAME];
 
-  if (req?.query.id) {
+  if (req && req.query && req.query.id) {
     const foundStore = await FullStore.findOne({
       storeId: req?.query.id,
     });
