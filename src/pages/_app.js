@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import NextApp from "next/app";
+import withRedux from "next-redux-wrapper";
+import axios from "axios";
+
 import CookieConsent from "react-cookie-consent";
-// import NextApp from "next/app";
-import App, { Container } from "next/app";
 import styled, { ThemeProvider } from "styled-components";
+import { useCookies } from "react-cookie";
+
 import { color } from "utils";
 
 // import { initGA, logPageView } from "analytics";
@@ -25,7 +29,9 @@ import "react-image-lightbox/style.css";
 import theme from "../theme/theme.js";
 import { GlobalStyle } from "../theme/global";
 
-import * as ga from "LibGlobal/ga";
+import { useFullStoreSelector } from "redux/order/reducer";
+
+import { REDUX_COOKIE_NAME, IS_CLIENT } from "constants/constants";
 
 const themeMaterialUI = createTheme({
   palette: {
@@ -41,26 +47,46 @@ const themeMaterialUI = createTheme({
   },
 });
 
-// const wrapper = createWrapper(makeStore);
-
-// export default function CustomApp({ Component, pageProps }) {
 const MyApp = ({ Component, pageProps, store }) => {
   const router = useRouter();
+  const [cookie, setCookie] = useCookies([REDUX_COOKIE_NAME]);
+
+  const fullReduxStore = useFullStoreSelector();
 
   // useEffect(() => {
-  //   const handleRouteChange = (url) => {
-  //     ga.pageview(url);
-  //   };
-  //   //When the component is mounted, subscribe to router changes
-  //   //and log those page views
-  //   router.events.on("routeChangeComplete", handleRouteChange);
+  //   const storedCookie = cookie[REDUX_COOKIE_NAME];
 
-  //   // If the component is unmounted, unsubscribe
-  //   // from the event with the `off` method
-  //   return () => {
-  //     router.events.off("routeChangeComplete", handleRouteChange);
-  //   };
-  // }, [router.events]);
+  //   if (storedCookie != router?.query?.id || !router?.query?.id) {
+  //     router.query.id = storedCookie;
+  //     router.push(router);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    const storedCookie = cookie[REDUX_COOKIE_NAME];
+
+    const saveReduxStore = async (store) => {
+      await axios.post("api/save-redux-store", {
+        reduxStore: store,
+        storeId: storedCookie,
+      });
+    };
+
+    saveReduxStore(fullReduxStore);
+  }, [fullReduxStore]);
+
+  useEffect(() => {
+    console.log("New_pathName", { pathName: router.pathname });
+
+    if (router.pathname === "/studio") {
+      const storedCookie = cookie[REDUX_COOKIE_NAME];
+
+      if (storedCookie != router?.query?.id || !router?.query?.id) {
+        router.query.id = storedCookie;
+        router.push(router);
+      }
+    }
+  }, [router.pathname]);
 
   return (
     <>
@@ -103,11 +129,28 @@ const MyApp = ({ Component, pageProps, store }) => {
 };
 
 MyApp.getInitialProps = wrapper.getInitialPageProps(
-  (store) => ({ pathname, req, res }) => {
-    // store.dispatch({
-    //   type: "TICK",
-    //   payload: "was set in error page " + pathname,
-    // });
+  (store) => async (appContext) => {
+    const { ctx } = appContext;
+
+    const { pathname, req, res, router } = ctx;
+
+    if (IS_CLIENT) {
+      console.log("_app_isClient_returnuning", { ctx });
+      return;
+    }
+
+    const { meta } = req;
+
+    if (meta?.storeId && res.cookie[REDUX_COOKIE_NAME] != meta.storeId) {
+      res.cookie(REDUX_COOKIE_NAME, meta.storeId, {
+        maxAge: 900000,
+        httpOnly: false,
+      });
+    }
+
+    const appProps = await NextApp.getInitialProps(appContext);
+
+    return { ...appProps, extra: "prop", storeId: meta?.storeId };
   }
 );
 

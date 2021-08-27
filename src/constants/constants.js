@@ -1,5 +1,7 @@
 const IS_CLIENT = typeof window !== "undefined";
 
+const IS_SERVER = typeof window === "undefined";
+
 const RUNTIME_PIXEL_RATIO = 2;
 
 const PIXEL_RATIO_SM = 1.7; // 1.7
@@ -510,8 +512,11 @@ const FAKE_DIV_IDS = {
 
 const VALID_DISCOUNT_CODES = [{ code: "AU65", discountKoef: 0.9 }];
 
+const REDUX_COOKIE_NAME = "reduxStoreCookie";
+
 module.exports = {
   IS_CLIENT,
+  IS_SERVER,
   RUNTIME_PIXEL_RATIO,
   PIXEL_RATIO_SM,
   PIXEL_RATIO_MD,
@@ -546,4 +551,5 @@ module.exports = {
   TITLE_NAMES,
   FAKE_DIV_IDS,
   VALID_DISCOUNT_CODES,
+  REDUX_COOKIE_NAME,
 };

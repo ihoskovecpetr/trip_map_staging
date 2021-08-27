@@ -1,6 +1,5 @@
 // import request from "superagent";
 import mapboxgl from "mapbox-gl";
-import atobX from "atob";
 
 import { drawLayout } from "./drawLayout";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
@@ -169,21 +168,16 @@ const getImageFromBase64 = async (data) => {
         reject("Failed to create image");
       };
 
-      // function b64_to_utf8(str) {
-      //   return decodeURIComponent(escape(atobX(str)));
-      // }
       console.log(JSON.stringify(data));
       // const theBlob = new Blob([atobX(data)], {
       //   type: "image/png",
       // });
-      // alert("Creating_objectURL", theBlob);
 
       // const objectURL = URL.createObjectURL(theBlob);
       // alert("Created_objectURL");
 
       // alert(JSON.stringify({ objectURL: objectURL }));
 
-      // imgEl.src = b64_to_utf8(data);
       imgEl.src = data;
     } catch (Error) {
       console.log("Error in getImageFromBase64", { Error });
