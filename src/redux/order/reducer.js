@@ -39,21 +39,25 @@ const orderInitialState = {
   discount: { code: "", codeAccepted: false },
 };
 
-const order = produce((state = orderInitialState, { type, data }) => {
+const order = produce((state = orderInitialState, { type, data, payload }) => {
   switch (type) {
     case HYDRATE:
       if (typeof window !== "undefined") {
         const storedPopupState = localStorage.getItem("seenPopup");
 
-        return { ...state, seenPopup: !!storedPopupState, isHydrated: true };
+        return {
+          ...orderInitialState,
+          ...state,
+          seenPopup: !!storedPopupState,
+          isHydrated: true,
+          ...payload.order, // in payload is server store state !!!!
+        };
       }
-      // const stateDiff = diff(state, action.payload) as any;
-      // const wasBumpedOnClient = stateDiff?.page?.[0]?.endsWith('X'); // or any other criteria
       return {
+        ...orderInitialState,
         ...state,
         isHydrated: true,
-        // ...action.payload,
-        // page: wasBumpedOnClient ? state.page : action.payload.page, // keep existing state or use hydrated
+        ...payload.order, // in payload is server store state !!!!
       };
     case countActionTypes.SET_PRODUCT:
       state.product = {
@@ -108,6 +112,8 @@ const order = produce((state = orderInitialState, { type, data }) => {
       return state;
   }
 });
+
+export const useFullStoreSelector = () => useSelector((store) => store.order);
 
 export const useProductSelector = () =>
   useSelector((store) => store.order.product);

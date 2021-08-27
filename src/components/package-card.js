@@ -15,6 +15,7 @@ export default function PriceCard({
     description,
     priceWithUnit,
     buttonText = "Start Free Trial",
+    buttonUri = "/studio",
     points,
   },
   deliveryPrice,
@@ -68,7 +69,9 @@ export default function PriceCard({
             variant={header ? "primary" : "whiteButton"}
             aria-label={buttonText}
             onClick={() => {
-              router.push("/studio");
+              // router.push(buttonUri);
+              window.location.href = `http://localhost:3000${buttonUri}`;
+
               setIsLoading(true);
             }}
           >

@@ -58,7 +58,6 @@ export default function LandingPage() {
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG();
 
-  console.log("displayPNG", displayPNG);
   useEffect(() => {
     const vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document

@@ -7,7 +7,6 @@ import Layout from "components/layout";
 import ObchodniInformace from "sections/obchodniInformace";
 
 import Faq from "sections/faq";
-import { wrapper } from "../redux/store";
 
 const IndexPage = (props) => {
   return (
@@ -26,12 +25,6 @@ const IndexPage = (props) => {
     </ThemeProvider>
   );
 };
-
-IndexPage.getInitialProps = wrapper.getInitialPageProps(
-  (store) => ({ pathname, req, res }) => {
-    // store.dispatch(setNewTitle());
-  }
-);
 
 // export default connect((state) => state, {})(IndexPage);
 export default IndexPage;

@@ -1,4 +1,3 @@
-const uuid = require("uuid");
 const mongoose = require("mongoose");
 const Big = require("big.js");
 
@@ -12,6 +11,8 @@ const {
 const {
   fetchAndTransformDataPrintful,
 } = require("./Lib/fetchAndTransformDataPrintful");
+
+const { REDUX_COOKIE_NAME } = require("../../constants/constants.js");
 
 const IS_PRODUCTION = getIsProduction();
 
@@ -108,8 +109,10 @@ export default async (req, res) => {
           ? "http://www.tripmap.shop"
           : "http://localhost:3000";
 
+        const cookieStoreId = req.cookies[REDUX_COOKIE_NAME];
+
         const session = await stripe.checkout.sessions.create({
-          cancel_url: BASE_DOMAIN + "/studio",
+          cancel_url: BASE_DOMAIN + `/studio?id=${cookieStoreId}`,
           success_url:
             BASE_DOMAIN + "/api/checkout-success?id={CHECKOUT_SESSION_ID}",
 
