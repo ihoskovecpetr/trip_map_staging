@@ -40,22 +40,23 @@ const initDataMiddleware = () => async (req, res, next) => {
 
   if (req && req.query && req.query.id) {
     const foundStore = await FullStore.findOne({
-      storeId: req?.query.id,
+      storeId: req.query.id,
     });
-    const foundStoreWithout_id = { ...foundStore?._doc };
-
-    delete foundStoreWithout_id._id;
-    delete foundStoreWithout_id.createdAt;
-    delete foundStoreWithout_id.updatedAt;
 
     if (foundStore) {
-      if (foundStore && req?.query.id === cookieStoreId) {
+      const foundStoreWithout_id = { ...foundStore._doc };
+
+      delete foundStoreWithout_id._id;
+      delete foundStoreWithout_id.createdAt;
+      delete foundStoreWithout_id.updatedAt;
+
+      if (req && req.query.id === cookieStoreId) {
         req.meta = {
           ...foundStoreWithout_id,
         };
       }
 
-      if (foundStore && req?.query.id != cookieStoreId) {
+      if (req && req.query.id != cookieStoreId) {
         const newStoreId = v4();
 
         req.meta = {
@@ -65,7 +66,7 @@ const initDataMiddleware = () => async (req, res, next) => {
       }
     }
 
-    if (!foundStore && req?.query.id != cookieStoreId) {
+    if (!foundStore && req && req.query.id != cookieStoreId) {
       const newStoreId = v4();
       const newStore = new FullStore({
         storeId: newStoreId,
@@ -83,7 +84,7 @@ const initDataMiddleware = () => async (req, res, next) => {
     });
 
     if (foundStoreCookie) {
-      const foundStoreCookieDoc = { ...foundStoreCookie?._doc };
+      const foundStoreCookieDoc = { ...foundStoreCookie._doc };
       delete foundStoreCookieDoc._id;
       delete foundStoreCookieDoc.createdAt;
       delete foundStoreCookieDoc.updatedAt;
