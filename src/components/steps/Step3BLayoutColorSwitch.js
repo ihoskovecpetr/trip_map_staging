@@ -28,7 +28,7 @@ export default function Step3BLayoutColorSwitch() {
 
   return (
     <Container>
-      {!isMobile && <HeadingText>4. Výplň ohraničení</HeadingText>}
+      {!isMobile && <HeadingText>5. Výplň ohraničení</HeadingText>}
       {activeMapStyleObject.layoutColor && activeMapStyleObject.textColor && (
         <ItemContainer>
           <LayoutItemWrap>

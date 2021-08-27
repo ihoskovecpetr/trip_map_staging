@@ -1,4 +1,3 @@
-const uuid = require("uuid");
 const mongoose = require("mongoose");
 const axios = require("axios");
 const hbs = require("nodemailer-express-handlebars");

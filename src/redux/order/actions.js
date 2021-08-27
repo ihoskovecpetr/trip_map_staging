@@ -1,4 +1,5 @@
 export const countActionTypes = {
+  SET_HYDRATE_FROM_LOCAL: "SET_HYDRATE_FROM_LOCAL",
   SET_PRODUCT: "SET_PRODUCT",
   NEW_TITLE: "NEW_TITLE",
   NEW_SUBTITLE: "NEW_SUBTITLE",
@@ -80,5 +81,12 @@ export const setPopupSeen = (bool) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_POPUP_SEEN,
     data: bool,
+  });
+};
+
+export const setHydrateFromLocalStorage = (string) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_HYDRATE_FROM_LOCAL,
+    data: string,
   });
 };

@@ -5,16 +5,15 @@ import theme from "theme";
 import SEO from "components/seo";
 import Layout from "components/layout";
 import ErrorBoundary from "components/ErrorBoundary";
+import router, { useRouter } from "next/router";
 
 import StudioRootContainer from "sections/studioRootContainer";
 import { useIsMobile } from "../../Hooks/useIsMobile";
+import { wrapper } from "redux/store";
 
-export default function IndexPage() {
+const StudioPage = (props) => {
+  const router = useRouter();
   const { isMobile } = useIsMobile();
-
-  useEffect(() => {
-    localStorage.setItem("seenPopup", true);
-  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -30,4 +29,16 @@ export default function IndexPage() {
       </StickyProvider>
     </ThemeProvider>
   );
-}
+};
+
+// StudioPage.getInitialProps = wrapper.getInitialPageProps((store) => (props) => {
+//   const { pathname, req, res, router, query } = props;
+
+//   return { pathname };
+// });
+
+// StudioPage.getInitialProps = async (ctx) => {
+//   return { props: "nic" };
+// };
+
+export default StudioPage;

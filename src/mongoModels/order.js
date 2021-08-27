@@ -7,13 +7,9 @@ const OrderScehma = new Schema(
     clientProductObj: { type: Object },
     imageObj: { type: Object },
     mapTitles: { type: Object },
+    discountCode: { type: String },
   },
   { timestamps: true }
-);
-
-OrderScehma.index(
-  { geometry: "2dsphere", name: "text", address: "text", description: "text" },
-  { weights: { name: 2, address: 1, description: 1 } }
 );
 
 module.exports =

@@ -12,6 +12,7 @@ import { ORIENTATIONS } from "@constants";
 import Stepper from "./Stepper";
 
 import Step1Location from "../steps/StepLocation";
+import StepAddRoute from "../steps/StepAddRoute";
 import Step2Orientation from "../steps/Step2Orientation";
 import Step3Layout from "../steps/Step3Layout";
 import Step3BLayoutColorSwitch from "../steps/Step3BLayoutColorSwitch";
@@ -74,7 +75,12 @@ export default function TabsRootNew({ map }) {
   };
 
   const stepElementsDesktop = [
-    [<Step1Location map={map} />, <Step2Orientation />, <StepTitles />],
+    [
+      <Step1Location map={map} />,
+      <StepAddRoute map={map} />,
+      <Step2Orientation />,
+      <StepTitles />,
+    ],
     [<Step3Layout />, <Step3BLayoutColorSwitch />, <Step4Colors />],
     [<Step5Size />, <Step6FinishVariant map={map} />],
     [<Step8Checkout map={map} activeMapStyleName={activeMapStyleName} />],
@@ -82,6 +88,7 @@ export default function TabsRootNew({ map }) {
 
   const stepElementsMobile = [
     [<Step1Location map={map} />],
+    [<StepAddRoute map={map} />],
     [<Step2Orientation />],
     [<StepTitles />],
     [<Step4Colors />],

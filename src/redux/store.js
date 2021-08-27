@@ -1,8 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import { HYDRATE, createWrapper } from "next-redux-wrapper"; // ADD HYDRATE!!
+import { createWrapper } from "next-redux-wrapper";
 import thunkMiddleware from "redux-thunk";
 import order from "./order/reducer";
-// import tick from './tick/reducer'
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== "production") {
@@ -14,11 +13,14 @@ const bindMiddleware = (middleware) => {
 
 const combinedReducer = combineReducers({
   order,
-  //   tick,
 });
 
-const initStore = () => {
-  return createStore(combinedReducer, bindMiddleware([thunkMiddleware]));
+const initStore = (props) => {
+  return createStore(
+    combinedReducer,
+    { order: { ...props?.ctx?.req.meta } },
+    bindMiddleware([thunkMiddleware])
+  );
 };
 
 export const wrapper = createWrapper(initStore);

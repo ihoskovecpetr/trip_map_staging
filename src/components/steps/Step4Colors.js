@@ -83,7 +83,7 @@ export default function Step4Colors() {
 
   return (
     <Container>
-      {!isMobile && <HeadingText>7. Barevná kombinace</HeadingText>}
+      {!isMobile && <HeadingText>6. Barevná kombinace</HeadingText>}
       <ColorsWrap>
         {Object.values(MAP_STYLES_NAMES).map((style, index) => (
           <div
