@@ -42,6 +42,7 @@ const initDataMiddleware = () => async (req, res, next) => {
     const foundStore = await FullStore.findOne({
       storeId: req?.query.id,
     });
+
     const foundStoreWithout_id = { ...foundStore?._doc };
 
     delete foundStoreWithout_id._id;

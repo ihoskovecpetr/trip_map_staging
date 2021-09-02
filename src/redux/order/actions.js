@@ -11,6 +11,9 @@ export const countActionTypes = {
   SET_DISCOUNT_CODE: "SET_DISCOUNT_CODE",
   SET_DISCOUNT_CODE_ACCEPTED: "SET_DISCOUNT_CODE_ACCEPTED",
   SET_POPUP_SEEN: "SET_POPUP_SEEN",
+  ADD_NEW_JOURNEY: "ADD_NEW_JOURNEY",
+  UPDATE_JOURNEY: "UPDATE_JOURNEY",
+  REMOVE_JOURNEY_POINT: "REMOVE_JOURNEY_POINT",
 };
 
 export const setProductAction = (newProduct) => (dispatch) => {
@@ -88,5 +91,26 @@ export const setHydrateFromLocalStorage = (string) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_HYDRATE_FROM_LOCAL,
     data: string,
+  });
+};
+
+export const addNewJourney = (arr) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.ADD_NEW_JOURNEY,
+    data: arr,
+  });
+};
+
+export const updateJourney = (point) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.UPDATE_JOURNEY,
+    data: point,
+  });
+};
+
+export const removeJourneyPoint = (point) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.REMOVE_JOURNEY_POINT,
+    data: point,
   });
 };

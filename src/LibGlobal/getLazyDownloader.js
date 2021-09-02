@@ -10,18 +10,14 @@ const getLazyDownloader = (getResult, getPromise) => {
 
     if (result) {
       promise = null;
-      console.log("Giving him saved result");
-
       return result;
     }
 
     if (promise) {
-      console.log("Giving him pending promise");
       return promise;
     }
 
     promise = getPromise();
-    console.log("Setting getPromise");
     return promise;
   };
 };

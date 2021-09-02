@@ -27,6 +27,7 @@ const fullStoreScehma = new Schema(
     seenPopup: { type: Boolean },
     uploadPercentage: { type: Number },
     discount: { type: Object },
+    journeys: { type: Object },
   },
   { timestamps: true }
 );

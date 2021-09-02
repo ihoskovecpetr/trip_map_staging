@@ -396,7 +396,6 @@ export default function StudioRootContainer() {
       // subtitleInput.innerText = TITLES_DEFAULT[1];
 
       map.on("moveend", function () {
-        console.log("map_moveend_event");
         dispatch(setMapCoordinatesAction(map.getCenter()));
         // setMapCoordinates(map.getCenter());
       });

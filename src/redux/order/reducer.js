@@ -38,6 +38,7 @@ const orderInitialState = {
   uploadPercentage: 0,
   discount: { code: "", codeAccepted: false },
   string: "",
+  journeys: [],
 };
 
 const order = produce((state = orderInitialState, { type, data, payload }) => {
@@ -121,6 +122,30 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       state.discount.codeAccepted = data;
       return state;
 
+    case countActionTypes.ADD_NEW_JOURNEY:
+      state.journeys = [...state.journeys, data];
+      return state;
+
+    case countActionTypes.UPDATE_JOURNEY:
+      const updatingIndex = state.journeys.findIndex(
+        (item) => item.sourceId === data.sourceId
+      );
+
+      const newJourneys = [...state.journeys];
+      newJourneys[updatingIndex] = data;
+
+      state.journeys = newJourneys;
+      return state;
+
+    case countActionTypes.REMOVE_JOURNEY_POINT:
+      console.log("Data_sourceID", { data });
+      const filteredJourneys = state.journeys.filter(
+        (item) => item.sourceId != data.sourceId
+      );
+
+      state.journeys = filteredJourneys;
+      return state;
+
     default:
       return state;
   }
@@ -154,5 +179,8 @@ export const useDiscountSelector = () =>
 
 export const useSeenPopupSelector = () =>
   useSelector((store) => store.order.seenPopup);
+
+export const useGetJourneys = () =>
+  useSelector((store) => store.order.journeys);
 
 export default order;

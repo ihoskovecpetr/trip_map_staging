@@ -42,7 +42,7 @@ export default async (req, res) => {
             updatedStore,
           });
         } else {
-          res.status(200).json({
+          res.status(203).json({
             ok: "NOT_UPDATED",
           });
         }

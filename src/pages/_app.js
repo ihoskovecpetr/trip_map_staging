@@ -67,18 +67,21 @@ const MyApp = ({ Component, pageProps, store }) => {
     const storedCookie = cookie[REDUX_COOKIE_NAME];
 
     const saveReduxStore = async (store) => {
-      await axios.post("api/save-redux-store", {
+      const response = await axios.post("api/save-redux-store", {
         reduxStore: store,
         storeId: storedCookie,
       });
+
+      if (response.status === 203) {
+        window.location.href =
+          window.location.origin + window.location.pathname;
+      }
     };
 
     saveReduxStore(fullReduxStore);
   }, [fullReduxStore]);
 
   useEffect(() => {
-    console.log("New_pathName", { pathName: router.pathname });
-
     if (router.pathname === "/studio") {
       const storedCookie = cookie[REDUX_COOKIE_NAME];
 
