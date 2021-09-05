@@ -9,7 +9,12 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useProductSelector } from "redux/order/reducer";
 
-export default function Step8Checkout({ map, activeMapStyleName, children }) {
+export default function Step8Checkout({
+  map,
+  activeMapStyleName,
+  snapMapInstance,
+  children,
+}) {
   const [isDefaultDefinition, setIsDefaultDefinition] = useState(true);
   const { isMobile } = useIsMobile();
   const productRedux = useProductSelector();
@@ -17,19 +22,6 @@ export default function Step8Checkout({ map, activeMapStyleName, children }) {
   return (
     <Container>
       <AbsoluteBtnWrap>
-        {/* <FormControlLabel
-          control={
-            <Checkbox
-              checked={isDefaultDefinition}
-              color="primary"
-              onClick={(e) => {
-                setIsDefaultDefinition(e.target.checked);
-              }}
-            />
-          }
-          label="Střední úrověň měřítka mapy"
-        /> */}
-
         {!isMobile && (
           <ExtraPaddingTop>
             <HeadingText>9. Materiál pro tisk</HeadingText>
@@ -42,7 +34,11 @@ export default function Step8Checkout({ map, activeMapStyleName, children }) {
         )}
         {!isMobile && <HeadingText>10. Shrnutí</HeadingText>}
 
-        <CheckoutCta map={map} children={children} />
+        <CheckoutCta
+          map={map}
+          children={children}
+          snapMapInstance={snapMapInstance}
+        />
       </AbsoluteBtnWrap>
     </Container>
   );

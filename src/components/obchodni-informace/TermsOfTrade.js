@@ -274,7 +274,7 @@ export default function Objection({ name }) {
                 činnost jako spotřebitel, má právo od kupní smlouvy odstoupit.
               </li>
               <li>
-                Lhůta pro odstoupení od smlouvy činí 14 dnů
+                Lhůta pro odstoupení od smlouvy činí 14 dní
                 <ul>
                   <li>ode dne převzetí zboží,</li>
                   <li>

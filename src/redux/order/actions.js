@@ -94,10 +94,10 @@ export const setHydrateFromLocalStorage = (string) => (dispatch) => {
   });
 };
 
-export const addNewJourney = (arr) => (dispatch) => {
+export const addNewJourney = (journey) => (dispatch) => {
   return dispatch({
     type: countActionTypes.ADD_NEW_JOURNEY,
-    data: arr,
+    data: journey,
   });
 };
 

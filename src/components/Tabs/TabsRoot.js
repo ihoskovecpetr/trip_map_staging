@@ -31,7 +31,7 @@ import {
   useActiveMapStyleSelector,
 } from "redux/order/reducer";
 
-export default function TabsRootNew({ map }) {
+export default function TabsRootNew({ map, snapMapInstance }) {
   const classes = useStyles();
   const productRedux = useProductSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
@@ -75,30 +75,36 @@ export default function TabsRootNew({ map }) {
   };
 
   const stepElementsDesktop = [
-    [
-      <Step1Location map={map} />,
-      <StepAddRoute map={map} />,
-      <Step2Orientation />,
-      <StepTitles />,
-    ],
+    [<Step1Location map={map} />, <Step2Orientation />, <StepTitles />],
     [<Step3Layout />, <Step3BLayoutColorSwitch />, <Step4Colors />],
+    [<StepAddRoute map={map} />],
     [<Step5Size />, <Step6FinishVariant map={map} />],
-    [<Step8Checkout map={map} activeMapStyleName={activeMapStyleName} />],
+    [
+      <Step8Checkout
+        map={map}
+        activeMapStyleName={activeMapStyleName}
+        snapMapInstance={snapMapInstance}
+      />,
+    ],
   ];
 
   const stepElementsMobile = [
     [<Step1Location map={map} />],
-    [<StepAddRoute map={map} />],
     [<Step2Orientation />],
     [<StepTitles />],
     [<Step4Colors />],
+    [<StepAddRoute map={map} />],
     [<Step3Layout />],
     [<Step3BLayoutColorSwitch />],
-
     [<Step5Size />],
-
     [<Step6FinishVariant map={map} />],
-    [<Step8Checkout map={map} activeMapStyleName={activeMapStyleName} />],
+    [
+      <Step8Checkout
+        map={map}
+        activeMapStyleName={activeMapStyleName}
+        snapMapInstance={snapMapInstance}
+      />,
+    ],
   ];
 
   const activeStepElements = isMobile
@@ -158,6 +164,7 @@ export default function TabsRootNew({ map }) {
           handleBack={handleBack}
           activeStep={activeStepNumber}
           map={map}
+          snapMapInstance={snapMapInstance}
           activeMapStyleName={activeMapStyleName}
         />
         {/* {isMobile && (

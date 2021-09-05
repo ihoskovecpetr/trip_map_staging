@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,8 @@ import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
+import ReactMapboxGl, { Layer, Feature, Source } from "react-mapbox-gl";
+import Backdrop from "@material-ui/core/Backdrop";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -23,31 +25,67 @@ import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import CustomTooltipWrap from "components/custom-tooltip";
+import { getSortedArrays } from "LibGlobal/getSortedArrays";
+import { getGeoArc } from "LibGlobal/getGeoArc";
 
-import { setProductAction, setPopupSeen } from "redux/order/actions";
+import {
+  setProductAction,
+  setPopupSeen,
+  updateJourney,
+  setMapZoomAction,
+  setMapCoordinatesAction,
+} from "redux/order/actions";
 
 import {
   useProductSelector,
   useActiveLayoutSelector,
   useActiveMapStyleSelector,
   useSeenPopupSelector,
+  useMapCoordinatesSelector,
+  useGetJourneys,
+  useMapZoomSelector,
 } from "redux/order/reducer";
 
 import {
   FAKE_DIV_IDS,
   TITLES_DEFAULT,
   VARIANTS_PRINTFUL,
+  MAP_STYLES,
 } from "constants/constants";
 
 const getFormatedPriceString = (amount) => {
   return amount ? `| ${getFormattedPrice(amount)}` : "";
 };
 
+const NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN =
+  "pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w";
+
+const Map = ReactMapboxGl({
+  accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+});
+
+const Map2 = ReactMapboxGl({
+  accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+});
+
+const lineLayout = {
+  "line-cap": "round",
+  "line-join": "round",
+};
+
+const linePaint = {
+  "line-color": "#000000",
+  "line-width": 2,
+};
+
 export default function MapContainer({
   map,
+  snapMapInstance,
   addZoom,
   subtractZoom,
   mapTitles,
+  setMapInstance,
+  setSnapMapInstance,
 }) {
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
@@ -55,6 +93,10 @@ export default function MapContainer({
   const activeMapStyleName = useActiveMapStyleSelector();
   const seenPopup = useSeenPopupSelector();
   const [openBackdrop, setOpenBackdrop] = useState(false);
+  const journeysRedux = useGetJourneys();
+  const sortedGroupsJourneys = getSortedArrays(journeysRedux);
+  const mapZoom = useMapZoomSelector();
+  const mapCoordinates = useMapCoordinatesSelector();
 
   const [lightbox, setLightbox] = useState({
     open: false,
@@ -62,6 +104,7 @@ export default function MapContainer({
   });
 
   const [isCreatingImage, setIsCreatingImage] = useState(false);
+  const [draggedPoint, setDraggedPoint] = useState();
   const { isMobile } = useIsMobile();
   const qualityImageCreator = useQualityImageCreator();
 
@@ -83,9 +126,10 @@ export default function MapContainer({
 
   const fullscreenImageRequested = async () => {
     setIsCreatingImage(true);
-
+    console.log({ snapMapInstance });
     const finalImgSrc = await qualityImageCreator({
       map,
+      snapMapInstance,
       activeLayoutName: activeLayoutNameRedux,
       product: productRedux,
       activeMapStyleName,
@@ -113,6 +157,42 @@ export default function MapContainer({
     await fullscreenImageRequested();
     setOpenBackdrop(false);
   };
+
+  const onMapLoad = (mapLoc) => {
+    mapLoc.dragRotate.disable();
+    mapLoc.touchZoomRotate.disableRotation();
+
+    setMapInstance(mapLoc);
+  };
+
+  const onMapSnapshotLoad = (snapMap) => {
+    snapMap.resize();
+    setSnapMapInstance(snapMap);
+  };
+
+  const onUp = (currentPoint) => (e) => {
+    const coords = e.lngLat;
+
+    e.target.dragPan.enable();
+
+    if (currentPoint.titleSourceId === draggedPoint) {
+      dispatch(
+        updateJourney({
+          ...currentPoint,
+          titleLocation: [coords.lng, coords.lat],
+        })
+      );
+      setDraggedPoint(null);
+    }
+  };
+
+  useEffect(() => {
+    map?.resize();
+    //   ,
+    // snapMapInstance,
+  }, [journeysRedux]);
+
+  console.log({ sortedGroupsJourneysContainer: sortedGroupsJourneys });
 
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
@@ -186,8 +266,240 @@ export default function MapContainer({
 
       <div sx={styles.map_available_space} id="map_available_space_id">
         <div id="map_wrap_2_id">
-          <div id="map" sx={styles.map_wrap_1}></div>
+          {/* <div id="map" sx={styles.map_wrap_1}></div> */}
+          <Map
+            onStyleLoad={onMapLoad}
+            style={MAP_STYLES[activeMapStyleName].url}
+            containerStyle={{
+              width: "100%",
+              height: "100%",
+            }}
+            center={mapCoordinates}
+            zoom={[mapZoom]}
+            onZoomEnd={(_, e) => {
+              dispatch(setMapZoomAction(e.target.getZoom()));
+            }}
+            onMoveEnd={(_, e) => {
+              dispatch(
+                setMapCoordinatesAction([
+                  e.target.getCenter().lng,
+                  e.target.getCenter().lat,
+                ])
+              );
+            }}
+          >
+            {sortedGroupsJourneys.map((group, groupIndex) => {
+              return group.map((_, pointIndex) => {
+                if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
+                  return;
+                }
+
+                const previousPoint =
+                  sortedGroupsJourneys[groupIndex][pointIndex - 1];
+                const currentPoint =
+                  sortedGroupsJourneys[groupIndex][pointIndex];
+
+                console.log("currentPointTIt!", currentPoint.title);
+
+                return (
+                  <>
+                    <Layer
+                      id={"point-blip" + groupIndex + pointIndex}
+                      type="circle"
+                      // sourceId={"point" + groupIndex + pointIndex}
+                      paint={{
+                        "circle-radius": 5,
+                        "circle-radius-transition": { duration: 0 },
+                        "circle-opacity-transition": { duration: 0 },
+                        "circle-color": "white",
+                      }}
+                    >
+                      <Feature coordinates={currentPoint.location} />
+                    </Layer>
+
+                    <Layer
+                      id={"point" + groupIndex + pointIndex}
+                      type="circle"
+                      // sourceId={"point" + groupIndex + pointIndex}
+                      paint={{
+                        "circle-radius": 3,
+                        "circle-color":
+                          currentPoint.titleSourceId === draggedPoint
+                            ? "red"
+                            : "black",
+                      }}
+                    >
+                      <Feature coordinates={currentPoint.location} />
+                    </Layer>
+
+                    {previousPoint && (
+                      <Layer type="line" layout={lineLayout} paint={linePaint}>
+                        <Feature
+                          coordinates={getGeoArc(
+                            currentPoint.location,
+                            previousPoint.location
+                          )}
+                        />
+                      </Layer>
+                    )}
+
+                    <Layer
+                      type="symbol"
+                      key={groupIndex + pointIndex}
+                      layout={{
+                        // "icon-image": "harbor-15",
+                        "icon-allow-overlap": true,
+                        "text-field": currentPoint.title,
+                        "text-font": [
+                          "Open Sans Bold",
+                          "Arial Unicode MS Bold",
+                        ],
+                        "text-size": 11,
+                        "text-transform": "uppercase",
+                        "text-letter-spacing": 0.05,
+                        "text-offset": [0, 1],
+                        "text-allow-overlap": true,
+                        "icon-allow-overlap": true,
+                        "text-ignore-placement": true,
+                        "icon-ignore-placement": true,
+                      }}
+                      paint={{
+                        "text-color": "#ffffff",
+                        "text-halo-color": "#000000",
+                        "text-halo-width": 5,
+                      }}
+                    >
+                      <Feature
+                        coordinates={currentPoint.titleLocation}
+                        onDragStart={(e) => {
+                          e.target.dragPan.disable();
+                          setDraggedPoint(currentPoint.titleSourceId);
+                        }}
+                        draggable={
+                          !draggedPoint ||
+                          currentPoint.titleSourceId === draggedPoint
+                        }
+                        onDragEnd={onUp(currentPoint)}
+                      />
+                    </Layer>
+                  </>
+                );
+              });
+            })}
+          </Map>
         </div>
+        <Backdrop
+          // className={classes.backdrop}
+          // classes={{
+          //   root: classes.rootBackdrop, // class name, e.g. `classes-nesting-root-x`
+          // }}
+          open={false}
+          // onClick={backdropClose}
+        >
+          <NeverDisplayContainer id="snapshot_map_wrapper">
+            <Map2
+              onStyleLoad={onMapSnapshotLoad}
+              style={MAP_STYLES[activeMapStyleName].url}
+              containerStyle={{
+                width: "100%",
+                height: "100%",
+                // display: "none",
+              }}
+            >
+              {sortedGroupsJourneys.map((group, groupIndex) => {
+                return group.map((_, pointIndex) => {
+                  if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
+                    return;
+                  }
+
+                  const previousPoint =
+                    sortedGroupsJourneys[groupIndex][pointIndex - 1];
+                  const currentPoint =
+                    sortedGroupsJourneys[groupIndex][pointIndex];
+
+                  return (
+                    <>
+                      {previousPoint && (
+                        <Layer
+                          type="line"
+                          layout={lineLayout}
+                          paint={{
+                            "line-color": "#000000",
+                            "line-width": 3,
+                          }}
+                        >
+                          <Feature
+                            coordinates={getGeoArc(
+                              currentPoint.location,
+                              previousPoint.location
+                            )}
+                          />
+                        </Layer>
+                      )}
+
+                      <Layer
+                        id={"point-blip" + groupIndex + pointIndex}
+                        type="circle"
+                        // sourceId={"point" + groupIndex + pointIndex}
+                        paint={{
+                          "circle-radius": 7,
+                          "circle-radius-transition": { duration: 0 },
+                          "circle-opacity-transition": { duration: 0 },
+                          "circle-color": "white",
+                        }}
+                      >
+                        <Feature coordinates={currentPoint.location} />
+                      </Layer>
+
+                      <Layer
+                        id={"point" + groupIndex + pointIndex}
+                        type="circle"
+                        // sourceId={"point" + groupIndex + pointIndex}
+                        paint={{
+                          "circle-radius": 5,
+                          "circle-color":
+                            currentPoint.titleSourceId === draggedPoint
+                              ? "red"
+                              : "black",
+                        }}
+                      >
+                        <Feature coordinates={currentPoint.location} />
+                      </Layer>
+
+                      <Layer
+                        type="symbol"
+                        layout={{
+                          // "icon-image": "harbor-15",
+                          "icon-allow-overlap": true,
+                          "text-field": currentPoint.title,
+                          "text-font": [
+                            "Open Sans Bold",
+                            "Arial Unicode MS Bold",
+                          ],
+                          "text-size": 18,
+                          "text-transform": "uppercase",
+                          "text-letter-spacing": 0.05,
+                          "text-offset": [0, 1],
+                          "text-allow-overlap": true,
+                          "icon-allow-overlap": true,
+                          "text-ignore-placement": true,
+                          "icon-ignore-placement": true,
+                        }}
+                        paint={{
+                          "text-color": "#ffffff",
+                          "text-halo-color": "#000000",
+                          "text-halo-width": 5,
+                        }}
+                      >
+                        <Feature coordinates={currentPoint.titleLocation} />
+                      </Layer>
+                    </>
+                  );
+                });
+              })}
+            </Map2>
+          </NeverDisplayContainer>
+        </Backdrop>
 
         {Object.keys(FAKE_DIV_IDS).map((key, index) => (
           <div
@@ -292,6 +604,10 @@ const ImagesWrap = styled.div`
   justify-content: space-between;
 `;
 
+const NeverDisplayContainer = styled.div`
+  position: absolute;
+`;
+
 const styles = {
   canvas_bg: {
     px: "0 !important",
@@ -299,7 +615,7 @@ const styles = {
     flexDirection: "column",
     transform: "translateX(0)", // this is important, reset absolute position to thos element
     height: [null, null, null, "100%"],
-    overflow: "auto",
+    overflow: "auto", //"auto",
   },
   map_available_space: {
     display: "flex",
@@ -312,7 +628,7 @@ const styles = {
 
   map_wrap_1: {
     position: "relative",
-    overflow: "initial",
+    overflow: "initial", //"initial",
     width: "100%",
     height: "100%",
   },

@@ -22,6 +22,7 @@ export default function Stepper({
   activeStep,
   map,
   activeMapStyleName,
+  snapMapInstance,
 }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -41,6 +42,7 @@ export default function Stepper({
           {isLastStep ? (
             <CheckoutCta
               map={map}
+              snapMapInstance={snapMapInstance}
               activeMapStyleName={activeMapStyleName}
               isCustomUI
             >

@@ -1,277 +1,25 @@
 /** @jsx jsx */
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { jsx } from "theme-ui";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import * as turf from "@turf/turf";
-import { v4 as uuidv4 } from "uuid";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import ClearIcon from "@material-ui/icons/Clear";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import CreateIcon from "@material-ui/icons/Create";
+import TextField from "@material-ui/core/TextField";
 
-import { color } from "utils";
+import { color, fontWeight } from "utils";
 import { useGetJourneys } from "redux/order/reducer";
 import { useIsMobile } from "Hooks/useIsMobile";
 import GeocoderInput from "components/GeocoderInput";
 import { getMaxGroupIndex } from "LibGlobal/getMaxGroupIndex";
 import { getSortedArrays } from "LibGlobal/getSortedArrays";
-
-import {
-  addNewJourney,
-  updateJourney,
-  removeJourneyPoint,
-} from "redux/order/actions";
-
-const getPointData = ({ title, location }) => {
-  return {
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: location,
-        },
-        properties: {
-          dummy_text: title,
-        },
-      },
-    ],
-  };
-};
-
-const mouseDownCallback = (map, point) => (e) => {
-  console.log("mousedown_event");
-  e.preventDefault();
-
-  const canvas = map.getCanvasContainer();
-  canvas.style.cursor = "grab";
-
-  map.on("mousemove", onMove(map, point));
-  map.once("mouseup", onUp(map, point));
-};
-
-const touchStartCallback = (map, point) => (e) => {
-  console.log("touchstart_event");
-  if (e.points.length !== 1) {
-    return;
-  }
-  e.preventDefault();
-
-  map.on("touchmove", onMove(map, point));
-  map.once("touchend", onUp(map, point));
-};
-
-const onMove = (map, point) => (e) => {
-  const coords = e.lngLat;
-  const canvas = map.getCanvasContainer();
-
-  canvas.style.cursor = "grabbing";
-
-  const geoJsonData = getPointData({
-    title: point.title,
-    location: [coords.lng, coords.lat],
-  });
-
-  map.getSource(point.titleSourceId).setData(geoJsonData);
-};
-
-const onUp = (map, point) => (e) => {
-  console.log("onUp");
-  const coords = e.lngLat;
-
-  const canvas = map.getCanvasContainer();
-  canvas.style.cursor = "";
-
-  console.log("Removing_event_listeners");
-
-  map.off("mousedown", point.titleSourceId, mouseDownCallback(map, point));
-  map.off("touchstart", point.titleSourceId, touchStartCallback(map, point));
-
-  map.off("mousemove", onMove(map, point));
-  map.off("touchmove", onMove(map, point));
-
-  // updatePoint({
-  //   ...point,
-  //   titleLocation: [coords.lng, coords.lat],
-  // });
-};
-
-const addDragableText = ({ map, currentPoint, updatePoint }) => {
-  const { title, titleLocation, titleSourceId } = currentPoint;
-  const canvas = map?.getCanvasContainer();
-
-  if (!map) {
-    return;
-  }
-
-  map.addSource(titleSourceId, {
-    type: "geojson",
-    data: getPointData({
-      title: title,
-      location: titleLocation,
-    }),
-  });
-  map.addLayer({
-    id: titleSourceId,
-    type: "symbol",
-    source: titleSourceId,
-    layout: {
-      "text-field": title, //`Map. {dummy_text}`,
-      "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-      "text-size": 12,
-      "text-allow-overlap": true,
-      "icon-allow-overlap": true,
-      "text-ignore-placement": true,
-      "icon-ignore-placement": true,
-      "text-anchor": "top",
-      "text-offset": [0, 1],
-    },
-    paint: {
-      "text-color": "#ffffff",
-      "text-halo-color": "#000000",
-      "text-halo-width": 5,
-    },
-  });
-
-  console.log("Adding_event_listeners");
-
-  map.on("mousedown", titleSourceId, mouseDownCallback(map, currentPoint));
-  map.on("touchstart", titleSourceId, touchStartCallback(map, currentPoint));
-};
-
-const addLayerToMap = ({ map, layerId, sourceId }) => {
-  map?.addLayer({
-    id: layerId,
-    type: "circle",
-    source: sourceId,
-    paint: {
-      "circle-radius": 2,
-      "circle-color": "white",
-    },
-  });
-};
-
-const drawRouteOrPoint = ({
-  map,
-  pointPrev,
-  currentPoint,
-  routeSourceId,
-  routeLayerId,
-  dispatch,
-}) => {
-  if (pointPrev) {
-    const routePath = {
-      type: "FeatureCollection",
-      features: [
-        {
-          type: "Feature",
-          properties: {},
-          geometry: {
-            type: "LineString",
-            coordinates: [pointPrev.location, currentPoint.location],
-          },
-        },
-      ],
-    };
-
-    const lineDistance = turf.length(routePath.features[0]);
-    const arc = [];
-    const steps = 100;
-
-    for (let i = 0; i < lineDistance; i += lineDistance / steps) {
-      const segment = turf.along(routePath.features[0], i);
-      arc.push(segment.geometry.coordinates);
-    }
-
-    if (arc.length && arc[1][0] < -180) {
-      arc[0] = [arc[0][0] - 360, arc[0][1]];
-    }
-
-    if (arc.length && arc[1][0] > 180) {
-      arc[0] = [arc[0][0] + 360, arc[0][1]];
-    }
-
-    // Update the route with calculated arc coordinates
-    routePath.features[0].geometry.coordinates = [...arc];
-
-    map.addSource(routeSourceId, {
-      type: "geojson",
-      data: routePath,
-    });
-
-    map.addLayer({
-      id: routeLayerId,
-      source: routeSourceId,
-      type: "line",
-      paint: {
-        "line-width": 1,
-        "line-color": "#000000",
-      },
-    });
-  }
-
-  addDragableText({
-    map,
-    currentPoint,
-    updatePoint: (newPoint) => {
-      dispatch(updateJourney(newPoint));
-    },
-  });
-
-  const sourceId2 = currentPoint.sourceId;
-
-  map?.addSource(sourceId2, {
-    type: "geojson",
-    data: getPointData({ title: "Any", location: currentPoint.location }),
-  });
-
-  addLayerToMap({ map, layerId: sourceId2, sourceId: sourceId2 });
-};
-
-const removePointIfExists = (map, layerId, sourceId) => {
-  const mapLayer = map?.getLayer(layerId);
-
-  if (typeof mapLayer !== "undefined") {
-    // Remove map layer & source.
-
-    map.removeLayer(layerId);
-  }
-
-  const mapSource = map?.getSource(sourceId);
-
-  if (typeof mapSource !== "undefined") {
-    map.removeSource(sourceId);
-  }
-};
-
-const getRouteSourceId = (previousPoint, currentPoint) => {
-  return "ROUTE_" + previousPoint.sourceId + "_" + currentPoint.sourceId;
-};
-
-const removeAllPoints = (sortedGroupsJourneys, map) => {
-  sortedGroupsJourneys.map((group, groupIndex) => {
-    group.map((_, pointIndex) => {
-      if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
-        return;
-      }
-
-      const previousPoint = sortedGroupsJourneys[groupIndex][pointIndex - 1];
-      const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex];
-
-      removePointIfExists(map, currentPoint.sourceId, currentPoint.sourceId);
-      removePointIfExists(
-        map,
-        currentPoint.titleSourceId,
-        currentPoint.titleSourceId
-      );
-
-      if (previousPoint) {
-        const routeSourceId = getRouteSourceId(previousPoint, currentPoint);
-
-        removePointIfExists(map, routeSourceId, routeSourceId);
-      }
-    });
-  });
-};
+import { addNewJourney, removeJourneyPoint } from "redux/order/actions";
 
 export default function StepAddRoute({ map }) {
   const { isMobile } = useIsMobile();
@@ -279,50 +27,12 @@ export default function StepAddRoute({ map }) {
   const router = useRouter();
   const journeysRedux = useGetJourneys();
   const journeysRef = useRef();
-  const [currentGroup, setCurrentGroup] = useState(0);
-  const currentGroupRef = useRef(currentGroup);
-
-  const drawAllRoutes = () => {
-    const sortedGroupsJourneys = getSortedArrays(journeysRedux);
-
-    removeAllPoints(sortedGroupsJourneys, map);
-
-    sortedGroupsJourneys.map((group, groupIndex) => {
-      group.map((_, pointIndex) => {
-        if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
-          return;
-        }
-
-        const previousPoint = sortedGroupsJourneys[groupIndex][pointIndex - 1];
-        const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex];
-
-        if (previousPoint) {
-          const routeSourceId = getRouteSourceId(previousPoint, currentPoint);
-
-          drawRouteOrPoint({
-            map,
-            pointPrev: previousPoint,
-            currentPoint: currentPoint,
-            routeSourceId,
-            routeLayerId: routeSourceId,
-            dispatch,
-          });
-        } else {
-          drawRouteOrPoint({
-            map,
-            currentPoint: currentPoint,
-            dispatch,
-          });
-        }
-      });
-    });
-
-    console.log("map_after_print::", { map, layers: map?.getStyle().layers });
-  };
+  const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
+  const currentGroupRef = useRef(currentGroupIndex);
 
   useEffect(() => {
-    currentGroupRef.current = currentGroup;
-  }, [currentGroup]);
+    currentGroupRef.current = currentGroupIndex;
+  }, [currentGroupIndex]);
 
   useEffect(() => {
     map?.on("error", function (e) {
@@ -330,9 +40,7 @@ export default function StepAddRoute({ map }) {
     });
 
     map?.on("load", function () {
-      console.log("drawAllRoutes_1_eff_load");
-
-      drawAllRoutes();
+      // drawAllRoutes();
     });
   }, [map]);
 
@@ -340,13 +48,13 @@ export default function StepAddRoute({ map }) {
     journeysRef.current = journeysRedux;
 
     const maxGroupIndex = getMaxGroupIndex(journeysRedux ?? []);
-    setCurrentGroup(maxGroupIndex);
+    setCurrentGroupIndex(maxGroupIndex);
 
     if (!map) {
       return;
     }
     console.log("drawAllRoutes_1_eff");
-    drawAllRoutes();
+    // drawAllRoutes();
   }, [journeysRedux]);
 
   const setGeocoderResult = (groupIndex, e) => {
@@ -369,10 +77,6 @@ export default function StepAddRoute({ map }) {
   };
 
   const removePointRedux = (journeyPoint) => {
-    const sortedGroupsJourneys = getSortedArrays(journeysRedux);
-
-    removeAllPoints(sortedGroupsJourneys, map);
-
     dispatch(removeJourneyPoint(journeyPoint));
   };
 
@@ -380,49 +84,97 @@ export default function StepAddRoute({ map }) {
 
   return (
     <Container>
-      {!isMobile && <HeadingText>1B. Zadej lety</HeadingText>}
-      <ul>
-        {sortedGroupsJourneys.map((journeyGroup) => {
-          return journeyGroup.map((journeyPoint, index) => {
-            return (
-              <>
-                {index === 0 && (
-                  <span>groupIndex: {journeyPoint.groupIndex}</span>
-                )}
-                {/* <GeocoderInput
-                key={journey.sourceId}
-                id={journey.sourceId}
-                map={map}
-                value={journey.title}
-                setResult={setGeocoderResult(0)}
-              /> */}
-                <li>{journeyPoint.title}</li>
-                <button
-                  onClick={() => {
-                    removePointRedux(journeyPoint);
+      {!isMobile && <HeadingText>Letecké tripy</HeadingText>}
+
+      {sortedGroupsJourneys.map((journeyGroup) => {
+        return (
+          <>
+            <HorizontalLine />
+
+            <StyledStepper
+              activeStep={journeyGroup.length}
+              orientation="vertical"
+              connector={
+                <span
+                  style={{
+                    paddingLeft: "10px",
+                    marginTop: "-15px",
+                    marginBottom: "-15px",
+                    fontWeight: 200,
                   }}
                 >
-                  REMOVE
-                </button>
-              </>
-            );
-          });
-        })}
-      </ul>
-      <p>++ group {currentGroup}</p>
-      <GeocoderInput
-        id="new_input_1"
-        map={map}
-        setResult={(e) => setGeocoderResult(currentGroupRef.current, e)}
-      />
+                  l
+                </span>
+              }
+            >
+              {journeyGroup.map((journeyPoint, index) => {
+                return (
+                  <Step key="1">
+                    <StyledStepLabel>
+                      <StepsText>
+                        {journeyPoint.title}
+                        <ClearIcon
+                          style={{
+                            fill: "red",
+                            marginBottom: "-5px",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            removePointRedux(journeyPoint);
+                          }}
+                        />
+                      </StepsText>
+                    </StyledStepLabel>
+                  </Step>
+                );
+              })}
+              {currentGroupIndex === journeyGroup[0].groupIndex ? (
+                <>
+                  <GeocoderInput
+                    id="new_input_1"
+                    map={map}
+                    setResult={(e) =>
+                      setGeocoderResult(currentGroupRef.current, e)
+                    }
+                  />
+                  <HorizontalLine />
+                </>
+              ) : (
+                <>
+                  <AddCircleOutlineIcon
+                    style={{
+                      fill: "green",
+                    }}
+                    onClick={() => {
+                      setCurrentGroupIndex(journeyGroup[0].groupIndex);
+                    }}
+                  />
+                  <HorizontalLine />
+                </>
+              )}
+            </StyledStepper>
+          </>
+        );
+      })}
 
-      <button
+      {(journeysRedux.length === 0 ||
+        sortedGroupsJourneys[sortedGroupsJourneys.length - 1][0].groupIndex <
+          currentGroupIndex) && (
+        <GeocoderInput
+          id="new_input_1"
+          placeholder="Najdi první zastávku tripu"
+          map={map}
+          setResult={(e) => setGeocoderResult(currentGroupRef.current, e)}
+        />
+      )}
+
+      <StyledButton
         onClick={() => {
-          setCurrentGroup((prev) => prev + 1);
+          setCurrentGroupIndex((prev) => prev + 1);
         }}
       >
-        +1 group
-      </button>
+        Nový trip
+      </StyledButton>
 
       {/* <p>++ group {maxGroupIndex + 1}</p>
       <GeocoderInput
@@ -465,6 +217,7 @@ const Container = styled.p`
   color: black;
   text-align: left;
   margin-top: 20px;
+  margin-bottom: 50px;
   letter-spacing: 1.1px;
 `;
 
@@ -474,4 +227,50 @@ const HeadingText = styled.p`
   text-align: left;
   margin-top: 20px;
   letter-spacing: 1.1px;
+`;
+
+const HorizontalLine = styled.p`
+  background-color: ${color("muted")};
+  height: 1px;
+  width: 100%;
+`;
+
+const StyledStepper = styled(Stepper)`
+  background-color: transparent !important;
+  padding: 0px !important;
+`;
+
+const StepsText = styled.p`
+  color: ${color("primary")};
+  font-weight: ${fontWeight("regular")};
+  letter-spacing: 1.2px;
+  font-size: 14px;
+  transform: translateX(0);
+  display: inline-block;
+  line-height: 145%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledStepLabel = styled(StepLabel)`
+  .MuiStepIcon-active {
+    color: ${color("secondary")} !important;
+    text {
+      fill: white !important;
+    }
+  }
+  .MuiStepIcon-completed {
+    color: ${color("cta_color")} !important;
+    text {
+      fill: white !important;
+    }
+  }
+`;
+
+const StyledButton = styled(Button)`
+  color: white !important;
+  background-color: ${color("cta_color")} !important;
+  padding-left: 15px !important;
+  text-transform: unset !important;
 `;

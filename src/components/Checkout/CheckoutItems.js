@@ -116,8 +116,7 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
         </ImageContainer> */}
         <LineTextContainer>
           <BoldText>{`Doprava`}</BoldText>
-
-          <RegularText>{`Doručení proběhne ${dataPrintfulVariant?.shipping.minDeliveryDays} - ${dataPrintfulVariant?.shipping.maxDeliveryDays} dnů po zaplacení`}</RegularText>
+          <RegularText>{`Doručení proběhne ${dataPrintfulVariant?.shipping.minDeliveryDays} - ${dataPrintfulVariant?.shipping.maxDeliveryDays} dní po zaplacení`}</RegularText>
         </LineTextContainer>
         <StyledPriceSpan>
           {getFormattedPrice(priceOfDelivery.netPrice)}

@@ -19,11 +19,6 @@ export default function ImageUploadSteps({
   setLightbox,
 }) {
   const [activeStep, setActiveStep] = useState(0);
-
-  // const [lightbox, setLightbox] = useState({
-  //   open: false,
-  //   activeSrc: null,
-  // });
   const [designDisplayed, setDesignDisplayed] = useState(false);
 
   useEffect(() => {
@@ -51,7 +46,7 @@ export default function ImageUploadSteps({
       <StyledStepper
         activeStep={activeStep}
         orientation="vertical"
-        connector={<span style={{ height: "5px" }} />}
+        connector={<span style={{ paddingLeft: "10px" }}> I </span>}
       >
         {[
           <Step key="1">

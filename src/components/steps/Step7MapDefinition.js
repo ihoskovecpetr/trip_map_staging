@@ -19,7 +19,7 @@ const LOW_DENSITY_CONSTANT = 3;
 const MID_DENSITY_CONSTANT = 2;
 const HIGH_DENSITY_CONSTANT = 1;
 
-export default function MapDefinition({ map }) {
+export default function Step7MapDefinition({ map }) {
   const qualityImageCreator = useQualityImageCreator();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
