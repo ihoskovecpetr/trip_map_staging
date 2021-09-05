@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { jsx, Box } from "theme-ui";
 import TabsRootNew from "components/Tabs/TabsRoot";
 import MapContainer from "components/canvas/mapContainer";
@@ -42,18 +42,11 @@ import {
 
 import {
   MAP_STYLES,
-  // MAP_STYLES_NAMES,
-  // LAYOUT_STYLE_NAMES,
-  // SIZES,
-  // VARIANTS_PRINTFUL,
   OUTSIDE_FRAME_CM,
-  // TITLES_DEFAULT,
   DEFAULT_FONT_WEIGHT_THIN,
   RUNTIME_PIXEL_RATIO,
   TITLE_NAMES,
 } from "../constants/constants";
-
-// const mapStyles = require.context("assets/MAPS_MAPBOX", true);
 
 let map;
 let trueMapCanvasElement;
@@ -219,13 +212,14 @@ export default function StudioRootContainer() {
   const mapTitles = useTitlesSelector();
   const activeLayoutRedux = useActiveLayoutSelector();
   const mapCoordinates = useMapCoordinatesSelector();
-  const mapZoom = useMapZoomSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
   // const { dataPrintful } = useGetDataPrintful();
 
   // const [activeMapStyleName, setActiveMapStyleName] = useState(
   //   MAP_STYLES_NAMES.RED_BLUE
   // );
+  const [mapInstance, setMapInstance] = useState(null);
+  const [snapMapInstance, setSnapMapInstance] = useState(null);
 
   const { height: headerHeight } = useElementDimensions("header");
   const {
@@ -327,45 +321,23 @@ export default function StudioRootContainer() {
     isMobile,
     mapAvailSpaceHeight,
     mapAvailSpaceWidth,
-    // mapTitles,
     JSON.stringify(mapTitles),
     activeMapStyleName,
   ]);
 
   useEffect(() => {
-    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
-
-    map = new mapboxgl.Map({
-      container: "map",
-      zoom: mapZoom,
-      minZoom: 0,
-      center: mapCoordinatesRef.current,
-      style: MAP_STYLES[activeMapStyleName].url,
-      // style: "mapbox://styles/petrhoskovec/ckmzz4z6y0mgx17s4lw0zeyho", // Continue add maps WhiteGreyMap
-
-      preserveDrawingBuffer: true, // to enable method toDataURL()
-    });
-
-    map.touchPitch.disable();
-    map.touchZoomRotate.disableRotation();
-    map.dragRotate.disable();
-
-    return () => {
-      map.remove();
-    };
-  }, [activeMapStyleName]);
-
-  useEffect(() => {
-    if (map) {
+    if (mapInstance) {
       const { updHeight, updWidth } = getUpdatedMapSizes({
         ratio: productRef.current.sizeObject.ratio,
         mapWrapWrapHeight: mapAvailSpaceRef.current.height,
         mapWrapWrapWidth: mapAvailSpaceRef.current.width,
       });
 
-      canvasMap = map.getCanvas();
+      canvasMap = mapInstance.getCanvas();
       ctxMap = canvasMap.getContext("webgl");
-      const mapWrapDivElement = document.getElementById("map");
+      const mapWrapDivElement = document.getElementsByClassName(
+        "mapboxgl-map"
+      )[0];
       trueMapCanvasElement = document.getElementsByClassName(
         "mapboxgl-canvas"
       )[0];
@@ -373,6 +345,7 @@ export default function StudioRootContainer() {
       const mapCanvasWrapElement = document.getElementsByClassName(
         "mapboxgl-canvas-container"
       )[0];
+
       mapCanvasWrapElement.style.position = "relative";
 
       const existingLayoutCanvas = document.getElementById("layout_canvas");
@@ -392,51 +365,39 @@ export default function StudioRootContainer() {
       headlineInput = document.createElement("input");
       subtitleInput = document.createElement("input");
 
-      // headlineInput.innerText = TITLES_DEFAULT[0];
-      // subtitleInput.innerText = TITLES_DEFAULT[1];
-
-      map.on("moveend", function () {
-        dispatch(setMapCoordinatesAction(map.getCenter()));
-        // setMapCoordinates(map.getCenter());
-      });
-
       layoutCanvas = document.createElement("canvas");
       layoutCanvas.setAttribute("id", "layout_canvas");
 
-      map.on("load", function () {
-        resizeLayout({
-          cvsLayout: layoutCanvas,
-          cvsMap: canvasMap,
-          activeLayout: layoutRef.current,
-          mapTitles: mapTitlesRef.current,
-          product: productRef.current,
-          activeMapStyleName,
-        });
-
-        resizeInputs({
-          mapTitles: mapTitlesRef.current,
-          saveTitlesValue,
-          mapHeight: updHeight,
-          mapWidth: updWidth,
-          layout: layoutRef.current,
-          layoutObj,
-          paddingWidth: paddingWidth / RUNTIME_PIXEL_RATIO,
-          activeMapStyleName,
-          productRef,
-        });
-
-        mapWrapDivElement.appendChild(inputWrap);
-        // mapCanvasWrapElement.appendChild(frameDiv);
-        mapCanvasWrapElement.appendChild(layoutCanvas);
-
-        resizeInputsWrap({ productRef, layout: layoutRef.current, canvasMap });
-        // inputWrap.appendChild(inputWrapDynamicSize);
-
-        inputWrap.appendChild(headlineInput);
-        inputWrap.appendChild(subtitleInput);
+      resizeLayout({
+        cvsLayout: layoutCanvas,
+        cvsMap: canvasMap,
+        activeLayout: layoutRef.current,
+        mapTitles: mapTitlesRef.current,
+        product: productRef.current,
+        activeMapStyleName,
       });
 
-      map.on("resize", () => {
+      resizeInputs({
+        mapTitles: mapTitlesRef.current,
+        saveTitlesValue,
+        mapHeight: updHeight,
+        mapWidth: updWidth,
+        layout: layoutRef.current,
+        layoutObj,
+        paddingWidth: paddingWidth / RUNTIME_PIXEL_RATIO,
+        activeMapStyleName,
+        productRef,
+      });
+
+      mapWrapDivElement.appendChild(inputWrap);
+      mapCanvasWrapElement.appendChild(layoutCanvas);
+
+      resizeInputsWrap({ productRef, layout: layoutRef.current, canvasMap });
+
+      inputWrap.appendChild(headlineInput);
+      inputWrap.appendChild(subtitleInput);
+
+      mapInstance.on("resize", () => {
         resizeLayout({
           cvsLayout: layoutCanvas,
           cvsMap: canvasMap,
@@ -453,22 +414,22 @@ export default function StudioRootContainer() {
         });
       });
 
-      map.on("zoomend", (e) => {
+      mapInstance.on("zoomend", (e) => {
         dispatch(setMapZoomAction(e.target.getZoom()));
       });
 
-      if (map) {
-        map.resize();
+      if (mapInstance) {
+        mapInstance.resize();
       }
     }
 
     return () => {
-      frameDiv.remove();
-      inputWrap.remove();
-      headlineInput.remove();
-      subtitleInput.remove();
+      frameDiv?.remove();
+      inputWrap?.remove();
+      headlineInput?.remove();
+      subtitleInput?.remove();
     };
-  }, [map, activeMapStyleName]);
+  }, [mapInstance, activeMapStyleName]);
 
   useEffect(() => {
     mapWrapper = document.getElementById("map_wrap_2_id");
@@ -485,10 +446,10 @@ export default function StudioRootContainer() {
       boxShadow: "0px 0px 25px rgba(156, 156, 156, 1)",
     });
 
-    if (map) {
-      map.resize();
+    if (mapInstance) {
+      mapInstance.resize();
     }
-  }, [productRedux, map, mapAvailSpaceHeight, mapAvailSpaceWidth]);
+  }, [productRedux, mapInstance, mapAvailSpaceHeight, mapAvailSpaceWidth]);
 
   useEffect(() => {
     if (headlineInput && subtitleInput) {
@@ -539,15 +500,18 @@ export default function StudioRootContainer() {
         <div sx={styles.containerBox}>
           <Box sx={styles.canvasBox}>
             <MapContainer
-              map={map}
-              addZoom={addZoom(map)}
-              subtractZoom={subtractZoom(map)}
+              map={mapInstance}
+              snapMapInstance={snapMapInstance}
+              addZoom={addZoom(mapInstance)}
+              subtractZoom={subtractZoom(mapInstance)}
               mapTitles={mapTitles}
+              setMapInstance={setMapInstance}
+              setSnapMapInstance={setSnapMapInstance}
             />
           </Box>
 
           <Box sx={styles.settingsBox}>
-            <TabsRootNew map={map} />
+            <TabsRootNew map={mapInstance} snapMapInstance={snapMapInstance} />
           </Box>
         </div>
       </ContainerBox>

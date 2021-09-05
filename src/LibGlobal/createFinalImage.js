@@ -12,7 +12,7 @@ import {
   PRINT_CANVAS_BASE_PX,
 } from "constants/constants";
 
-let snapshotMapObject;
+// let snapshotMapObject;
 
 function takeScreenshot(mapLocal) {
   return new Promise(function (resolve, _) {
@@ -28,21 +28,29 @@ function takeScreenshot(mapLocal) {
   });
 }
 
-const resizeMapPromise = async ({ originalMapObject, mapObject }) => {
+const fitBoundsMapPromise = async ({ originalMapObject, snapMapObject }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const originalBounds = originalMapObject.getBounds();
+      console.log({
+        originalBounds,
+        snapMapObject,
+        fitBounds: snapMapObject.fitBounds,
+      });
 
-      mapObject.on("idle", function () {
-        //TODO: find another event after fully loading image to avoid setTimeout.
+      snapMapObject.fitBounds(originalBounds, {
+        animate: false,
+      });
+
+      snapMapObject.on("idle", function (e) {
+        //TODO: find another event after fully loading map to avoid setTimeout.
+
+        console.log("Map_idling", { e });
         resolve();
         setTimeout(() => {}, 1000);
       });
-
-      mapObject.fitBounds(originalBounds, {
-        animate: false,
-      });
     } catch (e) {
+      console.log({ e });
       alert("resizing Error", e);
     }
   });
@@ -50,6 +58,7 @@ const resizeMapPromise = async ({ originalMapObject, mapObject }) => {
 
 export const createFinalImage = async ({
   originalMapObject,
+  snapMapInstance,
   activeLayoutName,
   mapTitles,
   product,
@@ -58,8 +67,9 @@ export const createFinalImage = async ({
 }) => {
   const { height, width, isPreview, definitionConstant = 1 } = options;
   return new Promise(async (resolve, reject) => {
-    let snapshotMap = document.createElement("div");
-    snapshotMap.setAttribute("id", "snapshot_map");
+    // let snapshotMap = document.createElement("div");
+    // snapshotMap.setAttribute("id", "snapshot_map");
+    let snapshotMapWrapper = document.getElementById("snapshot_map_wrapper");
 
     const isWideOrientation =
       product?.sizeObject?.orientation === ORIENTATIONS.wide;
@@ -81,36 +91,43 @@ export const createFinalImage = async ({
       multiple = computedPixelBase / height;
     }
 
-    Object.assign(snapshotMap.style, {
+    Object.assign(snapshotMapWrapper.style, {
       width: `${width * multiple}px`,
       height: `${height * multiple}px`,
       // display: "none",
-      visibility: "hidden",
+      // visibility: "hidden",
     });
-    const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
-    PlaceToHideBigMap.appendChild(snapshotMap);
+
+    // const canvas = snapMapInstance.getCanvas();
+
+    // canvas.height = `${400}px`;
+    // canvas.width = `${100}px`;
+
+    snapMapInstance.resize();
+
+    // const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
+    // PlaceToHideBigMap.appendChild(snapshotMap);
 
     setDevicePixelRatio(computedPixelRatio);
 
-    snapshotMapObject = new mapboxgl.Map({
-      container: "snapshot_map",
-      zoom: originalMapObject.getZoom(),
-      minZoom: 0,
-      center: originalMapObject.getCenter(),
-      style: MAP_STYLES[activeMapStyleName].url,
-      preserveDrawingBuffer: true,
-    });
+    // snapshotMapObject = new mapboxgl.Map({
+    //   container: "snapshot_map",
+    //   zoom: originalMapObject.getZoom(),
+    //   minZoom: 0,
+    //   center: originalMapObject.getCenter(),
+    //   style: MAP_STYLES[activeMapStyleName].url,
+    //   preserveDrawingBuffer: true,
+    // });
 
-    await resizeMapPromise({
+    await fitBoundsMapPromise({
       originalMapObject,
-      mapObject: snapshotMapObject,
-      options: { height, width },
+      snapMapObject: snapMapInstance,
     });
 
-    takeScreenshot(snapshotMapObject).then(async function (data) {
+    takeScreenshot(snapMapInstance).then(async function (data) {
       try {
-        const div = document.getElementById("snapshot_map");
-        div.parentNode.removeChild(div);
+        // const div = document.getElementById("snapshot_map");
+        // div.parentNode.removeChild(div);
 
         // alert(JSON.stringify(data));
 
@@ -143,9 +160,9 @@ export const createFinalImage = async ({
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
       } catch (e) {
         alert("Failed while creating Taking screenshot and creating Image");
-        // alert(JSON.stringify(e));
         console.log({ e });
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
+        reject(e);
       }
     });
   });
@@ -168,7 +185,7 @@ const getImageFromBase64 = async (data) => {
         reject("Failed to create image");
       };
 
-      console.log(JSON.stringify(data));
+      // console.log(JSON.stringify(data));
       // const theBlob = new Blob([atobX(data)], {
       //   type: "image/png",
       // });

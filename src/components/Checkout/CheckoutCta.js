@@ -31,7 +31,12 @@ import {
 
 const CancelToken = axios.CancelToken;
 
-export default function CheckoutCta({ map, children, isCustomUI }) {
+export default function CheckoutCta({
+  map,
+  snapMapInstance,
+  isCustomUI,
+  children,
+}) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -85,6 +90,7 @@ export default function CheckoutCta({ map, children, isCustomUI }) {
 
       const finalImgSrc = await qualityImageCreator({
         map,
+        snapMapInstance,
         activeLayoutName: activeLayoutNameRedux,
         product: productRedux,
         activeMapStyleName,

@@ -9,7 +9,7 @@ import router, { useRouter } from "next/router";
 
 import StudioRootContainer from "sections/studioRootContainer";
 import { useIsMobile } from "../../Hooks/useIsMobile";
-import { wrapper } from "redux/store";
+// import { wrapper } from "redux/store";
 
 const StudioPage = (props) => {
   const router = useRouter();
