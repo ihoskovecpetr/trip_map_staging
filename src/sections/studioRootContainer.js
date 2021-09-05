@@ -398,6 +398,7 @@ export default function StudioRootContainer() {
       inputWrap.appendChild(subtitleInput);
 
       mapInstance.on("resize", () => {
+        console.log("Studio_map_resize");
         resizeLayout({
           cvsLayout: layoutCanvas,
           cvsMap: canvasMap,
@@ -412,6 +413,8 @@ export default function StudioRootContainer() {
           baseLongSize,
           mapAvailSpaceRef,
         });
+
+        resizeInputsWrap({ productRef, layout: layoutRef.current, canvasMap });
       });
 
       mapInstance.on("zoomend", (e) => {

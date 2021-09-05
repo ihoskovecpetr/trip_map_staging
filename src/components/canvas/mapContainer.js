@@ -165,6 +165,10 @@ export default function MapContainer({
     setMapInstance(mapLoc);
   };
 
+  const onMapResized = (mapLoc) => {
+    console.log("onMapResized_map_resize");
+  };
+
   const onMapSnapshotLoad = (snapMap) => {
     snapMap.resize();
     setSnapMapInstance(snapMap);
@@ -269,6 +273,7 @@ export default function MapContainer({
           {/* <div id="map" sx={styles.map_wrap_1}></div> */}
           <Map
             onStyleLoad={onMapLoad}
+            onResize={onMapResized}
             style={MAP_STYLES[activeMapStyleName].url}
             containerStyle={{
               width: "100%",
