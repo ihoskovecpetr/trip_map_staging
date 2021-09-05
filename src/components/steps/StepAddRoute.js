@@ -158,7 +158,7 @@ export default function StepAddRoute({ map }) {
           currentGroupIndex) && (
         <GeocoderInput
           id="new_input_1"
-          placeholder="Najdi první zastávku tripu"
+          placeholder="První zastávka tripu"
           map={map}
           setResult={(e) => setGeocoderResult(currentGroupRef.current, e)}
         />
@@ -267,6 +267,5 @@ const StyledStepLabel = styled(StepLabel)`
 const StyledButton = styled(Button)`
   color: white !important;
   background-color: ${color("cta_color")} !important;
-  padding-left: 15px !important;
   text-transform: unset !important;
 `;

@@ -51,6 +51,7 @@ import {
   TITLES_DEFAULT,
   VARIANTS_PRINTFUL,
   MAP_STYLES,
+  MAP_STYLED_AND_FLIGHT_COLOR,
 } from "constants/constants";
 
 const getFormatedPriceString = (amount) => {
@@ -71,11 +72,6 @@ const Map2 = ReactMapboxGl({
 const lineLayout = {
   "line-cap": "round",
   "line-join": "round",
-};
-
-const linePaint = {
-  "line-color": "#000000",
-  "line-width": 2,
 };
 
 export default function MapContainer({
@@ -338,7 +334,15 @@ export default function MapContainer({
                     </Layer>
 
                     {previousPoint && (
-                      <Layer type="line" layout={lineLayout} paint={linePaint}>
+                      <Layer
+                        type="line"
+                        layout={lineLayout}
+                        paint={{
+                          "line-color":
+                            MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
+                          "line-width": 2,
+                        }}
+                      >
                         <Feature
                           coordinates={getGeoArc(
                             currentPoint.location,
@@ -429,7 +433,8 @@ export default function MapContainer({
                           type="line"
                           layout={lineLayout}
                           paint={{
-                            "line-color": "#000000",
+                            "line-color":
+                              MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
                             "line-width": 3,
                           }}
                         >

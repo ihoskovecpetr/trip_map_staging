@@ -1,14 +1,4 @@
 @font-face {
-  src: url("../FontFiles/Qahiri/Qahiri-Regular.ttf") format("truetype");
-  font-family: "Qahiri_local";
-}
-
-@font-face {
-  src: url("../FontFiles/Roboto/Roboto-Regular.ttf") format("truetype");
-  font-family: "Roboto_local";
-}
-
-@font-face {
   src: url("../FontFiles/HarmoniaSans/HarmoniaSansProCyr-Bold.ttf")
     format("truetype");
   font-family: "HarmoniaSans_local";
@@ -29,13 +19,6 @@
     format("truetype");
   font-family: "HarmoniaSans_local";
   font-weight: 300;
-  font-display: block;
-}
-
-@font-face {
-  src: url("../FontFiles/Zen_Tokyo_Zoo/ZenTokyoZoo-Regular.ttf")
-    format("truetype");
-  font-family: "Zen_Tokyo_Zoo_local";
   font-display: block;
 }
 

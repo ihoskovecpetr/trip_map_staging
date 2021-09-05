@@ -24,9 +24,6 @@ const theme = {
   fonts: {
     ubuntu: `'Ubuntu', sans-serif`,
     avenir: `'Avenir', sans-serif`,
-    Qahiri_local: `'Qahiri_local', sans-serif`,
-    Gramond_local: `'Gramond_local', sans-serif`,
-    Roboto_local: `'Roboto_local', sans-serif`,
     HarmoniaSans_local: `'HarmoniaSans_local', sans-serif`,
   },
   fontWeights: {

@@ -29,7 +29,7 @@ const TRANSPARENT_PADDING = 0.015;
 
 const BOTTOM_BANNER = 0.09;
 const BLURRED_AREA_HEIGHT = 0.09;
-const TITLES_FONT_DEFAULT = "RobotoMono_local"; //"Zen_Tokyo_Zoo_local"; // "NotoSansJP_local"; // "Roboto_local";
+const TITLES_FONT_DEFAULT = "RobotoMono_local"; // // "NotoSansJP_local";
 const TITLES_DEFAULT = ["New York", "— USA —"];
 
 const FRAME_COLOR_WHITE = "#F5F5F5";
@@ -364,6 +364,20 @@ const MAP_STYLES_NAMES = {
   // WHITE_BLUE_LOW_CONTRAST: "White Blue Low",
 };
 
+const MAP_STYLED_AND_FLIGHT_COLOR = {
+  [MAP_STYLES_NAMES.RED_BLUE]: "lightGrey",
+  [MAP_STYLES_NAMES.YELLOW_GREEN]: "black",
+  [MAP_STYLES_NAMES.BLUE_YELLOW]: "grey",
+  [MAP_STYLES_NAMES.GREEN_ORANGE]: "black",
+  [MAP_STYLES_NAMES.BLACK_LAND]: "black",
+  [MAP_STYLES_NAMES.BLACK_WHITE]: "black",
+  [MAP_STYLES_NAMES.RED_WHITE]: "black",
+  [MAP_STYLES_NAMES.DOUBLE_BLUE]: "black",
+  [MAP_STYLES_NAMES.PALE_BLUE]: "black",
+  [MAP_STYLES_NAMES.SANDY_DARK]: "black",
+  [MAP_STYLES_NAMES.WHITE_BLUE]: "black",
+};
+
 const MAP_STYLES = {
   // [MAP_STYLES_NAMES.WHITE_GREY]: {
   //   url: "mapbox://styles/petrhoskovec/ckmzzqlni0n5j17pbfvgf27n9",
@@ -548,6 +562,7 @@ module.exports = {
   LAYOUTS,
   MAP_STYLES_NAMES,
   MAP_STYLES,
+  MAP_STYLED_AND_FLIGHT_COLOR,
   TITLE_NAMES,
   FAKE_DIV_IDS,
   VALID_DISCOUNT_CODES,
