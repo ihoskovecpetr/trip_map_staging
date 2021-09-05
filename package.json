@@ -25,6 +25,7 @@
     "@next/bundle-analyzer": "^11.0.0",
     "@stripe/react-stripe-js": "^1.4.0",
     "@stripe/stripe-js": "^1.14.0",
+    "@turf/turf": "^6.5.0",
     "atob": "^2.1.2",
     "axios": "^0.21.1",
     "big.js": "^6.1.1",
