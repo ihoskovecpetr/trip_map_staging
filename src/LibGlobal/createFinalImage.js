@@ -17,8 +17,6 @@ import {
 function takeScreenshot(mapLocal) {
   return new Promise(function (resolve, _) {
     mapLocal.once("render", function () {
-      // console.log("Render_local_Screenshot", mapLocal.getCanvas().toDataURL());
-
       // mapLocal.getCanvas().toBlob((blob) => resolve(blob));
       resolve(mapLocal.getCanvas().toDataURL());
     });

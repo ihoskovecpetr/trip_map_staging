@@ -39,9 +39,7 @@ export default function StepAddRoute({ map }) {
       console.log({ ErrorMap: e });
     });
 
-    map?.on("load", function () {
-      // drawAllRoutes();
-    });
+    map?.on("load", function () {});
   }, [map]);
 
   useEffect(() => {
@@ -53,8 +51,6 @@ export default function StepAddRoute({ map }) {
     if (!map) {
       return;
     }
-    console.log("drawAllRoutes_1_eff");
-    // drawAllRoutes();
   }, [journeysRedux]);
 
   const setGeocoderResult = (groupIndex, e) => {
