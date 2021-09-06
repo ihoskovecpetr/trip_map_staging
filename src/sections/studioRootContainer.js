@@ -129,6 +129,8 @@ const resizeFrameDiv = ({ productRef, mapAvailSpaceRef }) => {
   if (variantObj) {
     const extraFrame = baseLongerSide * frameWidthKoefficient;
 
+    console.log({ Setting_frame: extraFrame });
+
     Object.assign(trueMapCanvasElement.style, {
       outline: `${extraFrame + 0}px solid ${variantObj.frameColor}`,
     });
@@ -341,6 +343,8 @@ export default function StudioRootContainer() {
       trueMapCanvasElement = document.getElementsByClassName(
         "mapboxgl-canvas"
       )[0];
+
+      console.log({ trueMapCanvasElement });
 
       const mapCanvasWrapElement = document.getElementsByClassName(
         "mapboxgl-canvas-container"
