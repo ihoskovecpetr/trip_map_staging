@@ -80,7 +80,7 @@ export default function StepAddRoute({ map }) {
 
   return (
     <Container>
-      {!isMobile && <HeadingText>Letecké tripy</HeadingText>}
+      <HeadingText>Zadejte body Vaší casty</HeadingText>
 
       {sortedGroupsJourneys.map((journeyGroup) => {
         return (

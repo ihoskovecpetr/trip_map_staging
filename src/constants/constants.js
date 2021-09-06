@@ -528,7 +528,7 @@ const VALID_DISCOUNT_CODES = [{ code: "AU65", discountKoef: 0.9 }];
 
 const REDUX_COOKIE_NAME = "reduxStoreCookie";
 
-const LABEL_SIZE_KOEF = 0.02;
+const LABEL_SIZE_KOEF = 0.012;
 
 module.exports = {
   IS_CLIENT,
