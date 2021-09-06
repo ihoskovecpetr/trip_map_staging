@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 
 import { drawLayout } from "./drawLayout";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
-import { getCurrentPixelRatio } from "LibGlobal/getCurrentPixelRatio";
+// import { getCurrentPixelRatio } from "LibGlobal/getCurrentPixelRatio";
 
 import {
   MAP_STYLES,
@@ -63,50 +63,63 @@ export const createFinalImage = async ({
   activeMapStyleName,
   options,
 }) => {
-  const { height, width, isPreview, definitionConstant = 1 } = options;
+  const {
+    // height,
+    // width,
+    // isPreview,
+    // definitionConstant = 1,
+    computedPixelRatio,
+  } = options;
   return new Promise(async (resolve, reject) => {
     // let snapshotMap = document.createElement("div");
     // snapshotMap.setAttribute("id", "snapshot_map");
-    let snapshotMapWrapper = document.getElementById("snapshot_map_wrapper");
 
-    const isWideOrientation =
-      product?.sizeObject?.orientation === ORIENTATIONS.wide;
+    //START
+    // let snapshotMapWrapper = document.getElementById("snapshot_map_wrapper");
 
-    const computedPixelBase = Math.floor(
-      PRINT_CANVAS_BASE_PX / definitionConstant
-    );
+    // const isWideOrientation =
+    //   product?.sizeObject?.orientation === ORIENTATIONS.wide;
 
-    const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
-    const computedPixelRatio = Number(
-      (currentVersionPixelRatio * definitionConstant).toFixed(2)
-    );
+    // const computedPixelBase = Math.floor(
+    //   PRINT_CANVAS_BASE_PX / definitionConstant
+    // );
 
-    let multiple;
+    // const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
+    // const computedPixelRatio = Number(
+    //   (currentVersionPixelRatio * definitionConstant).toFixed(2)
+    // );
 
-    if (isWideOrientation) {
-      multiple = computedPixelBase / width;
-    } else {
-      multiple = computedPixelBase / height;
-    }
+    // let multiple;
 
-    Object.assign(snapshotMapWrapper.style, {
-      width: `${width * multiple}px`,
-      height: `${height * multiple}px`,
-      // display: "none",
-      // visibility: "hidden",
-    });
+    // if (isWideOrientation) {
+    //   multiple = computedPixelBase / width;
+    // } else {
+    //   multiple = computedPixelBase / height;
+    // }
+
+    // console.log({
+    //   FinalWidth: width * multiple,
+    //   finalHeight: height * multiple,
+    // });
+    // Object.assign(snapshotMapWrapper.style, {
+    //   width: `${width * multiple}px`,
+    //   height: `${height * multiple}px`,
+    //   // display: "none",
+    //   // visibility: "hidden",
+    // });
+
+    //END
 
     // const canvas = snapMapInstance.getCanvas();
 
     // canvas.height = `${400}px`;
     // canvas.width = `${100}px`;
 
+    setDevicePixelRatio(computedPixelRatio);
     snapMapInstance.resize();
 
     // const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
     // PlaceToHideBigMap.appendChild(snapshotMap);
-
-    setDevicePixelRatio(computedPixelRatio);
 
     // snapshotMapObject = new mapboxgl.Map({
     //   container: "snapshot_map",
@@ -124,10 +137,13 @@ export const createFinalImage = async ({
 
     takeScreenshot(snapMapInstance).then(async function (data) {
       try {
-        // const div = document.getElementById("snapshot_map");
-        // div.parentNode.removeChild(div);
+        const snapshotWrapper = document.getElementById("snapshot_map_wrapper");
 
-        // alert(JSON.stringify(data));
+        Object.assign(snapshotWrapper.style, {
+          display: "none",
+        });
+
+        // div.parentNode.removeChild(div);
 
         const image = await getImageFromBase64(data);
 

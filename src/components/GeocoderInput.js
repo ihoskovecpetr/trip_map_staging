@@ -21,7 +21,7 @@ export default function GeocoderInput({
       marker: {
         // color: "transparent",
       },
-      placeholder: placeholder ?? "Najdi další bod cesty",
+      placeholder: placeholder ?? "Další bod cesty",
     });
     // document.getElementById(id).appendChild(geocoder.onAdd(map));
     geocoder.addTo(ref.current);

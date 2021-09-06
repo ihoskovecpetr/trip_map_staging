@@ -49,7 +49,7 @@ export default function TabsRootNew({ map, snapMapInstance }) {
     "map_buttons_wrapper"
   );
   const { height: map_canvas_height, width: with_ww } = useElementDimensions(
-    "map_wrap_2_id"
+    "map_wrap_id"
   );
 
   const { height: stepper_height, width: stepper_width } = useElementDimensions(

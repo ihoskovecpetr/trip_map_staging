@@ -5,7 +5,6 @@ export const getSortedArrays = (journeys) => {
     a.groupIndex < b.groupIndex ? -1 : 1
   );
 
-  console.log({ journeysSorted });
   const journeysGrouped = journeysSorted.reduce((acc, cur) => {
     if (acc.length === 0) {
       return [[cur]];

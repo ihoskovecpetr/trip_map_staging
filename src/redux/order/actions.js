@@ -13,6 +13,7 @@ export const countActionTypes = {
   ADD_NEW_JOURNEY: "ADD_NEW_JOURNEY",
   UPDATE_JOURNEY: "UPDATE_JOURNEY",
   REMOVE_JOURNEY_POINT: "REMOVE_JOURNEY_POINT",
+  SET_JOURNEYS_SPECS: "SET_JOURNEYS_SPECS",
 };
 
 export const setProductAction = (newProduct) => (dispatch) => {
@@ -110,6 +111,13 @@ export const updateJourney = (point) => (dispatch) => {
 export const removeJourneyPoint = (point) => (dispatch) => {
   return dispatch({
     type: countActionTypes.REMOVE_JOURNEY_POINT,
+    data: point,
+  });
+};
+
+export const setJourneysSpecs = (point) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_JOURNEYS_SPECS,
     data: point,
   });
 };

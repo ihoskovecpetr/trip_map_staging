@@ -5,8 +5,8 @@ const IS_SERVER = typeof window === "undefined";
 const RUNTIME_PIXEL_RATIO = 2;
 
 const PIXEL_RATIO_SM = 1.7; // 1.7
-const PIXEL_RATIO_MD = 2; // 2.8
-const PIXEL_RATIO_LG = 2.5; // 4.2
+const PIXEL_RATIO_MD = 2.5; // 2.8
+const PIXEL_RATIO_LG = 3.5; // 4.2
 
 const PRINT_CANVAS_BASE_PX = 1400; // 1400 //1024  2048;
 
@@ -369,7 +369,7 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
   [MAP_STYLES_NAMES.YELLOW_GREEN]: "black",
   [MAP_STYLES_NAMES.BLUE_YELLOW]: "grey",
   [MAP_STYLES_NAMES.GREEN_ORANGE]: "black",
-  [MAP_STYLES_NAMES.BLACK_LAND]: "black",
+  [MAP_STYLES_NAMES.BLACK_LAND]: "#a62703",
   [MAP_STYLES_NAMES.BLACK_WHITE]: "black",
   [MAP_STYLES_NAMES.RED_WHITE]: "black",
   [MAP_STYLES_NAMES.DOUBLE_BLUE]: "black",
@@ -528,6 +528,8 @@ const VALID_DISCOUNT_CODES = [{ code: "AU65", discountKoef: 0.9 }];
 
 const REDUX_COOKIE_NAME = "reduxStoreCookie";
 
+const LABEL_SIZE_KOEF = 0.02;
+
 module.exports = {
   IS_CLIENT,
   IS_SERVER,
@@ -567,4 +569,5 @@ module.exports = {
   FAKE_DIV_IDS,
   VALID_DISCOUNT_CODES,
   REDUX_COOKIE_NAME,
+  LABEL_SIZE_KOEF,
 };

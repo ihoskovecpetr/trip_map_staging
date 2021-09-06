@@ -27,6 +27,7 @@ import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import CustomTooltipWrap from "components/custom-tooltip";
 import { getSortedArrays } from "LibGlobal/getSortedArrays";
 import { getGeoArc } from "LibGlobal/getGeoArc";
+import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
 
 import {
   setProductAction,
@@ -44,6 +45,7 @@ import {
   useMapCoordinatesSelector,
   useGetJourneys,
   useMapZoomSelector,
+  useGetJourneysSpecsSelector,
 } from "redux/order/reducer";
 
 import {
@@ -52,6 +54,7 @@ import {
   VARIANTS_PRINTFUL,
   MAP_STYLES,
   MAP_STYLED_AND_FLIGHT_COLOR,
+  LABEL_SIZE_KOEF,
 } from "constants/constants";
 
 const getFormatedPriceString = (amount) => {
@@ -93,6 +96,7 @@ export default function MapContainer({
   const sortedGroupsJourneys = getSortedArrays(journeysRedux);
   const mapZoom = useMapZoomSelector();
   const mapCoordinates = useMapCoordinatesSelector();
+  const journeysSpecs = useGetJourneysSpecsSelector();
 
   const [lightbox, setLightbox] = useState({
     open: false,
@@ -103,6 +107,15 @@ export default function MapContainer({
   const [draggedPoint, setDraggedPoint] = useState();
   const { isMobile } = useIsMobile();
   const qualityImageCreator = useQualityImageCreator();
+
+  const mapCanvas = map?.getCanvas();
+
+  const { baseLongSize } = getCenteringLayoutDimensions({
+    product: productRedux,
+    layout: activeLayoutNameRedux,
+    elWidth: mapCanvas?.width,
+    elHeight: mapCanvas?.height,
+  });
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
@@ -161,10 +174,6 @@ export default function MapContainer({
     setMapInstance(mapLoc);
   };
 
-  const onMapResized = (mapLoc) => {
-    console.log("onMapResized_map_resize");
-  };
-
   const onMapSnapshotLoad = (snapMap) => {
     snapMap.resize();
     setSnapMapInstance(snapMap);
@@ -188,11 +197,7 @@ export default function MapContainer({
 
   useEffect(() => {
     map?.resize();
-    //   ,
-    // snapMapInstance,
   }, [journeysRedux]);
-
-  console.log({ sortedGroupsJourneysContainer: sortedGroupsJourneys });
 
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
@@ -265,11 +270,9 @@ export default function MapContainer({
       </div>
 
       <div sx={styles.map_available_space} id="map_available_space_id">
-        <div id="map_wrap_2_id">
-          {/* <div id="map" sx={styles.map_wrap_1}></div> */}
+        <div id="map_wrap_id">
           <Map
             onStyleLoad={onMapLoad}
-            onResize={onMapResized}
             style={MAP_STYLES[activeMapStyleName].url}
             containerStyle={{
               width: "100%",
@@ -300,8 +303,6 @@ export default function MapContainer({
                 const currentPoint =
                   sortedGroupsJourneys[groupIndex][pointIndex];
 
-                console.log("currentPointTIt!", currentPoint.title);
-
                 return (
                   <>
                     <Layer
@@ -309,7 +310,7 @@ export default function MapContainer({
                       type="circle"
                       // sourceId={"point" + groupIndex + pointIndex}
                       paint={{
-                        "circle-radius": 5,
+                        "circle-radius": 4,
                         "circle-radius-transition": { duration: 0 },
                         "circle-opacity-transition": { duration: 0 },
                         "circle-color": "white",
@@ -327,7 +328,7 @@ export default function MapContainer({
                         "circle-color":
                           currentPoint.titleSourceId === draggedPoint
                             ? "red"
-                            : "black",
+                            : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
                       }}
                     >
                       <Feature coordinates={currentPoint.location} />
@@ -351,7 +352,6 @@ export default function MapContainer({
                         />
                       </Layer>
                     )}
-
                     <Layer
                       type="symbol"
                       key={groupIndex + pointIndex}
@@ -363,7 +363,10 @@ export default function MapContainer({
                           "Open Sans Bold",
                           "Arial Unicode MS Bold",
                         ],
-                        "text-size": 11,
+                        "text-size": baseLongSize
+                          ? (baseLongSize * LABEL_SIZE_KOEF) / 2
+                          : 1, // 7,
+                        // "text-size": (baseLongSize * LABEL_SIZE_KOEF) / 2, // 7,
                         "text-transform": "uppercase",
                         "text-letter-spacing": 0.05,
                         "text-offset": [0, 1],
@@ -375,7 +378,9 @@ export default function MapContainer({
                       paint={{
                         "text-color": "#ffffff",
                         "text-halo-color": "#000000",
-                        "text-halo-width": 5,
+                        "text-halo-width": baseLongSize
+                          ? (baseLongSize * LABEL_SIZE_KOEF) / 2
+                          : 10,
                       }}
                     >
                       <Feature
@@ -397,14 +402,7 @@ export default function MapContainer({
             })}
           </Map>
         </div>
-        <Backdrop
-          // className={classes.backdrop}
-          // classes={{
-          //   root: classes.rootBackdrop, // class name, e.g. `classes-nesting-root-x`
-          // }}
-          open={false}
-          // onClick={backdropClose}
-        >
+        <Backdrop open={false}>
           <NeverDisplayContainer id="snapshot_map_wrapper">
             <Map2
               onStyleLoad={onMapSnapshotLoad}
@@ -450,9 +448,8 @@ export default function MapContainer({
                       <Layer
                         id={"point-blip" + groupIndex + pointIndex}
                         type="circle"
-                        // sourceId={"point" + groupIndex + pointIndex}
                         paint={{
-                          "circle-radius": 7,
+                          "circle-radius": 6,
                           "circle-radius-transition": { duration: 0 },
                           "circle-opacity-transition": { duration: 0 },
                           "circle-color": "white",
@@ -464,13 +461,10 @@ export default function MapContainer({
                       <Layer
                         id={"point" + groupIndex + pointIndex}
                         type="circle"
-                        // sourceId={"point" + groupIndex + pointIndex}
                         paint={{
                           "circle-radius": 5,
                           "circle-color":
-                            currentPoint.titleSourceId === draggedPoint
-                              ? "red"
-                              : "black",
+                            MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
                         }}
                       >
                         <Feature coordinates={currentPoint.location} />
@@ -486,7 +480,7 @@ export default function MapContainer({
                             "Open Sans Bold",
                             "Arial Unicode MS Bold",
                           ],
-                          "text-size": 18,
+                          "text-size": journeysSpecs.labelSizePrint ?? 1,
                           "text-transform": "uppercase",
                           "text-letter-spacing": 0.05,
                           "text-offset": [0, 1],
@@ -498,7 +492,7 @@ export default function MapContainer({
                         paint={{
                           "text-color": "#ffffff",
                           "text-halo-color": "#000000",
-                          "text-halo-width": 5,
+                          "text-halo-width": journeysSpecs.labelSizePrint,
                         }}
                       >
                         <Feature coordinates={currentPoint.titleLocation} />

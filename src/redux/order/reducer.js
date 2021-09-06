@@ -39,6 +39,9 @@ const orderInitialState = {
   discount: { code: "", codeAccepted: false },
   string: "",
   journeys: [],
+  journeysSpecs: {
+    labelSizePrint: 10,
+  },
 };
 
 const order = produce((state = orderInitialState, { type, data, payload }) => {
@@ -126,12 +129,15 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       return state;
 
     case countActionTypes.REMOVE_JOURNEY_POINT:
-      console.log("Data_sourceID", { data });
       const filteredJourneys = state.journeys.filter(
         (item) => item.sourceId != data.sourceId
       );
 
       state.journeys = filteredJourneys;
+      return state;
+
+    case countActionTypes.SET_JOURNEYS_SPECS:
+      state.journeysSpecs = { ...state.journeysSpecs, ...data };
       return state;
 
     default:
@@ -170,5 +176,8 @@ export const useSeenPopupSelector = () =>
 
 export const useGetJourneys = () =>
   useSelector((store) => store.order.journeys);
+
+export const useGetJourneysSpecsSelector = () =>
+  useSelector((store) => store.order.journeysSpecs);
 
 export default order;

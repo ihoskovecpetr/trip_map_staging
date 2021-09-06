@@ -23,8 +23,6 @@ export const getCenteringLayoutDimensions = ({
     frameCoverCoefficient = INSIDE_FRAME_COVER_CM / product?.sizeObject.width;
   }
 
-  // const framedVariantObject = getVariantObject(product?.variantId); // TODO redo to
-
   const insideFrameWidth = baseLongSize * frameCoverCoefficient;
   const bottomBannerHeightKoef = getBottomBannerHeightKoef(layoutName);
   const bottomBannerHeight = baseLongSize * bottomBannerHeightKoef;

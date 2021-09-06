@@ -13,7 +13,7 @@ import { useElementDimensions } from "Hooks/useElementDimensions";
 import { drawLayout } from "../LibGlobal/drawLayout";
 import { prepareTextInput } from "../LibGlobal/prepareTextInput";
 import { getUpdatedMapSizes } from "../LibGlobal/getUpdatedMapSizes";
-import { getCenteringLayoutDimensions } from "../LibGlobal/getCenteringLayoutDimensions";
+import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
 import { getVariantObject } from "../LibGlobal/getVariantObject";
 import { getIsProduction } from "../LibGlobal/getIsProduction";
 import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
@@ -230,7 +230,7 @@ export default function StudioRootContainer() {
   const {
     height: mapWrapperHeight,
     width: mapWrapperWidth,
-  } = useElementDimensions("map_wrap_2_id");
+  } = useElementDimensions("map_wrap_id");
 
   const { isMobile } = useIsMobile();
 
@@ -398,7 +398,6 @@ export default function StudioRootContainer() {
       inputWrap.appendChild(subtitleInput);
 
       mapInstance.on("resize", () => {
-        console.log("Studio_map_resize");
         resizeLayout({
           cvsLayout: layoutCanvas,
           cvsMap: canvasMap,
@@ -435,7 +434,7 @@ export default function StudioRootContainer() {
   }, [mapInstance, activeMapStyleName]);
 
   useEffect(() => {
-    mapWrapper = document.getElementById("map_wrap_2_id");
+    mapWrapper = document.getElementById("map_wrap_id");
 
     const { updHeight, updWidth } = getUpdatedMapSizes({
       ratio: productRef.current.sizeObject.ratio,

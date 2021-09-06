@@ -1,12 +1,21 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import { createFinalImage } from "LibGlobal/createFinalImage";
-// import { useElementDimensions } from "Hooks/useElementDimensions";
 import { useTitlesSelector } from "redux/order/reducer";
+import { setJourneysSpecs } from "redux/order/actions";
+import { getCurrentPixelRatio } from "LibGlobal/getCurrentPixelRatio";
 
-const mapWrapperId = "map_wrap_2_id";
+import {
+  PRINT_CANVAS_BASE_PX,
+  ORIENTATIONS,
+  LABEL_SIZE_KOEF,
+} from "constants/constants";
+
+const mapWrapperId = "map_wrap_id";
 
 export function useQualityImageCreator() {
+  const dispatch = useDispatch();
   const mapTitles = useTitlesSelector();
 
   return async ({
@@ -17,7 +26,52 @@ export function useQualityImageCreator() {
     activeMapStyleName,
     options,
   }) => {
-    console.log("useQualityImageCreator_", { snapMapInstance });
+    const { definitionConstant = 1 } = options;
+    let snapshotMapWrapper = document.getElementById("snapshot_map_wrapper");
+
+    const height = document
+      .getElementById(mapWrapperId)
+      ?.getBoundingClientRect().height;
+    const width = document.getElementById(mapWrapperId)?.getBoundingClientRect()
+      .width;
+
+    const isWideOrientation =
+      product?.sizeObject?.orientation === ORIENTATIONS.wide;
+
+    const computedPixelBase = Math.floor(
+      PRINT_CANVAS_BASE_PX / definitionConstant
+    );
+
+    const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
+    console.log({ currentVersionPixelRatio });
+    const computedPixelRatio = Number(
+      (currentVersionPixelRatio * definitionConstant).toFixed(2)
+    );
+
+    let multiple;
+    let baseLongSize;
+    console.log({ computedPixelBase, width });
+
+    if (isWideOrientation) {
+      multiple = computedPixelBase / width;
+      baseLongSize = width;
+    } else {
+      multiple = computedPixelBase / height;
+      baseLongSize = height;
+    }
+
+    Object.assign(snapshotMapWrapper.style, {
+      width: `${width * multiple}px`,
+      height: `${height * multiple}px`,
+      display: "block",
+    });
+
+    dispatch(
+      setJourneysSpecs({
+        labelSizePrint: LABEL_SIZE_KOEF * baseLongSize * multiple,
+      })
+    );
+
     return createFinalImage({
       originalMapObject: map,
       snapMapInstance,
@@ -26,11 +80,10 @@ export function useQualityImageCreator() {
       product,
       activeMapStyleName,
       options: {
-        height: document.getElementById(mapWrapperId)?.getBoundingClientRect()
-          .height,
-        width: document.getElementById(mapWrapperId)?.getBoundingClientRect()
-          .width,
+        height: height,
+        width: width,
         ...options,
+        computedPixelRatio,
       },
     });
   };
