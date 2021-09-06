@@ -76,8 +76,9 @@ export default function TabsRootNew({ map, snapMapInstance }) {
 
   const stepElementsDesktop = [
     [<Step1Location map={map} />, <Step2Orientation />, <StepTitles />],
-    [<Step3Layout />, <Step3BLayoutColorSwitch />, <Step4Colors />],
     [<StepAddRoute map={map} />],
+    [<Step3Layout />, <Step3BLayoutColorSwitch />, <Step4Colors />],
+
     [<Step5Size />, <Step6FinishVariant map={map} />],
     [
       <Step8Checkout
@@ -92,8 +93,8 @@ export default function TabsRootNew({ map, snapMapInstance }) {
     [<Step1Location map={map} />],
     [<Step2Orientation />],
     [<StepTitles />],
-    [<Step4Colors />],
     [<StepAddRoute map={map} />],
+    [<Step4Colors />],
     [<Step3Layout />],
     [<Step3BLayoutColorSwitch />],
     [<Step5Size />],

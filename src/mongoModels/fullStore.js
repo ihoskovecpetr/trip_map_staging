@@ -28,6 +28,7 @@ const fullStoreScehma = new Schema(
     uploadPercentage: { type: Number },
     discount: { type: Object },
     journeys: { type: Object },
+    journeysSpecs: { type: Object },
   },
   { timestamps: true }
 );
