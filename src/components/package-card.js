@@ -30,7 +30,16 @@ export default function PriceCard({
   return (
     <Card className={header ? "active" : null} sx={styles.packageBox}>
       {header && <Text sx={styles.header}>{header}</Text>}
-      {<Image src={displayPNG ? imgPNG : imgWebp} alt={"item.title"} />}
+      {
+        <Image
+          src={displayPNG ? imgPNG : imgWebp}
+          alt={"item.title"}
+          onClick={() => {
+            window.location = window.location.href + buttonUri;
+          }}
+          style={{ cursor: "pointer" }}
+        />
+      }
       <Box>
         <Flex sx={styles.pricingHeader}>
           <Box>
@@ -72,10 +81,7 @@ export default function PriceCard({
             variant={header ? "primary" : "whiteButton"}
             aria-label={buttonText}
             onClick={() => {
-              // router.push(buttonUri);
-
               window.location = window.location.href + buttonUri;
-              // window.location.href = `http://localhost:3000${buttonUri}`;
 
               setIsLoading(true);
             }}
