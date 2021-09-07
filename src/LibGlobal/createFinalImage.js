@@ -186,7 +186,6 @@ const getImageFromBase64 = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const imgEl = new Image();
-      // alert("Created_Img");
 
       imgEl.onload = () => {
         resolve(imgEl);
@@ -194,7 +193,6 @@ const getImageFromBase64 = async (data) => {
 
       imgEl.onerror = function (e) {
         console.log("Error loading image", e);
-        // alert(JSON.stringify(e));
 
         reject("Failed to create image");
       };
@@ -205,9 +203,6 @@ const getImageFromBase64 = async (data) => {
       // });
 
       // const objectURL = URL.createObjectURL(theBlob);
-      // alert("Created_objectURL");
-
-      // alert(JSON.stringify({ objectURL: objectURL }));
 
       imgEl.src = data;
     } catch (Error) {

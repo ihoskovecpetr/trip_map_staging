@@ -53,15 +53,6 @@ const MyApp = ({ Component, pageProps, store }) => {
 
   const fullReduxStore = useFullStoreSelector();
 
-  // useEffect(() => {
-  //   const storedCookie = cookie[REDUX_COOKIE_NAME];
-
-  //   if (storedCookie != router?.query?.id || !router?.query?.id) {
-  //     router.query.id = storedCookie;
-  //     router.push(router);
-  //   }
-  // }, []);
-
   useEffect(() => {
     const storedCookie = cookie[REDUX_COOKIE_NAME];
 
@@ -72,8 +63,10 @@ const MyApp = ({ Component, pageProps, store }) => {
       });
 
       if (response.status === 203) {
-        window.location.href =
+        const URLWithoutQuery =
           window.location.origin + window.location.pathname;
+
+        window.location.href = URLWithoutQuery;
       }
     };
 
@@ -84,7 +77,10 @@ const MyApp = ({ Component, pageProps, store }) => {
     if (router.pathname === "/studio") {
       const storedCookie = cookie[REDUX_COOKIE_NAME];
 
-      if (storedCookie != router?.query?.id || !router?.query?.id) {
+      const NonCookieOwner = storedCookie != router?.query?.id;
+      const isMissingQueryID = !router?.query?.id;
+
+      if (NonCookieOwner || isMissingQueryID) {
         router.query.id = storedCookie;
         router.push(router);
       }
@@ -143,8 +139,14 @@ MyApp.getInitialProps = wrapper.getInitialPageProps(
     }
 
     const { meta } = req;
+    console.log("Get_init_props_meta", {
+      metaStoreId: meta?.storeId,
+      resMeta: res?.meta,
+    });
 
     if (meta?.storeId && res.cookie[REDUX_COOKIE_NAME] != meta.storeId) {
+      console.log("Setting_new_cookie");
+
       res.cookie(REDUX_COOKIE_NAME, meta.storeId, {
         maxAge: 900000,
         httpOnly: false,

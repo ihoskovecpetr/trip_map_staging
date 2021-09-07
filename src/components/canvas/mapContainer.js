@@ -228,7 +228,13 @@ export default function MapContainer({
           <StyledRotateIcon onClick={changeOrientation} />
         </div>
 
-        <div sx={styles.rotateBtn}>
+        <div
+          sx={styles.teaserBtn}
+          onClick={() => {
+            console.log("Clickkk");
+            openTeaserImage();
+          }}
+        >
           {isCreatingImage ? (
             <ColorWrap>
               <StyledCircularProgress />
@@ -262,7 +268,7 @@ export default function MapContainer({
                   </TooltipBodyWrap>
                 }
               >
-                <OpenWithIcon color="grey" onClick={openTeaserImage} />
+                <OpenWithIcon color="grey" />
               </CustomTooltipWrap>
             </>
           )}
@@ -670,6 +676,18 @@ const styles = {
     },
   },
   rotateBtn: {
+    border: "1px solid lightGrey",
+    display: "flex",
+    padding: "5px 5px",
+    m: "2px",
+    borderRadius: `${BNT_RADIUS}px`,
+    backgroundColor: "white",
+    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.06)",
+    cursor: "pointer",
+    // marginRight: "30px",
+  },
+
+  teaserBtn: {
     border: "1px solid lightGrey",
     display: "flex",
     padding: "5px 5px",

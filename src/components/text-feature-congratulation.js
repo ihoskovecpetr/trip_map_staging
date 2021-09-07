@@ -18,7 +18,7 @@ export default function TextFeature({
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     document.execCommand("copy");
-    alert("Copied the text: " + copyText.value);
+    alert("Zkopírován text: " + copyText.value);
   }
   return (
     <Box sx={styles.card}>

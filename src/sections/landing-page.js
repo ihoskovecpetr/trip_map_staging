@@ -13,20 +13,24 @@ import Carousel1 from "assets/landing-page/webp/1.webp";
 import Carousel2 from "assets/landing-page/webp/2.webp";
 import Carousel3 from "assets/landing-page/webp/3.webp";
 import Carousel4 from "assets/landing-page/webp/4.webp";
+import Carousel5 from "assets/landing-page/webp/5.webp";
+import Carousel6 from "assets/landing-page/webp/6.webp";
 
 import Carousel1PNG from "assets/landing-page/png/1.png";
 import Carousel2PNG from "assets/landing-page/png/2.png";
 import Carousel3PNG from "assets/landing-page/png/3.png";
 import Carousel4PNG from "assets/landing-page/png/4.png";
+import Carousel5PNG from "assets/landing-page/png/5.png";
+import Carousel6PNG from "assets/landing-page/png/6.jpg";
 
 import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
 
 import UnderlineLoader from "components/UnderlineLoader";
 import Button from "components/Button";
-import { useElementDimensions } from "../Hooks/useElementDimensions";
-import { useIsMobile } from "../Hooks/useIsMobile";
-import { useDisplayPNG } from "../Hooks/useDisplayPNG";
+import { useElementDimensions } from "Hooks/useElementDimensions";
+import { useIsMobile } from "Hooks/useIsMobile";
+import { useDisplayPNG } from "Hooks/useDisplayPNG";
 import { mobile } from "utils";
 
 const data = {
@@ -82,6 +86,8 @@ export default function LandingPage() {
               renderCenterLeftControls={() => null}
               renderCenterRightControls={() => null}
             >
+              <img src={displayPNG ? Carousel5PNG : Carousel5} />
+              <img src={displayPNG ? Carousel6PNG : Carousel6} />
               <img src={displayPNG ? Carousel1PNG : Carousel1} />
               <img src={displayPNG ? Carousel2PNG : Carousel2} />
               <img src={displayPNG ? Carousel3PNG : Carousel3} />

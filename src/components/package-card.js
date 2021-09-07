@@ -6,11 +6,13 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import UnderlineLoader from "./UnderlineLoader";
+import { useDisplayPNG } from "Hooks/useDisplayPNG";
 
 export default function PriceCard({
   data: {
     header,
-    img,
+    imgPNG,
+    imgWebp,
     name,
     description,
     priceWithUnit,
@@ -21,13 +23,14 @@ export default function PriceCard({
   deliveryPrice,
   priceFresh,
 }) {
+  const { displayPNG } = useDisplayPNG();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Card className={header ? "active" : null} sx={styles.packageBox}>
       {header && <Text sx={styles.header}>{header}</Text>}
-      {<Image src={img} alt={"item.title"} />}
+      {<Image src={displayPNG ? imgPNG : imgWebp} alt={"item.title"} />}
       <Box>
         <Flex sx={styles.pricingHeader}>
           <Box>
@@ -70,7 +73,9 @@ export default function PriceCard({
             aria-label={buttonText}
             onClick={() => {
               // router.push(buttonUri);
-              window.location.href = `http://localhost:3000${buttonUri}`;
+
+              window.location = window.location.href + buttonUri;
+              // window.location.href = `http://localhost:3000${buttonUri}`;
 
               setIsLoading(true);
             }}

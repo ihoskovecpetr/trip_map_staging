@@ -51,17 +51,26 @@ const initDataMiddleware = () => async (req, res, next) => {
       delete foundStoreWithout_id.updatedAt;
 
       if (req && req.query.id === cookieStoreId) {
+        console.log("Cookie_same_as_ID");
         req.meta = {
           ...foundStoreWithout_id,
         };
       }
 
       if (req && req.query.id != cookieStoreId) {
-        const newStoreId = v4();
+        const newStoreId0 = v4();
+
+        const newStore = new FullStore({
+          storeId: newStoreId0,
+        });
+
+        await newStore.save();
+
+        console.log("CreatedNew_store_0", { newStoreId0 });
 
         req.meta = {
           ...foundStoreWithout_id,
-          storeId: newStoreId,
+          storeId: newStoreId0,
         };
       }
     }
@@ -73,6 +82,8 @@ const initDataMiddleware = () => async (req, res, next) => {
       });
 
       await newStore.save();
+
+      console.log("CreatedNew_store", { newStoreId });
 
       req.meta = {
         storeId: newStoreId,
@@ -93,15 +104,17 @@ const initDataMiddleware = () => async (req, res, next) => {
         ...foundStoreCookieDoc,
       };
     } else {
-      const newStoreId = v4();
+      const newStoreId2 = v4();
       const newStore = new FullStore({
-        storeId: newStoreId,
+        storeId: newStoreId2,
       });
 
       await newStore.save();
 
+      console.log("CreatedNew_store_2", { newStoreId2 });
+
       req.meta = {
-        storeId: newStoreId,
+        storeId: newStoreId2,
       };
     }
   }

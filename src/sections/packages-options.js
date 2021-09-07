@@ -3,13 +3,15 @@ import { jsx, Container, Flex } from "theme-ui";
 import PackageCard from "components/package-card";
 import SectionHeader from "components/section-header";
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from "react-icons/io";
-import PatternBG from "assets/patternBG.png";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
-import ProductFramed from "assets/packages/SanFrancisco_black.png";
-import ProductNoFrame from "assets/packages/Iceland_green.png";
+import PatternBG from "assets/patternBG.png";
+import ProductFramedPNG from "assets/packages/San_Francisco.png";
+import ProductFramedWebp from "assets/packages/San_Francisco.webp";
+import ProductNoFramePNG from "assets/packages/Iceland-flights.png";
+import ProductNoFrameWebp from "assets/packages/Iceland-flights.webp";
 
 const packages = [
   {
@@ -19,8 +21,9 @@ const packages = [
     priceWithUnit: "$79.99", //TODO add price
     variantId: 9357,
     buttonText: "Do STUDIA",
-    buttonUri: "/studio?id=f73c1dd9-c09c-43c7-a75d-bb2e5d8a3858",
-    img: ProductFramed, //Manhattan,
+    buttonUri: "studio?id=f05c44bd-e1be-4c04-955f-1364f7604d36",
+    imgPNG: ProductFramedPNG,
+    imgWebp: ProductFramedWebp,
     points: [
       {
         icon: <IoIosCheckmarkCircle />,
@@ -53,10 +56,11 @@ const packages = [
     name: "Provedení bez rámu",
     description: "Pro vlastní zarámování či jako plakát na zeď",
     buttonText: "Do STUDIA",
-    buttonUri: "/studio?id=b194cb86-50a4-4265-82fe-3d9d5b47866d",
+    buttonUri: "studio?id=c27dd661-f10a-4b91-9a11-87bc01e4ba54",
     priceWithUnit: "$29.99", //TODO add price
     variantId: 8948,
-    img: ProductNoFrame,
+    imgPNG: ProductNoFramePNG,
+    imgWebp: ProductNoFrameWebp,
     points: [
       {
         icon: <IoIosCheckmarkCircle />,
