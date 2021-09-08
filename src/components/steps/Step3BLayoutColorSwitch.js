@@ -14,7 +14,7 @@ import {
   useActiveMapStyleSelector,
 } from "redux/order/reducer";
 
-export default function Step3BLayoutColorSwitch() {
+export default function StepLayoutColorSwitch({ index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
@@ -28,7 +28,7 @@ export default function Step3BLayoutColorSwitch() {
 
   return (
     <Container>
-      {!isMobile && <HeadingText>4. Výplň ohraničení</HeadingText>}
+      {!isMobile && <HeadingText>{index}. Výplň ohraničení</HeadingText>}
       {activeMapStyleObject.layoutColor && activeMapStyleObject.textColor && (
         <ItemContainer>
           <LayoutItemWrap>

@@ -98,6 +98,8 @@ export default function MapContainer({
   const mapCoordinates = useMapCoordinatesSelector();
   const journeysSpecs = useGetJourneysSpecsSelector();
 
+  console.log({ journeysRedux });
+
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
@@ -660,7 +662,7 @@ const styles = {
   zoomBtnWrapper: {
     display: "flex",
     padding: "auto",
-    // marginRight: "30px",
+    marginRight: "20px",
   },
   zoomBtn: {
     border: "1px solid lightGrey",

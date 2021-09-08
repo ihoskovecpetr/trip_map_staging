@@ -20,7 +20,7 @@ import { useActiveLayoutSelector } from "redux/order/reducer";
 
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "constants/constants";
 
-export default function Step3Layout() {
+export default function StepLayout({ index }) {
   const dispatch = useDispatch();
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const { isMobile } = useIsMobile();
@@ -53,7 +53,7 @@ export default function Step3Layout() {
 
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>4. Ohraničení</HeadingText>}
+      {!isMobile && <HeadingText>{index}. Ohraničení</HeadingText>}
       <AllLayoutsContainer>
         {Object.values(LAYOUTS).map((layoutObj, index) => (
           <div

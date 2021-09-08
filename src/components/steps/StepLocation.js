@@ -23,7 +23,7 @@ let geocoder = new MapboxGeocoder({
   placeholder: "Zadejte lokalitu",
 });
 
-export default function StepLocation({ map }) {
+export default function StepLocation({ map, index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -59,6 +59,8 @@ export default function StepLocation({ map }) {
 
     const { bbox } = e.result;
 
+    console.log({ eResult: e.result });
+
     if (bbox) {
       map?.fitBounds([
         [bbox[0], bbox[1]], // southwestern corner of the bounds
@@ -93,7 +95,7 @@ export default function StepLocation({ map }) {
 
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>1. Zadejte lokalitu</HeadingText>}
+      {!isMobile && <HeadingText>{index}. Zadejte lokalitu</HeadingText>}
 
       <div
         id="geocoder"

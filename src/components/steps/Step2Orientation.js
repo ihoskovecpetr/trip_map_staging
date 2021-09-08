@@ -10,7 +10,7 @@ import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
 
-export default function Step2Orientation() {
+export default function Step2Orientation({ index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
@@ -32,7 +32,7 @@ export default function Step2Orientation() {
 
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>2. Orientace</HeadingText>}
+      {!isMobile && <HeadingText>{index}. Orientace</HeadingText>}
 
       <OrientationWrap>
         <SingleOrientationItem

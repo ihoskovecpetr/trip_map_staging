@@ -21,7 +21,7 @@ const packages = [
     priceWithUnit: "$79.99", //TODO add price
     variantId: 9357,
     buttonText: "Do STUDIA",
-    buttonUri: "studio?id=f05c44bd-e1be-4c04-955f-1364f7604d36",
+    buttonUri: "studio?id=a2d161ae-ec78-4fc0-9a6e-56495f260fb5",
     imgPNG: ProductFramedPNG,
     imgWebp: ProductFramedWebp,
     points: [
@@ -56,7 +56,7 @@ const packages = [
     name: "Provedení bez rámu",
     description: "Pro vlastní zarámování či jako plakát na zeď",
     buttonText: "Do STUDIA",
-    buttonUri: "studio?id=c27dd661-f10a-4b91-9a11-87bc01e4ba54",
+    buttonUri: "studio?id=668a69d4-2dce-459a-8302-b981e0cc2460",
     priceWithUnit: "$29.99", //TODO add price
     variantId: 8948,
     imgPNG: ProductNoFramePNG,

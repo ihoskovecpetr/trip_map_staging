@@ -31,7 +31,7 @@ import {
 
 import { useGetJourneys, useActiveMapStyleSelector } from "redux/order/reducer";
 
-export default function StepAddRoute({ map }) {
+export default function StepAddRoute({ map, index }) {
   const [updatingSourceId, setUpdatingSourceId] = useState();
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
@@ -113,7 +113,7 @@ export default function StepAddRoute({ map }) {
 
   return (
     <Container>
-      <HeadingText>4. Zadejte body cesty</HeadingText>
+      <HeadingText>{index}. Zadejte body cesty</HeadingText>
 
       {sortedGroupsJourneys.map((journeyGroup) => {
         return (

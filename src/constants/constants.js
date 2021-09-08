@@ -30,7 +30,7 @@ const TRANSPARENT_PADDING = 0.015;
 const BOTTOM_BANNER = 0.09;
 const BLURRED_AREA_HEIGHT = 0.09;
 const TITLES_FONT_DEFAULT = "RobotoMono_local"; // // "NotoSansJP_local";
-const TITLES_DEFAULT = ["New York", "— USA —"];
+const TITLES_DEFAULT = ["Itálie červen/2021", "— Řím - Toskánsko - Neapol —"];
 
 const FRAME_COLOR_WHITE = "#F5F5F5";
 const FRAME_COLOR_BLACK = "black";

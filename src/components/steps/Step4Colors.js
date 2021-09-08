@@ -33,11 +33,11 @@ import RedWhitePNG from "assets/mapStyles/png/RedWhite.png";
 import { MAP_STYLES_NAMES } from "../../constants/constants";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
-import { color, font, fontSize, fontWeight } from "utils";
+import { color, font, fontSize, fontWeight, mobile } from "utils";
 import { setActiveMapStyleAction } from "redux/order/actions";
 import { useActiveMapStyleSelector } from "redux/order/reducer";
 
-export default function Step4Colors() {
+export default function Step4Colors({ index }) {
   const dispatch = useDispatch();
   const activeMapStyleName = useActiveMapStyleSelector();
 
@@ -83,7 +83,7 @@ export default function Step4Colors() {
 
   return (
     <Container>
-      {!isMobile && <HeadingText>7. Barevná kombinace</HeadingText>}
+      {!isMobile && <HeadingText>{index}. Barevná kombinace</HeadingText>}
       <ColorsWrap>
         {Object.values(MAP_STYLES_NAMES).map((style, index) => (
           <div
@@ -99,9 +99,9 @@ export default function Step4Colors() {
                 onClick={changeActiveStyle(style)}
               />
             </ImageWrap>
-            <p sx={styles.itemStyleText} onClick={changeActiveStyle(style)}>
+            <ItemStyleText onClick={changeActiveStyle(style)}>
               {!isMobile && style}
-            </p>
+            </ItemStyleText>
           </div>
         ))}
       </ColorsWrap>
@@ -120,20 +120,6 @@ const styles = {
     "&.active p": {
       color: "cta_color",
     },
-  },
-  itemStyleText: {
-    overflow: "hidden",
-    height: "100%",
-    width: ["100%", null, null, "unset"],
-    margin: "0",
-    marginTop: "12px",
-    textAlign: "center",
-    verticalAlign: "middle",
-    lineHeight: 1.2,
-    letterSpacing: "1.1px",
-    fontWeight: 400,
-    textTransform: "uppercase",
-    fontSize: "14px",
   },
 };
 const ColorsWrap = styled.div`
@@ -173,4 +159,24 @@ const StyledImage = styled.img`
   color: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 0px 3px;
   color: ${({ active }) => active && color("cta_color")};
+`;
+
+const ItemStyleText = styled.p`
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  margin-top: 12px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.2;
+  letter-spacing: 1.1px;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: ${color("muted")};
+
+  ${mobile`
+    width: unset;
+  `}
 `;

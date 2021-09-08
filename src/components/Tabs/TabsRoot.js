@@ -13,9 +13,9 @@ import Stepper from "./Stepper";
 
 import Step1Location from "../steps/StepLocation";
 import Step2Orientation from "../steps/Step2Orientation";
-import Step3Layout from "../steps/Step3Layout";
-import Step3BLayoutColorSwitch from "../steps/Step3BLayoutColorSwitch";
-import Step4Colors from "../steps/Step4Colors";
+import StepLayout from "../steps/Step3Layout";
+import StepLayoutColorSwitch from "../steps/Step3BLayoutColorSwitch";
+import StepColors from "../steps/Step4Colors";
 import Step5Size from "../steps/Step5Size";
 import Step6FinishVariant from "../steps/Step6FinishVariant";
 import Step7MapDefinition from "../steps/Step7MapDefinition";
@@ -75,35 +75,45 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   };
 
   const stepElementsDesktop = [
-    [<Step1Location map={map} />, <Step2Orientation />, <StepTitles />],
-    [<StepAddRoute map={map} />],
-    [<Step3Layout />, <Step3BLayoutColorSwitch />, <Step4Colors />],
+    [
+      <Step1Location map={map} index={1} />,
+      <Step2Orientation index={2} />,
+      <StepTitles index={3} />,
+    ],
+    [<StepAddRoute map={map} index={4} />],
+    [
+      <StepLayout index={5} />,
+      <StepLayoutColorSwitch index={6} />,
+      <StepColors index={7} />,
+    ],
 
-    [<Step5Size />, <Step6FinishVariant map={map} />],
+    [<Step5Size index={8} />, <Step6FinishVariant map={map} index={9} />],
     [
       <Step8Checkout
         map={map}
         activeMapStyleName={activeMapStyleName}
         snapMapInstance={snapMapInstance}
+        index={10}
       />,
     ],
   ];
 
   const stepElementsMobile = [
-    [<Step1Location map={map} />],
-    [<Step2Orientation />],
-    [<StepTitles />],
-    [<StepAddRoute map={map} />],
-    [<Step4Colors />],
-    [<Step3Layout />],
-    [<Step3BLayoutColorSwitch />],
-    [<Step5Size />],
-    [<Step6FinishVariant map={map} />],
+    [<Step1Location map={map} index={1} />],
+    [<Step2Orientation index={2} />],
+    [<StepTitles index={3} />],
+    [<StepAddRoute map={map} index={4} />],
+    [<StepColors index={5} />],
+    [<StepLayout index={6} />],
+    [<StepLayoutColorSwitch index={7} />],
+    [<Step5Size index={8} />],
+    [<Step6FinishVariant map={map} index={9} />],
     [
       <Step8Checkout
         map={map}
         activeMapStyleName={activeMapStyleName}
         snapMapInstance={snapMapInstance}
+        index={10}
       />,
     ],
   ];

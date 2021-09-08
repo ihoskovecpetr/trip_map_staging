@@ -13,6 +13,7 @@ export default function Step8Checkout({
   map,
   activeMapStyleName,
   snapMapInstance,
+  index,
   children,
 }) {
   const [isDefaultDefinition, setIsDefaultDefinition] = useState(true);
@@ -24,7 +25,7 @@ export default function Step8Checkout({
       <AbsoluteBtnWrap>
         {!isMobile && (
           <ExtraPaddingTop>
-            <HeadingText>9. Materiál pro tisk</HeadingText>
+            <HeadingText>{index}. Materiál pro tisk</HeadingText>
             <StyledMaterialP>{productRedux.materialDesc}</StyledMaterialP>
           </ExtraPaddingTop>
         )}

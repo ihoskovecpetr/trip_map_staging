@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StepTitles() {
+export default function StepTitles({ index }) {
   const { isMobile } = useIsMobile();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ export default function StepTitles() {
   };
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>3. Popisky</HeadingText>}
+      {!isMobile && <HeadingText>{index}. Popisky</HeadingText>}
       <TextFieldsConteiner>
         <TextField
           classes={{

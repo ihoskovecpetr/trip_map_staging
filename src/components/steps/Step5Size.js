@@ -22,7 +22,7 @@ import {
   FRAME_OPTION_NAMES,
 } from "constants/constants";
 
-export default function Step5Size() {
+export default function Step5Size({ index }) {
   const { isMobile } = useIsMobile();
   const { isLargeSizeCapable, isMidSizeCapable } = useIsSizeWebGLSizeCapable();
   const dispatch = useDispatch();
@@ -110,7 +110,7 @@ export default function Step5Size() {
     <div sx={styles.container}>
       {!isMobile && (
         <HeadingText>
-          6. Rozměry <UnitMark>[cm]</UnitMark>
+          {index}. Rozměry <UnitMark>[cm]</UnitMark>
         </HeadingText>
       )}
 

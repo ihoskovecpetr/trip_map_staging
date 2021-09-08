@@ -24,7 +24,7 @@ import { VARIANTS_PRINTFUL, FRAME_OPTION_NAMES } from "constants/constants";
 
 const priceAlgorithm = getPriceAlgorithm();
 
-export default function Step6FinishVariant() {
+export default function Step6FinishVariant({ index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
@@ -73,7 +73,7 @@ export default function Step6FinishVariant() {
 
   return (
     <div sx={styles.container}>
-      {!isMobile && <HeadingText>7. Rámování</HeadingText>}
+      {!isMobile && <HeadingText>{index}. Rámování</HeadingText>}
       {variantsPrintfulForSize.length === 0 && (
         <div sx={styles.loaderWrap}>
           <CustomLoader />
