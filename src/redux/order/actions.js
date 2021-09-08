@@ -101,7 +101,7 @@ export const addNewJourney = (journey) => (dispatch) => {
   });
 };
 
-export const updateJourney = (point) => (dispatch) => {
+export const updateJourneyPoint = (point) => (dispatch) => {
   return dispatch({
     type: countActionTypes.UPDATE_JOURNEY,
     data: point,

@@ -35,10 +35,6 @@ export default async (req, res) => {
           { new: true }
         );
 
-        console.log("Updating_store_id", {
-          storeId,
-          updatedStore: !!updatedStore,
-        });
         if (updatedStore) {
           res.status(200).json({
             ok: "UPDATED",

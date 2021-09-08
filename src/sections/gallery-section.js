@@ -193,7 +193,7 @@ const imagesArr = [
   WhiteBedBoston,
   RestaurantGreenRio,
   RedWallBoston,
-  InterierYellow1,
+  // InterierYellow1,
   InterierChair2,
   // InterierBike2,
   InterierBike3,

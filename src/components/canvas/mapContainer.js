@@ -32,7 +32,7 @@ import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimens
 import {
   setProductAction,
   setPopupSeen,
-  updateJourney,
+  updateJourneyPoint,
   setMapZoomAction,
   setMapCoordinatesAction,
 } from "redux/order/actions";
@@ -186,7 +186,7 @@ export default function MapContainer({
 
     if (currentPoint.titleSourceId === draggedPoint) {
       dispatch(
-        updateJourney({
+        updateJourneyPoint({
           ...currentPoint,
           titleLocation: [coords.lng, coords.lat],
         })
@@ -359,50 +359,52 @@ export default function MapContainer({
                         />
                       </Layer>
                     )}
-                    <Layer
-                      type="symbol"
-                      key={groupIndex + pointIndex}
-                      layout={{
-                        // "icon-image": "harbor-15",
-                        "icon-allow-overlap": true,
-                        "text-field": currentPoint.title,
-                        "text-font": [
-                          "Open Sans Bold",
-                          "Arial Unicode MS Bold",
-                        ],
-                        "text-size": baseLongSize
-                          ? (baseLongSize * LABEL_SIZE_KOEF) / 2
-                          : 1, // 7,
-                        // "text-size": (baseLongSize * LABEL_SIZE_KOEF) / 2, // 7,
-                        "text-transform": "uppercase",
-                        "text-letter-spacing": 0.05,
-                        "text-offset": [0, 1],
-                        "text-allow-overlap": true,
-                        "icon-allow-overlap": true,
-                        "text-ignore-placement": true,
-                        "icon-ignore-placement": true,
-                      }}
-                      paint={{
-                        "text-color": "#ffffff",
-                        "text-halo-color": "#000000",
-                        "text-halo-width": baseLongSize
-                          ? (baseLongSize * LABEL_SIZE_KOEF) / 2
-                          : 10,
-                      }}
-                    >
-                      <Feature
-                        coordinates={currentPoint.titleLocation}
-                        onDragStart={(e) => {
-                          e.target.dragPan.disable();
-                          setDraggedPoint(currentPoint.titleSourceId);
+                    {currentPoint.titleLabelDisplayed && (
+                      <Layer
+                        type="symbol"
+                        key={groupIndex + pointIndex}
+                        layout={{
+                          // "icon-image": "harbor-15",
+                          "icon-allow-overlap": true,
+                          "text-field": currentPoint.titleLabel,
+                          "text-font": [
+                            "Open Sans Bold",
+                            "Arial Unicode MS Bold",
+                          ],
+                          "text-size": baseLongSize
+                            ? (baseLongSize * LABEL_SIZE_KOEF) / 2
+                            : 1, // 7,
+                          // "text-size": (baseLongSize * LABEL_SIZE_KOEF) / 2, // 7,
+                          "text-transform": "uppercase",
+                          "text-letter-spacing": 0.05,
+                          "text-offset": [0, -2],
+                          "text-allow-overlap": true,
+                          "icon-allow-overlap": true,
+                          "text-ignore-placement": true,
+                          "icon-ignore-placement": true,
                         }}
-                        draggable={
-                          !draggedPoint ||
-                          currentPoint.titleSourceId === draggedPoint
-                        }
-                        onDragEnd={onUp(currentPoint)}
-                      />
-                    </Layer>
+                        paint={{
+                          "text-color": "#ffffff",
+                          "text-halo-color": "#000000",
+                          "text-halo-width": baseLongSize
+                            ? (baseLongSize * LABEL_SIZE_KOEF) / 2
+                            : 10,
+                        }}
+                      >
+                        <Feature
+                          coordinates={currentPoint.titleLocation}
+                          onDragStart={(e) => {
+                            e.target.dragPan.disable();
+                            setDraggedPoint(currentPoint.titleSourceId);
+                          }}
+                          draggable={
+                            !draggedPoint ||
+                            currentPoint.titleSourceId === draggedPoint
+                          }
+                          onDragEnd={onUp(currentPoint)}
+                        />
+                      </Layer>
+                    )}
                   </>
                 );
               });
@@ -477,33 +479,35 @@ export default function MapContainer({
                         <Feature coordinates={currentPoint.location} />
                       </Layer>
 
-                      <Layer
-                        type="symbol"
-                        layout={{
-                          // "icon-image": "harbor-15",
-                          "icon-allow-overlap": true,
-                          "text-field": currentPoint.title,
-                          "text-font": [
-                            "Open Sans Bold",
-                            "Arial Unicode MS Bold",
-                          ],
-                          "text-size": journeysSpecs.labelSizePrint ?? 1,
-                          "text-transform": "uppercase",
-                          "text-letter-spacing": 0.05,
-                          "text-offset": [0, 1],
-                          "text-allow-overlap": true,
-                          "icon-allow-overlap": true,
-                          "text-ignore-placement": true,
-                          "icon-ignore-placement": true,
-                        }}
-                        paint={{
-                          "text-color": "#ffffff",
-                          "text-halo-color": "#000000",
-                          "text-halo-width": journeysSpecs.labelSizePrint,
-                        }}
-                      >
-                        <Feature coordinates={currentPoint.titleLocation} />
-                      </Layer>
+                      {currentPoint.titleLabelDisplayed && (
+                        <Layer
+                          type="symbol"
+                          layout={{
+                            // "icon-image": "harbor-15",
+                            "icon-allow-overlap": true,
+                            "text-field": currentPoint.titleLabel,
+                            "text-font": [
+                              "Open Sans Bold",
+                              "Arial Unicode MS Bold",
+                            ],
+                            "text-size": journeysSpecs.labelSizePrint ?? 1,
+                            "text-transform": "uppercase",
+                            "text-letter-spacing": 0.05,
+                            "text-offset": [0, -2],
+                            "text-allow-overlap": true,
+                            "icon-allow-overlap": true,
+                            "text-ignore-placement": true,
+                            "icon-ignore-placement": true,
+                          }}
+                          paint={{
+                            "text-color": "#ffffff",
+                            "text-halo-color": "#000000",
+                            "text-halo-width": journeysSpecs.labelSizePrint,
+                          }}
+                        >
+                          <Feature coordinates={currentPoint.titleLocation} />
+                        </Layer>
+                      )}
                     </>
                   );
                 });

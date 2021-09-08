@@ -35,7 +35,7 @@ import { mobile } from "utils";
 
 const data = {
   subTitle: "",
-  title: "Vytvořte si stylovou mapu na památku", // "Vytvořte si stylovou vzpomínku na cesty",  "Vytvořte si vlastní mapu na vzpomínku",
+  title: "Vytvořte si stylovou památku na cesty", //"Vytvořte si stylovou mapu na památku", // "Vytvořte si stylovou vzpomínku na cesty",  "Vytvořte si vlastní mapu na vzpomínku",
   features: [
     {
       id: 1,
@@ -77,6 +77,7 @@ export default function LandingPage() {
               autoplay={true}
               cellAlign="center"
               heightMode="max"
+              autoplayInterval={3000}
               // heightMode={current}
               initialSlideHeight={90}
               // frameOverflow="visible"

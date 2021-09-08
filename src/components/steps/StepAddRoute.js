@@ -12,16 +12,27 @@ import ClearIcon from "@material-ui/icons/Clear";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import CreateIcon from "@material-ui/icons/Create";
 import TextField from "@material-ui/core/TextField";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import DoneIcon from "@material-ui/icons/Done";
 
 import { color, fontWeight } from "utils";
-import { useGetJourneys } from "redux/order/reducer";
 import { useIsMobile } from "Hooks/useIsMobile";
 import GeocoderInput from "components/GeocoderInput";
 import { getMaxGroupIndex } from "LibGlobal/getMaxGroupIndex";
 import { getSortedArrays } from "LibGlobal/getSortedArrays";
-import { addNewJourney, removeJourneyPoint } from "redux/order/actions";
+import { MAP_STYLED_AND_FLIGHT_COLOR } from "constants/constants";
+
+import {
+  addNewJourney,
+  removeJourneyPoint,
+  updateJourneyPoint,
+} from "redux/order/actions";
+
+import { useGetJourneys, useActiveMapStyleSelector } from "redux/order/reducer";
 
 export default function StepAddRoute({ map }) {
+  const [updatingSourceId, setUpdatingSourceId] = useState();
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -29,6 +40,7 @@ export default function StepAddRoute({ map }) {
   const journeysRef = useRef();
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const currentGroupRef = useRef(currentGroupIndex);
+  const activeMapStyleName = useActiveMapStyleSelector();
 
   useEffect(() => {
     currentGroupRef.current = currentGroupIndex;
@@ -66,6 +78,8 @@ export default function StepAddRoute({ map }) {
         location: e.result.geometry.coordinates,
         sourceId: sourceId,
         title: newTitle,
+        titleLabel: newTitle,
+        titleLabelDisplayed: true,
         titleLocation: e.result.geometry.coordinates,
         titleSourceId,
       })
@@ -74,6 +88,25 @@ export default function StepAddRoute({ map }) {
 
   const removePointRedux = (journeyPoint) => {
     dispatch(removeJourneyPoint(journeyPoint));
+  };
+
+  const toggleLabelVisibility = (journeyPoint) => {
+    dispatch(
+      updateJourneyPoint({
+        ...journeyPoint,
+        titleLabelDisplayed: !journeyPoint.titleLabelDisplayed,
+      })
+    );
+  };
+
+  const updateLabel = (journeyPoint) => (e) => {
+    console.log("Value__ ", e.target.value);
+    dispatch(
+      updateJourneyPoint({
+        ...journeyPoint,
+        titleLabel: e.target.value,
+      })
+    );
   };
 
   const sortedGroupsJourneys = getSortedArrays(journeysRedux);
@@ -93,23 +126,77 @@ export default function StepAddRoute({ map }) {
               connector={
                 <span
                   style={{
-                    paddingLeft: "10px",
+                    paddingLeft: "9px",
                     marginTop: "-15px",
                     marginBottom: "-15px",
-                    fontWeight: 200,
+                    fontWeight: 600,
+                    color: MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
                   }}
                 >
-                  l
+                  |
                 </span>
               }
             >
               {journeyGroup.map((journeyPoint, index) => {
                 return (
                   <Step key="1">
-                    <StyledStepLabel>
+                    <StyledStepLabel
+                      color={MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]}
+                    >
                       <StepsText>
-                        {journeyPoint.title}
-                        <ClearIcon
+                        {updatingSourceId === journeyPoint.sourceId ? (
+                          <>
+                            <TextField
+                              value={journeyPoint.titleLabel}
+                              onChange={updateLabel(journeyPoint)}
+                            />
+                            <DoneIcon
+                              style={{
+                                fill: "green",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => setUpdatingSourceId("")}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            {journeyPoint.titleLabel}
+                            <CreateIcon
+                              style={{
+                                cursor: "pointer",
+                                width: "0.8em",
+                                height: "0.8em",
+                                marginLeft: "5px",
+                              }}
+                              onClick={() =>
+                                setUpdatingSourceId(journeyPoint.sourceId)
+                              }
+                            />
+                          </>
+                        )}
+                        <Flex1 />
+                        {journeyPoint.titleLabelDisplayed ? (
+                          <VisibilityIcon
+                            onClick={() => {
+                              toggleLabelVisibility(journeyPoint);
+                            }}
+                            style={{
+                              // fill: "red",
+                              cursor: "pointer",
+                            }}
+                          />
+                        ) : (
+                          <VisibilityOffIcon
+                            style={{
+                              fill: "grey",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              toggleLabelVisibility(journeyPoint);
+                            }}
+                          />
+                        )}
+                        <StyledClearIcon
                           style={{
                             fill: "red",
                             marginBottom: "-5px",
@@ -246,7 +333,7 @@ const StepsText = styled.p`
   line-height: 145%;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
 `;
 
 const StyledStepLabel = styled(StepLabel)`
@@ -258,6 +345,7 @@ const StyledStepLabel = styled(StepLabel)`
   }
   .MuiStepIcon-completed {
     color: ${color("cta_color")} !important;
+    color: ${({ color }) => color} !important;
     text {
       fill: white !important;
     }
@@ -268,4 +356,12 @@ const StyledButton = styled(Button)`
   color: white !important;
   background-color: ${color("cta_color")} !important;
   text-transform: unset !important;
+`;
+
+const Flex1 = styled.div`
+  flex: 1;
+`;
+
+const StyledClearIcon = styled(ClearIcon)`
+  margin-left: 5px;
 `;
