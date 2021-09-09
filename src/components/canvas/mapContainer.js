@@ -301,116 +301,18 @@ export default function MapContainer({
               );
             }}
           >
-            {sortedGroupsJourneys.map((group, groupIndex) => {
-              return group.map((_, pointIndex) => {
-                if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
-                  return;
-                }
-
-                const previousPoint =
-                  sortedGroupsJourneys[groupIndex][pointIndex - 1];
-                const currentPoint =
-                  sortedGroupsJourneys[groupIndex][pointIndex];
-
-                return (
-                  <>
-                    <Layer
-                      id={"point-blip" + groupIndex + pointIndex}
-                      type="circle"
-                      // sourceId={"point" + groupIndex + pointIndex}
-                      paint={{
-                        "circle-radius": 4,
-                        "circle-radius-transition": { duration: 0 },
-                        "circle-opacity-transition": { duration: 0 },
-                        "circle-color": "white",
-                      }}
-                    >
-                      <Feature coordinates={currentPoint.location} />
-                    </Layer>
-
-                    <Layer
-                      id={"point" + groupIndex + pointIndex}
-                      type="circle"
-                      // sourceId={"point" + groupIndex + pointIndex}
-                      paint={{
-                        "circle-radius": 3,
-                        "circle-color":
-                          currentPoint.titleSourceId === draggedPoint
-                            ? "red"
-                            : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
-                      }}
-                    >
-                      <Feature coordinates={currentPoint.location} />
-                    </Layer>
-
-                    {previousPoint && (
-                      <Layer
-                        type="line"
-                        layout={lineLayout}
-                        paint={{
-                          "line-color":
-                            MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
-                          "line-width": 2,
-                        }}
-                      >
-                        <Feature
-                          coordinates={getGeoArc(
-                            currentPoint.location,
-                            previousPoint.location
-                          )}
-                        />
-                      </Layer>
-                    )}
-                    {currentPoint.titleLabelDisplayed && (
-                      <Layer
-                        type="symbol"
-                        key={groupIndex + pointIndex}
-                        layout={{
-                          // "icon-image": "harbor-15",
-                          "icon-allow-overlap": true,
-                          "text-field": currentPoint.titleLabel,
-                          "text-font": [
-                            "Open Sans Bold",
-                            "Arial Unicode MS Bold",
-                          ],
-                          "text-size": baseLongSize
-                            ? (baseLongSize * LABEL_SIZE_KOEF) / 2
-                            : 1, // 7,
-                          // "text-size": (baseLongSize * LABEL_SIZE_KOEF) / 2, // 7,
-                          "text-transform": "uppercase",
-                          "text-letter-spacing": 0.05,
-                          "text-offset": [0, -2],
-                          "text-allow-overlap": true,
-                          "icon-allow-overlap": true,
-                          "text-ignore-placement": true,
-                          "icon-ignore-placement": true,
-                        }}
-                        paint={{
-                          "text-color": "#ffffff",
-                          "text-halo-color": "#000000",
-                          "text-halo-width": baseLongSize
-                            ? (baseLongSize * LABEL_SIZE_KOEF) / 2
-                            : 10,
-                        }}
-                      >
-                        <Feature
-                          coordinates={currentPoint.titleLocation}
-                          onDragStart={(e) => {
-                            e.target.dragPan.disable();
-                            setDraggedPoint(currentPoint.titleSourceId);
-                          }}
-                          draggable={
-                            !draggedPoint ||
-                            currentPoint.titleSourceId === draggedPoint
-                          }
-                          onDragEnd={onUp(currentPoint)}
-                        />
-                      </Layer>
-                    )}
-                  </>
-                );
-              });
-            })}
+            <PrintLocations
+              sortedGroupsJourneys={sortedGroupsJourneys}
+              draggedPoint={draggedPoint}
+              setDraggedPoint={setDraggedPoint}
+              activeMapStyleName={activeMapStyleName}
+              onUp={onUp}
+              textSize={
+                baseLongSize ? (baseLongSize * LABEL_SIZE_KOEF) / 2 : 10
+              }
+              lineWidth={1}
+              baseCircleRadius={3}
+            />
           </Map>
         </div>
         <Backdrop open={false}>
@@ -421,99 +323,18 @@ export default function MapContainer({
               containerStyle={{
                 width: "100%",
                 height: "100%",
-                // display: "none",
               }}
             >
-              {sortedGroupsJourneys.map((group, groupIndex) => {
-                return group.map((_, pointIndex) => {
-                  if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
-                    return;
-                  }
-
-                  const previousPoint =
-                    sortedGroupsJourneys[groupIndex][pointIndex - 1];
-                  const currentPoint =
-                    sortedGroupsJourneys[groupIndex][pointIndex];
-
-                  return (
-                    <>
-                      {previousPoint && (
-                        <Layer
-                          type="line"
-                          layout={lineLayout}
-                          paint={{
-                            "line-color":
-                              MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
-                            "line-width": 3,
-                          }}
-                        >
-                          <Feature
-                            coordinates={getGeoArc(
-                              currentPoint.location,
-                              previousPoint.location
-                            )}
-                          />
-                        </Layer>
-                      )}
-
-                      <Layer
-                        id={"point-blip" + groupIndex + pointIndex}
-                        type="circle"
-                        paint={{
-                          "circle-radius": 6,
-                          "circle-radius-transition": { duration: 0 },
-                          "circle-opacity-transition": { duration: 0 },
-                          "circle-color": "white",
-                        }}
-                      >
-                        <Feature coordinates={currentPoint.location} />
-                      </Layer>
-
-                      <Layer
-                        id={"point" + groupIndex + pointIndex}
-                        type="circle"
-                        paint={{
-                          "circle-radius": 5,
-                          "circle-color":
-                            MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
-                        }}
-                      >
-                        <Feature coordinates={currentPoint.location} />
-                      </Layer>
-
-                      {currentPoint.titleLabelDisplayed && (
-                        <Layer
-                          type="symbol"
-                          layout={{
-                            // "icon-image": "harbor-15",
-                            "icon-allow-overlap": true,
-                            "text-field": currentPoint.titleLabel,
-                            "text-font": [
-                              "Open Sans Bold",
-                              "Arial Unicode MS Bold",
-                            ],
-                            "text-size": journeysSpecs.labelSizePrint ?? 1,
-                            "text-transform": "uppercase",
-                            "text-letter-spacing": 0.05,
-                            "text-offset": [0, -2],
-                            "text-allow-overlap": true,
-                            "icon-allow-overlap": true,
-                            "text-ignore-placement": true,
-                            "icon-ignore-placement": true,
-                          }}
-                          paint={{
-                            "text-color": "#ffffff",
-                            "text-halo-color": "#000000",
-                            "text-halo-width": journeysSpecs.labelSizePrint,
-                          }}
-                        >
-                          <Feature coordinates={currentPoint.titleLocation} />
-                        </Layer>
-                      )}
-                    </>
-                  );
-                });
-              })}
+              <PrintLocations
+                sortedGroupsJourneys={sortedGroupsJourneys}
+                draggedPoint={draggedPoint}
+                setDraggedPoint={setDraggedPoint}
+                activeMapStyleName={activeMapStyleName}
+                onUp={onUp}
+                textSize={journeysSpecs.labelSizePrint}
+                lineWidth={2}
+                baseCircleRadius={5}
+              />
             </Map2>
           </NeverDisplayContainer>
         </Backdrop>
@@ -549,6 +370,128 @@ export default function MapContainer({
     </div>
   );
 }
+
+const PrintLocations = ({
+  sortedGroupsJourneys,
+  draggedPoint,
+  setDraggedPoint,
+  activeMapStyleName,
+  onUp,
+  textSize,
+  lineWidth,
+  baseCircleRadius,
+}) => {
+  return (
+    <>
+      {sortedGroupsJourneys.map((group, groupIndex) => {
+        return group.map((_, pointIndex) => {
+          if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
+            return;
+          }
+
+          const previousPoint =
+            sortedGroupsJourneys[groupIndex][pointIndex - 1];
+          const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex];
+
+          return (
+            <>
+              <Layer
+                id={"point-blip" + groupIndex + pointIndex}
+                type="circle"
+                paint={{
+                  "circle-radius": baseCircleRadius * 1.4,
+                  "circle-radius-transition": { duration: 0 },
+                  "circle-opacity-transition": { duration: 0 },
+                  "circle-color":
+                    MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                      .colorSecondary,
+                }}
+              >
+                <Feature coordinates={currentPoint.location} />
+              </Layer>
+
+              <Layer
+                id={"point" + groupIndex + pointIndex}
+                type="circle"
+                // sourceId={"point" + groupIndex + pointIndex}
+                paint={{
+                  "circle-radius": baseCircleRadius,
+                  "circle-color":
+                    currentPoint.titleSourceId === draggedPoint
+                      ? "red"
+                      : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                          .colorMain,
+                }}
+              >
+                <Feature coordinates={currentPoint.location} />
+              </Layer>
+
+              {previousPoint && (
+                <Layer
+                  type="line"
+                  layout={lineLayout}
+                  paint={{
+                    "line-color":
+                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain,
+                    "line-width": lineWidth,
+                  }}
+                >
+                  <Feature
+                    coordinates={getGeoArc(
+                      currentPoint.location,
+                      previousPoint.location
+                    )}
+                  />
+                </Layer>
+              )}
+              {currentPoint.titleLabelDisplayed && (
+                <Layer
+                  type="symbol"
+                  key={groupIndex + pointIndex}
+                  layout={{
+                    // "icon-image": "harbor-15",
+                    "icon-allow-overlap": true,
+                    "text-field": currentPoint.titleLabel,
+                    "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
+                    "text-size": textSize, // 7,
+                    "text-transform": "uppercase",
+                    "text-letter-spacing": 0.05,
+                    "text-offset": [0, -2],
+                    "text-allow-overlap": true,
+                    "icon-allow-overlap": true,
+                    "text-ignore-placement": true,
+                    "icon-ignore-placement": true,
+                  }}
+                  paint={{
+                    "text-color":
+                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                        .colorSecondary,
+                    "text-halo-color":
+                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorHalo,
+                    "text-halo-width": textSize,
+                  }}
+                >
+                  <Feature
+                    coordinates={currentPoint.titleLocation}
+                    onDragStart={(e) => {
+                      e.target.dragPan.disable();
+                      setDraggedPoint(currentPoint.titleSourceId);
+                    }}
+                    draggable={
+                      !draggedPoint ||
+                      currentPoint.titleSourceId === draggedPoint
+                    }
+                    onDragEnd={onUp(currentPoint)}
+                  />
+                </Layer>
+              )}
+            </>
+          );
+        });
+      })}
+    </>
+  );
+};
 
 const BNT_RADIUS = 4;
 

@@ -365,17 +365,61 @@ const MAP_STYLES_NAMES = {
 };
 
 const MAP_STYLED_AND_FLIGHT_COLOR = {
-  [MAP_STYLES_NAMES.RED_BLUE]: "lightGrey",
-  [MAP_STYLES_NAMES.YELLOW_GREEN]: "black",
-  [MAP_STYLES_NAMES.BLUE_YELLOW]: "#a62703",
-  [MAP_STYLES_NAMES.GREEN_ORANGE]: "black",
-  [MAP_STYLES_NAMES.BLACK_LAND]: "#a62703",
-  [MAP_STYLES_NAMES.BLACK_WHITE]: "#a62703",
-  [MAP_STYLES_NAMES.RED_WHITE]: "black",
-  [MAP_STYLES_NAMES.DOUBLE_BLUE]: "black",
-  [MAP_STYLES_NAMES.PALE_BLUE]: "black",
-  [MAP_STYLES_NAMES.SANDY_DARK]: "black",
-  [MAP_STYLES_NAMES.WHITE_BLUE]: "black",
+  [MAP_STYLES_NAMES.RED_BLUE]: {
+    colorMain: "lightGrey",
+    colorSecondary: "white",
+    colorHalo: "#000000",
+  },
+  [MAP_STYLES_NAMES.YELLOW_GREEN]: {
+    colorMain: "black",
+    colorSecondary: "white",
+    colorHalo: "rgba(00,00,00,0.5)",
+  },
+  [MAP_STYLES_NAMES.BLUE_YELLOW]: {
+    colorMain: "#a62703",
+    colorSecondary: "white",
+    colorHalo: "rgba(166, 39, 3, 0.8)",
+  },
+  [MAP_STYLES_NAMES.GREEN_ORANGE]: {
+    colorMain: "black",
+    colorSecondary: "white",
+    colorHalo: "#000000",
+  },
+  [MAP_STYLES_NAMES.BLACK_LAND]: {
+    colorMain: "#a62703",
+    colorSecondary: "white",
+    colorHalo: "rgba(166, 39, 3, 0.8)", // #a62703 but in rgba
+  },
+  [MAP_STYLES_NAMES.BLACK_WHITE]: {
+    colorMain: "#a62703",
+    colorSecondary: "white",
+    colorHalo: "#000000",
+  },
+  [MAP_STYLES_NAMES.RED_WHITE]: {
+    colorMain: "black",
+    colorSecondary: "white",
+    colorHalo: "#000000",
+  },
+  [MAP_STYLES_NAMES.DOUBLE_BLUE]: {
+    colorMain: "black",
+    colorSecondary: "white",
+    colorHalo: "#000000",
+  },
+  [MAP_STYLES_NAMES.PALE_BLUE]: {
+    colorMain: "black",
+    colorSecondary: "white",
+    colorHalo: "rgba(0,0,0,0.5)",
+  },
+  [MAP_STYLES_NAMES.SANDY_DARK]: {
+    colorMain: "black",
+    colorSecondary: "white",
+    colorHalo: "#000000",
+  },
+  [MAP_STYLES_NAMES.WHITE_BLUE]: {
+    colorMain: "black",
+    colorSecondary: "white",
+    colorHalo: "#000000",
+  },
 };
 
 const MAP_STYLES = {

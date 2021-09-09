@@ -108,4 +108,5 @@ const styles = {
 
 const MainHeading = styled.div`
   font-family: ${font("HarmoniaSans_local")};
+  padding: 0 5px;
 `;

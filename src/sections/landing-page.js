@@ -9,12 +9,23 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 
+import Briefcase from "assets/landing-page/briefcaseBlack.svg";
+import Secure from "assets/landing-page/secureBlack.svg";
+import UnderlineLoader from "components/UnderlineLoader";
+import Button from "components/Button";
+import { useElementDimensions } from "Hooks/useElementDimensions";
+import { useIsMobile } from "Hooks/useIsMobile";
+import { useDisplayPNG } from "Hooks/useDisplayPNG";
+import { mobile, color } from "utils";
+
 import Carousel1 from "assets/landing-page/webp/1.webp";
 import Carousel2 from "assets/landing-page/webp/2.webp";
 import Carousel3 from "assets/landing-page/webp/3.webp";
 import Carousel4 from "assets/landing-page/webp/4.webp";
 import Carousel5 from "assets/landing-page/webp/5.webp";
 import Carousel6 from "assets/landing-page/webp/6.webp";
+import Carousel7 from "assets/landing-page/webp/7.webp";
+import Carousel8 from "assets/landing-page/webp/8.webp";
 
 import Carousel1PNG from "assets/landing-page/png/1.png";
 import Carousel2PNG from "assets/landing-page/png/2.png";
@@ -22,16 +33,8 @@ import Carousel3PNG from "assets/landing-page/png/3.png";
 import Carousel4PNG from "assets/landing-page/png/4.png";
 import Carousel5PNG from "assets/landing-page/png/5.png";
 import Carousel6PNG from "assets/landing-page/png/6.jpg";
-
-import Briefcase from "assets/landing-page/briefcaseBlack.svg";
-import Secure from "assets/landing-page/secureBlack.svg";
-
-import UnderlineLoader from "components/UnderlineLoader";
-import Button from "components/Button";
-import { useElementDimensions } from "Hooks/useElementDimensions";
-import { useIsMobile } from "Hooks/useIsMobile";
-import { useDisplayPNG } from "Hooks/useDisplayPNG";
-import { mobile } from "utils";
+import Carousel7PNG from "assets/landing-page/png/7.png";
+import Carousel8PNG from "assets/landing-page/png/8.png";
 
 const data = {
   subTitle: "",
@@ -87,12 +90,14 @@ export default function LandingPage() {
               renderCenterLeftControls={() => null}
               renderCenterRightControls={() => null}
             >
-              <img src={displayPNG ? Carousel5PNG : Carousel5} />
-              <img src={displayPNG ? Carousel6PNG : Carousel6} />
               <img src={displayPNG ? Carousel1PNG : Carousel1} />
               <img src={displayPNG ? Carousel2PNG : Carousel2} />
+              <img src={displayPNG ? Carousel5PNG : Carousel5} />
+              <img src={displayPNG ? Carousel6PNG : Carousel6} />
               <img src={displayPNG ? Carousel3PNG : Carousel3} />
               <img src={displayPNG ? Carousel4PNG : Carousel4} />
+              <img src={displayPNG ? Carousel7PNG : Carousel7} />
+              <img src={displayPNG ? Carousel8PNG : Carousel8} />
             </Carousel>
             {isMobile && (
               <ZeroHeightWrap>
@@ -190,16 +195,9 @@ function CtaComponent() {
     }
   };
   return (
-    <Button
-      variant="primary"
-      onClick={onClick}
-      sx={styles.ctaButton}
-      isLoading={isLoading}
-      // isLoading
-      aria-label={"btnName"}
-    >
+    <CtaBtn onClick={onClick} isLoading={isLoading}>
       <StyledText> Do Studia {isLoading && <UnderlineLoader />}</StyledText>
-    </Button>
+    </CtaBtn>
   );
 }
 
@@ -219,7 +217,7 @@ const PureCtaBox = styled.div`
   align-items: flex-end;
   width: 100%;
   position: relative;
-  top: -110px;
+  top: -170px;
   z-index: 90;
 
   ${mobile`
@@ -230,6 +228,20 @@ const PureCtaBox = styled.div`
 const LandingCarousel = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+const CtaBtn = styled(Button)`
+  pointer-events: all;
+  background-color: #001427c0;
+  color: white;
+  font-size: 1rem !important;
+  letter-spacing: 1.5px;
+  width: 50%;
+  border-radius: 10px;
+
+  ${mobile`
+    background-color: #001427;
+  `}
 `;
 
 const styles = {
@@ -312,19 +324,6 @@ const styles = {
 
   ctaOnlyLarge: {
     display: ["none", null, null, "block", "block"],
-  },
-
-  ctaButton: {
-    pointerEvents: "all",
-    backgroundColor: "primary",
-    color: "white",
-    fontSize: "1rem !important",
-    letterSpacing: "1.5px",
-    width: "90%",
-    borderRadius: "10px",
-    // borderColor: "black",
-    // minHeight: "2rem",
-    // paddingTop: "0.75rem",
   },
 
   ctaLink: {

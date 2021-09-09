@@ -130,7 +130,8 @@ export default function StepAddRoute({ map, index }) {
                     marginTop: "-15px",
                     marginBottom: "-15px",
                     fontWeight: 600,
-                    color: MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName],
+                    color:
+                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain,
                   }}
                 >
                   |
@@ -141,7 +142,10 @@ export default function StepAddRoute({ map, index }) {
                 return (
                   <Step key="1">
                     <StyledStepLabel
-                      color={MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]}
+                      color={
+                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                          .colorMain
+                      }
                     >
                       <StepsText>
                         {updatingSourceId === journeyPoint.sourceId ? (
@@ -255,6 +259,9 @@ export default function StepAddRoute({ map, index }) {
         onClick={() => {
           setCurrentGroupIndex((prev) => prev + 1);
         }}
+        // style={{
+        //   marginBottom: "40px",
+        // }}
       >
         Nový trip
       </StyledButton>
@@ -356,6 +363,7 @@ const StyledButton = styled(Button)`
   color: white !important;
   background-color: ${color("cta_color")} !important;
   text-transform: unset !important;
+  margin-bottom: 60px !important;
 `;
 
 const Flex1 = styled.div`

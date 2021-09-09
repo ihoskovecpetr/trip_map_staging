@@ -71,31 +71,37 @@ export default function CheckoutPopupBody({
   );
 
   async function redirectToCheckout() {
-    const response = await axios.post("api/stripe-checkout", {
-      product,
-      imageObj: imageSavedResponse,
-      checkoutShownPrices: {
-        netPriceWithDelivery: priceWithDeliveryAndDiscount.netPrice,
-      },
-      discountCode: discount.code,
-      mapTitles: mapTitles,
-    });
+    try {
+      const response = await axios.post("api/stripe-checkout", {
+        product,
+        imageObj: imageSavedResponse,
+        checkoutShownPrices: {
+          netPriceWithDelivery: priceWithDeliveryAndDiscount.netPrice,
+        },
+        discountCode: discount.code,
+        mapTitles: mapTitles,
+      });
 
-    if (response?.data?.error) {
-      toast.error(
-        "Error: Odlišné ceny, kontaktujte prosím technickou podporu",
-        {
+      if (response?.data?.error) {
+        toast.error(
+          "Error: Odlišné ceny, kontaktujte prosím technickou podporu",
+          {
+            position: "top-left",
+          }
+        );
+      } else if (response?.data?.id) {
+        Stripe.redirectToCheckout({
+          sessionId: response.data.id,
+        });
+      } else {
+        toast("Info: Něco se pokazilo, kontaktujte prosím technickou podporu", {
           position: "top-left",
-        }
+        });
+      }
+    } catch (e) {
+      alert(
+        "Info: Něco se pokazilo při kontaktování platební brány. Po zavření a otevřete této webové stránky budete moci mapu objednat."
       );
-    } else if (response?.data?.id) {
-      Stripe.redirectToCheckout({
-        sessionId: response.data.id,
-      });
-    } else {
-      toast("Info: Něco se pokazilo, kontaktujte prosím technickou podporu", {
-        position: "top-left",
-      });
     }
   }
 

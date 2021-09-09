@@ -69,8 +69,8 @@ export default function Step2Orientation({ index }) {
 
       {!isMobile && (
         <TipParagraph>
-          <StyledBold>Tip!</StyledBold> Pro změnu hlavního a vedlejšího nadpisu
-          klikněte přímo na dotyčný text
+          <StyledBold>Tip!</StyledBold> Hlavní a vedlejší nadpis můžete upravit
+          po kliknutí přímo na něj.
         </TipParagraph>
       )}
     </div>
