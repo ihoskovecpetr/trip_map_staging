@@ -1,5 +1,6 @@
 export const countActionTypes = {
   SET_PRODUCT: "SET_PRODUCT",
+  SET_POPUP_SEEN: "SET_POPUP_SEEN",
   NEW_TITLE: "NEW_TITLE",
   NEW_SUBTITLE: "NEW_SUBTITLE",
   SET_ACTIVE_LAYOUT: "SET_ACTIVE_LAYOUT",
@@ -20,6 +21,13 @@ export const setProductAction = (newProduct) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_PRODUCT,
     data: newProduct,
+  });
+};
+
+export const setPopupSeenAction = (bool) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_POPUP_SEEN,
+    data: bool,
   });
 };
 
@@ -76,13 +84,6 @@ export const setDiscountCode = (code) => (dispatch) => {
 export const setDiscountCodeAccepted = (bool) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_DISCOUNT_CODE_ACCEPTED,
-    data: bool,
-  });
-};
-
-export const setPopupSeen = (bool) => (dispatch) => {
-  return dispatch({
-    type: countActionTypes.SET_POPUP_SEEN,
     data: bool,
   });
 };

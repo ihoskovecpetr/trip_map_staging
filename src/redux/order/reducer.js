@@ -27,7 +27,7 @@ const orderInitialState = {
     heading: { text: TITLES_DEFAULT[0], size: 14 },
     subtitle: { text: TITLES_DEFAULT[1], size: 8 },
   },
-  activeLayoutName: LAYOUT_STYLE_NAMES.ISLAND_BOX,
+  activeLayoutName: LAYOUT_STYLE_NAMES.BOTTOM_BLUR,
   activeMapStyleName: MAP_STYLES_NAMES.PALE_BLUE,
   mapCoordinates: [13.303958804602132, 41.47437924957853],
   mapZoom: 5,
@@ -113,6 +113,10 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
         ...state.product,
         ...data,
       };
+      return state;
+
+    case countActionTypes.SET_POPUP_SEEN:
+      state.seenPopup = data;
       return state;
 
     case countActionTypes.NEW_TITLE:

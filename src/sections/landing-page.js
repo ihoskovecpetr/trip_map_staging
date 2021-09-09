@@ -323,7 +323,8 @@ const styles = {
   },
 
   ctaOnlyLarge: {
-    display: ["none", null, null, "block", "block"],
+    display: ["none", null, null, "flex"],
+    justifyContent: "center",
   },
 
   ctaLink: {

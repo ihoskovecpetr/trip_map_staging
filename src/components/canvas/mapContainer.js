@@ -31,7 +31,7 @@ import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimens
 
 import {
   setProductAction,
-  setPopupSeen,
+  setPopupSeenAction,
   updateJourneyPoint,
   setMapZoomAction,
   setMapCoordinatesAction,
@@ -233,7 +233,6 @@ export default function MapContainer({
         <div
           sx={styles.teaserBtn}
           onClick={() => {
-            console.log("Clickkk");
             openTeaserImage();
           }}
         >
@@ -242,37 +241,36 @@ export default function MapContainer({
               <StyledCircularProgress />
             </ColorWrap>
           ) : (
-            <>
-              <CustomTooltipWrap
-                defaultState={!seenPopup}
-                onClose={() => {
-                  localStorage.setItem("seenPopup", true);
-                  dispatch(setPopupSeen(true));
-                }}
-                body={
-                  <TooltipBodyWrap>
-                    <p>
-                      Výsledná podrobnost mapy může být odlišná od zobrazení se
-                      studiu
-                    </p>
-                    <ImagesWrap>
-                      <StyledImg src={HighDefinitionMap} />
-                      <span>vs</span>
-                      <StyledImg src={LowDefinitionMap} />
-                    </ImagesWrap>
+            <CustomTooltipWrap
+              defaultState={!seenPopup}
+              onClose={(e) => {
+                localStorage.setItem("seenPopup", true);
+                dispatch(setPopupSeenAction(true));
+                e.stopPropagation();
+              }}
+              body={
+                <TooltipBodyWrap>
+                  <p>
+                    Výsledná podrobnost mapy může být odlišná od zobrazení se
+                    studiu
+                  </p>
+                  <ImagesWrap>
+                    <StyledImg src={HighDefinitionMap} />
+                    <span>vs</span>
+                    <StyledImg src={LowDefinitionMap} />
+                  </ImagesWrap>
 
-                    <p>
-                      Finální produkt zobrazíte kliknutím na tlačítko{" "}
-                      <DummyBtn>
-                        <OpenWithIcon color="grey" />
-                      </DummyBtn>
-                    </p>
-                  </TooltipBodyWrap>
-                }
-              >
-                <OpenWithIcon color="grey" />
-              </CustomTooltipWrap>
-            </>
+                  <p>
+                    Finální produkt zobrazíte kliknutím na tlačítko{" "}
+                    <DummyBtn>
+                      <OpenWithIcon color="grey" />
+                    </DummyBtn>
+                  </p>
+                </TooltipBodyWrap>
+              }
+            >
+              <OpenWithIcon color="grey" />
+            </CustomTooltipWrap>
           )}
         </div>
       </div>
@@ -508,6 +506,11 @@ const PlaceToHideBigMap = styled.div`
   width: 0px;
   height: 0px;
   overflow: hidden;
+`;
+
+const StyledSpan = styled.span`
+  // height: 1em;
+  // width: 1em;
 `;
 
 const ColorWrap = styled.div`

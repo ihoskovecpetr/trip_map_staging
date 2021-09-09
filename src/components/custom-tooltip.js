@@ -24,9 +24,9 @@ export default function TooltipWrap({ children, body, defaultState, onClose }) {
   const classes = useStyles();
   const [isTooltipOpen, setIsTooltipOpen] = useState(defaultState);
 
-  const closeTooltip = () => {
+  const closeTooltip = (e) => {
     setIsTooltipOpen(false);
-    onClose();
+    onClose(e);
   };
 
   return (
