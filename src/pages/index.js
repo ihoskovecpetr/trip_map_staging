@@ -22,7 +22,11 @@ const IndexPage = () => {
     <ThemeProvider theme={theme}>
       <StickyProvider>
         <Layout>
-          <SEO title="Trip Map" />
+          <SEO
+            title="Trip Map - Hlavní stránka"
+            description="Všekeré informace"
+            author="TripMap.shop"
+          />
         </Layout>
 
         <Layout withFooter>

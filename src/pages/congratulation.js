@@ -13,7 +13,11 @@ export default function CongratulationPage() {
     <ThemeProvider theme={theme}>
       <StickyProvider>
         <Layout>
-          <SEO title="Trip Map" />
+          <SEO
+            title="Trip Map Congratulation"
+            description="Gratulace k vyřízené objednávce"
+            author="TripMap.shop"
+          />
         </Layout>
 
         <Layout withFooter invertHeaderColor>

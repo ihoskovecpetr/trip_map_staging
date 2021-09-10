@@ -39,12 +39,12 @@ const initDataMiddleware = () => async (req, res, next) => {
   const cookieStoreId = req.cookies[REDUX_COOKIE_NAME];
 
   if (req && req.query && req.query.id) {
-    const foundStore = await FullStore.findOne({
+    const foundStoreFromQuery = await FullStore.findOne({
       storeId: req.query.id,
     });
 
-    if (foundStore) {
-      const foundStoreWithout_id = { ...foundStore._doc };
+    if (foundStoreFromQuery) {
+      const foundStoreWithout_id = { ...foundStoreFromQuery._doc };
 
       delete foundStoreWithout_id._id;
       delete foundStoreWithout_id.createdAt;
@@ -75,7 +75,7 @@ const initDataMiddleware = () => async (req, res, next) => {
       }
     }
 
-    if (!foundStore && req && req.query.id != cookieStoreId) {
+    if (!foundStoreFromQuery && req && req.query.id != cookieStoreId) {
       const newStoreId = v4();
       const newStore = new FullStore({
         storeId: newStoreId,
@@ -110,8 +110,6 @@ const initDataMiddleware = () => async (req, res, next) => {
       });
 
       await newStore.save();
-
-      console.log("CreatedNew_store_2", { newStoreId2 });
 
       req.meta = {
         storeId: newStoreId2,

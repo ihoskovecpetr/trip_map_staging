@@ -13,7 +13,11 @@ const IndexPage = (props) => {
     <ThemeProvider theme={theme}>
       <StickyProvider>
         <Layout>
-          <SEO title="Trip Map" />
+          <SEO
+            title="Trip Map - O nás"
+            description="Informace o nás"
+            author="TripMap.shop"
+          />
           {/* <LandingSection /> */}
         </Layout>
 

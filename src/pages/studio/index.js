@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { ThemeProvider } from "theme-ui";
+import Head from "next/head";
 import { StickyProvider } from "contexts/app/app.provider";
 import theme from "theme";
 import SEO from "components/seo";
@@ -17,11 +18,18 @@ const StudioPage = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <title>Trip Map - studio</title>
+      </Head>
       <StickyProvider>
         {!isMobile && (
           <Layout>
             <ErrorBoundary>
-              <SEO title="Trip Map Studio" />
+              <SEO
+                title="Trip Map - Studio"
+                description="Designove studio pro tvorbu map"
+                author="TripMap.shop"
+              />
             </ErrorBoundary>
           </Layout>
         )}

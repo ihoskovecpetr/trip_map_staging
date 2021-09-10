@@ -98,8 +98,6 @@ export default function MapContainer({
   const mapCoordinates = useMapCoordinatesSelector();
   const journeysSpecs = useGetJourneysSpecsSelector();
 
-  console.log({ journeysRedux });
-
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,

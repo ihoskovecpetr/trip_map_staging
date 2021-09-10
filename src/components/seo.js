@@ -3,9 +3,9 @@ import Head from "next/head";
 
 export default function SEO({
   description = "startup apps landing page",
-  author = "RedQ, Inc",
+  author = "TripMap.shop",
   meta,
-  title = "startup landing title",
+  title = "Designove studio pro tvorbu map",
 }) {
   const metaData = [
     {
