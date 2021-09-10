@@ -90,6 +90,15 @@ export default function LandingPage() {
               renderCenterLeftControls={() => null}
               renderCenterRightControls={() => null}
             >
+              {/* <picture>
+                <source
+                  srcset={Carousel1PNG}
+                  style={{ width: "100%", height: "100%", objectFit: "fit" }}
+                  media="(max-width: 768px)"
+                  media="(min-width: 768px)"
+                />
+                <img src={Carousel1} alt="" />
+              </picture> */}
               <img src={displayPNG ? Carousel1PNG : Carousel1} />
               <img src={displayPNG ? Carousel2PNG : Carousel2} />
               <img src={displayPNG ? Carousel5PNG : Carousel5} />

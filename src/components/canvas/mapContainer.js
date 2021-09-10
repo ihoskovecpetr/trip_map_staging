@@ -251,7 +251,7 @@ export default function MapContainer({
               body={
                 <TooltipBodyWrap>
                   <p>
-                    Výsledná podrobnost mapy může být odlišná od zobrazení se
+                    Výsledná podrobnost mapy může být odlišná od zobrazení ve
                     studiu
                   </p>
                   <ImagesWrap>

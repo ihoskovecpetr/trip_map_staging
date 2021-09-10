@@ -7,6 +7,7 @@ const OrderScehma = new Schema(
     clientProductObj: { type: Object },
     imageObj: { type: Object },
     mapTitles: { type: Object },
+    storeId: { type: String },
   },
   { timestamps: true }
 );

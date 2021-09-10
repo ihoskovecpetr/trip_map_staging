@@ -36,6 +36,7 @@ const orderInitialState = {
   uploadPercentage: 0,
   discount: { code: "", codeAccepted: false },
   string: "",
+  storeId: "",
   journeys: [
     {
       groupIndex: 0,
@@ -227,5 +228,8 @@ export const useGetJourneys = () =>
 
 export const useGetJourneysSpecsSelector = () =>
   useSelector((store) => store.order.journeysSpecs);
+
+export const useStoreIdSelector = () =>
+  useSelector((store) => store.order.storeId);
 
 export default order;

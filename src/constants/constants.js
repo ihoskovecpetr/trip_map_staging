@@ -413,12 +413,12 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
   [MAP_STYLES_NAMES.SANDY_DARK]: {
     colorMain: "black",
     colorSecondary: "white",
-    colorHalo: "#000000",
+    colorHalo: "rgba(00,00,00,0.5)",
   },
   [MAP_STYLES_NAMES.WHITE_BLUE]: {
     colorMain: "black",
     colorSecondary: "white",
-    colorHalo: "#000000",
+    colorHalo: "rgba(00,00,00,0.5)",
   },
 };
 
@@ -568,7 +568,11 @@ const FAKE_DIV_IDS = {
   subtitle: "fake_subtitle_div",
 };
 
-const VALID_DISCOUNT_CODES = [{ code: "AU65", discountKoef: 0.9 }];
+const VALID_DISCOUNT_CODES = [
+  { code: "LETO2021", discountKoef: 0.9 },
+  { code: "RODINNAPOUTA", discountKoef: 0.5 },
+  { code: "TESTERBUNNY", discountKoef: 0.7 },
+];
 
 const REDUX_COOKIE_NAME = "reduxStoreCookie";
 

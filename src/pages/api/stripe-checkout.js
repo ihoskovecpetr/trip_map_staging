@@ -61,6 +61,7 @@ export default async (req, res) => {
           checkoutShownPrices,
           discountCode,
           mapTitles,
+          storeId,
         } = req.body;
 
         const responsePrintful = await fetchAndTransformDataPrintful([
@@ -139,6 +140,7 @@ export default async (req, res) => {
           clientProductObj: clientProduct,
           imageObj: imageObj,
           mapTitles,
+          storeId: storeId,
         });
 
         await newOrder.save();

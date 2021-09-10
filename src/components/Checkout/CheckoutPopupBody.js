@@ -22,6 +22,7 @@ import {
   useProductSelector,
   useDiscountSelector,
   useTitlesSelector,
+  useStoreIdSelector,
 } from "redux/order/reducer";
 
 const STRIPE_PUBLIC_KEY_LIVE =
@@ -44,6 +45,7 @@ export default function CheckoutPopupBody({
   const product = useProductSelector();
   const discount = useDiscountSelector();
   const mapTitles = useTitlesSelector();
+  const storeId = useStoreIdSelector();
 
   const [lightbox, setLightbox] = useState({
     open: false,
@@ -80,6 +82,7 @@ export default function CheckoutPopupBody({
         },
         discountCode: discount.code,
         mapTitles: mapTitles,
+        storeId,
       });
 
       if (response?.data?.error) {

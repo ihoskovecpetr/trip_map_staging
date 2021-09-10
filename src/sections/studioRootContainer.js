@@ -138,11 +138,11 @@ const resizeFrameDiv = ({ productRef, mapAvailSpaceRef }) => {
 };
 
 const addZoom = (map) => () => {
-  map.flyTo({ zoom: map.getZoom() + 1 });
+  map.flyTo({ zoom: map.getZoom() + 0.3 });
 };
 
 const subtractZoom = (map) => () => {
-  map.flyTo({ zoom: map.getZoom() - 1 });
+  map.flyTo({ zoom: map.getZoom() - 0.3 });
 };
 
 const resizeInputs = ({
