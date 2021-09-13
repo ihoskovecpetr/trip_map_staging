@@ -15,6 +15,7 @@ import TextField from "@material-ui/core/TextField";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import DoneIcon from "@material-ui/icons/Done";
+import AddIcon from "@material-ui/icons/Add";
 
 import { color, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -259,19 +260,9 @@ export default function StepAddRoute({ map, index }) {
         onClick={() => {
           setCurrentGroupIndex((prev) => prev + 1);
         }}
-        // style={{
-        //   marginBottom: "40px",
-        // }}
       >
-        Nový trip
+        Nový trip / Nový bod
       </StyledButton>
-
-      {/* <p>++ group {maxGroupIndex + 1}</p>
-      <GeocoderInput
-        id="new_input_2"
-        map={map}
-        setResult={setGeocoderResult(maxGroupIndex + 1)}
-      /> */}
     </Container>
   );
 }

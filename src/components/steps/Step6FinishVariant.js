@@ -142,10 +142,6 @@ const styles = {
     padding: "10px 10px",
   },
 
-  materialDesc: {
-    textAlign: "left",
-  },
-
   loaderWrap: {
     display: "flex",
     width: "100%",

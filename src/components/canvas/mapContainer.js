@@ -12,6 +12,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import ReactMapboxGl, { Layer, Feature, Source } from "react-mapbox-gl";
 import Backdrop from "@material-ui/core/Backdrop";
+import Popper from "@material-ui/core/Popper";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -121,6 +122,27 @@ export default function MapContainer({
     VARIANTS_PRINTFUL.map((variant) => variant.id)
   );
 
+  const [anchorEl, setAnchorEl] = useState(
+    seenPopup ? document.getElementById("full-screen-button") : null
+  );
+
+  const handleClick = (event) => {
+    // setAnchorEl(anchorEl ? null : event.currentTarget);
+    openTeaserImage();
+  };
+
+  const handleClose = (e) => {
+    setAnchorEl(null);
+    localStorage.setItem("seenPopup", true);
+    dispatch(setPopupSeenAction(true));
+    e.stopPropagation();
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popper" : undefined;
+
+  console.log({ open, id, anchorEl });
+
   const priceWithDelivery =
     dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
       .netPrice ?? 0;
@@ -199,6 +221,12 @@ export default function MapContainer({
     map?.resize();
   }, [journeysRedux]);
 
+  useEffect(() => {
+    setAnchorEl(
+      !seenPopup ? document.getElementById("full_screen_button") : null
+    );
+  }, []);
+
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
       <div sx={styles.allBtnWrapper} id="map_buttons_wrapper">
@@ -215,6 +243,7 @@ export default function MapContainer({
         )}
 
         <EmptySpaceExpander></EmptySpaceExpander>
+
         <div sx={styles.zoomBtnWrapper}>
           <div sx={styles.zoomBtn} className="left" onClick={addZoom}>
             <AddIcon />
@@ -230,47 +259,40 @@ export default function MapContainer({
 
         <div
           sx={styles.teaserBtn}
-          onClick={() => {
-            openTeaserImage();
-          }}
+          aria-describedby={id}
+          id="full_screen_button"
+          onClick={handleClick}
         >
           {isCreatingImage ? (
             <ColorWrap>
               <StyledCircularProgress />
             </ColorWrap>
           ) : (
-            <CustomTooltipWrap
-              defaultState={!seenPopup}
-              onClose={(e) => {
-                localStorage.setItem("seenPopup", true);
-                dispatch(setPopupSeenAction(true));
-                e.stopPropagation();
-              }}
-              body={
-                <TooltipBodyWrap>
-                  <p>
-                    Výsledná podrobnost mapy může být odlišná od zobrazení ve
-                    studiu
-                  </p>
-                  <ImagesWrap>
-                    <StyledImg src={HighDefinitionMap} />
-                    <span>vs</span>
-                    <StyledImg src={LowDefinitionMap} />
-                  </ImagesWrap>
-
-                  <p>
-                    Finální produkt zobrazíte kliknutím na tlačítko{" "}
-                    <DummyBtn>
-                      <OpenWithIcon color="grey" />
-                    </DummyBtn>
-                  </p>
-                </TooltipBodyWrap>
-              }
-            >
-              <OpenWithIcon color="grey" />
-            </CustomTooltipWrap>
+            <OpenWithIcon color="grey" />
           )}
         </div>
+        <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-end">
+          <TooltipBodyWrap>
+            <p>
+              Výsledná podrobnost mapy může být odlišná od zobrazení ve studiu
+            </p>
+            <ImagesWrap>
+              <StyledImg src={HighDefinitionMap} />
+              <span>vs</span>
+              <StyledImg src={LowDefinitionMap} />
+            </ImagesWrap>
+
+            <p>
+              Finální produkt zobrazíte kliknutím na tlačítko{" "}
+              <DummyBtn>
+                <OpenWithIcon color="grey" onClick={handleClick} />
+              </DummyBtn>
+            </p>
+            <Button variant="contained" color="primary" onClick={handleClose}>
+              OK
+            </Button>
+          </TooltipBodyWrap>
+        </Popper>
       </div>
 
       <div sx={styles.map_available_space} id="map_available_space_id">
@@ -296,8 +318,10 @@ export default function MapContainer({
                 ])
               );
             }}
+            onMouseMove={(map, e) => {}}
           >
             <PrintLocations
+              map={map}
               sortedGroupsJourneys={sortedGroupsJourneys}
               draggedPoint={draggedPoint}
               setDraggedPoint={setDraggedPoint}
@@ -322,6 +346,7 @@ export default function MapContainer({
               }}
             >
               <PrintLocations
+                map={map}
                 sortedGroupsJourneys={sortedGroupsJourneys}
                 draggedPoint={draggedPoint}
                 setDraggedPoint={setDraggedPoint}
@@ -368,6 +393,7 @@ export default function MapContainer({
 }
 
 const PrintLocations = ({
+  map,
   sortedGroupsJourneys,
   draggedPoint,
   setDraggedPoint,
@@ -377,6 +403,13 @@ const PrintLocations = ({
   lineWidth,
   baseCircleRadius,
 }) => {
+  const setCursor = (newCursorStyle) => {
+    const canvas = map.getCanvas();
+    Object.assign(canvas.style, {
+      cursor: newCursorStyle,
+    });
+  };
+
   return (
     <>
       {sortedGroupsJourneys.map((group, groupIndex) => {
@@ -466,6 +499,12 @@ const PrintLocations = ({
                       MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorHalo,
                     "text-halo-width": textSize,
                   }}
+                  onMouseEnter={(e) => {
+                    setCursor("move");
+                  }}
+                  onMouseLeave={() => {
+                    setCursor("pointer");
+                  }}
                 >
                   <Feature
                     coordinates={currentPoint.titleLocation}
@@ -506,11 +545,6 @@ const PlaceToHideBigMap = styled.div`
   overflow: hidden;
 `;
 
-const StyledSpan = styled.span`
-  // height: 1em;
-  // width: 1em;
-`;
-
 const ColorWrap = styled.div`
   color: ${color("cta_color")} !important;
   display: flex;
@@ -539,11 +573,17 @@ const StyledText = styled.p`
 `;
 
 const TooltipBodyWrap = styled.div`
-  width: 100%;
+  width: 300px;
+  margin-top: 2px;
+  background-color: rgba(220, 0, 78, 0.99);
+  color: white;
   display: flex;
+
+  padding: 5px;
   flex-direction: column;
+
   & p {
-    font-size: ${fontSize("xs")};
+    font-size: ${fontSize("sm")};
   }
 `;
 

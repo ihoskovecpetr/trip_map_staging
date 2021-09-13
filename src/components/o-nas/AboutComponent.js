@@ -11,13 +11,14 @@ export default function AboutComponent({ name }) {
     <Container>
       <div>
         <h1>{name}</h1>
-        Společnost TripMap.shop vznikla jako výsledek dlouhých covid uzávěrek v
-        roce 2021.
-        <br /> Účelem této webové aplikace je tvorba vizuální prezentace Vašich
+        Posláním TripMap.shop je tvorba obrazů či plakátů pro zvěčnění Vašich
         vzpomínek z cest.
+        <br />
+        Společnost je nástroj na tvorbu krásné nástěnné vizualizace Vaší cesty
+        ať už jste se vydali kamkoli.
         <br /> TripMap je stále ve stavu vývoje a proto lze v budoucnu očekávat
         zlepseni uživatelskeho rozhraní či navýšení uživatelské
-        kostomizovatelnosti mapy.
+        kustomizovatelnosti mapy.
       </div>
     </Container>
   );

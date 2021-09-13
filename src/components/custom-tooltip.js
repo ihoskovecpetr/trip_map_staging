@@ -49,10 +49,6 @@ export default function TooltipWrap({ children, body, defaultState, onClose }) {
       placement="bottom-center"
       arrow
       open={isTooltipOpen}
-      // onClose={(e) => {
-      //   e.preventDefault();
-      //   e.stopPropagation();
-      // }}
     >
       {children}
     </StyledTooltip>

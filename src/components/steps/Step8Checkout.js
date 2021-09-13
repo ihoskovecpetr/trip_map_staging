@@ -26,14 +26,15 @@ export default function Step8Checkout({
         {!isMobile && (
           <ExtraPaddingTop>
             <HeadingText>{index}. Materiál pro tisk</HeadingText>
-            <StyledMaterialP>{productRedux.materialDesc}</StyledMaterialP>
+            {/* <StyledMaterialP>{productRedux.materialDesc}</StyledMaterialP> */}
+            <li>{productRedux.materialDesc}</li>
           </ExtraPaddingTop>
         )}
 
         {!isDefaultDefinition && (
           <MapDefinition map={map} activeMapStyleName={activeMapStyleName} />
         )}
-        {!isMobile && <HeadingText>10. Shrnutí</HeadingText>}
+        {!isMobile && <HeadingText>{index + 1}. Shrnutí</HeadingText>}
 
         <CheckoutCta
           map={map}
