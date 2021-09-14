@@ -128,7 +128,7 @@ export default function StepAddRoute({ map, index }) {
         }}
       >
         <AddIcon />
-        Nový trip / Nový bod
+        Nová cesta / Nový bod
       </StyledButton>
 
       {(journeysRedux.length === 0 ||
@@ -200,23 +200,6 @@ export default function StepAddRoute({ map, index }) {
                       }
                     >
                       <StepsWrap>
-                        {/* <div>
-                            <LocationTitle>
-                              location: {journeyPoint.title}
-                            </LocationTitle>
-                            <TextField
-                              value={journeyPoint.titleLabel}
-                              onChange={updateLabel(journeyPoint)}
-                            />
-                            <DoneIcon
-                              style={{
-                                fill: "green",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => setUpdatingSourceId("")}
-                            />
-                          </div>
-                        ) : ( */}
                         <div>
                           <LocationTitle>
                             poloha: {journeyPoint.title}
@@ -237,7 +220,12 @@ export default function StepAddRoute({ map, index }) {
                             </>
                           ) : (
                             <FlexCenterWrap>
-                              {journeyPoint.titleLabel}
+                              <SmallText>popisek: </SmallText>
+                              <LabelText
+                                crossed={!journeyPoint.titleLabelDisplayed}
+                              >
+                                {journeyPoint.titleLabel}
+                              </LabelText>
                               <StyledCreateIcon
                                 onClick={() =>
                                   setUpdatingSourceId(journeyPoint.sourceId)
@@ -353,6 +341,21 @@ const LocationTitle = styled.p`
   margin: 0;
   margin-top: 15px;
   text-align: left;
+`;
+
+const SmallText = styled.span`
+  color: ${color("muted")};
+  font-size: ${fontSize("xxs")};
+  display: inline-block;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+`;
+
+const LabelText = styled.span`
+  font-size: ${fontSize("sm")};
+  display: inline-block;
+  text-decoration: ${({ crossed }) => crossed && "line-through 2px"};
 `;
 
 const StyledStepLabel = styled(StepLabel)`

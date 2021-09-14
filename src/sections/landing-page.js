@@ -262,17 +262,6 @@ const styles = {
   onlyMobile: {
     display: ["block", null, null, "none"],
   },
-  // backgroundDiv: {
-  //   height: ["100vh", "100vh", "unset"],
-  //   width: "100%",
-  //   zIndex: -1,
-  //   position: "absolute",
-  //   // backgroundImage: [`url(${LandingPagePicture})`, null, `none`],
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundSize: ["100% auto", "cover"],
-  //   boxShadow: ["inset 0 0 0 2000px rgba(255, 255, 255, 0.1)", null, "unset"],
-  //   backgroundOrigin: "content-box",
-  // },
   containerBox: {
     p: [0, 0],
     display: "flex",
