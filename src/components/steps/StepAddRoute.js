@@ -170,7 +170,7 @@ export default function StepAddRoute({ map, index }) {
                   id="new_input_1"
                   map={map}
                   style={{ display: "inline-block", marginLeft: "10px" }}
-                  placeholder={"Další bod tripu"}
+                  placeholder={"Další bod cesty"}
                   setResult={(e) =>
                     setGeocoderResult(currentGroupRef.current, e)
                   }

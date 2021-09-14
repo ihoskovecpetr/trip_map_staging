@@ -85,7 +85,7 @@ export default function TabsRootNew({ map, snapMapInstance }) {
 
   const stepElementsDesktop = [
     [<StepStudioSettings map={map} index={1} />, StepComponent],
-    [<Step2Orientation index={3} />, <StepTitles index={3} />],
+    [<Step2Orientation index={3} />, <StepTitles index={4} />],
 
     [
       <StepLayout index={5} />,
