@@ -14,6 +14,7 @@ export const countActionTypes = {
   UPDATE_JOURNEY: "UPDATE_JOURNEY",
   REMOVE_JOURNEY_POINT: "REMOVE_JOURNEY_POINT",
   SET_JOURNEYS_SPECS: "SET_JOURNEYS_SPECS",
+  SET_JOURNEYS_ENABLED: "SET_JOURNEYS_ENABLED",
 };
 
 export const setProductAction = (newProduct) => (dispatch) => {
@@ -119,5 +120,12 @@ export const setJourneysSpecs = (point) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_JOURNEYS_SPECS,
     data: point,
+  });
+};
+
+export const setJourneysIsEnabled = (bool) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_JOURNEYS_ENABLED,
+    data: bool,
   });
 };

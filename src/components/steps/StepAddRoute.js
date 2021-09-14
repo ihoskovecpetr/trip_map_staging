@@ -8,7 +8,7 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
-import ClearIcon from "@material-ui/icons/Clear";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import CreateIcon from "@material-ui/icons/Create";
 import TextField from "@material-ui/core/TextField";
@@ -16,8 +16,9 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import DoneIcon from "@material-ui/icons/Done";
 import AddIcon from "@material-ui/icons/Add";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
-import { color, fontWeight } from "utils";
+import { color, fontSize, fontWeight, mobile } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import GeocoderInput from "components/GeocoderInput";
 import { getMaxGroupIndex } from "LibGlobal/getMaxGroupIndex";
@@ -72,9 +73,14 @@ export default function StepAddRoute({ map, index }) {
     const placeNameArr = e.result.place_name.split(",");
     const newTitle = placeNameArr[0];
 
+    const indexesArr = journeysRedux.map(({ index }) => index);
+    console.log({ indexesArr });
+    const max = Math.max(...indexesArr);
+
+    console.log({ maxIndex: max });
     dispatch(
       addNewJourney({
-        index: journeysRedux.length,
+        index: max + 1,
         groupIndex: groupIndex,
         location: e.result.geometry.coordinates,
         sourceId: sourceId,
@@ -116,27 +122,72 @@ export default function StepAddRoute({ map, index }) {
     <Container>
       <HeadingText>{index}. Zadejte body cesty</HeadingText>
 
+      <StyledButton
+        onClick={() => {
+          setCurrentGroupIndex((prev) => prev + 1);
+        }}
+      >
+        <AddIcon />
+        Nový trip / Nový bod
+      </StyledButton>
+
+      {(journeysRedux.length === 0 ||
+        sortedGroupsJourneys[0][0].groupIndex < currentGroupIndex) && (
+        <>
+          <HorizontalLine />
+          <HorizontalLine />
+          <NewTripWrap>
+            <CheckCircleIcon />
+            <GeocoderInput
+              id="new_input_1"
+              placeholder="První zastávka tripu"
+              style={{ margin: "5px 0" }}
+              map={map}
+              setResult={(e) => setGeocoderResult(currentGroupRef.current, e)}
+            />
+          </NewTripWrap>
+        </>
+      )}
+
       {sortedGroupsJourneys.map((journeyGroup) => {
+        const isNewestActiveGroup =
+          currentGroupIndex === journeyGroup[0].groupIndex;
         return (
           <>
-            <HorizontalLine />
-
+            <HorizontalLine /> <HorizontalLine />
+            <PlusGeoWrap>
+              <AddCircleOutlineIcon
+                style={{
+                  fill: isNewestActiveGroup ? "grey" : "green",
+                  margin: "7px 0",
+                }}
+                onClick={() => {
+                  setCurrentGroupIndex(journeyGroup[0].groupIndex);
+                }}
+              />
+              {isNewestActiveGroup && (
+                <GeocoderInput
+                  id="new_input_1"
+                  map={map}
+                  style={{ display: "inline-block", marginLeft: "10px" }}
+                  placeholder={"Další bod tripu"}
+                  setResult={(e) =>
+                    setGeocoderResult(currentGroupRef.current, e)
+                  }
+                />
+              )}
+            </PlusGeoWrap>
             <StyledStepper
               activeStep={journeyGroup.length}
               orientation="vertical"
               connector={
-                <span
-                  style={{
-                    paddingLeft: "9px",
-                    marginTop: "-15px",
-                    marginBottom: "-15px",
-                    fontWeight: 600,
-                    color:
-                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain,
-                  }}
+                <StepperConnector
+                  color={
+                    MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain
+                  }
                 >
                   |
-                </span>
+                </StepperConnector>
               }
             >
               {journeyGroup.map((journeyPoint, index) => {
@@ -148,9 +199,11 @@ export default function StepAddRoute({ map, index }) {
                           .colorMain
                       }
                     >
-                      <StepsText>
-                        {updatingSourceId === journeyPoint.sourceId ? (
-                          <>
+                      <StepsWrap>
+                        {/* <div>
+                            <LocationTitle>
+                              location: {journeyPoint.title}
+                            </LocationTitle>
                             <TextField
                               value={journeyPoint.titleLabel}
                               onChange={updateLabel(journeyPoint)}
@@ -162,158 +215,102 @@ export default function StepAddRoute({ map, index }) {
                               }}
                               onClick={() => setUpdatingSourceId("")}
                             />
-                          </>
-                        ) : (
-                          <>
-                            {journeyPoint.titleLabel}
-                            <CreateIcon
-                              style={{
-                                cursor: "pointer",
-                                width: "0.8em",
-                                height: "0.8em",
-                                marginLeft: "5px",
-                              }}
-                              onClick={() =>
-                                setUpdatingSourceId(journeyPoint.sourceId)
-                              }
-                            />
-                          </>
-                        )}
+                          </div>
+                        ) : ( */}
+                        <div>
+                          <LocationTitle>
+                            poloha: {journeyPoint.title}
+                          </LocationTitle>
+                          {updatingSourceId === journeyPoint.sourceId ? (
+                            <>
+                              <TextField
+                                value={journeyPoint.titleLabel}
+                                onChange={updateLabel(journeyPoint)}
+                              />
+                              <DoneIcon
+                                style={{
+                                  fill: "green",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => setUpdatingSourceId("")}
+                              />
+                            </>
+                          ) : (
+                            <FlexCenterWrap>
+                              {journeyPoint.titleLabel}
+                              <StyledCreateIcon
+                                onClick={() =>
+                                  setUpdatingSourceId(journeyPoint.sourceId)
+                                }
+                              />
+                              {journeyPoint.titleLabelDisplayed ? (
+                                <VisibilityIcon
+                                  onClick={() => {
+                                    toggleLabelVisibility(journeyPoint);
+                                  }}
+                                  style={{
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              ) : (
+                                <VisibilityOffIcon
+                                  style={{
+                                    fill: "grey",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    toggleLabelVisibility(journeyPoint);
+                                  }}
+                                />
+                              )}
+                            </FlexCenterWrap>
+                          )}
+                        </div>
+
                         <Flex1 />
-                        {journeyPoint.titleLabelDisplayed ? (
-                          <VisibilityIcon
-                            onClick={() => {
-                              toggleLabelVisibility(journeyPoint);
-                            }}
-                            style={{
-                              // fill: "red",
-                              cursor: "pointer",
-                            }}
-                          />
-                        ) : (
-                          <VisibilityOffIcon
-                            style={{
-                              fill: "grey",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              toggleLabelVisibility(journeyPoint);
-                            }}
-                          />
-                        )}
-                        <StyledClearIcon
+                        <StyledDeleteForeverIcon
                           style={{
                             fill: "red",
-                            marginBottom: "-5px",
                             cursor: "pointer",
                           }}
                           onClick={() => {
                             removePointRedux(journeyPoint);
                           }}
                         />
-                      </StepsText>
+                      </StepsWrap>
                     </StyledStepLabel>
                   </Step>
                 );
               })}
-              {currentGroupIndex === journeyGroup[0].groupIndex ? (
-                <>
-                  <GeocoderInput
-                    id="new_input_1"
-                    map={map}
-                    setResult={(e) =>
-                      setGeocoderResult(currentGroupRef.current, e)
-                    }
-                  />
-                  <HorizontalLine />
-                </>
-              ) : (
-                <>
-                  <AddCircleOutlineIcon
-                    style={{
-                      fill: "green",
-                    }}
-                    onClick={() => {
-                      setCurrentGroupIndex(journeyGroup[0].groupIndex);
-                    }}
-                  />
-                  <HorizontalLine />
-                </>
-              )}
             </StyledStepper>
           </>
         );
       })}
-
-      {(journeysRedux.length === 0 ||
-        sortedGroupsJourneys[sortedGroupsJourneys.length - 1][0].groupIndex <
-          currentGroupIndex) && (
-        <GeocoderInput
-          id="new_input_1"
-          placeholder="První zastávka tripu"
-          map={map}
-          setResult={(e) => setGeocoderResult(currentGroupRef.current, e)}
-        />
-      )}
-
-      <StyledButton
-        onClick={() => {
-          setCurrentGroupIndex((prev) => prev + 1);
-        }}
-      >
-        Nový trip / Nový bod
-      </StyledButton>
     </Container>
   );
 }
 
-const styles = {
-  container: {
-    width: "100%",
-  },
-
-  locationInput: {
-    width: "100%",
-    border: "1px solid",
-    borderColor: "cta_color",
-    borderRadius: "5px",
-    marginBottom: ["210px", null, null, "10px"],
-
-    "& div": {
-      width: "100%",
-      maxWidth: "100%",
-    },
-  },
-  absoluteBtnWrap: {
-    position: "fixed",
-    top: ["85vh", "85vh", "85vh", "90vh"],
-    left: "0px",
-    height: 0,
-    width: ["100%", "100%", "100%", "40%", "30%"],
-  },
-};
-
-const Container = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 20px;
+const Container = styled.div`
   margin-bottom: 50px;
-  letter-spacing: 1.1px;
 `;
 
 const HeadingText = styled.p`
   font-weight: 600;
   color: black;
   text-align: left;
-  margin-top: 20px;
+  margin-top: 0;
   letter-spacing: 1.1px;
+
+  ${mobile`
+    margin-top: 20px;
+  `}
 `;
 
 const HorizontalLine = styled.p`
   background-color: ${color("muted")};
   height: 1px;
   width: 100%;
+  margin: 5px 0;
 `;
 
 const StyledStepper = styled(Stepper)`
@@ -321,17 +318,41 @@ const StyledStepper = styled(Stepper)`
   padding: 0px !important;
 `;
 
-const StepsText = styled.p`
-  color: ${color("primary")};
-  font-weight: ${fontWeight("regular")};
-  letter-spacing: 1.2px;
-  font-size: 14px;
-  transform: translateX(0);
-  display: inline-block;
-  line-height: 145%;
+const PlusGeoWrap = styled.div`
   width: 100%;
   display: flex;
-  // justify-content: space-between;
+  align-items: center;
+`;
+
+const NewTripWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const StepsWrap = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const StepperConnector = styled.span`
+  padding-left: 9px;
+  margin-top: -15px;
+  margin-bottom: -15px;
+  font-weight: ${fontWeight("bold")};
+  color: ${({ color }) => color}};
+  text-align: start;
+  width: 20px;
+`;
+
+const LocationTitle = styled.p`
+  color: ${color("muted")};
+  font-size: ${fontSize("xxs")};
+  width: 100%;
+  margin: 0;
+  margin-top: 15px;
+  text-align: left;
 `;
 
 const StyledStepLabel = styled(StepLabel)`
@@ -352,15 +373,31 @@ const StyledStepLabel = styled(StepLabel)`
 
 const StyledButton = styled(Button)`
   color: white !important;
-  background-color: ${color("cta_color")} !important;
+  background-color: ${color("heading_secondary")} !important;
   text-transform: unset !important;
-  margin-bottom: 60px !important;
+  margin-bottom: 0px !important;
+
+  ${mobile`
+    margin-bottom: 20px !important;
+  `}
 `;
 
 const Flex1 = styled.div`
   flex: 1;
 `;
 
-const StyledClearIcon = styled(ClearIcon)`
+const StyledDeleteForeverIcon = styled(DeleteForeverIcon)`
   margin-left: 5px;
+`;
+
+const FlexCenterWrap = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const StyledCreateIcon = styled(CreateIcon)`
+  cursor: pointer !important;
+  width: 0.8em !important;
+  height: 0.8em !important;
+  margin: 0 5px !important;
 `;

@@ -8,12 +8,12 @@ import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import CustomLoader from "components/CustomLoader";
 import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
+import { ORIENTATIONS } from "constants/constants";
+
 import {
   useActiveLayoutSelector,
   useActiveMapStyleSelector,
 } from "redux/order/reducer";
-
-import { ORIENTATIONS } from "constants/constants";
 
 const LOW_DENSITY_CONSTANT = 3;
 const MID_DENSITY_CONSTANT = 2;

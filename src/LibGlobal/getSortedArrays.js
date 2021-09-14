@@ -2,7 +2,7 @@ import { produce } from "immer";
 
 export const getSortedArrays = (journeys) => {
   const journeysSorted = [...journeys].sort((a, b) =>
-    a.groupIndex < b.groupIndex ? -1 : 1
+    a.groupIndex < b.groupIndex ? 1 : -1
   );
 
   const journeysGrouped = journeysSorted.reduce((acc, cur) => {

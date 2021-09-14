@@ -29,7 +29,7 @@ const orderInitialState = {
   },
   activeLayoutName: LAYOUT_STYLE_NAMES.BOTTOM_BLUR,
   activeMapStyleName: MAP_STYLES_NAMES.PALE_BLUE,
-  mapCoordinates: [13.303958804602132, 41.47437924957853],
+  mapCenterCoordinates: [13.303958804602132, 41.47437924957853],
   mapZoom: 5,
   isHydrated: false,
   seenPopup: false,
@@ -39,7 +39,7 @@ const orderInitialState = {
   storeId: "",
   journeys: [
     {
-      groupIndex: 0,
+      groupIndex: 3,
       index: 0,
       location: [14.42139, 50.08861],
       sourceId: "SourceId_0.3506115025981893",
@@ -50,7 +50,7 @@ const orderInitialState = {
       titleSourceId: "TitleSourceId_0.234234",
     },
     {
-      groupIndex: 0,
+      groupIndex: 3,
       index: 1,
       location: [12.48278, 41.89306],
       sourceId: "SourceId_0.5361843612493742",
@@ -86,6 +86,7 @@ const orderInitialState = {
   ],
   journeysSpecs: {
     labelSizePrint: 10,
+    isEnabled: true,
   },
 };
 
@@ -143,7 +144,7 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       return state;
 
     case countActionTypes.SET_MAP_COORDINATES:
-      state.mapCoordinates = data;
+      state.mapCenterCoordinates = data;
       return state;
 
     case countActionTypes.SET_MAP_ZOOM:
@@ -189,6 +190,10 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       state.journeysSpecs = { ...state.journeysSpecs, ...data };
       return state;
 
+    case countActionTypes.SET_JOURNEYS_ENABLED:
+      state.journeysSpecs = { ...state.journeysSpecs, isEnabled: data };
+      return state;
+
     default:
       return state;
   }
@@ -209,7 +214,7 @@ export const useActiveMapStyleSelector = () =>
   useSelector((store) => store.order.activeMapStyleName);
 
 export const useMapCoordinatesSelector = () =>
-  useSelector((store) => store.order.mapCoordinates);
+  useSelector((store) => store.order.mapCenterCoordinates);
 
 export const useMapZoomSelector = () =>
   useSelector((store) => store.order.mapZoom);
@@ -231,5 +236,8 @@ export const useGetJourneysSpecsSelector = () =>
 
 export const useStoreIdSelector = () =>
   useSelector((store) => store.order.storeId);
+
+export const useJourneysEnabledSelector = () =>
+  useSelector((store) => store.order.journeysSpecs.isEnabled);
 
 export default order;

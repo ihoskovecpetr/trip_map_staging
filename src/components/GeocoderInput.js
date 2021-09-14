@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import mapboxgl from "mapbox-gl";
+import styled from "styled-components";
+
+import { color } from "utils";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 let geocoder;
@@ -11,6 +14,7 @@ export default function GeocoderInput({
   value,
   setResult,
   placeholder,
+  style,
 }) {
   const ref = useRef();
 
@@ -49,9 +53,12 @@ export default function GeocoderInput({
     // document.getElementById(id).innerHTML = value;
   };
 
-  return (
-    <p>
-      <div id={id} ref={ref}></div>
-    </p>
-  );
+  return <StyledDiv id={id} ref={ref} style={style}></StyledDiv>;
 }
+
+const StyledDiv = styled.div`
+  && input {
+    border: 1px solid ${color("cta_color")};
+    border-radius: 5px;
+  }
+`;

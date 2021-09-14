@@ -11,6 +11,7 @@ import { color, fontWeight } from "utils";
 import { ORIENTATIONS } from "@constants";
 import Stepper from "./Stepper";
 
+import StepStudioSettings from "../steps/StepStudioSettings";
 import Step1Location from "../steps/StepLocation";
 import Step2Orientation from "../steps/Step2Orientation";
 import StepLayout from "../steps/Step3Layout";
@@ -29,11 +30,13 @@ import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import {
   useProductSelector,
   useActiveMapStyleSelector,
+  useJourneysEnabledSelector,
 } from "redux/order/reducer";
 
 export default function TabsRootNew({ map, snapMapInstance }) {
   const classes = useStyles();
   const productRedux = useProductSelector();
+  const isJourneysEnabled = useJourneysEnabledSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
   const { isMobile } = useIsMobile();
 
@@ -74,13 +77,16 @@ export default function TabsRootNew({ map, snapMapInstance }) {
     setActiveStepNumber((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const StepComponent = isJourneysEnabled ? (
+    <StepAddRoute map={map} index={2} />
+  ) : (
+    <Step1Location map={map} index={2} />
+  );
+
   const stepElementsDesktop = [
-    [
-      <Step1Location map={map} index={1} />,
-      <Step2Orientation index={2} />,
-      <StepTitles index={3} />,
-    ],
-    [<StepAddRoute map={map} index={4} />],
+    [<StepStudioSettings map={map} index={1} />, StepComponent],
+    [<Step2Orientation index={3} />, <StepTitles index={3} />],
+
     [
       <StepLayout index={5} />,
       <StepLayoutColorSwitch index={6} />,
@@ -99,10 +105,12 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   ];
 
   const stepElementsMobile = [
-    [<Step1Location map={map} index={1} />],
-    [<Step2Orientation index={2} />],
-    [<StepTitles index={3} />],
-    [<StepAddRoute map={map} index={4} />],
+    [<StepStudioSettings map={map} index={1} />],
+    [StepComponent],
+    // [<StepAddRoute map={map} index={1} />],
+    // [<Step1Location map={map} index={1} />],
+    [<Step2Orientation index={3} />],
+    [<StepTitles index={4} />],
     [<StepColors index={5} />],
     [<StepLayout index={6} />],
     [<StepLayoutColorSwitch index={7} />],

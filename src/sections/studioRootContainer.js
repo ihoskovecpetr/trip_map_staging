@@ -211,7 +211,7 @@ export default function StudioRootContainer() {
   const productRedux = useProductSelector();
   const mapTitles = useTitlesSelector();
   const activeLayoutRedux = useActiveLayoutSelector();
-  const mapCoordinates = useMapCoordinatesSelector();
+  const mapCenterCoordinates = useMapCoordinatesSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
   // const { dataPrintful } = useGetDataPrintful();
 
@@ -236,7 +236,7 @@ export default function StudioRootContainer() {
 
   const mapTitlesRef = useRef(mapTitles); // Using this due to snapshot state of state in hooks
   const layoutRef = useRef(activeLayoutRedux);
-  const mapCoordinatesRef = useRef(mapCoordinates);
+  const mapCoordinatesRef = useRef(mapCenterCoordinates);
   const productRef = useRef(productRedux);
   const isMobileRef = useRef(isMobile);
   const mapAvailSpaceRef = useRef({
@@ -273,8 +273,8 @@ export default function StudioRootContainer() {
   }, [activeLayoutRedux]);
 
   useEffect(() => {
-    mapCoordinatesRef.current = mapCoordinates;
-  }, [mapCoordinates]);
+    mapCoordinatesRef.current = mapCenterCoordinates;
+  }, [mapCenterCoordinates]);
 
   useEffect(() => {
     productRef.current = productRedux;
@@ -445,6 +445,7 @@ export default function StudioRootContainer() {
     });
 
     Object.assign(mapWrapper.style, {
+      display: "block",
       height: updHeight ? `${updHeight}px` : 0,
       width: updWidth ? `${updWidth}px` : 0,
       boxShadow: "0px 0px 25px rgba(156, 156, 156, 1)",

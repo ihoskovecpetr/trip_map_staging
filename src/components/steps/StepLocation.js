@@ -33,8 +33,6 @@ export default function StepLocation({ map, index }) {
     document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
     geocoder.container.style.width = "100%";
-
-    // document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
   }, []);
 
   useEffect(() => {
@@ -59,8 +57,6 @@ export default function StepLocation({ map, index }) {
 
     const { bbox } = e.result;
 
-    console.log({ eResult: e.result });
-
     if (bbox) {
       map?.fitBounds([
         [bbox[0], bbox[1]], // southwestern corner of the bounds
@@ -71,18 +67,7 @@ export default function StepLocation({ map, index }) {
         center: e.result.geometry.coordinates,
         zoom: 9,
       });
-      // map?.panTo(e.result.geometry.coordinates);
-      // map.setZoom(13);
     }
-
-    const newZoom = map.getZoom();
-
-    // router.query.c = JSON.stringify(e.result.geometry.coordinates);
-    // router.query.t = newTitle;
-    // router.query.s = newSubTitle;
-    // router.query.z = newZoom;
-
-    // router.push(router);
 
     geocoder.clear(); // to remove blue dot
     document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].blur();

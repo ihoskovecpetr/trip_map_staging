@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import ReactMapboxGl, { Layer, Feature, Source } from "react-mapbox-gl";
 import Backdrop from "@material-ui/core/Backdrop";
 import Popper from "@material-ui/core/Popper";
+import * as turf from "@turf/turf";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -28,6 +29,7 @@ import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import CustomTooltipWrap from "components/custom-tooltip";
 import { getSortedArrays } from "LibGlobal/getSortedArrays";
 import { getGeoArc } from "LibGlobal/getGeoArc";
+import { getBbox } from "LibGlobal/getBbox";
 import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
 
 import {
@@ -44,9 +46,10 @@ import {
   useActiveMapStyleSelector,
   useSeenPopupSelector,
   useMapCoordinatesSelector,
-  useGetJourneys,
   useMapZoomSelector,
+  useGetJourneys,
   useGetJourneysSpecsSelector,
+  useJourneysEnabledSelector,
 } from "redux/order/reducer";
 
 import {
@@ -96,16 +99,18 @@ export default function MapContainer({
   const journeysRedux = useGetJourneys();
   const sortedGroupsJourneys = getSortedArrays(journeysRedux);
   const mapZoom = useMapZoomSelector();
-  const mapCoordinates = useMapCoordinatesSelector();
+  const mapCenterCoordinates = useMapCoordinatesSelector();
   const journeysSpecs = useGetJourneysSpecsSelector();
+  const isJourneysEnabled = useJourneysEnabledSelector();
 
+  const [bbox, setBbox] = useState(null);
+  const [isCreatingImage, setIsCreatingImage] = useState(false);
+  const [draggedPoint, setDraggedPoint] = useState();
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
   });
 
-  const [isCreatingImage, setIsCreatingImage] = useState(false);
-  const [draggedPoint, setDraggedPoint] = useState();
   const { isMobile } = useIsMobile();
   const qualityImageCreator = useQualityImageCreator();
 
@@ -122,9 +127,7 @@ export default function MapContainer({
     VARIANTS_PRINTFUL.map((variant) => variant.id)
   );
 
-  const [anchorEl, setAnchorEl] = useState(
-    seenPopup ? document.getElementById("full-screen-button") : null
-  );
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     // setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -140,8 +143,6 @@ export default function MapContainer({
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
-
-  console.log({ open, id, anchorEl });
 
   const priceWithDelivery =
     dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
@@ -219,6 +220,9 @@ export default function MapContainer({
 
   useEffect(() => {
     map?.resize();
+    if (journeysRedux.length > 0) {
+      setBbox(getBbox(journeysRedux));
+    }
   }, [journeysRedux]);
 
   useEffect(() => {
@@ -226,6 +230,10 @@ export default function MapContainer({
       !seenPopup ? document.getElementById("full_screen_button") : null
     );
   }, []);
+
+  useEffect(() => {
+    map?.resize();
+  }, [isJourneysEnabled]);
 
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
@@ -296,7 +304,7 @@ export default function MapContainer({
       </div>
 
       <div sx={styles.map_available_space} id="map_available_space_id">
-        <div id="map_wrap_id">
+        <div style={{ display: "none" }} id="map_wrap_id">
           <Map
             onStyleLoad={onMapLoad}
             style={MAP_STYLES[activeMapStyleName].url}
@@ -305,7 +313,7 @@ export default function MapContainer({
               height: "100%",
               overflow: "visible",
             }}
-            center={mapCoordinates}
+            center={mapCenterCoordinates}
             zoom={[mapZoom]}
             onZoomEnd={(_, e) => {
               dispatch(setMapZoomAction(e.target.getZoom()));
@@ -323,6 +331,7 @@ export default function MapContainer({
             <PrintLocations
               map={map}
               sortedGroupsJourneys={sortedGroupsJourneys}
+              isJourneysEnabled={isJourneysEnabled}
               draggedPoint={draggedPoint}
               setDraggedPoint={setDraggedPoint}
               activeMapStyleName={activeMapStyleName}
@@ -348,6 +357,7 @@ export default function MapContainer({
               <PrintLocations
                 map={map}
                 sortedGroupsJourneys={sortedGroupsJourneys}
+                isJourneysEnabled={isJourneysEnabled}
                 draggedPoint={draggedPoint}
                 setDraggedPoint={setDraggedPoint}
                 activeMapStyleName={activeMapStyleName}
@@ -395,6 +405,7 @@ export default function MapContainer({
 const PrintLocations = ({
   map,
   sortedGroupsJourneys,
+  isJourneysEnabled,
   draggedPoint,
   setDraggedPoint,
   activeMapStyleName,
@@ -410,120 +421,125 @@ const PrintLocations = ({
     });
   };
 
+  console.log({ sortedGroupsJourneys });
+
   return (
     <>
-      {sortedGroupsJourneys.map((group, groupIndex) => {
-        return group.map((_, pointIndex) => {
-          if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
-            return;
-          }
+      {isJourneysEnabled &&
+        sortedGroupsJourneys.map((group, groupIndex) => {
+          return group.map((_, pointIndex) => {
+            if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
+              return;
+            }
 
-          const previousPoint =
-            sortedGroupsJourneys[groupIndex][pointIndex - 1];
-          const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex];
+            const previousPoint =
+              sortedGroupsJourneys[groupIndex][pointIndex - 1];
+            const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex];
 
-          return (
-            <>
-              <Layer
-                id={"point-blip" + groupIndex + pointIndex}
-                type="circle"
-                paint={{
-                  "circle-radius": baseCircleRadius * 1.4,
-                  "circle-radius-transition": { duration: 0 },
-                  "circle-opacity-transition": { duration: 0 },
-                  "circle-color":
-                    MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                      .colorSecondary,
-                }}
-              >
-                <Feature coordinates={currentPoint.location} />
-              </Layer>
-
-              <Layer
-                id={"point" + groupIndex + pointIndex}
-                type="circle"
-                // sourceId={"point" + groupIndex + pointIndex}
-                paint={{
-                  "circle-radius": baseCircleRadius,
-                  "circle-color":
-                    currentPoint.titleSourceId === draggedPoint
-                      ? "red"
-                      : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                          .colorMain,
-                }}
-              >
-                <Feature coordinates={currentPoint.location} />
-              </Layer>
-
-              {previousPoint && (
+            return (
+              <>
                 <Layer
-                  type="line"
-                  layout={lineLayout}
+                  id={"point-blip" + groupIndex + pointIndex}
+                  type="circle"
                   paint={{
-                    "line-color":
-                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain,
-                    "line-width": lineWidth,
-                  }}
-                >
-                  <Feature
-                    coordinates={getGeoArc(
-                      currentPoint.location,
-                      previousPoint.location
-                    )}
-                  />
-                </Layer>
-              )}
-              {currentPoint.titleLabelDisplayed && (
-                <Layer
-                  type="symbol"
-                  key={groupIndex + pointIndex}
-                  layout={{
-                    // "icon-image": "harbor-15",
-                    "icon-allow-overlap": true,
-                    "text-field": currentPoint.titleLabel,
-                    "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
-                    "text-size": textSize, // 7,
-                    "text-transform": "uppercase",
-                    "text-letter-spacing": 0.05,
-                    "text-offset": [0, -2],
-                    "text-allow-overlap": true,
-                    "icon-allow-overlap": true,
-                    "text-ignore-placement": true,
-                    "icon-ignore-placement": true,
-                  }}
-                  paint={{
-                    "text-color":
+                    "circle-radius": baseCircleRadius * 1.4,
+                    "circle-radius-transition": { duration: 0 },
+                    "circle-opacity-transition": { duration: 0 },
+                    "circle-color":
                       MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
                         .colorSecondary,
-                    "text-halo-color":
-                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorHalo,
-                    "text-halo-width": textSize,
-                  }}
-                  onMouseEnter={(e) => {
-                    setCursor("move");
-                  }}
-                  onMouseLeave={() => {
-                    setCursor("pointer");
                   }}
                 >
-                  <Feature
-                    coordinates={currentPoint.titleLocation}
-                    onDragStart={(e) => {
-                      e.target.dragPan.disable();
-                      setDraggedPoint(currentPoint.titleSourceId);
-                    }}
-                    draggable={
-                      !draggedPoint ||
-                      currentPoint.titleSourceId === draggedPoint
-                    }
-                    onDragEnd={onUp(currentPoint)}
-                  />
+                  <Feature coordinates={currentPoint.location} />
                 </Layer>
-              )}
-            </>
-          );
-        });
-      })}
+
+                <Layer
+                  id={"point" + groupIndex + pointIndex}
+                  type="circle"
+                  // sourceId={"point" + groupIndex + pointIndex}
+                  paint={{
+                    "circle-radius": baseCircleRadius,
+                    "circle-color":
+                      currentPoint.titleSourceId === draggedPoint
+                        ? "red"
+                        : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                            .colorMain,
+                  }}
+                >
+                  <Feature coordinates={currentPoint.location} />
+                </Layer>
+
+                {previousPoint && (
+                  <Layer
+                    type="line"
+                    layout={lineLayout}
+                    paint={{
+                      "line-color":
+                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                          .colorMain,
+                      "line-width": lineWidth,
+                    }}
+                  >
+                    <Feature
+                      coordinates={getGeoArc(
+                        currentPoint.location,
+                        previousPoint.location
+                      )}
+                    />
+                  </Layer>
+                )}
+                {currentPoint.titleLabelDisplayed && (
+                  <Layer
+                    type="symbol"
+                    key={groupIndex + pointIndex}
+                    layout={{
+                      // "icon-image": "harbor-15",
+                      "icon-allow-overlap": true,
+                      "text-field": currentPoint.titleLabel,
+                      "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
+                      "text-size": textSize, // 7,
+                      "text-transform": "uppercase",
+                      "text-letter-spacing": 0.05,
+                      "text-offset": [0, -2],
+                      "text-allow-overlap": true,
+                      "icon-allow-overlap": true,
+                      "text-ignore-placement": true,
+                      "icon-ignore-placement": true,
+                    }}
+                    paint={{
+                      "text-color":
+                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                          .colorSecondary,
+                      "text-halo-color":
+                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                          .colorHalo,
+                      "text-halo-width": textSize,
+                    }}
+                    onMouseEnter={(e) => {
+                      setCursor("move");
+                    }}
+                    onMouseLeave={() => {
+                      setCursor("pointer");
+                    }}
+                  >
+                    <Feature
+                      coordinates={currentPoint.titleLocation}
+                      onDragStart={(e) => {
+                        e.target.dragPan.disable();
+                        setDraggedPoint(currentPoint.titleSourceId);
+                      }}
+                      draggable={
+                        !draggedPoint ||
+                        currentPoint.titleSourceId === draggedPoint
+                      }
+                      onDragEnd={onUp(currentPoint)}
+                    />
+                  </Layer>
+                )}
+              </>
+            );
+          });
+        })}
     </>
   );
 };
@@ -551,8 +567,9 @@ const ColorWrap = styled.div`
 `;
 
 const StyledImg = styled.img`
-  height: 45%;
-  width: 45%;
+  height: 120px;
+  width: 120px;
+  object-fit: cover;
 `;
 
 const StyledRotateIcon = styled(Rotate90DegreesCcwIcon)`

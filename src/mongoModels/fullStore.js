@@ -21,7 +21,7 @@ const fullStoreScehma = new Schema(
     },
     activeLayoutName: { type: String },
     activeMapStyleName: { type: String },
-    mapCoordinates: { type: Object },
+    mapCenterCoordinates: { type: Object },
     mapZoom: { type: Number },
     isHydrated: { type: Boolean },
     seenPopup: { type: Boolean },
