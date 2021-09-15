@@ -23,7 +23,7 @@ const data = [
   },
   {
     id: 3,
-    title: "Pro zaplacení jste přesměrováni na platformu Stripe",
+    title: "Pro platbu jste přesměrováni na platformu Stripe",
     text:
       "Po kontrole všech zvolených parametrů a mapy v tiskové kvalitě jste přesměrování na platební bránu Stripe kde doplníte doručovací adresu a vyberete preferovaný způsob platby",
   },
@@ -49,13 +49,7 @@ export default function WorkFlow() {
 
         <Grid sx={styles.grid}>
           {data.map((item) => (
-            <Box
-              sx={styles.card}
-              key={item.id}
-              onClick={() => {
-                router.push("/studio");
-              }}
-            >
+            <Box sx={styles.card} key={item.id}>
               <Box sx={styles.iconBox}>{`0${item.id}`}</Box>
               <Box sx={styles.wrapper}>
                 <Heading sx={styles.wrapper.title}>{item.title}</Heading>
@@ -117,7 +111,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     position: "relative",
-    cursor: "pointer",
     textAlign: ["center", null, "left"],
     width: ["100%", "80%", "100%"],
     mx: "auto",
