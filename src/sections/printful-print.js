@@ -9,9 +9,9 @@ import PaymentPattern from "assets/payment-pattern.png";
 
 const data = {
   subTitle: "Tisk a zpracování",
-  title: "Tist a zaslání výsledného produktu zprostředkuje Printful",
+  title: "Tisk a zaslání výsledného produktu zprostředkuje Printful",
   description:
-    "Společnost Printfull je celosvětový poskytovatel tisku na zakázku a důvěřují mu i takové společnosti jako je Amazon, Shopify, Ebay nebo Square",
+    "Společnost Printful je celosvětový poskytovatel tisku na zakázku a důvěřují mu i takové společnosti jako je Amazon, Shopify, Ebay nebo Square",
   btnName: "více o Printful",
   btnURL: "https://www.printful.com/",
 };
