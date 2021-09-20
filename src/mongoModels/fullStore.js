@@ -29,6 +29,7 @@ const fullStoreScehma = new Schema(
     discount: { type: Object },
     journeys: { type: Object },
     journeysSpecs: { type: Object },
+    icons: { type: Object },
   },
   { timestamps: true }
 );

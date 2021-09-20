@@ -88,6 +88,14 @@ const orderInitialState = {
     labelSizePrint: 10,
     isEnabled: true,
   },
+  icons: [
+    {
+      groupIndex: 1,
+      location: [11.48972, 40.75056],
+      titleLocation: [14.48972, 40.75056],
+      sourceId: "SourceId_1",
+    },
+  ],
 };
 
 const order = produce((state = orderInitialState, { type, data, payload }) => {
@@ -121,6 +129,11 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
         ...data,
       };
       return state;
+
+    case countActionTypes.RESET_STORE:
+      return {
+        ...orderInitialState,
+      };
 
     case countActionTypes.SET_POPUP_SEEN:
       state.seenPopup = data;
@@ -203,9 +216,20 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       state.journeysSpecs = { ...state.journeysSpecs, isEnabled: data };
       return state;
 
-    // case "RESET_PRODUCT":
-    //   state.product = {};
-    //   return state;
+    case countActionTypes.ADD_NEW_ICON:
+      state.icons = [...state.icons, data];
+      return state;
+
+    case countActionTypes.UPDATE_ICON:
+      const updatingIconIndex = state.icons.findIndex(
+        (item) => item.sourceId === data.sourceId
+      );
+
+      const newIcons = [...state.icons];
+      newIcons[updatingIconIndex] = data;
+
+      state.icons = newIcons;
+      return state;
 
     default:
       return state;
@@ -252,5 +276,7 @@ export const useStoreIdSelector = () =>
 
 export const useJourneysEnabledSelector = () =>
   useSelector((store) => store.order.journeysSpecs.isEnabled);
+
+export const useGetIcons = () => useSelector((store) => store.order.icons);
 
 export default order;

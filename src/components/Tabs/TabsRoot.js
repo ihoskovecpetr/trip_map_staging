@@ -23,6 +23,7 @@ import Step7MapDefinition from "../steps/Step7MapDefinition";
 import Step8Checkout from "../steps/Step8Checkout";
 import StepTitles from "../steps/StepTitles";
 import StepAddRoute from "../steps/StepAddRoute";
+import StepAddIcon from "../steps/StepAddIcon";
 
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
@@ -85,7 +86,11 @@ export default function TabsRootNew({ map, snapMapInstance }) {
 
   const stepElementsDesktop = [
     [<StepStudioSettings map={map} index={1} />, StepComponent],
-    [<Step2Orientation index={3} />, <StepTitles index={4} />],
+    [
+      <Step2Orientation index={3} />,
+      <StepTitles index={4} />,
+      // <StepAddIcon map={map} index={21} />,
+    ],
 
     [
       <StepLayout index={5} />,
@@ -107,8 +112,7 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   const stepElementsMobile = [
     [<StepStudioSettings map={map} index={1} />],
     [StepComponent],
-    // [<StepAddRoute map={map} index={1} />],
-    // [<Step1Location map={map} index={1} />],
+    // [<StepAddIcon map={map} index={21} />],
     [<Step2Orientation index={3} />],
     [<StepTitles index={4} />],
     [<StepColors index={5} />],

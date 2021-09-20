@@ -4,25 +4,17 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import Lightbox from "react-image-lightbox";
-import RemoveIcon from "@material-ui/icons/Remove";
-import AddIcon from "@material-ui/icons/Add";
 import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
-import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
-import ReactMapboxGl, { Layer, Feature, Source } from "react-mapbox-gl";
+import ReactMapboxGl, { Layer, Feature, Source, Marker } from "react-mapbox-gl";
 import Backdrop from "@material-ui/core/Backdrop";
-import Popper from "@material-ui/core/Popper";
-import * as turf from "@turf/turf";
 
-import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { color, fontWeight, fontSize } from "utils";
-import Logo from "components/logo";
 import BackdropLoader from "components/backdropLoader";
-import LogoWhite from "assets/logo_while.png";
-import LowDefinitionMap from "assets/mapDefinition/low-definition-map.png";
-import HighDefinitionMap from "assets/mapDefinition/high-definition-map.png";
+
+import iconChat from "assets/mapIcons/pin2D.svg";
+
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
@@ -31,13 +23,14 @@ import { getSortedArrays } from "LibGlobal/getSortedArrays";
 import { getGeoArc } from "LibGlobal/getGeoArc";
 import { getBbox } from "LibGlobal/getBbox";
 import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
+import MapButtons from "./mapButtons";
 
 import {
-  setProductAction,
   setPopupSeenAction,
   updateJourneyPoint,
   setMapZoomAction,
   setMapCoordinatesAction,
+  updateIcon,
 } from "redux/order/actions";
 
 import {
@@ -50,6 +43,7 @@ import {
   useGetJourneys,
   useGetJourneysSpecsSelector,
   useJourneysEnabledSelector,
+  useGetIcons,
 } from "redux/order/reducer";
 
 import {
@@ -60,10 +54,6 @@ import {
   MAP_STYLED_AND_FLIGHT_COLOR,
   LABEL_SIZE_KOEF,
 } from "constants/constants";
-
-const getFormatedPriceString = (amount) => {
-  return amount ? `| ${getFormattedPrice(amount)}` : "";
-};
 
 const NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN =
   "pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w";
@@ -102,14 +92,16 @@ export default function MapContainer({
   const mapCenterCoordinates = useMapCoordinatesSelector();
   const journeysSpecs = useGetJourneysSpecsSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
+  const icons = useGetIcons();
 
-  const [bbox, setBbox] = useState(null);
+  // const [bbox, setBbox] = useState(null);
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const [draggedPoint, setDraggedPoint] = useState();
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
   });
+  const [images, setImages] = useState([]);
 
   const { isMobile } = useIsMobile();
   const qualityImageCreator = useQualityImageCreator();
@@ -143,18 +135,6 @@ export default function MapContainer({
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
-
-  const priceWithDelivery =
-    dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
-      .netPrice ?? 0;
-
-  const changeOrientation = () => {
-    dispatch(
-      setProductAction({
-        sizeObject: getFlippedSizeObject(productRedux),
-      })
-    );
-  };
 
   const fullscreenImageRequested = async () => {
     setIsCreatingImage(true);
@@ -218,10 +198,32 @@ export default function MapContainer({
     }
   };
 
+  const setCursor = (newCursorStyle) => {
+    const canvas = map.getCanvas();
+    Object.assign(canvas.style, {
+      cursor: newCursorStyle,
+    });
+  };
+
+  const updateIconLocation = (e, originalIconObj) => {
+    const coords = e.lngLat;
+
+    dispatch(
+      updateIcon({ ...originalIconObj, location: [coords.lng, coords.lat] })
+    );
+  };
+
+  useEffect(() => {
+    const image = new Image(100, 100);
+    image.src = iconChat;
+
+    setImages(["myImage", image]);
+  }, [journeysRedux]);
+
   useEffect(() => {
     map?.resize();
     if (journeysRedux.length > 0) {
-      setBbox(getBbox(journeysRedux));
+      // setBbox(getBbox(journeysRedux));
     }
   }, [journeysRedux]);
 
@@ -237,71 +239,13 @@ export default function MapContainer({
 
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
-      <div sx={styles.allBtnWrapper} id="map_buttons_wrapper">
-        {isMobile && (
-          <LogoWrap>
-            <Logo src={LogoWhite} />
-          </LogoWrap>
-        )}
-        {!isMobile && (
-          <StyledText size="small">
-            {`cena 
-            ${getFormatedPriceString(priceWithDelivery)}`}
-          </StyledText>
-        )}
-
-        <EmptySpaceExpander></EmptySpaceExpander>
-
-        <div sx={styles.zoomBtnWrapper}>
-          <div sx={styles.zoomBtn} className="left" onClick={addZoom}>
-            <AddIcon />
-          </div>
-          <div sx={styles.zoomBtn} className="right" onClick={subtractZoom}>
-            <RemoveIcon />
-          </div>
-        </div>
-
-        <div sx={styles.rotateBtn}>
-          <StyledRotateIcon onClick={changeOrientation} />
-        </div>
-
-        <div
-          sx={styles.teaserBtn}
-          aria-describedby={id}
-          id="full_screen_button"
-          onClick={handleClick}
-        >
-          {isCreatingImage ? (
-            <ColorWrap>
-              <StyledCircularProgress />
-            </ColorWrap>
-          ) : (
-            <OpenWithIcon color="grey" />
-          )}
-        </div>
-        <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-end">
-          <TooltipBodyWrap>
-            <p>
-              Výsledná podrobnost mapy může být odlišná od zobrazení ve studiu
-            </p>
-            <ImagesWrap>
-              <StyledImg src={HighDefinitionMap} />
-              <span>vs</span>
-              <StyledImg src={LowDefinitionMap} />
-            </ImagesWrap>
-
-            <p>
-              Finální produkt zobrazíte kliknutím na tlačítko{" "}
-              <DummyBtn>
-                <OpenWithIcon color="grey" onClick={handleClick} />
-              </DummyBtn>
-            </p>
-            <Button variant="contained" color="primary" onClick={handleClose}>
-              OK
-            </Button>
-          </TooltipBodyWrap>
-        </Popper>
-      </div>
+      <MapButtons
+        map={map}
+        snapMapInstance={snapMapInstance}
+        addZoom={addZoom}
+        subtractZoom={subtractZoom}
+        mapTitles={mapTitles}
+      />
 
       <div sx={styles.map_available_space} id="map_available_space_id">
         <div style={{ display: "none" }} id="map_wrap_id">
@@ -336,12 +280,45 @@ export default function MapContainer({
               setDraggedPoint={setDraggedPoint}
               activeMapStyleName={activeMapStyleName}
               onUp={onUp}
+              setCursor={setCursor}
               textSize={
                 baseLongSize ? (baseLongSize * LABEL_SIZE_KOEF) / 2 : 10
               }
+              onError={(e) => {
+                console.log("map_error_ ", { e });
+              }}
               lineWidth={1}
               baseCircleRadius={3}
             />
+
+            {icons?.map((icon) => {
+              return (
+                <Layer
+                  id={icon.sourceId}
+                  type="symbol"
+                  layout={{ "icon-image": "myImage", "icon-size": 0.25 }}
+                  images={images}
+                  onMouseEnter={(e) => {
+                    setCursor("move");
+                  }}
+                  onMouseLeave={() => {
+                    setCursor("pointer");
+                  }}
+                >
+                  <Feature
+                    coordinates={icon.location}
+                    draggable
+                    onDragStart={(e) => {
+                      console.log("Dragging_e", { e });
+                    }}
+                    onDragEnd={(e) => {
+                      console.log("Dragging__ended_e", { e });
+                      updateIconLocation(e, icon);
+                    }}
+                  />
+                </Layer>
+              );
+            })}
           </Map>
         </div>
         <Backdrop open={false}>
@@ -359,6 +336,7 @@ export default function MapContainer({
                 sortedGroupsJourneys={sortedGroupsJourneys}
                 isJourneysEnabled={isJourneysEnabled}
                 draggedPoint={draggedPoint}
+                setCursor={setCursor}
                 setDraggedPoint={setDraggedPoint}
                 activeMapStyleName={activeMapStyleName}
                 onUp={onUp}
@@ -389,7 +367,6 @@ export default function MapContainer({
       </div>
 
       <canvas id="canvas_merging" sx={styles.canvas_merging} />
-      <PlaceToHideBigMap id="place_to_hide_big_map"></PlaceToHideBigMap>
       {lightbox.open && (
         <Lightbox
           mainSrc={lightbox.activeSrc}
@@ -408,21 +385,13 @@ const PrintLocations = ({
   isJourneysEnabled,
   draggedPoint,
   setDraggedPoint,
+  setCursor,
   activeMapStyleName,
   onUp,
   textSize,
   lineWidth,
   baseCircleRadius,
 }) => {
-  const setCursor = (newCursorStyle) => {
-    const canvas = map.getCanvas();
-    Object.assign(canvas.style, {
-      cursor: newCursorStyle,
-    });
-  };
-
-  console.log({ sortedGroupsJourneys });
-
   return (
     <>
       {isJourneysEnabled &&
