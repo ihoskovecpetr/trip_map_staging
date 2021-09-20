@@ -15,6 +15,13 @@ export const countActionTypes = {
   REMOVE_JOURNEY_POINT: "REMOVE_JOURNEY_POINT",
   SET_JOURNEYS_SPECS: "SET_JOURNEYS_SPECS",
   SET_JOURNEYS_ENABLED: "SET_JOURNEYS_ENABLED",
+  RESET_STORE: "RESET_STORE",
+};
+
+export const resetStore = () => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.RESET_STORE,
+  });
 };
 
 export const setProductAction = (newProduct) => (dispatch) => {
