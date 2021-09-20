@@ -110,6 +110,11 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
         isHydrated: true,
         ...payload.order, // in payload is server store state !!!!
       };
+
+    case countActionTypes.RESET_STORE:
+      state = {};
+      return state;
+
     case countActionTypes.SET_PRODUCT:
       state.product = {
         ...state.product,
@@ -193,6 +198,10 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
     case countActionTypes.SET_JOURNEYS_ENABLED:
       state.journeysSpecs = { ...state.journeysSpecs, isEnabled: data };
       return state;
+
+    // case "RESET_PRODUCT":
+    //   state.product = {};
+    //   return state;
 
     default:
       return state;
