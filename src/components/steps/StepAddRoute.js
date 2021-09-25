@@ -29,6 +29,7 @@ import {
   addNewJourney,
   removeJourneyPoint,
   updateJourneyPoint,
+  removeAllJourneys,
 } from "redux/order/actions";
 
 import { useGetJourneys, useActiveMapStyleSelector } from "redux/order/reducer";
@@ -121,16 +122,30 @@ export default function StepAddRoute({ map, index }) {
   return (
     <Container>
       <HeadingText>{index}. Zadejte body cesty</HeadingText>
+      <BtnWrap>
+        <StyledButton
+          onClick={() => {
+            setCurrentGroupIndex((prev) => prev + 1);
+          }}
+        >
+          <AddIcon />
+          Nová cesta / Nový bod
+        </StyledButton>
 
-      <StyledButton
-        onClick={() => {
-          setCurrentGroupIndex((prev) => prev + 1);
-        }}
-      >
-        <AddIcon />
-        Nová cesta / Nový bod
-      </StyledButton>
-
+        <StyledButton
+          onClick={() => {
+            dispatch(removeAllJourneys());
+          }}
+          bgColor="rgba(242, 73, 73,1)"
+        >
+          Smazat vše
+          <StyledDeleteForeverIcon
+            style={{
+              fill: "white",
+            }}
+          />
+        </StyledButton>
+      </BtnWrap>
       {(journeysRedux.length === 0 ||
         sortedGroupsJourneys[0][0].groupIndex < currentGroupIndex) && (
         <>
@@ -374,9 +389,15 @@ const StyledStepLabel = styled(StepLabel)`
   }
 `;
 
+const BtnWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const StyledButton = styled(Button)`
   color: white !important;
-  background-color: ${color("heading_secondary")} !important;
+  background-color: ${({ bgColor }) =>
+    bgColor ? bgColor : color("heading_secondary")} !important;
   text-transform: unset !important;
   margin-bottom: 0px !important;
 
