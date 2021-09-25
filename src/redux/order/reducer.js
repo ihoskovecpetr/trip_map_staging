@@ -191,6 +191,10 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       state.journeys = filteredJourneys;
       return state;
 
+    case countActionTypes.REMOVE_ALL_JOURNEYS:
+      state.journeys = [];
+      return state;
+
     case countActionTypes.SET_JOURNEYS_SPECS:
       state.journeysSpecs = { ...state.journeysSpecs, ...data };
       return state;

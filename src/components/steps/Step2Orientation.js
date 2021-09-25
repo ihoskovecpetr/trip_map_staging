@@ -66,13 +66,6 @@ export default function Step2Orientation({ index }) {
           </StyledDescriptionP>
         </SingleOrientationItem>
       </OrientationWrap>
-
-      {!isMobile && (
-        <TipParagraph>
-          <StyledBold>Tip!</StyledBold> Hlavní a vedlejší nadpis můžete upravit
-          po kliknutí přímo na něj.
-        </TipParagraph>
-      )}
     </div>
   );
 }
@@ -143,14 +136,4 @@ const StyledDescriptionP = styled.p`
   color: ${({ active }) => active && color("cta_color")};
   font-weight: ${fontWeight("regular")};
   margin: 3px 0;
-`;
-
-const TipParagraph = styled.p`
-  margin: "20px 0px";
-  font-weight: ${fontWeight("light")};
-`;
-
-const StyledBold = styled.span`
-  font-weight: 600;
-  color: black;
 `;

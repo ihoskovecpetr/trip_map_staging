@@ -125,6 +125,12 @@ export default function StepTitles({ index }) {
           onChange={handleTitleChange}
         />
       </TextFieldsConteiner>
+      {!isMobile && (
+        <TipParagraph>
+          <StyledBold>Tip!</StyledBold> Hlavní a vedlejší nadpis můžete upravit
+          také přímo na mapě.
+        </TipParagraph>
+      )}
     </div>
   );
 }
@@ -148,4 +154,14 @@ const HeadingText = styled.p`
 const TextFieldsConteiner = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const TipParagraph = styled.p`
+  margin: "20px 0px";
+  font-weight: ${fontWeight("light")};
+`;
+
+const StyledBold = styled.span`
+  font-weight: 600;
+  color: black;
 `;

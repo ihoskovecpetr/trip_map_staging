@@ -16,6 +16,7 @@ export const countActionTypes = {
   SET_JOURNEYS_SPECS: "SET_JOURNEYS_SPECS",
   SET_JOURNEYS_ENABLED: "SET_JOURNEYS_ENABLED",
   RESET_STORE: "RESET_STORE",
+  REMOVE_ALL_JOURNEYS: "REMOVE_ALL_JOURNEYS",
 };
 
 export const resetStore = () => (dispatch) => {
@@ -134,5 +135,11 @@ export const setJourneysIsEnabled = (bool) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_JOURNEYS_ENABLED,
     data: bool,
+  });
+};
+
+export const removeAllJourneys = () => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.REMOVE_ALL_JOURNEYS,
   });
 };
