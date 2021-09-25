@@ -23,25 +23,11 @@ import BackdropLoader from "components/backdropLoader";
 import LogoWhite from "assets/logo_while.png";
 import LowDefinitionMap from "assets/mapDefinition/low-definition-map.png";
 import HighDefinitionMap from "assets/mapDefinition/high-definition-map.png";
-import iconChat from "assets/mapIcons/pin2D.svg";
-import iconPin2DPNG from "assets/mapIcons/pin2D.png";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
-import CustomTooltipWrap from "components/custom-tooltip";
-import { getSortedArrays } from "LibGlobal/getSortedArrays";
-import { getGeoArc } from "LibGlobal/getGeoArc";
-import { getBbox } from "LibGlobal/getBbox";
-import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
 
-import {
-  setProductAction,
-  setPopupSeenAction,
-  updateJourneyPoint,
-  setMapZoomAction,
-  setMapCoordinatesAction,
-  updateIcon,
-} from "redux/order/actions";
+import { setProductAction, setPopupSeenAction } from "redux/order/actions";
 
 import {
   useProductSelector,
