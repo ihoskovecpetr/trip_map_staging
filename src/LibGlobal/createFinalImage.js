@@ -63,72 +63,10 @@ export const createFinalImage = async ({
   activeMapStyleName,
   options,
 }) => {
-  const {
-    // height,
-    // width,
-    // isPreview,
-    // definitionConstant = 1,
-    computedPixelRatio,
-  } = options;
+  const { computedPixelRatio } = options;
   return new Promise(async (resolve, reject) => {
-    // let snapshotMap = document.createElement("div");
-    // snapshotMap.setAttribute("id", "snapshot_map");
-
-    //START
-    // let snapshotMapWrapper = document.getElementById("snapshot_map_wrapper");
-
-    // const isWideOrientation =
-    //   product?.sizeObject?.orientation === ORIENTATIONS.wide;
-
-    // const computedPixelBase = Math.floor(
-    //   PRINT_CANVAS_BASE_PX / definitionConstant
-    // );
-
-    // const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
-    // const computedPixelRatio = Number(
-    //   (currentVersionPixelRatio * definitionConstant).toFixed(2)
-    // );
-
-    // let multiple;
-
-    // if (isWideOrientation) {
-    //   multiple = computedPixelBase / width;
-    // } else {
-    //   multiple = computedPixelBase / height;
-    // }
-
-    // console.log({
-    //   FinalWidth: width * multiple,
-    //   finalHeight: height * multiple,
-    // });
-    // Object.assign(snapshotMapWrapper.style, {
-    //   width: `${width * multiple}px`,
-    //   height: `${height * multiple}px`,
-    //   // display: "none",
-    //   // visibility: "hidden",
-    // });
-
-    //END
-
-    // const canvas = snapMapInstance.getCanvas();
-
-    // canvas.height = `${400}px`;
-    // canvas.width = `${100}px`;
-
     setDevicePixelRatio(computedPixelRatio);
     snapMapInstance.resize();
-
-    // const PlaceToHideBigMap = document.getElementById("place_to_hide_big_map");
-    // PlaceToHideBigMap.appendChild(snapshotMap);
-
-    // snapshotMapObject = new mapboxgl.Map({
-    //   container: "snapshot_map",
-    //   zoom: originalMapObject.getZoom(),
-    //   minZoom: 0,
-    //   center: originalMapObject.getCenter(),
-    //   style: MAP_STYLES[activeMapStyleName].url,
-    //   preserveDrawingBuffer: true,
-    // });
 
     await fitBoundsMapPromise({
       originalMapObject,
@@ -142,8 +80,6 @@ export const createFinalImage = async ({
         Object.assign(snapshotWrapper.style, {
           display: "none",
         });
-
-        // div.parentNode.removeChild(div);
 
         const image = await getImageFromBase64(data);
 

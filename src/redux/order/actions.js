@@ -17,6 +17,8 @@ export const countActionTypes = {
   SET_JOURNEYS_ENABLED: "SET_JOURNEYS_ENABLED",
   RESET_STORE: "RESET_STORE",
   REMOVE_ALL_JOURNEYS: "REMOVE_ALL_JOURNEYS",
+  ADD_NEW_ICON: "ADD_NEW_ICON",
+  UPDATE_ICON: "UPDATE_ICON",
 };
 
 export const resetStore = () => (dispatch) => {
@@ -141,5 +143,19 @@ export const setJourneysIsEnabled = (bool) => (dispatch) => {
 export const removeAllJourneys = () => (dispatch) => {
   return dispatch({
     type: countActionTypes.REMOVE_ALL_JOURNEYS,
+  });
+};
+
+export const addNewIcon = (iconObj) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.ADD_NEW_ICON,
+    data: iconObj,
+  });
+};
+
+export const updateIcon = (iconObj) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.UPDATE_ICON,
+    data: iconObj,
   });
 };
