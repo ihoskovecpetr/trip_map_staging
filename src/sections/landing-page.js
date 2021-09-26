@@ -205,7 +205,9 @@ function CtaComponent() {
   };
   return (
     <CtaBtn onClick={onClick} isLoading={isLoading}>
-      <StyledText> Do Studia {isLoading && <UnderlineLoader />}</StyledText>
+      <StyledText>
+        Začít navrhovat {isLoading && <UnderlineLoader />}
+      </StyledText>
     </CtaBtn>
   );
 }
