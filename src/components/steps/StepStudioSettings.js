@@ -30,6 +30,7 @@ export default function StepStudioSettings({ map, index }) {
           onClick={() => {
             dispatch(setJourneysIsEnabled(false));
           }}
+          active={!isJourneysEnabled}
         >
           <ItemHeading active={!isJourneysEnabled}>Mapa bez trasy</ItemHeading>
           <StyledImg active={!isJourneysEnabled} src={NoPath} />
@@ -37,8 +38,9 @@ export default function StepStudioSettings({ map, index }) {
         <OptionItem
           onClick={() => {
             dispatch(setJourneysIsEnabled(true));
-            map.fitBounds(bbox, { padding: 50 });
+            map.fitBounds(bbox, { padding: 80 });
           }}
+          active={isJourneysEnabled}
         >
           <ItemHeading active={isJourneysEnabled}>
             Mapa s trasou a body
@@ -73,20 +75,23 @@ const OptionContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 const OptionItem = styled.div`
-  width: 150px;
-  color: rgba(0, 0, 0, 0.3);
+  width: 160px;
+  padding: 5px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: ${({ active }) => active && "white"};
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const ItemHeading = styled.p`
-  color: ${({ active }) => (active ? color("cta_color") : color("primary"))};
+  color: ${({ active }) => (active ? color("cta_color") : color("muted"))};
   line-height: 1.2;
   font-size: 0.8rem;
   font-weight: ${fontWeight("bold")};
@@ -106,6 +111,8 @@ const StyledImg = styled.img`
   height: 100px;
   object-fit: cover;
   border-radius: 3px;
-  box-shadow: 0px 0px 0px 1px;
+  color: ${color("muted")};
+  box-shadow: ${({ active }) =>
+    active ? "0px 0px 0px 3px" : "0px 0px 0px 1px"};
   color: ${({ active }) => active && color("cta_color")};
 `;

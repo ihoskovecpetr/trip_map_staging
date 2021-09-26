@@ -2,6 +2,7 @@
 import { jsx } from "theme-ui";
 import { Container, Grid } from "theme-ui";
 import Gallery from "react-grid-gallery";
+import { useIsMobile } from "Hooks/useIsMobile";
 
 import SectionHeader from "../components/section-header";
 import FeatureCardColumn from "components/feature-card-column.js";
@@ -79,30 +80,33 @@ const Japan_table = {
     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/blank-1868502_1920_2_fc4itd.jpg",
 };
 
-const XX = {
-  src: "",
-  thumbnail: "",
-};
-
 const imagesArr = [
   Japan_cottage,
   Europe_White,
-  Italy_inside,
-  World_White,
-  Greek_Black,
-  Rio_green,
-  Japan_table,
   // InterierChair1,
   // WorkMacSippinRio,
   // WhiteBedBoston,
   // RestaurantGreenRio,
   RedWallBoston,
+  Japan_table,
   // InterierYellow1,
   InterierChair2,
+  World_White,
   InterierBike1,
+  Italy_inside,
+  Greek_Black,
+  Rio_green,
 ];
 
+const imagesWithOptions = imagesArr.map((image) => ({
+  ...image,
+  // thumbnailHeight: 124,
+  // thumbnailWidth: 250,
+}));
+
 export default function KeyFeature() {
+  const { isMobile } = useIsMobile();
+
   return (
     <section sx={{ variant: "section.keyFeature" }} id="feature">
       <Container>
@@ -112,9 +116,10 @@ export default function KeyFeature() {
         />
         <Grid sx={styles.gridCenter}>
           <Gallery
-            images={imagesArr}
+            images={imagesWithOptions}
             width={"100%"}
             backdropClosesModal={true}
+            rowHeight={isMobile ? 120 : 180}
           />
         </Grid>
         {/* <Grid sx={styles.grid}>

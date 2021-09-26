@@ -128,23 +128,26 @@ export default function StepAddRoute({ map, index }) {
             setCurrentGroupIndex((prev) => prev + 1);
           }}
         >
-          <AddIcon />
+          <AddIcon
+            style={{
+              fill: "green",
+            }}
+          />
           Nová cesta / Nový bod
         </StyledButton>
 
-        <StyledButton
+        <StyledRedButton
           onClick={() => {
             dispatch(removeAllJourneys());
           }}
-          bgColor="rgba(242, 73, 73,1)"
         >
-          Smazat body
           <StyledDeleteForeverIcon
             style={{
-              fill: "white",
+              fill: "rgba(242, 73, 73,1)",
             }}
           />
-        </StyledButton>
+          Smazat body
+        </StyledRedButton>
       </BtnWrap>
       {(journeysRedux.length === 0 ||
         sortedGroupsJourneys[0][0].groupIndex < currentGroupIndex) && (
@@ -395,11 +398,23 @@ const BtnWrap = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  color: white !important;
-  background-color: ${({ bgColor }) =>
-    bgColor ? bgColor : color("heading_secondary")} !important;
+  color: ${color("heading_secondary")} !important;
+  border: 1px solid ${color("heading_secondary")} !important;
   text-transform: unset !important;
   margin-bottom: 0px !important;
+  padding: 2px 3px !important;
+
+  ${mobile`
+    margin-bottom: 20px !important;
+  `}
+`;
+
+const StyledRedButton = styled(Button)`
+  color: rgba(242, 73, 73, 1) !important;
+  text-transform: unset !important;
+  margin-bottom: 0px !important;
+  border: 1px solid rgba(242, 73, 73, 1) !important;
+  padding: 2px 3px !important;
 
   ${mobile`
     margin-bottom: 20px !important;

@@ -578,6 +578,10 @@ const REDUX_COOKIE_NAME = "reduxStoreCookie";
 
 const LABEL_SIZE_KOEF = 0.012;
 
+const PATHS = {
+  studio: "/studio",
+};
+
 module.exports = {
   IS_CLIENT,
   IS_SERVER,
@@ -618,4 +622,5 @@ module.exports = {
   VALID_DISCOUNT_CODES,
   REDUX_COOKIE_NAME,
   LABEL_SIZE_KOEF,
+  PATHS,
 };

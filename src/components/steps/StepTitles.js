@@ -16,6 +16,7 @@ import { TITLE_NAMES } from "constants/constants";
 const useStyles = makeStyles((theme) => ({
   root: {
     borderColor: "red",
+    backgroundColor: "white",
     margin: "5px",
     color: "green",
     "& > div": {

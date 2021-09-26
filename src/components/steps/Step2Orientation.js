@@ -101,6 +101,7 @@ const SingleOrientationItem = styled.div`
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-color: ${({ active }) => active && color("cta_color")};
+  background-color: white;
 `;
 
 const IconWrap = styled.div`

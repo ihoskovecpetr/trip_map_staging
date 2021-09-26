@@ -220,7 +220,7 @@ const StyledItem = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
+  background-color: white;
   background-color: ${({ isDisabled }) => isDisabled && "rgba(0, 0, 0, 0.1)"};
   color: rgba(0, 0, 0, 0.1);
   border-radius: 4px;

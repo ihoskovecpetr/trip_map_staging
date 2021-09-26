@@ -7,7 +7,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useElementDimensions } from "Hooks/useElementDimensions";
-import { color, fontWeight } from "utils";
+import { color, fontWeight, mobile } from "utils";
 import { ORIENTATIONS } from "@constants";
 import Stepper from "./Stepper";
 
@@ -258,16 +258,16 @@ const TabSegmentWrap = styled.div`
 `;
 
 const TabContentWrap = styled.div`
-  padding: 0px 0.7rem;
-  height: ${({ topElementsHeight }) =>
-    `calc(100vh - ${topElementsHeight}px - 20px)`};
-  overflow: auto;
+  height: unset;
+  overflow: visible;
+  padding: 0px 0.5rem;
+  background-color: ${color("background_almost_white")};
 
-  @media (max-width: 768px) {
-    height: unset;
-    overflow: visible;
-    padding: 0px 0.5rem;
-  }
+  ${mobile`
+    height: ${({ topElementsHeight }) =>
+      `calc(100vh - ${topElementsHeight}px - 20px)`};
+    overflow: auto;
+  `}
 
   ::-webkit-scrollbar {
     display: none;
@@ -276,7 +276,6 @@ const TabContentWrap = styled.div`
 
 const PriceWrap = styled.div`
   display: inline-flex;
-
   height: 0;
 `;
 
