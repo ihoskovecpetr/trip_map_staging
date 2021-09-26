@@ -75,10 +75,8 @@ export default function StepAddRoute({ map, index }) {
     const newTitle = placeNameArr[0];
 
     const indexesArr = journeysRedux.map(({ index }) => index);
-    console.log({ indexesArr });
     const max = Math.max(...indexesArr);
 
-    console.log({ maxIndex: max });
     dispatch(
       addNewJourney({
         index: max + 1,
@@ -121,7 +119,7 @@ export default function StepAddRoute({ map, index }) {
 
   return (
     <Container>
-      <HeadingText>{index}. Zadejte body cesty</HeadingText>
+      {!isMobile && <HeadingText>{index}. Zadejte body cesty</HeadingText>}
       <BtnWrap>
         <StyledButton
           onClick={() => {
