@@ -123,22 +123,22 @@ export default function TabsRootNew({ map, snapMapInstance }) {
     [
       <Step2Orientation index={3} />,
       <StepTitles index={4} />,
-      // <StepAddIcon map={map} index={21} />,
+      <StepAddIcon map={map} index={5} />,
     ],
 
     [
-      <StepLayout index={5} />,
-      <StepLayoutColorSwitch index={6} />,
-      <StepColors index={7} />,
+      <StepLayout index={6} />,
+      <StepLayoutColorSwitch index={7} />,
+      <StepColors index={8} />,
     ],
 
-    [<Step5Size index={8} />, <Step6FinishVariant map={map} index={9} />],
+    [<Step5Size index={9} />, <Step6FinishVariant map={map} index={10} />],
     [
       <Step8Checkout
         map={map}
         activeMapStyleName={activeMapStyleName}
         snapMapInstance={snapMapInstance}
-        index={10}
+        index={11}
       />,
     ],
   ];
@@ -146,7 +146,7 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   const stepElementsMobile = [
     [<StepStudioSettings map={map} index={1} />],
     [StepComponent],
-    // [<StepAddIcon map={map} index={21} />],
+    [<StepAddIcon map={map} index={21} />],
     [<Step2Orientation index={3} />],
     [<StepTitles index={4} />],
     [<StepColors index={5} />],

@@ -17,11 +17,8 @@ import iconChat from "assets/mapIcons/pin2D.svg";
 
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
-import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
-import CustomTooltipWrap from "components/custom-tooltip";
 import { getSortedArrays } from "LibGlobal/getSortedArrays";
 import { getGeoArc } from "LibGlobal/getGeoArc";
-import { getBbox } from "LibGlobal/getBbox";
 import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
 import MapButtons from "./mapButtons";
 
@@ -290,13 +287,19 @@ export default function MapContainer({
               lineWidth={1}
               baseCircleRadius={3}
             />
-            {/* 
             {icons?.map((icon) => {
               return (
                 <Layer
                   id={icon.sourceId}
                   type="symbol"
-                  layout={{ "icon-image": "myImage", "icon-size": 0.25 }}
+                  layout={{
+                    "icon-image": "myImage",
+                    "icon-size": 0.25,
+                    "text-allow-overlap": true,
+                    "icon-allow-overlap": true,
+                    "text-ignore-placement": true,
+                    "icon-ignore-placement": true,
+                  }}
                   images={images}
                   onMouseEnter={(e) => {
                     setCursor("move");
@@ -312,13 +315,12 @@ export default function MapContainer({
                       console.log("Dragging_e", { e });
                     }}
                     onDragEnd={(e) => {
-                      console.log("Dragging__ended_e", { e });
                       updateIconLocation(e, icon);
                     }}
                   />
                 </Layer>
               );
-            })} */}
+            })}
           </Map>
         </div>
         <Backdrop open={false}>
