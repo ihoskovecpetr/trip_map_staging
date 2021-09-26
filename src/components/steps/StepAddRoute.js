@@ -138,7 +138,7 @@ export default function StepAddRoute({ map, index }) {
           }}
           bgColor="rgba(242, 73, 73,1)"
         >
-          Smazat vše
+          Smazat body
           <StyledDeleteForeverIcon
             style={{
               fill: "white",

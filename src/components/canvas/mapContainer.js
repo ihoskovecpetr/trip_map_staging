@@ -290,7 +290,7 @@ export default function MapContainer({
               lineWidth={1}
               baseCircleRadius={3}
             />
-
+            {/* 
             {icons?.map((icon) => {
               return (
                 <Layer
@@ -318,7 +318,7 @@ export default function MapContainer({
                   />
                 </Layer>
               );
-            })}
+            })} */}
           </Map>
         </div>
         <Backdrop open={false}>
@@ -480,8 +480,10 @@ const PrintLocations = ({
                         MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
                           .colorSecondary,
                       "text-halo-color":
-                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                          .colorHalo,
+                        currentPoint.titleSourceId === draggedPoint
+                          ? "red"
+                          : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                              .colorHalo,
                       "text-halo-width": textSize,
                     }}
                     onMouseEnter={(e) => {
@@ -514,82 +516,6 @@ const PrintLocations = ({
 };
 
 const BNT_RADIUS = 4;
-
-const LogoWrap = styled.div`
-  position: absolute;
-  display: flex;
-`;
-
-const EmptySpaceExpander = styled.div`
-  flex-grow: 4;
-`;
-
-const PlaceToHideBigMap = styled.div`
-  width: 0px;
-  height: 0px;
-  overflow: hidden;
-`;
-
-const ColorWrap = styled.div`
-  color: ${color("cta_color")} !important;
-  display: flex;
-`;
-
-const StyledImg = styled.img`
-  height: 120px;
-  width: 120px;
-  object-fit: cover;
-`;
-
-const StyledRotateIcon = styled(Rotate90DegreesCcwIcon)`
-  transform: rotate(-45deg);
-`;
-
-const StyledCircularProgress = styled(CircularProgress)`
-  height: 24px !important;
-  width: 24px !important;
-  color: inherit !important;
-`;
-
-const StyledText = styled.p`
-  color: ${color("cta_color")};
-  font-weight: ${fontWeight("bold")};
-  padding-left: 15px;
-  margin: 0;
-`;
-
-const TooltipBodyWrap = styled.div`
-  width: 300px;
-  margin-top: 2px;
-  background-color: rgba(220, 0, 78, 0.99);
-  color: white;
-  display: flex;
-
-  padding: 5px;
-  flex-direction: column;
-
-  & p {
-    font-size: ${fontSize("sm")};
-  }
-`;
-
-const DummyBtn = styled.div`
-  border: 1px solid lightGrey;
-  display: inline-flex;
-  padding: 3px;
-  margin: 2px;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.8);
-`;
-
-const ImagesWrap = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
 
 const NeverDisplayContainer = styled.div`
   position: absolute;
