@@ -11,9 +11,8 @@ import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import ReactMapboxGl, { Layer, Feature, Source, Marker } from "react-mapbox-gl";
-import Backdrop from "@material-ui/core/Backdrop";
 import Popper from "@material-ui/core/Popper";
-import * as turf from "@turf/turf";
+import { motion } from "framer-motion";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -111,8 +110,8 @@ export default function MapContainer({
     e.stopPropagation();
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popper" : undefined;
+  const isPopupOpen = Boolean(anchorEl) && map;
+  const id = isPopupOpen ? "simple-popper" : undefined;
 
   const priceWithDelivery =
     dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
@@ -209,27 +208,39 @@ export default function MapContainer({
             <OpenWithIcon color="grey" />
           )}
         </TeaserButton>
-        <Popper id={id} open={open} anchorEl={anchorEl} placement="bottom-end">
-          <TooltipBodyWrap>
-            <p>
-              Výsledná podrobnost mapy může být odlišná od zobrazení ve studiu
-            </p>
-            <ImagesWrap>
-              <StyledImg src={HighDefinitionMap} />
-              <span>vs</span>
-              <StyledImg src={LowDefinitionMap} />
-            </ImagesWrap>
 
-            <p>
-              Finální produkt zobrazíte kliknutím na tlačítko{" "}
-              <DummyBtn>
-                <OpenWithIcon color="grey" onClick={handleClick} />
-              </DummyBtn>
-            </p>
-            <Button variant="contained" color="primary" onClick={handleClose}>
-              OK
-            </Button>
-          </TooltipBodyWrap>
+        <Popper
+          id={id}
+          open={isPopupOpen}
+          anchorEl={anchorEl}
+          placement="bottom-end"
+        >
+          <motion.div
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.6 }}
+            initial={{ opacity: 0 }}
+          >
+            <TooltipBodyWrap>
+              <p>
+                Výsledná podrobnost mapy může být odlišná od zobrazení ve studiu
+              </p>
+              <ImagesWrap>
+                <StyledImg src={HighDefinitionMap} />
+                <span>vs</span>
+                <StyledImg src={LowDefinitionMap} />
+              </ImagesWrap>
+
+              <p>
+                Finální produkt zobrazíte kliknutím na tlačítko{" "}
+                <DummyBtn>
+                  <OpenWithIcon color="grey" onClick={handleClick} />
+                </DummyBtn>
+              </p>
+              <Button variant="contained" color="primary" onClick={handleClose}>
+                OK
+              </Button>
+            </TooltipBodyWrap>
+          </motion.div>
         </Popper>
       </div>
 

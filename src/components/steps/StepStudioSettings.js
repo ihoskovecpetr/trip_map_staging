@@ -1,11 +1,9 @@
 /** @jsx jsx */
-import { useEffect, useState } from "react";
 import { jsx } from "theme-ui";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 
-import { color } from "utils";
+import { color, mobile, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { getBbox } from "LibGlobal/getBbox";
 import WithPath from "assets/mapStudioVariants/withPath.png";
@@ -18,6 +16,7 @@ import {
 } from "redux/order/reducer";
 
 export default function StepStudioSettings({ map, index }) {
+  const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const reduxJourneys = useGetJourneys();
   const isJourneysEnabled = useJourneysEnabledSelector();
@@ -25,17 +24,15 @@ export default function StepStudioSettings({ map, index }) {
 
   return (
     <div sx={styles.container}>
-      <HeadingText>{index}. Vyberte variantu mapy</HeadingText>
+      {!isMobile && <HeadingText>{index}. Vyberte variantu mapy</HeadingText>}
       <OptionContainer>
         <OptionItem
           onClick={() => {
             dispatch(setJourneysIsEnabled(false));
           }}
         >
+          <ItemHeading active={!isJourneysEnabled}>Mapa bez trasy</ItemHeading>
           <StyledImg active={!isJourneysEnabled} src={NoPath} />
-          <ItemHeading active={!isJourneysEnabled}>
-            Mapa bez trasování
-          </ItemHeading>
         </OptionItem>
         <OptionItem
           onClick={() => {
@@ -43,10 +40,10 @@ export default function StepStudioSettings({ map, index }) {
             map.fitBounds(bbox, { padding: 50 });
           }}
         >
-          <StyledImg active={isJourneysEnabled} src={WithPath} />
           <ItemHeading active={isJourneysEnabled}>
-            Mapa s trasováním a vlastními body
+            Mapa s trasou a body
           </ItemHeading>
+          <StyledImg active={isJourneysEnabled} src={WithPath} />
         </OptionItem>
       </OptionContainer>
     </div>
@@ -63,14 +60,20 @@ const HeadingText = styled.p`
   font-weight: 600;
   color: black;
   text-align: left;
-  margin-top: 20px;
   letter-spacing: 1.1px;
+  margin: 0;
+  margin-bottom: 10px;
+
+  ${mobile`
+    margin-top: 20px;
+  `};
 `;
 
 const OptionContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
+  margin-top: 20px;
 `;
 
 const OptionItem = styled.div`
@@ -79,17 +82,24 @@ const OptionItem = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
 `;
 
 const ItemHeading = styled.p`
-  color: ${color("muted")};
-  border-radius: 3px;
-  box-shadow: 0px 0px 0px 1px;
-  color: ${({ active }) => active && color("cta_color")};
-  margin-top: 5px;
-  padding: 5px;
+  color: ${({ active }) => (active ? color("cta_color") : color("primary"))};
+  line-height: 1.2;
+  font-size: 0.8rem;
+  font-weight: ${fontWeight("bold")};
+  padding-bottom: 5px;
+  margin: 0;
 `;
+
+// color: ${color("muted")};
+// border-radius: 3px;
+// box-shadow: 0px 0px 0px 1px;
+// color: ${({ active }) => active && color("cta_color")};
+// margin-bottom: 5px;
+// padding: 5px;
 
 const StyledImg = styled.img`
   width: 150px;
