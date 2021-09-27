@@ -10,6 +10,7 @@ import { useElementDimensions } from "Hooks/useElementDimensions";
 import { color, fontWeight, mobile } from "utils";
 import { ORIENTATIONS } from "@constants";
 import Stepper from "./Stepper";
+import { getIsProduction } from "LibGlobal/getIsProduction";
 
 import StepStudioSettings from "../steps/StepStudioSettings";
 import Step1Location from "../steps/StepLocation";
@@ -35,6 +36,8 @@ import {
   useJourneysEnabledSelector,
   useActiveLayoutSelector,
 } from "redux/order/reducer";
+
+const isProduction = getIsProduction();
 
 export default function TabsRootNew({ map, snapMapInstance }) {
   const classes = useStyles();
@@ -75,13 +78,15 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   }, [activeStepNumber]);
 
   const handleNext = () => {
-    sendSaveBlueprint({
-      map,
-      snapMapInstance,
-      activeLayoutName,
-      product: productRedux,
-      activeMapStyleName,
-    });
+    if (isProduction) {
+      sendSaveBlueprint({
+        map,
+        snapMapInstance,
+        activeLayoutName,
+        product: productRedux,
+        activeMapStyleName,
+      });
+    }
     setActiveStepNumber((prevActiveStep) => prevActiveStep + 1);
   };
 

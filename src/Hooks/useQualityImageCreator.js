@@ -13,7 +13,6 @@ import {
 } from "constants/constants";
 
 const mapWrapperId = "map_wrap_id";
-const SMALLEST_READABLE_THUMBNAIL_KOEF = 0.4;
 
 export function useQualityImageCreator() {
   const dispatch = useDispatch();
@@ -60,12 +59,17 @@ export function useQualityImageCreator() {
       multiple = computedPixelBase / height;
       baseLongSize = height;
     }
+    if (isLowResolution) {
+      multiple = multiple / 5;
+    }
 
     Object.assign(snapshotMapWrapper.style, {
       width: `${width * multiple}px`,
       height: `${height * multiple}px`,
       display: "block",
     });
+
+    console.log("Same_XS_", computedPixelBase, baseLongSize * multiple);
 
     dispatch(
       setJourneysSpecs({
@@ -84,9 +88,7 @@ export function useQualityImageCreator() {
         height: height,
         width: width,
         ...options,
-        computedPixelRatio: isLowResolution
-          ? SMALLEST_READABLE_THUMBNAIL_KOEF
-          : computedPixelRatio,
+        computedPixelRatio: computedPixelRatio,
       },
     });
   };
