@@ -90,12 +90,12 @@ const imagesArr = [
   RedWallBoston,
   Japan_table,
   // InterierYellow1,
-  InterierChair2,
   World_White,
   InterierBike1,
   Italy_inside,
   Greek_Black,
   Rio_green,
+  InterierChair2,
 ];
 
 const imagesWithOptions = imagesArr.map((image) => ({
@@ -109,7 +109,7 @@ export default function KeyFeature() {
 
   return (
     <section sx={{ variant: "section.keyFeature" }} id="feature">
-      <Container>
+      <Container sx={styles.containerThemUI}>
         <SectionHeader
           slogan="Něco pro inspiraci"
           title="Galerie povedených interiérů"
@@ -122,23 +122,15 @@ export default function KeyFeature() {
             rowHeight={isMobile ? 120 : 180}
           />
         </Grid>
-        {/* <Grid sx={styles.grid}>
-          {data.map((item) => (
-            <FeatureCardColumn
-              key={item.id}
-              src={item.imgSrc}
-              alt={item.title}
-              title={item.title}
-              text={item.text}
-            />
-          ))}
-        </Grid> */}
       </Container>
     </section>
   );
 }
 
 const styles = {
+  containerThemUI: {
+    px: [0, null, null, "40px", null, "80px"],
+  },
   grid: {
     px: [0, null, null, "40px", null, "80px"],
     pt: [0, null, null, null, null, null, null, 3],
@@ -157,9 +149,8 @@ const styles = {
     },
   },
   gridCenter: {
-    width: ["100%", "80%", "100%"],
-    px: [0, null, null, "40px", null, "80px"],
-    mx: "auto",
+    width: ["100%", "100%", "100%"],
+    // px: [null, null, null, "40px", null, "80px"],
     overflow: "hidden",
   },
 };
