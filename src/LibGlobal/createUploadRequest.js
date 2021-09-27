@@ -12,7 +12,7 @@ export const createUploadRequest = (
     },
     {
       onUploadProgress: progressCallback,
-      cancelToken: axiosCancelTokenSource.token,
+      cancelToken: axiosCancelTokenSource?.token,
     }
   );
 };

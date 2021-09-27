@@ -13,6 +13,7 @@ import {
 } from "constants/constants";
 
 const mapWrapperId = "map_wrap_id";
+const SMALLEST_READABLE_THUMBNAIL_KOEF = 0.4;
 
 export function useQualityImageCreator() {
   const dispatch = useDispatch();
@@ -26,7 +27,8 @@ export function useQualityImageCreator() {
     activeMapStyleName,
     options,
   }) => {
-    const { definitionConstant = 1 } = options;
+    const { definitionConstant = 1, isLowResolution = false } = options;
+
     let snapshotMapWrapper = document.getElementById("snapshot_map_wrapper");
 
     const height = document
@@ -43,14 +45,13 @@ export function useQualityImageCreator() {
     );
 
     const currentVersionPixelRatio = getCurrentPixelRatio(product.variantId);
-    console.log({ currentVersionPixelRatio });
+
     const computedPixelRatio = Number(
       (currentVersionPixelRatio * definitionConstant).toFixed(2)
     );
 
     let multiple;
     let baseLongSize;
-    console.log({ computedPixelBase, width });
 
     if (isWideOrientation) {
       multiple = computedPixelBase / width;
@@ -83,7 +84,9 @@ export function useQualityImageCreator() {
         height: height,
         width: width,
         ...options,
-        computedPixelRatio,
+        computedPixelRatio: isLowResolution
+          ? SMALLEST_READABLE_THUMBNAIL_KOEF
+          : computedPixelRatio,
       },
     });
   };

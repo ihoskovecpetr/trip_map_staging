@@ -26,19 +26,23 @@ import StepAddRoute from "../steps/StepAddRoute";
 import StepAddIcon from "../steps/StepAddIcon";
 
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { useSendSaveBlueprint } from "Hooks/useSendSaveBlueprint";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
 import {
   useProductSelector,
   useActiveMapStyleSelector,
   useJourneysEnabledSelector,
+  useActiveLayoutSelector,
 } from "redux/order/reducer";
 
 export default function TabsRootNew({ map, snapMapInstance }) {
   const classes = useStyles();
   const productRedux = useProductSelector();
+  const sendSaveBlueprint = useSendSaveBlueprint();
   const isJourneysEnabled = useJourneysEnabledSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
+  const activeLayoutName = useActiveLayoutSelector();
   const { isMobile } = useIsMobile();
 
   const [activeStepNumber, setActiveStepNumber] = React.useState(0);
@@ -71,6 +75,13 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   }, [activeStepNumber]);
 
   const handleNext = () => {
+    sendSaveBlueprint({
+      map,
+      snapMapInstance,
+      activeLayoutName,
+      product: productRedux,
+      activeMapStyleName,
+    });
     setActiveStepNumber((prevActiveStep) => prevActiveStep + 1);
   };
 
