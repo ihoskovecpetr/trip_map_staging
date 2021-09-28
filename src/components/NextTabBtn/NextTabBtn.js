@@ -60,7 +60,9 @@ function NextTabBtn({
           <TextWrap>
             {`${children}`}{" "}
             {price && (
-              <span sx={styles.priceText}>{getFormatedPriceString(price)}</span>
+              <span sx={styles.priceText}>
+                {price ? getFormatedPriceString(price) : ""}
+              </span>
             )}
             {isLoading && <UnderlineLoader />}
           </TextWrap>

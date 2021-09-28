@@ -66,7 +66,7 @@ export default function Examples() {
               }}
               aria-label="Get Started"
             >
-              do studia
+              Začít navrhovat
             </Button>
             <>
               <ModalVideo

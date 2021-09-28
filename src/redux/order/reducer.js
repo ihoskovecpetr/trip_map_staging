@@ -13,7 +13,7 @@ import {
 
 const orderInitialState = {
   product: {
-    name: "Zakázková mapa dle vlastního designu",
+    name: "Zakázková mapa dle vlastní konfigurace",
     price: null,
     currency: "CZK",
     sizeObject: SIZES[3],
@@ -31,7 +31,7 @@ const orderInitialState = {
   activeMapStyleName: MAP_STYLES_NAMES.PALE_BLUE,
   mapCenterCoordinates: [13.303958804602132, 41.47437924957853],
   mapZoom: 5,
-  isHydrated: false,
+  activeStepNumber: 0,
   seenPopup: false,
   uploadPercentage: 0,
   discount: { code: "", codeAccepted: false },
@@ -108,14 +108,14 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
           ...orderInitialState,
           ...state,
           seenPopup: !!storedPopupState,
-          isHydrated: true,
+          // isHydrated: true,
           ...payload.order, // in payload is server store state !!!!
         };
       }
       return {
         ...orderInitialState,
         ...state,
-        isHydrated: true,
+        // isHydrated: true,
         ...payload.order, // in payload is server store state !!!!
       };
 
@@ -231,6 +231,10 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       state.icons = newIcons;
       return state;
 
+    case countActionTypes.SET_ACTIVE_STEP_NUMBER:
+      state.activeStepNumber = data;
+      return state;
+
     default:
       return state;
   }
@@ -278,5 +282,8 @@ export const useJourneysEnabledSelector = () =>
   useSelector((store) => store.order.journeysSpecs.isEnabled);
 
 export const useGetIcons = () => useSelector((store) => store.order.icons);
+
+export const useGetActiveStepNumber = () =>
+  useSelector((store) => store.order.activeStepNumber);
 
 export default order;

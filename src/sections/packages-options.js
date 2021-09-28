@@ -20,7 +20,7 @@ const packages = [
     description: "Skvělé jako hotový dárek, stačí rozbalit",
     priceWithUnit: "$79.99", //TODO add price
     variantId: 9357,
-    buttonText: "Do STUDIA",
+    buttonText: "Pokračovat v návrhu",
     buttonUri: "studio?id=c339ea81-039b-4290-8bef-1a7a710049f0",
     imgPNG: ProductFramedPNG,
     imgWebp: ProductFramedWebp,
@@ -55,7 +55,7 @@ const packages = [
   {
     name: "Provedení bez rámu",
     description: "Pro vlastní zarámování či jako plakát na zeď",
-    buttonText: "Do STUDIA",
+    buttonText: "Pokračovat v návrhu",
     buttonUri: "studio?id=c8f14e01-0436-438b-bc3a-a4501af4d85a",
     priceWithUnit: "$29.99", //TODO add price
     variantId: 8948,

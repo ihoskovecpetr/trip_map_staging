@@ -23,7 +23,7 @@ const fullStoreScehma = new Schema(
     activeMapStyleName: { type: String },
     mapCenterCoordinates: { type: Object },
     mapZoom: { type: Number },
-    isHydrated: { type: Boolean },
+    activeStepNumber: { type: Number },
     seenPopup: { type: Boolean },
     uploadPercentage: { type: Number },
     discount: { type: Object },

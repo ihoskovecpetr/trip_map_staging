@@ -19,6 +19,7 @@ export const countActionTypes = {
   REMOVE_ALL_JOURNEYS: "REMOVE_ALL_JOURNEYS",
   ADD_NEW_ICON: "ADD_NEW_ICON",
   UPDATE_ICON: "UPDATE_ICON",
+  SET_ACTIVE_STEP_NUMBER: "SET_ACTIVE_STEP_NUMBER",
 };
 
 export const resetStore = () => (dispatch) => {
@@ -157,5 +158,12 @@ export const updateIcon = (iconObj) => (dispatch) => {
   return dispatch({
     type: countActionTypes.UPDATE_ICON,
     data: iconObj,
+  });
+};
+
+export const setActiveStepNumber = (number) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_ACTIVE_STEP_NUMBER,
+    data: number,
   });
 };

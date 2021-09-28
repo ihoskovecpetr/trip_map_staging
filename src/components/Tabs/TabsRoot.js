@@ -4,6 +4,7 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
+import { useDispatch } from "react-redux";
 
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useElementDimensions } from "Hooks/useElementDimensions";
@@ -29,26 +30,31 @@ import StepAddIcon from "../steps/StepAddIcon";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { useSendSaveBlueprint } from "Hooks/useSendSaveBlueprint";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
+import { setActiveStepNumber } from "redux/order/actions";
 
 import {
   useProductSelector,
   useActiveMapStyleSelector,
   useJourneysEnabledSelector,
   useActiveLayoutSelector,
+  useGetActiveStepNumber,
 } from "redux/order/reducer";
 
 const isProduction = getIsProduction();
 
 export default function TabsRootNew({ map, snapMapInstance }) {
   const classes = useStyles();
-  const productRedux = useProductSelector();
+  const dispatch = useDispatch();
+  const { isMobile } = useIsMobile();
   const sendSaveBlueprint = useSendSaveBlueprint();
+
+  const productRedux = useProductSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
   const activeLayoutName = useActiveLayoutSelector();
-  const { isMobile } = useIsMobile();
+  const activeStepNumber = useGetActiveStepNumber();
 
-  const [activeStepNumber, setActiveStepNumber] = React.useState(0);
+  // const [activeStepNumber, setActiveStepNumber] = React.useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
   const { height: map_segment_height } = useElementDimensions(
@@ -77,6 +83,18 @@ export default function TabsRootNew({ map, snapMapInstance }) {
     }
   }, [activeStepNumber]);
 
+  useEffect(() => {
+    if (isProduction) {
+      sendSaveBlueprint({
+        map,
+        snapMapInstance,
+        activeLayoutName,
+        product: productRedux,
+        activeMapStyleName,
+      });
+    }
+  }, []);
+
   const handleNext = () => {
     if (isProduction) {
       sendSaveBlueprint({
@@ -87,11 +105,11 @@ export default function TabsRootNew({ map, snapMapInstance }) {
         activeMapStyleName,
       });
     }
-    setActiveStepNumber((prevActiveStep) => prevActiveStep + 1);
+    dispatch(setActiveStepNumber(activeStepNumber + 1));
   };
 
   const handleBack = () => {
-    setActiveStepNumber((prevActiveStep) => prevActiveStep - 1);
+    dispatch(setActiveStepNumber(activeStepNumber - 1));
   };
 
   const StepComponent = isJourneysEnabled ? (
@@ -153,16 +171,9 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   useEffect(() => {
     const currentTabsLength = activeStepElements.length - 1;
     if (!isMobile && activeStepNumber > currentTabsLength) {
-      setActiveStepNumber(currentTabsLength);
+      dispatch(setActiveStepNumber(currentTabsLength));
     }
   }, [isMobile]);
-
-  useEffect(() => {
-    const currentTabsLength = activeStepElements.length - 1;
-    if (!isMobile && activeStepNumber > currentTabsLength) {
-      setActiveStepNumber(currentTabsLength);
-    }
-  }, [productRedux]);
 
   const isWideOrientation =
     productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
