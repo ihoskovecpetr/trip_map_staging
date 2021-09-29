@@ -33,22 +33,9 @@ import {
   useActiveLayoutSelector,
   useActiveMapStyleSelector,
   useSeenPopupSelector,
-  useMapCoordinatesSelector,
-  useMapZoomSelector,
-  useGetJourneys,
-  useGetJourneysSpecsSelector,
-  useJourneysEnabledSelector,
-  useGetIcons,
 } from "redux/order/reducer";
 
-import {
-  FAKE_DIV_IDS,
-  TITLES_DEFAULT,
-  VARIANTS_PRINTFUL,
-  MAP_STYLES,
-  MAP_STYLED_AND_FLIGHT_COLOR,
-  LABEL_SIZE_KOEF,
-} from "constants/constants";
+import { VARIANTS_PRINTFUL } from "constants/constants";
 
 const getFormatedPriceString = (amount) => {
   return amount ? `| ${getFormattedPrice(amount)}` : "";
@@ -222,12 +209,13 @@ export default function MapContainer({
           >
             <TooltipBodyWrap>
               <p>
-                Výsledná podrobnost mapy může být odlišná od zobrazení ve studiu
+                Výsledná podrobnost obrazu bude <b>odlišná</b> od zobrazení zde
+                ve studiu
               </p>
               <ImagesWrap>
-                <StyledImg src={HighDefinitionMap} />
+                <StyledImg src={LowDefinitionMap} atl="low definition map" />
                 <span>vs</span>
-                <StyledImg src={LowDefinitionMap} />
+                <StyledImg src={HighDefinitionMap} atl="high definition map" />
               </ImagesWrap>
 
               <p>
