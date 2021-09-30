@@ -14,7 +14,6 @@ import { color } from "utils";
 // import { initGA, logPageView } from "analytics";
 // Load DM Sans typeface
 import "typeface-dm-sans";
-import { createTheme } from "@material-ui/core/styles";
 import { ThemeProvider as ThemeProviderMaterialUI } from "@material-ui/styles";
 import { wrapper } from "../redux/store";
 
@@ -27,25 +26,12 @@ import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-image-lightbox/style.css";
 import theme from "../theme/theme.js";
+import themeMaterialUI from "../theme/themeMaterialUI.js";
 import { GlobalStyle } from "../theme/global";
 
 import { useFullStoreSelector } from "redux/order/reducer";
 
 import { REDUX_COOKIE_NAME, IS_CLIENT } from "constants/constants";
-
-const themeMaterialUI = createTheme({
-  palette: {
-    primary: {
-      main: "#001427",
-    },
-    secondary: {
-      main: "#f6aa1c",
-    },
-    cta_color: {
-      main: "#f6aa1c",
-    },
-  },
-});
 
 const MyApp = ({ Component, pageProps, store }) => {
   const router = useRouter();
@@ -139,10 +125,6 @@ MyApp.getInitialProps = wrapper.getInitialPageProps(
     }
 
     const { meta } = req;
-    console.log("Get_init_props_meta", {
-      metaStoreId: meta?.storeId,
-      resMeta: res?.meta,
-    });
 
     if (meta?.storeId && res.cookie[REDUX_COOKIE_NAME] != meta.storeId) {
       console.log("Setting_new_cookie");

@@ -57,4 +57,7 @@ export const GlobalStyle = createGlobalStyle`
   
   }
 
+  #full_screen_button {
+    background-color: red;
+  }
 `;

@@ -21,8 +21,6 @@ export default function Header({ className }) {
 
   const isStudio = router.pathname === PATHS.studio;
 
-  console.log({ router, isStudio });
-
   return (
     <DrawerProvider>
       <HeaderContainer isStudio={isStudio} id="header">
