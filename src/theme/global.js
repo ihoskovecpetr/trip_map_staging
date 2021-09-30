@@ -6,6 +6,7 @@ const fonts = css`
       format("truetype");
     font-family: "HarmoniaSans_local";
     font-weight: 600;
+    font-display: block;
   }
 
   @font-face {
@@ -13,6 +14,7 @@ const fonts = css`
       format("truetype");
     font-family: "HarmoniaSans_local";
     font-weight: 400;
+    font-display: block;
   }
 
   @font-face {
@@ -20,6 +22,7 @@ const fonts = css`
       format("truetype");
     font-family: "HarmoniaSans_local";
     font-weight: 300;
+    font-display: block;
   }
 
   // RobotoMono
@@ -54,7 +57,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-  
   }
 
 
