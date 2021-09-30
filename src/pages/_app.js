@@ -83,8 +83,8 @@ const MyApp = ({ Component, pageProps, store }) => {
       </Head>
 
       <ThemeProviderMaterialUI theme={themeMaterialUI}>
+        <GlobalStyle />
         <ThemeProvider theme={theme}>
-          <GlobalStyle />
           <CookieConsent
             location="bottom"
             buttonText="Souhlasím"
