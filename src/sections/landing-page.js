@@ -87,6 +87,7 @@ export default function LandingPage() {
               autoplay
               playsinline
               loop
+              poster="/Italy_9_mobile.gif"
             >
               <source
                 // src="/landing-mobile-vid.mp4"
@@ -256,6 +257,10 @@ const PureCtaBox = styled.div`
 const LandingCarousel = styled.div`
   width: 100%;
   height: 100%;
+
+  ${mobile`
+    max-height: 80vh;
+  `}
 `;
 
 const CtaBtn = styled(Button)`
