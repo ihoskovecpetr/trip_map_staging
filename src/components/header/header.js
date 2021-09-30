@@ -2,7 +2,6 @@
 import { jsx, Container, Flex, Button } from "theme-ui";
 import { keyframes } from "@emotion/core";
 // import { Link } from "react-scroll";
-import Link from "next/link";
 import styled from "styled-components";
 
 import Logo from "components/logo";
@@ -24,27 +23,10 @@ export default function Header({ className }) {
   return (
     <DrawerProvider>
       <HeaderContainer isStudio={isStudio} id="header">
-        <Container sx={styles.container}>
-          <Logo src={LogoBlack} /> {/* isMobile ? LogoWhite */}
-          <Flex as="nav" sx={styles.nav}>
-            {/* {menuItems.map(({ path, label }, i) => {
-              return (
-                <Link
-                  activeClass="active"
-                  href={path}
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  key={i}
-                >
-                  {label}
-                </Link>
-              );
-            })} */}
-          </Flex>
+        <StyledContainer>
+          <Logo src={LogoBlack} />
           <MobileDrawer />
-        </Container>
+        </StyledContainer>
       </HeaderContainer>
     </DrawerProvider>
   );
@@ -52,7 +34,7 @@ export default function Header({ className }) {
 
 const positionAnim = keyframes`
   from {
-    opacity: 1;
+    opacity: 0;
   }
   to {
     opacity: 1;
@@ -76,41 +58,8 @@ const HeaderContainer = styled.div`
     isStudio ? "transparent" : "transparent"};
 `;
 
-const styles = {
-  header: {
-    fontWeight: "normal",
-    py: 1,
-    width: "100%",
-    minHeight: "60px",
-    position: "absolute",
-    zIndex: 5,
-    top: 0,
-    left: 0,
-    transition: "all 0.5s ease",
-    animation: `${positionAnim} 0.4s ease`,
-    backgroundColor: "transparent",
-    color: "#000000",
-  },
-  container: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  nav: {
-    mx: "auto",
-    // display: "none",
-    "@media screen and (min-width: 1024px)": {
-      display: "block",
-    },
-    a: {
-      fontSize: "16px",
-      fontWeight: "400",
-      px: 25,
-      cursor: "pointer",
-      lineHeight: "1.2",
-      "&.active": {
-        color: "secondary",
-      },
-    },
-  },
-};
+const StyledContainer = styled(Container)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
