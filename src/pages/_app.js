@@ -75,16 +75,16 @@ const MyApp = ({ Component, pageProps, store }) => {
 
   return (
     <>
-      <Head>
-        {/* <meta
+      {/* <Head>
+        <meta
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
-      ></meta> */}
-      </Head>
+      ></meta>
+      </Head> */}
 
-      <ThemeProviderMaterialUI theme={themeMaterialUI}>
-        <GlobalStyle />
-        <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <ThemeProviderMaterialUI theme={themeMaterialUI}>
           <CookieConsent
             location="bottom"
             buttonText="Souhlasím"
@@ -107,8 +107,8 @@ const MyApp = ({ Component, pageProps, store }) => {
           </CookieConsent>
 
           <Component {...pageProps} />
-        </ThemeProvider>
-      </ThemeProviderMaterialUI>
+        </ThemeProviderMaterialUI>
+      </ThemeProvider>
     </>
   );
 };
@@ -120,7 +120,6 @@ MyApp.getInitialProps = wrapper.getInitialPageProps(
     const { pathname, req, res, router } = ctx;
 
     if (IS_CLIENT) {
-      console.log("_app_isClient_returnuning", { ctx });
       return;
     }
 
