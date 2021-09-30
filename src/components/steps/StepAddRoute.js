@@ -172,11 +172,8 @@ export default function StepAddRoute({ map, index }) {
           <>
             <HorizontalLine /> <HorizontalLine />
             <PlusGeoWrap>
-              <AddCircleOutlineIcon
-                style={{
-                  fill: isNewestActiveGroup ? "grey" : "green",
-                  margin: "7px 0",
-                }}
+              <StyledAddCircleOutlineIcon
+                isNewestActiveGroup={isNewestActiveGroup}
                 onClick={() => {
                   setCurrentGroupIndex(journeyGroup[0].groupIndex);
                 }}
@@ -421,6 +418,14 @@ const StyledRedButton = styled(Button)`
 
 const Flex1 = styled.div`
   flex: 1;
+`;
+
+const StyledAddCircleOutlineIcon = styled(AddCircleOutlineIcon)`
+  fill: ${({ isNewestActiveGroup }) =>
+    isNewestActiveGroup ? "grey" : "green"} !important;
+  margin: 7px 0 !important;
+  width: 1em !important;
+  height: 1em !important;
 `;
 
 const StyledDeleteForeverIcon = styled(DeleteForeverIcon)`

@@ -1,9 +1,12 @@
 import Document, { Head, Main, NextScript, Html } from "next/document";
 import { ServerStyleSheet } from "styled-components";
+import { ServerStyleSheets as MaterialUiServerStyleSheets } from "@material-ui/core/styles";
 
 export default class CustomDocument extends Document {
   static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
+    const materialUiSheets = new MaterialUiServerStyleSheets();
+
     const originalRenderPage = ctx.renderPage;
 
     // function handleCollectStyles(App) {
@@ -20,12 +23,14 @@ export default class CustomDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
+            sheet.collectStyles(materialUiSheets.collect(<App {...props} />)),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
 
-      console.log({ sheet_getStyleElement: sheet.getStyleElement().props });
+      console.log({
+        materUI: materialUiSheets.getStyleElement(),
+      });
 
       return {
         ...initialProps,
@@ -33,6 +38,7 @@ export default class CustomDocument extends Document {
           <>
             {initialProps.styles}
             {sheet.getStyleElement()}
+            {materialUiSheets.getStyleElement()}
           </>
         ),
       };
@@ -45,6 +51,7 @@ export default class CustomDocument extends Document {
     return (
       <Html>
         <Head>
+          {console.log({ this_props_styleTags: this.props.styleTags })}
           {this.props.styleTags}
           <link
             href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"
