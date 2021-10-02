@@ -10,7 +10,6 @@ import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
-import ReactMapboxGl, { Layer, Feature, Source, Marker } from "react-mapbox-gl";
 import Popper from "@material-ui/core/Popper";
 import { motion } from "framer-motion";
 
@@ -39,22 +38,6 @@ import { VARIANTS_PRINTFUL } from "constants/constants";
 
 const getFormatedPriceString = (amount) => {
   return amount ? `| ${getFormattedPrice(amount)}` : "";
-};
-
-const NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN =
-  "pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w";
-
-const Map = ReactMapboxGl({
-  accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
-});
-
-const Map2 = ReactMapboxGl({
-  accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
-});
-
-const lineLayout = {
-  "line-cap": "round",
-  "line-join": "round",
 };
 
 export default function MapContainer({

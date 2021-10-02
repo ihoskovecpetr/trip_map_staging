@@ -6,15 +6,10 @@ import styled from "styled-components";
 import Carousel from "nuka-carousel";
 import { useRouter } from "next/router";
 import ModalVideo from "react-modal-video";
-import { Link } from "components/link";
-import { FaPlayCircle } from "react-icons/fa";
-
 import CarouselJapanPNG from "assets/mapExamples/Japan_karaoke.png";
 import CarouselNYWhitePNG from "assets/mapExamples/NY_white.png";
-import CarouselRioCopacabanaPNG from "assets/mapExamples/Rio_copacabana.png";
-import CarouselHKDragonPNG from "assets/mapExamples/HK_Dragons_back.png";
-import CarouselSFAlcatrazPNG from "assets/mapExamples/San_francisco_alcatraz.png";
 import CarouselSydneyPNG from "assets/mapExamples/Sydney_surfing.png";
+import CarouselEuropeUSPNG from "assets/mapExamples/EU_Amerika_white.png";
 
 import { fontSize, mobile } from "utils";
 
@@ -30,7 +25,7 @@ export default function Examples() {
 
   return (
     <section sx={styles.banner} id="home">
-      <Container sx={styles.banner.container}>
+      <StyledContainer>
         <CarouselWrap>
           <Carousel
             autoplay={true}
@@ -45,11 +40,10 @@ export default function Examples() {
             renderCenterLeftControls={() => null}
             renderCenterRightControls={() => null}
           >
-            <img src={CarouselRioCopacabanaPNG} />
+            <img src={CarouselNYWhitePNG} />
             <img src={CarouselJapanPNG} id="carousel_img_photo_0" />
             <img src={CarouselSydneyPNG} />
-            <img src={CarouselSFAlcatrazPNG} />
-            <img src={CarouselHKDragonPNG} />
+            <img src={CarouselEuropeUSPNG} />
           </Carousel>
         </CarouselWrap>
         <Box sx={styles.banner.contentBox}>
@@ -85,7 +79,7 @@ export default function Examples() {
             </>
           </Flex>
         </Box>
-      </Container>
+      </StyledContainer>
     </section>
   );
 }
@@ -101,10 +95,6 @@ const styles = {
     pt: ["150px", null, null, null, null, null, "140px", "130px"],
     pb: ["100px", null, null, "110px", null, 10, "150px"],
     backgroundColor: "primary",
-    container: {
-      display: "flex",
-      flexDirection: ["column", null, null, "row"],
-    },
     contentBox: {
       width: ["100%", null, "85%", "55%", "50%", "55%"],
       display: "flex",
@@ -127,8 +117,13 @@ const StyledHeading = styled.h2`
 const CarouselWrap = styled.div`
   width: 100%;
   margin-bottom: 20px;
+`;
+
+const StyledContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
 
   ${mobile`
-    margin-bottom: 0px;
+    flex-direction: row;
   `}
 `;

@@ -33,7 +33,7 @@ const StudioPage = () => {
         <button
           onClick={() => {
             dispatch(resetStore());
-            router.push("/");
+            router.push("/studio");
           }}
         >
           RESETOVAT STUDIO

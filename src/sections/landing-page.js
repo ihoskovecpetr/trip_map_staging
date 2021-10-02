@@ -79,64 +79,68 @@ export default function LandingPage() {
       <Container sx={styles.containerBox}>
         <Box sx={styles.carouselBox}>
           <LandingCarousel id="carousel_wrapper">
-            <StyledVideo
-              muted
-              id="vid"
-              width="100%"
-              height="100%"
-              autoplay
-              playsinline
-              loop
-              poster="/Italy_9_mobile.gif"
-            >
-              <source
-                // src="/landing-mobile-vid.mp4"
-                src="/Italy_9_mobile.mp4"
-                type="video/mp4"
-                media="all and (max-width: 480px)"
-              />
-              <Carousel
-                autoplay={true}
-                cellAlign="center"
-                heightMode="max"
-                autoplayInterval={3000}
-                // heightMode={current}
-                initialSlideHeight={90}
-                // frameOverflow="visible"
-                // withoutControls
-                wrapAround
-                swiping
-                renderCenterLeftControls={() => null}
-                renderCenterRightControls={() => null}
+            {!isMobile && (
+              <StyledVideo
+                muted
+                id="vid"
+                width="100%"
+                height="100%"
+                autoplay
+                playsinline
+                loop
+                poster="/Italy_9_medium.gif"
               >
-                <img src={displayPNG ? Carousel1PNG : Carousel1} />
-                <img src={displayPNG ? Carousel2PNG : Carousel2} />
-                <img src={displayPNG ? Carousel5PNG : Carousel5} />
-                <img src={displayPNG ? Carousel6PNG : Carousel6} />
-                <img src={displayPNG ? Carousel3PNG : Carousel3} />
-                <img src={displayPNG ? Carousel4PNG : Carousel4} />
-                <img src={displayPNG ? Carousel7PNG : Carousel7} />
-                <img src={displayPNG ? Carousel8PNG : Carousel8} />
-              </Carousel>
-              Your browser does not support the video tag.
-            </StyledVideo>
+                <source
+                  // src="/landing-mobile-vid.mp4"
+                  src="/Italy_9_medium_mobile.mp4"
+                  type="video/mp4"
+                  media="all and (max-width: 480px)"
+                />
+                Your browser does not support the video tag.
+              </StyledVideo>
+            )}
 
             {isMobile && (
-              <ZeroHeightWrap>
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 0.6 }}
-                  initial={{ opacity: 0 }}
+              <>
+                <Carousel
+                  autoplay={true}
+                  cellAlign="center"
+                  heightMode="max"
+                  autoplayInterval={3000}
+                  // heightMode={current}
+                  initialSlideHeight={90}
+                  // frameOverflow="visible"
+                  // withoutControls
+                  wrapAround
+                  swiping
+                  renderCenterLeftControls={() => null}
+                  renderCenterRightControls={() => null}
                 >
-                  <PureCtaBox
-                    maxHeightTop={headerHeight + carouselHeight}
-                    id="pure_cta_box"
+                  <img src={displayPNG ? Carousel1PNG : Carousel1} />
+                  <img src={displayPNG ? Carousel2PNG : Carousel2} />
+                  <img src={displayPNG ? Carousel5PNG : Carousel5} />
+                  <img src={displayPNG ? Carousel6PNG : Carousel6} />
+                  <img src={displayPNG ? Carousel3PNG : Carousel3} />
+                  <img src={displayPNG ? Carousel4PNG : Carousel4} />
+                  <img src={displayPNG ? Carousel7PNG : Carousel7} />
+                  <img src={displayPNG ? Carousel8PNG : Carousel8} />
+                </Carousel>
+                <ZeroHeightWrap>
+                  <motion.div
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.6 }}
+                    initial={{ opacity: 0 }}
                   >
-                    <ScrollIcon />
-                    {/* <CtaComponent /> */}
-                  </PureCtaBox>
-                </motion.div>
-              </ZeroHeightWrap>
+                    <PureCtaBox
+                      maxHeightTop={headerHeight + carouselHeight}
+                      id="pure_cta_box"
+                    >
+                      <ScrollIcon />
+                      {/* <CtaComponent /> */}
+                    </PureCtaBox>
+                  </motion.div>
+                </ZeroHeightWrap>
+              </>
             )}
           </LandingCarousel>
         </Box>
@@ -279,9 +283,11 @@ const CtaBtn = styled(Button)`
 
 const styles = {
   sectionContainer: {
-    py: [null, null, null, 9, null, 10],
-    pt: [0, null, null, 10],
+    py: [null, null, null, 5, null, 6],
+    pt: [8, null, null, "unset"],
     position: "relative",
+    height: ["unset", null, null, "100vh"],
+    maxHeight: [null, null, null, "1000px"],
   },
   onlyMobile: {
     display: ["block", null, null, "none"],
@@ -289,7 +295,7 @@ const styles = {
   containerBox: {
     p: [0, 0],
     display: "flex",
-    height: ["100%", "100%", "100%", "unset"],
+    height: ["unset", null, null, "100%"],
     alignItems: ["center"],
     justifyContent: ["space-around"], //"space-between"
     flexDirection: ["column", null, null, "row"],
@@ -300,13 +306,9 @@ const styles = {
     pl: [0, 0, 0, 5, 7, 95],
     pr: [0, 0, 0, 5, null, 75, 95],
     order: [0, null, null, 0],
-    // display: ["none", null, "block"],
-    display: "block",
     cursor: "default",
-    backgroundColor: [null, null, "unset"], //"primary",
     display: "flex",
-    alignItems: "flex-start",
-    paddingTop: [0, null, null, 0],
+    alignItems: "center",
   },
   contentBox: {
     width: ["100%", 450, 350, 350, 500, 570],
