@@ -16,10 +16,14 @@ export const countActionTypes = {
   SET_JOURNEYS_SPECS: "SET_JOURNEYS_SPECS",
   SET_JOURNEYS_ENABLED: "SET_JOURNEYS_ENABLED",
   RESET_STORE: "RESET_STORE",
+  SET_ACTIVE_STEP_NUMBER: "SET_ACTIVE_STEP_NUMBER",
   REMOVE_ALL_JOURNEYS: "REMOVE_ALL_JOURNEYS",
   ADD_NEW_ICON: "ADD_NEW_ICON",
   UPDATE_ICON: "UPDATE_ICON",
-  SET_ACTIVE_STEP_NUMBER: "SET_ACTIVE_STEP_NUMBER",
+  REMOVE_ICON: "REMOVE_ICON",
+  ADD_NEW_IMAGE: "ADD_NEW_IMAGE",
+  UPDATE_IMAGE: "UPDATE_IMAGE",
+  REMOVE_IMAGE: "REMOVE_IMAGE",
 };
 
 export const resetStore = () => (dispatch) => {
@@ -147,6 +151,13 @@ export const removeAllJourneys = () => (dispatch) => {
   });
 };
 
+export const setActiveStepNumber = (number) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.SET_ACTIVE_STEP_NUMBER,
+    data: number,
+  });
+};
+
 export const addNewIcon = (iconObj) => (dispatch) => {
   return dispatch({
     type: countActionTypes.ADD_NEW_ICON,
@@ -161,9 +172,30 @@ export const updateIcon = (iconObj) => (dispatch) => {
   });
 };
 
-export const setActiveStepNumber = (number) => (dispatch) => {
+export const removeIcon = (iconObj) => (dispatch) => {
   return dispatch({
-    type: countActionTypes.SET_ACTIVE_STEP_NUMBER,
-    data: number,
+    type: countActionTypes.REMOVE_ICON,
+    data: iconObj,
+  });
+};
+
+export const addNewImage = (imageObj) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.ADD_NEW_IMAGE,
+    data: imageObj,
+  });
+};
+
+export const updateImage = (imageObj) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.UPDATE_IMAGE,
+    data: imageObj,
+  });
+};
+
+export const removeImage = (imageObj) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.REMOVE_IMAGE,
+    data: imageObj,
   });
 };

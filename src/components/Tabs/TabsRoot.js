@@ -26,6 +26,7 @@ import Step8Checkout from "../steps/Step8Checkout";
 import StepTitles from "../steps/StepTitles";
 import StepAddRoute from "../steps/StepAddRoute";
 import StepAddIcon from "../steps/StepAddIcon";
+import StepAddImage from "../steps/StepAddImage";
 
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { useSendSaveBlueprint } from "Hooks/useSendSaveBlueprint";
@@ -125,7 +126,7 @@ export default function TabsRootNew({ map, snapMapInstance }) {
       <StepTitles index={4} />,
       <StepAddIcon map={map} index={5} />,
     ],
-
+    [<StepAddImage map={map} index={51} />],
     [
       <StepLayout index={6} />,
       <StepLayoutColorSwitch index={7} />,
@@ -147,6 +148,8 @@ export default function TabsRootNew({ map, snapMapInstance }) {
     [<StepStudioSettings map={map} index={1} />],
     [StepComponent],
     [<StepAddIcon map={map} index={21} />],
+    [<StepAddImage map={map} index={22} />],
+
     [<Step2Orientation index={3} />],
     [<StepTitles index={4} />],
     [<StepColors index={5} />],

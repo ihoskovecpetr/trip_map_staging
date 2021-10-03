@@ -88,14 +88,8 @@ const orderInitialState = {
     labelSizePrint: 10,
     isEnabled: true,
   },
-  icons: [
-    {
-      groupIndex: 1,
-      location: [11.48972, 40.75056],
-      titleLocation: [14.48972, 40.75056],
-      sourceId: "SourceId_1",
-    },
-  ],
+  icons: [],
+  images: [],
 };
 
 const order = produce((state = orderInitialState, { type, data, payload }) => {
@@ -224,16 +218,40 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       const updatingIconIndex = state.icons.findIndex(
         (item) => item.sourceId === data.sourceId
       );
-
       const newIcons = [...state.icons];
       newIcons[updatingIconIndex] = data;
-
       state.icons = newIcons;
+      return state;
+
+    case countActionTypes.REMOVE_ICON:
+      const filteredIcons = state.icons.filter(
+        (item) => item.sourceId != data.sourceId
+      );
+      state.icons = filteredIcons;
+      return state;
+
+    case countActionTypes.ADD_NEW_IMAGE:
+      state.images = [...state.images, data];
+      return state;
+
+    case countActionTypes.UPDATE_IMAGE:
+      const updatingImageIndex = state.images.findIndex(
+        (item) => item.sourceId === data.sourceId
+      );
+      const newImage = [...state.images];
+      newImage[updatingImageIndex] = data;
+      state.images = newImage;
+      return state;
+
+    case countActionTypes.REMOVE_IMAGE:
+      const filteredImages = state.images.filter(
+        (item) => item.sourceId != data.sourceId
+      );
+      state.images = filteredImages;
       return state;
 
     case countActionTypes.SET_ACTIVE_STEP_NUMBER:
       state.activeStepNumber = data;
-      return state;
 
     default:
       return state;
@@ -282,6 +300,8 @@ export const useJourneysEnabledSelector = () =>
   useSelector((store) => store.order.journeysSpecs.isEnabled);
 
 export const useGetIcons = () => useSelector((store) => store.order.icons);
+
+export const useGetImages = () => useSelector((store) => store.order.images);
 
 export const useGetActiveStepNumber = () =>
   useSelector((store) => store.order.activeStepNumber);

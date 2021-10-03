@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import NextApp from "next/app";
-import withRedux from "next-redux-wrapper";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 import CookieConsent from "react-cookie-consent";
 import styled, { ThemeProvider } from "styled-components";
@@ -36,7 +36,7 @@ import { REDUX_COOKIE_NAME, IS_CLIENT } from "constants/constants";
 const MyApp = ({ Component, pageProps, store }) => {
   const router = useRouter();
   const [cookie, setCookie] = useCookies([REDUX_COOKIE_NAME]);
-
+  const dispatch = useDispatch();
   const fullReduxStore = useFullStoreSelector();
 
   useEffect(() => {
@@ -51,7 +51,6 @@ const MyApp = ({ Component, pageProps, store }) => {
       if (response.status === 203) {
         const URLWithoutQuery =
           window.location.origin + window.location.pathname;
-
         window.location.href = URLWithoutQuery;
       }
     };

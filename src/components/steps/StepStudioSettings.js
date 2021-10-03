@@ -99,13 +99,6 @@ const ItemHeading = styled.p`
   margin: 0;
 `;
 
-// color: ${color("muted")};
-// border-radius: 3px;
-// box-shadow: 0px 0px 0px 1px;
-// color: ${({ active }) => active && color("cta_color")};
-// margin-bottom: 5px;
-// padding: 5px;
-
 const StyledImg = styled.img`
   width: 150px;
   height: 100px;

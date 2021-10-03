@@ -30,6 +30,7 @@ const fullStoreScehma = new Schema(
     journeys: { type: Object },
     journeysSpecs: { type: Object },
     icons: { type: Object },
+    images: { type: Object },
   },
   { timestamps: true }
 );

@@ -582,6 +582,26 @@ const PATHS = {
   studio: "/studio",
 };
 
+const ICON_NAMES = {
+  pin: "pin",
+  pin_black: "pin_black",
+  beach_color: "beach_color",
+  beer: "beer",
+  beer_2: "beer_2",
+  cocktail: "cocktail",
+  binoculars: "binoculars",
+  heart: "heart",
+  hiking: "hiking",
+  home_full: "home_full",
+  like: "like",
+  like_color: "like_color",
+  man_hike: "man_hike",
+  soft_drink: "soft_drink",
+  surf_color: "surf_color",
+  surf: "surf",
+  wine: "wine",
+};
+
 module.exports = {
   IS_CLIENT,
   IS_SERVER,
@@ -623,4 +643,5 @@ module.exports = {
   REDUX_COOKIE_NAME,
   LABEL_SIZE_KOEF,
   PATHS,
+  ICON_NAMES,
 };

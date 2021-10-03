@@ -63,40 +63,7 @@ const styles = {
       m: ["0 auto", null, null, 0],
     },
   },
-  wrapper: {
-    // width: "100%",
-    // display: "flex",
-    // flexDirection: "column",
-    // mt: "-5px",
-    // title: {
-    //   fontSize: ["24px", null, "28px", "32px", "36px", "42px", null, "46px"],
-    //   color: "heading_secondary",
-    //   lineHeight: [1.35, null, null, 1.3, 1.2],
-    //   fontWeight: "700",
-    //   letterSpacing: "-.5px",
-    //   mb: 5,
-    // },
-    // subTitle: {
-    //   fontSize: [0, null, "14px"],
-    //   color: "heading",
-    //   letterSpacing: "2px",
-    //   textTransform: "uppercase",
-    //   fontWeight: "700",
-    //   mb: [2, null, null, null, 3],
-    //   lineHeight: 1.5,
-    // },
-    // subTitleId: {
-    //   fontSize: [0, null, "14px"],
-    //   color: "secondary",
-    //   letterSpacing: "2px",
-    //   textTransform: "uppercase",
-    //   fontWeight: "700",
-    //   mb: [2, null, null, null, 3],
-    //   lineHeight: 1.5,
-    //   width: "100%",
-    //   wordWrap: "break-word",
-    // },
-  },
+  wrapper: {},
   description: {
     fontSize: ["15px", 2, null, null, null, "17px", null, 3],
     fontWeight: 400,
@@ -108,5 +75,5 @@ const styles = {
 
 const MainHeading = styled.div`
   font-family: ${font("HarmoniaSans_local")};
-  padding: 0 5px;
+  padding: 0 10px;
 `;

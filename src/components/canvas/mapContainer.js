@@ -4,49 +4,43 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import Lightbox from "react-image-lightbox";
-import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import ReactMapboxGl, { Layer, Feature, Source, Marker } from "react-mapbox-gl";
 import Backdrop from "@material-ui/core/Backdrop";
 
-import { useIsMobile } from "Hooks/useIsMobile";
-import { color, fontWeight, fontSize } from "utils";
-import BackdropLoader from "components/backdropLoader";
-
-import iconChat from "assets/mapIcons/pin2D.svg";
-
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
-import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { useGetUploadedImagesElements } from "Hooks/useGetUploadedImagesElements";
 import { getSortedArrays } from "LibGlobal/getSortedArrays";
 import { getGeoArc } from "LibGlobal/getGeoArc";
 import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
+import { getLoadedIconImages } from "LibGlobal/getLoadedIconImages";
+import { getLayoutImgArray } from "LibGlobal/getLayoutImgArray";
 import MapButtons from "./mapButtons";
+import { getMaxGroupIndex } from "LibGlobal/getMaxGroupIndex";
 
 import {
-  setPopupSeenAction,
   updateJourneyPoint,
   setMapZoomAction,
   setMapCoordinatesAction,
   updateIcon,
+  updateImage,
 } from "redux/order/actions";
 
 import {
   useProductSelector,
   useActiveLayoutSelector,
   useActiveMapStyleSelector,
-  useSeenPopupSelector,
   useMapCoordinatesSelector,
   useMapZoomSelector,
   useGetJourneys,
   useGetJourneysSpecsSelector,
   useJourneysEnabledSelector,
   useGetIcons,
+  useGetImages,
 } from "redux/order/reducer";
 
 import {
   FAKE_DIV_IDS,
   TITLES_DEFAULT,
-  VARIANTS_PRINTFUL,
   MAP_STYLES,
   MAP_STYLED_AND_FLIGHT_COLOR,
   LABEL_SIZE_KOEF,
@@ -68,6 +62,8 @@ const lineLayout = {
   "line-join": "round",
 };
 
+const ICON = "icon";
+
 export default function MapContainer({
   map,
   snapMapInstance,
@@ -81,8 +77,6 @@ export default function MapContainer({
   const productRedux = useProductSelector();
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
-  const seenPopup = useSeenPopupSelector();
-  const [openBackdrop, setOpenBackdrop] = useState(false);
   const journeysRedux = useGetJourneys();
   const sortedGroupsJourneys = getSortedArrays(journeysRedux);
   const mapZoom = useMapZoomSelector();
@@ -90,19 +84,31 @@ export default function MapContainer({
   const journeysSpecs = useGetJourneysSpecsSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
   const icons = useGetIcons();
+  const images = useGetImages();
 
-  // const [bbox, setBbox] = useState(null);
-  const [isCreatingImage, setIsCreatingImage] = useState(false);
+  const [iconImages, setIconImages] = useState([]);
   const [draggedPoint, setDraggedPoint] = useState();
+  const [draggedIconId, setDraggedIconId] = useState(null);
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,
   });
-  const [images, setImages] = useState([]);
+  const enrichedImages = useGetUploadedImagesElements(images);
+  // const [availableImages, setAvailableImages] = useState();
 
-  const { isMobile } = useIsMobile();
+  // useEffect(() => {
+  //   const makeAsyncThing = async () => {
+  //     const imagesArr = await getLayoutImgArray(images);
+
+  //     setAvailableImages(imagesArr);
+  //   };
+
+  //   if (images.length) {
+  //     makeAsyncThing();
+  //   }
+  // }, [images]);
+
   const qualityImageCreator = useQualityImageCreator();
-
   const mapCanvas = map?.getCanvas();
 
   const { baseLongSize } = getCenteringLayoutDimensions({
@@ -111,61 +117,6 @@ export default function MapContainer({
     elWidth: mapCanvas?.width,
     elHeight: mapCanvas?.height,
   });
-
-  const { dataPrintful } = useGetDataPrintful(
-    VARIANTS_PRINTFUL.map((variant) => variant.id)
-  );
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = (event) => {
-    // setAnchorEl(anchorEl ? null : event.currentTarget);
-    openTeaserImage();
-  };
-
-  const handleClose = (e) => {
-    setAnchorEl(null);
-    localStorage.setItem("seenPopup", true);
-    dispatch(setPopupSeenAction(true));
-    e.stopPropagation();
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popper" : undefined;
-
-  const fullscreenImageRequested = async () => {
-    setIsCreatingImage(true);
-    console.log({ snapMapInstance });
-    const finalImgSrc = await qualityImageCreator({
-      map,
-      snapMapInstance,
-      activeLayoutName: activeLayoutNameRedux,
-      product: productRedux,
-      activeMapStyleName,
-      mapTitles,
-      options: {
-        isPreview: false,
-        isLowDefinition: false,
-      },
-    });
-
-    setLightbox({
-      open: true,
-      activeSrc: finalImgSrc,
-    });
-
-    setIsCreatingImage(false);
-    return;
-  };
-
-  const openTeaserImage = async () => {
-    if (isCreatingImage) {
-      return;
-    }
-    setOpenBackdrop(true);
-    await fullscreenImageRequested();
-    setOpenBackdrop(false);
-  };
 
   const onMapLoad = (mapLoc) => {
     mapLoc.dragRotate.disable();
@@ -195,6 +146,32 @@ export default function MapContainer({
     }
   };
 
+  const onUpIcon = (currentPoint, type) => (e) => {
+    const coords = e.lngLat;
+
+    e.target.dragPan.enable();
+
+    if (currentPoint.sourceId === draggedIconId) {
+      if (type === ICON) {
+        dispatch(
+          updateIcon({
+            ...currentPoint,
+            location: [coords.lng, coords.lat],
+          })
+        );
+      } else {
+        dispatch(
+          updateImage({
+            ...currentPoint,
+            location: [coords.lng, coords.lat],
+          })
+        );
+      }
+
+      setDraggedIconId(null);
+    }
+  };
+
   const setCursor = (newCursorStyle) => {
     const canvas = map.getCanvas();
     Object.assign(canvas.style, {
@@ -202,37 +179,15 @@ export default function MapContainer({
     });
   };
 
-  const updateIconLocation = (e, originalIconObj) => {
-    const coords = e.lngLat;
-
-    dispatch(
-      updateIcon({ ...originalIconObj, location: [coords.lng, coords.lat] })
-    );
-  };
-
-  useEffect(() => {
-    const image = new Image(100, 100);
-    image.src = iconChat;
-
-    setImages(["myImage", image]);
-  }, [journeysRedux]);
-
   useEffect(() => {
     map?.resize();
     if (journeysRedux.length > 0) {
-      // setBbox(getBbox(journeysRedux));
     }
-  }, [journeysRedux]);
+  }, [journeysRedux, icons, isJourneysEnabled]);
 
   useEffect(() => {
-    setAnchorEl(
-      !seenPopup ? document.getElementById("full_screen_button") : null
-    );
+    setIconImages(getLoadedIconImages());
   }, []);
-
-  useEffect(() => {
-    map?.resize();
-  }, [isJourneysEnabled]);
 
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
@@ -268,9 +223,11 @@ export default function MapContainer({
               );
             }}
             onMouseMove={(map, e) => {}}
+            onError={(map, e) => {
+              console.log("Map_error", { e });
+            }}
           >
             <PrintLocations
-              map={map}
               sortedGroupsJourneys={sortedGroupsJourneys}
               isJourneysEnabled={isJourneysEnabled}
               draggedPoint={draggedPoint}
@@ -281,27 +238,26 @@ export default function MapContainer({
               textSize={
                 baseLongSize ? (baseLongSize * LABEL_SIZE_KOEF) / 2 : 10
               }
-              onError={(e) => {
-                console.log("map_error_ ", { e });
-              }}
               lineWidth={1}
               baseCircleRadius={3}
             />
-            {icons?.map((icon) => {
+
+            {icons?.map((iconObj, iconIndex) => {
               return (
                 <Layer
-                  id={icon.sourceId}
+                  id={iconObj.sourceId}
                   type="symbol"
+                  images={iconImages}
+                  key={iconObj.sourceId + iconIndex}
                   layout={{
-                    "icon-image": "myImage",
+                    "icon-image": iconObj.iconType,
                     "icon-size": 0.25,
                     "text-allow-overlap": true,
                     "icon-allow-overlap": true,
                     "text-ignore-placement": true,
                     "icon-ignore-placement": true,
                   }}
-                  images={images}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={() => {
                     setCursor("move");
                   }}
                   onMouseLeave={() => {
@@ -309,18 +265,63 @@ export default function MapContainer({
                   }}
                 >
                   <Feature
-                    coordinates={icon.location}
-                    draggable
+                    coordinates={iconObj.location}
+                    draggable={
+                      !draggedIconId || iconObj.sourceId === draggedIconId
+                    }
                     onDragStart={(e) => {
-                      console.log("Dragging_e", { e });
+                      console.log("Drag_start");
+                      e.target.dragPan.disable();
+                      setDraggedIconId(iconObj.sourceId);
                     }}
-                    onDragEnd={(e) => {
-                      updateIconLocation(e, icon);
-                    }}
+                    onDrag={(e) => {}}
+                    onDragEnd={onUpIcon(iconObj, ICON)}
                   />
                 </Layer>
               );
             })}
+
+            {enrichedImages &&
+              enrichedImages.map((imageObj) => {
+                console.log({ imageObj, enrichedImages });
+
+                return (
+                  <Layer
+                    id={imageObj.sourceId}
+                    type="symbol"
+                    images={[imageObj.sourceId, imageObj.imageEl]}
+                    key={imageObj.sourceId}
+                    layout={{
+                      "icon-image": imageObj.sourceId,
+                      "icon-size": 0.25,
+                      "text-allow-overlap": true,
+                      "icon-allow-overlap": true,
+                      "text-ignore-placement": true,
+                      "icon-ignore-placement": true,
+                    }}
+                    onMouseEnter={(e) => {
+                      setCursor("move");
+                    }}
+                    onMouseLeave={() => {
+                      setCursor("pointer");
+                    }}
+                  >
+                    <Feature
+                      coordinates={imageObj.location}
+                      draggable={
+                        !draggedIconId || imageObj.sourceId === draggedIconId
+                      }
+                      onDragStart={(e) => {
+                        console.log("Drag_start");
+                        e.target.dragPan.disable();
+                        setDraggedIconId(imageObj.sourceId);
+                      }}
+                      onDrag={(e) => {}}
+                      onDragEnd={onUpIcon(imageObj)}
+                    />
+                  </Layer>
+                );
+              })}
           </Map>
         </div>
         <Backdrop open={false}>
@@ -334,7 +335,6 @@ export default function MapContainer({
               }}
             >
               <PrintLocations
-                map={map}
                 sortedGroupsJourneys={sortedGroupsJourneys}
                 isJourneysEnabled={isJourneysEnabled}
                 draggedPoint={draggedPoint}
@@ -375,14 +375,11 @@ export default function MapContainer({
           onCloseRequest={() => setLightbox({ open: false })}
         />
       )}
-
-      {openBackdrop && <BackdropLoader defaultState={true} />}
     </div>
   );
 }
 
 const PrintLocations = ({
-  map,
   sortedGroupsJourneys,
   isJourneysEnabled,
   draggedPoint,

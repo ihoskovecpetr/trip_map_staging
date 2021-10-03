@@ -293,6 +293,11 @@ export default function StepAddRoute({ map, index }) {
 
 const Container = styled.div`
   margin-bottom: 50px;
+  margin-top: 10px;
+
+  ${mobile`
+    margin-top: 0;
+  `}
 `;
 
 const HeadingText = styled.p`

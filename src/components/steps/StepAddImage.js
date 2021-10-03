@@ -11,31 +11,35 @@ import Button from "@material-ui/core/Button";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CreateIcon from "@material-ui/icons/Create";
 import AddIcon from "@material-ui/icons/Add";
+import axios from "axios";
 
+import { createUploadRequest } from "LibGlobal/createUploadRequest";
 import { color, fontSize, fontWeight, mobile } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { getMaxGroupIndex } from "LibGlobal/getMaxGroupIndex";
 import { getLoadedIconImages } from "LibGlobal/getLoadedIconImages";
 import { MAP_STYLED_AND_FLIGHT_COLOR, ICON_NAMES } from "constants/constants";
 
-import { addNewIcon, removeIcon } from "redux/order/actions";
+import { addNewIcon, removeImage, addNewImage } from "redux/order/actions";
 
-import { useGetIcons, useActiveMapStyleSelector } from "redux/order/reducer";
+import {
+  useGetImages,
+  useActiveMapStyleSelector,
+  useActiveLayoutSelector,
+} from "redux/order/reducer";
 
-export default function StepAddRoute({ map, index }) {
+export default function StepAddImage({ map, index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const router = useRouter();
-  const iconsRedux = useGetIcons();
+  const imagesRedux = useGetImages();
   const journeysRef = useRef();
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const currentGroupRef = useRef(currentGroupIndex);
-  const activeMapStyleName = useActiveMapStyleSelector();
-  const [availableIcons, setAvailableIcons] = useState([]);
+  // const activeMapStyleName = useActiveMapStyleSelector();
+  const activeLayoutName = useActiveLayoutSelector();
 
-  useEffect(() => {
-    setAvailableIcons(getLoadedIconImages());
-  }, []);
+  const [availableIcons, setAvailableIcons] = useState([]);
 
   useEffect(() => {
     currentGroupRef.current = currentGroupIndex;
@@ -50,33 +54,44 @@ export default function StepAddRoute({ map, index }) {
   }, [map]);
 
   useEffect(() => {
-    journeysRef.current = iconsRedux;
+    journeysRef.current = imagesRedux;
 
-    const maxGroupIndex = getMaxGroupIndex(iconsRedux ?? []);
+    const maxGroupIndex = getMaxGroupIndex(imagesRedux ?? []);
     setCurrentGroupIndex(maxGroupIndex);
 
     if (!map) {
       return;
     }
-  }, [iconsRedux]);
+  }, [imagesRedux]);
 
   const removeIconRedux = (iconObj) => {
     console.log({ iconObj });
     dispatch(removeIcon(iconObj));
   };
 
-  const handleAddIcon = (iconType) => {
-    const maxGroupIndex = getMaxGroupIndex(iconsRedux ?? []);
+  const handleAddImage = (e, data) => {
+    const maxGroupIndex = getMaxGroupIndex(imagesRedux ?? []);
 
-    dispatch(
-      addNewIcon({
-        groupIndex: maxGroupIndex + 1,
-        location: [map.getCenter().lng, map.getCenter().lat],
-        sourceId: "sourceId" + maxGroupIndex,
-        title: "newTitle",
-        iconType: iconType,
-      })
-    );
+    console.log({
+      e,
+      attrId: e.target.getAttribute("id"),
+      type: typeof e.target,
+      elemImg: <img />,
+      data,
+      value: e.target.id,
+      el: document.getElementById(e.target.getAttribute("id")),
+    });
+
+    // dispatch(
+    //   addNewImage({
+    //     groupIndex: maxGroupIndex + 1,
+    //     location: [map.getCenter().lng, map.getCenter().lat],
+    //     sourceId: "sourceImageId" + maxGroupIndex,
+    //     title: "newTitle",
+    //     iconType: "custom",
+    //     element: e.target,
+    //   })
+    // );
   };
 
   return (
@@ -99,28 +114,49 @@ export default function StepAddRoute({ map, index }) {
           }}
         />
       ))}
-      {iconsRedux.map((iconObj, index) => {
-        return (
-          <Step>
-            <StyledStepLabel
-              color={MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain}
-            >
-              <StepsWrap>
-                <Flex1 />
-                <StyledDeleteForeverIcon
-                  style={{
-                    fill: "red",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    removeIconRedux(iconObj);
-                  }}
-                />
-              </StepsWrap>
-            </StyledStepLabel>
-          </Step>
-        );
-      })}
+      <input
+        type="file"
+        style={{ width: "100%", height: "50px" }}
+        accept="image/png, image/jpeg"
+        onInput={(e) => {
+          const reader = new FileReader();
+          reader.onloadend = async function (e) {
+            const imageEl = document.getElementById("result_image");
+            imageEl.src = e.target.result;
+            // imageEl.onload = async () => {};
+            const result = await createUploadRequest(
+              e.target.result,
+              () => {},
+              axios
+            );
+
+            console.log({ result });
+
+            if (result?.status === 200) {
+              // setAvailableIcons((prev) => [...prev, ["custom", imageEl]]);
+              const maxGroupIndex = getMaxGroupIndex(imagesRedux ?? []);
+
+              dispatch(
+                addNewImage({
+                  groupIndex: maxGroupIndex + 1,
+                  location: [map.getCenter().lng, map.getCenter().lat],
+                  sourceId: "sourceImageId" + maxGroupIndex,
+                  title: "newTitle",
+                  iconType: "custom",
+                  imageUrl: result.data.url,
+                })
+              );
+            }
+          };
+          const result = reader.readAsDataURL(e.target.files[0]);
+          // console.log(result);
+        }}
+      />
+      <img
+        id="result_image"
+        style={{ height: "150px", width: "150px" }}
+        onClick={handleAddImage}
+      />
     </Container>
   );
 }
