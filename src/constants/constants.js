@@ -582,6 +582,8 @@ const PATHS = {
   studio: "/studio",
 };
 
+const OFFICIAL_EMAIL = "tripmapshopinfo@gmail.com";
+
 module.exports = {
   IS_CLIENT,
   IS_SERVER,
@@ -623,4 +625,5 @@ module.exports = {
   REDUX_COOKIE_NAME,
   LABEL_SIZE_KOEF,
   PATHS,
+  OFFICIAL_EMAIL,
 };

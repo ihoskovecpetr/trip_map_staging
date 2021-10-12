@@ -5,6 +5,7 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 
 import { color } from "utils";
+import { OFFICIAL_EMAIL } from "@constants";
 
 export default function GDPR({ name }) {
   return (
@@ -31,7 +32,7 @@ export default function GDPR({ name }) {
                 Kontaktní údaje správce jsou:
                 <ul>
                   <li>adresa: Riegrova 237, 53862 Hrochův Týnec</li>
-                  <li>e-mail: ihoskovecpetr@gmail.com</li>
+                  <li>e-mail: {OFFICIAL_EMAIL}</li>
                   <li>telefon: +420 704 206 828</li>
                 </ul>
               </li>

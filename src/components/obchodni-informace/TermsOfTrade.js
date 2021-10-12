@@ -4,6 +4,7 @@ import { jsx } from "theme-ui";
 
 import styled from "styled-components";
 import { color } from "utils";
+import { OFFICIAL_EMAIL } from "@constants";
 // import odstoupeni_od_smlouvy from "assets/docs/Odstoupeni_od_smlouvy.pdf";
 
 export default function Objection({ name }) {
@@ -32,7 +33,7 @@ export default function Objection({ name }) {
                 se sídlem : Riegrova 237, 53862 Hrochův Týnec
                 <br />
                 <br />
-                email: ihoskovecpetr@gmail.com
+                email: {OFFICIAL_EMAIL}
                 <br />
                 telefon: +420 704 206 828
                 <br />

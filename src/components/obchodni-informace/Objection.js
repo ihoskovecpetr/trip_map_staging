@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { jsx } from "theme-ui";
 
 import styled from "styled-components";
+import { OFFICIAL_EMAIL } from "@constants";
 import { color } from "utils";
 // import odstoupeni_od_smlouvy from "assets/docs/Odstoupeni_od_smlouvy.pdf";
 
@@ -91,9 +92,8 @@ export default function Objection({ name }) {
                 převzata.
               </li>
             </ul>
-            <br />
-            V případě jakýchkoliv dotazů nás prosím kontaktujte e-mailem na
-            adrese ihoskovecpetr@gmail.com
+            <br />V případě jakýchkoliv dotazů nás prosím kontaktujte e-mailem
+            na adrese {OFFICIAL_EMAIL}
             <br />
             Dokumenty ke stažení:
             <br />
