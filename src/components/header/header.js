@@ -13,16 +13,18 @@ import menuItems from "./header.data";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useRouter } from "next/router";
 import { PATHS } from "@constants";
+import { useElementDimensions } from "Hooks/useElementDimensions";
 
 export default function Header({ className }) {
   const router = useRouter();
   const { isMobile } = useIsMobile();
+  const { height: headerHeight } = useElementDimensions("header");
 
   const isStudio = router.pathname === PATHS.studio;
 
   return (
     <DrawerProvider>
-      <HeaderContainer isStudio={isStudio} id="header">
+      <HeaderContainer isStudio={isStudio} isMobile={isMobile} id="header">
         <StyledContainer>
           <Logo src={LogoBlack} />
           <MobileDrawer />
@@ -54,9 +56,11 @@ const HeaderContainer = styled.div`
   transition: all 0.5s ease;
   animation: ${positionAnim} 0.4s ease;
   color: black;
-  background-color: ${({ isStudio }) =>
-    isStudio ? "transparent" : "transparent"};
+  background-color: transparent;
 `;
+
+// background-color: ${({ isStudio, isMobile }) =>
+// isStudio ? (isMobile ? "transparent" : "#7B8188") : "transparent"};
 
 const StyledContainer = styled(Container)`
   display: flex;

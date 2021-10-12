@@ -88,11 +88,17 @@ export default function LandingPage() {
                 autoplay
                 playsinline
                 loop
-                poster="/Italy_9_medium.gif"
+                poster="/Italy_9_mobile.gif"
               >
                 <source
                   // src="/landing-mobile-vid.mp4"
-                  src="/Italy_9_medium_mobile.mp4"
+                  src="/Italy_10_mobile.mov"
+                  type="video/mp4"
+                  media="all and (max-width: 480px)"
+                />
+                <source
+                  // src="/landing-mobile-vid.mp4"
+                  src="/Italy_10_mobile.mov"
                   type="video/mp4"
                   media="all and (max-width: 480px)"
                 />

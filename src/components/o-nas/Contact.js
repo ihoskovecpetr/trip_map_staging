@@ -5,6 +5,7 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 
 import { color } from "utils";
+import { OFFICIAL_EMAIL } from "@constants";
 
 export default function Contact({ name }) {
   return (
@@ -16,7 +17,7 @@ export default function Contact({ name }) {
             adresa: <b>Riegrova 237, 53862 Hrochův Týnec</b>
           </li>
           <li>
-            e-mail: <b>ihoskovecpetr@gmail.com</b>
+            e-mail: <b>{OFFICIAL_EMAIL}</b>
           </li>
           <li>
             telefon: <b>+420 704 206 828</b>

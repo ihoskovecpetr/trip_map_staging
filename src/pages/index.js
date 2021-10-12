@@ -37,8 +37,8 @@ const IndexPage = () => {
           <WorkFlow />
           <SecurePayment />
           <PrintfulPrint />
-          {/* <Feature />
-          <TestimonialCard /> */}
+          {/* <Feature /> */}
+          <TestimonialCard />
           <Faq />
         </Layout>
       </StickyProvider>

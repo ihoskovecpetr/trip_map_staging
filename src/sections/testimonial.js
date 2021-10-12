@@ -9,46 +9,59 @@ import Avatar1 from "assets/testimonial/avatar1.png";
 import Avatar2 from "assets/testimonial/avatar2.png";
 import Avatar3 from "assets/testimonial/avatar3.png";
 import Avatar4 from "assets/testimonial/avatar4.png";
+import Man1 from "assets/testimonial/man_1.jpg";
+import Woman1 from "assets/testimonial/woman_1.jpg";
+import Woman2 from "assets/testimonial/woman_2.jpg";
+import Woman3 from "assets/testimonial/woman_3.jpg";
 
 const data = [
   {
     id: 1,
-    title: "Modern look & trending design",
-    description:
-      "Get working experience to work with this amazing team & in future want to work together for bright future projects and also make deposit to freelancer.",
-    avatar: Avatar1,
-    name: "Denny Hilguston",
-    designation: "@denny.hil",
-    review: 4,
+    title: "Moderní vzhled a design",
+    description: "Super dar na svatbu, osobitost mapy je k nezaplacení",
+    avatar: Woman1,
+    name: "Jana Strolená",
+    designation: "@jana.s",
+    review: 5,
   },
   {
     id: 2,
-    title: "Design Quality & performance",
+    title: "Krásné barvy a zpracování",
     description:
-      "Get working experience to work with this amazing team & in future want to work together for bright future projects and also make deposit to freelancer.",
-    avatar: Avatar2,
-    name: "Denny Hilguston",
-    designation: "@denny.hil",
+      "Myslím že se jedná o velmi povedený doplněk do domu, zakoupila jsem pouze mapu bez rámu kterou jsem následně s pomocí manžela a nákupu v JISKu jednoduše osadila do rámu",
+    avatar: Woman2,
+    name: "Anna Krásná",
+    designation: "@anickak",
     review: 5,
   },
   {
     id: 3,
-    title: "Layout and organized layers",
+    title: "Potěšil jsem svou přítelkyni",
     description:
-      "Get working experience to work with this amazing team & in future want to work together for bright future projects and also make deposit to freelancer.",
-    avatar: Avatar3,
-    name: "Denny Hilguston",
-    designation: "@denny.hil",
+      "Super mapa jako věčná vzpomínka na naše líbánky. Doporučuji 👍",
+    avatar: Man1,
+    name: "Jan Klíma",
+    designation: "@klimaj",
     review: 5,
   },
   {
     id: 4,
-    title: "Modern look & trending design",
+    title: "Provedení letecké dráhy",
     description:
-      "Get working experience to work with this amazing team & in future want to work together for bright future projects and also make deposit to freelancer.",
+      "Dárek pro bratra který velmi rád cestuje, zaoblení letu dle zakřivení planety vypadá skvěle. Mapa přišla kvalitně zabalená a snad během prvního týdne po objednání",
     avatar: Avatar4,
-    name: "Denny Hilguston",
-    designation: "@denny.hil",
+    name: "Daniel Karch",
+    designation: "@dankarch",
+    review: 4,
+  },
+  {
+    id: 4,
+    title: "Dárek pro bratra",
+    description:
+      "Bratr ocenil originalitu dárku já jsem ocenila rychlost dodání :)",
+    avatar: Woman3,
+    name: "Romana Jelínková",
+    designation: "@romcajelinkova",
     review: 4,
   },
 ];
@@ -80,7 +93,10 @@ export default function TestimonialCard() {
   return (
     <section id="testimonial" sx={{ variant: "section.testimonial" }}>
       <Container>
-        <SectionHeader slogan="Testimonial" title="Meet Client Satisfaction" />
+        <SectionHeader
+          slogan="Svědectví zákazníků"
+          title="Zkušenosti našich zákazníků"
+        />
       </Container>
       <Box sx={styles.carouselWrapper}>
         <Carousel

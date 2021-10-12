@@ -74,13 +74,16 @@ export default function StepAddRoute({ map, index }) {
     const placeNameArr = e.result.place_name.split(",");
     const newTitle = placeNameArr[0];
 
-    const indexesArr = journeysRedux.map(({ index }) => index);
+    const indexesArr = journeysRef.current?.map(({ index }) => index);
+
     const max = Math.max(...indexesArr);
+
+    console.log({ max });
 
     dispatch(
       addNewJourney({
-        index: max + 1,
         groupIndex: groupIndex,
+        index: max + 1,
         location: e.result.geometry.coordinates,
         sourceId: sourceId,
         title: newTitle,
@@ -219,10 +222,19 @@ export default function StepAddRoute({ map, index }) {
                           </LocationTitle>
                           {updatingSourceId === journeyPoint.sourceId ? (
                             <>
-                              <TextField
+                              <LabelText
                                 value={journeyPoint.titleLabel}
                                 onChange={updateLabel(journeyPoint)}
-                              />
+                                color={
+                                  MAP_STYLED_AND_FLIGHT_COLOR[
+                                    activeMapStyleName
+                                  ].colorSecondary
+                                }
+                                contentEditable
+                                isEditing
+                              >
+                                {journeyPoint.titleLabel}
+                              </LabelText>
                               <DoneIcon
                                 style={{
                                   fill: "green",
@@ -236,6 +248,11 @@ export default function StepAddRoute({ map, index }) {
                               <SmallText>popisek: </SmallText>
                               <LabelText
                                 crossed={!journeyPoint.titleLabelDisplayed}
+                                color={
+                                  MAP_STYLED_AND_FLIGHT_COLOR[
+                                    activeMapStyleName
+                                  ].colorSecondary
+                                }
                               >
                                 {journeyPoint.titleLabel}
                               </LabelText>
@@ -365,10 +382,30 @@ const SmallText = styled.span`
   align-items: center;
 `;
 
-const LabelText = styled.span`
+const LabelText = styled.div`
   font-size: ${fontSize("sm")};
   display: inline-block;
   text-decoration: ${({ crossed }) => crossed && "line-through 2px"};
+  color: ${({ color }) => color ?? "white"};
+  text-transform: uppercase;
+  text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black,
+    0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black,
+    0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black,
+    0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black,
+    0 0 2px black;
+  border: ${({ isEditing }) => isEditing && "solid 2px lightSkyBlue"};
+  border-radius: 5px;
+  padding: ${({ isEditing }) => isEditing && "4px"};
+`;
+
+const StyledTextField = styled(TextField)`
+  color: ${({ color }) => color ?? "white"};
+  text-transform: uppercase;
+  text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black,
+    0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black,
+    0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black,
+    0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black,
+    0 0 2px black;
 `;
 
 const StyledStepLabel = styled(StepLabel)`
