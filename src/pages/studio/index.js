@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { ErrorBoundary } from "react-error-boundary";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
+import styled from "styled-components";
 
 import StudioRootContainer from "sections/studioRootContainer";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -27,18 +28,21 @@ const StudioPage = () => {
     Cookies.set(REDUX_COOKIE_NAME, "XX_DLTD");
 
     return (
-      <div role="alert">
-        <p>Something went wrong:</p>
-        <pre style={{ color: "red" }}>{error.message}</pre>
-        <button
-          onClick={() => {
-            dispatch(resetStore());
-            router.push("/studio");
-          }}
-        >
-          RESETOVAT STUDIO
-        </button>
-      </div>
+      <Container>
+        <div>
+          <p>Something went wrong:</p>
+          <pre style={{ color: "red" }}>{error.message}</pre>
+          <button
+            onClick={() => {
+              dispatch(resetStore());
+              router.push("/studio?id=123445er");
+              // create saga in here to await clean store instead??
+            }}
+          >
+            RESETOVAT STUDIO
+          </button>
+        </div>
+      </Container>
     );
   }
 
@@ -67,6 +71,14 @@ const StudioPage = () => {
     </ThemeProvider>
   );
 };
+
+const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 // StudioPage.getInitialProps = wrapper.getInitialPageProps((store) => (props) => {
 //   const { pathname, req, res, router, query } = props;

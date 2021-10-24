@@ -33,7 +33,7 @@ import { useFullStoreSelector } from "redux/order/reducer";
 
 import { REDUX_COOKIE_NAME, IS_CLIENT } from "constants/constants";
 
-const MyApp = ({ Component, pageProps, store }) => {
+const MyApp = ({ Component, pageProps, err, ...props }) => {
   const router = useRouter();
   const [cookie, setCookie] = useCookies([REDUX_COOKIE_NAME]);
 

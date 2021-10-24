@@ -266,7 +266,7 @@ const StyledCircularProgress = styled(CircularProgress)`
 `;
 
 const StyledText = styled.p`
-  color: ${color("cta_color")};
+  color: ${color("primary")};
   font-weight: ${fontWeight("bold")};
   padding-left: 15px;
   margin: 0;

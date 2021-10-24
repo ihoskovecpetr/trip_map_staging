@@ -22,14 +22,9 @@ import { color, fontSize, fontWeight, mobile } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import GeocoderInput from "components/GeocoderInput";
 import { getMaxGroupIndex } from "LibGlobal/getMaxGroupIndex";
-import { getSortedArrays } from "LibGlobal/getSortedArrays";
 import { MAP_STYLED_AND_FLIGHT_COLOR } from "constants/constants";
 
-import {
-  addNewIcon,
-  removeJourneyPoint,
-  updateJourneyPoint,
-} from "redux/order/actions";
+import { addNewIcon } from "redux/order/actions";
 
 import { useGetIcons, useActiveMapStyleSelector } from "redux/order/reducer";
 
@@ -67,43 +62,21 @@ export default function StepAddRoute({ map, index }) {
     }
   }, [iconsRedux]);
 
-  const removePointRedux = (journeyPoint) => {
-    dispatch(removeJourneyPoint(journeyPoint));
-  };
+  const removePointRedux = (journeyPoint) => {};
 
-  const toggleLabelVisibility = (journeyPoint) => {
-    dispatch(
-      updateJourneyPoint({
-        ...journeyPoint,
-        titleLabelDisplayed: !journeyPoint.titleLabelDisplayed,
-      })
-    );
-  };
+  const toggleLabelVisibility = (journeyPoint) => {};
 
-  const updateLabel = (journeyPoint) => (e) => {
-    console.log("Value__ ", e.target.value);
-    dispatch(
-      updateJourneyPoint({
-        ...journeyPoint,
-        titleLabel: e.target.value,
-      })
-    );
-  };
+  const updateLabel = (journeyPoint) => (e) => {};
 
   const handleAddIcon = () => {
     const maxGroupIndex = getMaxGroupIndex(iconsRedux ?? []);
 
     dispatch(
       addNewIcon({
-        // index: max + 1,
         groupIndex: maxGroupIndex + 1,
         location: [map.getCenter().lng, map.getCenter().lat],
         sourceId: "sourceId" + maxGroupIndex,
         title: "newTitle",
-        // titleLabel: newTitle,
-        // titleLabelDisplayed: true,
-        // titleLocation: e.result.geometry.coordinates,
-        // titleSourceId,
       })
     );
   };

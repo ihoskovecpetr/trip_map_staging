@@ -93,6 +93,15 @@ body::-webkit-scrollbar {
   order: 1;
 }
 
+.mapboxgl-ctrl-geocoder {
+  width: 100% !important;
+  box-shadow: none !important;
+}
+
+.suggestions-wrapper {
+  z-index: 1000;
+}
+
 #map {
   /* position: relative; */
 }

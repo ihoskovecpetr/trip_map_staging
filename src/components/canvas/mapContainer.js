@@ -4,22 +4,16 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import Lightbox from "react-image-lightbox";
-import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import ReactMapboxGl, { Layer, Feature, Source, Marker } from "react-mapbox-gl";
 import Backdrop from "@material-ui/core/Backdrop";
 
 import { useIsMobile } from "Hooks/useIsMobile";
-import { color, fontWeight, fontSize } from "utils";
 import BackdropLoader from "components/backdropLoader";
 
 import iconChat from "assets/mapIcons/pin2D.svg";
 
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
-import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
-import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
-import CustomTooltipWrap from "components/custom-tooltip";
-import { getSortedArrays } from "LibGlobal/getSortedArrays";
+import { getSortedArraysDraggable } from "LibGlobal/getSortedArraysDraggable";
 import { getGeoArc } from "LibGlobal/getGeoArc";
 import { getBbox } from "LibGlobal/getBbox";
 import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
@@ -31,6 +25,7 @@ import {
   setMapZoomAction,
   setMapCoordinatesAction,
   updateIcon,
+  updateLocation,
 } from "redux/order/actions";
 
 import {
@@ -40,7 +35,7 @@ import {
   useSeenPopupSelector,
   useMapCoordinatesSelector,
   useMapZoomSelector,
-  useGetJourneys,
+  useGetJourneysDraggable,
   useGetJourneysSpecsSelector,
   useJourneysEnabledSelector,
   useGetIcons,
@@ -86,15 +81,15 @@ export default function MapContainer({
   const activeMapStyleName = useActiveMapStyleSelector();
   const seenPopup = useSeenPopupSelector();
   const [openBackdrop, setOpenBackdrop] = useState(false);
-  const journeysRedux = useGetJourneys();
-  const sortedGroupsJourneys = getSortedArrays(journeysRedux);
+  const journeysDragable = useGetJourneysDraggable();
+  const sortedGroupsJourneys = getSortedArraysDraggable(journeysDragable);
+
   const mapZoom = useMapZoomSelector();
   const mapCenterCoordinates = useMapCoordinatesSelector();
   const journeysSpecs = useGetJourneysSpecsSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
   const icons = useGetIcons();
 
-  // const [bbox, setBbox] = useState(null);
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const [draggedPoint, setDraggedPoint] = useState();
   const [lightbox, setLightbox] = useState({
@@ -102,8 +97,6 @@ export default function MapContainer({
     activeSrc: null,
   });
   const [images, setImages] = useState([]);
-
-  const { isMobile } = useIsMobile();
   const qualityImageCreator = useQualityImageCreator();
 
   const mapCanvas = map?.getCanvas();
@@ -115,30 +108,8 @@ export default function MapContainer({
     elHeight: mapCanvas?.height,
   });
 
-  const { dataPrintful } = useGetDataPrintful(
-    VARIANTS_PRINTFUL.map((variant) => variant.id)
-  );
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = (event) => {
-    // setAnchorEl(anchorEl ? null : event.currentTarget);
-    openTeaserImage();
-  };
-
-  const handleClose = (e) => {
-    setAnchorEl(null);
-    localStorage.setItem("seenPopup", true);
-    dispatch(setPopupSeenAction(true));
-    e.stopPropagation();
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popper" : undefined;
-
   const fullscreenImageRequested = async () => {
     setIsCreatingImage(true);
-    console.log({ snapMapInstance });
     const finalImgSrc = await qualityImageCreator({
       map,
       snapMapInstance,
@@ -161,15 +132,6 @@ export default function MapContainer({
     return;
   };
 
-  const openTeaserImage = async () => {
-    if (isCreatingImage) {
-      return;
-    }
-    setOpenBackdrop(true);
-    await fullscreenImageRequested();
-    setOpenBackdrop(false);
-  };
-
   const onMapLoad = (mapLoc) => {
     mapLoc.dragRotate.disable();
     mapLoc.touchZoomRotate.disableRotation();
@@ -189,7 +151,7 @@ export default function MapContainer({
 
     if (currentPoint.titleSourceId === draggedPoint) {
       dispatch(
-        updateJourneyPoint({
+        updateLocation({
           ...currentPoint,
           titleLocation: [coords.lng, coords.lat],
         })
@@ -218,20 +180,14 @@ export default function MapContainer({
     image.src = iconChat;
 
     setImages(["myImage", image]);
-  }, [journeysRedux]);
+  }, [journeysDragable]);
 
   useEffect(() => {
     map?.resize();
-    if (journeysRedux.length > 0) {
-      // setBbox(getBbox(journeysRedux));
+    if (map && Object.values(journeysDragable.locations).length > 0) {
+      // map.fitBounds(getBbox(journeysDragable), { padding: 80 });
     }
-  }, [journeysRedux]);
-
-  useEffect(() => {
-    setAnchorEl(
-      !seenPopup ? document.getElementById("full_screen_button") : null
-    );
-  }, []);
+  }, [journeysDragable]);
 
   useEffect(() => {
     map?.resize();
@@ -469,7 +425,7 @@ const PrintLocations = ({
                       "text-size": textSize, // 7,
                       "text-transform": "uppercase",
                       "text-letter-spacing": 0.05,
-                      "text-offset": [0, -2],
+                      "text-offset": [0, 0],
                       "text-allow-overlap": true,
                       "icon-allow-overlap": true,
                       "text-ignore-placement": true,
