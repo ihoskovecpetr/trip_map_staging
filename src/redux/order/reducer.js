@@ -3,6 +3,8 @@ import produce from "immer";
 import { useSelector } from "react-redux";
 import { HYDRATE } from "next-redux-wrapper"; // ADD HYDRATE!!
 
+import { getMaxLocationIndex } from "LibGlobal/getMaxLocationIndex";
+
 import {
   TITLES_DEFAULT,
   SIZES,
@@ -10,6 +12,20 @@ import {
   LAYOUT_STYLE_NAMES,
   MAP_STYLES_NAMES,
 } from "constants/constants";
+
+const getDefaultLocation = (id, index) => {
+  return {
+    id: id,
+    index: index,
+    location: [14.42139, 50.08861],
+    sourceId: "SourceId_" + Math.random(),
+    title: "Prague",
+    titleLabel: "Popisek Praha",
+    titleLabelDisplayed: true,
+    titleLocation: [14.42139, 50.08861],
+    titleSourceId: "TitleSourceId_" + Math.random(),
+  };
+};
 
 const orderInitialState = {
   product: {
@@ -96,6 +112,72 @@ const orderInitialState = {
       sourceId: "SourceId_1",
     },
   ],
+  journeysDraggable: {
+    locations: {
+      "location-1": {
+        id: "location-1",
+        index: 1,
+        content: "Take out the garbage",
+        location: [14.42139, 50.08861],
+        sourceId: "SourceId_0.3506115025981893",
+        title: "Prague",
+        titleLabel: "Praha",
+        titleLabelDisplayed: true,
+        titleLocation: [12.832277284787466, 45.644311055175336],
+        titleSourceId: "TitleSourceId_0.234234",
+      },
+      "location-2": {
+        id: "location-2",
+        index: 2,
+        content: "Make Sleep",
+        location: [14.48972, 40.75056],
+        sourceId: "SourceId_0.0578665585636553",
+        title: "Pompeii",
+        titleLabel: "Pompeii",
+        titleLabelDisplayed: true,
+        titleLocation: [14.48972, 40.75056],
+        titleSourceId: "TitleSourceId_0.53453sdf",
+      },
+      "location-3": {
+        id: "location-3",
+        index: 3,
+        content: "Make Small Goodness",
+        location: [14.48972, 40.75056],
+        sourceId: "SourceId_0.0578665585636553",
+        title: "Pompeii",
+        titleLabel: "Pompeii",
+        titleLabelDisplayed: true,
+        titleLocation: [14.48972, 40.75056],
+        titleSourceId: "TitleSourceId_0.53453sdf",
+      },
+      "location-4": {
+        id: "location-4",
+        index: 4,
+        content: "Make Sma Cinque",
+        location: [9.736335, 44.100683],
+        sourceId: "SourceId_0.9056085573382431",
+        title: "Cinque Terre",
+        titleLabel: "Cinque Terre",
+        titleLabelDisplayed: true,
+        titleLocation: [9.736335, 44.100683],
+        titleSourceId: "TitleSourceId_0.70345fds",
+      },
+    },
+    trips: {
+      "trip-1": {
+        id: "trip-1",
+        title: "Spojený trip 1",
+        locationIds: ["location-1", "location-2", "location-4"],
+      },
+      "trip-2": {
+        id: "trip-2",
+        title: "Spojený trip 2",
+        locationIds: ["location-3"],
+      },
+    },
+    // Facilitate reordering of the trips
+    tripsOrder: ["trip-1", "trip-2"],
+  },
 };
 
 const order = produce((state = orderInitialState, { type, data, payload }) => {
@@ -181,31 +263,87 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       state.discount.codeAccepted = data;
       return state;
 
-    case countActionTypes.ADD_NEW_JOURNEY:
-      state.journeys = [...state.journeys, data];
+    case countActionTypes.ADD_NEW_LOCATION_DRAGGABLE:
+      const nextLocationIndex = getMaxLocationIndex(
+        state.journeysDraggable.locations
+      );
+      const nextLocationId = "location-" + nextLocationIndex;
+      state.journeysDraggable.locations[nextLocationId] = {
+        index: nextLocationIndex,
+        id: nextLocationId,
+        ...data.body,
+      };
+      state.journeysDraggable.trips[data.tripId].locationIds.push(
+        nextLocationId
+      );
       return state;
 
-    case countActionTypes.UPDATE_JOURNEY:
-      const updatingIndex = state.journeys.findIndex(
-        (item) => item.sourceId === data.sourceId
+    case countActionTypes.UPDATE_LOCATION_SEQUENCE:
+      state.journeysDraggable.trips[data.source.droppableId].locationIds.splice(
+        data.source.index,
+        1
+      );
+      state.journeysDraggable.trips[
+        data.destination.droppableId
+      ].locationIds.splice(data.destination.index, 0, data.draggableId);
+      return state;
+
+    case countActionTypes.UPDATE_LOCATION:
+      state.journeysDraggable.locations[data.id] = data;
+      return state;
+
+    case countActionTypes.REMOVE_LOCATION:
+      delete state.journeysDraggable.locations[data.locationId];
+
+      const newLocationIds = state.journeysDraggable.trips[
+        data.tripId
+      ].locationIds.filter((id) => id != data.locationId);
+
+      if (!newLocationIds.length) {
+        delete state.journeysDraggable.trips[data.tripId];
+
+        const newTripsOrderArr = state.journeysDraggable.tripsOrder.filter(
+          (trip) => trip != data.tripId
+        );
+
+        state.journeysDraggable.tripsOrder = newTripsOrderArr;
+      } else {
+        state.journeysDraggable.trips[data.tripId].locationIds = newLocationIds;
+      }
+      return state;
+
+    case countActionTypes.REMOVE_ALL_LOCATIONS:
+      state.journeysDraggable.locations = {};
+      state.journeysDraggable.trips = {};
+      state.journeysDraggable.tripsOrder = [];
+      return state;
+
+    case countActionTypes.ADD_TRIP:
+      const tripIdsArr = Object.keys(state.journeysDraggable.trips).map(
+        (name) => name.split("-")[1]
+      );
+      const tripsMaxId = Math.max(...tripIdsArr);
+      const nextLocIndex = getMaxLocationIndex(
+        state.journeysDraggable.locations
       );
 
-      const newJourneys = [...state.journeys];
-      newJourneys[updatingIndex] = data;
+      const newLocationId = `location-${nextLocIndex}`;
 
-      state.journeys = newJourneys;
-      return state;
-
-    case countActionTypes.REMOVE_JOURNEY_POINT:
-      const filteredJourneys = state.journeys.filter(
-        (item) => item.sourceId != data.sourceId
+      state.journeysDraggable.locations[newLocationId] = getDefaultLocation(
+        newLocationId,
+        nextLocIndex
       );
 
-      state.journeys = filteredJourneys;
-      return state;
+      const newTripName = `trip-${tripsMaxId + 1}`;
 
-    case countActionTypes.REMOVE_ALL_JOURNEYS:
-      state.journeys = [];
+      state.journeysDraggable.trips[newTripName] = {
+        id: newTripName,
+        title: "Spojený trip 2",
+        locationIds: [newLocationId],
+      };
+
+      state.journeysDraggable.tripsOrder.unshift(newTripName);
+
       return state;
 
     case countActionTypes.SET_JOURNEYS_SPECS:
@@ -269,8 +407,8 @@ export const useDiscountSelector = () =>
 export const useSeenPopupSelector = () =>
   useSelector((store) => store.order.seenPopup);
 
-export const useGetJourneys = () =>
-  useSelector((store) => store.order.journeys);
+export const useGetJourneysDraggable = () =>
+  useSelector((store) => store.order.journeysDraggable);
 
 export const useGetJourneysSpecsSelector = () =>
   useSelector((store) => store.order.journeysSpecs);

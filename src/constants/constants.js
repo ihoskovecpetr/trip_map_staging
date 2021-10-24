@@ -576,7 +576,7 @@ const VALID_DISCOUNT_CODES = [
 
 const REDUX_COOKIE_NAME = "reduxStoreCookie";
 
-const LABEL_SIZE_KOEF = 0.012;
+const LABEL_SIZE_KOEF = 0.009;
 
 const PATHS = {
   studio: "/studio",

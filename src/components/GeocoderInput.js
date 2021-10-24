@@ -14,6 +14,7 @@ export default function GeocoderInput({
   value,
   setResult,
   placeholder,
+  clearAfterResult = true,
   style,
 }) {
   const ref = useRef();
@@ -32,6 +33,10 @@ export default function GeocoderInput({
   }, [id]);
 
   useEffect(() => {
+    document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
+  }, []);
+
+  useEffect(() => {
     const childNodes = ref.current?.childNodes;
 
     if (childNodes && value) {
@@ -39,6 +44,9 @@ export default function GeocoderInput({
     }
 
     geocoder.on("result", transformResult);
+    geocoder.on("init", () => {
+      console.log("Init_geocoder");
+    });
 
     return () => {
       geocoder.off("result", transformResult);
@@ -48,7 +56,9 @@ export default function GeocoderInput({
   const transformResult = (e) => {
     setResult(e);
 
-    geocoder.clear(); // to remove blue dot
+    if (clearAfterResult) {
+      geocoder.clear(); // to remove blue dot
+    }
     // document.getElementById(id).innerHTML = "Filled";
     // document.getElementById(id).innerHTML = value;
   };
@@ -57,8 +67,14 @@ export default function GeocoderInput({
 }
 
 const StyledDiv = styled.div`
-  && input {
-    border: 1px solid ${color("cta_color")};
-    border-radius: 5px;
+  input {
+    // border: 1px solid ${color("cta_color")};
+    // border-radius: 5px;
+  }
+  :nth-child(1) {
+    box-shadow: 0 0 0;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+    width: 100%;
   }
 `;

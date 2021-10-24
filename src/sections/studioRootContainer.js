@@ -16,10 +16,6 @@ import { getUpdatedMapSizes } from "../LibGlobal/getUpdatedMapSizes";
 import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
 import { getVariantObject } from "../LibGlobal/getVariantObject";
 import { getIsProduction } from "../LibGlobal/getIsProduction";
-import { getCurrentPixelRatio } from "../LibGlobal/getCurrentPixelRatio";
-// import { useGetDataPrintful } from "../Hooks/useGetDataPrintful";
-// import { getPriceAlgorithm } from "../LibGlobal/priceAlgorithm/getPriceAlgorithm";
-// import { getSizeOfTitle } from "../LibGlobal/getSizeOfTitle";
 import { getLayoutColors } from "LibGlobal/getLayoutColors";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
 
@@ -555,7 +551,7 @@ const styles = {
     order: [0, 0, 0, 2],
     width: ["100%", "100%", "100%", "60%", "70%"],
     height: [null, null, null, "100%"],
-    backgroundColor: "muted",
+    backgroundColor: "rgba(0,0,0,0.2)",
   },
 };
 

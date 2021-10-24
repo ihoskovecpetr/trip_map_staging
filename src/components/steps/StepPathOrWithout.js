@@ -11,16 +11,19 @@ import NoPath from "assets/mapStudioVariants/noPath.png";
 
 import { setJourneysIsEnabled } from "redux/order/actions";
 import {
-  useGetJourneys,
+  useGetJourneysDraggable,
   useJourneysEnabledSelector,
 } from "redux/order/reducer";
 
-export default function StepStudioSettings({ map, index }) {
+export default function StepPathOrWithout({ map, index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
-  const reduxJourneys = useGetJourneys();
+  const journeysDragable = useGetJourneysDraggable();
+
+  console.log({ journeysDragable });
+
   const isJourneysEnabled = useJourneysEnabledSelector();
-  const bbox = getBbox(reduxJourneys);
+  const bbox = getBbox(journeysDragable);
 
   return (
     <div sx={styles.container}>
@@ -86,12 +89,16 @@ const OptionItem = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: ${({ active }) => active && "white"};
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  // border-top-left-radius: 10px;
+  // border-top-right-radius: 10px;
+
+  box-shadow: ${({ active }) =>
+    active ? "0px 0px 0px 1px" : "0px 0px 0px 0px"};
+  color: ${({ active }) => active && color("cta_color")};
 `;
 
 const ItemHeading = styled.p`
-  color: ${({ active }) => (active ? color("cta_color") : color("muted"))};
+  color: ${({ active }) => (active ? color("primary") : color("muted"))};
   line-height: 1.2;
   font-size: 0.8rem;
   font-weight: ${fontWeight("bold")};
@@ -99,20 +106,13 @@ const ItemHeading = styled.p`
   margin: 0;
 `;
 
-// color: ${color("muted")};
-// border-radius: 3px;
-// box-shadow: 0px 0px 0px 1px;
-// color: ${({ active }) => active && color("cta_color")};
-// margin-bottom: 5px;
-// padding: 5px;
-
 const StyledImg = styled.img`
   width: 150px;
   height: 100px;
   object-fit: cover;
   border-radius: 3px;
   color: ${color("muted")};
-  box-shadow: ${({ active }) =>
-    active ? "0px 0px 0px 3px" : "0px 0px 0px 1px"};
-  color: ${({ active }) => active && color("cta_color")};
 `;
+// box-shadow: ${({ active }) =>
+//   active ? "0px 0px 0px 3px" : "0px 0px 0px 1px"};
+// color: ${({ active }) => active && color("cta_color")};

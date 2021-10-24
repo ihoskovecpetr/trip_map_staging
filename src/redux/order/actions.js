@@ -10,13 +10,15 @@ export const countActionTypes = {
   SET_UPLOAD_PERCENTAGE: "SET_UPLOAD_PERCENTAGE",
   SET_DISCOUNT_CODE: "SET_DISCOUNT_CODE",
   SET_DISCOUNT_CODE_ACCEPTED: "SET_DISCOUNT_CODE_ACCEPTED",
-  ADD_NEW_JOURNEY: "ADD_NEW_JOURNEY",
-  UPDATE_JOURNEY: "UPDATE_JOURNEY",
-  REMOVE_JOURNEY_POINT: "REMOVE_JOURNEY_POINT",
+  ADD_NEW_LOCATION_DRAGGABLE: "ADD_NEW_LOCATION_DRAGGABLE",
+  UPDATE_LOCATION_SEQUENCE: "UPDATE_LOCATION_SEQUENCE",
+  UPDATE_LOCATION: "UPDATE_LOCATION",
+  REMOVE_LOCATION: "REMOVE_LOCATION",
+  REMOVE_ALL_LOCATIONS: "REMOVE_ALL_LOCATIONS",
+  ADD_TRIP: "ADD_TRIP",
   SET_JOURNEYS_SPECS: "SET_JOURNEYS_SPECS",
   SET_JOURNEYS_ENABLED: "SET_JOURNEYS_ENABLED",
   RESET_STORE: "RESET_STORE",
-  REMOVE_ALL_JOURNEYS: "REMOVE_ALL_JOURNEYS",
   ADD_NEW_ICON: "ADD_NEW_ICON",
   UPDATE_ICON: "UPDATE_ICON",
   SET_ACTIVE_STEP_NUMBER: "SET_ACTIVE_STEP_NUMBER",
@@ -106,24 +108,45 @@ export const setHydrateFromLocalStorage = (string) => (dispatch) => {
   });
 };
 
-export const addNewJourney = (journey) => (dispatch) => {
+export const addNewLocationDraggable = (journey) => (dispatch) => {
   return dispatch({
-    type: countActionTypes.ADD_NEW_JOURNEY,
+    type: countActionTypes.ADD_NEW_LOCATION_DRAGGABLE,
     data: journey,
   });
 };
 
-export const updateJourneyPoint = (point) => (dispatch) => {
+export const updateLocationSequence = (data) => (dispatch) => {
   return dispatch({
-    type: countActionTypes.UPDATE_JOURNEY,
-    data: point,
+    type: countActionTypes.UPDATE_LOCATION_SEQUENCE,
+    data,
   });
 };
 
-export const removeJourneyPoint = (point) => (dispatch) => {
+export const updateLocation = (data) => (dispatch) => {
   return dispatch({
-    type: countActionTypes.REMOVE_JOURNEY_POINT,
-    data: point,
+    type: countActionTypes.UPDATE_LOCATION,
+    data,
+  });
+};
+
+export const removeLocation = (data) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.REMOVE_LOCATION,
+    data,
+  });
+};
+
+export const removeAllLocations = (data) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.REMOVE_ALL_LOCATIONS,
+    data,
+  });
+};
+
+export const addTrip = (data) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.ADD_TRIP,
+    data,
   });
 };
 
@@ -138,12 +161,6 @@ export const setJourneysIsEnabled = (bool) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_JOURNEYS_ENABLED,
     data: bool,
-  });
-};
-
-export const removeAllJourneys = () => (dispatch) => {
-  return dispatch({
-    type: countActionTypes.REMOVE_ALL_JOURNEYS,
   });
 };
 

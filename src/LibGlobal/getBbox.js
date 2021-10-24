@@ -1,7 +1,9 @@
 import * as turf from "@turf/turf";
 
 const getBbox = (journeys) => {
-  const locationsArray = journeys.map((journey) => journey.location);
+  const locationsArray = Object.values(journeys?.locations).map(
+    (journey) => journey.location
+  );
 
   if (locationsArray.length < 2) {
     return [

@@ -89,7 +89,8 @@ const HeadingText = styled.p`
 const OrientationWrap = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
+
   margin-bottom: 10px;
 `;
 

@@ -60,6 +60,7 @@
     "prop-types": "^15.7.2",
     "rc-drawer": "^4.1.0",
     "react": "16.13.0",
+    "react-beautiful-dnd": "^13.1.0",
     "react-comparison-slider": "^1.1.0",
     "react-cookie": "^4.1.1",
     "react-cookie-consent": "^6.2.4",
@@ -105,13 +106,5 @@
   "bugs": {
     "url": "https://github.com/ihoskovecpetr/TripMap/issues"
   },
-  "homepage": "https://github.com/ihoskovecpetr/TripMap#readme",
-  "_moduleAliases": {
-    "@components": "./src/components",
-    "@constants": "./src/constants",
-    "@LiGlobal": "./src/LiGlobal",
-    "@Hooks": "./src/Hooks",
-    "@utils": "./src/utils",
-    "@redux": "./src/redux"
-  }
+  "homepage": "https://www.tripmap.shop"
 }

@@ -13,7 +13,7 @@ import { ORIENTATIONS } from "@constants";
 import Stepper from "./Stepper";
 import { getIsProduction } from "LibGlobal/getIsProduction";
 
-import StepStudioSettings from "../steps/StepStudioSettings";
+import StepPathOrWithout from "../steps/StepPathOrWithout";
 import Step1Location from "../steps/StepLocation";
 import Step2Orientation from "../steps/Step2Orientation";
 import StepLayout from "../steps/Step3Layout";
@@ -119,7 +119,7 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   );
 
   const stepElementsDesktop = [
-    [<StepStudioSettings map={map} index={1} />, StepComponent],
+    [<StepPathOrWithout map={map} index={1} />, StepComponent],
     [
       <Step2Orientation index={3} />,
       <StepTitles index={4} />,
@@ -144,7 +144,7 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   ];
 
   const stepElementsMobile = [
-    [<StepStudioSettings map={map} index={1} />],
+    [<StepPathOrWithout map={map} index={1} />],
     [StepComponent],
     // [<StepAddIcon map={map} index={21} />],
     [<Step2Orientation index={3} />],
