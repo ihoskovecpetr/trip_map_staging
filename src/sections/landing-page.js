@@ -96,12 +96,6 @@ export default function LandingPage() {
                   type="video/mp4"
                   media="all and (max-width: 480px)"
                 />
-                {/* <source
-                  // src="/landing-mobile-vid.mp4"
-                  src="/Italy_10_mobile.mov"
-                  type="video/mp4"
-                  media="all and (max-width: 480px)"
-                /> */}
                 Your browser does not support the video tag.
               </StyledVideo>
             )}
