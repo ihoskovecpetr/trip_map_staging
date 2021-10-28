@@ -4,46 +4,34 @@ import { ServerStyleSheets as MaterialUiServerStyleSheets } from "@material-ui/c
 
 export default class CustomDocument extends Document {
   static async getInitialProps(ctx) {
-    const sheet = new ServerStyleSheet();
+    const styledComponentsSheet = new ServerStyleSheet();
     const materialUiSheets = new MaterialUiServerStyleSheets();
 
     const originalRenderPage = ctx.renderPage;
-
-    // function handleCollectStyles(App) {
-    //   return (props) => {
-    //     return sheet.collectStyles(<App {...props} />);
-    //   };
-    // }
-
-    // const page = ctx.renderPage((App) => handleCollectStyles(App));
-    // const styleTags = sheet.getStyleElement();
-    // return { ...page, styleTags };
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(materialUiSheets.collect(<App {...props} />)),
+            styledComponentsSheet.collectStyles(
+              materialUiSheets.collect(<App {...props} />)
+            ),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
-
-      console.log({
-        materUI: materialUiSheets.getStyleElement(),
-      });
 
       return {
         ...initialProps,
         styles: (
           <>
             {initialProps.styles}
-            {sheet.getStyleElement()}
+            {styledComponentsSheet.getStyleElement()}
             {materialUiSheets.getStyleElement()}
           </>
         ),
       };
     } finally {
-      sheet.seal();
+      styledComponentsSheet.seal();
     }
   }
 
@@ -51,8 +39,6 @@ export default class CustomDocument extends Document {
     return (
       <Html>
         <Head>
-          {console.log({ this_props_styleTags: this.props.styleTags })}
-          {this.props.styleTags}
           <link
             href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"
             rel="stylesheet"

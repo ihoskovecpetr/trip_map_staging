@@ -13,7 +13,7 @@ import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
 import UnderlineLoader from "components/UnderlineLoader";
 import Button from "components/Button";
-import ScrollIcon from "components/ScrollIcon";
+import ScrollAnimatedIcon from "components/ScrolAnimatedIcon";
 import { useElementDimensions } from "Hooks/useElementDimensions";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useDisplayPNG } from "Hooks/useDisplayPNG";
@@ -141,7 +141,7 @@ export default function LandingPage() {
                       maxHeightTop={headerHeight + carouselHeight}
                       id="pure_cta_box"
                     >
-                      <ScrollIcon />
+                      <ScrollAnimatedIcon />
                       {/* <CtaComponent /> */}
                     </PureCtaBox>
                   </motion.div>

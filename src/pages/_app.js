@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import NextApp from "next/app";
-import withRedux from "next-redux-wrapper";
 import axios from "axios";
 
 import CookieConsent from "react-cookie-consent";
@@ -126,8 +125,6 @@ MyApp.getInitialProps = wrapper.getInitialPageProps(
     const { meta } = req;
 
     if (meta?.storeId && res.cookie[REDUX_COOKIE_NAME] != meta.storeId) {
-      console.log("Setting_new_cookie");
-
       res.cookie(REDUX_COOKIE_NAME, meta.storeId, {
         maxAge: 900000,
         httpOnly: false,

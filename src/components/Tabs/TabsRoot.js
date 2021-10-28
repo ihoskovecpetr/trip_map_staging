@@ -290,11 +290,9 @@ const TabContentWrap = styled.div`
   padding: 0px 0.5rem;
   background-color: ${color("background_almost_white")};
 
-  ${mobile`
-    height: ${({ topElementsHeight }) =>
-      `calc(100vh - ${topElementsHeight}px - 20px)`};
-    overflow: auto;
-  `}
+  height: ${({ topElementsHeight }) =>
+    `calc(100vh - ${topElementsHeight}px - 20px)`};
+  overflow: auto;
 
   ::-webkit-scrollbar {
     display: none;
@@ -311,7 +309,7 @@ const Price = styled.div`
   color: white;
   padding-left: 0.5rem;
   top: -30px;
-  color: ${color("cta_color")};
+  color: ${color("primary")};
   font-Weight ${fontWeight("bold")}
 `;
 

@@ -56,7 +56,7 @@ const packages = [
     name: "Provedení bez rámu",
     description: "Pro vlastní zarámování či jako plakát na zeď",
     buttonText: "Pokračovat v návrhu",
-    buttonUri: "studio?id=c8f14e01-0436-438b-bc3a-a4501af4d85a",
+    buttonUri: "studio?id=e2427d1b-62a3-4699-bdb5-143cc202612b",
     priceWithUnit: "$29.99", //TODO add price
     variantId: 8948,
     imgPNG: ProductNoFramePNG,

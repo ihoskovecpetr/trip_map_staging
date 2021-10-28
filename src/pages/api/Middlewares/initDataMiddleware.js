@@ -31,8 +31,6 @@ const initDataMiddleware = () => async (req, res, next) => {
     return next();
   }
 
-  console.log("initDataMiddleware_pass_reqURl", { reqUrrl: req.url, counter });
-
   counter++;
   await connectToMongoose();
 
@@ -44,16 +42,16 @@ const initDataMiddleware = () => async (req, res, next) => {
     });
 
     if (foundStoreFromQuery) {
-      const foundStoreWithout_id = { ...foundStoreFromQuery._doc };
+      const foundStoreWithout_secrets = { ...foundStoreFromQuery._doc };
 
-      delete foundStoreWithout_id._id;
-      delete foundStoreWithout_id.createdAt;
-      delete foundStoreWithout_id.updatedAt;
+      delete foundStoreWithout_secrets._id;
+      delete foundStoreWithout_secrets.createdAt;
+      delete foundStoreWithout_secrets.updatedAt;
 
       if (req && req.query.id === cookieStoreId) {
         console.log("Cookie_same_as_ID");
         req.meta = {
-          ...foundStoreWithout_id,
+          ...foundStoreWithout_secrets,
         };
       }
 
@@ -66,10 +64,9 @@ const initDataMiddleware = () => async (req, res, next) => {
 
         await newStore.save();
 
-        console.log("CreatedNew_store_0", { newStoreId0 });
-
+        // creating copy of shared store
         req.meta = {
-          ...foundStoreWithout_id,
+          ...foundStoreWithout_secrets,
           storeId: newStoreId0,
         };
       }

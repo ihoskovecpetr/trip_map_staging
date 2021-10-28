@@ -14,14 +14,14 @@ const ScrollIcon = () => {
 const wheel = keyframes`
   0% {
 		opacity: 1;
-		top: 10px;
+		top: 60px;
 	}
   30% {
     opacity: 1;
   }
   100% {
     opacity: 0;
-		top: 60px;
+		top: 10px;
   }
 `;
 

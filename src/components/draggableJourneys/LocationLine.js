@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
