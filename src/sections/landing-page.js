@@ -13,7 +13,7 @@ import Briefcase from "assets/landing-page/briefcaseBlack.svg";
 import Secure from "assets/landing-page/secureBlack.svg";
 import UnderlineLoader from "components/UnderlineLoader";
 import Button from "components/Button";
-import ScrollIcon from "components/ScrollIcon";
+import ScrollAnimatedIcon from "components/ScrolAnimatedIcon";
 import { useElementDimensions } from "Hooks/useElementDimensions";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useDisplayPNG } from "Hooks/useDisplayPNG";
@@ -92,16 +92,16 @@ export default function LandingPage() {
               >
                 <source
                   // src="/landing-mobile-vid.mp4"
-                  src="/Italy_10_mobile.mov"
+                  src="/Italy_10_mobile.mp4"
                   type="video/mp4"
                   media="all and (max-width: 480px)"
                 />
-                <source
+                {/* <source
                   // src="/landing-mobile-vid.mp4"
                   src="/Italy_10_mobile.mov"
                   type="video/mp4"
                   media="all and (max-width: 480px)"
-                />
+                /> */}
                 Your browser does not support the video tag.
               </StyledVideo>
             )}
@@ -141,7 +141,7 @@ export default function LandingPage() {
                       maxHeightTop={headerHeight + carouselHeight}
                       id="pure_cta_box"
                     >
-                      <ScrollIcon />
+                      <ScrollAnimatedIcon />
                       {/* <CtaComponent /> */}
                     </PureCtaBox>
                   </motion.div>

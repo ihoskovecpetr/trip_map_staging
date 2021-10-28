@@ -388,7 +388,7 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
   [MAP_STYLES_NAMES.BLACK_LAND]: {
     colorMain: "#a62703",
     colorSecondary: "white",
-    colorHalo: "rgba(166, 39, 3, 0.8)", // #a62703 but in rgba
+    colorHalo: "rgba(166, 39, 3, 1)", // #a62703 but in rgba
   },
   [MAP_STYLES_NAMES.BLACK_WHITE]: {
     colorMain: "#a62703",

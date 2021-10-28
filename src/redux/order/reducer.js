@@ -13,7 +13,7 @@ import {
   MAP_STYLES_NAMES,
 } from "constants/constants";
 
-const getDefaultLocation = (id, index) => {
+const _getDefaultLocation = (id, index) => {
   return {
     id: id,
     index: index,
@@ -53,53 +53,6 @@ const orderInitialState = {
   discount: { code: "", codeAccepted: false },
   string: "",
   storeId: "",
-  journeys: [
-    {
-      groupIndex: 3,
-      index: 0,
-      location: [14.42139, 50.08861],
-      sourceId: "SourceId_0.3506115025981893",
-      title: "Prague",
-      titleLabel: "Praha",
-      titleLabelDisplayed: true,
-      titleLocation: [12.832277284787466, 45.644311055175336],
-      titleSourceId: "TitleSourceId_0.234234",
-    },
-    {
-      groupIndex: 3,
-      index: 1,
-      location: [12.48278, 41.89306],
-      sourceId: "SourceId_0.5361843612493742",
-      title: "Rome",
-      titleLabel: "Rome",
-      titleLabelDisplayed: true,
-      titleLocation: [12.48278, 41.89306],
-      titleSourceId: "TitleSourceId_0.37sefsfse",
-    },
-
-    {
-      groupIndex: 1,
-      index: 2,
-      location: [9.736335, 44.100683],
-      sourceId: "SourceId_0.9056085573382431",
-      title: "Cinque Terre",
-      titleLabel: "Cinque Terre",
-      titleLabelDisplayed: true,
-      titleLocation: [9.736335, 44.100683],
-      titleSourceId: "TitleSourceId_0.70345fds",
-    },
-    {
-      groupIndex: 2,
-      index: 3,
-      location: [14.48972, 40.75056],
-      sourceId: "SourceId_0.0578665585636553",
-      title: "Pompeii",
-      titleLabel: "Pompeii",
-      titleLabelDisplayed: true,
-      titleLocation: [14.48972, 40.75056],
-      titleSourceId: "TitleSourceId_0.53453sdf",
-    },
-  ],
   journeysSpecs: {
     labelSizePrint: 10,
     isEnabled: true,
@@ -194,6 +147,7 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
           ...payload.order, // in payload is server store state !!!!
         };
       }
+
       return {
         ...orderInitialState,
         ...state,
@@ -329,7 +283,7 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
 
       const newLocationId = `location-${nextLocIndex}`;
 
-      state.journeysDraggable.locations[newLocationId] = getDefaultLocation(
+      state.journeysDraggable.locations[newLocationId] = _getDefaultLocation(
         newLocationId,
         nextLocIndex
       );
