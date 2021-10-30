@@ -60,8 +60,9 @@ const Mouse = styled.div`
     background-color: #ffffff;
     border-radius: 50%;
     opacity: 1;
-    animation: ${wheel} 2s infinite;
-    -webkit-animation: ${wheel} 2s infinite;
+    animation-delay: 2s;
+    animation: ${wheel} 3s infinite;
+    -webkit-animation: ${wheel} 3s infinite;
   }
 `;
 

@@ -220,7 +220,10 @@ export default function TabsRootNew({ map, snapMapInstance }) {
         {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
-        <TabContentWrap topElementsHeight={stepper_height + header_height}>
+        <TabContentWrap
+          topElementsHeight={stepper_height + header_height}
+          mapSegmentHeight={map_segment_height}
+        >
           {<>{activeStepElements[activeStepNumber]}</>}
         </TabContentWrap>
       </TabSegmentWrap>
@@ -289,10 +292,14 @@ const TabContentWrap = styled.div`
   overflow: visible;
   padding: 0px 0.5rem;
   background-color: ${color("background_almost_white")};
+  min-height: ${({ mapSegmentHeight, topElementsHeight }) =>
+    `calc(100vh - ${mapSegmentHeight}px - ${topElementsHeight}px + 0px)`};
 
-  height: ${({ topElementsHeight }) =>
-    `calc(100vh - ${topElementsHeight}px - 20px)`};
-  overflow: auto;
+  ${mobile`
+    height: ${({ topElementsHeight }) =>
+      `calc(100vh - ${topElementsHeight}px - 10px)`};
+    overflow: auto;
+  `}
 
   ::-webkit-scrollbar {
     display: none;

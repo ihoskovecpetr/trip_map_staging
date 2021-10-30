@@ -1,12 +1,8 @@
 /** @jsx jsx */
+import React, { useState } from "react";
 import { jsx } from "theme-ui";
 import { Container, Flex, Box, Heading, Text, Image, Button } from "theme-ui";
-import React, { useState } from "react";
-import ModalVideo from "react-modal-video";
 import { Link } from "components/link";
-import { FaPlayCircle } from "react-icons/fa";
-// import BannerBG from "assets/bannerBg.png";
-// import BannerThumb from "assets/banner-thumb.png";
 
 import client1 from "assets/sponsor/paypal.svg";
 import client2 from "assets/sponsor/google.svg";
@@ -33,13 +29,7 @@ const data = [
   },
 ];
 
-export default function Banner() {
-  const [videoOpen, setVideoOpen] = useState(false);
-  const handleClick = (e) => {
-    e.preventDefault();
-    setVideoOpen(true);
-  };
-
+export default function LandingSection() {
   return (
     <section sx={styles.banner} id="home">
       <Container sx={styles.banner.container}>
@@ -56,21 +46,6 @@ export default function Banner() {
             <Button variant="whiteButton" aria-label="Get Started">
               Get Started
             </Button>
-            <>
-              <ModalVideo
-                channel="youtube"
-                isOpen={videoOpen}
-                videoId="ZNA9rmDsYVE"
-                onClose={() => setVideoOpen(false)}
-              />
-              <Button
-                variant="textButton"
-                aria-label="Watch Video"
-                onClick={handleClick}
-              >
-                <FaPlayCircle /> Watch Video
-              </Button>
-            </>
           </Flex>
           <Flex sx={styles.sponsorBox}>
             <Text sx={styles.sponsorTitle}>Sponsored by:</Text>
@@ -83,10 +58,6 @@ export default function Banner() {
             </Box>
           </Flex>
         </Box>
-
-        {/* <Box sx={styles.banner.imageBox}>
-          <Image src={BannerThumb} alt="banner" />
-        </Box> */}
       </Container>
     </section>
   );
@@ -95,7 +66,6 @@ export default function Banner() {
 const styles = {
   banner: {
     overflow: ["hidden", "initial", null, "hidden"],
-    // backgroundImage: `url(${BannerBG})`,
     backgroundRepeat: `no-repeat`,
     backgroundPosition: "top left",
     backgroundSize: "cover",

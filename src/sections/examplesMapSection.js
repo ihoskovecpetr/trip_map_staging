@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Carousel from "nuka-carousel";
 import { useRouter } from "next/router";
-import ModalVideo from "react-modal-video";
 import CarouselJapanPNG from "assets/mapExamples/Japan_karaoke.png";
 import CarouselNYWhitePNG from "assets/mapExamples/NY_white.png";
 import CarouselSydneyPNG from "assets/mapExamples/Sydney_surfing.png";
@@ -14,14 +13,7 @@ import CarouselEuropeUSPNG from "assets/mapExamples/EU_Amerika_white.png";
 import { fontSize, mobile } from "utils";
 
 export default function Examples() {
-  const [videoOpen, setVideoOpen] = useState(false);
-  const [isRedirecting, setIsRedirecting] = useState(false);
   const router = useRouter();
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    setVideoOpen(true);
-  };
 
   return (
     <section sx={styles.banner} id="home">
@@ -52,32 +44,15 @@ export default function Examples() {
             Připoměňte si neopakovatelné okamžiky vašeho života a vytvořte si
             osobitou mapu.
           </Text>
-          <Flex>
-            <Button
-              variant="whiteButton"
-              onClick={() => {
-                router.push("/studio");
-              }}
-              aria-label="Get Started"
-            >
-              Začít navrhovat
-            </Button>
-            <>
-              <ModalVideo
-                channel="youtube"
-                isOpen={videoOpen}
-                videoId="ZNA9rmDsYVE"
-                onClose={() => setVideoOpen(false)}
-              />
-              <Button
-                variant="textButton"
-                aria-label="Watch Video"
-                onClick={handleClick}
-              >
-                {/* <FaPlayCircle /> */}
-              </Button>
-            </>
-          </Flex>
+          <Button
+            variant="whiteButton"
+            onClick={() => {
+              router.push("/studio");
+            }}
+            aria-label="Get Started"
+          >
+            Začít navrhovat
+          </Button>
         </Box>
       </StyledContainer>
     </section>
@@ -99,7 +74,7 @@ const styles = {
       width: ["100%", null, "85%", "55%", "50%", "55%"],
       display: "flex",
       flexDirection: "column",
-      alignItems: "flex-start",
+      alignItems: ["center", null, null, "flex-start"],
       flexShrink: 0,
       pt: [0, null, null, null, null, null, 5, 7],
     },
@@ -112,6 +87,10 @@ const StyledHeading = styled.h2`
   font-size: ${fontSize("xl")};
   font-weight: 700;
   margin-bottom: 10px;
+`;
+
+const BtnWrap = styled.div`
+  // display: flex;
 `;
 
 const CarouselWrap = styled.div`

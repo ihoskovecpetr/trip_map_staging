@@ -185,7 +185,7 @@ export default function MapContainer({
   useEffect(() => {
     map?.resize();
     if (map && Object.values(journeysDragable.locations).length > 0) {
-      // map.fitBounds(getBbox(journeysDragable), { padding: 80 });
+      map.fitBounds(getBbox(journeysDragable), { padding: 80 });
     }
   }, [journeysDragable]);
 
