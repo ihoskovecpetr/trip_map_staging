@@ -4,15 +4,16 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { useDispatch } from "react-redux";
 
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useElementDimensions } from "Hooks/useElementDimensions";
 import { color, fontWeight, mobile } from "utils";
 import { ORIENTATIONS } from "@constants";
-import Stepper from "./Stepper";
 import { getIsProduction } from "LibGlobal/getIsProduction";
 
+import Stepper from "./Stepper";
 import StepPathOrWithout from "../steps/StepPathOrWithout";
 import Step1Location from "../steps/StepLocation";
 import Step2Orientation from "../steps/Step2Orientation";
@@ -189,17 +190,27 @@ export default function TabsRootNew({ map, snapMapInstance }) {
       mapHeight={map_segment_height}
       isWideOrientation={isWideOrientation}
     >
-      {/* <div sx={styles.tabsContainer} className={isMobile && isOpen && "open"}> */}
-
-      <PriceWrap>
-        <Price>
-          {`celkem:
+      {isMobile && (
+        <>
+          <PriceWrap>
+            <Price>
+              <StyledParagraph>{`celkem:
           ${getFormattedPrice(
             dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
               .netPrice ?? 0
-          )}`}
-        </Price>
-      </PriceWrap>
+          )}`}</StyledParagraph>
+            </Price>
+            <ArrowWrap>
+              <StyledKeyboardArrowRight
+                isOpen={isOpen}
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+              />
+            </ArrowWrap>
+          </PriceWrap>
+        </>
+      )}
 
       <TabSegmentWrap
         mapHeight={map_segment_height}
@@ -220,24 +231,23 @@ export default function TabsRootNew({ map, snapMapInstance }) {
         {/* {isMobile && (
         <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
       )} */}
-        <TabContentWrap
+        <StepperContentWrap
           topElementsHeight={stepper_height + header_height}
           mapSegmentHeight={map_segment_height}
+          isOpen={isOpen}
         >
-          {<>{activeStepElements[activeStepNumber]}</>}
-        </TabContentWrap>
+          {activeStepElements[activeStepNumber]}
+        </StepperContentWrap>
       </TabSegmentWrap>
-      {isMobile && (
+      {/* {isMobile && (
         <Backdrop
-          className={classes.backdrop}
           classes={{
             root: classes.rootBackdrop, // class name, e.g. `classes-nesting-root-x`
           }}
           open={isOpen}
           onClick={() => setIsOpen(false)}
         ></Backdrop>
-      )}
-      {/* </div> */}
+      )} */}
     </MainContainer>
   );
 }
@@ -249,61 +259,68 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   z-index: 10;
-  background-color: white;
-  transition-duration: 1s;
+  background-color: ${color("background_almost_white")};
+  transition-duration: 0.5s;
   position: ${({ isOpen, isMobile }) =>
     isOpen ? "fixed" : isMobile ? "absolute" : "relative"};
-  top: ${({ isOpen, mapHeight }) => (isOpen ? "60vh" : `${mapHeight}px`)};
+  top: ${({ isOpen, mapHeight }) => (isOpen ? "30vh" : `${mapHeight}px`)};
 
   top: ${({ isOpen, isWideOrientation, mapCanvasHeight, mobileHeaderHeight }) =>
     isWideOrientation &&
     !isOpen &&
     `calc(${mobileHeaderHeight}px + ${mapCanvasHeight}px + 80px)`};
 
-  height: ${({ mapHeight }) => `calc(100vh - ${mapHeight}px)`};
+  height: ${({ mapHeight, isOpen, isMobile }) => isOpen && isMobile && `70vh`};
 
-  @media (min-width: 768px) {
-    height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
+  ${mobile`
     overflow: auto;
     top: unset;
-  }
+  `}
 `;
 
 const TabSegmentWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: ${color("background")};
+  // background-color: ${color("background")};
 
-  @media (max-width: 768px) {
-    height: ${({ mapHeight, isWideOrientation }) =>
-      `calc(100vh - ${mapHeight}px + ${isWideOrientation ? 100 : 0}px)`};
+  height: 100%;
+  top: ${({ isOpen, isWideOrientation, mapHeight }) =>
+    isOpen && `${mapHeight - 150}px`};
 
-    top: ${({ isOpen, isWideOrientation, mapHeight }) =>
-      isWideOrientation && !isOpen && `${mapHeight - 100}px`};
-
-    padding: 0 0;
-    overflow: visible;
-  }
-`;
-
-const TabContentWrap = styled.div`
-  height: unset;
-  overflow: visible;
-  padding: 0px 0.5rem;
-  background-color: ${color("background_almost_white")};
-  min-height: ${({ mapSegmentHeight, topElementsHeight }) =>
-    `calc(100vh - ${mapSegmentHeight}px - ${topElementsHeight}px + 0px)`};
+  padding: 0 0;
 
   ${mobile`
-    height: ${({ topElementsHeight }) =>
+    height: unset;
+    top: 0;
+    padding: unset;
+  `}
+`;
+
+// height: ${({ mapHeight, isWideOrientation }) =>
+//`calc(100vh - ${mapHeight}px + ${isWideOrientation ? 100 : 0}px)`};
+
+const StepperContentWrap = styled.div`
+  overflow: ${({ isOpen }) => (isOpen ? "scroll" : "hidden")};
+  padding: 0px 0.5rem;
+  height: ${({ topElementsHeight, mapSegmentHeight, isOpen }) =>
+    !isOpen &&
+    `calc(100vh - ${topElementsHeight}px - ${mapSegmentHeight}px - 10px)`};
+
+  ${mobile`
+    height: ${({ topElementsHeight, isOpen }) =>
       `calc(100vh - ${topElementsHeight}px - 10px)`};
-    overflow: auto;
+    overflow: scroll;
   `}
 
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const StyledParagraph = styled.p`
+  margin: 0;
+  display: inline;
 `;
 
 const PriceWrap = styled.div`
@@ -312,17 +329,38 @@ const PriceWrap = styled.div`
 `;
 
 const Price = styled.div`
+// display: inline-block;
+
   position: relative;
   color: white;
   padding-left: 0.5rem;
-  top: -30px;
+  top: -28px;
   color: ${color("primary")};
   font-Weight ${fontWeight("bold")}
 `;
 
+const ArrowWrap = styled.div`
+  display: inline-block;
+  background-color: ${color("background_almost_white")};
+  margin-left: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 0 10px;
+  position: relative;
+  height: 30px;
+  top: 5px;
+  top: -30px;
+`;
+
+const StyledKeyboardArrowRight = styled(KeyboardArrowRight)`
+  height: 44px !important;
+  width: 44px !important;
+  transform: ${({ isOpen }) => (isOpen ? "rotate(90deg)" : "rotate(-90deg)")};
+  margin: -6px 0;
+`;
+
 const useStyles = makeStyles((theme) => ({
   rootBackdrop: {
-    // zIndex: "5 !important",
     backgroundColor: "rgba(0,0,0,0.3)",
   },
 }));

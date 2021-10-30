@@ -492,7 +492,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: ["flex-start", null, null, "center"],
-    pt: ["20px", null, null, 0],
+    pt: ["14px", null, null, 0],
     width: "100%",
     height: ["60vh", null, null, "85vh"],
   },

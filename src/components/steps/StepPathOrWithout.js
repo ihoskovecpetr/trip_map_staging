@@ -79,6 +79,7 @@ const OptionContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin-top: 10px;
+  padding-bottom: 10px;
 `;
 
 const OptionItem = styled.div`

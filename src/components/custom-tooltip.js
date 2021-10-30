@@ -3,7 +3,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
-import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 
 import { color, fontWeight, mobile } from "utils";
@@ -74,16 +73,4 @@ const ButtonWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 5px;
-`;
-
-const StyledCloseIcon = styled(CloseIcon)`
-  padding: 0.1rem;
-  color: ${color("background_almost_white")};
-  border-radius: 5px;
-  border: 2px solid;
-  pointer-events: auto;
-  cursor: pointer;
-  margin-top: 0px;
-  z-index: 100;
-  position: absolute;
 `;
