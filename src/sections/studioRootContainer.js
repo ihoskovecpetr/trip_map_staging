@@ -497,7 +497,12 @@ export default function StudioRootContainer() {
 
   return (
     <section sx={{ marginTop: isMobile ? 0 : headerHeight }}>
-      <ContainerBox headerHeight={isMobile ? 0 : headerHeight}>
+      <ContainerBox
+        headerHeight={isMobile ? 0 : headerHeight}
+        dynamicVH={
+          typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
+        }
+      >
         <div sx={styles.containerBox}>
           <Box sx={styles.canvasBox}>
             <MapContainer
@@ -556,5 +561,6 @@ const styles = {
 };
 
 const ContainerBox = styled.div`
-  height: ${({ headerHeight }) => `calc(100vh - ${headerHeight}px)`};
+  height: ${({ headerHeight, dynamicVH }) =>
+    `calc(${100 * dynamicVH}px - ${headerHeight}px)`};
 `;

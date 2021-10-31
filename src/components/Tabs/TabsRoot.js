@@ -179,6 +179,10 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   const isWideOrientation =
     productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
 
+  console.log({
+    valVH: typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px",
+  });
+
   return (
     <MainContainer
       className={isMobile && isOpen && "open"}
@@ -189,6 +193,9 @@ export default function TabsRootNew({ map, snapMapInstance }) {
       mapCanvasHeight={map_canvas_height}
       mapHeight={map_segment_height}
       isWideOrientation={isWideOrientation}
+      dynamicVH={
+        typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
+      }
     >
       {isMobile && (
         <>
@@ -235,6 +242,9 @@ export default function TabsRootNew({ map, snapMapInstance }) {
           topElementsHeight={stepper_height + header_height}
           mapSegmentHeight={map_segment_height}
           isOpen={isOpen}
+          dynamicVH={
+            typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
+          }
         >
           {activeStepElements[activeStepNumber]}
         </StepperContentWrap>
@@ -254,7 +264,6 @@ export default function TabsRootNew({ map, snapMapInstance }) {
 
 const MainContainer = styled.div`
   width: 100%;
-  height: null;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -263,14 +272,16 @@ const MainContainer = styled.div`
   transition-duration: 0.5s;
   position: ${({ isOpen, isMobile }) =>
     isOpen ? "fixed" : isMobile ? "absolute" : "relative"};
-  top: ${({ isOpen, mapHeight }) => (isOpen ? "30vh" : `${mapHeight}px`)};
+  top: ${({ isOpen, mapHeight, dynamicVH }) =>
+    isOpen ? `${30 * dynamicVH}px` : `${mapHeight}px`};
 
   top: ${({ isOpen, isWideOrientation, mapCanvasHeight, mobileHeaderHeight }) =>
     isWideOrientation &&
     !isOpen &&
     `calc(${mobileHeaderHeight}px + ${mapCanvasHeight}px + 80px)`};
 
-  height: ${({ mapHeight, isOpen, isMobile }) => isOpen && isMobile && `70vh`};
+  height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
+    isOpen && isMobile && `${70 * dynamicVH}px`};
 
   ${mobile`
     overflow: auto;
@@ -303,13 +314,15 @@ const TabSegmentWrap = styled.div`
 const StepperContentWrap = styled.div`
   overflow: ${({ isOpen }) => (isOpen ? "scroll" : "hidden")};
   padding: 0px 0.5rem;
-  height: ${({ topElementsHeight, mapSegmentHeight, isOpen }) =>
+  height: ${({ topElementsHeight, mapSegmentHeight, isOpen, dynamicVH }) =>
     !isOpen &&
-    `calc(100vh - ${topElementsHeight}px - ${mapSegmentHeight}px - 10px)`};
+    `calc(${
+      100 * dynamicVH
+    }px - ${topElementsHeight}px - ${mapSegmentHeight}px - 10px)`};
 
   ${mobile`
-    height: ${({ topElementsHeight, isOpen }) =>
-      `calc(100vh - ${topElementsHeight}px - 10px)`};
+    height: ${({ topElementsHeight, isOpen, dynamicVH }) =>
+      `calc(${100 * dynamicVH}px - ${topElementsHeight}px - 10px)`};
     overflow: scroll;
   `}
 
