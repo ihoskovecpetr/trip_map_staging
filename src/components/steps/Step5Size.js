@@ -123,7 +123,7 @@ export default function Step5Size({ index }) {
       <ContainerSizes>
         {variantsPrintfulForSize.length > 0 &&
           dataPrintful &&
-          arrSingleSizeNames.map((sizeNameLocal) => {
+          arrSingleSizeNames.map((sizeNameLocal, index) => {
             const sizeObject = SIZES.find(
               (size) => size.code === sizeNameLocal
             );
@@ -140,11 +140,12 @@ export default function Step5Size({ index }) {
               (sizeNameLocal === SIZE_NAMES["50X70cm"] && !isMidSizeCapable); // change it to !isLa..
             // const isDisabledBtn = sizeNameLocal === SIZE_NAMES["61X91cm"];
             return (
-              <MainItem>
+              <MainItem key={index}>
                 <StyledItem
                   active={productRedux.sizeObject.acceptableSizes.includes(
                     sizeNameLocal
                   )}
+                  key={index}
                   isDisabled={isDisabledBtn}
                   onClick={() => !isDisabledBtn && setNewSize(sizeNameLocal)}
                 >

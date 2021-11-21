@@ -43,7 +43,7 @@ import {
 
 const isProduction = getIsProduction();
 
-export default function TabsRootNew({ map, snapMapInstance }) {
+export default function TabsRoot({ map, snapMapInstance }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { isMobile } = useIsMobile();
@@ -179,10 +179,6 @@ export default function TabsRootNew({ map, snapMapInstance }) {
   const isWideOrientation =
     productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
 
-  console.log({
-    valVH: typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px",
-  });
-
   return (
     <MainContainer
       className={isMobile && isOpen && "open"}
@@ -241,6 +237,7 @@ export default function TabsRootNew({ map, snapMapInstance }) {
         <StepperContentWrap
           topElementsHeight={stepper_height + header_height}
           mapSegmentHeight={map_segment_height}
+          key={Math.random()}
           isOpen={isOpen}
           dynamicVH={
             typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"

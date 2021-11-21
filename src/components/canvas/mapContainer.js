@@ -4,7 +4,9 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import Lightbox from "react-image-lightbox";
-import ReactMapboxGl, { Layer, Feature, Source, Marker } from "react-mapbox-gl";
+// import ReactMapboxGl, { Layer, Feature, Source, Marker } from "react-mapbox-gl";
+import ReactMapGL, { Layer, Source } from "react-map-gl";
+
 import Backdrop from "@material-ui/core/Backdrop";
 
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -53,13 +55,13 @@ import {
 const NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN =
   "pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w";
 
-const Map = ReactMapboxGl({
-  accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
-});
+// const Map = ReactMapboxGl({
+//   accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+// });
 
-const Map2 = ReactMapboxGl({
-  accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
-});
+// const Map2 = ReactMapboxGl({
+//   accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+// });
 
 const lineLayout = {
   "line-cap": "round",
@@ -193,6 +195,47 @@ export default function MapContainer({
     map?.resize();
   }, [isJourneysEnabled]);
 
+  const [viewport, setViewport] = useState({
+    width: 400,
+    height: 400,
+    latitude: 50.08861,
+    longitude: 14.42139,
+    zoom: 4,
+  });
+
+  const RASTER_SOURCE_OPTIONS = {
+    type: "raster",
+    tiles: [
+      `https://api.mapbox.com/styles/v1/petrhoskovec/ckvxm7gn72k0c14pcefmofa93/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
+      // `https://api.mapbox.com/styles/v1/petrhoskovec/ckvxm7gn72k0c14pcefmofa93/tiles/${1}/1/1?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
+      // `https://api.mapbox.com/styles/v1/petrhoskovec/ckolmiq3f4u9217p9v8fmln15/tiles/${mapZoom}/1/0?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
+    ],
+    tileSize: 124, //512,
+  };
+
+  const style = {
+    version: 8,
+    sources: {
+      osm: {
+        type: "raster",
+        tiles: [
+          `https://api.mapbox.com/styles/v1/petrhoskovec/ckpbeqdof7li518ojkwwaqrfh/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
+        ],
+        tileSize: 64,
+      },
+    },
+    layers: [
+      {
+        id: "osmTiles",
+        type: "raster",
+        source: "osm",
+        minzoom: 0,
+        maxzoom: 19,
+      },
+    ],
+    glyphs: "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+  };
+
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
       <MapButtons
@@ -205,29 +248,54 @@ export default function MapContainer({
 
       <div sx={styles.map_available_space} id="map_available_space_id">
         <div style={{ display: "none" }} id="map_wrap_id">
-          <Map
-            onStyleLoad={onMapLoad}
-            style={MAP_STYLES[activeMapStyleName].url}
-            containerStyle={{
-              width: "100%",
-              height: "100%",
-              overflow: "visible",
+          <ReactMapGL
+            mapboxApiAccessToken={NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN}
+            {...viewport}
+            mapStyle={style}
+            width="100%"
+            height="100%"
+            onViewportChange={(nextViewport) => setViewport(nextViewport)}
+            onError={(E) => {
+              console.log({ Err_or: E });
             }}
-            center={mapCenterCoordinates}
-            zoom={[mapZoom]}
-            onZoomEnd={(_, e) => {
-              dispatch(setMapZoomAction(e.target.getZoom()));
+            onMouseMove={(e_move) => {
+              console.log(e_move.type, { e_move });
             }}
-            onMoveEnd={(_, e) => {
-              dispatch(
-                setMapCoordinatesAction([
-                  e.target.getCenter().lng,
-                  e.target.getCenter().lat,
-                ])
-              );
-            }}
-            onMouseMove={(map, e) => {}}
+
+            // onStyleLoad={onMapLoad}
+            // // style={MAP_STYLES[activeMapStyleName].url}
+            // style={style}
+            // containerStyle={{
+            //   width: "100%",
+            //   height: "100%",
+            //   overflow: "visible",
+            // }}
+            // center={mapCenterCoordinates}
+            // zoom={[mapZoom]}
+            // onZoomEnd={(_, e) => {
+            //   dispatch(setMapZoomAction(e.target.getZoom()));
+            // }}
+            // onMoveEnd={(_, e) => {
+            //   dispatch(
+            //     setMapCoordinatesAction([
+            //       e.target.getCenter().lng,
+            //       e.target.getCenter().lat,
+            //     ])
+            //   );
+            // }}
+            // onMouseMove={(map, e) => {}}
           >
+            {/* <Source id="source_id" tileJsonSource={RASTER_SOURCE_OPTIONS} />
+            <Layer type="raster" id="layer_id" sourceId="source_id" /> */}
+
+            {/* <Layer
+              type="symbol"
+              id="marker"
+              layout={{ "icon-image": "marker-15" }}
+            >
+              <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
+            </Layer> */}
+
             <PrintLocations
               map={map}
               sortedGroupsJourneys={sortedGroupsJourneys}
@@ -275,9 +343,9 @@ export default function MapContainer({
                 </Layer>
               );
             })} */}
-          </Map>
+          </ReactMapGL>
         </div>
-        <Backdrop open={false}>
+        {/* <Backdrop open={false}>
           <NeverDisplayContainer id="snapshot_map_wrapper">
             <Map2
               onStyleLoad={onMapSnapshotLoad}
@@ -302,7 +370,7 @@ export default function MapContainer({
               />
             </Map2>
           </NeverDisplayContainer>
-        </Backdrop>
+        </Backdrop> */}
 
         {Object.keys(FAKE_DIV_IDS).map((key, index) => (
           <div
@@ -361,62 +429,107 @@ const PrintLocations = ({
               sortedGroupsJourneys[groupIndex][pointIndex - 1];
             const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex];
 
+            const getGeojsonPoint = (location) => {
+              return {
+                type: "FeatureCollection",
+                features: [
+                  {
+                    type: "Feature",
+                    geometry: {
+                      type: "Point",
+                      coordinates: location,
+                    },
+                  },
+                ],
+              };
+            };
+
+            const getGeojsonLine = (location) => {
+              return {
+                type: "FeatureCollection",
+                features: [
+                  {
+                    type: "Feature",
+                    geometry: {
+                      type: "LineString",
+                      coordinates: location,
+                    },
+                  },
+                ],
+              };
+            };
+
             return (
               <>
-                <Layer
-                  id={"point-blip" + groupIndex + pointIndex}
-                  type="circle"
-                  paint={{
-                    "circle-radius": baseCircleRadius * 1.4,
-                    "circle-radius-transition": { duration: 0 },
-                    "circle-opacity-transition": { duration: 0 },
-                    "circle-color":
-                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                        .colorSecondary,
-                  }}
+                <Source
+                  id={"source_1_" + groupIndex + pointIndex}
+                  type="geojson"
+                  data={getGeojsonPoint(currentPoint.location)}
                 >
-                  <Feature coordinates={currentPoint.location} />
-                </Layer>
+                  <Layer
+                    id={"point-blip" + groupIndex + pointIndex}
+                    type="circle"
+                    paint={{
+                      "circle-radius": baseCircleRadius * 1.4,
+                      "circle-radius-transition": { duration: 0 },
+                      "circle-opacity-transition": { duration: 0 },
+                      "circle-color":
+                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                          .colorSecondary,
+                    }}
+                  ></Layer>
+                </Source>
 
-                <Layer
-                  id={"point" + groupIndex + pointIndex}
-                  type="circle"
-                  // sourceId={"point" + groupIndex + pointIndex}
-                  paint={{
-                    "circle-radius": baseCircleRadius,
-                    "circle-color":
-                      currentPoint.titleSourceId === draggedPoint
-                        ? "red"
-                        : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                            .colorMain,
-                  }}
+                <Source
+                  id={"source_2_" + groupIndex + pointIndex}
+                  type="geojson"
+                  data={getGeojsonPoint(currentPoint.location)}
                 >
-                  <Feature coordinates={currentPoint.location} />
-                </Layer>
+                  <Layer
+                    id={"point" + groupIndex + pointIndex}
+                    type="circle"
+                    // sourceId={"point" + groupIndex + pointIndex}
+                    paint={{
+                      "circle-radius": baseCircleRadius,
+                      "circle-color":
+                        currentPoint.titleSourceId === draggedPoint
+                          ? "red"
+                          : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                              .colorMain,
+                    }}
+                  />
+                </Source>
 
                 {previousPoint && (
-                  <Layer
-                    type="line"
-                    layout={lineLayout}
-                    paint={{
-                      "line-color":
-                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                          .colorMain,
-                      "line-width": lineWidth,
-                    }}
+                  <Source
+                    id={"source_line_" + groupIndex + pointIndex}
+                    type="geojson"
+                    data={getGeojsonLine(
+                      getGeoArc(currentPoint.location, previousPoint.location)
+                    )}
                   >
-                    <Feature
-                      coordinates={getGeoArc(
-                        currentPoint.location,
-                        previousPoint.location
-                      )}
+                    <Layer
+                      type="line"
+                      layout={lineLayout}
+                      paint={{
+                        "line-color":
+                          MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                            .colorMain,
+                        "line-width": lineWidth,
+                      }}
                     />
-                  </Layer>
+                  </Source>
                 )}
-                {currentPoint.titleLabelDisplayed && (
+
+                {/* {currentPoint.titleLabelDisplayed && ( */}
+                <Source
+                  id={"source_title_" + groupIndex + pointIndex}
+                  type="geojson"
+                  data={getGeojsonPoint(currentPoint.titleLocation)}
+                >
                   <Layer
+                    id={"layer_title_" + groupIndex + pointIndex}
                     type="symbol"
-                    key={groupIndex + pointIndex}
                     layout={{
                       // "icon-image": "harbor-15",
                       "icon-allow-overlap": true,
@@ -444,14 +557,17 @@ const PrintLocations = ({
                               .colorHalo,
                       "text-halo-width": textSize,
                     }}
-                    onMouseEnter={(e) => {
-                      setCursor("move");
+                    // onMouseEnter={(e) => {
+                    //   setCursor("move");
+                    // }}
+                    // onMouseLeave={() => {
+                    //   setCursor("pointer");
+                    // }}
+                    onClick={() => {
+                      console.log("pointe__r");
                     }}
-                    onMouseLeave={() => {
-                      setCursor("pointer");
-                    }}
-                  >
-                    <Feature
+                  />
+                  {/* <Feature
                       coordinates={currentPoint.titleLocation}
                       onDragStart={(e) => {
                         e.target.dragPan.disable();
@@ -462,9 +578,9 @@ const PrintLocations = ({
                         currentPoint.titleSourceId === draggedPoint
                       }
                       onDragEnd={onUp(currentPoint)}
-                    />
-                  </Layer>
-                )}
+                    /> */}
+                </Source>
+                {/* )} */}
               </>
             );
           });

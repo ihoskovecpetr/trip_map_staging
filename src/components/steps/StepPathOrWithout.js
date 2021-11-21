@@ -20,8 +20,6 @@ export default function StepPathOrWithout({ map, index }) {
   const dispatch = useDispatch();
   const journeysDragable = useGetJourneysDraggable();
 
-  console.log({ journeysDragable });
-
   const isJourneysEnabled = useJourneysEnabledSelector();
   const bbox = getBbox(journeysDragable);
 

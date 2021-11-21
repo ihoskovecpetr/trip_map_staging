@@ -10,7 +10,6 @@ const getGeoArc = (start, end) => {
     },
   };
 
-  console.log({ start, end });
   const lineDistance = turf.length(feature);
   const arc = [];
   const steps = 100;
@@ -29,8 +28,6 @@ const getGeoArc = (start, end) => {
   }
 
   arc.push(end);
-
-  console.log({ arc });
 
   return arc;
 

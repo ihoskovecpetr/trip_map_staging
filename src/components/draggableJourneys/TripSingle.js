@@ -39,6 +39,10 @@ const Flex3 = styled.div`
   flex: 1;
 `;
 
+const StyledAddCircleOutlineIcon = styled(AddCircleOutlineIcon)`
+  cursor: pointer;
+`;
+
 const LocationsList = styled.div``;
 
 export default function TripSingle({
@@ -105,7 +109,7 @@ export default function TripSingle({
       </Droppable>
       <NewLocationContainer>
         <Flex1>
-          <AddCircleOutlineIcon
+          <StyledAddCircleOutlineIcon
             onClick={() =>
               !isTripActive && activateNewLocationGeoInput(tripObj.id)
             }
