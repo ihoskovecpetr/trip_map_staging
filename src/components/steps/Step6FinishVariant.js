@@ -81,27 +81,28 @@ export default function Step6FinishVariant({ index }) {
       )}
       {variantsPrintfulForSize.length > 0 && (
         <ContainerVariants>
-          {variantsPrintfulForSize.map(({ id: variantId, shipping }) => (
-            <ItemWrap>
-              <div sx={styles.textsWrap}>
-                <VariantDesc>
-                  {getVariantObject(variantId)?.frameName}
-                </VariantDesc>
-              </div>
-              <ItemVariant
-                active={productRedux.variantId === variantId}
-                onClick={() => setNewFrame(variantId, shipping.codeCZ)}
-              >
-                <div sx={styles.imageWrap}>
-                  <img
-                    sx={styles.variantImage}
-                    src={dataPrintful[variantId]?.url}
-                  />
+          {variantsPrintfulForSize.map(
+            ({ id: variantId, shipping }, varIndex) => (
+              <ItemWrap key={varIndex}>
+                <div sx={styles.textsWrap}>
+                  <VariantDesc>
+                    {getVariantObject(variantId)?.frameName}
+                  </VariantDesc>
                 </div>
-              </ItemVariant>
-              <div sx={styles.textsWrap}>
-                <StyledPriceP active={productRedux.variantId === variantId}>
-                  {`+ 
+                <ItemVariant
+                  active={productRedux.variantId === variantId}
+                  onClick={() => setNewFrame(variantId, shipping.codeCZ)}
+                >
+                  <div sx={styles.imageWrap}>
+                    <img
+                      sx={styles.variantImage}
+                      src={dataPrintful[variantId]?.url}
+                    />
+                  </div>
+                </ItemVariant>
+                <div sx={styles.textsWrap}>
+                  <StyledPriceP active={productRedux.variantId === variantId}>
+                    {`+ 
                   ${getFormattedPrice(
                     basePriceAlgorithm.subtract([
                       dataPrintful?.[variantId]?.priceWithDeliveryAndProfit
@@ -110,19 +111,20 @@ export default function Step6FinishVariant({ index }) {
                         ?.priceWithDeliveryAndProfit.netPrice ?? 0,
                     ])
                   )}`}
-                </StyledPriceP>
+                  </StyledPriceP>
 
-                <StyledDeliveryPriceP
-                  active={productRedux.variantId === variantId}
-                >
-                  {`(+ ${getFormattedPrice(
-                    priceAlgorithm.getPriceOfDelivery(variantId, dataPrintful)
-                      .netPrice
-                  )} doprava)`}
-                </StyledDeliveryPriceP>
-              </div>
-            </ItemWrap>
-          ))}
+                  <StyledDeliveryPriceP
+                    active={productRedux.variantId === variantId}
+                  >
+                    {`(+ ${getFormattedPrice(
+                      priceAlgorithm.getPriceOfDelivery(variantId, dataPrintful)
+                        .netPrice
+                    )} doprava)`}
+                  </StyledDeliveryPriceP>
+                </div>
+              </ItemWrap>
+            )
+          )}
         </ContainerVariants>
       )}
 

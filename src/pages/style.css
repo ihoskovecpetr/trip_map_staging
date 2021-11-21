@@ -64,6 +64,7 @@ body::-webkit-scrollbar {
 
 .mapboxgl-canvas {
   position: relative !important;
+  /* transform: scale(0.5); */
   /* outline: 5px solid green; */
   /* width: calc(100% * 0.6) !important;
   height: calc(100% * 0.4) !important; */

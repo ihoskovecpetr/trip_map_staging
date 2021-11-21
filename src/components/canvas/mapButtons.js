@@ -175,7 +175,7 @@ export default function MapContainer({
               <StyledCircularProgress />
             </ColorWrap>
           ) : (
-            <OpenWithIcon color="grey" />
+            <OpenWithIcon />
           )}
         </TeaserButton>
 

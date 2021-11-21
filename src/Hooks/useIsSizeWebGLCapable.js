@@ -10,13 +10,13 @@ export function useIsSizeWebGLSizeCapable() {
   const [isLargeSizeCapable, setIsLargeSizeCapable] = useState(false);
   const [isMidSizeCapable, setIsMidSizeCapable] = useState(false);
 
-  const checkWebGLMaxSize = () => {
-    const canvas = document.createElement("canvas");
-    const gl = canvas.getContext("webgl");
-    return gl.getParameter(gl.MAX_TEXTURE_SIZE);
-  };
-
   useEffect(() => {
+    const checkWebGLMaxSize = () => {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl");
+      return gl.getParameter(gl.MAX_TEXTURE_SIZE);
+    };
+
     const maxSidePx = checkWebGLMaxSize();
 
     setMaxPixels(maxSidePx);

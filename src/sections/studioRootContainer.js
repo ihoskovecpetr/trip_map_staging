@@ -1,21 +1,18 @@
 /** @jsx jsx */
 import React, { useEffect, useRef, useState } from "react";
 import { jsx, Box } from "theme-ui";
-import TabsRootNew from "components/Tabs/TabsRoot";
+import TabsRoot from "components/Tabs/TabsRoot";
 import MapContainer from "components/canvas/mapContainer";
-import mapboxgl from "mapbox-gl";
 import styled from "styled-components";
-// import produce from "immer";
 import { useDispatch } from "react-redux";
 
-import { useIsMobile } from "../Hooks/useIsMobile";
+import { useIsMobile } from "Hooks/useIsMobile";
 import { useElementDimensions } from "Hooks/useElementDimensions";
-import { drawLayout } from "../LibGlobal/drawLayout";
-import { prepareTextInput } from "../LibGlobal/prepareTextInput";
-import { getUpdatedMapSizes } from "../LibGlobal/getUpdatedMapSizes";
+import { drawLayout } from "LibGlobal/drawLayout";
+import { prepareTextInput } from "LibGlobal/prepareTextInput";
+import { getUpdatedMapSizes } from "LibGlobal/getUpdatedMapSizes";
 import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
-import { getVariantObject } from "../LibGlobal/getVariantObject";
-import { getIsProduction } from "../LibGlobal/getIsProduction";
+import { getVariantObject } from "LibGlobal/getVariantObject";
 import { getLayoutColors } from "LibGlobal/getLayoutColors";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
 
@@ -24,16 +21,13 @@ import {
   useProductSelector,
   useActiveLayoutSelector,
   useMapCoordinatesSelector,
-  useMapZoomSelector,
   useActiveMapStyleSelector,
 } from "redux/order/reducer";
 
 import {
   setNewTitle,
   setNewSubtitle,
-  setMapCoordinatesAction,
   setMapZoomAction,
-  setActiveMapStyleAction,
 } from "redux/order/actions";
 
 import {
@@ -55,9 +49,6 @@ let subtitleInput;
 let canvasMap;
 let ctxMap;
 let mapWrapper;
-
-const IS_PRODUCTION = getIsProduction();
-// const priceAlgorithm = getPriceAlgorithm();
 
 const resizeLayout = ({
   cvsLayout,
@@ -126,7 +117,7 @@ const resizeFrameDiv = ({ productRef, mapAvailSpaceRef }) => {
     const extraFrame = baseLongerSide * frameWidthKoefficient;
 
     Object.assign(trueMapCanvasElement.style, {
-      outline: `${extraFrame + 0}px solid ${variantObj.frameColor}`,
+      outline: `${extraFrame}px solid ${variantObj.frameColor}`,
     });
   }
 };
@@ -209,11 +200,6 @@ export default function StudioRootContainer() {
   const activeLayoutRedux = useActiveLayoutSelector();
   const mapCenterCoordinates = useMapCoordinatesSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
-  // const { dataPrintful } = useGetDataPrintful();
-
-  // const [activeMapStyleName, setActiveMapStyleName] = useState(
-  //   MAP_STYLES_NAMES.RED_BLUE
-  // );
   const [mapInstance, setMapInstance] = useState(null);
   const [snapMapInstance, setSnapMapInstance] = useState(null);
 
@@ -305,11 +291,11 @@ export default function StudioRootContainer() {
         activeMapStyleName: activeMapStyleName,
       });
 
-      resizeFrameDiv({
-        productRef,
-        baseLongSize,
-        mapAvailSpaceRef,
-      });
+      // resizeFrameDiv({
+      //   productRef,
+      //   baseLongSize,
+      //   mapAvailSpaceRef,
+      // });
     }
   }, [
     activeLayoutRedux,
@@ -337,8 +323,6 @@ export default function StudioRootContainer() {
       trueMapCanvasElement = document.getElementsByClassName(
         "mapboxgl-canvas"
       )[0];
-
-      console.log({ trueMapCanvasElement });
 
       const mapCanvasWrapElement = document.getElementsByClassName(
         "mapboxgl-canvas-container"
@@ -405,11 +389,11 @@ export default function StudioRootContainer() {
           activeMapStyleName,
         });
 
-        resizeFrameDiv({
-          productRef,
-          baseLongSize,
-          mapAvailSpaceRef,
-        });
+        // resizeFrameDiv({
+        //   productRef,
+        //   baseLongSize,
+        //   mapAvailSpaceRef,
+        // });
 
         resizeInputsWrap({ productRef, layout: layoutRef.current, canvasMap });
       });
@@ -517,7 +501,7 @@ export default function StudioRootContainer() {
           </Box>
 
           <Box sx={styles.settingsBox}>
-            <TabsRootNew map={mapInstance} snapMapInstance={snapMapInstance} />
+            <TabsRoot map={mapInstance} snapMapInstance={snapMapInstance} />
           </Box>
         </div>
       </ContainerBox>

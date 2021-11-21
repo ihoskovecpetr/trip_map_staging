@@ -21,7 +21,7 @@ export function prepareTextInput({
 }) {
   element.setAttribute("type", "text");
   element.setAttribute("name", name);
-  element.setAttribute("contenteditable", "plaintext-only");
+  // element.setAttribute("contentEditable", "plaintext-only");
   element.setAttribute("maxLength", name === "subtitle" ? 44 : 30);
   element.setAttribute("id", "title_input");
 

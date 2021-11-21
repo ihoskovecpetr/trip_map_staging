@@ -117,7 +117,7 @@ export default function KeyFeature() {
         <Grid sx={styles.gridCenter}>
           <Gallery
             images={imagesWithOptions}
-            width={"100%"}
+            // width={"100%"}
             backdropClosesModal={true}
             rowHeight={isMobile ? 120 : 180}
           />

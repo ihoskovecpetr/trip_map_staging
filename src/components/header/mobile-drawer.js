@@ -84,7 +84,7 @@ const MobileDrawer = () => {
       </Drawer>
       <Box sx={styles.nav}>
         {menuItems.map(({ path, label }, index) => (
-          <Link href={path}>
+          <Link href={path} key={index}>
             <StyledContainer
               onClick={() => {
                 setLoadingIndex(index);

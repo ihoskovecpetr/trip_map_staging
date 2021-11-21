@@ -45,7 +45,9 @@ export default function Step2Orientation({ index }) {
 
           <StyledDescriptionP
             active={!isProductWide(productRedux)}
-            onClick={isProductWide(productRedux) && switchOrientation}
+            onClick={
+              isProductWide(productRedux) ? switchOrientation : undefined
+            }
           >
             Na výšku
           </StyledDescriptionP>
@@ -59,7 +61,9 @@ export default function Step2Orientation({ index }) {
           </IconWrap>
 
           <StyledDescriptionP
-            onClick={!isProductWide(productRedux) && switchOrientation}
+            onClick={
+              !isProductWide(productRedux) ? switchOrientation : undefined
+            }
             active={isProductWide(productRedux)}
           >
             Na šířku
