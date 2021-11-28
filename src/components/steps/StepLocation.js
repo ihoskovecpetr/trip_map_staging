@@ -30,7 +30,8 @@ export default function StepLocation({ map, index }) {
 
   useEffect(() => {
     document.getElementById("geocoder").innerHTML = "";
-    document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+    // document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+    geocoder.addTo("#geocoder");
 
     geocoder.container.style.width = "100%";
   }, []);
@@ -70,7 +71,13 @@ export default function StepLocation({ map, index }) {
     }
 
     geocoder.clear(); // to remove blue dot
-    document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].blur();
+
+    setTimeout(() => {
+      document
+        .getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0]
+        .blur();
+      geocoder.clear(); // to remove blue dot
+    }, 500);
     window.scrollTo({
       top: 0,
       left: 0,
@@ -79,7 +86,7 @@ export default function StepLocation({ map, index }) {
   };
 
   return (
-    <div sx={styles.container}>
+    <div sx={styles.container} key={`step_${index}`}>
       {!isMobile && <HeadingText>{index}. Zadejte lokalitu</HeadingText>}
 
       <div

@@ -1,11 +1,11 @@
 /** @jsx jsx */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import Lightbox from "react-image-lightbox";
 // import ReactMapboxGl, { Layer, Feature, Source, Marker } from "react-mapbox-gl";
-import ReactMapGL, { Layer, Source } from "react-map-gl";
+import ReactMapGL, { Layer, Source, Marker } from "react-map-gl";
 
 import Backdrop from "@material-ui/core/Backdrop";
 
@@ -20,12 +20,14 @@ import { getGeoArc } from "LibGlobal/getGeoArc";
 import { getBbox } from "LibGlobal/getBbox";
 import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimensions";
 import MapButtons from "./mapButtons";
+import Pin from "./pin";
 
 import {
   setPopupSeenAction,
   updateJourneyPoint,
   setMapZoomAction,
   setMapCoordinatesAction,
+  setMapPositionAction,
   updateIcon,
   updateLocation,
 } from "redux/order/actions";
@@ -35,8 +37,11 @@ import {
   useActiveLayoutSelector,
   useActiveMapStyleSelector,
   useSeenPopupSelector,
+  //remove
   useMapCoordinatesSelector,
   useMapZoomSelector,
+  //to here
+  useMapPosition,
   useGetJourneysDraggable,
   useGetJourneysSpecsSelector,
   useJourneysEnabledSelector,
@@ -88,6 +93,7 @@ export default function MapContainer({
 
   const mapZoom = useMapZoomSelector();
   const mapCenterCoordinates = useMapCoordinatesSelector();
+  const mapPosition = useMapPosition();
   const journeysSpecs = useGetJourneysSpecsSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
   const icons = useGetIcons();
@@ -101,6 +107,7 @@ export default function MapContainer({
   const [images, setImages] = useState([]);
   const qualityImageCreator = useQualityImageCreator();
 
+  const [viewport, setViewport] = useState(mapPosition);
   const mapCanvas = map?.getCanvas();
 
   const { baseLongSize } = getCenteringLayoutDimensions({
@@ -110,38 +117,46 @@ export default function MapContainer({
     elHeight: mapCanvas?.height,
   });
 
-  const fullscreenImageRequested = async () => {
-    setIsCreatingImage(true);
-    const finalImgSrc = await qualityImageCreator({
-      map,
-      snapMapInstance,
-      activeLayoutName: activeLayoutNameRedux,
-      product: productRedux,
-      activeMapStyleName,
-      mapTitles,
-      options: {
-        isPreview: false,
-        isLowDefinition: false,
-      },
-    });
-
-    setLightbox({
-      open: true,
-      activeSrc: finalImgSrc,
-    });
-
-    setIsCreatingImage(false);
-    return;
+  const updateMapDimensions = (newDimensions) => {
+    dispatch(setMapPositionAction(newDimensions));
   };
 
-  const onMapLoad = (mapLoc) => {
+  // const fullscreenImageRequested = async () => {
+  //   setIsCreatingImage(true);
+  //   const finalImgSrc = await qualityImageCreator({
+  //     map,
+  //     snapMapInstance,
+  //     activeLayoutName: activeLayoutNameRedux,
+  //     product: productRedux,
+  //     activeMapStyleName,
+  //     mapTitles,
+  //     options: {
+  //       isPreview: false,
+  //       isLowDefinition: false,
+  //     },
+  //   });
+
+  //   setLightbox({
+  //     open: true,
+  //     activeSrc: finalImgSrc,
+  //   });
+
+  //   setIsCreatingImage(false);
+  //   return;
+  // };
+
+  const onMapLoad = (e) => {
+    const mapLoc = e.target;
     mapLoc.dragRotate.disable();
     mapLoc.touchZoomRotate.disableRotation();
+
+    console.log({ mapLoc });
 
     setMapInstance(mapLoc);
   };
 
-  const onMapSnapshotLoad = (snapMap) => {
+  const onMapSnapshotLoad = (e) => {
+    const snapMap = e.target;
     snapMap.resize();
     setSnapMapInstance(snapMap);
   };
@@ -149,13 +164,14 @@ export default function MapContainer({
   const onUp = (currentPoint) => (e) => {
     const coords = e.lngLat;
 
-    e.target.dragPan.enable();
+    map.dragPan.enable();
+    map.scrollZoom.enable();
 
     if (currentPoint.titleSourceId === draggedPoint) {
       dispatch(
         updateLocation({
           ...currentPoint,
-          titleLocation: [coords.lng, coords.lat],
+          titleLocation: [coords[0], coords[1]],
         })
       );
       setDraggedPoint(null);
@@ -187,7 +203,7 @@ export default function MapContainer({
   useEffect(() => {
     map?.resize();
     if (map && Object.values(journeysDragable.locations).length > 0) {
-      map.fitBounds(getBbox(journeysDragable), { padding: 80 });
+      // map.fitBounds(getBbox(journeysDragable), { padding: 80 });
     }
   }, [journeysDragable]);
 
@@ -195,34 +211,21 @@ export default function MapContainer({
     map?.resize();
   }, [isJourneysEnabled]);
 
-  const [viewport, setViewport] = useState({
-    width: 400,
-    height: 400,
-    latitude: 50.08861,
-    longitude: 14.42139,
-    zoom: 4,
-  });
-
-  const RASTER_SOURCE_OPTIONS = {
-    type: "raster",
-    tiles: [
-      `https://api.mapbox.com/styles/v1/petrhoskovec/ckvxm7gn72k0c14pcefmofa93/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
-      // `https://api.mapbox.com/styles/v1/petrhoskovec/ckvxm7gn72k0c14pcefmofa93/tiles/${1}/1/1?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
-      // `https://api.mapbox.com/styles/v1/petrhoskovec/ckolmiq3f4u9217p9v8fmln15/tiles/${mapZoom}/1/0?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
-    ],
-    tileSize: 124, //512,
-  };
-
-  const style = {
+  const getMapStyleObj = (mapId) => ({
     version: 8,
     sources: {
       osm: {
         type: "raster",
         tiles: [
-          `https://api.mapbox.com/styles/v1/petrhoskovec/ckpbeqdof7li518ojkwwaqrfh/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
+          `https://api.mapbox.com/styles/v1/petrhoskovec/${mapId}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
         ],
         tileSize: 64,
+        minzoom: 0,
+        maxzoom: 22,
       },
+    },
+    options: {
+      diff: false,
     },
     layers: [
       {
@@ -230,11 +233,13 @@ export default function MapContainer({
         type: "raster",
         source: "osm",
         minzoom: 0,
-        maxzoom: 19,
+        maxzoom: 22,
       },
     ],
-    glyphs: "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
-  };
+    // glyphs: "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+    glyphs: "http://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
+    // glyphs: "",
+  });
 
   return (
     <div sx={styles.canvas_bg} id="map_studio_segment">
@@ -251,15 +256,18 @@ export default function MapContainer({
           <ReactMapGL
             mapboxApiAccessToken={NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN}
             {...viewport}
-            mapStyle={style}
+            mapStyle={getMapStyleObj(MAP_STYLES[activeMapStyleName].mapId)}
+            // mapStyle={MAP_STYLES[activeMapStyleName].url}
+            onLoad={onMapLoad}
             width="100%"
             height="100%"
-            onViewportChange={(nextViewport) => setViewport(nextViewport)}
+            onViewportChange={(nextViewport) => {
+              setViewport(nextViewport);
+
+              updateMapDimensions(nextViewport);
+            }}
             onError={(E) => {
               console.log({ Err_or: E });
-            }}
-            onMouseMove={(e_move) => {
-              console.log(e_move.type, { e_move });
             }}
 
             // onStyleLoad={onMapLoad}
@@ -285,17 +293,6 @@ export default function MapContainer({
             // }}
             // onMouseMove={(map, e) => {}}
           >
-            {/* <Source id="source_id" tileJsonSource={RASTER_SOURCE_OPTIONS} />
-            <Layer type="raster" id="layer_id" sourceId="source_id" /> */}
-
-            {/* <Layer
-              type="symbol"
-              id="marker"
-              layout={{ "icon-image": "marker-15" }}
-            >
-              <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-            </Layer> */}
-
             <PrintLocations
               map={map}
               sortedGroupsJourneys={sortedGroupsJourneys}
@@ -308,11 +305,9 @@ export default function MapContainer({
               textSize={
                 baseLongSize ? (baseLongSize * LABEL_SIZE_KOEF) / 2 : 10
               }
-              onError={(e) => {
-                console.log("map_error_ ", { e });
-              }}
               lineWidth={1}
               baseCircleRadius={3}
+              isScreenshotPrint={false}
             />
             {/* 
             {icons?.map((icon) => {
@@ -345,15 +340,18 @@ export default function MapContainer({
             })} */}
           </ReactMapGL>
         </div>
-        {/* <Backdrop open={false}>
+
+        <Backdrop open={false}>
           <NeverDisplayContainer id="snapshot_map_wrapper">
-            <Map2
-              onStyleLoad={onMapSnapshotLoad}
-              style={MAP_STYLES[activeMapStyleName].url}
-              containerStyle={{
-                width: "100%",
-                height: "100%",
-              }}
+            <ReactMapGL
+              mapboxApiAccessToken={NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN}
+              {...viewport}
+              mapStyle={getMapStyleObj(MAP_STYLES[activeMapStyleName].mapId)}
+              // mapStyle={MAP_STYLES[activeMapStyleName].url}
+
+              onLoad={onMapSnapshotLoad}
+              width="100%"
+              height="100%"
             >
               <PrintLocations
                 map={map}
@@ -367,15 +365,16 @@ export default function MapContainer({
                 textSize={journeysSpecs.labelSizePrint}
                 lineWidth={2}
                 baseCircleRadius={5}
+                isScreenshotPrint={true}
               />
-            </Map2>
+            </ReactMapGL>
           </NeverDisplayContainer>
-        </Backdrop> */}
+        </Backdrop>
 
         {Object.keys(FAKE_DIV_IDS).map((key, index) => (
           <div
             id={FAKE_DIV_IDS[key]}
-            contenteditable="plaintext-only"
+            key={index}
             style={{
               width: "auto",
               display: "inline-block",
@@ -415,10 +414,12 @@ const PrintLocations = ({
   textSize,
   lineWidth,
   baseCircleRadius,
+  isScreenshotPrint,
 }) => {
   return (
     <>
-      {isJourneysEnabled &&
+      {map &&
+        isJourneysEnabled &&
         sortedGroupsJourneys.map((group, groupIndex) => {
           return group.map((_, pointIndex) => {
             if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
@@ -461,54 +462,100 @@ const PrintLocations = ({
 
             return (
               <>
+                <Marker
+                  key={"marker_" + groupIndex + pointIndex}
+                  latitude={currentPoint.titleLocation[1]}
+                  longitude={currentPoint.titleLocation[0]}
+                  // offsetLeft={-20}
+                  // offsetTop={-10}
+                  draggable
+                  onDragStart={(e) => {
+                    console.log("DragStart:_", { e });
+                    map.dragPan.disable();
+                    map.scrollZoom.disable();
+                    setDraggedPoint(currentPoint.titleSourceId);
+                  }}
+                  onMouseOver={() => {
+                    console.log("Mouse_Over");
+                  }}
+                  // draggable={
+                  //   !draggedPoint || currentPoint.titleSourceId === draggedPoint
+                  // }
+                  onDragEnd={onUp(currentPoint)}
+                >
+                  <StyledMapTitleLabel
+                    textSize={textSize}
+                    bgColor={
+                      currentPoint.titleSourceId === draggedPoint
+                        ? "red"
+                        : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                            .colorHalo
+                    }
+                    textColor={
+                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                        .colorSecondary
+                    }
+                  >
+                    {currentPoint.titleLabel}
+                  </StyledMapTitleLabel>
+                </Marker>
                 <Source
-                  id={"source_1_" + groupIndex + pointIndex}
+                  id={"source_" + groupIndex + "_" + pointIndex}
+                  key={"source_" + groupIndex + "_" + pointIndex}
                   type="geojson"
                   data={getGeojsonPoint(currentPoint.location)}
-                >
-                  <Layer
-                    id={"point-blip" + groupIndex + pointIndex}
-                    type="circle"
-                    paint={{
-                      "circle-radius": baseCircleRadius * 1.4,
-                      "circle-radius-transition": { duration: 0 },
-                      "circle-opacity-transition": { duration: 0 },
-                      "circle-color":
-                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                          .colorSecondary,
-                    }}
-                  ></Layer>
-                </Source>
+                />
+                <Layer
+                  id={"point-blip" + groupIndex + pointIndex}
+                  key={"source_key_" + groupIndex + "_" + pointIndex}
+                  source={"source_" + groupIndex + "_" + pointIndex}
+                  type="circle"
+                  paint={{
+                    "circle-radius": baseCircleRadius * 1.4,
+                    "circle-radius-transition": { duration: 0 },
+                    "circle-opacity-transition": { duration: 0 },
+                    "circle-color":
+                      MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                        .colorSecondary,
+                  }}
+                />
 
                 <Source
                   id={"source_2_" + groupIndex + pointIndex}
+                  key={"source_2_X_" + groupIndex + pointIndex}
                   type="geojson"
                   data={getGeojsonPoint(currentPoint.location)}
-                >
-                  <Layer
-                    id={"point" + groupIndex + pointIndex}
-                    type="circle"
-                    // sourceId={"point" + groupIndex + pointIndex}
-                    paint={{
-                      "circle-radius": baseCircleRadius,
-                      "circle-color":
-                        currentPoint.titleSourceId === draggedPoint
-                          ? "red"
-                          : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                              .colorMain,
-                    }}
-                  />
-                </Source>
+                />
+
+                <Layer
+                  id={"point" + groupIndex + pointIndex}
+                  type="circle"
+                  key={"layer_2_Y_" + groupIndex + pointIndex}
+                  source={"source_2_" + groupIndex + pointIndex}
+                  paint={{
+                    "circle-radius": baseCircleRadius,
+                    "circle-color":
+                      currentPoint.titleSourceId === draggedPoint
+                        ? "red"
+                        : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                            .colorMain,
+                  }}
+                />
 
                 {previousPoint && (
-                  <Source
-                    id={"source_line_" + groupIndex + pointIndex}
-                    type="geojson"
-                    data={getGeojsonLine(
-                      getGeoArc(currentPoint.location, previousPoint.location)
-                    )}
-                  >
+                  <>
+                    <Source
+                      id={"source_line_" + groupIndex + pointIndex}
+                      key={"source_line_" + groupIndex + pointIndex}
+                      type="geojson"
+                      data={getGeojsonLine(
+                        getGeoArc(currentPoint.location, previousPoint.location)
+                      )}
+                    />
+
                     <Layer
+                      key={"layout_line_" + groupIndex + pointIndex}
+                      source={"source_line_" + groupIndex + pointIndex}
                       type="line"
                       layout={lineLayout}
                       paint={{
@@ -518,28 +565,30 @@ const PrintLocations = ({
                         "line-width": lineWidth,
                       }}
                     />
-                  </Source>
+                  </>
                 )}
-
-                {/* {currentPoint.titleLabelDisplayed && ( */}
-                <Source
-                  id={"source_title_" + groupIndex + pointIndex}
-                  type="geojson"
-                  data={getGeojsonPoint(currentPoint.titleLocation)}
-                >
+                {/* {isScreenshotPrint && ( */}
+                <>
+                  <Source
+                    id={"source_title_" + groupIndex + pointIndex}
+                    key={"source_title_" + groupIndex + pointIndex}
+                    type="geojson"
+                    data={getGeojsonPoint(currentPoint.titleLocation)}
+                  />
                   <Layer
                     id={"layer_title_" + groupIndex + pointIndex}
+                    source={"source_title_" + groupIndex + pointIndex}
                     type="symbol"
                     layout={{
                       // "icon-image": "harbor-15",
-                      "icon-allow-overlap": true,
                       "text-field": currentPoint.titleLabel,
-                      "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
+                      "text-font": ["Open Sans Bold"],
+                      "text-max-width": 15,
                       "text-size": textSize, // 7,
                       "text-transform": "uppercase",
                       "text-letter-spacing": 0.05,
-                      "text-offset": [4, -2],
-                      // anchor: ["top-right"],
+                      // "text-offset": [4, -2],
+                      "text-anchor": "top-left",
                       // "text-radial-offset": 10,
                       "text-allow-overlap": true,
                       "icon-allow-overlap": true,
@@ -557,29 +606,8 @@ const PrintLocations = ({
                               .colorHalo,
                       "text-halo-width": textSize,
                     }}
-                    // onMouseEnter={(e) => {
-                    //   setCursor("move");
-                    // }}
-                    // onMouseLeave={() => {
-                    //   setCursor("pointer");
-                    // }}
-                    onClick={() => {
-                      console.log("pointe__r");
-                    }}
                   />
-                  {/* <Feature
-                      coordinates={currentPoint.titleLocation}
-                      onDragStart={(e) => {
-                        e.target.dragPan.disable();
-                        setDraggedPoint(currentPoint.titleSourceId);
-                      }}
-                      draggable={
-                        !draggedPoint ||
-                        currentPoint.titleSourceId === draggedPoint
-                      }
-                      onDragEnd={onUp(currentPoint)}
-                    /> */}
-                </Source>
+                </>
                 {/* )} */}
               </>
             );
@@ -593,6 +621,18 @@ const BNT_RADIUS = 4;
 
 const NeverDisplayContainer = styled.div`
   position: absolute;
+`;
+
+const StyledMapTitleLabel = styled.div`
+  cursor: move;
+  background: ${({ bgColor }) => bgColor ?? "black"};
+  color: ${({ textColor }) => textColor ?? "white"};
+  padding: 1px 1px;
+  line-height: 1;
+  text-transform: uppercase;
+  font-family: "Open_Sans_bold";
+  font-size: ${({ textSize }) => textSize ?? 8}px;
+  letter-spacing: 1.2;
 `;
 
 const styles = {
@@ -621,57 +661,5 @@ const styles = {
   },
   canvas_merging: {
     display: "none",
-  },
-  allBtnWrapper: {
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "8px",
-  },
-  zoomBtnWrapper: {
-    display: "flex",
-    padding: "auto",
-    marginRight: "20px",
-  },
-  zoomBtn: {
-    border: "1px solid lightGrey",
-    display: "flex",
-    padding: "5px 5px",
-    margin: "auto",
-    backgroundColor: "white",
-    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.06)",
-    cursor: "pointer",
-
-    "&.left": {
-      borderRadius: `${BNT_RADIUS}px 0 0 ${BNT_RADIUS}px`,
-      borderRight: "0px solid lightGrey",
-    },
-    "&.right": {
-      borderRadius: `0 ${BNT_RADIUS}px ${BNT_RADIUS}px 0`,
-    },
-  },
-  rotateBtn: {
-    border: "1px solid lightGrey",
-    display: "flex",
-    padding: "5px 5px",
-    m: "2px",
-    borderRadius: `${BNT_RADIUS}px`,
-    backgroundColor: "white",
-    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.06)",
-    cursor: "pointer",
-    // marginRight: "30px",
-  },
-
-  teaserBtn: {
-    border: "1px solid lightGrey",
-    display: "flex",
-    padding: "5px 5px",
-    m: "2px",
-    borderRadius: `${BNT_RADIUS}px`,
-    backgroundColor: "white",
-    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.06)",
-    cursor: "pointer",
-    // marginRight: "30px",
   },
 };

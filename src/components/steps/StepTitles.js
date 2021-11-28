@@ -72,7 +72,7 @@ export default function StepTitles({ index }) {
     }
   };
   return (
-    <div sx={styles.container}>
+    <div sx={styles.container} key={`step_${index}`}>
       {!isMobile && <HeadingText>{index}. Popisky</HeadingText>}
       <TextFieldsConteiner>
         <TextField

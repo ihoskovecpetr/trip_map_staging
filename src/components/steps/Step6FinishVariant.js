@@ -72,7 +72,7 @@ export default function Step6FinishVariant({ index }) {
   //     .netPrice;
 
   return (
-    <div sx={styles.container}>
+    <div sx={styles.container} key={`step_${index}`}>
       {!isMobile && <HeadingText>{index}. Rámování</HeadingText>}
       {variantsPrintfulForSize.length === 0 && (
         <div sx={styles.loaderWrap}>

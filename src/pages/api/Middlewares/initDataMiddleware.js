@@ -49,7 +49,6 @@ const initDataMiddleware = () => async (req, res, next) => {
       delete foundStoreWithout_secrets.updatedAt;
 
       if (req && req.query.id === cookieStoreId) {
-        console.log("Cookie_same_as_ID");
         req.meta = {
           ...foundStoreWithout_secrets,
         };
@@ -79,8 +78,6 @@ const initDataMiddleware = () => async (req, res, next) => {
       });
 
       await newStore.save();
-
-      console.log("CreatedNew_store", { newStoreId });
 
       req.meta = {
         storeId: newStoreId,

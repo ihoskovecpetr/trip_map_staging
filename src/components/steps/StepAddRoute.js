@@ -19,7 +19,7 @@ export default function StepAddRoute({ map, index }) {
   }, [map]);
 
   return (
-    <Container>
+    <Container key={`step_${index}`}>
       {!isMobile && <HeadingText>{index}. Zadejte body cesty</HeadingText>}
 
       <DragContainer map={map} />

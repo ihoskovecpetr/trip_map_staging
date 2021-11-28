@@ -31,7 +31,7 @@ export default function Step2Orientation({ index }) {
   };
 
   return (
-    <div sx={styles.container}>
+    <div sx={styles.container} key={`step_${index}`}>
       {!isMobile && <HeadingText>{index}. Orientace</HeadingText>}
 
       <OrientationWrap>

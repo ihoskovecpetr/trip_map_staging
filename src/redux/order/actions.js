@@ -4,8 +4,13 @@ export const countActionTypes = {
   NEW_TITLE: "NEW_TITLE",
   NEW_SUBTITLE: "NEW_SUBTITLE",
   SET_ACTIVE_LAYOUT: "SET_ACTIVE_LAYOUT",
+
+  //remove
   SET_MAP_COORDINATES: "SET_MAP_COORDINATES",
   SET_MAP_ZOOM: "SET_MAP_ZOOM",
+  //
+
+  UPDATE_MAP_POSITION: "UPDATE_MAP_POSITION",
   SET_ACTIVE_MAP_STYLE: "SET_ACTIVE_MAP_STYLE",
   SET_UPLOAD_PERCENTAGE: "SET_UPLOAD_PERCENTAGE",
   SET_DISCOUNT_CODE: "SET_DISCOUNT_CODE",
@@ -66,6 +71,7 @@ export const setActiveMapStyleAction = (mapStyleName) => (dispatch) => {
   });
 };
 
+//remove
 export const setMapCoordinatesAction = (newCoordinates) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_MAP_COORDINATES,
@@ -77,6 +83,14 @@ export const setMapZoomAction = (newZoom) => (dispatch) => {
   return dispatch({
     type: countActionTypes.SET_MAP_ZOOM,
     data: newZoom,
+  });
+};
+//tillHere
+
+export const setMapPositionAction = (data) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.UPDATE_MAP_POSITION,
+    data: data,
   });
 };
 

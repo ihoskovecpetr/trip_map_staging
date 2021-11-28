@@ -107,7 +107,7 @@ export default function Step5Size({ index }) {
   };
 
   return (
-    <div sx={styles.container}>
+    <div sx={styles.container} key={`step_${index}`}>
       {!isMobile && (
         <HeadingText>
           {index}. Rozměry <UnitMark>[cm]</UnitMark>

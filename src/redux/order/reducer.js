@@ -47,6 +47,13 @@ const orderInitialState = {
   activeMapStyleName: MAP_STYLES_NAMES.PALE_BLUE,
   mapCenterCoordinates: [13.303958804602132, 41.47437924957853],
   mapZoom: 5,
+  mapPosition: {
+    width: 400,
+    height: 400,
+    latitude: 51.08861,
+    longitude: 14.42139,
+    zoom: 4,
+  },
   activeStepNumber: 0,
   seenPopup: false,
   uploadPercentage: 0,
@@ -138,7 +145,7 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
     case HYDRATE:
       if (typeof window !== "undefined") {
         const storedPopupState = localStorage.getItem("seenPopup");
-
+        console.log("HYdrate_str", { payload_order: payload.order });
         return {
           ...orderInitialState,
           ...state,
@@ -196,13 +203,18 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
     case countActionTypes.SET_ACTIVE_MAP_STYLE:
       state.activeMapStyleName = data;
       return state;
-
+    //remove
     case countActionTypes.SET_MAP_COORDINATES:
       state.mapCenterCoordinates = data;
       return state;
 
     case countActionTypes.SET_MAP_ZOOM:
       state.mapZoom = data;
+      return state;
+    // to here
+
+    case countActionTypes.UPDATE_MAP_POSITION:
+      state.mapPosition = { ...state.mapPosition, ...data };
       return state;
 
     case countActionTypes.SET_UPLOAD_PERCENTAGE:
@@ -351,6 +363,9 @@ export const useMapCoordinatesSelector = () =>
 
 export const useMapZoomSelector = () =>
   useSelector((store) => store.order.mapZoom);
+
+export const useMapPosition = () =>
+  useSelector((store) => store.order.mapPosition);
 
 export const useUploadPercentageSelector = () =>
   useSelector((store) => store.order.uploadPercentage);

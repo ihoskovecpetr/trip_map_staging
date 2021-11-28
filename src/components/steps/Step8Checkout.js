@@ -21,7 +21,7 @@ export default function Step8Checkout({
   const productRedux = useProductSelector();
 
   return (
-    <Container>
+    <Container key={`step_${index}`}>
       <AbsoluteBtnWrap>
         {!isMobile && (
           <ExtraPaddingTop>

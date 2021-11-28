@@ -52,7 +52,7 @@ export default function StepLayout({ index }) {
   };
 
   return (
-    <div sx={styles.container}>
+    <div sx={styles.container} key={`step_${index}`}>
       {!isMobile && <HeadingText>{index}. Ohraničení</HeadingText>}
       <AllLayoutsContainer>
         {Object.values(LAYOUTS).map((layoutObj, index) => (

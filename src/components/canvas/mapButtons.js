@@ -97,7 +97,6 @@ export default function MapContainer({
 
   const fullscreenImageRequested = async () => {
     setIsCreatingImage(true);
-
     const finalImgSrc = await qualityImageCreator({
       map,
       snapMapInstance,

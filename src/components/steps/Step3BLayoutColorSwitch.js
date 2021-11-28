@@ -27,7 +27,7 @@ export default function StepLayoutColorSwitch({ index }) {
   const activeMapStyleObject = MAP_STYLES[activeMapStyleName];
 
   return (
-    <Container>
+    <Container key={`step_${index}`}>
       {!isMobile && <HeadingText>{index}. Výplň ohraničení</HeadingText>}
       {activeMapStyleObject.layoutColor && activeMapStyleObject.textColor && (
         <ItemContainer>

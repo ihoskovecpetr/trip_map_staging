@@ -14,7 +14,7 @@ import { ORIENTATIONS } from "@constants";
 import { getIsProduction } from "LibGlobal/getIsProduction";
 
 import Stepper from "./Stepper";
-import StepPathOrWithout from "../steps/StepPathOrWithout";
+import StepPathOrPure from "../steps/StepPathOrPure";
 import Step1Location from "../steps/StepLocation";
 import Step2Orientation from "../steps/Step2Orientation";
 import StepLayout from "../steps/Step3Layout";
@@ -120,7 +120,12 @@ export default function TabsRoot({ map, snapMapInstance }) {
   );
 
   const stepElementsDesktop = [
-    [<StepPathOrWithout map={map} index={1} />, StepComponent],
+    [
+      <StepPathOrPure //map={map}
+        index={1}
+      />,
+      StepComponent,
+    ],
     [
       <Step2Orientation index={3} />,
       <StepTitles index={4} />,
@@ -145,7 +150,11 @@ export default function TabsRoot({ map, snapMapInstance }) {
   ];
 
   const stepElementsMobile = [
-    [<StepPathOrWithout map={map} index={1} />],
+    [
+      <StepPathOrPure // map={map}
+        index={1}
+      />,
+    ],
     [StepComponent],
     // [<StepAddIcon map={map} index={21} />],
     [<Step2Orientation index={3} />],
@@ -178,6 +187,23 @@ export default function TabsRoot({ map, snapMapInstance }) {
 
   const isWideOrientation =
     productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
+
+  const clonedActiveStepElements = activeStepElements[activeStepNumber].map(
+    (el, index) =>
+      React.cloneElement(el, {
+        key: `key_step_${index}`,
+      })
+  );
+
+  console.log("First_el_ME", {
+    cloned: activeStepElements[activeStepNumber].map((el, index) =>
+      React.cloneElement(el, {
+        key: `key_step_${index}`,
+      })
+    ),
+    orig: activeStepElements[activeStepNumber],
+    clonedActiveStepElements,
+  });
 
   return (
     <MainContainer
@@ -243,7 +269,11 @@ export default function TabsRoot({ map, snapMapInstance }) {
             typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
           }
         >
-          {activeStepElements[activeStepNumber]}
+          {activeStepElements[activeStepNumber].map((el, index) =>
+            React.cloneElement(el, {
+              key: `key_step_${index}`,
+            })
+          )}
         </StepperContentWrap>
       </TabSegmentWrap>
       {/* {isMobile && (

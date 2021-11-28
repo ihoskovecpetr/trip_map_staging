@@ -47,6 +47,13 @@ const fonts = css`
     font-weight: 300;
     font-display: block;
   }
+
+  @font-face {
+    src: url("../FontFiles/OpenSans/OpenSans-SemiBold.ttf") format("truetype");
+    font-family: "Open_Sans_bold";
+    font-weight: 500;
+    font-display: block;
+  }
 `;
 
 export const GlobalStyle = createGlobalStyle`

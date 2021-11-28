@@ -189,6 +189,7 @@ const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
     justifyContent: "center",
     position: "absolute",
     bottom: 0,
+    zIndex: 1,
   });
 };
 
@@ -466,7 +467,6 @@ export default function StudioRootContainer() {
   ]);
 
   const saveTitlesValue = (e) => {
-    console.log("saveTitlesValue_call_val: ", e.target.value);
     switch (e.target.name) {
       case TITLE_NAMES.TITLE:
         dispatch(setNewTitle(e.target.value ?? ""));

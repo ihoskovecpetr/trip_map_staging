@@ -1,30 +1,31 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
+import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { color, mobile, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
-import { getBbox } from "LibGlobal/getBbox";
+// import { getBbox } from "LibGlobal/getBbox";
 import WithPath from "assets/mapStudioVariants/withPath.png";
 import NoPath from "assets/mapStudioVariants/noPath.png";
 
 import { setJourneysIsEnabled } from "redux/order/actions";
 import {
-  useGetJourneysDraggable,
+  // useGetJourneysDraggable,
   useJourneysEnabledSelector,
 } from "redux/order/reducer";
 
-export default function StepPathOrWithout({ map, index }) {
+export default function StepPathOrPure({ map, index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
-  const journeysDragable = useGetJourneysDraggable();
+  // const journeysDragable = useGetJourneysDraggable();
 
   const isJourneysEnabled = useJourneysEnabledSelector();
-  const bbox = getBbox(journeysDragable);
+  // const bbox = getBbox(journeysDragable);
 
   return (
-    <div sx={styles.container}>
+    <div sx={styles.container} key={`step_${index}`}>
       {!isMobile && <HeadingText>{index}. Vyberte variantu mapy</HeadingText>}
       <OptionContainer>
         <OptionItem
@@ -39,7 +40,7 @@ export default function StepPathOrWithout({ map, index }) {
         <OptionItem
           onClick={() => {
             dispatch(setJourneysIsEnabled(true));
-            map.fitBounds(bbox, { padding: 80 });
+            // map.fitBounds(bbox, { padding: 80 });
           }}
           active={isJourneysEnabled}
         >

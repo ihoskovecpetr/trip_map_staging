@@ -21,8 +21,13 @@ const fullStoreScehma = new Schema(
     },
     activeLayoutName: { type: String },
     activeMapStyleName: { type: String },
+
+    //TODO: remove
     mapCenterCoordinates: { type: Object },
     mapZoom: { type: Number },
+    //till here
+
+    mapPosition: { type: Object },
     activeStepNumber: { type: Number },
     seenPopup: { type: Boolean },
     uploadPercentage: { type: Number },

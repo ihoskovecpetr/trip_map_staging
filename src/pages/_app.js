@@ -40,7 +40,7 @@ const MyApp = ({ Component, pageProps, err, ...props }) => {
   useEffect(() => {
     const storedCookie = cookie[REDUX_COOKIE_NAME];
 
-    const saveReduxStore = async (store) => {
+    const storeReduxStore = async (store) => {
       const response = await axios.post("api/save-redux-store", {
         reduxStore: store,
         storeId: storedCookie,
@@ -54,7 +54,7 @@ const MyApp = ({ Component, pageProps, err, ...props }) => {
       }
     };
 
-    saveReduxStore(fullReduxStore);
+    storeReduxStore(fullReduxStore);
   }, [fullReduxStore]);
 
   useEffect(() => {
