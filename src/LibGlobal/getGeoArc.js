@@ -30,8 +30,6 @@ const getGeoArc = (start, end) => {
   arc.push(end);
 
   return arc;
-
-  // return [start, end];
 };
 
 module.exports = {

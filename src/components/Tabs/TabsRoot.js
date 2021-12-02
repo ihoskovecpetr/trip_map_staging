@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
@@ -243,7 +243,12 @@ export default function TabsRoot({ map, snapMapInstance }) {
             typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
           }
         >
-          {activeStepElements[activeStepNumber]}
+          {/* {activeStepElements[activeStepNumber]} */}
+          {activeStepElements[activeStepNumber].map((el, index) =>
+            React.cloneElement(el, {
+              key: `key_step_${index}`,
+            })
+          )}
         </StepperContentWrap>
       </TabSegmentWrap>
       {/* {isMobile && (

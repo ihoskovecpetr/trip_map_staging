@@ -165,7 +165,7 @@ export default function MapContainer({
           <StyledRotateIcon onClick={changeOrientation} />
         </RotateBtn>
 
-        <TeaserButton
+        {/* <TeaserButton
           aria-describedby={id}
           id="full_screen_button"
           onClick={handleClick}
@@ -177,7 +177,7 @@ export default function MapContainer({
           ) : (
             <OpenWithIcon />
           )}
-        </TeaserButton>
+        </TeaserButton> */}
 
         <Popper
           id={id}
