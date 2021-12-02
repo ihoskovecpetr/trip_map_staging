@@ -34,8 +34,12 @@ import { MAP_STYLES_NAMES } from "../../constants/constants";
 import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
 import { color, font, fontSize, fontWeight, mobile } from "utils";
-import { setActiveMapStyleAction } from "redux/order/actions";
 import { useActiveMapStyleSelector } from "redux/order/reducer";
+
+import {
+  setActiveMapStyleAction,
+  setJourneysIsEnabled,
+} from "redux/order/actions";
 
 export default function Step4Colors({ index }) {
   const dispatch = useDispatch();
@@ -45,8 +49,13 @@ export default function Step4Colors({ index }) {
   const { displayPNG } = useDisplayPNG();
 
   const changeActiveStyle = (style) => () => {
+    dispatch(setJourneysIsEnabled(false));
+
     dispatch(setActiveMapStyleAction(style));
-    // setActiveMapStyleName(style);
+
+    setTimeout(() => {
+      dispatch(setJourneysIsEnabled(true));
+    }, 1000);
   };
 
   const getMapStyleImg = (mapStyle) => {
@@ -89,6 +98,7 @@ export default function Step4Colors({ index }) {
           <div
             className={activeMapStyleName === style && "active"}
             sx={styles.mapColorsItem}
+            key={index}
           >
             <ImageWrap active={activeMapStyleName === style}>
               <StyledImage

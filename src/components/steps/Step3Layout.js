@@ -60,8 +60,9 @@ export default function StepLayout({ index }) {
             className={activeLayoutNameRedux === layoutObj.name && "active"}
             sx={styles.layoutItem}
             onClick={() => changeActiveLayout(layoutObj.name)}
+            key={Math.random()}
           >
-            <ImageWrap>
+            <ImageWrap key={Math.random()}>
               <StyledImage
                 src={getLayoutImg(layoutObj.name)}
                 active={activeLayoutNameRedux === layoutObj.name}

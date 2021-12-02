@@ -39,7 +39,7 @@ export default function StepPathOrWithout({ map, index }) {
         <OptionItem
           onClick={() => {
             dispatch(setJourneysIsEnabled(true));
-            map.fitBounds(bbox, { padding: 80 });
+            map.fitBounds(bbox, { padding: 100 });
           }}
           active={isJourneysEnabled}
         >
