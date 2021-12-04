@@ -237,7 +237,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
         <StepperContentWrap
           topElementsHeight={stepper_height + header_height}
           mapSegmentHeight={map_segment_height}
-          key={Math.random()}
           isOpen={isOpen}
           dynamicVH={
             typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
