@@ -243,7 +243,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
           }
         >
           {/* {activeStepElements[activeStepNumber]} */}
-          {activeStepElements[activeStepNumber].map((el, index) =>
+          {activeStepElements[activeStepNumber]?.map((el, index) =>
             React.cloneElement(el, {
               key: `key_step_${index}`,
             })

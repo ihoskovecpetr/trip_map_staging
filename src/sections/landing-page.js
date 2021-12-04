@@ -268,16 +268,13 @@ const LandingCarousel = styled.div`
 
 const CtaBtn = styled(Button)`
   pointer-events: all;
-  background-color: #001427ff;
+  background-color: rgb(239, 17, 67);
   color: white;
   font-size: 1rem !important;
+  font-weight: 400;
   letter-spacing: 1.5px;
   width: 50%;
   border-radius: 10px;
-
-  ${mobile`
-    background-color: #001427;
-  `}
 `;
 
 const styles = {

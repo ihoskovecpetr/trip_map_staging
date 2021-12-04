@@ -291,11 +291,11 @@ export default function StudioRootContainer() {
         activeMapStyleName: activeMapStyleName,
       });
 
-      // resizeFrameDiv({
-      //   productRef,
-      //   baseLongSize,
-      //   mapAvailSpaceRef,
-      // });
+      resizeFrameDiv({
+        productRef,
+        baseLongSize,
+        mapAvailSpaceRef,
+      });
     }
   }, [
     activeLayoutRedux,
@@ -389,11 +389,11 @@ export default function StudioRootContainer() {
           activeMapStyleName,
         });
 
-        // resizeFrameDiv({
-        //   productRef,
-        //   baseLongSize,
-        //   mapAvailSpaceRef,
-        // });
+        resizeFrameDiv({
+          productRef,
+          baseLongSize,
+          mapAvailSpaceRef,
+        });
 
         resizeInputsWrap({ productRef, layout: layoutRef.current, canvasMap });
       });
