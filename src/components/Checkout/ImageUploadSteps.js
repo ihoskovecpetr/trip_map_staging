@@ -46,7 +46,7 @@ export default function ImageUploadSteps({
       <StyledStepper
         activeStep={activeStep}
         orientation="vertical"
-        connector={<span style={{ paddingLeft: "10px" }}> I </span>}
+        connector={<span style={{ paddingBottom: "5px" }}></span>}
       >
         {[
           <Step key="1">
@@ -116,6 +116,7 @@ const WrapSpan = styled.span`
 `;
 
 const HeaderTextsContainer = styled.div`
+  flex-basis: 60%;
   width: 100%;
   display: flex;
   flex-direction: column;

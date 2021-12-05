@@ -195,7 +195,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
     >
       {isMobile && (
         <>
-          <PriceWrap>
+          <OverflowSectionWrap>
             <Price>
               <StyledParagraph>{`celkem:
           ${getFormattedPrice(
@@ -211,7 +211,8 @@ export default function TabsRoot({ map, snapMapInstance }) {
                 }}
               />
             </ArrowWrap>
-          </PriceWrap>
+            <Dummy_item></Dummy_item>
+          </OverflowSectionWrap>
         </>
       )}
 
@@ -319,11 +320,11 @@ const StepperContentWrap = styled.div`
     !isOpen &&
     `calc(${
       100 * dynamicVH
-    }px - ${topElementsHeight}px - ${mapSegmentHeight}px - 10px)`};
+    }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
 
   ${mobile`
     height: ${({ topElementsHeight, isOpen, dynamicVH }) =>
-      `calc(${100 * dynamicVH}px - ${topElementsHeight}px - 10px)`};
+      `calc(${100 * dynamicVH}px - ${topElementsHeight}px)`};
     overflow: scroll;
   `}
 
@@ -337,33 +338,40 @@ const StyledParagraph = styled.p`
   display: inline;
 `;
 
-const PriceWrap = styled.div`
+const OverflowSectionWrap = styled.div`
   display: inline-flex;
   height: 0;
+  justify-content: space-between;
+  gap: 15px;
+
+  width: 100%;
+  position: relative;
+  top: -28px;
+
+  ${mobile`
+`}
 `;
 
 const Price = styled.div`
-// display: inline-block;
-
   position: relative;
-  color: white;
-  padding-left: 0.5rem;
-  top: -28px;
+  flex: 1 0; 
+  min-width: 145px; 
+  padding-left: 5px;
   color: ${color("primary")};
   font-Weight ${fontWeight("bold")}
 `;
 
 const ArrowWrap = styled.div`
-  display: inline-block;
   background-color: ${color("background_almost_white")};
-  margin-left: 20px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  padding: 0 10px;
   position: relative;
-  height: 30px;
-  top: 5px;
-  top: -30px;
+  height: 28px;
+  flex: 1 2;
+`;
+
+const Dummy_item = styled.div`
+  flex: 1 2;
 `;
 
 const StyledKeyboardArrowRight = styled(KeyboardArrowRight)`

@@ -1,6 +1,7 @@
 const theme = {
   colors: {
     cta_color: "#f6aa1c", // "#EF233C", // "#D90429", // "#25CB9E", // green-blue "#fe6769", // red CTA color
+    cta_red_color: "rgb(239, 17, 67)",
     primary: "#001427", // "#1F3E76", // blue - primary button and link color
     background_almost_white: "#F9FBFD", // almost white - secondary background color
 

@@ -11,6 +11,9 @@ const themeMaterialUI = createTheme({
     cta_color: {
       main: "#f6aa1c",
     },
+    cta_red_color: {
+      main: "rgb(239, 17, 67)",
+    },
   },
 });
 

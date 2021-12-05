@@ -9,6 +9,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 
 import { useIsMobile } from "Hooks/useIsMobile";
 import BackdropLoader from "components/backdropLoader";
+import { color, fontWeight, mobile } from "utils";
 
 import iconChat from "assets/mapIcons/pin2D.svg";
 
@@ -194,7 +195,7 @@ export default function MapContainer({
     map?.resize();
   }, [isJourneysEnabled]);
 
-  const getMapStyleObj = (mapId) => ({
+  const getMapStyleObj = (mapId, isSnapshot) => ({
     version: 8,
     sources: {
       osm: {
@@ -202,7 +203,7 @@ export default function MapContainer({
         tiles: [
           `https://api.mapbox.com/styles/v1/petrhoskovec/${mapId}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
         ],
-        tileSize: 64,
+        tileSize: isSnapshot ? 128 : 64, //128
         minzoom: 0,
         maxzoom: 22,
       },
@@ -225,7 +226,7 @@ export default function MapContainer({
   });
 
   return (
-    <div sx={styles.canvas_bg} id="map_studio_segment">
+    <StudioMapSection id="map_studio_segment">
       <MapButtons
         map={map}
         snapMapInstance={snapMapInstance}
@@ -234,7 +235,7 @@ export default function MapContainer({
         mapTitles={mapTitles}
       />
 
-      <div sx={styles.map_available_space} id="map_available_space_id">
+      <MapAvailableSpace id="map_available_space_id">
         <div style={{ display: "none" }} id="map_wrap_id">
           <Map
             onStyleLoad={onMapLoad}
@@ -316,7 +317,7 @@ export default function MapContainer({
             <Map2
               onStyleLoad={onMapSnapshotLoad}
               // style={MAP_STYLES[activeMapStyleName].url}
-              style={getMapStyleObj(MAP_STYLES[activeMapStyleName].mapId)}
+              style={getMapStyleObj(MAP_STYLES[activeMapStyleName].mapId, true)}
               containerStyle={{
                 width: "100%",
                 height: "100%",
@@ -356,7 +357,7 @@ export default function MapContainer({
             {TITLES_DEFAULT[index]}
           </div>
         ))}
-      </div>
+      </MapAvailableSpace>
 
       <canvas id="canvas_merging" sx={styles.canvas_merging} />
       {lightbox.open && (
@@ -367,7 +368,7 @@ export default function MapContainer({
       )}
 
       {openBackdrop && <BackdropLoader defaultState={true} />}
-    </div>
+    </StudioMapSection>
   );
 }
 
@@ -522,20 +523,33 @@ const NeverDisplayContainer = styled.div`
   position: absolute;
 `;
 
+const StudioMapSection = styled.div`
+  px: 0 !important;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(0);
+  height: 100%;
+  overflow: hidden; //auto,
+`;
+
+const MapAvailableSpace = styled.div`
+  display: flex;
+  justify-content: center;
+  width: "100%";
+  align-items: flex-start;
+  height: 60vh;
+  padding-top: 14px;
+
+  ${mobile`
+    height: 85vh;
+    align-Items: center;
+    padding-top: 0;
+
+  `}
+`;
+
 const styles = {
-  canvas_bg: {
-    px: "0 !important",
-    display: "flex",
-    flexDirection: "column",
-    transform: "translateX(0)", // this is important, reset absolute position to thos element
-    height: [null, null, null, "100%"],
-    overflow: "auto", //"auto",
-  },
   map_available_space: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: ["flex-start", null, null, "center"],
-    pt: ["14px", null, null, 0],
     width: "100%",
     height: ["60vh", null, null, "85vh"],
   },

@@ -86,6 +86,7 @@ const StyledInput = styled.input`
   font-size: ${fontSize("sm")};
   font-weight: ${fontWeight("bold")};
   border-left: 1px solid black;
+  border-radius: 0px;
 `;
 
 export default function Location({

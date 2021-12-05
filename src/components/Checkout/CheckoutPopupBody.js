@@ -116,6 +116,9 @@ export default function CheckoutPopupBody({
         </CustomLoaderWrap>
       ) : (
         <TeaserImageWrap>
+          <IconContainer>
+            <StyledOpenInNewIcon />
+          </IconContainer>
           <StyledImg
             id="img_screen_shot"
             src={imageBase64Created}
@@ -127,9 +130,6 @@ export default function CheckoutPopupBody({
               e.stopPropagation();
             }}
           />
-          <IconContainer>
-            <StyledOpenInNewIcon />
-          </IconContainer>
         </TeaserImageWrap>
       )}
     </TeaserContainer>
@@ -210,7 +210,8 @@ const ImageStepsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 15px;
+  margin-left: 10px;
+  margin-bottom: 10px;
 
   ${mobile`
     flex-direction: row;
@@ -218,19 +219,16 @@ const ImageStepsContainer = styled.div`
 `;
 
 const TeaserContainer = styled.div`
+  flex-basis: 40%;
   display: flex;
   justify-content: center;
   width: 100%;
   align-items: center;
   height: 120px;
-  margin-bottom: 0px;
-  margin-left: 5px;
 
   ${mobile`
-    margin-bottom: 10px;
     justify-content: center;
     height: 150px;
-
   `}
 `;
 
@@ -238,6 +236,7 @@ const TeaserImageWrap = styled.div`
   color: ${color("whitish_paper_blue")};
   height: 120px;
   display: flex;
+  flex-direction: column;
   align-items: flex-end;
   cursor: pointer !important;
   pointer-events: auto;
@@ -252,13 +251,15 @@ const IconContainer = styled.span`
   width: 0;
   display: block;
   position: relative;
-  top: -2em;
+  top: 3px;
   left: -2em;
   z-index: 100;
 `;
 
 const StyledOpenInNewIcon = styled(OpenInNewIcon)`
   pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 3px;
 `;
 
 const StyledImg = styled.img`

@@ -43,7 +43,7 @@ function NextTabBtn({
   }
 
   return (
-    <div sx={styles.container} style={{ margin: margin }}>
+    <Container margin={margin}>
       <div
         sx={styles.button}
         style={{
@@ -59,46 +59,40 @@ function NextTabBtn({
         ) : (
           <TextWrap>
             {`${children}`}{" "}
-            {price && (
-              <span sx={styles.priceText}>
-                {price ? getFormatedPriceString(price) : ""}
-              </span>
-            )}
+            {price && <span>{price ? getFormatedPriceString(price) : ""}</span>}
             {isLoading && <UnderlineLoader />}
           </TextWrap>
         )}
       </div>
-    </div>
+    </Container>
   );
 }
 
 const TextWrap = styled.div`
   transform: translateX(0);
-  color: ${color("primary")};
+  color: white;
   display: inline-block;
 `;
 
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+  padding: 0;
+  margin: ${({ margin }) => margin};
+`;
+
 const styles = {
-  container: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    zIndex: 10,
-    padding: "0",
-  },
   button: {
-    backgroundColor: "cta_color",
-    // color: "white",
-    padding: "10px",
+    backgroundColor: "rgb(239, 17, 67)",
+    padding: "8px 0",
     textAlign: "center",
     cursor: "pointer",
-    fontWeight: 600,
+    fontWeight: 400,
     textTransform: "none",
     letterSpacing: "1.5px",
     transform: "translateX(0)",
-  },
-  priceText: {
-    color: "primary",
   },
 };
 

@@ -15,6 +15,7 @@ import { getCenteringLayoutDimensions } from "LibGlobal/getCenteringLayoutDimens
 import { getVariantObject } from "LibGlobal/getVariantObject";
 import { getLayoutColors } from "LibGlobal/getLayoutColors";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
+import { color, mobile, desktop } from "utils";
 
 import {
   useTitlesSelector,
@@ -204,6 +205,7 @@ export default function StudioRootContainer() {
   const [snapMapInstance, setSnapMapInstance] = useState(null);
 
   const { height: headerHeight } = useElementDimensions("header");
+
   const {
     height: mapAvailSpaceHeight,
     width: mapAvailSpaceWidth,
@@ -466,7 +468,6 @@ export default function StudioRootContainer() {
   ]);
 
   const saveTitlesValue = (e) => {
-    console.log("saveTitlesValue_call_val: ", e.target.value);
     switch (e.target.name) {
       case TITLE_NAMES.TITLE:
         dispatch(setNewTitle(e.target.value ?? ""));
@@ -487,23 +488,23 @@ export default function StudioRootContainer() {
           typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
         }
       >
-        <div sx={styles.containerBox}>
-          <Box sx={styles.canvasBox}>
-            <MapContainer
-              map={mapInstance}
-              snapMapInstance={snapMapInstance}
-              addZoom={addZoom(mapInstance)}
-              subtractZoom={subtractZoom(mapInstance)}
-              mapTitles={mapTitles}
-              setMapInstance={setMapInstance}
-              setSnapMapInstance={setSnapMapInstance}
-            />
-          </Box>
+        {/* <div sx={styles.containerBox}> */}
+        <Box sx={styles.canvasBox}>
+          <MapContainer
+            map={mapInstance}
+            snapMapInstance={snapMapInstance}
+            addZoom={addZoom(mapInstance)}
+            subtractZoom={subtractZoom(mapInstance)}
+            mapTitles={mapTitles}
+            setMapInstance={setMapInstance}
+            setSnapMapInstance={setSnapMapInstance}
+          />
+        </Box>
 
-          <Box sx={styles.settingsBox}>
-            <TabsRoot map={mapInstance} snapMapInstance={snapMapInstance} />
-          </Box>
-        </div>
+        <Box sx={styles.settingsBox}>
+          <TabsRoot map={mapInstance} snapMapInstance={snapMapInstance} />
+        </Box>
+        {/* </div> */}
       </ContainerBox>
     </section>
   );
@@ -511,14 +512,14 @@ export default function StudioRootContainer() {
 
 const styles = {
   containerBox: {
-    display: "flex",
-    // alignItems: ["flex-start", null, null, "center"],
-    justifyContent: "space-between",
-    flexDirection: ["column", null, null, "row"],
-    alignItems: "flex-start",
-    flexWrap: [null, null, null, "wrap"],
-    height: "100%",
-    width: "100%",
+    // display: "flex",
+    // // alignItems: ["flex-start", null, null, "center"],
+    // justifyContent: "space-between",
+    // flexDirection: ["column", null, null, "row"],
+    // alignItems: "flex-start",
+    // flexWrap: [null, null, null, "wrap"],
+    // height: "100%",
+    // width: "100%",
   },
 
   settingsBox: {
@@ -547,4 +548,14 @@ const styles = {
 const ContainerBox = styled.div`
   height: ${({ headerHeight, dynamicVH }) =>
     `calc(${100 * dynamicVH}px - ${headerHeight}px)`};
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: row;
+
+  ${desktop`
+    flex-direction: row;
+  `}
 `;
