@@ -210,7 +210,7 @@ const ImageStepsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-left: 10px;
+  margin: 0 10px;
   margin-bottom: 10px;
 
   ${mobile`
@@ -224,26 +224,20 @@ const TeaserContainer = styled.div`
   justify-content: center;
   width: 100%;
   align-items: center;
-  height: 120px;
+  height: 100%;
 
   ${mobile`
     justify-content: center;
-    height: 150px;
   `}
 `;
 
 const TeaserImageWrap = styled.div`
   color: ${color("whitish_paper_blue")};
-  height: 120px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   cursor: pointer !important;
   pointer-events: auto;
-
-  ${mobile`
-    height: 150px;
-  `};
 `;
 
 const IconContainer = styled.span`

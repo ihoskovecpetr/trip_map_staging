@@ -136,6 +136,18 @@ const orderInitialState = {
 const order = produce((state = orderInitialState, { type, data, payload }) => {
   switch (type) {
     case HYDRATE:
+      const {
+        product: metaProduct,
+        mapTitles: metaMapTitles,
+        ...metaPayloadStripped
+      } = payload.order; //This is fixing that recurring error on DEV
+      let metaPayload;
+      if (metaProduct?.name) {
+        metaPayload = payload.order;
+      } else {
+        metaPayload = metaPayloadStripped;
+      }
+
       if (typeof window !== "undefined") {
         const storedPopupState = localStorage.getItem("seenPopup");
 
@@ -143,16 +155,18 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
           ...orderInitialState,
           ...state,
           seenPopup: !!storedPopupState,
-          // isHydrated: true,
-          ...payload.order, // in payload is server store state !!!!
+          ...metaPayload,
+
+          // ...payload.order, // this was coming with empty product: {} // in payload is server store state !!!!
         };
       }
 
       return {
         ...orderInitialState,
         ...state,
-        // isHydrated: true,
-        ...payload.order, // in payload is server store state !!!!
+        ...metaPayload,
+
+        // ...payload.order, // this was coming with empty product: {} // in payload is server store state !!!!
       };
 
     case countActionTypes.RESET_STORE:

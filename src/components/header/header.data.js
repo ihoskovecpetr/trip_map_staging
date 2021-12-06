@@ -1,7 +1,7 @@
 export default [
   {
     path: "/",
-    label: "Home",
+    label: "Domů",
   },
   {
     path: "/studio",

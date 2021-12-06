@@ -102,18 +102,19 @@ export default function PackagesOptions() {
             flexWrap: ["wrap", null, null, "nowrap"],
           }}
         >
-          {dataPrintful &&
-            packages.map((packageData) => (
-              <PackageCard
-                data={packageData}
-                key={packageData.name}
-                priceFresh={`${getFormattedPrice(
-                  dataPrintful?.[packageData.variantId]
-                    ?.priceWithDeliveryAndProfit.netPrice ?? 0
-                )}`}
-                deliveryPrice={`doprava zdarma`}
-              />
-            ))}
+          {dataPrintful
+            ? packages.map((packageData) => (
+                <PackageCard
+                  data={packageData}
+                  key={packageData.name}
+                  priceFresh={`${getFormattedPrice(
+                    dataPrintful?.[packageData.variantId]
+                      ?.priceWithDeliveryAndProfit.netPrice ?? 0
+                  )}`}
+                  deliveryPrice={`doprava zdarma`}
+                />
+              ))
+            : "no data printful"}
         </Flex>
       </Container>
     </section>

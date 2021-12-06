@@ -32,6 +32,7 @@ export default class CustomDocument extends Document {
       };
     } finally {
       styledComponentsSheet.seal();
+      materialUiSheets.getStyleElement();
     }
   }
 
