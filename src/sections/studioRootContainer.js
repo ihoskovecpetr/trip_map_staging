@@ -480,16 +480,22 @@ export default function StudioRootContainer() {
     }
   };
 
+  const dynamicVH =
+    typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px";
+
   return (
-    <section sx={{ marginTop: isMobile ? 0 : headerHeight }}>
+    <StyledSection
+      isMobile={isMobile}
+      headerHeight={headerHeight}
+      dynamicVH={dynamicVH}
+    >
       <ContainerBox
         headerHeight={isMobile ? 0 : headerHeight}
-        dynamicVH={
-          typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
-        }
+        isMobile={isMobile}
+        dynamicVH={dynamicVH}
       >
-        {/* <div sx={styles.containerBox}> */}
-        <Box sx={styles.canvasBox}>
+        <CanvasBox>
+          {/* <Box sx={styles.canvasBox}> */}
           <MapContainer
             map={mapInstance}
             snapMapInstance={snapMapInstance}
@@ -499,63 +505,96 @@ export default function StudioRootContainer() {
             setMapInstance={setMapInstance}
             setSnapMapInstance={setSnapMapInstance}
           />
-        </Box>
+          {/* </Box> */}
+        </CanvasBox>
 
-        <Box sx={styles.settingsBox}>
+        <SettingsBox>
           <TabsRoot map={mapInstance} snapMapInstance={snapMapInstance} />
-        </Box>
-        {/* </div> */}
+        </SettingsBox>
+
+        {/* <Box sx={styles.settingsBox}>
+        </Box> */}
       </ContainerBox>
-    </section>
+    </StyledSection>
   );
 }
 
-const styles = {
-  containerBox: {
-    // display: "flex",
-    // // alignItems: ["flex-start", null, null, "center"],
-    // justifyContent: "space-between",
-    // flexDirection: ["column", null, null, "row"],
-    // alignItems: "flex-start",
-    // flexWrap: [null, null, null, "wrap"],
-    // height: "100%",
-    // width: "100%",
-  },
+// const styles = {
+//   settingsBox: {
+//     // flexShrink: 1,
+//     // order: [1, 1, 1, 1, 0],
+//     // textAlign: ["center", null, "right", "left"],
+//     width: ["100%", "100%", "100%", "40%", "30%"],
+//     mx: "auto",
+//     // backgroundColor: ["white", "white", "white", "background_almost_white"],
+//     zIndex: 10,
+//     // position: "relative",
 
-  settingsBox: {
-    flexShrink: 1,
-    order: [1, 1, 1, 1, 0],
-    textAlign: ["center", null, "right", "left"],
-    width: ["100%", "100%", "100%", "40%", "30%"],
-    mx: "auto",
-    backgroundColor: ["white", "white", "white", "background_almost_white"],
-    zIndex: 10,
-    // position: "relative",
+//     // ".description": {
+//     //   pr: [0, null, null, null, 4],
+//     // },
+//   },
+//   canvasBox: {
+//     // px: [0, null, "40px", 0],
+//     // order: [0, 0, 0, 2],
+//     // width: ["100%", "100%", "100%", "60%", "70%"],
+//     // height: [null, null, null, "100%"],
+//     // backgroundColor: "rgba(0,0,0,0.2)",
+//   },
+// };
 
-    ".description": {
-      pr: [0, null, null, null, 4],
-    },
-  },
-  canvasBox: {
-    // px: [0, null, "40px", 0],
-    order: [0, 0, 0, 2],
-    width: ["100%", "100%", "100%", "60%", "70%"],
-    height: [null, null, null, "100%"],
-    backgroundColor: "rgba(0,0,0,0.2)",
-  },
-};
-
-const ContainerBox = styled.div`
-  height: ${({ headerHeight, dynamicVH }) =>
-    `calc(${100 * dynamicVH}px - ${headerHeight}px)`};
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
+const CanvasBox = styled.div`
+  order: 0;
   width: 100%;
-  flex-direction: row;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  ${mobile`
+    order: 1;
+    width: 60%;
+  `};
 
   ${desktop`
+  width: 70%;
+`}
+`;
+
+const SettingsBox = styled.div`
+  order: 1;
+  flex: 1;
+  width: 100%;
+  background-color: ${color("background_almost_white")};
+
+  ${mobile`
+    order: 0;
+    width: 40%;
+    background-color: white;
+  `}
+
+  ${desktop`
+    width: 30%;
+  `}
+`;
+
+const StyledSection = styled.section`
+  margin-top: ${({ headerHeight, isMobile }) =>
+    isMobile ? 0 : `${headerHeight}px`};
+  height: ${({ headerHeight, dynamicVH, isMobile }) =>
+    `calc(${100 * dynamicVH}px - ${!isMobile ? headerHeight : 0}px)`};
+`;
+
+const ContainerBox = styled.div`
+  height: ${({ headerHeight, dynamicVH, isMobile }) =>
+    `calc(${100 * dynamicVH}px - ${!isMobile && headerHeight}px)`};
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  // justify-content: space-between;
+  // align-items: stretch;
+  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: column;
+
+  ${mobile`
     flex-direction: row;
   `}
 `;

@@ -176,6 +176,11 @@ export default function TabsRoot({ map, snapMapInstance }) {
     }
   }, [isMobile]);
 
+  console.log("Rerendered__THIS", {
+    topElementsHeight: stepper_height + header_height,
+    mapSegmentHeight: map_segment_height,
+  });
+
   const isWideOrientation =
     productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
 
@@ -232,18 +237,16 @@ export default function TabsRoot({ map, snapMapInstance }) {
           snapMapInstance={snapMapInstance}
           activeMapStyleName={activeMapStyleName}
         />
-        {/* {isMobile && (
-        <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
-      )} */}
+
         <StepperContentWrap
           topElementsHeight={stepper_height + header_height}
+          stepperHeight={stepper_height}
           mapSegmentHeight={map_segment_height}
           isOpen={isOpen}
           dynamicVH={
             typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
           }
         >
-          {/* {activeStepElements[activeStepNumber]} */}
           {activeStepElements[activeStepNumber]?.map((el, index) =>
             React.cloneElement(el, {
               key: `key_step_${index}`,
@@ -274,6 +277,7 @@ const MainContainer = styled.div`
   transition-duration: 0.5s;
   position: ${({ isOpen, isMobile }) =>
     isOpen ? "fixed" : isMobile ? "absolute" : "relative"};
+
   top: ${({ isOpen, mapHeight, dynamicVH }) =>
     isOpen ? `${30 * dynamicVH}px` : `${mapHeight}px`};
 
@@ -285,6 +289,21 @@ const MainContainer = styled.div`
   height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
     isOpen && isMobile && `${70 * dynamicVH}px`};
 
+  height: ${({
+    mapCanvasHeight,
+    mobileHeaderHeight,
+    isOpen,
+    isMobile,
+    dynamicVH,
+    isWideOrientation,
+    mapHeight,
+  }) =>
+    !isOpen &&
+    isMobile &&
+    `calc(${100 * dynamicVH - mapHeight}px - ${
+      isWideOrientation ? 80 : 0
+    }px - 0px)`};
+
   ${mobile`
     overflow: auto;
     top: unset;
@@ -295,7 +314,6 @@ const TabSegmentWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  // background-color: ${color("background")};
 
   height: 100%;
   top: ${({ isOpen, isWideOrientation, mapHeight }) =>
@@ -310,9 +328,6 @@ const TabSegmentWrap = styled.div`
   `}
 `;
 
-// height: ${({ mapHeight, isWideOrientation }) =>
-//`calc(100vh - ${mapHeight}px + ${isWideOrientation ? 100 : 0}px)`};
-
 const StepperContentWrap = styled.div`
   overflow: ${({ isOpen }) => (isOpen ? "scroll" : "hidden")};
   padding: 0px 0.5rem;
@@ -321,6 +336,9 @@ const StepperContentWrap = styled.div`
     `calc(${
       100 * dynamicVH
     }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
+
+  height: ${({ stepperHeight, isOpen }) =>
+    !isOpen && `calc(100% - ${stepperHeight}px)`};
 
   ${mobile`
     height: ${({ topElementsHeight, isOpen, dynamicVH }) =>
@@ -368,6 +386,8 @@ const ArrowWrap = styled.div`
   position: relative;
   height: 28px;
   flex: 1 2;
+  display: flex;
+  justify-content: center;
 `;
 
 const Dummy_item = styled.div`
