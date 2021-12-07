@@ -278,8 +278,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
 //     isWideOrientation ? 80 : 0
 //   }px - 0px)`};
 
-// position: ${({ isOpen, isMobile }) => (isOpen ? "fixed" : "relative")};
-
 const MainContainer = styled.div`
   width: 100%;
   display: flex;
@@ -290,11 +288,8 @@ const MainContainer = styled.div`
   transition-duration: 0.5s;
   position: relative;
 
-  top: ${({ isOpen, mapHeight, dynamicVH }) =>
-    isOpen ? `-${30 * dynamicVH}px` : `${0}px`};
-
-  top: ${({ isOpen, isWideOrientation, mapCanvasHeight, mobileHeaderHeight }) =>
-    isWideOrientation && !isOpen && `-80px`};
+  top: ${({ isOpen, mapHeight, dynamicVH, isWideOrientation }) =>
+    isOpen ? `-${30 * dynamicVH}px` : isWideOrientation ? "-80px" : `0px`};
 
   height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
     isOpen && isMobile && `${70 * dynamicVH}px`};
