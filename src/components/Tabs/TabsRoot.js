@@ -263,21 +263,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
   );
 }
 
-// height: ${({
-//   mapCanvasHeight,
-//   mobileHeaderHeight,
-//   isOpen,
-//   isMobile,
-//   dynamicVH,
-//   isWideOrientation,
-//   mapHeight,
-// }) =>
-//   !isOpen &&
-//   isMobile &&
-//   `calc(${100 * dynamicVH - mapHeight}px + ${
-//     isWideOrientation ? 80 : 0
-//   }px - 0px)`};
-
 const MainContainer = styled.div`
   width: 100%;
   display: flex;
