@@ -176,13 +176,13 @@ export default function TabsRoot({ map, snapMapInstance }) {
     }
   }, [isMobile]);
 
-  console.log("Rerendered__THIS", {
-    topElementsHeight: stepper_height + header_height,
-    mapSegmentHeight: map_segment_height,
-  });
-
   const isWideOrientation =
     productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
+
+  const dynamicVH =
+    typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px";
+
+  console.log({ dynamicVH });
 
   return (
     <MainContainer
@@ -194,9 +194,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
       mapCanvasHeight={map_canvas_height}
       mapHeight={map_segment_height}
       isWideOrientation={isWideOrientation}
-      dynamicVH={
-        typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
-      }
+      dynamicVH={dynamicVH}
     >
       {isMobile && (
         <>
@@ -243,9 +241,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
           stepperHeight={stepper_height}
           mapSegmentHeight={map_segment_height}
           isOpen={isOpen}
-          dynamicVH={
-            typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
-          }
+          dynamicVH={dynamicVH}
         >
           {activeStepElements[activeStepNumber]?.map((el, index) =>
             React.cloneElement(el, {
@@ -267,6 +263,23 @@ export default function TabsRoot({ map, snapMapInstance }) {
   );
 }
 
+// height: ${({
+//   mapCanvasHeight,
+//   mobileHeaderHeight,
+//   isOpen,
+//   isMobile,
+//   dynamicVH,
+//   isWideOrientation,
+//   mapHeight,
+// }) =>
+//   !isOpen &&
+//   isMobile &&
+//   `calc(${100 * dynamicVH - mapHeight}px + ${
+//     isWideOrientation ? 80 : 0
+//   }px - 0px)`};
+
+// position: ${({ isOpen, isMobile }) => (isOpen ? "fixed" : "relative")};
+
 const MainContainer = styled.div`
   width: 100%;
   display: flex;
@@ -275,34 +288,19 @@ const MainContainer = styled.div`
   z-index: 10;
   background-color: ${color("background_almost_white")};
   transition-duration: 0.5s;
-  position: ${({ isOpen, isMobile }) =>
-    isOpen ? "fixed" : isMobile ? "absolute" : "relative"};
+  position: relative;
 
   top: ${({ isOpen, mapHeight, dynamicVH }) =>
-    isOpen ? `${30 * dynamicVH}px` : `${mapHeight}px`};
+    isOpen ? `-${30 * dynamicVH}px` : `${0}px`};
 
   top: ${({ isOpen, isWideOrientation, mapCanvasHeight, mobileHeaderHeight }) =>
-    isWideOrientation &&
-    !isOpen &&
-    `calc(${mobileHeaderHeight}px + ${mapCanvasHeight}px + 80px)`};
+    isWideOrientation && !isOpen && `-80px`};
 
   height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
     isOpen && isMobile && `${70 * dynamicVH}px`};
 
-  height: ${({
-    mapCanvasHeight,
-    mobileHeaderHeight,
-    isOpen,
-    isMobile,
-    dynamicVH,
-    isWideOrientation,
-    mapHeight,
-  }) =>
-    !isOpen &&
-    isMobile &&
-    `calc(${100 * dynamicVH - mapHeight}px - ${
-      isWideOrientation ? 80 : 0
-    }px - 0px)`};
+  height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
+    !isOpen && isMobile && `100%`};
 
   ${mobile`
     overflow: auto;
@@ -314,12 +312,12 @@ const TabSegmentWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
   height: 100%;
+  padding: 0;
+
   top: ${({ isOpen, isWideOrientation, mapHeight }) =>
     isOpen && `${mapHeight - 150}px`};
-
-  padding: 0 0;
+  top: -100px;
 
   ${mobile`
     height: unset;
@@ -364,7 +362,7 @@ const OverflowSectionWrap = styled.div`
 
   width: 100%;
   position: relative;
-  top: -28px;
+  top: -20px;
 
   ${mobile`
 `}

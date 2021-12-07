@@ -495,7 +495,6 @@ export default function StudioRootContainer() {
         dynamicVH={dynamicVH}
       >
         <CanvasBox>
-          {/* <Box sx={styles.canvasBox}> */}
           <MapContainer
             map={mapInstance}
             snapMapInstance={snapMapInstance}
@@ -505,75 +504,15 @@ export default function StudioRootContainer() {
             setMapInstance={setMapInstance}
             setSnapMapInstance={setSnapMapInstance}
           />
-          {/* </Box> */}
         </CanvasBox>
 
         <SettingsBox>
           <TabsRoot map={mapInstance} snapMapInstance={snapMapInstance} />
         </SettingsBox>
-
-        {/* <Box sx={styles.settingsBox}>
-        </Box> */}
       </ContainerBox>
     </StyledSection>
   );
 }
-
-// const styles = {
-//   settingsBox: {
-//     // flexShrink: 1,
-//     // order: [1, 1, 1, 1, 0],
-//     // textAlign: ["center", null, "right", "left"],
-//     width: ["100%", "100%", "100%", "40%", "30%"],
-//     mx: "auto",
-//     // backgroundColor: ["white", "white", "white", "background_almost_white"],
-//     zIndex: 10,
-//     // position: "relative",
-
-//     // ".description": {
-//     //   pr: [0, null, null, null, 4],
-//     // },
-//   },
-//   canvasBox: {
-//     // px: [0, null, "40px", 0],
-//     // order: [0, 0, 0, 2],
-//     // width: ["100%", "100%", "100%", "60%", "70%"],
-//     // height: [null, null, null, "100%"],
-//     // backgroundColor: "rgba(0,0,0,0.2)",
-//   },
-// };
-
-const CanvasBox = styled.div`
-  order: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-
-  ${mobile`
-    order: 1;
-    width: 60%;
-  `};
-
-  ${desktop`
-  width: 70%;
-`}
-`;
-
-const SettingsBox = styled.div`
-  order: 1;
-  flex: 1;
-  width: 100%;
-  background-color: ${color("background_almost_white")};
-
-  ${mobile`
-    order: 0;
-    width: 40%;
-    background-color: white;
-  `}
-
-  ${desktop`
-    width: 30%;
-  `}
-`;
 
 const StyledSection = styled.section`
   margin-top: ${({ headerHeight, isMobile }) =>
@@ -584,17 +523,48 @@ const StyledSection = styled.section`
 
 const ContainerBox = styled.div`
   height: ${({ headerHeight, dynamicVH, isMobile }) =>
-    `calc(${100 * dynamicVH}px - ${!isMobile && headerHeight}px)`};
+    `calc(${100 * dynamicVH}px - ${!isMobile ? headerHeight : 0}px)`};
   height: 100%;
   overflow: hidden;
-  display: flex;
-  // justify-content: space-between;
-  // align-items: stretch;
-  flex-wrap: wrap;
+  display: block;
+  // flex-wrap: wrap;
   width: 100%;
-  flex-direction: column;
+  // flex-direction: column;
 
   ${mobile`
-    flex-direction: row;
+    display: flex;
+  `}
+`;
+
+const CanvasBox = styled.div`
+  // order: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  ${mobile`
+    order: 1;
+    width: 60%;
+  `};
+
+  ${desktop`
+    width: 70%;
+  `}
+`;
+
+const SettingsBox = styled.div`
+  // order: 1;
+  // flex: 1;
+  width: 100%;
+  background-color: ${color("background_almost_white")};
+  // overflow: auto;
+
+  ${mobile`
+    order: 0;
+    width: 40%;
+    background-color: white;
+  `}
+
+  ${desktop`
+    width: 30%;
   `}
 `;
