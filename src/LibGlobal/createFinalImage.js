@@ -43,7 +43,6 @@ const fitBoundsMapPromise = async ({ originalMapObject, snapMapObject }) => {
       snapMapObject.on("idle", function (e) {
         //TODO: find another event after fully loading map to avoid setTimeout.
 
-        console.log("Map_idling", { e });
         resolve();
         setTimeout(() => {}, 1000);
       });
