@@ -63,17 +63,26 @@ const LocLblBtn = styled.div`
 `;
 
 const StyledGeocoderInput = styled(GeocoderInput)`
-  div {
-    width: undefined !important;
+  box-shadow: 5px 5px green;
+  border-left: 1px solid red !important;
+  .mapboxgl-ctrl {
+    background-color: green !important;
+  }
+  & div {
+    width: 20px !important;
+    height: 200px !important;
     border: 2px solid pink !important;
+    background-color: yellow !important;
   }
+
   input {
-    // border: 1px solid ${color("cta_color")};
-    // border-radius: 5px;
-  }
-  & :nth-child(0) {
-    width: undefined !important;
-    border: 2px solid pink;
+    border: 1px solid red !important;
+
+    &:focus {
+      width: undefined !important;
+      border: 2px solid pink;
+      background-color: red !important;
+    }
   }
 `;
 
@@ -159,24 +168,26 @@ export default function Location({
               </BtnsRow>
               <InputsRow>
                 <StyledIconShuffle />
-                {isThisLocalityBeingUpdated ? (
-                  <StyledGeocoderInput
-                    style={{
-                      display: "inline",
-                      flex: 5,
-                      div: { background: "red" },
-                    }}
-                    value={location.title}
-                    setResult={(e) => setGeocoderResult(location, e)}
-                    clearAfterResult={false}
-                  />
-                ) : (
+                {/* {isThisLocalityBeingUpdated ? ( */}
+
+                <StyledGeocoderInput
+                  style={{
+                    display: "inline",
+                    flex: 5,
+                    borderLeft: "1px solid black",
+                    zIndex: isThisLocalityBeingUpdated ? 100 : 1,
+                  }}
+                  value={location.title}
+                  setResult={(e) => setGeocoderResult(location, e)}
+                  clearAfterResult={false}
+                />
+                {/* ) : (
                   <StyledInput
                     // variant="outlined"
                     defaultValue={location.titleLabel}
                     onChange={updateLabel(location)}
                   />
-                )}
+                )} */}
                 <StyledDeleteIcon
                   onClick={() =>
                     dispatch(removeThisLocation(location.id, tripId))

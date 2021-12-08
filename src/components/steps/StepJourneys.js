@@ -7,7 +7,7 @@ import DragContainer from "components/draggableJourneys/TripsAll";
 import { mobile } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 
-export default function StepAddRoute({ map, index }) {
+export default function StepJourneys({ map, index }) {
   const { isMobile } = useIsMobile();
 
   useEffect(() => {

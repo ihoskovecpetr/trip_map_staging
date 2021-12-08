@@ -25,7 +25,7 @@ import Step6FinishVariant from "../steps/Step6FinishVariant";
 import Step7MapDefinition from "../steps/Step7MapDefinition";
 import Step8Checkout from "../steps/Step8Checkout";
 import StepTitles from "../steps/StepTitles";
-import StepAddRoute from "../steps/StepAddRoute";
+import StepJourneys from "../steps/StepJourneys";
 import StepAddIcon from "../steps/StepAddIcon";
 
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
@@ -114,7 +114,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
   };
 
   const StepComponent = isJourneysEnabled ? (
-    <StepAddRoute map={map} index={2} />
+    <StepJourneys map={map} index={2} />
   ) : (
     <Step1Location map={map} index={2} />
   );
@@ -273,8 +273,19 @@ const MainContainer = styled.div`
   transition-duration: 0.5s;
   position: relative;
 
-  top: ${({ isOpen, mapHeight, dynamicVH, isWideOrientation }) =>
-    isOpen ? `-${30 * dynamicVH}px` : isWideOrientation ? "-80px" : `0px`};
+  top: ${({
+    isOpen,
+    mapHeight,
+    dynamicVH,
+    isWideOrientation,
+    mapCanvasHeight,
+    headerHeight,
+  }) =>
+    isOpen
+      ? `-${45 * dynamicVH}px`
+      : isWideOrientation
+      ? `calc(${mapCanvasHeight + headerHeight + 120}px - ${mapHeight}px)`
+      : `0px`};
 
   height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
     isOpen && isMobile && `${70 * dynamicVH}px`};
