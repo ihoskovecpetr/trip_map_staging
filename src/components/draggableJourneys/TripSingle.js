@@ -131,7 +131,6 @@ export default function TripSingle({
         <Flex3></Flex3>
       </NewLocationContainer>
       <HorizontalLine />
-      {/* <HorizontalLine /> */}
     </Container>
   );
 }

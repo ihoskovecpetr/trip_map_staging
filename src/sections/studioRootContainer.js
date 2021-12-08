@@ -527,9 +527,8 @@ const ContainerBox = styled.div`
   height: 100%;
   overflow: hidden;
   display: block;
-  // flex-wrap: wrap;
   width: 100%;
-  // flex-direction: column;
+  background-color: ${color("background_almost_white")};
 
   ${mobile`
     display: flex;
