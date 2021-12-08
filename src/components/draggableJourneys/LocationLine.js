@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { color, fontSize, fontWeight } from "utils";
 
-import GeocoderInput from "components/GeocoderInput";
+import GeocoderInput from "components/GeocoderInput_new";
 import { updateLocation, removeLocation } from "redux/order/actions";
 
 const Container = styled.div`
@@ -42,7 +42,6 @@ const StyledIconShuffle = styled(CompareArrowsIcon)`
   flex: 1;
   transform: rotate(90deg);
   font-size: 1.5rem !important;
-  // border-top: 1px solid black;
 `;
 
 const StyledDeleteIcon = styled(DeleteForeverIcon)`
@@ -56,6 +55,7 @@ const LocLblBtn = styled.div`
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
   border: 1px solid black;
+  border-bottom-color: transparent;
 
   padding: 0 5px;
   font-size: ${fontSize("xs")};
@@ -98,30 +98,33 @@ const StyledInput = styled.input`
   border-radius: 0px;
 `;
 
-export default function Location({
+export default function LocationLine({
   location,
   index,
   tripId,
-  updatingLocationId,
-  setUpdatingLocationId,
+  activeLocationId,
+  setActiveLocationId,
 }) {
   const dispatch = useDispatch();
 
-  const setGeocoderResult = (locationObj, e) => {
+  const [locationInput, setLocationInput] = useState(true);
+  const [activeGeocoder, setActiveGeocoder] = useState(false);
+
+  const setGeocoderResult = (locationObj, result) => {
     const sourceId = "SourceId_" + Math.random();
     const titleSourceId = "TitleSourceId_" + Math.random();
-    const placeNameArr = e.result.place_name.split(",");
+    const placeNameArr = result.place_name.split(",");
     const newTitle = placeNameArr[0];
 
     dispatch(
       updateLocation({
         ...locationObj,
-        location: e.result.geometry.coordinates,
+        location: result.geometry.coordinates,
         sourceId: sourceId,
         title: newTitle,
         titleLabel: newTitle,
         titleLabelDisplayed: true,
-        titleLocation: e.result.geometry.coordinates,
+        titleLocation: result.geometry.coordinates,
         titleSourceId,
       })
     );
@@ -140,8 +143,6 @@ export default function Location({
     dispatch(removeLocation({ locationId, tripId }));
   };
 
-  const isThisLocalityBeingUpdated = updatingLocationId === location.id;
-
   return (
     <Draggable draggableId={location.id} index={index}>
       {(provided) => {
@@ -154,40 +155,42 @@ export default function Location({
             >
               <BtnsRow>
                 <LocLblBtn
-                  isActive={isThisLocalityBeingUpdated}
-                  onClick={() => setUpdatingLocationId(location.id)}
+                  isActive={locationInput}
+                  onClick={() => setLocationInput(true)}
                 >
                   lokalita
                 </LocLblBtn>
                 <LocLblBtn
-                  isActive={updatingLocationId != location.id}
-                  onClick={() => setUpdatingLocationId(null)}
+                  isActive={!locationInput}
+                  onClick={() => setLocationInput(false)}
                 >
                   popisek
                 </LocLblBtn>
               </BtnsRow>
               <InputsRow>
                 <StyledIconShuffle />
-                {/* {isThisLocalityBeingUpdated ? ( */}
-
-                <StyledGeocoderInput
-                  style={{
-                    display: "inline",
-                    flex: 5,
-                    borderLeft: "1px solid black",
-                    zIndex: isThisLocalityBeingUpdated ? 100 : 1,
-                  }}
-                  value={location.title}
-                  setResult={(e) => setGeocoderResult(location, e)}
-                  clearAfterResult={false}
-                />
-                {/* ) : (
+                {locationInput ? (
+                  <StyledGeocoderInput
+                    style={{
+                      // display: "inline",
+                      // flex: 5,
+                      borderLeft: "1px solid black",
+                      zIndex: activeLocationId === location.id ? 10 : 1,
+                    }}
+                    value={location.title}
+                    setResult={(e) => setGeocoderResult(location, e)}
+                    clearAfterResult={false}
+                    onClick={() => {
+                      setActiveLocationId(location.id);
+                    }}
+                  />
+                ) : (
                   <StyledInput
                     // variant="outlined"
                     defaultValue={location.titleLabel}
                     onChange={updateLabel(location)}
                   />
-                )} */}
+                )}
                 <StyledDeleteIcon
                   onClick={() =>
                     dispatch(removeThisLocation(location.id, tripId))

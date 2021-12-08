@@ -10,12 +10,13 @@ let geocoder;
 
 export default function GeocoderInput({
   id,
-  map,
   value,
   setResult,
   placeholder,
   clearAfterResult = true,
   style,
+  focusCallback,
+  blurCallback,
 }) {
   const ref = useRef();
 
@@ -29,11 +30,19 @@ export default function GeocoderInput({
       placeholder: placeholder ?? "Další bod cesty",
     });
     // document.getElementById(id).appendChild(geocoder.onAdd(map));
+
     geocoder.addTo(ref.current);
+
+    geocoder._inputEl.addEventListener("focus", focusCallback);
+
+    return () => {
+      console.log("Removing_event_listener", { id });
+      geocoder._inputEl.removeEventListener("focus", focusCallback);
+    };
   }, [id]);
 
   useEffect(() => {
-    document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
+    // document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
   }, []);
 
   useEffect(() => {
@@ -51,12 +60,13 @@ export default function GeocoderInput({
     return () => {
       geocoder.off("result", transformResult);
     };
-  }, [map]);
+  }, []);
 
   const transformResult = (e) => {
     setResult(e);
 
     if (clearAfterResult) {
+      console.log("Clearing_result");
       geocoder.clear(); // to remove blue dot
     }
     // document.getElementById(id).innerHTML = "Filled";
