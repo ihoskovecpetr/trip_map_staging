@@ -182,8 +182,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
   const dynamicVH =
     typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px";
 
-  console.log({ dynamicVH });
-
   return (
     <MainContainer
       className={isMobile && isOpen && "open"}

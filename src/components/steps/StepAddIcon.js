@@ -20,7 +20,6 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 import { color, fontSize, fontWeight, mobile } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
-import GeocoderInput from "components/GeocoderInput";
 import { getMaxGroupIndex } from "LibGlobal/getMaxGroupIndex";
 import { MAP_STYLED_AND_FLIGHT_COLOR } from "constants/constants";
 
