@@ -483,33 +483,37 @@ export default function StudioRootContainer() {
   };
 
   return (
-    <StyledSection
-      isMobile={isMobile}
-      headerHeight={headerHeight}
-      screenHeight={screenHeight}
-    >
-      <ContainerBox
-        headerHeight={isMobile ? 0 : headerHeight}
-        isMobile={isMobile}
-        screenHeight={screenHeight}
-      >
-        <CanvasBox>
-          <MapContainer
-            map={mapInstance}
-            snapMapInstance={snapMapInstance}
-            addZoom={addZoom(mapInstance)}
-            subtractZoom={subtractZoom(mapInstance)}
-            mapTitles={mapTitles}
-            setMapInstance={setMapInstance}
-            setSnapMapInstance={setSnapMapInstance}
-          />
-        </CanvasBox>
+    <>
+      {screenHeight && (
+        <StyledSection
+          isMobile={isMobile}
+          headerHeight={headerHeight}
+          screenHeight={screenHeight}
+        >
+          <ContainerBox
+            headerHeight={isMobile ? 0 : headerHeight}
+            isMobile={isMobile}
+            screenHeight={screenHeight}
+          >
+            <CanvasBox>
+              <MapContainer
+                map={mapInstance}
+                snapMapInstance={snapMapInstance}
+                addZoom={addZoom(mapInstance)}
+                subtractZoom={subtractZoom(mapInstance)}
+                mapTitles={mapTitles}
+                setMapInstance={setMapInstance}
+                setSnapMapInstance={setSnapMapInstance}
+              />
+            </CanvasBox>
 
-        <SettingsBox>
-          <TabsRoot map={mapInstance} snapMapInstance={snapMapInstance} />
-        </SettingsBox>
-      </ContainerBox>
-    </StyledSection>
+            <SettingsBox>
+              <TabsRoot map={mapInstance} snapMapInstance={snapMapInstance} />
+            </SettingsBox>
+          </ContainerBox>
+        </StyledSection>
+      )}
+    </>
   );
 }
 
@@ -521,8 +525,7 @@ const StyledSection = styled.section`
 `;
 
 const ContainerBox = styled.div`
-  height: ${({ headerHeight, screenHeight, isMobile }) =>
-    `calc(${screenHeight}px - ${!isMobile ? headerHeight : 0}px)`};
+  height: 100%;
   overflow: hidden;
   display: block;
   width: 100%;

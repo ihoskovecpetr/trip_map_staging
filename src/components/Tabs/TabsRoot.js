@@ -247,6 +247,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
               setIsOpen(!isOpen);
             }}
           >
+            {screenHeight}
             <StyledKeyboardArrowRight isOpen={isOpen} />
           </ArrowWrap>
         )}
@@ -314,7 +315,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
 // display: flex;
 // flex-direction: column;
 // align-items: flex-start;
-// z-index: 10;
 // background-color: ${color("background_almost_white")};
 // transition-duration: 0.5s;
 // position: relative;
@@ -329,7 +329,6 @@ const MainContainer = styled.div`
 
 // top: ${({ isOpen, isWideOrientation, mapHeight }) =>
 // isOpen && `${mapHeight - 150}px`};
-// top: -100px;
 
 const TabSegmentWrap = styled.div`
   display: flex;
@@ -424,6 +423,7 @@ const ArrowWrap = styled.div`
   flex: 1 2;
   display: flex;
   justify-content: center;
+  color: black;
 `;
 
 const Dummy_item = styled.div`
