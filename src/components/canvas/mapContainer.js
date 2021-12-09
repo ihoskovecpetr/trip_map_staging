@@ -537,7 +537,7 @@ const MapAvailableSpace = styled.div`
   justify-content: center;
   width: "100%";
   align-items: flex-start;
-  height: 60vh;
+  height: 90vh;
   padding-top: 14px;
 
   ${mobile`

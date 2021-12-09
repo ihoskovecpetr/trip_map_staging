@@ -25,11 +25,12 @@ import Step6FinishVariant from "../steps/Step6FinishVariant";
 import Step7MapDefinition from "../steps/Step7MapDefinition";
 import Step8Checkout from "../steps/Step8Checkout";
 import StepTitles from "../steps/StepTitles";
-import StepAddRoute from "../steps/StepAddRoute";
+import StepJourneys from "../steps/StepJourneys";
 import StepAddIcon from "../steps/StepAddIcon";
 
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { useSendSaveBlueprint } from "Hooks/useSendSaveBlueprint";
+import { useScreenSize } from "Hooks/useScreenSize";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import { setActiveStepNumber } from "redux/order/actions";
 
@@ -48,6 +49,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
   const dispatch = useDispatch();
   const { isMobile } = useIsMobile();
   const sendSaveBlueprint = useSendSaveBlueprint();
+  const { height: screenHeight } = useScreenSize();
 
   const productRedux = useProductSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
@@ -106,6 +108,8 @@ export default function TabsRoot({ map, snapMapInstance }) {
         activeMapStyleName,
       });
     }
+
+    setIsOpen(true);
     dispatch(setActiveStepNumber(activeStepNumber + 1));
   };
 
@@ -114,7 +118,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
   };
 
   const StepComponent = isJourneysEnabled ? (
-    <StepAddRoute map={map} index={2} />
+    <StepJourneys map={map} index={2} />
   ) : (
     <Step1Location map={map} index={2} />
   );
@@ -189,11 +193,9 @@ export default function TabsRoot({ map, snapMapInstance }) {
       mapCanvasHeight={map_canvas_height}
       mapHeight={map_segment_height}
       isWideOrientation={isWideOrientation}
-      dynamicVH={
-        typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
-      }
+      screenHeight={screenHeight}
     >
-      {isMobile && (
+      {/* {isMobile && (
         <>
           <OverflowSectionWrap>
             <Price>
@@ -214,6 +216,20 @@ export default function TabsRoot({ map, snapMapInstance }) {
             <Dummy_item></Dummy_item>
           </OverflowSectionWrap>
         </>
+      )} */}
+
+      {!isMobile && (
+        <StepperWrap>
+          <Stepper
+            stepElements={activeStepElements}
+            handleNext={handleNext}
+            handleBack={handleBack}
+            activeStep={activeStepNumber}
+            map={map}
+            snapMapInstance={snapMapInstance}
+            activeMapStyleName={activeMapStyleName}
+          />
+        </StepperWrap>
       )}
 
       <TabSegmentWrap
@@ -222,28 +238,25 @@ export default function TabsRoot({ map, snapMapInstance }) {
         isWideOrientation={isWideOrientation}
         isOpen={isOpen}
         isMobile={isMobile}
+        screenHeight={screenHeight}
+        stepperHeight={stepper_height}
       >
-        <Stepper
-          stepElements={activeStepElements}
-          handleNext={handleNext}
-          handleBack={handleBack}
-          activeStep={activeStepNumber}
-          map={map}
-          snapMapInstance={snapMapInstance}
-          activeMapStyleName={activeMapStyleName}
-        />
-        {/* {isMobile && (
-        <MobileTabWrap>{stepElementsMobile[activeStep]}</MobileTabWrap>
-      )} */}
+        {isMobile && (
+          <ArrowWrap
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          >
+            <StyledKeyboardArrowRight isOpen={isOpen} />
+          </ArrowWrap>
+        )}
         <StepperContentWrap
           topElementsHeight={stepper_height + header_height}
+          stepperHeight={stepper_height}
           mapSegmentHeight={map_segment_height}
           isOpen={isOpen}
-          dynamicVH={
-            typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px"
-          }
+          screenHeight={screenHeight}
         >
-          {/* {activeStepElements[activeStepNumber]} */}
           {activeStepElements[activeStepNumber]?.map((el, index) =>
             React.cloneElement(el, {
               key: `key_step_${index}`,
@@ -251,6 +264,20 @@ export default function TabsRoot({ map, snapMapInstance }) {
           )}
         </StepperContentWrap>
       </TabSegmentWrap>
+
+      {isMobile && (
+        <StepperWrap>
+          <Stepper
+            stepElements={activeStepElements}
+            handleNext={handleNext}
+            handleBack={handleBack}
+            activeStep={activeStepNumber}
+            map={map}
+            snapMapInstance={snapMapInstance}
+            activeMapStyleName={activeMapStyleName}
+          />
+        </StepperWrap>
+      )}
       {/* {isMobile && (
         <Backdrop
           classes={{
@@ -264,26 +291,35 @@ export default function TabsRoot({ map, snapMapInstance }) {
   );
 }
 
+// top: ${({
+//   isOpen,
+//   mapHeight,
+//   dynamicVH,
+//   isWideOrientation,
+//   mapCanvasHeight,
+//   headerHeight,
+// }) =>
+//   isOpen
+//     ? `-${45 * dynamicVH}px`
+//     : isWideOrientation
+//     ? `calc(${mapCanvasHeight + headerHeight + 120}px - ${mapHeight}px)`
+//     : `0px`};
+
+// height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
+// isOpen && isMobile && `${70 * dynamicVH}px`};
+
+// height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
+// !isOpen && isMobile && `100%`};
+
+// display: flex;
+// flex-direction: column;
+// align-items: flex-start;
+// z-index: 10;
+// background-color: ${color("background_almost_white")};
+// transition-duration: 0.5s;
+// position: relative;
 const MainContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  z-index: 10;
-  background-color: ${color("background_almost_white")};
-  transition-duration: 0.5s;
-  position: ${({ isOpen, isMobile }) =>
-    isOpen ? "fixed" : isMobile ? "absolute" : "relative"};
-  top: ${({ isOpen, mapHeight, dynamicVH }) =>
-    isOpen ? `${30 * dynamicVH}px` : `${mapHeight}px`};
-
-  top: ${({ isOpen, isWideOrientation, mapCanvasHeight, mobileHeaderHeight }) =>
-    isWideOrientation &&
-    !isOpen &&
-    `calc(${mobileHeaderHeight}px + ${mapCanvasHeight}px + 80px)`};
-
-  height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
-    isOpen && isMobile && `${70 * dynamicVH}px`};
 
   ${mobile`
     overflow: auto;
@@ -291,46 +327,64 @@ const MainContainer = styled.div`
   `}
 `;
 
+// top: ${({ isOpen, isWideOrientation, mapHeight }) =>
+// isOpen && `${mapHeight - 150}px`};
+// top: -100px;
+
 const TabSegmentWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  // background-color: ${color("background")};
-
-  height: 100%;
-  top: ${({ isOpen, isWideOrientation, mapHeight }) =>
-    isOpen && `${mapHeight - 150}px`};
-
-  padding: 0 0;
+  padding: 0;
+  position: fixed;
+  top: ${({ isOpen, screenHeight, stepperHeight }) =>
+    isOpen
+      ? `calc(${0.3 * screenHeight}px)`
+      : `calc(${screenHeight}px - ${stepperHeight}px - 40px)`};
 
   ${mobile`
+  position: relative;
     height: unset;
     top: 0;
     padding: unset;
   `}
 `;
 
-// height: ${({ mapHeight, isWideOrientation }) =>
-//`calc(100vh - ${mapHeight}px + ${isWideOrientation ? 100 : 0}px)`};
+// height: ${({ topElementsHeight, mapSegmentHeight, isOpen, dynamicVH }) =>
+//   !isOpen &&
+//   `calc(${
+//     100 * dynamicVH
+//   }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
 
 const StepperContentWrap = styled.div`
   overflow: ${({ isOpen }) => (isOpen ? "scroll" : "hidden")};
   padding: 0px 0.5rem;
-  height: ${({ topElementsHeight, mapSegmentHeight, isOpen, dynamicVH }) =>
-    !isOpen &&
-    `calc(${
-      100 * dynamicVH
-    }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
+  background: rgba(255, 255, 255, 0.7);
+
+  height: ${({ screenHeight, isOpen }) =>
+    isOpen ? `calc(${0.7 * screenHeight}px)` : "0px"};
 
   ${mobile`
-    height: ${({ topElementsHeight, isOpen, dynamicVH }) =>
-      `calc(${100 * dynamicVH}px - ${topElementsHeight}px)`};
+    height: ${({ topElementsHeight, isOpen, screenHeight }) =>
+      `calc(${screenHeight}px - ${topElementsHeight}px)`};
     overflow: scroll;
   `}
 
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const StepperWrap = styled.div`
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  z-index: 15;
+
+  ${mobile`
+  position: relative;
+  z-index: unset;
+`}
 `;
 
 const StyledParagraph = styled.p`
@@ -346,7 +400,7 @@ const OverflowSectionWrap = styled.div`
 
   width: 100%;
   position: relative;
-  top: -28px;
+  top: -20px;
 
   ${mobile`
 `}
@@ -368,6 +422,8 @@ const ArrowWrap = styled.div`
   position: relative;
   height: 28px;
   flex: 1 2;
+  display: flex;
+  justify-content: center;
 `;
 
 const Dummy_item = styled.div`

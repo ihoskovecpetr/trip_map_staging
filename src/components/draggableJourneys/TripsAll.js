@@ -20,7 +20,7 @@ export default function DragContainer({ map }) {
   const dispatch = useDispatch();
   const journeysDraggable = useGetJourneysDraggable();
   const [activeTripId, setActiveTripId] = useState();
-  const [updatingLocationId, setUpdatingLocationId] = useState();
+  const [activeLocationId, setActiveLocationId] = useState();
   // journeysDraggable?.tripsOrder[0]
 
   const onDragEnd = (result) => {
@@ -39,6 +39,8 @@ export default function DragContainer({ map }) {
 
     dispatch(updateLocationSequence(result));
   };
+
+  console.log({ activeTripId: activeTripId, activeLocationId });
 
   return (
     <>
@@ -84,8 +86,8 @@ export default function DragContainer({ map }) {
               map={map}
               isTripActive={activeTripId === tripObj.id}
               setActiveTripId={setActiveTripId}
-              updatingLocationId={updatingLocationId}
-              setUpdatingLocationId={setUpdatingLocationId}
+              activeLocationId={activeLocationId}
+              setActiveLocationId={setActiveLocationId}
             />
           );
         })}

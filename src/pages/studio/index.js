@@ -50,6 +50,7 @@ const StudioPage = () => {
     <ThemeProvider theme={theme}>
       <Head>
         <title>Trip Map - Studio</title>
+        <link rel="stylesheet" href="style_studio_public.css" />
       </Head>
       <StickyProvider>
         {!isMobile && (
