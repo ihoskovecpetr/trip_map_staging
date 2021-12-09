@@ -315,7 +315,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
 // display: flex;
 // flex-direction: column;
 // align-items: flex-start;
-// z-index: 10;
 // background-color: ${color("background_almost_white")};
 // transition-duration: 0.5s;
 // position: relative;
