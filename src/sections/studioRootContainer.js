@@ -16,6 +16,7 @@ import { getVariantObject } from "LibGlobal/getVariantObject";
 import { getLayoutColors } from "LibGlobal/getLayoutColors";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
 import { color, mobile, desktop } from "utils";
+import { useScreenSize } from "Hooks/useScreenSize";
 
 import {
   useTitlesSelector,
@@ -203,6 +204,7 @@ export default function StudioRootContainer() {
   const activeMapStyleName = useActiveMapStyleSelector();
   const [mapInstance, setMapInstance] = useState(null);
   const [snapMapInstance, setSnapMapInstance] = useState(null);
+  const { height: screenHeight } = useScreenSize();
 
   const { height: headerHeight } = useElementDimensions("header");
 
@@ -480,21 +482,16 @@ export default function StudioRootContainer() {
     }
   };
 
-  const dynamicVH =
-    typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px";
-
-  console.log({ dynamicVH });
-
   return (
     <StyledSection
       isMobile={isMobile}
       headerHeight={headerHeight}
-      dynamicVH={dynamicVH}
+      screenHeight={screenHeight}
     >
       <ContainerBox
         headerHeight={isMobile ? 0 : headerHeight}
         isMobile={isMobile}
-        dynamicVH={dynamicVH}
+        screenHeight={screenHeight}
       >
         <CanvasBox>
           <MapContainer
@@ -519,13 +516,13 @@ export default function StudioRootContainer() {
 const StyledSection = styled.section`
   margin-top: ${({ headerHeight, isMobile }) =>
     isMobile ? 0 : `${headerHeight}px`};
-  height: ${({ headerHeight, dynamicVH, isMobile }) =>
-    `calc(${100 * dynamicVH}px - ${!isMobile ? headerHeight : 0}px)`};
+  height: ${({ headerHeight, screenHeight, isMobile }) =>
+    `calc(${screenHeight}px - ${!isMobile ? headerHeight : 0}px)`};
 `;
 
 const ContainerBox = styled.div`
-  height: ${({ headerHeight, dynamicVH, isMobile }) =>
-    `calc(${100 * dynamicVH}px - ${!isMobile ? headerHeight : 0}px)`};
+  height: ${({ headerHeight, screenHeight, isMobile }) =>
+    `calc(${screenHeight}px - ${!isMobile ? headerHeight : 0}px)`};
   overflow: hidden;
   display: block;
   width: 100%;

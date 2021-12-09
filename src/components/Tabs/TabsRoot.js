@@ -183,11 +183,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
   const isWideOrientation =
     productRedux?.sizeObject?.orientation === ORIENTATIONS.wide;
 
-  const dynamicVH =
-    typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px";
-
-  console.log({ screenHeight, dynamicVH });
-
   return (
     <MainContainer
       className={isMobile && isOpen && "open"}
@@ -198,7 +193,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
       mapCanvasHeight={map_canvas_height}
       mapHeight={map_segment_height}
       isWideOrientation={isWideOrientation}
-      dynamicVH={dynamicVH}
       screenHeight={screenHeight}
     >
       {/* {isMobile && (
@@ -244,7 +238,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
         isWideOrientation={isWideOrientation}
         isOpen={isOpen}
         isMobile={isMobile}
-        dynamicVH={dynamicVH}
         screenHeight={screenHeight}
         stepperHeight={stepper_height}
       >
@@ -262,7 +255,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
           stepperHeight={stepper_height}
           mapSegmentHeight={map_segment_height}
           isOpen={isOpen}
-          dynamicVH={dynamicVH}
           screenHeight={screenHeight}
         >
           {activeStepElements[activeStepNumber]?.map((el, index) =>
@@ -346,7 +338,7 @@ const TabSegmentWrap = styled.div`
   // height: 100%;
   padding: 0;
   position: fixed;
-  top: ${({ isOpen, dynamicVH, screenHeight, stepperHeight }) =>
+  top: ${({ isOpen, screenHeight, stepperHeight }) =>
     isOpen
       ? `calc(${0.3 * screenHeight}px)`
       : `calc(${screenHeight}px - ${stepperHeight}px - 40px)`};
@@ -370,11 +362,11 @@ const StepperContentWrap = styled.div`
   padding: 0px 0.5rem;
   background: rgba(255, 255, 255, 0.7);
 
-  height: ${({ dynamicVH, screenHeight, isOpen }) =>
+  height: ${({ screenHeight, isOpen }) =>
     isOpen ? `calc(${0.7 * screenHeight}px)` : "0px"};
 
   ${mobile`
-    height: ${({ topElementsHeight, isOpen, dynamicVH, screenHeight }) =>
+    height: ${({ topElementsHeight, isOpen, screenHeight }) =>
       `calc(${screenHeight}px - ${topElementsHeight}px)`};
     overflow: scroll;
   `}
