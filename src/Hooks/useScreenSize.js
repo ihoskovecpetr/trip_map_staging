@@ -22,7 +22,12 @@ export function useScreenSize() {
     }
 
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("keydown", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("keydown", handleResize);
+    };
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
   return windowSize;

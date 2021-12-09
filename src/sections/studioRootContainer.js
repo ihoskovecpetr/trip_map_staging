@@ -549,11 +549,6 @@ const CanvasBox = styled.div`
 `;
 
 const SettingsBox = styled.div`
-  // background-color: ${color("background_almost_white")};
-  // overflow: auto;
-  // position: fixed;
-  // top: 350px;
-
   ${mobile`
     order: 0;
     width: 40%;
