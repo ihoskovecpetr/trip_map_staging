@@ -247,6 +247,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
               setIsOpen(!isOpen);
             }}
           >
+            {screenHeight}
             <StyledKeyboardArrowRight isOpen={isOpen} />
           </ArrowWrap>
         )}
@@ -329,7 +330,6 @@ const MainContainer = styled.div`
 
 // top: ${({ isOpen, isWideOrientation, mapHeight }) =>
 // isOpen && `${mapHeight - 150}px`};
-// top: -100px;
 
 const TabSegmentWrap = styled.div`
   display: flex;
@@ -424,6 +424,7 @@ const ArrowWrap = styled.div`
   flex: 1 2;
   display: flex;
   justify-content: center;
+  color: black;
 `;
 
 const Dummy_item = styled.div`

@@ -31,21 +31,18 @@ const GeocoderInput = ({
           <SuggestionWrapper>
             {address.suggestions.map((suggestion, index) => {
               return (
-                <>
-                  {console.log({ sug: suggestion })}
-                  <Suggestion
-                    key={index}
-                    onClick={() => {
-                      console.log({ suggestion });
-                      setResult(suggestion);
-                      address.setValue(suggestion.place_name);
-                      address.setSuggestions([]);
-                    }}
-                  >
-                    <HalfName>{suggestion.place_name.split(",")[0]}</HalfName>
-                    <FullName>{suggestion.place_name}</FullName>
-                  </Suggestion>
-                </>
+                <Suggestion
+                  key={index}
+                  onClick={() => {
+                    console.log({ suggestion });
+                    setResult(suggestion);
+                    address.setValue(suggestion.place_name);
+                    address.setSuggestions([]);
+                  }}
+                >
+                  <HalfName>{suggestion.place_name.split(",")[0]}</HalfName>
+                  <FullName>{suggestion.place_name}</FullName>
+                </Suggestion>
               );
             })}
           </SuggestionWrapper>
@@ -87,6 +84,8 @@ const SuggestionWrapper = styled.div`
   position: absolute;
   border-radius: 0px 0px 10px 10px;
   box-shadow: 0px 10px 20px grey;
+  max-height: 120px;
+  overflow: scroll;
 `;
 
 const Suggestion = styled.p`
