@@ -30,6 +30,7 @@ import StepAddIcon from "../steps/StepAddIcon";
 
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { useSendSaveBlueprint } from "Hooks/useSendSaveBlueprint";
+import { useScreenSize } from "Hooks/useScreenSize";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import { setActiveStepNumber } from "redux/order/actions";
 
@@ -48,6 +49,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
   const dispatch = useDispatch();
   const { isMobile } = useIsMobile();
   const sendSaveBlueprint = useSendSaveBlueprint();
+  const { height: screenHeight } = useScreenSize();
 
   const productRedux = useProductSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
@@ -106,6 +108,8 @@ export default function TabsRoot({ map, snapMapInstance }) {
         activeMapStyleName,
       });
     }
+
+    setIsOpen(true);
     dispatch(setActiveStepNumber(activeStepNumber + 1));
   };
 
@@ -182,6 +186,8 @@ export default function TabsRoot({ map, snapMapInstance }) {
   const dynamicVH =
     typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px";
 
+  console.log({ screenHeight, dynamicVH });
+
   return (
     <MainContainer
       className={isMobile && isOpen && "open"}
@@ -193,6 +199,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
       mapHeight={map_segment_height}
       isWideOrientation={isWideOrientation}
       dynamicVH={dynamicVH}
+      screenHeight={screenHeight}
     >
       {/* {isMobile && (
         <>
@@ -238,16 +245,16 @@ export default function TabsRoot({ map, snapMapInstance }) {
         isOpen={isOpen}
         isMobile={isMobile}
         dynamicVH={dynamicVH}
+        screenHeight={screenHeight}
         stepperHeight={stepper_height}
       >
         {isMobile && (
-          <ArrowWrap>
-            <StyledKeyboardArrowRight
-              isOpen={isOpen}
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            />
+          <ArrowWrap
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          >
+            <StyledKeyboardArrowRight isOpen={isOpen} />
           </ArrowWrap>
         )}
         <StepperContentWrap
@@ -256,6 +263,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
           mapSegmentHeight={map_segment_height}
           isOpen={isOpen}
           dynamicVH={dynamicVH}
+          screenHeight={screenHeight}
         >
           {activeStepElements[activeStepNumber]?.map((el, index) =>
             React.cloneElement(el, {
@@ -338,10 +346,10 @@ const TabSegmentWrap = styled.div`
   // height: 100%;
   padding: 0;
   position: fixed;
-  top: ${({ isOpen, dynamicVH, stepperHeight }) =>
+  top: ${({ isOpen, dynamicVH, screenHeight, stepperHeight }) =>
     isOpen
-      ? `calc(${30 * dynamicVH}px)`
-      : `calc(${100 * dynamicVH}px - ${stepperHeight}px - 40px)`};
+      ? `calc(${0.3 * screenHeight}px)`
+      : `calc(${screenHeight}px - ${stepperHeight}px - 40px)`};
 
   ${mobile`
   position: relative;
@@ -362,12 +370,12 @@ const StepperContentWrap = styled.div`
   padding: 0px 0.5rem;
   background: rgba(255, 255, 255, 0.7);
 
-  height: ${({ dynamicVH, isOpen }) =>
-    isOpen ? `calc(${70 * dynamicVH}px)` : "0px"};
+  height: ${({ dynamicVH, screenHeight, isOpen }) =>
+    isOpen ? `calc(${0.7 * screenHeight}px)` : "0px"};
 
   ${mobile`
-    height: ${({ topElementsHeight, isOpen, dynamicVH }) =>
-      `calc(${100 * dynamicVH}px - ${topElementsHeight}px)`};
+    height: ${({ topElementsHeight, isOpen, dynamicVH, screenHeight }) =>
+      `calc(${screenHeight}px - ${topElementsHeight}px)`};
     overflow: scroll;
   `}
 
