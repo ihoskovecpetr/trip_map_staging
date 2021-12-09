@@ -72,13 +72,12 @@ const Input = styled.input`
   background: white;
   border: none;
   padding: 10px 20px;
-  // border-radius: 30px;
+  font: inherit;
   position: relative;
   display: grid;
   justify-self: center;
   &:focus {
     outline: none;
-    // border-radius: ${(props) => props.isTyping && "10px 10px 0px 0px"};
   }
 `;
 

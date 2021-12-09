@@ -524,7 +524,6 @@ const StyledSection = styled.section`
 const ContainerBox = styled.div`
   height: ${({ headerHeight, dynamicVH, isMobile }) =>
     `calc(${100 * dynamicVH}px - ${!isMobile ? headerHeight : 0}px)`};
-  height: 100%;
   overflow: hidden;
   display: block;
   width: 100%;
