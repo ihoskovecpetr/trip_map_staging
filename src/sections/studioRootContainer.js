@@ -537,7 +537,6 @@ const styles = {
     },
   },
   canvasBox: {
-    // px: [0, null, "40px", 0],
     order: [0, 0, 0, 2],
     width: ["100%", "100%", "100%", "60%", "70%"],
     height: [null, null, null, "100%"],
