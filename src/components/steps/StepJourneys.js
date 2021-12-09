@@ -30,6 +30,7 @@ export default function StepJourneys({ map, index }) {
 const Container = styled.div`
   margin-bottom: 50px;
   width: 100%;
+  padding-bottom: 200px;
 `;
 
 const HeadingText = styled.p`

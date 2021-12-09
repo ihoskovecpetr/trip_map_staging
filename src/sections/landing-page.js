@@ -259,7 +259,7 @@ const PureCtaBox = styled.div`
 
 const LandingCarousel = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 70vh;
 
   ${mobile`
     max-height: 80vh;

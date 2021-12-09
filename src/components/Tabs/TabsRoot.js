@@ -194,7 +194,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
       isWideOrientation={isWideOrientation}
       dynamicVH={dynamicVH}
     >
-      {isMobile && (
+      {/* {isMobile && (
         <>
           <OverflowSectionWrap>
             <Price>
@@ -215,6 +215,20 @@ export default function TabsRoot({ map, snapMapInstance }) {
             <Dummy_item></Dummy_item>
           </OverflowSectionWrap>
         </>
+      )} */}
+
+      {!isMobile && (
+        <StepperWrap>
+          <Stepper
+            stepElements={activeStepElements}
+            handleNext={handleNext}
+            handleBack={handleBack}
+            activeStep={activeStepNumber}
+            map={map}
+            snapMapInstance={snapMapInstance}
+            activeMapStyleName={activeMapStyleName}
+          />
+        </StepperWrap>
       )}
 
       <TabSegmentWrap
@@ -223,17 +237,19 @@ export default function TabsRoot({ map, snapMapInstance }) {
         isWideOrientation={isWideOrientation}
         isOpen={isOpen}
         isMobile={isMobile}
+        dynamicVH={dynamicVH}
+        stepperHeight={stepper_height}
       >
-        <Stepper
-          stepElements={activeStepElements}
-          handleNext={handleNext}
-          handleBack={handleBack}
-          activeStep={activeStepNumber}
-          map={map}
-          snapMapInstance={snapMapInstance}
-          activeMapStyleName={activeMapStyleName}
-        />
-
+        {isMobile && (
+          <ArrowWrap>
+            <StyledKeyboardArrowRight
+              isOpen={isOpen}
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            />
+          </ArrowWrap>
+        )}
         <StepperContentWrap
           topElementsHeight={stepper_height + header_height}
           stepperHeight={stepper_height}
@@ -248,6 +264,20 @@ export default function TabsRoot({ map, snapMapInstance }) {
           )}
         </StepperContentWrap>
       </TabSegmentWrap>
+
+      {isMobile && (
+        <StepperWrap>
+          <Stepper
+            stepElements={activeStepElements}
+            handleNext={handleNext}
+            handleBack={handleBack}
+            activeStep={activeStepNumber}
+            map={map}
+            snapMapInstance={snapMapInstance}
+            activeMapStyleName={activeMapStyleName}
+          />
+        </StepperWrap>
+      )}
       {/* {isMobile && (
         <Backdrop
           classes={{
@@ -261,35 +291,35 @@ export default function TabsRoot({ map, snapMapInstance }) {
   );
 }
 
+// top: ${({
+//   isOpen,
+//   mapHeight,
+//   dynamicVH,
+//   isWideOrientation,
+//   mapCanvasHeight,
+//   headerHeight,
+// }) =>
+//   isOpen
+//     ? `-${45 * dynamicVH}px`
+//     : isWideOrientation
+//     ? `calc(${mapCanvasHeight + headerHeight + 120}px - ${mapHeight}px)`
+//     : `0px`};
+
+// height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
+// isOpen && isMobile && `${70 * dynamicVH}px`};
+
+// height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
+// !isOpen && isMobile && `100%`};
+
+// display: flex;
+// flex-direction: column;
+// align-items: flex-start;
+// z-index: 10;
+// background-color: ${color("background_almost_white")};
+// transition-duration: 0.5s;
+// position: relative;
 const MainContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  z-index: 10;
-  background-color: ${color("background_almost_white")};
-  transition-duration: 0.5s;
-  position: relative;
-
-  top: ${({
-    isOpen,
-    mapHeight,
-    dynamicVH,
-    isWideOrientation,
-    mapCanvasHeight,
-    headerHeight,
-  }) =>
-    isOpen
-      ? `-${45 * dynamicVH}px`
-      : isWideOrientation
-      ? `calc(${mapCanvasHeight + headerHeight + 120}px - ${mapHeight}px)`
-      : `0px`};
-
-  height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
-    isOpen && isMobile && `${70 * dynamicVH}px`};
-
-  height: ${({ mapHeight, isOpen, isMobile, dynamicVH }) =>
-    !isOpen && isMobile && `100%`};
 
   ${mobile`
     overflow: auto;
@@ -297,35 +327,43 @@ const MainContainer = styled.div`
   `}
 `;
 
+// top: ${({ isOpen, isWideOrientation, mapHeight }) =>
+// isOpen && `${mapHeight - 150}px`};
+// top: -100px;
+
 const TabSegmentWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  // height: 100%;
   padding: 0;
-
-  top: ${({ isOpen, isWideOrientation, mapHeight }) =>
-    isOpen && `${mapHeight - 150}px`};
-  top: -100px;
+  position: fixed;
+  top: ${({ isOpen, dynamicVH, stepperHeight }) =>
+    isOpen
+      ? `calc(${30 * dynamicVH}px)`
+      : `calc(${100 * dynamicVH}px - ${stepperHeight}px - 40px)`};
 
   ${mobile`
+  position: relative;
     height: unset;
     top: 0;
     padding: unset;
   `}
 `;
 
+// height: ${({ topElementsHeight, mapSegmentHeight, isOpen, dynamicVH }) =>
+//   !isOpen &&
+//   `calc(${
+//     100 * dynamicVH
+//   }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
+
 const StepperContentWrap = styled.div`
   overflow: ${({ isOpen }) => (isOpen ? "scroll" : "hidden")};
   padding: 0px 0.5rem;
-  height: ${({ topElementsHeight, mapSegmentHeight, isOpen, dynamicVH }) =>
-    !isOpen &&
-    `calc(${
-      100 * dynamicVH
-    }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
+  background: rgba(255, 255, 255, 0.7);
 
-  height: ${({ stepperHeight, isOpen }) =>
-    !isOpen && `calc(100% - ${stepperHeight}px)`};
+  height: ${({ dynamicVH, isOpen }) =>
+    isOpen ? `calc(${70 * dynamicVH}px)` : "0px"};
 
   ${mobile`
     height: ${({ topElementsHeight, isOpen, dynamicVH }) =>
@@ -336,6 +374,17 @@ const StepperContentWrap = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const StepperWrap = styled.div`
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  z-index: 15;
+
+  ${mobile`
+  position: relative;
+`}
 `;
 
 const StyledParagraph = styled.p`

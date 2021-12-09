@@ -483,6 +483,8 @@ export default function StudioRootContainer() {
   const dynamicVH =
     typeof window !== "undefined" ? window.innerHeight * 0.01 : "400px";
 
+  console.log({ dynamicVH });
+
   return (
     <StyledSection
       isMobile={isMobile}
@@ -550,11 +552,10 @@ const CanvasBox = styled.div`
 `;
 
 const SettingsBox = styled.div`
-  // order: 1;
-  // flex: 1;
-  width: 100%;
-  background-color: ${color("background_almost_white")};
+  // background-color: ${color("background_almost_white")};
   // overflow: auto;
+  // position: fixed;
+  // top: 350px;
 
   ${mobile`
     order: 0;

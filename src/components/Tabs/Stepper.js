@@ -12,6 +12,7 @@ import CheckoutCta from "../Checkout/CheckoutCta";
 const useStyles = makeStyles({
   root: {
     width: "100%",
+    padding: "15px 5px",
   },
 });
 
