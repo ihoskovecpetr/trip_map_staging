@@ -529,7 +529,7 @@ const StudioMapSection = styled.div`
   flex-direction: column;
   transform: translateX(0);
   height: 100%;
-  overflow: hidden; //auto,
+  // overflow: hidden; //auto,
 `;
 
 const MapAvailableSpace = styled.div`
@@ -554,65 +554,7 @@ const styles = {
     height: ["60vh", null, null, "85vh"],
   },
 
-  map_wrap_1: {
-    position: "relative",
-    overflow: "initial", //"initial",
-    width: "100%",
-    height: "100%",
-  },
   canvas_merging: {
     display: "none",
-  },
-  allBtnWrapper: {
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "8px",
-  },
-  zoomBtnWrapper: {
-    display: "flex",
-    padding: "auto",
-    marginRight: "20px",
-  },
-  zoomBtn: {
-    border: "1px solid lightGrey",
-    display: "flex",
-    padding: "5px 5px",
-    margin: "auto",
-    backgroundColor: "white",
-    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.06)",
-    cursor: "pointer",
-
-    "&.left": {
-      borderRadius: `${BNT_RADIUS}px 0 0 ${BNT_RADIUS}px`,
-      borderRight: "0px solid lightGrey",
-    },
-    "&.right": {
-      borderRadius: `0 ${BNT_RADIUS}px ${BNT_RADIUS}px 0`,
-    },
-  },
-  rotateBtn: {
-    border: "1px solid lightGrey",
-    display: "flex",
-    padding: "5px 5px",
-    m: "2px",
-    borderRadius: `${BNT_RADIUS}px`,
-    backgroundColor: "white",
-    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.06)",
-    cursor: "pointer",
-    // marginRight: "30px",
-  },
-
-  teaserBtn: {
-    border: "1px solid lightGrey",
-    display: "flex",
-    padding: "5px 5px",
-    m: "2px",
-    borderRadius: `${BNT_RADIUS}px`,
-    backgroundColor: "white",
-    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.06)",
-    cursor: "pointer",
-    // marginRight: "30px",
   },
 };

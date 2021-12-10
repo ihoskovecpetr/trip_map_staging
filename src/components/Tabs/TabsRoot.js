@@ -322,24 +322,22 @@ const MainContainer = styled.div`
   width: 100%;
 
   ${mobile`
-    overflow: auto;
     top: unset;
   `}
 `;
 
-// top: ${({ isOpen, isWideOrientation, mapHeight }) =>
-// isOpen && `${mapHeight - 150}px`};
+// top: ${({ isOpen, screenHeight, stepperHeight }) =>
+//   isOpen
+//     ? `calc(${0.3 * screenHeight}px)`
+//     : `calc(${screenHeight}px - ${stepperHeight}px - 40px)`};
 
 const TabSegmentWrap = styled.div`
-  display: flex;
+  // display: flex;
   flex-direction: column;
   width: 100%;
   padding: 0;
-  position: fixed;
-  top: ${({ isOpen, screenHeight, stepperHeight }) =>
-    isOpen
-      ? `calc(${0.3 * screenHeight}px)`
-      : `calc(${screenHeight}px - ${stepperHeight}px - 40px)`};
+  position: ${({ isOpen }) => (isOpen ? "absolute" : "relative")};
+  top: ${({ isOpen }) => (isOpen ? "100px" : "0px")};
 
   ${mobile`
   position: relative;
@@ -356,12 +354,14 @@ const TabSegmentWrap = styled.div`
 //   }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
 
 const StepperContentWrap = styled.div`
-  overflow: ${({ isOpen }) => (isOpen ? "scroll" : "hidden")};
+  // overflow: ${({ isOpen }) => (isOpen ? "scroll" : "hidden")};
   padding: 0px 0.5rem;
   background: rgba(255, 255, 255, 0.7);
 
   height: ${({ screenHeight, isOpen }) =>
     isOpen ? `calc(${0.7 * screenHeight}px)` : "0px"};
+
+  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
 
   ${mobile`
     height: ${({ topElementsHeight, isOpen, screenHeight }) =>

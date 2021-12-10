@@ -517,16 +517,17 @@ export default function StudioRootContainer() {
   );
 }
 
+// height: ${({ headerHeight, screenHeight, isMobile }) =>
+//   `calc(${screenHeight}px - ${!isMobile ? headerHeight : 0}px)`};
+
 const StyledSection = styled.section`
   margin-top: ${({ headerHeight, isMobile }) =>
     isMobile ? 0 : `${headerHeight}px`};
-  height: ${({ headerHeight, screenHeight, isMobile }) =>
-    `calc(${screenHeight}px - ${!isMobile ? headerHeight : 0}px)`};
 `;
 
 const ContainerBox = styled.div`
-  height: 100%;
-  overflow: hidden;
+  // height: 100%;
+  // overflow: hidden;
   display: block;
   width: 100%;
   background-color: ${color("background_almost_white")};
