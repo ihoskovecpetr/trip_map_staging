@@ -84,7 +84,6 @@ const SuggestionWrapper = styled.div`
   position: absolute;
   border-radius: 0px 0px 10px 10px;
   box-shadow: 0px 10px 20px grey;
-  max-height: 120px;
   overflow: scroll;
 `;
 

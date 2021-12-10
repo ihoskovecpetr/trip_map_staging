@@ -241,7 +241,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
         screenHeight={screenHeight}
         stepperHeight={stepper_height}
       >
-        {isMobile && (
+        {isMobile && isOpen && (
           <ArrowWrap
             onClick={() => {
               setIsOpen(!isOpen);
@@ -268,6 +268,16 @@ export default function TabsRoot({ map, snapMapInstance }) {
 
       {isMobile && (
         <StepperWrap>
+          {isMobile && !isOpen && (
+            <ArrowWrap
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              {screenHeight}, {visualViewportHeight}
+              <StyledKeyboardArrowRight isOpen={isOpen} />
+            </ArrowWrap>
+          )}
           <Stepper
             stepElements={activeStepElements}
             handleNext={handleNext}
