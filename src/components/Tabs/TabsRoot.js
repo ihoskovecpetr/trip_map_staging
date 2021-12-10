@@ -49,7 +49,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
   const dispatch = useDispatch();
   const { isMobile } = useIsMobile();
   const sendSaveBlueprint = useSendSaveBlueprint();
-  const { height: screenHeight } = useScreenSize();
+  const { height: screenHeight, visualViewportHeight } = useScreenSize();
 
   const productRedux = useProductSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
@@ -247,7 +247,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
               setIsOpen(!isOpen);
             }}
           >
-            {screenHeight}
+            {screenHeight}, {visualViewportHeight}
             <StyledKeyboardArrowRight isOpen={isOpen} />
           </ArrowWrap>
         )}
