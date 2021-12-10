@@ -243,6 +243,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
       >
         {isMobile && isOpen && (
           <ArrowWrap
+            isOpen={isOpen}
             onClick={() => {
               setIsOpen(!isOpen);
             }}
@@ -257,6 +258,11 @@ export default function TabsRoot({ map, snapMapInstance }) {
           mapSegmentHeight={map_segment_height}
           isOpen={isOpen}
           screenHeight={screenHeight}
+          onClick={(e) => {
+            console.log({ eEE: e });
+            e.preventDefault();
+            e.stopPropagation();
+          }}
         >
           {activeStepElements[activeStepNumber]?.map((el, index) =>
             React.cloneElement(el, {
@@ -268,7 +274,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
 
       {isMobile && (
         <StepperWrap>
-          {isMobile && !isOpen && (
+          {isMobile && (
             <ArrowWrap
               onClick={() => {
                 setIsOpen(!isOpen);
@@ -347,7 +353,7 @@ const TabSegmentWrap = styled.div`
   width: 100%;
   padding: 0;
   position: ${({ isOpen }) => (isOpen ? "absolute" : "relative")};
-  top: ${({ isOpen }) => (isOpen ? "100px" : "0px")};
+  top: 0px;
 
   ${mobile`
   position: relative;
@@ -425,7 +431,9 @@ const Price = styled.div`
 `;
 
 const ArrowWrap = styled.div`
-  background-color: ${color("background_almost_white")};
+  padding-top: ${({ isOpen }) => (isOpen ? "200px" : "0px")};
+
+  background-color: rgba(0, 0, 0, 0.1);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   position: relative;

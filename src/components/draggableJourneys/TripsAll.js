@@ -40,8 +40,6 @@ export default function DragContainer({ map }) {
     dispatch(updateLocationSequence(result));
   };
 
-  console.log({ activeTripId: activeTripId, activeLocationId });
-
   return (
     <>
       <BtnWrap>

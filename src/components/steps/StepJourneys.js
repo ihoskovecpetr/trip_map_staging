@@ -28,9 +28,9 @@ export default function StepJourneys({ map, index }) {
 }
 
 const Container = styled.div`
-  margin-bottom: 50px;
+  // margin-bottom: 50px;
   width: 100%;
-  padding-bottom: 200px;
+  padding-bottom: 350px;
 `;
 
 const HeadingText = styled.p`
