@@ -56,6 +56,7 @@ export default function StepPathOrWithout({ map, index }) {
 const styles = {
   container: {
     width: "100%",
+    paddingTop: "10px",
   },
 };
 
@@ -76,7 +77,6 @@ const OptionContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
-  margin-top: 10px;
   padding-bottom: 10px;
 `;
 

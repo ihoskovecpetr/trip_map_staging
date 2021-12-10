@@ -596,6 +596,19 @@ const PATHS = {
 
 const OFFICIAL_EMAIL = "tripmapshopinfo@gmail.com";
 
+const TAB_STEPS = [
+  { full: "Vyberte variantu mapy", short: "Varianta" },
+  { full: "Zadejte body cesty", short: "Cesta" },
+  { full: "Orientace", short: "Orientace" },
+  { full: "Popisky", short: "Popisky" },
+  { full: "Ohraničení", short: "Ohraničení" },
+  { full: "Výplň ohraničení", short: "Výplň" },
+  { full: "Barevná kombinace", short: "Barvy" },
+  { full: "Rozměry", short: "Rozměry" },
+  { full: "Rámování", short: "Rámování" },
+  { full: "Checkout", short: "Checkout" },
+];
+
 module.exports = {
   IS_CLIENT,
   IS_SERVER,
@@ -638,4 +651,5 @@ module.exports = {
   LABEL_SIZE_KOEF,
   PATHS,
   OFFICIAL_EMAIL,
+  TAB_STEPS,
 };

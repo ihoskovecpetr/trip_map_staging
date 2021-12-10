@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useElementDimensions } from "Hooks/useElementDimensions";
 import { color, fontWeight, mobile } from "utils";
-import { ORIENTATIONS } from "@constants";
+import { ORIENTATIONS, TAB_STEPS } from "@constants";
 import { getIsProduction } from "LibGlobal/getIsProduction";
 
 import Stepper from "./Stepper";
@@ -114,6 +114,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
   };
 
   const handleBack = () => {
+    setIsOpen(true);
     dispatch(setActiveStepNumber(activeStepNumber - 1));
   };
 
@@ -241,17 +242,12 @@ export default function TabsRoot({ map, snapMapInstance }) {
         screenHeight={screenHeight}
         stepperHeight={stepper_height}
       >
-        {isMobile && isOpen && (
-          <ArrowWrap
-            isOpen={isOpen}
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-          >
-            {screenHeight}, {visualViewportHeight}
-            <StyledKeyboardArrowRight isOpen={isOpen} />
-          </ArrowWrap>
-        )}
+        <TopBackdropSpace
+          isOpen={isOpen}
+          onClick={() => {
+            setIsOpen(false);
+          }}
+        ></TopBackdropSpace>
         <StepperContentWrap
           topElementsHeight={stepper_height + header_height}
           stepperHeight={stepper_height}
@@ -280,7 +276,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
                 setIsOpen(!isOpen);
               }}
             >
-              {screenHeight}, {visualViewportHeight}
+              Krok: {TAB_STEPS[activeStepNumber].short}
               <StyledKeyboardArrowRight isOpen={isOpen} />
             </ArrowWrap>
           )}
@@ -372,7 +368,7 @@ const TabSegmentWrap = styled.div`
 const StepperContentWrap = styled.div`
   // overflow: ${({ isOpen }) => (isOpen ? "scroll" : "hidden")};
   padding: 0px 0.5rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
 
   height: ${({ screenHeight, isOpen }) =>
     isOpen ? `calc(${0.7 * screenHeight}px)` : "0px"};
@@ -431,9 +427,8 @@ const Price = styled.div`
 `;
 
 const ArrowWrap = styled.div`
-  padding-top: ${({ isOpen }) => (isOpen ? "200px" : "0px")};
-
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: ${color("background_almost_white")};
+  box-shadow: 0px -2px 4px lightGrey;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   position: relative;
@@ -442,6 +437,11 @@ const ArrowWrap = styled.div`
   display: flex;
   justify-content: center;
   color: black;
+`;
+
+const TopBackdropSpace = styled.div`
+  padding-top: ${({ isOpen }) => (isOpen ? "200px" : "0px")};
+  background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const Dummy_item = styled.div`
