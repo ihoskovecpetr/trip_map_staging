@@ -74,6 +74,7 @@ export const createFinalImage = async ({
 
     takeScreenshot(snapMapInstance).then(async function (data) {
       try {
+        alert("Got data from Screenshot" + JSON.stringify(data));
         const snapshotWrapper = document.getElementById("snapshot_map_wrapper");
 
         Object.assign(snapshotWrapper.style, {
@@ -130,6 +131,7 @@ const getImageFromBase64 = async (data) => {
       };
 
       imgEl.onerror = function (e) {
+        alert(JSON.stringify(e));
         console.log("Error loading image", e);
 
         reject("Failed to create image");

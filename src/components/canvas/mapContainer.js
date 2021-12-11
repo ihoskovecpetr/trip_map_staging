@@ -542,7 +542,7 @@ const MapAvailableSpace = styled.div`
   justify-content: center;
   width: 100%;
   align-items: flex-start;
-  height: ${({ screenHeight }) => `calc(${screenHeight}px - 80px)`};
+  height: ${({ screenHeight }) => `calc(${screenHeight}px - 0px)`};
   padding-top: 14px;
 
   ${mobile`
