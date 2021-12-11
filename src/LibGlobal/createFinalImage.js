@@ -79,7 +79,7 @@ export const createFinalImage = async ({
       snapMapObject: snapMapInstance,
     });
 
-    await addDelay(1000);
+    await addDelay(3000);
 
     takeScreenshot(snapMapInstance).then(async function (data) {
       try {
