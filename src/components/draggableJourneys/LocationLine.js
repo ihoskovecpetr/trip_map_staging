@@ -16,12 +16,6 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const BtnsRow = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-`;
-
 const InputsRow = styled.div`
   display: flex;
   align-items: center;
@@ -47,54 +41,41 @@ const StyledIconShuffle = styled(CompareArrowsIcon)`
 const StyledDeleteIcon = styled(DeleteForeverIcon)`
   flex: 1;
   font-size: 1.5rem !important;
-  border-left: 1px solid black;
+  // border-left: 1px solid black;
   fill: red !important;
+`;
+
+const BtnsRow = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
 `;
 
 const LocLblBtn = styled.div`
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
-  border: 1px solid black;
+  border: 1px solid lightGrey;
   border-bottom-color: transparent;
 
   padding: 0 5px;
   font-size: ${fontSize("xs")};
-  font-weight: ${fontWeight("bold")};
+  font-weight: ${fontWeight("light")};
 `;
 
-const StyledGeocoderInput = styled(GeocoderInput)`
-  box-shadow: 5px 5px green;
-  border-left: 1px solid red !important;
-  .mapboxgl-ctrl {
-    background-color: green !important;
-  }
-  & div {
-    width: 20px !important;
-    height: 200px !important;
-    border: 2px solid pink !important;
-    background-color: yellow !important;
-  }
+const StyledGeocoderInput = styled(GeocoderInput)``;
 
-  input {
-    border: 1px solid red !important;
-
-    &:focus {
-      width: undefined !important;
-      border: 2px solid pink;
-      background-color: red !important;
-    }
-  }
+const InputWrap = styled.div`
+  flex: 5;
 `;
 
 const StyledInput = styled.input`
-  background-color: white !important;
-  flex: 5;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: ${fontSize("default")};
+  font-weight: ${fontWeight("regular")};
   border: none;
-  margin: 7px -5px;
-  padding: 4px 5px;
-  font-size: ${fontSize("sm")};
-  font-weight: ${fontWeight("bold")};
-  border-left: 1px solid black;
+  border-left: 1px solid lightGrey;
+  border-right: 1px solid lightGrey;
   border-radius: 0px;
 `;
 
@@ -173,8 +154,9 @@ export default function LocationLine({
                   <StyledGeocoderInput
                     style={{
                       // display: "inline",
-                      // flex: 5,
-                      borderLeft: "1px solid black",
+                      flex: 5,
+                      borderLeft: "1px solid lightGrey",
+                      borderRight: "1px solid lightGrey",
                       zIndex: activeLocationId === location.id ? 10 : 1,
                     }}
                     value={location.title}
@@ -185,11 +167,13 @@ export default function LocationLine({
                     }}
                   />
                 ) : (
-                  <StyledInput
-                    // variant="outlined"
-                    defaultValue={location.titleLabel}
-                    onChange={updateLabel(location)}
-                  />
+                  <InputWrap>
+                    <StyledInput
+                      // variant="outlined"
+                      defaultValue={location.titleLabel}
+                      onChange={updateLabel(location)}
+                    />
+                  </InputWrap>
                 )}
                 <StyledDeleteIcon
                   onClick={() =>

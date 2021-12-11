@@ -9,8 +9,8 @@ const GeocoderInput = ({
   placeholder,
   clearAfterResult = true,
   style,
-  focusCallback,
   onClick,
+  clearOnFocus = false,
 }) => {
   const address = useInput(value);
 
@@ -25,6 +25,9 @@ const GeocoderInput = ({
         {...address}
         isTyping={address.value !== ""}
         onClick={onClick}
+        onFocus={(e) => {
+          clearOnFocus && address.setValue("");
+        }}
       />
       {address.suggestions?.length > 0 && (
         <WrapperWrapSug>
@@ -34,9 +37,12 @@ const GeocoderInput = ({
                 <Suggestion
                   key={index}
                   onClick={() => {
-                    console.log({ suggestion });
                     setResult(suggestion);
-                    address.setValue(suggestion.place_name);
+                    address.setValue(
+                      clearOnFocus
+                        ? placeholder
+                        : suggestion.place_name.split(",")[0]
+                    );
                     address.setSuggestions([]);
                   }}
                 >
@@ -55,11 +61,10 @@ const GeocoderInput = ({
 export default GeocoderInput;
 
 const Wrapper = styled.div`
-  flex: 5;
-
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0 auto;
+  background: white;
 `;
 
 const WrapperWrapSug = styled.div`
@@ -67,10 +72,8 @@ const WrapperWrapSug = styled.div`
 `;
 
 const Input = styled.input`
-  width: 200px;
-  background: white;
   border: none;
-  padding: 10px 20px;
+  padding: 5px 10px;
   font: inherit;
   position: relative;
   display: grid;

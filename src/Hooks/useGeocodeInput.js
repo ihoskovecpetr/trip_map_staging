@@ -12,6 +12,7 @@ const useInput = (initialValue) => {
       const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${event.target.value}.json?access_token=${process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN}&autocomplete=true`;
       const response = await fetch(endpoint);
       const result = await response.json();
+      console.log({ result_features: result?.features });
       setSuggestions(result?.features);
       setFullResult(result);
     } catch (error) {

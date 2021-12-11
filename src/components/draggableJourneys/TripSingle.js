@@ -107,7 +107,7 @@ export default function TripSingle({
               !isTripActive && activateNewLocationGeoInput(tripObj.id)
             }
             style={{
-              fill: isTripActive ? "grey" : "green",
+              fill: isTripActive ? "green" : "green",
             }}
           />
         </Flex1>
@@ -117,16 +117,15 @@ export default function TripSingle({
               map={map}
               style={{
                 display: "inline",
-                width: "50%",
+                width: "100%",
                 flex: 4,
                 zIndex: activeLocationId === tripObj.id + "_new_geo" ? 10 : 1,
+                borderLeft: "1px solid black",
+                borderRight: "1px solid black",
               }}
               placeholder={"Další bod tripu"}
               setResult={(e) => setGeocoderResult(tripObj.id, e)}
-              focusCallback={(e) => {
-                console.log("Focus_new_geo", { id: tripObj.id + "_new_geo" });
-                setActiveLocationId(tripObj.id + "_new_geo");
-              }}
+              clearOnFocus
             />
           )}
         </Flex2>

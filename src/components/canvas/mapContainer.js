@@ -10,6 +10,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import { useIsMobile } from "Hooks/useIsMobile";
 import BackdropLoader from "components/backdropLoader";
 import { color, fontWeight, mobile } from "utils";
+import { useScreenSize } from "Hooks/useScreenSize";
 
 import iconChat from "assets/mapIcons/pin2D.svg";
 
@@ -90,6 +91,7 @@ export default function MapContainer({
   const journeysSpecs = useGetJourneysSpecsSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
   const icons = useGetIcons();
+  const { height: screenHeight } = useScreenSize();
 
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const [draggedPoint, setDraggedPoint] = useState();
@@ -235,7 +237,10 @@ export default function MapContainer({
         mapTitles={mapTitles}
       />
 
-      <MapAvailableSpace id="map_available_space_id">
+      <MapAvailableSpace
+        id="map_available_space_id"
+        screenHeight={screenHeight}
+      >
         <div style={{ display: "none" }} id="map_wrap_id">
           <Map
             onStyleLoad={onMapLoad}
@@ -535,9 +540,9 @@ const StudioMapSection = styled.div`
 const MapAvailableSpace = styled.div`
   display: flex;
   justify-content: center;
-  width: "100%";
+  width: 100%;
   align-items: flex-start;
-  height: 90vh;
+  height: ${({ screenHeight }) => `calc(${screenHeight}px - 80px)`};
   padding-top: 14px;
 
   ${mobile`

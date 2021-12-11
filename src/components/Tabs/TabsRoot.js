@@ -49,7 +49,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
   const dispatch = useDispatch();
   const { isMobile } = useIsMobile();
   const sendSaveBlueprint = useSendSaveBlueprint();
-  const { height: screenHeight, visualViewportHeight } = useScreenSize();
+  const { height: screenHeight } = useScreenSize();
 
   const productRedux = useProductSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
@@ -334,10 +334,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
 // position: relative;
 const MainContainer = styled.div`
   width: 100%;
-
-  ${mobile`
-    top: unset;
-  `}
 `;
 
 // top: ${({ isOpen, screenHeight, stepperHeight }) =>
@@ -357,7 +353,8 @@ const TabSegmentWrap = styled.div`
   position: relative;
     height: unset;
     top: 0;
-    padding: unset;
+    padding: 0 0.5rem;
+
   `}
 `;
 
@@ -433,9 +430,12 @@ const Price = styled.div`
 
 const ArrowWrap = styled.div`
   background-color: ${color("background_almost_white")};
-  box-shadow: 0px -2px 4px lightGrey;
+  box-shadow: 0px -2px 6px lightGrey;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  border: 2px solid black;
+  border-color: ${color("cta_color")};
+  border-bottom: unset;
   position: relative;
   height: 28px;
   display: flex;
@@ -448,6 +448,10 @@ const ArrowWrap = styled.div`
 const TopBackdropSpace = styled.div`
   padding-top: ${({ isOpen }) => (isOpen ? "200px" : "0px")};
   background-color: rgba(0, 0, 0, 0.1);
+
+  ${mobile`
+    display: none
+  `}
 `;
 
 const Dummy_item = styled.div`

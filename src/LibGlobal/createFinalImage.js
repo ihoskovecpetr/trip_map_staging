@@ -108,7 +108,10 @@ export const createFinalImage = async ({
 
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
       } catch (e) {
-        alert("Failed while creating Taking screenshot and creating Image");
+        alert(
+          "Failed while taking screenshot and creating Image" +
+            JSON.stringify(e)
+        );
         console.log({ e });
         setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
         reject(e);
