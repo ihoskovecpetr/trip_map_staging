@@ -74,7 +74,6 @@ export const createFinalImage = async ({
 
     takeScreenshot(snapMapInstance).then(async function (data) {
       try {
-        alert("Got data from Screenshot" + JSON.stringify(data));
         const snapshotWrapper = document.getElementById("snapshot_map_wrapper");
 
         Object.assign(snapshotWrapper.style, {
