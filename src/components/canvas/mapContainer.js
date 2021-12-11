@@ -111,30 +111,6 @@ export default function MapContainer({
     elHeight: mapCanvas?.height,
   });
 
-  const fullscreenImageRequested = async () => {
-    setIsCreatingImage(true);
-    const finalImgSrc = await qualityImageCreator({
-      map,
-      snapMapInstance,
-      activeLayoutName: activeLayoutNameRedux,
-      product: productRedux,
-      activeMapStyleName,
-      mapTitles,
-      options: {
-        isPreview: false,
-        isLowDefinition: false,
-      },
-    });
-
-    setLightbox({
-      open: true,
-      activeSrc: finalImgSrc,
-    });
-
-    setIsCreatingImage(false);
-    return;
-  };
-
   const onMapLoad = (mapLoc) => {
     mapLoc.dragRotate.disable();
     mapLoc.touchZoomRotate.disableRotation();

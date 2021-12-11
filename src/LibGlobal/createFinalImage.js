@@ -53,6 +53,13 @@ const fitBoundsMapPromise = async ({ originalMapObject, snapMapObject }) => {
   });
 };
 
+const addDelay = (delay) =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true);
+    }, delay);
+  });
+
 export const createFinalImage = async ({
   originalMapObject,
   snapMapInstance,
@@ -71,6 +78,8 @@ export const createFinalImage = async ({
       originalMapObject,
       snapMapObject: snapMapInstance,
     });
+
+    await addDelay(1000);
 
     takeScreenshot(snapMapInstance).then(async function (data) {
       try {

@@ -69,8 +69,6 @@ export function useQualityImageCreator() {
       display: "block",
     });
 
-    console.log("Same_XS_", computedPixelBase, baseLongSize * multiple);
-
     dispatch(
       setJourneysSpecs({
         labelSizePrint: LABEL_SIZE_KOEF * baseLongSize * multiple,

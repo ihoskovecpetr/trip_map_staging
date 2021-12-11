@@ -111,6 +111,7 @@ export default function TripSingle({
             }}
           />
         </Flex1>
+        {}
         <Flex2>
           {isTripActive && (
             <GeocoderInput
@@ -119,13 +120,14 @@ export default function TripSingle({
                 display: "inline",
                 width: "100%",
                 flex: 4,
-                zIndex: activeLocationId === tripObj.id + "_new_geo" ? 10 : 1,
+                zIndex: activeLocationId === tripObj.id ? 10 : 1,
                 borderLeft: "1px solid black",
                 borderRight: "1px solid black",
               }}
               placeholder={"Další bod tripu"}
               setResult={(e) => setGeocoderResult(tripObj.id, e)}
               clearOnFocus
+              onFocus={() => {}}
             />
           )}
         </Flex2>

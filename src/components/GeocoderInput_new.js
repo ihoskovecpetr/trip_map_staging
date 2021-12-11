@@ -11,6 +11,7 @@ const GeocoderInput = ({
   style,
   onClick,
   clearOnFocus = false,
+  onFocus = () => {},
 }) => {
   const address = useInput(value);
 
@@ -27,6 +28,7 @@ const GeocoderInput = ({
         onClick={onClick}
         onFocus={(e) => {
           clearOnFocus && address.setValue("");
+          onFocus();
         }}
       />
       {address.suggestions?.length > 0 && (
