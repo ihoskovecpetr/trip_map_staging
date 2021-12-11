@@ -42,7 +42,7 @@ export default function DragContainer({ map }) {
 
   return (
     <>
-      <BtnWrap>
+      {/* <BtnWrap>
         <StyledButton
           onClick={() => {
             dispatch(addTrip());
@@ -68,7 +68,7 @@ export default function DragContainer({ map }) {
           />
           Smazat vše
         </StyledButtonDelAll>
-      </BtnWrap>
+      </BtnWrap> */}
       <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragEnd}>
         {journeysDraggable?.tripsOrder?.map((tripId) => {
           const tripObj = journeysDraggable?.trips[tripId];

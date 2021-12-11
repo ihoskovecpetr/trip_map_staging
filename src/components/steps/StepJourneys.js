@@ -4,7 +4,7 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 import DragContainer from "components/draggableJourneys/TripsAll";
 
-import { mobile } from "utils";
+import { mobile, color } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 
 export default function StepJourneys({ map, index }) {
@@ -29,8 +29,10 @@ export default function StepJourneys({ map, index }) {
 
 const Container = styled.div`
   // margin-bottom: 50px;
+  padding: 10px 0.5rem;
   width: 100%;
-  padding-bottom: 350px;
+  padding-bottom: 320px;
+  background: ${color("background_almost_white")};
 `;
 
 const HeadingText = styled.p`

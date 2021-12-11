@@ -271,14 +271,16 @@ export default function TabsRoot({ map, snapMapInstance }) {
       {isMobile && (
         <StepperWrap>
           {isMobile && (
-            <ArrowWrap
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              Krok: {TAB_STEPS[activeStepNumber].short}
-              <StyledKeyboardArrowRight isOpen={isOpen} />
-            </ArrowWrap>
+            <NullHeightWrap>
+              <ArrowWrap
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+              >
+                Krok: {TAB_STEPS[activeStepNumber].short}
+                <StyledKeyboardArrowRight isOpen={isOpen} />
+              </ArrowWrap>
+            </NullHeightWrap>
           )}
           <Stepper
             stepElements={activeStepElements}
@@ -359,6 +361,13 @@ const TabSegmentWrap = styled.div`
   `}
 `;
 
+const NullHeightWrap = styled.div`
+  height: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 // height: ${({ topElementsHeight, mapSegmentHeight, isOpen, dynamicVH }) =>
 //   !isOpen &&
 //   `calc(${
@@ -366,14 +375,10 @@ const TabSegmentWrap = styled.div`
 //   }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
 
 const StepperContentWrap = styled.div`
-  overflow: scroll;
-  padding: 0px 0.5rem;
   background: rgba(255, 255, 255, 0.85);
-
-  height: ${({ screenHeight, isOpen }) =>
-    isOpen ? `calc(${0.7 * screenHeight}px)` : "0px"};
-
   display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  min-height: ${({ screenHeight, isOpen }) =>
+    isOpen ? `calc(${screenHeight}px - 200px)` : "0px"};
 
   ${mobile`
     height: ${({ topElementsHeight, isOpen, screenHeight }) =>
@@ -429,14 +434,15 @@ const Price = styled.div`
 const ArrowWrap = styled.div`
   background-color: ${color("background_almost_white")};
   box-shadow: 0px -2px 4px lightGrey;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   position: relative;
   height: 28px;
-  flex: 1 2;
   display: flex;
   justify-content: center;
   color: black;
+  top: -28px;
+  flex-basis: 50%;
 `;
 
 const TopBackdropSpace = styled.div`
