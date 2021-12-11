@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import useInput from "Hooks/useGeocodeInput";
 
@@ -11,13 +11,29 @@ const GeocoderInput = ({
   style,
   onClick,
   clearOnFocus = false,
-  onFocus = () => {},
+  onBlur = () => {},
 }) => {
   const address = useInput(value);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
-    console.log({ address });
-  }, [address.value]);
+    const onClickAway = (event) => {
+      if (
+        dropdownRef.current?.contains(event.target) ||
+        event.target === dropdownRef.current
+      ) {
+        return;
+      }
+
+      address.setSuggestions([]);
+    };
+
+    document.addEventListener("click", onClickAway, true);
+
+    return () => {
+      document.removeEventListener("click", onClickAway, true);
+    };
+  }, []);
 
   return (
     <Wrapper key={id} style={style}>
@@ -28,12 +44,12 @@ const GeocoderInput = ({
         onClick={onClick}
         onFocus={(e) => {
           clearOnFocus && address.setValue("");
-          onFocus();
         }}
+        onBlur={onBlur}
       />
       {address.suggestions?.length > 0 && (
         <WrapperWrapSug>
-          <SuggestionWrapper>
+          <SuggestionWrapper ref={dropdownRef}>
             {address.suggestions.map((suggestion, index) => {
               return (
                 <Suggestion
@@ -67,10 +83,7 @@ const Wrapper = styled.div`
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0 auto;
   background: white;
-`;
-
-const WrapperWrapSug = styled.div`
-  transform: translateX(0);
+  position: relative;
 `;
 
 const Input = styled.input`
@@ -85,10 +98,17 @@ const Input = styled.input`
   }
 `;
 
+const WrapperWrapSug = styled.div`
+  max-width: 200px;
+  position: relative;
+  height: 0px;
+`;
+
 const SuggestionWrapper = styled.div`
-  width: 200px;
+  width: 100%;
+  z-index: 22;
   background: white;
-  position: absolute;
+  position: relative;
   border-radius: 0px 0px 10px 10px;
   box-shadow: 0px 10px 20px grey;
   margin-bottom: 150px;

@@ -25,6 +25,7 @@ const NewLocationContainer = styled.div`
 
 const Flex1 = styled.div`
   flex: 1;
+  flex-basis: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,6 +36,7 @@ const Flex2 = styled.div`
 `;
 const Flex3 = styled.div`
   flex: 1;
+  flex-basis: 30px;
 `;
 
 const StyledAddCircleOutlineIcon = styled(AddCircleOutlineIcon)`
@@ -53,6 +55,7 @@ export default function TripSingle({
   setActiveLocationId,
 }) {
   const dispatch = useDispatch();
+  const [thisActiveNewInput, setThisActiveNewInput] = useState(false);
 
   const setGeocoderResult = (tripId, result) => {
     const sourceId = "SourceId_" + Math.random();
@@ -118,16 +121,23 @@ export default function TripSingle({
               map={map}
               style={{
                 display: "inline",
-                width: "100%",
                 flex: 4,
-                zIndex: activeLocationId === tripObj.id ? 10 : 1,
+                zIndex: thisActiveNewInput ? 11 : "unset",
                 borderLeft: "1px solid black",
-                borderRight: "1px solid black",
+                borderRight: thisActiveNewInput
+                  ? "1px solid red"
+                  : "1px solid black",
               }}
               placeholder={"Další bod tripu"}
               setResult={(e) => setGeocoderResult(tripObj.id, e)}
               clearOnFocus
-              onFocus={() => {}}
+              onClick={() => {
+                setThisActiveNewInput(true);
+              }}
+              onBlur={() => {
+                console.log("BLUUR");
+                setThisActiveNewInput(false);
+              }}
             />
           )}
         </Flex2>

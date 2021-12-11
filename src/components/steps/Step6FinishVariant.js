@@ -166,7 +166,6 @@ const styles = {
   textsWrap: {
     display: "flex",
     flexDirection: "column",
-    padding: "5px",
     textAlign: "left",
   },
 };

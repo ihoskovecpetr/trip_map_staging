@@ -255,7 +255,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
           isOpen={isOpen}
           screenHeight={screenHeight}
           onClick={(e) => {
-            console.log({ eEE: e });
             e.preventDefault();
             e.stopPropagation();
           }}
@@ -392,7 +391,7 @@ const StepperWrap = styled.div`
   width: 100%;
   position: fixed;
   bottom: 0px;
-  z-index: 15;
+  z-index: 1;
 
   ${mobile`
   position: relative;
