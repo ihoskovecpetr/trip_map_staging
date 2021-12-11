@@ -55,6 +55,8 @@ const GeocoderInput = ({
 export default GeocoderInput;
 
 const Wrapper = styled.div`
+  flex: 5;
+
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0 auto;

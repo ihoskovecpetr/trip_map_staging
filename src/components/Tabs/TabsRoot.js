@@ -366,7 +366,7 @@ const TabSegmentWrap = styled.div`
 //   }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
 
 const StepperContentWrap = styled.div`
-  // overflow: ${({ isOpen }) => (isOpen ? "scroll" : "hidden")};
+  overflow: scroll;
   padding: 0px 0.5rem;
   background: rgba(255, 255, 255, 0.85);
 
