@@ -375,7 +375,7 @@ const StepperContentWrap = styled.div`
   display: ${({ isOpen, isMobile }) =>
     !isOpen && isMobile ? "none" : "block"};
   min-height: ${({ screenHeight, isOpen }) =>
-    isOpen ? `calc(${screenHeight}px - 200px)` : "0px"};
+    isOpen ? `calc(${screenHeight}px - 230px)` : "0px"};
 
   ${mobile`
     height: ${({ topElementsHeight, isOpen, screenHeight }) =>

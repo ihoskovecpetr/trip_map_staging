@@ -3,6 +3,7 @@ import mapboxgl from "mapbox-gl";
 
 import { drawLayout } from "./drawLayout";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
+import { getScreenshot } from "LibGlobal/getScreenshot";
 // import { getCurrentPixelRatio } from "LibGlobal/getCurrentPixelRatio";
 
 import {
@@ -14,27 +15,22 @@ import {
 
 // let snapshotMapObject;
 
-function takeScreenshot(mapLocal) {
-  return new Promise(function (resolve, _) {
-    mapLocal.once("render", function () {
-      // mapLocal.getCanvas().toBlob((blob) => resolve(blob));
-      resolve(mapLocal.getCanvas().toDataURL());
-    });
+// function getScreenshot(mapLocal) {
+//   return new Promise(function (resolve, _) {
+//     mapLocal.once("render", function () {
+//       // mapLocal.getCanvas().toBlob((blob) => resolve(blob));
+//       resolve(mapLocal.getCanvas().toDataURL());
+//     });
 
-    /* trigger render */
-    mapLocal.setBearing(mapLocal.getBearing());
-  });
-}
+//     /* trigger render */
+//     mapLocal.setBearing(mapLocal.getBearing());
+//   });
+// }
 
 const fitBoundsMapPromise = async ({ originalMapObject, snapMapObject }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const originalBounds = originalMapObject.getBounds();
-      console.log({
-        originalBounds,
-        snapMapObject,
-        fitBounds: snapMapObject.fitBounds,
-      });
 
       snapMapObject.fitBounds(originalBounds, {
         animate: false,
@@ -79,9 +75,9 @@ export const createFinalImage = async ({
       snapMapObject: snapMapInstance,
     });
 
-    await addDelay(3000);
+    // await addDelay(3000);
 
-    takeScreenshot(snapMapInstance).then(async function (data) {
+    getScreenshot(snapMapInstance).then(async function (data) {
       try {
         const snapshotWrapper = document.getElementById("snapshot_map_wrapper");
 

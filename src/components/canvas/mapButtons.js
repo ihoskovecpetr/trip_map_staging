@@ -137,7 +137,7 @@ export default function MapContainer({
 
   return (
     <>
-      <div sx={styles.allBtnWrapper} id="map_buttons_wrapper">
+      <AllBtnWrapper id="map_buttons_wrapper">
         {isMobile && (
           <LogoWrap>
             <Logo src={LogoWhite} />
@@ -152,14 +152,14 @@ export default function MapContainer({
 
         <EmptySpaceExpander></EmptySpaceExpander>
 
-        <div sx={styles.zoomBtnWrapper}>
+        <ZoomBtnWrapper>
           <ZoomBtn isLeft={true} onClick={addZoom}>
             <AddIcon />
           </ZoomBtn>
           <ZoomBtn isLeft={false} onClick={subtractZoom}>
             <RemoveIcon />
           </ZoomBtn>
-        </div>
+        </ZoomBtnWrapper>
 
         <RotateBtn>
           <StyledRotateIcon onClick={changeOrientation} />
@@ -179,7 +179,7 @@ export default function MapContainer({
           )}
         </TeaserButton> */}
 
-        <Popper
+        {/* <Popper
           id={id}
           open={isPopupOpen}
           anchorEl={anchorEl}
@@ -212,8 +212,8 @@ export default function MapContainer({
               </Button>
             </TooltipBodyWrap>
           </motion.div>
-        </Popper>
-      </div>
+        </Popper> */}
+      </AllBtnWrapper>
 
       {lightbox.open && (
         <Lightbox
@@ -236,12 +236,6 @@ const LogoWrap = styled.div`
 
 const EmptySpaceExpander = styled.div`
   flex-grow: 4;
-`;
-
-const PlaceToHideBigMap = styled.div`
-  width: 0px;
-  height: 0px;
-  overflow: hidden;
 `;
 
 const ColorWrap = styled.div`
@@ -305,12 +299,8 @@ const ImagesWrap = styled.div`
   justify-content: space-between;
 `;
 
-const NeverDisplayContainer = styled.div`
-  position: absolute;
-`;
-
 const TeaserButton = styled.div`
-  border: 1px solid lightGrey;
+  border: 1px solid grey;
   display: flex;
   padding: 5px 5px;
   m: 2px;
@@ -321,7 +311,7 @@ const TeaserButton = styled.div`
 `;
 
 const ZoomBtn = styled.div`
-  border: 1px solid lightGrey;
+  border: 1px solid grey;
   display: flex;
   padding: 5px 5px;
   margin: auto;
@@ -336,7 +326,7 @@ const ZoomBtn = styled.div`
 `;
 
 const RotateBtn = styled.div`
-  border: 1px solid lightGrey;
+  border: 1px solid grey;
   display: flex;
   padding: 5px 5px;
   m: 2px;
@@ -346,43 +336,16 @@ const RotateBtn = styled.div`
   cursor: pointer;
 `;
 
-const styles = {
-  canvas_bg: {
-    px: "0 !important",
-    display: "flex",
-    flexDirection: "column",
-    transform: "translateX(0)", // this is important, reset absolute position to thos element
-    height: [null, null, null, "100%"],
-    overflow: "auto", //"auto",
-  },
-  map_available_space: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: ["flex-start", null, null, "center"],
-    pt: ["20px", null, null, 0],
-    width: "100%",
-    height: ["60vh", null, null, "85vh"],
-  },
+const AllBtnWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+`;
 
-  map_wrap_1: {
-    position: "relative",
-    overflow: "initial", //"initial",
-    width: "100%",
-    height: "100%",
-  },
-  canvas_merging: {
-    display: "none",
-  },
-  allBtnWrapper: {
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "8px",
-  },
-  zoomBtnWrapper: {
-    display: "flex",
-    padding: "auto",
-    marginRight: "20px",
-  },
-};
+const ZoomBtnWrapper = styled.div`
+  display: flex;
+  padding: auto;
+  margin-right: 20px;
+`;

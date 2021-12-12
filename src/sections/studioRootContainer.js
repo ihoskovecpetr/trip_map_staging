@@ -517,17 +517,13 @@ export default function StudioRootContainer() {
   );
 }
 
-// height: ${({ headerHeight, screenHeight, isMobile }) =>
-//   `calc(${screenHeight}px - ${!isMobile ? headerHeight : 0}px)`};
-
 const StyledSection = styled.section`
   margin-top: ${({ headerHeight, isMobile }) =>
     isMobile ? 0 : `${headerHeight}px`};
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 const ContainerBox = styled.div`
-  // height: 100%;
-  // overflow: hidden;
   display: block;
   width: 100%;
   background-color: ${color("background_almost_white")};
@@ -538,7 +534,6 @@ const ContainerBox = styled.div`
 `;
 
 const CanvasBox = styled.div`
-  // order: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.2);
 

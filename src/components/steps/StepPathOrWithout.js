@@ -27,10 +27,10 @@ export default function StepPathOrWithout({ map, index }) {
   const bbox = getBbox(journeysDragable);
 
   const noPathUrl =
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/noPath_new_imnjzu.png";
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_200,c_scale/Finished%20Interiers/noPath_new_imnjzu.png";
 
   const withPathUrl =
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/withPath_new_pmebpp.png";
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_200,c_scale/Finished%20Interiers/withPath_new_pmebpp.png";
 
   return (
     <StepContainer isMobile={isMobile}>
