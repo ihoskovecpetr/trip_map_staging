@@ -154,4 +154,5 @@ const StyledStepper = styled(Stepper)`
   // width: 100% !important;
   background-color: transparent !important;
   padding: 0px !important;
+  margin: 10px 0;
 `;

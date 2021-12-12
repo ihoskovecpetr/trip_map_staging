@@ -22,7 +22,6 @@ import StepLayoutColorSwitch from "../steps/Step3BLayoutColorSwitch";
 import StepColors from "../steps/Step4Colors";
 import Step5Size from "../steps/Step5Size";
 import Step6FinishVariant from "../steps/Step6FinishVariant";
-import Step7MapDefinition from "../steps/Step7MapDefinition";
 import Step8Checkout from "../steps/Step8Checkout";
 import StepTitles from "../steps/StepTitles";
 import StepJourneys from "../steps/StepJourneys";
@@ -88,25 +87,25 @@ export default function TabsRoot({ map, snapMapInstance }) {
 
   useEffect(() => {
     if (isProduction) {
-      // sendSaveBlueprint({
-      //   map,
-      //   snapMapInstance,
-      //   activeLayoutName,
-      //   product: productRedux,
-      //   activeMapStyleName,
-      // });
+      sendSaveBlueprint({
+        map,
+        snapMapInstance,
+        activeLayoutName,
+        product: productRedux,
+        activeMapStyleName,
+      });
     }
   }, []);
 
   const handleNext = () => {
     if (isProduction) {
-      // sendSaveBlueprint({
-      //   map,
-      //   snapMapInstance,
-      //   activeLayoutName,
-      //   product: productRedux,
-      //   activeMapStyleName,
-      // });
+      sendSaveBlueprint({
+        map,
+        snapMapInstance,
+        activeLayoutName,
+        product: productRedux,
+        activeMapStyleName,
+      });
     }
 
     setIsOpen(true);
@@ -254,6 +253,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
           mapSegmentHeight={map_segment_height}
           isOpen={isOpen}
           screenHeight={screenHeight}
+          isMobile={isMobile}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -372,7 +372,8 @@ const NullHeightWrap = styled.div`
 
 const StepperContentWrap = styled.div`
   background: rgba(255, 255, 255, 0.85);
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  display: ${({ isOpen, isMobile }) =>
+    !isOpen && isMobile ? "none" : "block"};
   min-height: ${({ screenHeight, isOpen }) =>
     isOpen ? `calc(${screenHeight}px - 200px)` : "0px"};
 

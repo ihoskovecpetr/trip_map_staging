@@ -6,11 +6,12 @@ import styled from "styled-components";
 import { color, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { getBbox } from "LibGlobal/getBbox";
-import WithPath from "assets/mapStudioVariants/withPath.png";
-import NoPath from "assets/mapStudioVariants/noPath.png";
 import HeadingText from "./atoms/HeadingText";
 import { setJourneysIsEnabled } from "redux/order/actions";
 import StepContainer from "./atoms/StepContainer";
+
+import WithPath from "assets/mapStudioVariants/withPath.png";
+import NoPath from "assets/mapStudioVariants/noPath.png";
 
 import {
   useGetJourneysDraggable,
@@ -25,6 +26,12 @@ export default function StepPathOrWithout({ map, index }) {
   const isJourneysEnabled = useJourneysEnabledSelector();
   const bbox = getBbox(journeysDragable);
 
+  const noPathUrl =
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/noPath_new_imnjzu.png";
+
+  const withPathUrl =
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/withPath_new_pmebpp.png";
+
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
@@ -38,7 +45,7 @@ export default function StepPathOrWithout({ map, index }) {
           active={!isJourneysEnabled}
         >
           <ItemHeading active={!isJourneysEnabled}>Mapa bez trasy</ItemHeading>
-          <StyledImg active={!isJourneysEnabled} src={NoPath} />
+          <StyledImg active={!isJourneysEnabled} src={noPathUrl} />
         </OptionItem>
         <OptionItem
           onClick={() => {
@@ -50,7 +57,7 @@ export default function StepPathOrWithout({ map, index }) {
           <ItemHeading active={isJourneysEnabled}>
             Mapa s trasou a body
           </ItemHeading>
-          <StyledImg active={isJourneysEnabled} src={WithPath} />
+          <StyledImg active={isJourneysEnabled} src={withPathUrl} />
         </OptionItem>
       </OptionContainer>
     </StepContainer>
@@ -67,21 +74,19 @@ const styles = {
 const OptionContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-around;
-  padding-bottom: 10px;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2px;
 `;
 
 const OptionItem = styled.div`
-  width: 160px;
-  padding: 5px;
+  flex: 1;
   cursor: pointer;
   display: flex;
+  padding: 5px;
   flex-direction: column;
   justify-content: space-between;
   background-color: ${({ active }) => active && "white"};
-  // border-top-left-radius: 10px;
-  // border-top-right-radius: 10px;
-
   box-shadow: ${({ active }) =>
     active ? "0px 0px 0px 1px" : "0px 0px 0px 0px"};
   color: ${({ active }) => active && color("cta_color")};
@@ -97,7 +102,7 @@ const ItemHeading = styled.p`
 `;
 
 const StyledImg = styled.img`
-  width: 150px;
+  width: 100%;
   height: 100px;
   object-fit: cover;
   border-radius: 3px;

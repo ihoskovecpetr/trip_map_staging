@@ -141,6 +141,10 @@ export default function Step5Size({ index }) {
                 (isMobile || !isLargeSizeCapable)) ||
               (sizeNameLocal === SIZE_NAMES["50X70cm"] && !isMidSizeCapable); // change it to !isLa..
             // const isDisabledBtn = sizeNameLocal === SIZE_NAMES["61X91cm"];
+
+            if (isDisabledBtn) {
+              return;
+            }
             return (
               <MainItem key={index}>
                 <StyledItem
@@ -198,7 +202,7 @@ const UnitMark = styled.span`
 const ContainerSizes = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
   font-size: ${fontSize("sm")};
 `;
 
@@ -211,7 +215,7 @@ const StyledItem = styled.div`
   flex-direction: column;
   width: 100%;
   background-color: white;
-  background-color: ${({ isDisabled }) => isDisabled && "rgba(0, 0, 0, 0.1)"};
+  background-color: ${({ isDisabled }) => isDisabled && "lightGrey"};
   color: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   box-shadow: 0px 0px 0px 1px;
@@ -259,7 +263,7 @@ const SizeIconWrap = styled.div`
 const SizeIconSmall = styled.div`
   width: 40px;
   height: 30px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0, 0, 0, 0.4);
 `;
 
 const SizeIconMedium = styled.div`

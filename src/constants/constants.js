@@ -373,12 +373,12 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
   [MAP_STYLES_NAMES.YELLOW_GREEN]: {
     colorMain: "black",
     colorSecondary: "white",
-    colorHalo: "rgba(00,00,00,0.5)",
+    colorHalo: "rgba(00,00,00,1)",
   },
   [MAP_STYLES_NAMES.BLUE_YELLOW]: {
     colorMain: "#a62703",
     colorSecondary: "white",
-    colorHalo: "rgba(166, 39, 3, 0.8)",
+    colorHalo: "rgba(166, 39, 3, 1)",
   },
   [MAP_STYLES_NAMES.GREEN_ORANGE]: {
     colorMain: "black",
@@ -413,12 +413,12 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
   [MAP_STYLES_NAMES.SANDY_DARK]: {
     colorMain: "black",
     colorSecondary: "white",
-    colorHalo: "rgba(00,00,00,0.5)",
+    colorHalo: "rgba(00,00,00,1)",
   },
   [MAP_STYLES_NAMES.WHITE_BLUE]: {
     colorMain: "black",
     colorSecondary: "white",
-    colorHalo: "rgba(00,00,00,0.5)",
+    colorHalo: "rgba(00,00,00,1)",
   },
 };
 
