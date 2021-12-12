@@ -55,7 +55,6 @@ const AbsoluteBtnWrap = styled.div`
   position: relative;
   bottom: 0px;
   left: 0px;
-  z-index: 10;
   overflow: visible;
   width: 100%;
   padding: 10px;

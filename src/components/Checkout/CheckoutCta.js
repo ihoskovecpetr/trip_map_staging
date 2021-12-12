@@ -233,5 +233,4 @@ const CustomUI = styled.div`
 
 const DefaultUI = styled.div`
   width: 100%;
-  // padding: 15px 0;
 `;

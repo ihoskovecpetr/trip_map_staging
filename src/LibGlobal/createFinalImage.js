@@ -139,7 +139,7 @@ const getImageFromBase64 = async (data) => {
       };
 
       imgEl.onerror = function (e) {
-        alert(JSON.stringify(e));
+        alert("ImageOn_Error:_", JSON.stringify(e));
         console.log("Error loading image", e);
 
         reject("Failed to create image");

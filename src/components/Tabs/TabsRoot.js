@@ -276,7 +276,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
                   setIsOpen(!isOpen);
                 }}
               >
-                Krok: {TAB_STEPS[activeStepNumber].short}
+                {TAB_STEPS[activeStepNumber].short}
                 <StyledKeyboardArrowRight isOpen={isOpen} />
               </ArrowWrap>
             </NullHeightWrap>
