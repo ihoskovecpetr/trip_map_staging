@@ -88,25 +88,25 @@ export default function TabsRoot({ map, snapMapInstance }) {
 
   useEffect(() => {
     if (isProduction) {
-      sendSaveBlueprint({
-        map,
-        snapMapInstance,
-        activeLayoutName,
-        product: productRedux,
-        activeMapStyleName,
-      });
+      // sendSaveBlueprint({
+      //   map,
+      //   snapMapInstance,
+      //   activeLayoutName,
+      //   product: productRedux,
+      //   activeMapStyleName,
+      // });
     }
   }, []);
 
   const handleNext = () => {
     if (isProduction) {
-      sendSaveBlueprint({
-        map,
-        snapMapInstance,
-        activeLayoutName,
-        product: productRedux,
-        activeMapStyleName,
-      });
+      // sendSaveBlueprint({
+      //   map,
+      //   snapMapInstance,
+      //   activeLayoutName,
+      //   product: productRedux,
+      //   activeMapStyleName,
+      // });
     }
 
     setIsOpen(true);
