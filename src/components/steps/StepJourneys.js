@@ -4,7 +4,6 @@ import { jsx } from "theme-ui";
 import styled from "styled-components";
 
 import DragContainer from "components/draggableJourneys/TripsAll";
-import { mobile, color } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
@@ -21,7 +20,7 @@ export default function StepJourneys({ map, index }) {
   }, [map]);
 
   return (
-    <StepContainer isMobile={isMobile} isSolidBg={true}>
+    <StepContainer isMobile={isMobile} isSolidBg={isMobile ? true : false}>
       <HeadingText isMobile={isMobile}>{index}. Zadejte body cesty</HeadingText>
 
       <DragContainer map={map} />

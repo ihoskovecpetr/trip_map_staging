@@ -204,6 +204,7 @@ const ContainerSizes = styled.div`
   width: 100%;
   justify-content: space-around;
   font-size: ${fontSize("sm")};
+  padding: 0px;
 `;
 
 const MainItem = styled.div`
