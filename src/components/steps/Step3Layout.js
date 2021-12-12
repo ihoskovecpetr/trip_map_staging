@@ -17,6 +17,8 @@ import { useIsMobile } from "Hooks/useIsMobile";
 import { color } from "utils";
 import { setActiveLayoutAction } from "redux/order/actions";
 import { useActiveLayoutSelector } from "redux/order/reducer";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "constants/constants";
 
@@ -52,8 +54,8 @@ export default function StepLayout({ index }) {
   };
 
   return (
-    <div sx={styles.container}>
-      {!isMobile && <HeadingText>{index}. Ohraničení</HeadingText>}
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>{index}. Ohraničení</HeadingText>
       <AllLayoutsContainer>
         {Object.values(LAYOUTS).map((layoutObj, index) => (
           <div
@@ -74,17 +76,11 @@ export default function StepLayout({ index }) {
           </div>
         ))}
       </AllLayoutsContainer>
-    </div>
+    </StepContainer>
   );
 }
 
 const styles = {
-  container: {
-    width: "100%",
-    padding: "5px 5px",
-    // pb: "90px",
-  },
-
   headingDesc: {
     fontWeight: 500,
     textAlign: "left",
@@ -122,14 +118,6 @@ const styles = {
     fontSize: "14px",
   },
 };
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 20px;
-  letter-spacing: 1.1px;
-`;
 
 const ImageWrap = styled.div`
   display: flex;

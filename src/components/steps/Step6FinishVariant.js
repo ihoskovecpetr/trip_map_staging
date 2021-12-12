@@ -14,6 +14,8 @@ import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 import {
   getPriceAlgorithm,
@@ -72,8 +74,8 @@ export default function Step6FinishVariant({ index }) {
   //     .netPrice;
 
   return (
-    <div sx={styles.container}>
-      {!isMobile && <HeadingText>{index}. Rámování</HeadingText>}
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>{index}. Rámování</HeadingText>
       {variantsPrintfulForSize.length === 0 && (
         <div sx={styles.loaderWrap}>
           <CustomLoader />
@@ -134,16 +136,11 @@ export default function Step6FinishVariant({ index }) {
           onCloseRequest={() => setLightbox({ open: false })}
         />
       )}
-    </div>
+    </StepContainer>
   );
 }
 
 const styles = {
-  container: {
-    width: "100%",
-    padding: "10px 10px",
-  },
-
   loaderWrap: {
     display: "flex",
     width: "100%",
@@ -203,14 +200,6 @@ const ItemWrap = styled.div`
   flex-basis: 30%;
   display: block;
   width: 4rem;
-`;
-
-const HeadingText = styled.p`
-  font-weight: ${fontWeight("bold")};
-  color: black;
-  text-align: left;
-  margin-top: 20px;
-  letter-spacing: 1.1px;
 `;
 
 const ContainerVariants = styled.div`

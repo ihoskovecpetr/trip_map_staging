@@ -3,13 +3,15 @@ import { jsx } from "theme-ui";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { color, mobile, fontWeight } from "utils";
+import { color, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { getBbox } from "LibGlobal/getBbox";
 import WithPath from "assets/mapStudioVariants/withPath.png";
 import NoPath from "assets/mapStudioVariants/noPath.png";
-
+import HeadingText from "./atoms/HeadingText";
 import { setJourneysIsEnabled } from "redux/order/actions";
+import StepContainer from "./atoms/StepContainer";
+
 import {
   useGetJourneysDraggable,
   useJourneysEnabledSelector,
@@ -24,8 +26,10 @@ export default function StepPathOrWithout({ map, index }) {
   const bbox = getBbox(journeysDragable);
 
   return (
-    <div sx={styles.container}>
-      {!isMobile && <HeadingText>{index}. Vyberte variantu mapy</HeadingText>}
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>
+        {index}. Vyberte variantu mapy
+      </HeadingText>
       <OptionContainer>
         <OptionItem
           onClick={() => {
@@ -49,7 +53,7 @@ export default function StepPathOrWithout({ map, index }) {
           <StyledImg active={isJourneysEnabled} src={WithPath} />
         </OptionItem>
       </OptionContainer>
-    </div>
+    </StepContainer>
   );
 }
 
@@ -59,19 +63,6 @@ const styles = {
     paddingTop: "10px",
   },
 };
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  letter-spacing: 1.1px;
-  margin: 0;
-  margin-bottom: 10px;
-
-  ${mobile`
-    margin-top: 20px;
-  `};
-`;
 
 const OptionContainer = styled.div`
   width: 100%;

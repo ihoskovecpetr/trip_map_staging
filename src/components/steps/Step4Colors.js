@@ -35,6 +35,8 @@ import { useIsMobile } from "../../Hooks/useIsMobile";
 import { useDisplayPNG } from "../../Hooks/useDisplayPNG";
 import { color, font, fontSize, fontWeight, mobile } from "utils";
 import { useActiveMapStyleSelector } from "redux/order/reducer";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 import {
   setActiveMapStyleAction,
@@ -91,8 +93,8 @@ export default function Step4Colors({ index }) {
   };
 
   return (
-    <Container>
-      {!isMobile && <HeadingText>{index}. Barevná kombinace</HeadingText>}
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>{index}. Barevná kombinace</HeadingText>
       <ColorsWrap>
         {Object.values(MAP_STYLES_NAMES).map((style, index) => (
           <div
@@ -115,7 +117,7 @@ export default function Step4Colors({ index }) {
           </div>
         ))}
       </ColorsWrap>
-    </Container>
+    </StepContainer>
   );
 }
 
@@ -138,18 +140,6 @@ const ColorsWrap = styled.div`
   overflow: auto;
   padding: 10px 10px;
   flex-wrap: wrap;
-`;
-
-const Container = styled.div`
-  width: 100%;
-`;
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 20px;
-  letter-spacing: 1.1px;
 `;
 
 const ImageWrap = styled.div`

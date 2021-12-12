@@ -12,6 +12,8 @@ import { setNewTitle, setNewSubtitle } from "redux/order/actions";
 import { useIsMobile } from "Hooks/useIsMobile";
 import PopoverGuide from "components/PopoverGuide";
 import { setMapCoordinatesAction } from "redux/order/actions";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 let geocoder = new MapboxGeocoder({
@@ -79,8 +81,8 @@ export default function StepLocation({ map, index }) {
   };
 
   return (
-    <div sx={styles.container}>
-      {!isMobile && <HeadingText>{index}. Zadejte lokalitu</HeadingText>}
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>{index}. Zadejte lokalitu</HeadingText>
 
       <div
         id="geocoder"
@@ -88,15 +90,11 @@ export default function StepLocation({ map, index }) {
         sx={styles.locationInput}
         style={{ marginTop: isMobile ? "10px" : "10px" }}
       ></div>
-    </div>
+    </StepContainer>
   );
 }
 
 const styles = {
-  container: {
-    width: "100%",
-  },
-
   locationInput: {
     width: "100%",
     border: "1px solid",
@@ -117,11 +115,3 @@ const styles = {
     width: ["100%", "100%", "100%", "40%", "30%"],
   },
 };
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 20px;
-  letter-spacing: 1.1px;
-`;

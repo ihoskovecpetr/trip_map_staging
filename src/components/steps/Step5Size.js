@@ -14,6 +14,8 @@ import disabledAndroid from "assets/icons/devicesAndroidOblique.png";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 import {
   VARIANTS_PRINTFUL,
@@ -107,12 +109,12 @@ export default function Step5Size({ index }) {
   };
 
   return (
-    <div sx={styles.container}>
-      {!isMobile && (
-        <HeadingText>
-          {index}. Rozměry <UnitMark>[cm]</UnitMark>
-        </HeadingText>
-      )}
+    <StepContainer isMobile={isMobile}>
+      {/* {!isMobile && ( */}
+      <HeadingText isMobile={isMobile}>
+        {index}. Rozměry <UnitMark>[cm]</UnitMark>
+      </HeadingText>
+      {/* )} */}
 
       {variantsPrintfulForSize.length === 0 && (
         <div sx={styles.loaderWrap}>
@@ -136,7 +138,7 @@ export default function Step5Size({ index }) {
 
             const isDisabledBtn =
               (sizeNameLocal === SIZE_NAMES["61X91cm"] &&
-                !isLargeSizeCapable) ||
+                (isMobile || !isLargeSizeCapable)) ||
               (sizeNameLocal === SIZE_NAMES["50X70cm"] && !isMidSizeCapable); // change it to !isLa..
             // const isDisabledBtn = sizeNameLocal === SIZE_NAMES["61X91cm"];
             return (
@@ -166,16 +168,11 @@ export default function Step5Size({ index }) {
             );
           })}
       </ContainerSizes>
-    </div>
+    </StepContainer>
   );
 }
 
 const styles = {
-  container: {
-    width: "100%",
-    padding: "10px 10px",
-  },
-
   itemDimensions: {
     margin: 0,
     paddingTop: "5px",
@@ -196,14 +193,6 @@ const styles = {
 const UnitMark = styled.span`
   text-transform: uppercase;
   font-size: ${fontSize("xs")};
-`;
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 20px;
-  letter-spacing: 1.1px;
 `;
 
 const ContainerSizes = styled.div`

@@ -8,10 +8,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { color, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
-
 import { setNewTitle, setNewSubtitle } from "redux/order/actions";
 import { useTitlesSelector } from "redux/order/reducer";
 import { TITLE_NAMES } from "constants/constants";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,8 +73,8 @@ export default function StepTitles({ index }) {
     }
   };
   return (
-    <div sx={styles.container}>
-      {!isMobile && <HeadingText>{index}. Popisky</HeadingText>}
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>{index}. Popisky</HeadingText>
       <TextFieldsConteiner>
         <TextField
           classes={{
@@ -132,25 +133,9 @@ export default function StepTitles({ index }) {
           také přímo na mapě.
         </TipParagraph>
       )}
-    </div>
+    </StepContainer>
   );
 }
-
-const styles = {
-  container: {
-    width: "100%",
-    position: "relative",
-    paddingTop: "15px",
-  },
-};
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 20px;
-  letter-spacing: 1.1px;
-`;
 
 const TextFieldsConteiner = styled.div`
   display: flex;

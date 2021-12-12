@@ -2,10 +2,12 @@
 import { useEffect } from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
-import DragContainer from "components/draggableJourneys/TripsAll";
 
+import DragContainer from "components/draggableJourneys/TripsAll";
 import { mobile, color } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 export default function StepJourneys({ map, index }) {
   const { isMobile } = useIsMobile();
@@ -19,30 +21,15 @@ export default function StepJourneys({ map, index }) {
   }, [map]);
 
   return (
-    <Container>
-      {!isMobile && <HeadingText>{index}. Zadejte body cesty</HeadingText>}
+    <StepContainer isMobile={isMobile} isSolidBg={true}>
+      <HeadingText isMobile={isMobile}>{index}. Zadejte body cesty</HeadingText>
 
       <DragContainer map={map} />
-    </Container>
+      <ExtraSpace />
+    </StepContainer>
   );
 }
 
-const Container = styled.div`
-  // margin-bottom: 50px;
-  padding: 10px 0.5rem;
-  width: 100%;
-  padding-bottom: 320px;
-  background: ${color("background_almost_white")};
-`;
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 0;
-  letter-spacing: 1.1px;
-
-  ${mobile`
-    margin-top: 20px;
-  `}
+const ExtraSpace = styled.div`
+  padding-bottom: ${({ isMobile }) => (isMobile ? "220px" : "50px")};
 `;

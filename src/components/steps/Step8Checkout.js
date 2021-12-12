@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import CheckoutCta from "../Checkout/CheckoutCta";
+import CheckoutCta from "../checkout-btn/CheckoutCta";
 import MapDefinition from "./Step7MapDefinition";
 import { mobile, color, fontWeight } from "utils";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useProductSelector } from "redux/order/reducer";
+import StepContainer from "./atoms/StepContainer";
 
 export default function Step8Checkout({
   map,
@@ -21,7 +22,7 @@ export default function Step8Checkout({
   const productRedux = useProductSelector();
 
   return (
-    <Container>
+    <StepContainer isMobile={isMobile}>
       <AbsoluteBtnWrap>
         {!isMobile && (
           <ExtraPaddingTop>
@@ -42,13 +43,9 @@ export default function Step8Checkout({
           snapMapInstance={snapMapInstance}
         />
       </AbsoluteBtnWrap>
-    </Container>
+    </StepContainer>
   );
 }
-
-const Container = styled.div`
-  width: 100%;
-`;
 
 const AbsoluteBtnWrap = styled.div`
   width: 100%;

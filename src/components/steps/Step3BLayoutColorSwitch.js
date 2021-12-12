@@ -8,6 +8,8 @@ import { color } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { MAP_STYLES } from "constants/constants";
 import { setProductAction } from "redux/order/actions";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 import {
   useProductSelector,
@@ -27,8 +29,8 @@ export default function StepLayoutColorSwitch({ index }) {
   const activeMapStyleObject = MAP_STYLES[activeMapStyleName];
 
   return (
-    <Container>
-      {!isMobile && <HeadingText>{index}. Výplň ohraničení</HeadingText>}
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>{index}. Výplň ohraničení</HeadingText>
       {activeMapStyleObject.layoutColor && activeMapStyleObject.textColor && (
         <ItemContainer>
           <LayoutItemWrap>
@@ -53,22 +55,9 @@ export default function StepLayoutColorSwitch({ index }) {
           </LayoutItemWrap>
         </ItemContainer>
       )}
-    </Container>
+    </StepContainer>
   );
 }
-
-const Container = styled.div`
-  width: 100%;
-  padding: 5px 5px;
-`;
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 15px;
-  letter-spacing: 1.1px;
-`;
 
 const ItemContainer = styled.div`
   display: flex;

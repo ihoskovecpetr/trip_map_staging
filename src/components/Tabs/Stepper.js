@@ -7,7 +7,7 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { color } from "utils";
 
-import CheckoutCta from "../Checkout/CheckoutCta";
+import CheckoutCta from "../checkout-btn/CheckoutCta";
 
 const useStyles = makeStyles({
   root: {

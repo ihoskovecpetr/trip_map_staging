@@ -17,6 +17,8 @@ import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import DoneIcon from "@material-ui/icons/Done";
 import AddIcon from "@material-ui/icons/Add";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 import { color, fontSize, fontWeight, mobile } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -81,8 +83,8 @@ export default function StepAddRoute({ map, index }) {
   };
 
   return (
-    <Container>
-      <HeadingText>{index}. Přidejte Ikony</HeadingText>
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>{index}. Přidejte Ikony</HeadingText>
       <StyledButton
         onClick={() => {
           handleAddIcon();
@@ -165,25 +167,9 @@ export default function StepAddRoute({ map, index }) {
           </Step>
         );
       })}
-    </Container>
+    </StepContainer>
   );
 }
-
-const Container = styled.div`
-  margin-bottom: 50px;
-`;
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 0;
-  letter-spacing: 1.1px;
-
-  ${mobile`
-    margin-top: 20px;
-  `}
-`;
 
 const HorizontalLine = styled.p`
   background-color: ${color("muted")};

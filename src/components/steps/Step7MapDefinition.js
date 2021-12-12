@@ -9,6 +9,9 @@ import CustomLoader from "components/CustomLoader";
 import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
 import { ORIENTATIONS } from "constants/constants";
+import { useIsMobile } from "Hooks/useIsMobile";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 import {
   useActiveLayoutSelector,
@@ -25,6 +28,7 @@ export default function Step7MapDefinition({ map }) {
   const productRedux = useProductSelector();
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const activeMapStyleName = useActiveMapStyleSelector();
+  const { isMobile } = useIsMobile();
 
   const [highDefinitionImg, setHighDefinitionImg] = useState(null);
   const [lowDefinitionImg, setLowDefinitionImg] = useState(null);
@@ -107,8 +111,8 @@ export default function Step7MapDefinition({ map }) {
   };
 
   return (
-    <>
-      <HeadingText>Měřítko (podrobnost mapy)</HeadingText>
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>Měřítko (podrobnost mapy)</HeadingText>
       <Container isWideOrientation={isWideOrientation}>
         <Item onClick={() => switchActiveLow(LOW_DENSITY_CONSTANT)}>
           {isLoading ? (
@@ -147,7 +151,7 @@ export default function Step7MapDefinition({ map }) {
           onCloseRequest={() => setLightbox({ open: false })}
         />
       )}
-    </>
+    </StepContainer>
   );
 }
 
@@ -176,12 +180,4 @@ const StyledImg = styled.img`
   color: rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 0px 4px;
   color: ${({ active }) => active && color("cta_color")};
-`;
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 20px;
-  letter-spacing: 1.1px;
 `;

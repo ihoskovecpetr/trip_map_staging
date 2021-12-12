@@ -9,6 +9,8 @@ import { useIsMobile } from "../../Hooks/useIsMobile";
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
+import HeadingText from "./atoms/HeadingText";
+import StepContainer from "./atoms/StepContainer";
 
 export default function Step2Orientation({ index }) {
   const { isMobile } = useIsMobile();
@@ -31,8 +33,8 @@ export default function Step2Orientation({ index }) {
   };
 
   return (
-    <div sx={styles.container}>
-      {!isMobile && <HeadingText>{index}. Orientace</HeadingText>}
+    <StepContainer isMobile={isMobile}>
+      <HeadingText isMobile={isMobile}>{index}. Orientace</HeadingText>
 
       <OrientationWrap>
         <SingleOrientationItem
@@ -70,25 +72,9 @@ export default function Step2Orientation({ index }) {
           </StyledDescriptionP>
         </SingleOrientationItem>
       </OrientationWrap>
-    </div>
+    </StepContainer>
   );
 }
-
-const styles = {
-  container: {
-    width: "100%",
-    position: "relative",
-    paddingTop: "15px",
-  },
-};
-
-const HeadingText = styled.p`
-  font-weight: 600;
-  color: black;
-  text-align: left;
-  margin-top: 20px;
-  letter-spacing: 1.1px;
-`;
 
 const OrientationWrap = styled.div`
   width: 100%;
