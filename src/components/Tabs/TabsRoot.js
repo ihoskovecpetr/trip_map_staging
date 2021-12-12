@@ -87,25 +87,17 @@ export default function TabsRoot({ map, snapMapInstance }) {
 
   useEffect(() => {
     if (isProduction) {
-      // sendSaveBlueprint({
-      //   map,
-      //   snapMapInstance,
-      //   activeLayoutName,
-      //   product: productRedux,
-      //   activeMapStyleName,
-      // });
+      sendSaveBlueprint({
+        map,
+      });
     }
   }, []);
 
   const handleNext = () => {
     if (isProduction) {
-      // sendSaveBlueprint({
-      //   map,
-      //   snapMapInstance,
-      //   activeLayoutName,
-      //   product: productRedux,
-      //   activeMapStyleName,
-      // });
+      sendSaveBlueprint({
+        map,
+      });
     }
 
     setIsOpen(true);
@@ -364,18 +356,12 @@ const NullHeightWrap = styled.div`
   justify-content: center;
 `;
 
-// height: ${({ topElementsHeight, mapSegmentHeight, isOpen, dynamicVH }) =>
-//   !isOpen &&
-//   `calc(${
-//     100 * dynamicVH
-//   }px - ${topElementsHeight}px - ${mapSegmentHeight}px)`};
-
 const StepperContentWrap = styled.div`
   background: rgba(255, 255, 255, 0.85);
   display: ${({ isOpen, isMobile }) =>
     !isOpen && isMobile ? "none" : "block"};
   min-height: ${({ screenHeight, isOpen }) =>
-    isOpen ? `calc(${screenHeight}px - 230px)` : "0px"};
+    isOpen ? `calc(${screenHeight}px - 200px)` : "0px"};
 
   ${mobile`
     height: ${({ topElementsHeight, isOpen, screenHeight }) =>

@@ -44,8 +44,8 @@ export default function StepPathOrWithout({ map, index }) {
           }}
           active={!isJourneysEnabled}
         >
-          <ItemHeading active={!isJourneysEnabled}>Mapa bez trasy</ItemHeading>
           <StyledImg active={!isJourneysEnabled} src={noPathUrl} />
+          <ItemHeading active={!isJourneysEnabled}>Mapa bez trasy</ItemHeading>
         </OptionItem>
         <OptionItem
           onClick={() => {
@@ -54,10 +54,10 @@ export default function StepPathOrWithout({ map, index }) {
           }}
           active={isJourneysEnabled}
         >
+          <StyledImg active={isJourneysEnabled} src={withPathUrl} />
           <ItemHeading active={isJourneysEnabled}>
             Mapa s trasou a body
           </ItemHeading>
-          <StyledImg active={isJourneysEnabled} src={withPathUrl} />
         </OptionItem>
       </OptionContainer>
     </StepContainer>
@@ -86,10 +86,10 @@ const OptionItem = styled.div`
   padding: 5px;
   flex-direction: column;
   justify-content: space-between;
-  background-color: ${({ active }) => active && "white"};
+  background-color: ${({ active }) => "white"};
   box-shadow: ${({ active }) =>
-    active ? "0px 0px 0px 1px" : "0px 0px 0px 0px"};
-  color: ${({ active }) => active && color("cta_color")};
+    active ? "0px 0px 0px 1px" : "0px 0px 0px 1px"};
+  color: ${({ active }) => (active ? color("cta_color") : "lightGrey")};
 `;
 
 const ItemHeading = styled.p`
@@ -97,7 +97,7 @@ const ItemHeading = styled.p`
   line-height: 1.2;
   font-size: 0.8rem;
   font-weight: ${fontWeight("bold")};
-  padding-bottom: 5px;
+  padding-top: 5px;
   margin: 0;
 `;
 
