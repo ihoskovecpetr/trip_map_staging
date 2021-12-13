@@ -140,11 +140,6 @@ const AllLayoutsContainer = styled.div`
   overflow: auto;
   flex-wrap: wrap;
   padding-top: 2px;
-  padding-bottom: 0px;
-
-  ${mobile`
-    padding-bottom: 30px;
-  `}
 
   &::-webkit-scrollbar {
     display: none;

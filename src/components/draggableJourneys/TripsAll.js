@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 import TripSingle from "./TripSingle";
 import { color, fontSize, mobile } from "utils";
@@ -16,7 +17,7 @@ import {
   removeAllLocations,
 } from "redux/order/actions";
 
-export default function DragContainer({ map }) {
+export default function TripsAll({ map }) {
   const dispatch = useDispatch();
   const journeysDraggable = useGetJourneysDraggable();
   const [activeTripId, setActiveTripId] = useState();
@@ -42,21 +43,29 @@ export default function DragContainer({ map }) {
 
   return (
     <>
-      {/* <BtnWrap>
-        <StyledButton
+      <BtnWrap>
+        {/* <StyledAddCircleOutlineIcon
+            style={{
+              fill: "green",
+            }}
+            onClick={() => {
+              dispatch(addTrip());
+            }}
+          > */}
+        <AddIcon
+          style={{
+            fill: "green",
+          }}
           onClick={() => {
             dispatch(addTrip());
           }}
         >
-          <AddIcon
-            style={{
-              fill: "green",
-            }}
-          />
-          Nová cesta / Nový bod
-        </StyledButton>
+          Nová cesta
+        </AddIcon>
+        {/* Nová cesta / Nový bod
+          </StyledAddCircleOutlineIcon> */}
 
-        <StyledButtonDelAll
+        {/* <StyledButtonDelAll
           onClick={() => {
             dispatch(removeAllLocations());
           }}
@@ -67,14 +76,16 @@ export default function DragContainer({ map }) {
             }}
           />
           Smazat vše
-        </StyledButtonDelAll>
-      </BtnWrap> */}
+        </StyledButtonDelAll> */}
+      </BtnWrap>
       <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragEnd}>
         {journeysDraggable?.tripsOrder?.map((tripId) => {
           const tripObj = journeysDraggable?.trips[tripId];
           const locations = tripObj.locationIds.map(
             (taskId) => journeysDraggable?.locations[taskId]
           );
+
+          console.log({ tripObj });
 
           return (
             <TripSingle
@@ -94,10 +105,15 @@ export default function DragContainer({ map }) {
   );
 }
 
+const StyledAddCircleOutlineIcon = styled(AddCircleOutlineIcon)`
+  cursor: pointer;
+`;
+
 const BtnWrap = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px !important;
+  justify-content: center;
+  border: 1px solid green;
+  margin: 15px 0 !important;
 
   ${mobile`
     margin-bottom: 0px !important;

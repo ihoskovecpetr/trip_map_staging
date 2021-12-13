@@ -22,6 +22,7 @@ const InputsRow = styled.div`
   background-color: white;
   box-shadow: 0 0 4px lightGrey;
   border-radius: 5px;
+  width: 100%;
 `;
 
 const IconColumn = styled.div`

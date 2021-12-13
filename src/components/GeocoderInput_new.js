@@ -9,12 +9,17 @@ const GeocoderInput = ({
   placeholder,
   clearAfterResult = true,
   style,
+  inputStyle,
   onClick,
   clearOnFocus = false,
   onBlur = () => {},
 }) => {
   const address = useInput(value);
   const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    address.setValue(placeholder);
+  }, []);
 
   useEffect(() => {
     const onClickAway = (event) => {
@@ -45,6 +50,7 @@ const GeocoderInput = ({
         onFocus={(e) => {
           clearOnFocus && address.setValue("");
         }}
+        style={inputStyle}
         onBlur={onBlur}
       />
       {address.suggestions?.length > 0 && (

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 import LocationLine from "./LocationLine";
 import GeocoderInput from "components/GeocoderInput_new";
@@ -13,14 +14,18 @@ import { color } from "utils";
 const Container = styled.div``;
 
 const HorizontalLine = styled.p`
-  background-color: ${color("muted")};
-  height: 2px;
-  width: 100%;
-  margin: 5px 0;
+  // background-color: ${color("muted")};
+  // height: 1px;
+  // width: 100%;
+  margin-bottom: 20px;
 `;
 
 const NewLocationContainer = styled.div`
   display: flex;
+  width: 100%;
+  position: relative;
+  margin-bottom: ${({ isTripActive }) => isTripActive && "30px"};
+  top: ${({ isTripActive }) => isTripActive && "-5px"};
 `;
 
 const Flex1 = styled.div`
@@ -41,6 +46,8 @@ const Flex3 = styled.div`
 
 const StyledAddCircleOutlineIcon = styled(AddCircleOutlineIcon)`
   cursor: pointer;
+  position: relative;
+  top: ${({ isTripActive }) => !isTripActive && "-10px"};
 `;
 
 const LocationsList = styled.div``;
@@ -103,45 +110,56 @@ export default function TripSingle({
           </LocationsList>
         )}
       </Droppable>
-      <NewLocationContainer>
+      <NewLocationContainer isTripActive={isTripActive}>
         <Flex1>
-          <StyledAddCircleOutlineIcon
-            onClick={() =>
-              !isTripActive && activateNewLocationGeoInput(tripObj.id)
-            }
-            style={{
-              fill: isTripActive ? "green" : "green",
-            }}
-          />
-        </Flex1>
-        {}
-        <Flex2>
-          {isTripActive && (
-            <GeocoderInput
-              map={map}
+          {isTripActive ? (
+            <ArrowForwardIcon
               style={{
-                display: "inline",
-                flex: 4,
-                zIndex: thisActiveNewInput ? 11 : "unset",
-                borderLeft: "1px solid black",
-                borderRight: thisActiveNewInput
-                  ? "1px solid red"
-                  : "1px solid black",
-              }}
-              placeholder={"Další bod tripu"}
-              setResult={(e) => setGeocoderResult(tripObj.id, e)}
-              clearOnFocus
-              onClick={() => {
-                setThisActiveNewInput(true);
-              }}
-              onBlur={() => {
-                console.log("BLUUR");
-                setThisActiveNewInput(false);
+                fill: isTripActive ? "green" : "green",
               }}
             />
+          ) : (
+            <StyledAddCircleOutlineIcon
+              onClick={() =>
+                !isTripActive && activateNewLocationGeoInput(tripObj.id)
+              }
+              style={{
+                fill: isTripActive ? "green" : "green",
+              }}
+              isTripActive={isTripActive}
+            />
           )}
-        </Flex2>
-        <Flex3></Flex3>
+        </Flex1>
+
+        {isTripActive && (
+          <>
+            <Flex2>
+              <GeocoderInput
+                map={map}
+                style={{
+                  display: "inline",
+                  flex: 5,
+                  zIndex: thisActiveNewInput ? 11 : "unset",
+                }}
+                inputStyle={{
+                  borderRadius: "10px",
+                  boxShadow: "0px 0px 5px grey",
+                }}
+                placeholder={"Další bod tripu"}
+                setResult={(e) => setGeocoderResult(tripObj.id, e)}
+                clearOnFocus
+                onClick={() => {
+                  setThisActiveNewInput(true);
+                }}
+                onBlur={() => {
+                  console.log("BLUUR");
+                  setThisActiveNewInput(false);
+                }}
+              />
+            </Flex2>
+            <Flex3></Flex3>
+          </>
+        )}
       </NewLocationContainer>
       <HorizontalLine />
     </Container>

@@ -11,6 +11,6 @@ const StyledText = styled.p`
   font-weight: 400;
   color: black;
   text-align: left;
-  margin: ${({ isMobile }) => (isMobile ? "5px 0" : "20px 0")};
+  margin: ${({ isMobile }) => (isMobile ? "5px 0 5px 0px" : "15px 0 10px 0px")};
   letter-spacing: 1.1px;
 `;

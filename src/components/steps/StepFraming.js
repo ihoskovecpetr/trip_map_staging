@@ -26,7 +26,7 @@ import { VARIANTS_PRINTFUL, FRAME_OPTION_NAMES } from "constants/constants";
 
 const priceAlgorithm = getPriceAlgorithm();
 
-export default function Step6FinishVariant({ index }) {
+export default function StepFraming({ index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
@@ -206,6 +206,7 @@ const ContainerVariants = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  padding: 1px;
 `;
 
 const ItemVariant = styled.div`

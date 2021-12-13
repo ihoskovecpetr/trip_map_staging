@@ -7,7 +7,7 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 
-import { color, fontWeight, mobile } from "utils";
+import { color, fontWeight, mobile, font } from "utils";
 import UploadPercentageString from "./UploadPercentageString";
 import UnderlineLoader from "components/UnderlineLoader";
 
@@ -127,7 +127,8 @@ const HeaderTextsContainer = styled.div`
 
 const StepsText = styled.p`
   color: ${color("primary")};
-  font-weight: ${fontWeight("regular")};
+  font-weight: ${fontWeight("light")};
+  font-family: ${font("HarmoniaSans_local")};
   letter-spacing: 1.2px;
   font-size: 14px;
   transform: translateX(0);
