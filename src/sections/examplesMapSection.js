@@ -5,10 +5,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Carousel from "nuka-carousel";
 import { useRouter } from "next/router";
-import CarouselJapanPNG from "assets/mapExamples/Japan_karaoke.png";
-import CarouselNYWhitePNG from "assets/mapExamples/NY_white.png";
-import CarouselSydneyPNG from "assets/mapExamples/Sydney_surfing.png";
-import CarouselEuropeUSPNG from "assets/mapExamples/EU_Amerika_white.png";
+import CarouselManhattanBikeBlack from "assets/mapExamples/static_manhattan_bike_black.png";
+import CarouselGreece from "assets/mapExamples/static_greece.png";
+import CarouselItaly from "assets/mapExamples/static_italy.png";
+import CarouselManhattanBike from "assets/mapExamples/static_manhattan_bike.png";
+import CarouselManhattan from "assets/mapExamples/static_manhattan.png";
+import CarouselPrague from "assets/mapExamples/static_prague.png";
+import CarouselRio from "assets/mapExamples/static_rio.png";
+import CarouselSanFrancisco from "assets/mapExamples/static_san_francisco.png";
 
 import { fontSize, mobile } from "utils";
 
@@ -32,10 +36,15 @@ export default function Examples() {
             renderCenterLeftControls={() => null}
             renderCenterRightControls={() => null}
           >
-            <img src={CarouselNYWhitePNG} />
-            <img src={CarouselJapanPNG} id="carousel_img_photo_0" />
-            <img src={CarouselSydneyPNG} />
-            <img src={CarouselEuropeUSPNG} />
+            <img src={CarouselGreece} />
+            <img src={CarouselSanFrancisco} />
+            <img src={CarouselManhattanBike} id="carousel_img_photo_0" />
+            <img src={CarouselItaly} />
+            <img src={CarouselManhattanBike} />
+            <img src={CarouselRio} />
+            <img src={CarouselManhattan} />
+            <img src={CarouselPrague} />
+            <img src={CarouselManhattanBikeBlack} />
           </Carousel>
         </CarouselWrap>
         <Box sx={styles.banner.contentBox}>
@@ -71,7 +80,7 @@ const styles = {
     pb: ["100px", null, null, "110px", null, 10, "150px"],
     backgroundColor: "primary",
     contentBox: {
-      width: ["100%", null, "85%", "55%", "50%", "55%"],
+      width: ["100%", null, "70%", "35%", "30%", "30%"],
       display: "flex",
       flexDirection: "column",
       alignItems: ["center", null, null, "flex-start"],
@@ -95,12 +104,14 @@ const BtnWrap = styled.div`
 
 const CarouselWrap = styled.div`
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 `;
 
 const StyledContainer = styled(Container)`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   ${mobile`
     flex-direction: row;

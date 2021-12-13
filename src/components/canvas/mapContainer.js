@@ -386,7 +386,7 @@ const PrintLocations = ({
                   key={`${pointIndex}_${groupIndex}`}
                   type="circle"
                   paint={{
-                    "circle-radius": baseCircleRadius * 1.4,
+                    "circle-radius": baseCircleRadius * 1.2,
                     "circle-radius-transition": { duration: 0 },
                     "circle-opacity-transition": { duration: 0 },
                     "circle-color":
@@ -460,7 +460,7 @@ const PrintLocations = ({
                     paint={{
                       "text-color":
                         MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                          .colorSecondary,
+                          .colorText,
                       "text-halo-color":
                         currentPoint.titleSourceId === draggedPoint
                           ? "red"

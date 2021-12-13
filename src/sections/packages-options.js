@@ -8,10 +8,10 @@ import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 
 import PatternBG from "assets/patternBG.png";
-import ProductFramedPNG from "assets/packages/San_Francisco.png";
-import ProductFramedWebp from "assets/packages/San_Francisco.webp";
-import ProductNoFramePNG from "assets/packages/Iceland-flights.png";
-import ProductNoFrameWebp from "assets/packages/Iceland-flights.webp";
+import ProductFramedPNG from "assets/packages/static_san_francisco.png";
+import ProductFramedWebp from "assets/packages/static_san_francisco.webp";
+import ProductNoFramePNG from "assets/packages/static_iceland.png";
+import ProductNoFrameWebp from "assets/packages/static_iceland.webp";
 
 const packages = [
   {
@@ -21,7 +21,7 @@ const packages = [
     priceWithUnit: "$79.99", //TODO add price
     variantId: 9357,
     buttonText: "Pokračovat v návrhu",
-    buttonUri: "studio?id=c339ea81-039b-4290-8bef-1a7a710049f0",
+    buttonUri: "studio?id=486e6724-b48e-4170-a374-7f3ce843ccdd",
     imgPNG: ProductFramedPNG,
     imgWebp: ProductFramedWebp,
     points: [
@@ -56,7 +56,7 @@ const packages = [
     name: "Provedení bez rámu",
     description: "Pro vlastní zarámování či jako plakát na zeď",
     buttonText: "Pokračovat v návrhu",
-    buttonUri: "studio?id=e2427d1b-62a3-4699-bdb5-143cc202612b",
+    buttonUri: "studio?id=a2d50948-8979-42db-914b-c12b6a096926",
     priceWithUnit: "$29.99", //TODO add price
     variantId: 8948,
     imgPNG: ProductNoFramePNG,
@@ -93,7 +93,7 @@ export default function PackagesOptions() {
       <Container>
         <SectionHeader
           title="Varianty provedení"
-          slogan="Jaké jsou možnosti"
+          slogan="Vyberte si zpracování"
           isWhite={true}
         />
         <Flex
@@ -114,7 +114,7 @@ export default function PackagesOptions() {
                   deliveryPrice={`doprava zdarma`}
                 />
               ))
-            : "no data printful"}
+            : "...loading packages"}
         </Flex>
       </Container>
     </section>

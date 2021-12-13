@@ -43,21 +43,14 @@ export default function TripsAll({ map }) {
 
   return (
     <>
-      <BtnWrap>
-        {/* <StyledAddCircleOutlineIcon
-            style={{
-              fill: "green",
-            }}
-            onClick={() => {
-              dispatch(addTrip());
-            }}
-          > */}
+      <BtnWrap
+        onClick={() => {
+          dispatch(addTrip());
+        }}
+      >
         <AddIcon
           style={{
             fill: "green",
-          }}
-          onClick={() => {
-            dispatch(addTrip());
           }}
         >
           Nová cesta
@@ -113,11 +106,11 @@ const BtnWrap = styled.div`
   display: flex;
   justify-content: center;
   border: 1px solid green;
-  margin: 15px 0 !important;
+  margin: 25px 0 !important;
+  cursor: pointer;
 
-  ${mobile`
-    margin-bottom: 0px !important;
-  `};
+  // ${mobile`
+  // `};
 `;
 
 const StyledButton = styled(Button)`
