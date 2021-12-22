@@ -5,7 +5,7 @@ import TextFeature from "components/text-feature";
 import Image from "components/image";
 
 import PrintfulHIW from "assets/how-printful-works-3.svg";
-import PaymentPattern from "assets/payment-pattern.png";
+// import PaymentPattern from "assets/payment-pattern.png";
 
 const data = {
   subTitle: "Tisk a zpracování",
@@ -55,7 +55,7 @@ const styles = {
       null,
       "calc(50% + 625px)",
     ],
-    backgroundImage: `url(${PaymentPattern})`,
+    // backgroundImage: `url(${PaymentPattern})`,
     backgroundRepeat: `no-repeat`,
     backgroundPosition: "top left",
     backgroundSize: "cover",

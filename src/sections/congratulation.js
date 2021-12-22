@@ -7,7 +7,7 @@ import axios from "axios";
 import TextFeatureCongratulation from "components/text-feature-congratulation";
 import Image from "components/image";
 import PaymentThumb from "assets/congratulation.png";
-import PaymentPattern from "assets/payment-pattern.png";
+// import PaymentPattern from "assets/payment-pattern.png";
 
 const data = {
   subTitle: "Informace na závěr",

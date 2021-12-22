@@ -55,21 +55,6 @@ export default function TripsAll({ map }) {
         >
           Nová cesta
         </AddIcon>
-        {/* Nová cesta / Nový bod
-          </StyledAddCircleOutlineIcon> */}
-
-        {/* <StyledButtonDelAll
-          onClick={() => {
-            dispatch(removeAllLocations());
-          }}
-        >
-          <StyledDeleteForeverIcon
-            style={{
-              fill: "rgba(242, 73, 73,1)",
-            }}
-          />
-          Smazat vše
-        </StyledButtonDelAll> */}
       </BtnWrap>
       <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragEnd}>
         {journeysDraggable?.tripsOrder?.map((tripId) => {
@@ -94,6 +79,20 @@ export default function TripsAll({ map }) {
           );
         })}
       </DragDropContext>
+
+      <BtnWrap
+        onClick={() => {
+          dispatch(addTrip());
+        }}
+      >
+        <AddIcon
+          style={{
+            fill: "green",
+          }}
+        >
+          Nová cesta
+        </AddIcon>
+      </BtnWrap>
     </>
   );
 }
