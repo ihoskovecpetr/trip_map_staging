@@ -11,7 +11,6 @@ import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 import Popper from "@material-ui/core/Popper";
-import { motion } from "framer-motion";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -19,8 +18,6 @@ import { color, fontWeight, fontSize } from "utils";
 import Logo from "components/logo";
 import BackdropLoader from "components/backdropLoader";
 import LogoWhite from "assets/logo_while.png";
-import LowDefinitionMap from "assets/mapDefinition/low-definition-map.png";
-import HighDefinitionMap from "assets/mapDefinition/high-definition-map.png";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
@@ -178,41 +175,6 @@ export default function MapContainer({
             <OpenWithIcon />
           )}
         </TeaserButton> */}
-
-        {/* <Popper
-          id={id}
-          open={isPopupOpen}
-          anchorEl={anchorEl}
-          placement="bottom-end"
-        >
-          <motion.div
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.6 }}
-            initial={{ opacity: 0 }}
-          >
-            <TooltipBodyWrap>
-              <p>
-                Výsledná podrobnost obrazu bude <b>odlišná</b> od zobrazení zde
-                ve studiu
-              </p>
-              <ImagesWrap>
-                <StyledImg src={LowDefinitionMap} atl="low definition map" />
-                <span>vs</span>
-                <StyledImg src={HighDefinitionMap} atl="high definition map" />
-              </ImagesWrap>
-
-              <p>
-                Finální produkt zobrazíte kliknutím na tlačítko{" "}
-                <DummyBtn>
-                  <OpenWithIcon color="grey" onClick={handleClick} />
-                </DummyBtn>
-              </p>
-              <Button variant="contained" color="primary" onClick={handleClose}>
-                OK
-              </Button>
-            </TooltipBodyWrap>
-          </motion.div>
-        </Popper> */}
       </AllBtnWrapper>
 
       {lightbox.open && (

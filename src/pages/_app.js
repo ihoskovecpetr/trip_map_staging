@@ -132,7 +132,7 @@ MyApp.getInitialProps = wrapper.getInitialPageProps(
 
     const appProps = await NextApp.getInitialProps(appContext);
 
-    return { ...appProps, extra: "prop", storeId: meta?.storeId };
+    return { ...appProps, storeId: meta?.storeId };
   }
 );
 

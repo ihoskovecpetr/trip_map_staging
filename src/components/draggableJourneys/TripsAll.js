@@ -108,9 +108,6 @@ const BtnWrap = styled.div`
   border: 1px solid green;
   margin: 25px 0 !important;
   cursor: pointer;
-
-  // ${mobile`
-  // `};
 `;
 
 const StyledButton = styled(Button)`
