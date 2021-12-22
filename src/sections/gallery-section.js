@@ -87,15 +87,16 @@ const imagesArr = [
   // WorkMacSippinRio,
   // WhiteBedBoston,
   // RestaurantGreenRio,
-  RedWallBoston,
-  Japan_table,
-  // InterierYellow1,
-  World_White,
-  InterierBike1,
-  Italy_inside,
-  Greek_Black,
-  Rio_green,
-  InterierChair2,
+
+  // RedWallBoston,
+  // Japan_table,
+  // // InterierYellow1,
+  // World_White,
+  // InterierBike1,
+  // Italy_inside,
+  // Greek_Black,
+  // Rio_green,
+  // InterierChair2,
 ];
 
 const imagesWithOptions = imagesArr.map((image) => ({

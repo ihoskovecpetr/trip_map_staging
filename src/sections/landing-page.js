@@ -87,10 +87,12 @@ export default function LandingPage() {
                 autoplay
                 playsinline
                 loop
-                poster="/video_fallback.png"
+                poster={
+                  displayPNG ? "/video_fallback.png" : "/video_fallback.webp"
+                }
               >
                 <source
-                  src="/mobile_landing_short_3.mp4"
+                  src="/mobile-landing-short-2_compressed.mp4"
                   type="video/mp4"
                   media="all and (max-width: 480px)"
                 />
