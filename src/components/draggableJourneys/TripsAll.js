@@ -63,8 +63,6 @@ export default function TripsAll({ map }) {
             (taskId) => journeysDraggable?.locations[taskId]
           );
 
-          console.log({ tripObj });
-
           return (
             <TripSingle
               key={tripObj.id}
@@ -79,20 +77,6 @@ export default function TripsAll({ map }) {
           );
         })}
       </DragDropContext>
-
-      <BtnWrap
-        onClick={() => {
-          dispatch(addTrip());
-        }}
-      >
-        <AddIcon
-          style={{
-            fill: "green",
-          }}
-        >
-          Nová cesta
-        </AddIcon>
-      </BtnWrap>
     </>
   );
 }

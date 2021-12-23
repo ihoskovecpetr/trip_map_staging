@@ -17,6 +17,7 @@ import { getLayoutColors } from "LibGlobal/getLayoutColors";
 import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
 import { color, mobile, desktop } from "utils";
 import { useScreenSize } from "Hooks/useScreenSize";
+import { useDebounce } from "Hooks/useDebounce";
 
 import {
   useTitlesSelector,
@@ -205,6 +206,7 @@ export default function StudioRootContainer() {
   const [mapInstance, setMapInstance] = useState(null);
   const [snapMapInstance, setSnapMapInstance] = useState(null);
   const { height: screenHeight } = useScreenSize();
+  const debounce = useDebounce({ delayInMS: 1000 });
 
   const { height: headerHeight } = useElementDimensions("header");
 
@@ -469,18 +471,30 @@ export default function StudioRootContainer() {
     JSON.stringify(mapTitles),
   ]);
 
+  const dispatchNewTitle = (value) => {
+    dispatch(setNewTitle(value ?? ""));
+  };
+
+  const dispatchNewSubTitle = (value) => {
+    dispatch(setNewSubtitle(value ?? ""));
+  };
+
   const saveTitlesValue = (e) => {
     switch (e.target.name) {
       case TITLE_NAMES.TITLE:
-        dispatch(setNewTitle(e.target.value ?? ""));
+        // dispatch(setNewTitle(e.target.value ?? ""));
+        debounce(dispatchNewTitle, e.target.value); // dispatchNewTitle(e.target.value);
         return;
       case TITLE_NAMES.SUBTITLE:
-        dispatch(setNewSubtitle(e.target.value ?? ""));
+        debounce(dispatchNewSubTitle, e.target.value);
+        // dispatch(setNewSubtitle(e.target.value ?? ""));
         return;
       default:
         alert("Wrong input name");
     }
   };
+
+  console.log("Rerender_studio");
 
   return (
     <>

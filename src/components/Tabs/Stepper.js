@@ -39,7 +39,10 @@ export default function Stepper({
       className={classes.root}
       id="tabs_stepper"
       nextButton={
-        <StyledButton size="small" onClick={!isLastStep && handleNext}>
+        <StyledButton
+          size="small"
+          onClick={!isLastStep ? handleNext : () => {}}
+        >
           {isLastStep ? (
             <CheckoutCta
               map={map}

@@ -28,14 +28,14 @@ export function useScreenSize() {
     }
 
     window.addEventListener("resize", handleResize);
-    window.addEventListener("keydown", handleResize);
+    // window.addEventListener("keydown", handleResize);
 
     window.visualViewport.addEventListener("scroll", handleResize);
     window.visualViewport.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("keydown", handleResize);
+      // window.removeEventListener("keydown", handleResize);
 
       window.visualViewport.removeEventListener("scroll", handleResize);
       window.visualViewport.removeEventListener("resize", handleResize);

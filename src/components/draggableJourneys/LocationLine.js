@@ -9,6 +9,7 @@ import { color, fontSize, fontWeight } from "utils";
 
 import GeocoderInput from "components/GeocoderInput_new";
 import { updateLocation, removeLocation } from "redux/order/actions";
+import { useDebounce } from "Hooks/useDebounce";
 
 const Container = styled.div`
   margin-bottom: 16px;
@@ -91,6 +92,7 @@ export default function LocationLine({
 
   const [locationInput, setLocationInput] = useState(true);
   const [activeGeocoder, setActiveGeocoder] = useState(false);
+  const debounce = useDebounce({ delayInMS: 1000 });
 
   const setGeocoderResult = (locationObj, result) => {
     const sourceId = "SourceId_" + Math.random();
@@ -112,13 +114,16 @@ export default function LocationLine({
     );
   };
 
-  const updateLabel = (locationObj) => (e) => {
+  const dispatchUpdateLabel = ({ value, locationObj }) => {
     dispatch(
       updateLocation({
         ...locationObj,
-        titleLabel: e.target.value,
+        titleLabel: value,
       })
     );
+  };
+  const updateLabel = (locationObj) => (e) => {
+    debounce(dispatchUpdateLabel, { value: e.target.value, locationObj });
   };
 
   const removeThisLocation = (locationId, tripId) => () => {

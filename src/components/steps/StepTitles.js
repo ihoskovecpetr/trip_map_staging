@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { color, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
+import { useDebounce } from "Hooks/useDebounce";
 import { setNewTitle, setNewSubtitle } from "redux/order/actions";
 import { useTitlesSelector } from "redux/order/reducer";
 import { TITLE_NAMES } from "constants/constants";
@@ -56,6 +57,15 @@ export default function StepTitles({ index }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const mapTitles = useTitlesSelector();
+  const debounce = useDebounce({ delayInMS: 1000 });
+
+  const dispatchNewTitle = (value) => {
+    dispatch(setNewTitle(value ?? ""));
+  };
+
+  const dispatchNewSubTitle = (value) => {
+    dispatch(setNewSubtitle(value ?? ""));
+  };
 
   const handleTitleChange = (e) => {
     const targetValue = e.target.value;
@@ -63,10 +73,13 @@ export default function StepTitles({ index }) {
 
     switch (targetName) {
       case TITLE_NAMES.TITLE:
-        dispatch(setNewTitle(targetValue ?? ""));
+        // dispatch(setNewTitle(targetValue ?? ""));
+        debounce(dispatchNewTitle, targetValue);
         return;
       case TITLE_NAMES.SUBTITLE:
-        dispatch(setNewSubtitle(targetValue ?? ""));
+        // dispatch(setNewSubtitle(targetValue ?? ""));
+        debounce(dispatchNewSubTitle, targetValue);
+
         return;
       default:
         alert("Wrong input name");
@@ -99,7 +112,8 @@ export default function StepTitles({ index }) {
           variant="outlined"
           color="cta_color"
           name="heading"
-          value={mapTitles.heading.text}
+          defaultValue={mapTitles.heading.text}
+          // value={mapTitles.heading.text}
           onChange={handleTitleChange}
         />
         <TextField

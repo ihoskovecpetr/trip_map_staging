@@ -153,7 +153,6 @@ export default function CheckoutCta({
       {isCustomUI && (
         <CustomUI
           onClick={() => {
-            console.log("settingBacOpn");
             setBackdropOpen(true);
             lazyUploadImage();
           }}
