@@ -1,16 +1,17 @@
 /** @jsx jsx */
-import React from "react";
+import React, { useState } from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import { TITLES_DEFAULT } from "@constants";
 
 import { color, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useDebounce } from "Hooks/useDebounce";
 import { setNewTitle, setNewSubtitle } from "redux/order/actions";
-import { useTitlesSelector } from "redux/order/reducer";
+// import { useTitlesSelector } from "redux/order/reducer";
 import { TITLE_NAMES } from "constants/constants";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
@@ -52,11 +53,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StepTitles({ index }) {
+export default function StepTitles({ index, defaultTitleValues }) {
   const { isMobile } = useIsMobile();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const mapTitles = useTitlesSelector();
+  // const mapTitles = useTitlesSelector();
   const debounce = useDebounce({ delayInMS: 1000 });
 
   const dispatchNewTitle = (value) => {
@@ -89,6 +90,7 @@ export default function StepTitles({ index }) {
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>{index}. Popisky</HeadingText>
       <TextFieldsConteiner>
+        {console.log("Rerender_text_fields")}
         <TextField
           classes={{
             root: classes.root,
@@ -112,8 +114,7 @@ export default function StepTitles({ index }) {
           variant="outlined"
           color="cta_color"
           name="heading"
-          defaultValue={mapTitles.heading.text}
-          // value={mapTitles.heading.text}
+          defaultValue={defaultTitleValues.title}
           onChange={handleTitleChange}
         />
         <TextField
@@ -137,7 +138,7 @@ export default function StepTitles({ index }) {
           label="Vedlejší nadpis"
           variant="outlined"
           name="subtitle"
-          value={mapTitles.subtitle.text}
+          defaultValue={defaultTitleValues.subtitle}
           onChange={handleTitleChange}
         />
       </TextFieldsConteiner>

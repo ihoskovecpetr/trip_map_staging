@@ -86,6 +86,7 @@ export default function LandingPage() {
                 height="100%"
                 autoplay
                 playsinline
+                // controls="true"
                 loop
                 poster={
                   displayPNG ? "/video_fallback.png" : "/video_fallback.webp"

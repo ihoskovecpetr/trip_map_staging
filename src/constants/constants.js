@@ -368,9 +368,8 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
   [MAP_STYLES_NAMES.RED_BLUE]: {
     colorMain: "lightGrey",
     colorSecondary: "white",
-    colorText: "white",
-
-    colorHalo: "#000000",
+    colorText: "#000000",
+    colorHalo: "white",
   },
   [MAP_STYLES_NAMES.YELLOW_GREEN]: {
     colorMain: "black",
@@ -381,32 +380,32 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
   [MAP_STYLES_NAMES.BLUE_YELLOW]: {
     colorMain: "#a62703",
     colorSecondary: "white",
-    colorText: "white",
-    colorHalo: "rgba(166, 39, 3, 1)",
+    colorText: "rgba(166, 39, 3, 1)",
+    colorHalo: "white",
   },
   [MAP_STYLES_NAMES.GREEN_ORANGE]: {
     colorMain: "black",
     colorSecondary: "white",
-    colorText: "white",
-    colorHalo: "#000000",
+    colorText: "#000000",
+    colorHalo: "white",
   },
   [MAP_STYLES_NAMES.BLACK_LAND]: {
     colorMain: "#a62703",
     colorSecondary: "white",
-    colorText: "white",
-    colorHalo: "rgba(166, 39, 3, 1)", // #a62703 but in rgba
+    colorText: "black",
+    colorHalo: "white", // #a62703 but in rgba
   },
   [MAP_STYLES_NAMES.BLACK_WHITE]: {
     colorMain: "#a62703",
     colorSecondary: "white",
-    colorText: "white",
-    colorHalo: "#000000",
+    colorText: "#000000",
+    colorHalo: "white",
   },
   [MAP_STYLES_NAMES.RED_WHITE]: {
     colorMain: "black",
     colorSecondary: "white",
-    colorText: "white",
-    colorHalo: "#000000",
+    colorText: "#000000",
+    colorHalo: "white",
   },
   [MAP_STYLES_NAMES.DOUBLE_BLUE]: {
     colorMain: "black",
@@ -423,14 +422,14 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
   [MAP_STYLES_NAMES.SANDY_DARK]: {
     colorMain: "black",
     colorSecondary: "white",
-    colorText: "white",
-    colorHalo: "rgba(00,00,00,1)",
+    colorText: "rgba(00,00,00,1)",
+    colorHalo: "white",
   },
   [MAP_STYLES_NAMES.WHITE_BLUE]: {
     colorMain: "black",
     colorSecondary: "white",
-    colorText: "white",
-    colorHalo: "rgba(00,00,00,1)",
+    colorText: "rgba(00,00,00,1)",
+    colorHalo: "white",
   },
 };
 

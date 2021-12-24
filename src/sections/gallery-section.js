@@ -115,14 +115,14 @@ const Iceland = {
   src:
     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_iceland_lvvwgj.png",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_iceland_lvvwgj.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_iceland_lvvwgj.png",
 };
 
 const Hong_Kong = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_mirror_la5tix.png",
-  thumbnail:
     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_mirror_la5tix.png",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_mirror_la5tix.png",
 };
 
 const Italy_red = {

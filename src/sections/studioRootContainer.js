@@ -186,7 +186,7 @@ const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
     width: "100%",
     height: bottomBannerHeight / RUNTIME_PIXEL_RATIO + "px", // `${frameCanvas.height}px`,
     marginBottom: paddingWidth / RUNTIME_PIXEL_RATIO + "px",
-    display: "flex",
+    display: "none", //"flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
@@ -480,6 +480,7 @@ export default function StudioRootContainer() {
   };
 
   const saveTitlesValue = (e) => {
+    console.log({ name: e.target.name, value: e.target.value });
     switch (e.target.name) {
       case TITLE_NAMES.TITLE:
         // dispatch(setNewTitle(e.target.value ?? ""));
@@ -493,8 +494,6 @@ export default function StudioRootContainer() {
         alert("Wrong input name");
     }
   };
-
-  console.log("Rerender_studio");
 
   return (
     <>

@@ -309,9 +309,9 @@ function drawText({
 }) {
   const IS_PRODUCTION = getIsProduction();
 
-  if (IS_PRODUCTION && !isProductionPrint) {
-    return;
-  }
+  // if (IS_PRODUCTION && !isProductionPrint) {
+  //   return;
+  // }
 
   const headingCoef = elHeight === baseLngSide ? 0.047 : 0.061;
   const subtitleCoef = elHeight === baseLngSide ? 0.015 : 0.018;
