@@ -365,6 +365,17 @@ export default function StudioRootContainer() {
         activeMapStyleName,
       });
 
+      document.fonts.ready.then(() => {
+        resizeLayout({
+          cvsLayout: layoutCanvas,
+          cvsMap: canvasMap,
+          activeLayout: activeLayoutRedux,
+          mapTitles: mapTitlesRef.current,
+          product: productRef.current,
+          activeMapStyleName: activeMapStyleName,
+        });
+      });
+
       resizeInputs({
         mapTitles: mapTitlesRef.current,
         saveTitlesValue,

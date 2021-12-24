@@ -105,6 +105,7 @@ export function drawLayout(
       baseLngSideRaw,
     });
   }
+
   drawText({
     ctx,
     paddingWidth: paddingWidth / localPixelRatio,

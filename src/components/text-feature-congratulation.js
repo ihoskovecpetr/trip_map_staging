@@ -24,7 +24,7 @@ export default function TextFeature({
     <Box sx={styles.card}>
       <Box>
         <Description>{subTitle}</Description>
-        <MainHeading as="h2">{title}</MainHeading>
+        <h2>{title}</h2>
       </Box>
 
       {description && (
@@ -105,12 +105,7 @@ const styles = {
   },
 };
 
-const MainHeading = styled.div`
-  font-family: ${font("HarmoniaSans_local")};
-`;
-
 const Description = styled.p`
-  font-family: ${font("HarmoniaSans_local")};
   margin: 0;
   text-align: left;
 `;

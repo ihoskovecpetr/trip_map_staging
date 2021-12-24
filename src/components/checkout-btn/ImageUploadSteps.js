@@ -128,7 +128,6 @@ const HeaderTextsContainer = styled.div`
 const StepsText = styled.p`
   color: ${color("primary")};
   font-weight: ${fontWeight("light")};
-  font-family: ${font("HarmoniaSans_local")};
   letter-spacing: 1.2px;
   font-size: 14px;
   transform: translateX(0);

@@ -44,14 +44,8 @@
   font-display: block;
 }
 
-/* RobotoMono-Bold.ttf
-  RobotoMono-Light.ttf
-  RobotoMono-Medium.ttf
-  RobotoMono-Regular.ttf
-  RobotoMono-Thin.ttf */
-
 body {
-  font-family: "HarmoniaSans_local", serif;
+  font-family: "HarmoniaSans_local", serif, "RobotoMono_local";
 }
 
 body::-webkit-scrollbar {

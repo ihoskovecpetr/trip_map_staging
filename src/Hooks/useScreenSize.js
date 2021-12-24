@@ -7,8 +7,6 @@ export function useScreenSize() {
   function getSize(e) {
     const viewport = e?.target;
 
-    console.log({ isClient });
-
     return {
       width: isClient ? window.innerWidth : undefined,
       height: isClient ? window.innerHeight : undefined,
