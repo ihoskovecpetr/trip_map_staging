@@ -78,79 +78,79 @@ import SectionHeader from "../components/section-header";
 
 const Europe = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_europe_gifnho.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/europe_interier_gvweep.webp",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_europe_gifnho.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/europe_interier_gvweep.webp",
 };
 
-const Prague = {
-  src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_prague_rhpmtd.png",
-  thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_prague_rhpmtd.png",
-};
+// const Prague = {
+//   src:
+//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_prague_rhpmtd.png",
+//   thumbnail:
+//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_prague_rhpmtd.png",
+// };
 
 const Manhattan_bike = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_bike_biyfnp.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/manhattan_bike_dkcjzf.webp",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_bike_biyfnp.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/manhattan_bike_dkcjzf.webp",
 };
 
 const Manhattan_white = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_manhattan_dqw1nz.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/manhattan_white_f5uoqz.webp",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_manhattan_dqw1nz.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/manhattan_white_f5uoqz.webp",
 };
 
 const Europe_nice = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_evropou_copy_is2ksw.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/europe_grey_ceqxm4.webp",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_evropou_copy_is2ksw.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/europe_grey_ceqxm4.webp",
 };
 
 const Iceland = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_iceland_lvvwgj.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/iceland_yipwns.webp",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_iceland_lvvwgj.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/iceland_yipwns.webp",
 };
 
 const Hong_Kong = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_mirror_la5tix.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/hk_mirrors_lh0b3x.webp",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_mirror_la5tix.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/hk_mirrors_lh0b3x.webp",
 };
 
 const Italy_red = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/Interior_italy_red_y1dn3v.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/italy_red_rs71du.webp",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/Interior_italy_red_y1dn3v.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/italy_red_rs71du.webp",
 };
 
-const Manhattan_balck_sofa = {
+// const Manhattan_balck_sofa = {
+//   src:
+//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_manhattan_balck_yfvpxi.png",
+//   thumbnail:
+//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_manhattan_balck_yfvpxi.png",
+// };
+
+const Sofa_SF = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_manhattan_balck_yfvpxi.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/sf_sandy_nuyh5n.webp",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_manhattan_balck_yfvpxi.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/sf_sandy_nuyh5n.webp",
 };
 
 const Rio = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_rio_ujlqig.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/rio_ghpncz.webp",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_rio_ujlqig.png",
-};
-
-const Sofa_SF = {
-  src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_sf_ijmtqb.png",
-  thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_sf_ijmtqb.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/rio_ghpncz.webp",
 };
 
 const imagesArr = [
@@ -158,13 +158,13 @@ const imagesArr = [
   Rio,
   Manhattan_white,
   Hong_Kong,
-  Prague,
+  // Prague,
   Italy_red,
   Manhattan_bike,
   Europe_nice,
   Europe,
   Iceland,
-  Manhattan_balck_sofa,
+  // Manhattan_balck_sofa,
 ];
 
 const imagesWithOptions = imagesArr.map((image) => ({

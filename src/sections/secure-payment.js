@@ -22,7 +22,12 @@ export default function SecurePayment() {
       <Box sx={styles.bgOverlay} />
       <Container sx={styles.containerBox}>
         <Box sx={styles.thumbnail}>
-          <Image src={PaymentThumb} alt={data.title} />
+          <Image
+            src={
+              "https://res.cloudinary.com/dkyt8girl/image/upload/v1640486987/Finished%20Interiers/payment_tcqmvi.webp"
+            }
+            alt={data.title}
+          />
         </Box>
         <Box sx={styles.contentBox}>
           <TextFeature
