@@ -82,7 +82,7 @@ export default function LandingPage() {
       <Container sx={styles.containerBox}>
         <Box sx={styles.carouselBox}>
           <LandingCarouselWrap id="carousel_wrapper">
-            {!isMobile && !isSafari && (
+            {/* {!isMobile && !isSafari && (
               <StyledVideo
                 muted
                 id="vid"
@@ -103,91 +103,91 @@ export default function LandingPage() {
                 />
                 Your browser does not support the video tag.
               </StyledVideo>
-            )}
+            )} */}
 
-            {(isMobile || isSafari) && (
-              <>
-                <Carousel
-                  autoplay={true}
-                  cellAlign="center"
-                  heightMode="max"
-                  autoplayInterval={3000}
-                  // heightMode={current}
-                  initialSlideHeight={90}
-                  // frameOverflow="visible"
-                  // withoutControls
-                  wrapAround
-                  swiping
-                  renderCenterLeftControls={() => null}
-                  renderCenterRightControls={() => null}
-                >
-                  <img src={displayPNG ? Carousel1PNG : Carousel1} />
-                  <img src={displayPNG ? Carousel2PNG : Carousel2} />
-                  {/* <img src={displayPNG ? Carousel5PNG : Carousel5} />
+            {/* {(isMobile || isSafari) && ( */}
+            <>
+              <Carousel
+                autoplay={true}
+                cellAlign="center"
+                heightMode="max"
+                autoplayInterval={3000}
+                // heightMode={current}
+                initialSlideHeight={90}
+                // frameOverflow="visible"
+                // withoutControls
+                wrapAround
+                swiping
+                renderCenterLeftControls={() => null}
+                renderCenterRightControls={() => null}
+              >
+                <img src={displayPNG ? Carousel1PNG : Carousel1} />
+                <img src={displayPNG ? Carousel2PNG : Carousel2} />
+                {/* <img src={displayPNG ? Carousel5PNG : Carousel5} />
                   <img src={displayPNG ? Carousel6PNG : Carousel6} /> */}
-                  <img src={displayPNG ? Carousel3PNG : Carousel3} />
-                  <img src={displayPNG ? Carousel4PNG : Carousel4} />
-                  {/* <img src={displayPNG ? Carousel7PNG : Carousel7} /> */}
-                  {/* <img src={displayPNG ? Carousel8PNG : Carousel8} /> */}
-                </Carousel>
-                <ZeroHeightWrap>
-                  <motion.div
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.6 }}
-                    initial={{ opacity: 0 }}
+                <img src={displayPNG ? Carousel3PNG : Carousel3} />
+                <img src={displayPNG ? Carousel4PNG : Carousel4} />
+                {/* <img src={displayPNG ? Carousel7PNG : Carousel7} /> */}
+                {/* <img src={displayPNG ? Carousel8PNG : Carousel8} /> */}
+              </Carousel>
+              <ZeroHeightWrap>
+                <motion.div
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 0.6 }}
+                  initial={{ opacity: 0 }}
+                >
+                  <PureCtaBox
+                    maxHeightTop={headerHeight + carouselHeight}
+                    id="pure_cta_box"
                   >
-                    <PureCtaBox
-                      maxHeightTop={headerHeight + carouselHeight}
-                      id="pure_cta_box"
-                    >
-                      <ScrollAnimatedIcon />
-                      {/* <CtaComponent /> */}
-                    </PureCtaBox>
-                  </motion.div>
-                </ZeroHeightWrap>
-              </>
-            )}
+                    <ScrollAnimatedIcon />
+                    {/* <CtaComponent /> */}
+                  </PureCtaBox>
+                </motion.div>
+              </ZeroHeightWrap>
+            </>
+            {/* )} */}
           </LandingCarouselWrap>
         </Box>
 
         <Box sx={styles.contentBox}>
-          <motion.div
+          {/* <motion.div
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0 }}
             initial={{ opacity: 0 }}
-          >
-            <Box sx={styles.headingTop}>
-              <TextFeature subTitle={data.subTitle} title={data.title} />
-            </Box>
-          </motion.div>
+          > */}
+          <Box sx={styles.headingTop}>
+            <TextFeature subTitle={data.subTitle} title={data.title} />
+          </Box>
+          {/* </motion.div> */}
 
           <Grid gap="15px 0" columns={1} sx={styles.gridCards}>
             {data.features.map((item, index) => (
-              <motion.div
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: (index + 1) * 0.6 }}
-                initial={{ opacity: 0 }}
-              >
-                <Box sx={styles.card} key={item.id}>
-                  <Image src={item.imgSrc} alt={item.altText} sx={styles.img} />
+              // <motion.div
+              //   animate={{ opacity: 1 }}
+              //   transition={{ duration: 1, delay: (index + 1) * 0.6 }}
+              //   initial={{ opacity: 0 }}
+              // >
+              <Box sx={styles.card} key={item.id}>
+                <Image src={item.imgSrc} alt={item.altText} sx={styles.img} />
 
-                  <Box sx={styles.wrapper}>
-                    <div sx={styles.wrapper.title}>{item.title}</div>
-                    <Text sx={styles.wrapper.subTitle}>{item.text}</Text>
-                  </Box>
+                <Box sx={styles.wrapper}>
+                  <div sx={styles.wrapper.title}>{item.title}</div>
+                  <Text sx={styles.wrapper.subTitle}>{item.text}</Text>
                 </Box>
-              </motion.div>
+              </Box>
+              // </motion.div>
             ))}
 
-            <motion.div
+            {/* <motion.div
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1.6 }}
               initial={{ opacity: 0 }}
-            >
-              <Box sx={styles.ctaOnlyLarge}>
-                <CtaComponent />
-              </Box>
-            </motion.div>
+            > */}
+            <Box sx={styles.ctaOnlyLarge}>
+              <CtaComponent />
+            </Box>
+            {/* </motion.div> */}
           </Grid>
         </Box>
       </Container>
