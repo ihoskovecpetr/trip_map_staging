@@ -53,7 +53,7 @@ import {
 } from "constants/constants";
 
 const NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN =
-  "pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w";
+  "pk.eyJ1IjoiaWhvc2tvdmVjcGV0ciIsImEiOiJja3g1dmtqdXYwZHY3MnBxbzkycW5veGF5In0.e_D0Bd6v_28G4cIJJn65EA";
 
 const Map = ReactMapboxGl({
   accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
