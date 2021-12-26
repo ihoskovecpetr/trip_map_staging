@@ -75,14 +75,12 @@ export default function LandingPage() {
     document.getElementById("vid")?.play();
   }, []);
 
-  console.log("SAfari: ", { isSafari: isSafari, displayPNG });
-
   return (
     <section sx={styles.sectionContainer}>
       <Container sx={styles.containerBox}>
         <Box sx={styles.carouselBox}>
           <LandingCarouselWrap id="carousel_wrapper">
-            {/* {!isMobile && !isSafari && (
+            {!isMobile && !isSafari && (
               <StyledVideo
                 muted
                 id="vid"
@@ -103,50 +101,50 @@ export default function LandingPage() {
                 />
                 Your browser does not support the video tag.
               </StyledVideo>
-            )} */}
+            )}
 
-            {/* {(isMobile || isSafari) && ( */}
-            <>
-              <Carousel
-                autoplay={true}
-                cellAlign="center"
-                heightMode="max"
-                autoplayInterval={3000}
-                // heightMode={current}
-                initialSlideHeight={90}
-                // frameOverflow="visible"
-                // withoutControls
-                wrapAround
-                swiping
-                renderCenterLeftControls={() => null}
-                renderCenterRightControls={() => null}
-              >
-                <img src={displayPNG ? Carousel1PNG : Carousel1} />
-                <img src={displayPNG ? Carousel2PNG : Carousel2} />
-                {/* <img src={displayPNG ? Carousel5PNG : Carousel5} />
-                  <img src={displayPNG ? Carousel6PNG : Carousel6} /> */}
-                <img src={displayPNG ? Carousel3PNG : Carousel3} />
-                <img src={displayPNG ? Carousel4PNG : Carousel4} />
-                {/* <img src={displayPNG ? Carousel7PNG : Carousel7} /> */}
-                {/* <img src={displayPNG ? Carousel8PNG : Carousel8} /> */}
-              </Carousel>
-              <ZeroHeightWrap>
-                <motion.div
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 0.6 }}
-                  initial={{ opacity: 0 }}
+            {(isMobile || isSafari) && (
+              <>
+                <Carousel
+                  autoplay={true}
+                  cellAlign="center"
+                  heightMode="max"
+                  autoplayInterval={3000}
+                  // heightMode={current}
+                  initialSlideHeight={90}
+                  // frameOverflow="visible"
+                  // withoutControls
+                  wrapAround
+                  swiping
+                  renderCenterLeftControls={() => null}
+                  renderCenterRightControls={() => null}
                 >
-                  <PureCtaBox
-                    maxHeightTop={headerHeight + carouselHeight}
-                    id="pure_cta_box"
+                  <img src={displayPNG ? Carousel1PNG : Carousel1} />
+                  <img src={displayPNG ? Carousel2PNG : Carousel2} />
+                  {/* <img src={displayPNG ? Carousel5PNG : Carousel5} />
+                  <img src={displayPNG ? Carousel6PNG : Carousel6} /> */}
+                  <img src={displayPNG ? Carousel3PNG : Carousel3} />
+                  <img src={displayPNG ? Carousel4PNG : Carousel4} />
+                  {/* <img src={displayPNG ? Carousel7PNG : Carousel7} /> */}
+                  {/* <img src={displayPNG ? Carousel8PNG : Carousel8} /> */}
+                </Carousel>
+                <ZeroHeightWrap>
+                  <motion.div
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.6 }}
+                    initial={{ opacity: 0 }}
                   >
-                    <ScrollAnimatedIcon />
-                    {/* <CtaComponent /> */}
-                  </PureCtaBox>
-                </motion.div>
-              </ZeroHeightWrap>
-            </>
-            {/* )} */}
+                    <ScrollDownWrapper
+                      maxHeightTop={headerHeight + carouselHeight}
+                      id="pure_cta_box"
+                    >
+                      <ScrollAnimatedIcon />
+                      {/* <CtaComponent /> */}
+                    </ScrollDownWrapper>
+                  </motion.div>
+                </ZeroHeightWrap>
+              </>
+            )}
           </LandingCarouselWrap>
         </Box>
 
@@ -249,7 +247,7 @@ const ZeroHeightWrap = styled.div`
   height: 0;
 `;
 
-const PureCtaBox = styled.div`
+const ScrollDownWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
