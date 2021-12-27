@@ -137,7 +137,7 @@ export default function CheckoutPopupBody({
 
   return (
     <Card onClick={(e) => e.stopPropagation()}>
-      <HeadingContainer>
+      <HeadingContainer isUploadPending={isUploadPending}>
         <StyledCloseIcon onClick={() => backdropClose()} />
         <ImageStepsContainer>
           <ImageUploadSteps
@@ -185,7 +185,8 @@ const HeadingContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${color("cta_color")};
+  background-color: ${({ isUploadPending }) =>
+    isUploadPending ? color("cta_color") : "rgba(255,255,255,0.5)"};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 `;
