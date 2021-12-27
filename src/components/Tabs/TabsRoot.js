@@ -65,11 +65,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
     "map_studio_segment"
   );
 
-  const [defaultTitleValues, _] = useState({
-    title: mapTitles.heading.text,
-    subtitle: mapTitles.subtitle.text,
-  });
-
   const { height: header_height } = useElementDimensions("header");
   const { height: mobile_header_height } = useElementDimensions(
     "map_buttons_wrapper"
@@ -126,7 +121,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
     [<StepPathOrWithout map={map} index={1} />, StepComponent],
     [
       <Step2Orientation index={3} />,
-      <StepTitles index={4} defaultTitleValues={defaultTitleValues} />,
+      <StepTitles index={4} />,
       // <StepAddIcon map={map} index={21} />,
     ],
 
@@ -152,7 +147,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
     [StepComponent],
     // [<StepAddIcon map={map} index={21} />],
     [<Step2Orientation index={3} />],
-    [<StepTitles index={4} defaultTitleValues={defaultTitleValues} />],
+    [<StepTitles index={4} />],
     [<StepColors index={5} />],
     [<StepLayout index={6} />],
     [<StepLayoutColorSwitch index={7} />],

@@ -11,7 +11,7 @@ import { color, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useDebounce } from "Hooks/useDebounce";
 import { setNewTitle, setNewSubtitle } from "redux/order/actions";
-// import { useTitlesSelector } from "redux/order/reducer";
+import { useTitlesSelector } from "redux/order/reducer";
 import { TITLE_NAMES } from "constants/constants";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
@@ -53,12 +53,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StepTitles({ index, defaultTitleValues }) {
+export default function StepTitles({ index }) {
   const { isMobile } = useIsMobile();
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const mapTitles = useTitlesSelector();
+  const mapTitles = useTitlesSelector();
   const debounce = useDebounce({ delayInMS: 1000 });
+
+  const [defaultVal, setDefault] = useState({
+    title: mapTitles.heading.text,
+    subtitle: mapTitles.subtitle.text,
+  });
 
   const dispatchNewTitle = (value) => {
     dispatch(setNewTitle(value ?? ""));
@@ -114,7 +119,7 @@ export default function StepTitles({ index, defaultTitleValues }) {
           variant="outlined"
           color="cta_color"
           name="heading"
-          defaultValue={defaultTitleValues.title}
+          defaultValue={defaultVal.title}
           onChange={handleTitleChange}
         />
         <TextField
@@ -138,7 +143,7 @@ export default function StepTitles({ index, defaultTitleValues }) {
           label="Vedlejší nadpis"
           variant="outlined"
           name="subtitle"
-          defaultValue={defaultTitleValues.subtitle}
+          defaultValue={defaultVal.subtitle}
           onChange={handleTitleChange}
         />
       </TextFieldsConteiner>

@@ -179,7 +179,7 @@ export default function MapContainer({
       osm: {
         type: "raster",
         tiles: [
-          `https://api.mapbox.com/styles/v1/petrhoskovec/${mapId}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGV0cmhvc2tvdmVjIiwiYSI6ImNrcGE3YjlxZzBuYnQydnQ3OTVyNm03emMifQ.qEEhTuzVLQ9kdw8qI3jl0w`,
+          `https://api.mapbox.com/styles/v1/ihoskovecpetr/${mapId}/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN}`,
         ],
         tileSize: isSnapshot ? 128 : 64, //128
         minzoom: 0,

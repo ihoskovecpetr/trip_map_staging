@@ -434,21 +434,9 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
 };
 
 const MAP_STYLES = {
-  // [MAP_STYLES_NAMES.WHITE_GREY]: {
-  //   url: "mapbox://styles/petrhoskovec/ckmzzqlni0n5j17pbfvgf27n9",
-  //   waterColor: "",
-  //   landColor: "",
-  //   roadsColor: "",
-  // },
-  // [MAP_STYLES_NAMES.WHITE_BLUE_LOW_CONTRAST]: {
-  //   url: "mapbox://styles/petrhoskovec/ckolm2l7k23ck18mwrl2jkgcg",
-  //   waterColor: "",
-  //   landColor: "",
-  //   roadsColor: "",
-  // },
   [MAP_STYLES_NAMES.RED_WHITE]: {
-    mapId: "ckwtnge8030go14o14bkmeaww", // "cksk4tz3xa8zs18rhk21fgll2",
-    url: "mapbox://styles/petrhoskovec/ckwtnge8030go14o14bkmeaww",
+    mapId: "ckxnqr6n1owx915luxtwik09h", // "cksk4tz3xa8zs18rhk21fgll2",
+    url: "mapbox://styles/petrhoskovec/ckxnqr6n1owx915luxtwik09h",
     waterColor: "e8e7e3",
     landColor: "bc002d",
     roadsColor: "ffffff",
@@ -456,26 +444,18 @@ const MAP_STYLES = {
     textColor: "bc002d",
   },
   [MAP_STYLES_NAMES.WHITE_BLUE]: {
-    mapId: "ckwulegyp1wmv14nsl29dqfks", // "ckmzzsrsl0naa17o3ki2xzuoj",
-    url: "mapbox://styles/petrhoskovec/ckwulegyp1wmv14nsl29dqfks",
+    mapId: "ckxnqrvzk3cpx15mqrggucyjf", // "ckmzzsrsl0naa17o3ki2xzuoj",
+    url: "mapbox://styles/ihoskovecpetr/ckxnqrvzk3cpx15mqrggucyjf",
     waterColor: "30bcf3",
     landColor: "f7f5de",
-    roadsColor: "7891ab",
+    roadsColor: "000000",
     layoutColor: "f7f5de",
-    textColor: "7891ab",
+    textColor: "000000",
   },
-  // [MAP_STYLES_NAMES.MUSTARD_BLUE]: {
-  //   mapId: "ckolmiq3f4u9217p9v8fmln15",
-  //   url: "mapbox://styles/petrhoskovec/ckolmiq3f4u9217p9v8fmln15",
-  //   waterColor: "32728b",
-  //   landColor: "cbc057",
-  //   roadsColor: "567495",
-  //   layoutColor: "cbc057",
-  //   textColor: "32728b",
-  // },
+
   [MAP_STYLES_NAMES.SANDY_DARK]: {
-    mapId: "ckwullx4se19u14p4kqxddov0", // "ckrazk0zr02dg17pnd1rv62m3",
-    url: "mapbox://styles/petrhoskovec/ckwullx4se19u14p4kqxddov0",
+    mapId: "ckxnqrl3i8aio15sciuhcjv1q", // "ckrazk0zr02dg17pnd1rv62m3",
+    url: "mapbox://styles/petrhoskovec/ckxnqrl3i8aio15sciuhcjv1q",
     waterColor: "054057",
     landColor: "e2dd7e",
     roadsColor: "000000",
@@ -499,8 +479,8 @@ const MAP_STYLES = {
   //   textColor: "",
   // },
   [MAP_STYLES_NAMES.PALE_BLUE]: {
-    mapId: "ckwuluxnc1yrw14n2c1sw6u2z", // "ckollex8z78ly18mu9jmefwnz",
-    url: "mapbox://styles/petrhoskovec/ckwuluxnc1yrw14n2c1sw6u2z",
+    mapId: "ckxnqq1a23ead14mcmca3ofxc", // "ckollex8z78ly18mu9jmefwnz",
+    url: "mapbox://styles/ihoskovecpetr/ckxnqq1a23ead14mcmca3ofxc",
     waterColor: "5e96c9",
     landColor: "e6d398",
     roadsColor: "ffffff", //f1eae5
@@ -508,8 +488,8 @@ const MAP_STYLES = {
     textColor: "5e96c9",
   },
   [MAP_STYLES_NAMES.BLACK_WHITE]: {
-    mapId: "ckpbeqdof7li518ojkwwaqrfh",
-    url: "mapbox://styles/petrhoskovec/ckpbeqdof7li518ojkwwaqrfh",
+    mapId: "ckxnqogcu7k0h15nxgblmhrpe",
+    url: "mapbox://styles/petrhoskovec/ckxnqogcu7k0h15nxgblmhrpe",
     waterColor: "e8e7e3",
     landColor: "ffffff",
     roadsColor: "080808",
@@ -517,8 +497,8 @@ const MAP_STYLES = {
     textColor: "080808",
   },
   [MAP_STYLES_NAMES.BLACK_LAND]: {
-    mapId: "ckwumblbc3zb415nv4zgg8kyd", // "ckpbgjjxd0phz17nzanvcr6y4",
-    url: "mapbox://styles/petrhoskovec/ckwumblbc3zb415nv4zgg8kyd",
+    mapId: "ckxnqo3u7e5lc14ud9g9lpfw4", // "",
+    url: "mapbox://styles/petrhoskovec/ckxnqo3u7e5lc14ud9g9lpfw4",
     waterColor: "f8f8f7",
     landColor: "050505",
     roadsColor: "f1f2f3",
@@ -534,8 +514,8 @@ const MAP_STYLES = {
   //   textColor: "d5d2d2",
   // },
   [MAP_STYLES_NAMES.DOUBLE_BLUE]: {
-    mapId: "ckwumj82q5x9s15o3h2j0jp69", // "ckqzcrfq0b9am18pddrl61dto",
-    url: "mapbox://styles/petrhoskovec/ckwumj82q5x9s15o3h2j0jp69",
+    mapId: "ckxnqp77ze5ml14udt3nnqvhy",
+    url: "mapbox://styles/petrhoskovec/ckxnqp77ze5ml14udt3nnqvhy",
     waterColor: "405cb0",
     landColor: "20439d",
     roadsColor: "e0e4f0",
@@ -543,8 +523,8 @@ const MAP_STYLES = {
     textColor: "e0e4f0",
   },
   [MAP_STYLES_NAMES.RED_BLUE]: {
-    mapId: "ckwumpmzoe19l15p2in5fszja", //"ckrazzkcv02t718phiw9msazt",
-    url: "mapbox://styles/petrhoskovec/ckwumpmzoe19l15p2in5fszja",
+    mapId: "ckxnqqjt2owwo15lumitjtlkp",
+    url: "mapbox://styles/petrhoskovec/ckxnqqjt2owwo15lumitjtlkp",
     waterColor: "1babc8",
     landColor: "4c060d",
     roadsColor: "f1eae5",
@@ -553,17 +533,17 @@ const MAP_STYLES = {
   },
 
   [MAP_STYLES_NAMES.YELLOW_GREEN]: {
-    mapId: "ckwtnbp1i4z2815o34x8d1tsn", //"ckrg4j3qq51gs17nrk7hy8s64",
-    url: "mapbox://styles/petrhoskovec/ckwtnbp1i4z2815o34x8d1tsn",
+    mapId: "ckxnqs831e5ow15t926pweovo", //"ckrg4j3qq51gs17nrk7hy8s64",
+    url: "mapbox://styles/ihoskovecpetr/ckxnqs831e5ow15t926pweovo",
     waterColor: "159874",
     landColor: "e4bf45",
     roadsColor: "f1eae5",
-    layoutColor: "159874",
-    textColor: "e4bf45",
+    layoutColor: "e4bf45",
+    textColor: "000000",
   },
   [MAP_STYLES_NAMES.BLUE_YELLOW]: {
-    mapId: "ckwumuih6e22o14ocnqnmc0dx", // "ckrg7588l54ax19nz2gomz4ba",
-    url: "mapbox://styles/petrhoskovec/ckwumuih6e22o14ocnqnmc0dx",
+    mapId: "ckxnqouzm0uu614padm355zyy",
+    url: "mapbox://styles/petrhoskovec/ckxnqouzm0uu614padm355zyy",
     waterColor: "f7d02f",
     landColor: "313d64",
     roadsColor: "f1eae5",
@@ -571,8 +551,8 @@ const MAP_STYLES = {
     textColor: "f7d02f",
   },
   [MAP_STYLES_NAMES.GREEN_ORANGE]: {
-    mapId: "ckwun0ta92v1x14pbp5u7l8vu",
-    url: "mapbox://styles/petrhoskovec/ckwun0ta92v1x14pbp5u7l8vu",
+    mapId: "ckxnqpo0p3ea014mcdx5m5jps",
+    url: "mapbox://styles/petrhoskovec/ckxnqpo0p3ea014mcdx5m5jps",
     waterColor: "ea9264",
     landColor: "265b60",
     roadsColor: "f1eae5",

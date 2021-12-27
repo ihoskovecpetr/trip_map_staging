@@ -16,19 +16,19 @@ import CarouselItaly from "assets/mapExamples/static_italy.png";
 import CarouselItalyWebp from "assets/mapExamples/static_italy.webp";
 
 import CarouselManhattanBikeBlack from "assets/mapExamples/static_manhattan_bike_black.png";
-import CarouselManhattanBlackWebp from "assets/mapExamples/static_manhattan_black.webp";
-
-import CarouselManhattan from "assets/mapExamples/static_manhattan.png";
-import CarouselManhattanPaleWebp from "assets/mapExamples/static_manhattan_pale.webp";
-
-import CarouselGreeceWebp from "assets/mapExamples/static_greece.webp";
-import CarouselGreece from "assets/mapExamples/static_greece.png";
-
-import CarouselPrague from "assets/mapExamples/static_prague.png";
-import CarouselPragueWebp from "assets/mapExamples/static_prague.webp";
+import CarouselManhattanBlackWebp from "assets/mapExamples/static_manhattan_bike_black.webp";
 
 import CarouselRioWebp from "assets/mapExamples/static_rio.webp";
 import CarouselRio from "assets/mapExamples/static_rio.png";
+
+import JapanPNG from "assets/mapExamples/japan_white_frame.png";
+import JapanWebp from "assets/mapExamples/japan_white_frame.webp";
+
+import USAWatPNG from "assets/mapExamples/usa_wat.png";
+import USAWatWebp from "assets/mapExamples/usa_wat.webp";
+
+import GermanyPNG from "assets/mapExamples/germany_trip.png";
+import GermanyWebp from "assets/mapExamples/germany_trip.webp";
 
 export default function Examples() {
   const router = useRouter();
@@ -52,6 +52,12 @@ export default function Examples() {
             renderCenterRightControls={() => null}
           >
             {displayPNG ? (
+              <img src={CarouselItaly} />
+            ) : (
+              <img src={CarouselItalyWebp} />
+            )}
+
+            {displayPNG ? (
               <>
                 <img src={CarouselSanFrancisco} />
               </>
@@ -61,40 +67,14 @@ export default function Examples() {
               </>
             )}
 
-            {displayPNG ? (
-              <img src={CarouselItaly} />
-            ) : (
-              <img src={CarouselItalyWebp} />
-            )}
+            {displayPNG ? <img src={USAWatPNG} /> : <img src={USAWatWebp} />}
+            {displayPNG ? <img src={JapanPNG} /> : <img src={JapanWebp} />}
+            {displayPNG ? <img src={GermanyPNG} /> : <img src={GermanyWebp} />}
 
             {displayPNG ? (
               <img src={CarouselManhattanBikeBlack} />
             ) : (
               <img src={CarouselManhattanBlackWebp} />
-            )}
-
-            {displayPNG ? (
-              <img src={CarouselRio} />
-            ) : (
-              <img src={CarouselRioWebp} />
-            )}
-
-            {displayPNG ? (
-              <img src={CarouselManhattan} />
-            ) : (
-              <img src={CarouselManhattanPaleWebp} />
-            )}
-
-            {displayPNG ? (
-              <img src={CarouselGreece} />
-            ) : (
-              <img src={CarouselGreeceWebp} />
-            )}
-
-            {displayPNG ? (
-              <img src={CarouselPrague} />
-            ) : (
-              <img src={CarouselPragueWebp} />
             )}
           </Carousel>
         </CarouselWrap>
