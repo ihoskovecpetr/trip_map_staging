@@ -18,6 +18,7 @@ import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
 import { color, mobile, desktop } from "utils";
 import { useScreenSize } from "Hooks/useScreenSize";
 import { useDebounce } from "Hooks/useDebounce";
+import { Container } from "theme-ui";
 
 import {
   useTitlesSelector,
@@ -507,7 +508,7 @@ export default function StudioRootContainer() {
   };
 
   return (
-    <>
+    <StyledTrueContainer>
       {screenHeight && (
         <StyledSection
           isMobile={isMobile}
@@ -537,14 +538,18 @@ export default function StudioRootContainer() {
           </ContainerBox>
         </StyledSection>
       )}
-    </>
+    </StyledTrueContainer>
   );
 }
 
 const StyledSection = styled.section`
   margin-top: ${({ headerHeight, isMobile }) =>
     isMobile ? 0 : `${headerHeight}px`};
-  background-color: rgba(0, 0, 0, 0.2);
+`;
+
+const StyledTrueContainer = styled(Container)`
+  padding: 0 !important;
+  max-height: 1500px;
 `;
 
 const ContainerBox = styled.div`
@@ -559,7 +564,8 @@ const ContainerBox = styled.div`
 
 const CanvasBox = styled.div`
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
+  // background-color: rgba(0, 0, 0, 0.2);
+  border-left: 1px solid lightGrey;
 
   ${mobile`
     order: 1;

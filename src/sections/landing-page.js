@@ -263,7 +263,7 @@ const ScrollDownWrapper = styled.div`
 
 const LandingCarouselWrap = styled.div`
   width: 100%;
-  min-height: 70vh;
+  // min-height: 70vh;
 
   ${mobile`
     max-height: 80vh;
