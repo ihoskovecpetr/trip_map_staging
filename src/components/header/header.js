@@ -27,6 +27,7 @@ export default function Header({ className }) {
       <HeaderContainer isStudio={isStudio} isMobile={isMobile} id="header">
         <StyledContainer>
           <Logo src={LogoBlack} />
+          XX
           <MobileDrawer />
         </StyledContainer>
       </HeaderContainer>

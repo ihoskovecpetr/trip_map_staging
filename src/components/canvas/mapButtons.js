@@ -17,7 +17,7 @@ import { useIsMobile } from "Hooks/useIsMobile";
 import { color, fontWeight, fontSize } from "utils";
 import Logo from "components/logo";
 import BackdropLoader from "components/backdropLoader";
-import LogoWhite from "assets/logo_while.png";
+import LogoWhite from "assets/logo_black.png";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";

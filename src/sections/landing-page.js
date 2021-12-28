@@ -373,7 +373,7 @@ const styles = {
     mt: "-5px",
     title: {
       fontSize: 3,
-      color: "heading_secondary",
+      color: "za",
       lineHeight: 1.4,
       fontWeight: 700,
       mb: [2, null, null, null, 3],
