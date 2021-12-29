@@ -19,6 +19,7 @@ import AddIcon from "@material-ui/icons/Add";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
+import { TAB_STEPS } from "@constants";
 
 import { color, fontSize, fontWeight, mobile } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -84,7 +85,9 @@ export default function StepAddRoute({ map, index }) {
 
   return (
     <StepContainer isMobile={isMobile}>
-      <HeadingText isMobile={isMobile}>{index}. Přidejte Ikony</HeadingText>
+      <HeadingText isMobile={isMobile}>
+        {index}. {TAB_STEPS[index].full}
+      </HeadingText>
       <StyledButton
         onClick={() => {
           handleAddIcon();

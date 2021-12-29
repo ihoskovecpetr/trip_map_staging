@@ -270,7 +270,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
                   setIsOpen(!isOpen);
                 }}
               >
-                {TAB_STEPS[activeStepNumber].short}
+                {TAB_STEPS[activeStepNumber + 1].short}
                 <StyledKeyboardArrowRight isOpen={isOpen} />
               </ArrowWrap>
             </NullHeightWrap>

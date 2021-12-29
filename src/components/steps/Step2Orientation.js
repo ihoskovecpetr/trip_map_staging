@@ -11,6 +11,7 @@ import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
+import { TAB_STEPS } from "@constants";
 
 export default function Step2Orientation({ index }) {
   const { isMobile } = useIsMobile();
@@ -34,7 +35,9 @@ export default function Step2Orientation({ index }) {
 
   return (
     <StepContainer isMobile={isMobile}>
-      <HeadingText isMobile={isMobile}>{index}. Orientace</HeadingText>
+      <HeadingText isMobile={isMobile}>
+        {index}. {TAB_STEPS[index].full}
+      </HeadingText>
 
       <OrientationWrap>
         <SingleOrientationItem

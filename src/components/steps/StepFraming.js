@@ -16,6 +16,7 @@ import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
+import { TAB_STEPS } from "@constants";
 
 import {
   getPriceAlgorithm,
@@ -75,7 +76,9 @@ export default function StepFraming({ index }) {
 
   return (
     <StepContainer isMobile={isMobile}>
-      <HeadingText isMobile={isMobile}>{index}. Rámování</HeadingText>
+      <HeadingText isMobile={isMobile}>
+        {index}. {TAB_STEPS[index].full}
+      </HeadingText>
       {variantsPrintfulForSize.length === 0 && (
         <div sx={styles.loaderWrap}>
           <CustomLoader />

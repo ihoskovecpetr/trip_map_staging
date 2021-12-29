@@ -19,6 +19,7 @@ import { setActiveLayoutAction } from "redux/order/actions";
 import { useActiveLayoutSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
+import { TAB_STEPS } from "@constants";
 
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "constants/constants";
 
@@ -55,7 +56,9 @@ export default function StepLayout({ index }) {
 
   return (
     <StepContainer isMobile={isMobile}>
-      <HeadingText isMobile={isMobile}>{index}. Ohraničení</HeadingText>
+      <HeadingText isMobile={isMobile}>
+        {index}. {TAB_STEPS[index].full}
+      </HeadingText>
       <AllLayoutsContainer>
         {Object.values(LAYOUTS).map((layoutObj, index) => (
           <div

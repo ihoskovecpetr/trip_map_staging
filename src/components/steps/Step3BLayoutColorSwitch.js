@@ -10,6 +10,7 @@ import { MAP_STYLES } from "constants/constants";
 import { setProductAction } from "redux/order/actions";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
+import { TAB_STEPS } from "@constants";
 
 import {
   useProductSelector,
@@ -30,7 +31,9 @@ export default function StepLayoutColorSwitch({ index }) {
 
   return (
     <StepContainer isMobile={isMobile}>
-      <HeadingText isMobile={isMobile}>{index}. Výplň ohraničení</HeadingText>
+      <HeadingText isMobile={isMobile}>
+        {index}. {TAB_STEPS[index].full}
+      </HeadingText>
       {activeMapStyleObject.layoutColor && activeMapStyleObject.textColor && (
         <ItemContainer>
           <LayoutItemWrap>

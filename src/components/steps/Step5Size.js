@@ -16,6 +16,7 @@ import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
+import { TAB_STEPS } from "@constants";
 
 import {
   VARIANTS_PRINTFUL,
@@ -112,7 +113,7 @@ export default function Step5Size({ index }) {
     <StepContainer isMobile={isMobile}>
       {/* {!isMobile && ( */}
       <HeadingText isMobile={isMobile}>
-        {index}. Rozměry <UnitMark>[cm]</UnitMark>
+        {index}. {TAB_STEPS[index].full}
       </HeadingText>
       {/* )} */}
 
@@ -193,11 +194,6 @@ const styles = {
     alignItems: "center",
   },
 };
-
-const UnitMark = styled.span`
-  text-transform: uppercase;
-  font-size: ${fontSize("xs")};
-`;
 
 const ContainerSizes = styled.div`
   display: flex;

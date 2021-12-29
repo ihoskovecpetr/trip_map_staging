@@ -7,6 +7,7 @@ import TripsAll from "components/draggableJourneys/TripsAll";
 import { useIsMobile } from "Hooks/useIsMobile";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
+import { TAB_STEPS } from "@constants";
 
 export default function StepJourneys({ map, index }) {
   const { isMobile } = useIsMobile();
@@ -21,7 +22,9 @@ export default function StepJourneys({ map, index }) {
 
   return (
     <StepContainer isMobile={isMobile} isSolidBg={isMobile ? true : false}>
-      <HeadingText isMobile={isMobile}>{index}. Zadejte body cesty</HeadingText>
+      <HeadingText isMobile={isMobile}>
+        {index}. {TAB_STEPS[index].full}
+      </HeadingText>
 
       <TripsAll map={map} />
       <ExtraSpace isMobile={isMobile} />

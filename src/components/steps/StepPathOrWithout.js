@@ -9,6 +9,7 @@ import { getBbox } from "LibGlobal/getBbox";
 import HeadingText from "./atoms/HeadingText";
 import { setJourneysIsEnabled } from "redux/order/actions";
 import StepContainer from "./atoms/StepContainer";
+import { TAB_STEPS } from "@constants";
 
 import WithPath from "assets/mapStudioVariants/withPath.png";
 import NoPath from "assets/mapStudioVariants/noPath.png";
@@ -37,7 +38,7 @@ export default function StepPathOrWithout({ map, index }) {
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. Vyberte variantu mapy
+        {index}. {TAB_STEPS[index].full}
       </HeadingText>
       <OptionContainer>
         <OptionItem

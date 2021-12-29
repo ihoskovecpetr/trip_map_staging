@@ -588,6 +588,7 @@ const PATHS = {
 const OFFICIAL_EMAIL = "tripmapshopinfo@gmail.com";
 
 const TAB_STEPS = [
+  { full: "__null__", short: "null" },
   { full: "Vyberte variantu mapy", short: "Varianta" },
   { full: "Zadejte body cesty", short: "Cesta" },
   { full: "Orientace", short: "Orientace" },

@@ -5,16 +5,15 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import { TITLES_DEFAULT } from "@constants";
 
 import { color, fontWeight } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useDebounce } from "Hooks/useDebounce";
 import { setNewTitle, setNewSubtitle } from "redux/order/actions";
 import { useTitlesSelector } from "redux/order/reducer";
-import { TITLE_NAMES } from "constants/constants";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
+import { TAB_STEPS, TITLE_NAMES } from "@constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
