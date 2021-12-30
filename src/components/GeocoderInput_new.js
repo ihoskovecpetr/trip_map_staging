@@ -105,7 +105,7 @@ const Input = styled.input`
 `;
 
 const WrapperWrapSug = styled.div`
-  max-width: 200px;
+  max-width: 250px;
   position: relative;
   height: 0px;
 `;
