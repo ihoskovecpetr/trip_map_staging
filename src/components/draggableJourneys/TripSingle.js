@@ -36,7 +36,7 @@ const Flex1 = styled.div`
   align-items: center;
 `;
 const Flex2 = styled.div`
-  flex: 5;
+  flex: 12;
   display: flex;
 `;
 const Flex3 = styled.div`
@@ -138,12 +138,13 @@ export default function TripSingle({
                 map={map}
                 style={{
                   display: "inline",
-                  flex: 5,
+                  width: "100%",
                   zIndex: thisActiveNewInput ? 11 : "unset",
                 }}
                 inputStyle={{
-                  borderRadius: "10px",
+                  borderRadius: "3px",
                   boxShadow: "0px 0px 5px grey",
+                  width: "100%",
                 }}
                 placeholder={"Další bod tripu"}
                 setResult={(e) => setGeocoderResult(tripObj.id, e)}
