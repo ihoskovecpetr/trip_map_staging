@@ -90,13 +90,6 @@ const Europe = {
 //     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_prague_rhpmtd.png",
 // };
 
-const Manhattan_bike = {
-  src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/manhattan_bike_dkcjzf.webp",
-  thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/manhattan_bike_dkcjzf.webp",
-};
-
 const Manhattan_white = {
   src:
     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/manhattan_white_f5uoqz.webp",
@@ -160,7 +153,6 @@ const imagesArr = [
   Hong_Kong,
   // Prague,
   Italy_red,
-  Manhattan_bike,
   Europe_nice,
   Europe,
   Iceland,

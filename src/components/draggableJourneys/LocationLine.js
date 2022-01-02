@@ -23,7 +23,8 @@ const InputsRow = styled.div`
   background-color: white;
   box-shadow: 0 0 4px lightGrey;
   border-radius: 5px;
-  width: 100%;
+  width: 98%;
+  margin: 0 1%;
 `;
 
 const IconColumn = styled.div`

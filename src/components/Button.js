@@ -42,13 +42,6 @@ const StyledButton = styled.button`
   }
 `;
 
-const StyledLoadingCircle = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
 const Button = ({
   children,
   disabled,

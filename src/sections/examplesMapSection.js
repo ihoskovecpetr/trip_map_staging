@@ -1,13 +1,15 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
-import { Container, Flex, Box, Heading, Text, Image, Button } from "theme-ui";
-import React, { useState } from "react";
+import { Container, Flex, Box, Heading, Text, Image } from "theme-ui";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Carousel from "nuka-carousel";
 import { useRouter } from "next/router";
 
 import { useDisplayPNG } from "Hooks/useDisplayPNG";
 import { fontSize, mobile } from "utils";
+import UnderlineLoader from "components/UnderlineLoader";
+import Button from "components/Button";
 
 import CarouselSanFrancisco from "assets/mapExamples/static_san_francisco.png";
 import CarouselSanFranciscoWebp from "assets/mapExamples/static_san_francisco.webp";
@@ -33,6 +35,12 @@ import GermanyWebp from "assets/mapExamples/germany_trip.webp";
 export default function Examples() {
   const router = useRouter();
   const { displayPNG } = useDisplayPNG();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <section sx={styles.banner} id="home">
@@ -84,15 +92,17 @@ export default function Examples() {
             Připoměňte si neopakovatelné okamžiky vašeho života a vytvořte si
             osobitou mapu.
           </Text>
-          <Button
-            variant="whiteButton"
+          <CtaBtn
             onClick={() => {
+              setIsLoading(true);
               router.push("/studio");
             }}
             aria-label="Get Started"
           >
-            Začít navrhovat
-          </Button>
+            <StyledText>
+              Začít navrhovat {isLoading && <UnderlineLoader />}
+            </StyledText>
+          </CtaBtn>
         </Box>
       </StyledContainer>
     </section>
@@ -131,6 +141,23 @@ const StyledHeading = styled.h2`
 
 const BtnWrap = styled.div`
   // display: flex;
+`;
+
+const CtaBtn = styled(Button)`
+  pointer-events: all;
+  background-color: rgb(239, 17, 67);
+  color: white;
+  // font-size: 1rem !important;
+  // font-weight: 400;
+  // letter-spacing: 1.5px;
+  // width: 50%;
+  // border-radius: 10px;
+`;
+
+const StyledText = styled.p`
+  display: inline-block;
+  margin: 0;
+  transform: translateX(0);
 `;
 
 const CarouselWrap = styled.div`
