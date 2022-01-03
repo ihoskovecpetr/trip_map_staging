@@ -44,6 +44,35 @@
   font-display: block;
 }
 
+@font-face {
+  src: url("../FontFiles/AppleChapple/apple_chancery.woff") format("woff");
+  font-family: "AppleChapple";
+  /* font-weight: 300; */
+  font-display: block;
+}
+
+@font-face {
+  src: url("../FontFiles/Balthazar/Balthazar-Regular.ttf") format("ttf");
+  font-family: "Balthazar";
+  /* font-weight: 300; */
+  font-display: block;
+}
+
+@font-face {
+  src: url("../FontFiles/AmericanTypewriter/AmericanTypewriter.ttf")
+    format("ttf");
+  font-family: "AmericanTypewriter";
+  /* font-weight: 300; */
+  font-display: block;
+}
+
+@font-face {
+  src: url("../FontFiles/Copperplate/Copperplate.ttf") format("ttf");
+  font-family: "Copperplate";
+  /* font-weight: 300; */
+  font-display: block;
+}
+
 body {
   font-family: "HarmoniaSans_local", serif, "RobotoMono_local";
 }

@@ -5,8 +5,6 @@ const getBbox = (journeys) => {
     (journey) => journey.location
   );
 
-  console.log({ locationsArray });
-
   if (locationsArray.length < 2) {
     return [locationsArray[0], locationsArray[0]];
   }

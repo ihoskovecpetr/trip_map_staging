@@ -187,7 +187,7 @@ const resizeInputsWrap = ({ productRef, layout, canvasMap }) => {
     width: "100%",
     height: bottomBannerHeight / RUNTIME_PIXEL_RATIO + "px", // `${frameCanvas.height}px`,
     marginBottom: paddingWidth / RUNTIME_PIXEL_RATIO + "px",
-    display: "none", //"flex",
+    display: "none", // "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",

@@ -94,7 +94,6 @@ export default function StepTitles({ index }) {
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>{index}. Popisky</HeadingText>
       <TextFieldsConteiner>
-        {console.log("Rerender_text_fields")}
         <TextField
           classes={{
             root: classes.root,

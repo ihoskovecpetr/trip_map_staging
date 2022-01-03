@@ -11,12 +11,12 @@ const StyledButton = styled.button`
   background: ${color("cta_color")};
   border: solid 2px
     ${({ withBorder }) =>
-      withBorder ? color("muted") : color("background_almost_white")};
+      withBorder ? color("background_almost_white") : "transparent"};
+  
   border-radius: 5px;
   color: ${({ inverted, primaryColor }) =>
     inverted ? color("background_almost_white") : primaryColor};
   cursor: pointer;
-  font-family: ${font("avenir")};
   font-size: ${({ textSize }) => fontSize(textSize ?? "default")};
   padding: 1.25rem 2rem;
   min-height: 4rem;

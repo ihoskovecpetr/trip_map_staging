@@ -87,7 +87,7 @@ export default function Examples() {
           </Carousel>
         </CarouselWrap>
         <Box sx={styles.banner.contentBox}>
-          <StyledHeading>Zvěčni si své dobrodružství</StyledHeading>
+          <StyledHeading>Zvěčněte své dobrodružství</StyledHeading>
           <Text as="p" variant="heroSecondary">
             Připoměňte si neopakovatelné okamžiky vašeho života a vytvořte si
             osobitou mapu.

@@ -35,7 +35,7 @@ export default function LandingSection() {
       <Container sx={styles.banner.container}>
         <Box sx={styles.banner.contentBox}>
           <Heading as="h1" variant="heroPrimary">
-            Zvěčni si své dobrodružství
+            Zvěčněte své dobrodružství
           </Heading>
           <Text as="p" variant="heroSecondary">
             Get your blood tests delivered at let home collect sample from the

@@ -28,8 +28,9 @@ const LAY_DOUBLE_FRAME_PDNG = 0.015;
 const TRANSPARENT_PADDING = 0.015;
 
 const BOTTOM_BANNER = 0.09;
+const BOTTOM_BANNER_BIGGER = 0.1;
 const BLURRED_AREA_HEIGHT = 0.09;
-const TITLES_FONT_DEFAULT = "RobotoMono_local"; // // "NotoSansJP_local";
+const TITLES_FONT_DEFAULT = "RobotoMono_local";
 const TITLES_DEFAULT = ["Itálie červen/2021", "— Řím - Toskánsko - Neapol —"];
 
 const FRAME_COLOR_WHITE = "#F5F5F5";
@@ -287,6 +288,8 @@ const LAYOUTS = [
     text: {
       isVisible: true,
       align: "center",
+      title_font: "Copperplate",
+      subtitle_font: "Copperplate",
     },
   },
   {
@@ -298,6 +301,8 @@ const LAYOUTS = [
     text: {
       isVisible: true,
       align: "center",
+      title_font: "AppleChapple",
+      subtitle_font: "Copperplate", //"Balthazar",
     },
   },
 
@@ -310,17 +315,22 @@ const LAYOUTS = [
     text: {
       isVisible: true,
       align: "center",
+      title_font: "Georgia",
+      subtitle_font: "Cochin",
     },
   },
   {
     name: LAYOUT_STYLE_NAMES.BOTTOM_LINE,
     roundPdng: null,
     paddingColor: PADDING_COLOR_OPTIONS.white,
-    bottomBannerHeight: BOTTOM_BANNER,
+    bottomBannerHeight: BOTTOM_BANNER_BIGGER,
     isBannerBlur: false,
+    bannerTopLineHeightCoef: 0.0025,
     text: {
       isVisible: true,
       align: "center",
+      title_font: "AmericanTypewriter",
+      subtitle_font: "AmericanTypewriter",
     },
   },
   {
@@ -332,6 +342,8 @@ const LAYOUTS = [
     text: {
       isVisible: true,
       align: "center",
+      title_font: "Copperplate",
+      subtitle_font: "Copperplate",
     },
   },
   {
@@ -343,6 +355,8 @@ const LAYOUTS = [
     text: {
       isVisible: false,
       align: "center",
+      title_font: "",
+      subtitle_font: "",
     },
   },
 ];
@@ -599,7 +613,6 @@ module.exports = {
   DEFAULT_FONT_WEIGHT_BOLD,
   DEFAULT_FONT_WEIGHT_THIN,
   SIZE_NAMES,
-  BOTTOM_BANNER,
   LAY_SINGLE_FRAME_PDNG,
   LAY_DOUBLE_FRAME_PDNG,
   SIZES,

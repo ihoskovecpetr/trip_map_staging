@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Card, Text, Flex, Heading, Button, Image } from "theme-ui";
+import { Box, Card, Text, Flex, Heading, Image } from "theme-ui";
 import List from "./list";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import UnderlineLoader from "./UnderlineLoader";
 import { useDisplayPNG } from "Hooks/useDisplayPNG";
+import Button from "components/Button";
 
 export default function PriceCard({
   data: {
@@ -77,19 +78,18 @@ export default function PriceCard({
             mt: ["40px", null, null, null, null, "70px"],
           }}
         >
-          <Button
+          <StyledButton
             variant={header ? "primary" : "whiteButton"}
             aria-label={buttonText}
             onClick={() => {
               window.location = window.location.href + buttonUri;
-
               setIsLoading(true);
             }}
           >
-            <StyledP>
+            <StyledText>
               {buttonText} {isLoading && <UnderlineLoader />}
-            </StyledP>
-          </Button>
+            </StyledText>
+          </StyledButton>
         </Box>
       </Box>
     </Card>
@@ -224,6 +224,14 @@ const styles = {
   },
 };
 
-const StyledP = styled.p`
-  position: relative;
+const StyledButton = styled(Button)`
+  pointer-events: all;
+  background-color: rgb(239, 17, 67);
+  color: white;
+`;
+
+const StyledText = styled.p`
+  display: inline-block;
+  margin: 0;
+  transform: translateX(0);
 `;

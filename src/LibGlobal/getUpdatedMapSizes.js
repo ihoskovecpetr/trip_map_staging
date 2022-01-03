@@ -27,7 +27,6 @@ export const getUpdatedMapSizes = ({
     widthTry = heightTry / ratio;
 
     if (widthTry > mapWidthFresh) {
-      console.log("Too narrow, let make width fit");
       widthTry = mapWidthFresh;
       heightTry = widthTry * ratio;
     }
@@ -35,8 +34,6 @@ export const getUpdatedMapSizes = ({
     widthTry = mapWidthFresh;
     heightTry = widthTry * ratio;
     if (heightTry > mapHeightFresh) {
-      console.log("Too long, let make height fit");
-
       heightTry = mapHeightFresh;
       widthTry = heightTry / ratio;
     }

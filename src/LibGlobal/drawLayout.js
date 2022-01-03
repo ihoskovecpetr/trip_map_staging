@@ -131,7 +131,7 @@ export function drawLayout(
       0,
       elHeight - paddingWidth - bottomBannerHeight,
       elWidth,
-      lineWidth
+      layoutObj.bannerTopLineHeightCoef * height // lineWidth
     );
     ctx.stroke();
   } else if (activeLayoutName === LAYOUT_STYLE_NAMES.BORDER_BOX) {
@@ -327,7 +327,7 @@ function drawText({
   ctx.fillStyle = textColor;
   ctx.font = `${DEFAULT_FONT_WEIGHT_BOLD} ${
     heading?.size * 0.003 * baseLngSide
-  }px ${TITLES_FONT_DEFAULT}`;
+  }px ${layoutObj.text.title_font || TITLES_FONT_DEFAULT}`;
   ctx.textAlign = layoutObj?.text.align ?? "center";
 
   ctx.fillText(
@@ -339,7 +339,7 @@ function drawText({
   ctx.fillStyle = textColor;
   ctx.font = `${DEFAULT_FONT_WEIGHT_THIN} ${
     subtitle?.size * 0.003 * baseLngSide
-  }px ${TITLES_FONT_DEFAULT}`;
+  }px ${layoutObj.text.subtitle_font || TITLES_FONT_DEFAULT}`;
   ctx.textAlign = layoutObj?.text.align ?? "center";
 
   ctx.fillText(
