@@ -27,7 +27,6 @@ export default function StepPathOrWithout({ map, index }) {
   const isJourneysEnabled = useJourneysEnabledSelector();
 
   const bbox = getBbox(journeysDragable);
-  console.log({ journeysDragable, bbox });
 
   const noPathUrl =
     "https://res.cloudinary.com/dkyt8girl/image/upload/h_200,c_scale/Finished%20Interiers/noPath_new_imnjzu.png";
