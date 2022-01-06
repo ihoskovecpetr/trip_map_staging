@@ -11,9 +11,6 @@ import { setJourneysIsEnabled } from "redux/order/actions";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
 
-import WithPath from "assets/mapStudioVariants/withPath.png";
-import NoPath from "assets/mapStudioVariants/noPath.png";
-
 import {
   useGetJourneysDraggable,
   useJourneysEnabledSelector,
@@ -32,7 +29,7 @@ export default function StepPathOrWithout({ map, index }) {
     "https://res.cloudinary.com/dkyt8girl/image/upload/h_200,c_scale/Finished%20Interiers/noPath_new_imnjzu.png";
 
   const withPathUrl =
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_200,c_scale/Finished%20Interiers/withPath_new_pmebpp.png";
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_200,c_scale/mapa_s_body_ntiygz.png";
 
   return (
     <StepContainer isMobile={isMobile}>

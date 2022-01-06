@@ -349,6 +349,10 @@ export default function StudioRootContainer() {
       // inputWrapDynamicSize = document.createElement("div");
       // inputWrapDynamicSize.setAttribute("id", "input_wrap_middle");
 
+      inputWrap.onClick = function () {
+        console.log("clicked");
+      };
+
       resizeInputsWrap({ productRef, layout: activeLayoutRedux, canvasMap });
 
       headlineInput = document.createElement("input");

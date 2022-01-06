@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
@@ -9,11 +9,17 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 import TripSingle from "./TripSingle";
 import { color, fontSize, mobile } from "utils";
-import { useGetJourneysDraggable } from "redux/order/reducer";
+
+import {
+  useGetJourneysDraggable,
+  useMaxTripIdSelector,
+  useNumberOfEmptyTripsSelector,
+} from "redux/order/reducer";
 
 import {
   updateLocationSequence,
   addTrip,
+  addEmptyTrip,
   removeAllLocations,
 } from "redux/order/actions";
 
@@ -22,9 +28,19 @@ export default function TripsAll({ map }) {
   const journeysDraggable = useGetJourneysDraggable();
   const [activeTripId, setActiveTripId] = useState();
   const [activeLocationId, setActiveLocationId] = useState();
+
+  const maxTripIdString = useMaxTripIdSelector();
+  const numberOfEmptyTrips = useNumberOfEmptyTripsSelector();
   // journeysDraggable?.tripsOrder[0]
 
   const onDragEnd = (result) => {
+    console.log("onDragEndResult", { result });
+    // if (
+    //   result?.destination?.droppableId === maxTripIdString &&
+    //   result?.destination?.index === 0
+    // ) {
+    //   dispatch(addEmptyTrip());
+    // }
     const { destination, source, draggableId } = result;
 
     if (!destination) {
@@ -41,6 +57,18 @@ export default function TripsAll({ map }) {
     dispatch(updateLocationSequence(result));
   };
 
+  const onDragStart = (result) => {
+    console.log("onDragStart", { result });
+
+    onDragEnd(result);
+  };
+
+  useEffect(() => {
+    if (!numberOfEmptyTrips) {
+      dispatch(addEmptyTrip());
+    }
+  }, [numberOfEmptyTrips]);
+
   return (
     <>
       <BtnWrap
@@ -52,16 +80,26 @@ export default function TripsAll({ map }) {
           style={{
             fill: "green",
           }}
-        >
-          Nová cesta
-        </AddIcon>
+        />
       </BtnWrap>
-      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
         {journeysDraggable?.tripsOrder?.map((tripId) => {
           const tripObj = journeysDraggable?.trips[tripId];
           const locations = tripObj.locationIds.map(
             (taskId) => journeysDraggable?.locations[taskId]
           );
+
+          if (!locations.length) {
+            return (
+              <Droppable droppableId={tripObj.id}>
+                {(provided) => (
+                  <EmptyJourneyContainer ref={provided.innerRef}>
+                    přetáhnutím bodu separujete lokaci
+                  </EmptyJourneyContainer>
+                )}
+              </Droppable>
+            );
+          }
 
           return (
             <TripSingle
@@ -81,8 +119,12 @@ export default function TripsAll({ map }) {
   );
 }
 
-const StyledAddCircleOutlineIcon = styled(AddCircleOutlineIcon)`
-  cursor: pointer;
+const EmptyJourneyContainer = styled.div`
+  width: 100%;
+  padding: 20px;
+  border: 1px dashed grey;
+  text-align: center;
+  margin-bottom: 10px;
 `;
 
 const BtnWrap = styled.div`

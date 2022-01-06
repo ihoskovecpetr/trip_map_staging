@@ -16,6 +16,7 @@ export const countActionTypes = {
   REMOVE_LOCATION: "REMOVE_LOCATION",
   REMOVE_ALL_LOCATIONS: "REMOVE_ALL_LOCATIONS",
   ADD_TRIP: "ADD_TRIP",
+  ADD_EMPTY_TRIP: "ADD_EMPTY_TRIP",
   SET_JOURNEYS_SPECS: "SET_JOURNEYS_SPECS",
   SET_JOURNEYS_ENABLED: "SET_JOURNEYS_ENABLED",
   RESET_STORE: "RESET_STORE",
@@ -146,6 +147,13 @@ export const removeAllLocations = (data) => (dispatch) => {
 export const addTrip = (data) => (dispatch) => {
   return dispatch({
     type: countActionTypes.ADD_TRIP,
+    data,
+  });
+};
+
+export const addEmptyTrip = (data) => (dispatch) => {
+  return dispatch({
+    type: countActionTypes.ADD_EMPTY_TRIP,
     data,
   });
 };

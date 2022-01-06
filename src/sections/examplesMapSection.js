@@ -14,11 +14,8 @@ import Button from "components/Button";
 import CarouselSanFrancisco from "assets/mapExamples/static_san_francisco.png";
 import CarouselSanFranciscoWebp from "assets/mapExamples/static_san_francisco.webp";
 
-import CarouselItaly from "assets/mapExamples/static_italy.png";
-import CarouselItalyWebp from "assets/mapExamples/static_italy.webp";
-
-import CarouselManhattanBikeBlack from "assets/mapExamples/static_manhattan_bike_black.png";
-import CarouselManhattanBlackWebp from "assets/mapExamples/static_manhattan_bike_black.webp";
+import CarouselManhattanBikeBlack from "assets/mapExamples/manhattan.png";
+import CarouselManhattanBlackWebp from "assets/mapExamples/manhattan.webp";
 
 import CarouselRioWebp from "assets/mapExamples/static_rio.webp";
 import CarouselRio from "assets/mapExamples/static_rio.png";

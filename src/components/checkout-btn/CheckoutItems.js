@@ -10,15 +10,14 @@ import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
 import { isDiscountCodeValid } from "LibGlobal/isDiscountCodeValid";
 import { getDiscountPercentage } from "LibGlobal/getDiscountPercentage";
-
+import { setDiscountCode, setDiscountCodeAccepted } from "redux/order/actions";
+import { VALID_DISCOUNT_CODES } from "@constants";
 import {
   useTitlesSelector,
   useProductSelector,
   useActiveLayoutSelector,
   useDiscountSelector,
 } from "redux/order/reducer";
-
-import { setDiscountCode, setDiscountCodeAccepted } from "redux/order/actions";
 
 export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
   const dispatch = useDispatch();
