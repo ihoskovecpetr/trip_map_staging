@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
-import { Container, Flex, Box, Heading, Text, Image } from "theme-ui";
 import React, { useState, useEffect } from "react";
+import { Container, Flex, Box, Heading, Text, Image } from "theme-ui";
 import styled from "styled-components";
 import Carousel from "nuka-carousel";
 import { useRouter } from "next/router";
@@ -10,6 +10,7 @@ import { useDisplayPNG } from "Hooks/useDisplayPNG";
 import { fontSize, mobile } from "utils";
 import UnderlineLoader from "components/UnderlineLoader";
 import Button from "components/Button";
+import { useIsMobile } from "Hooks/useIsMobile";
 
 import CarouselSanFrancisco from "assets/mapExamples/static_san_francisco.png";
 import CarouselSanFranciscoWebp from "assets/mapExamples/static_san_francisco.webp";
@@ -29,9 +30,24 @@ import USAWatWebp from "assets/mapExamples/usa_wat.webp";
 import GermanyPNG from "assets/mapExamples/germany_trip.png";
 import GermanyWebp from "assets/mapExamples/germany_trip.webp";
 
+import RawGermanyWebp from "assets/mapRawExamples/germany.webp";
+import RawGermany from "assets/mapRawExamples/germany.png";
+
+const imagesArr = [
+  {
+    thumbnailHeight: 324,
+    // thumbnaxilWidth: 550,
+    src:
+      "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/sf_sandy_nuyh5n.webp",
+    thumbnail:
+      "https://res.cloudinary.com/dkyt8girl/image/upload/h_600,c_scale/Finished%20Interiers/sf_sandy_nuyh5n.webp",
+  },
+];
+
 export default function Examples() {
   const router = useRouter();
   const { displayPNG } = useDisplayPNG();
+  const { isMobile } = useIsMobile();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,12 +59,12 @@ export default function Examples() {
     <section sx={styles.banner} id="home">
       <StyledContainer>
         <CarouselWrap>
-          <Carousel
+          <StyledCarousel
             autoplay={true}
             cellAlign="center"
-            heightMode="max"
+            // heightMode="max"
             // heightMode={current}
-            initialSlideHeight={90}
+            // initialSlideHeight={10}
             // frameOverflow="visible"
             withoutControls
             wrapAround
@@ -57,31 +73,39 @@ export default function Examples() {
             renderCenterRightControls={() => null}
           >
             {displayPNG ? (
-              <img src={CarouselItaly} />
+              <StyledImg src={CarouselSanFrancisco} />
             ) : (
-              <img src={CarouselItalyWebp} />
+              <StyledImg src={CarouselSanFranciscoWebp} />
             )}
 
             {displayPNG ? (
-              <>
-                <img src={CarouselSanFrancisco} />
-              </>
+              <StyledImg src={USAWatPNG} />
             ) : (
-              <>
-                <img src={CarouselSanFranciscoWebp} />
-              </>
+              <StyledImg src={USAWatWebp} />
             )}
-
-            {displayPNG ? <img src={USAWatPNG} /> : <img src={USAWatWebp} />}
-            {displayPNG ? <img src={JapanPNG} /> : <img src={JapanWebp} />}
-            {displayPNG ? <img src={GermanyPNG} /> : <img src={GermanyWebp} />}
+            {displayPNG ? (
+              <StyledImg src={JapanPNG} />
+            ) : (
+              <StyledImg src={JapanWebp} />
+            )}
+            {displayPNG ? (
+              <StyledImg src={GermanyPNG} />
+            ) : (
+              <StyledImg src={GermanyWebp} />
+            )}
 
             {displayPNG ? (
-              <img src={CarouselManhattanBikeBlack} />
+              <StyledImg src={CarouselManhattanBikeBlack} />
             ) : (
-              <img src={CarouselManhattanBlackWebp} />
+              <StyledImg src={CarouselManhattanBlackWebp} />
             )}
-          </Carousel>
+
+            {displayPNG ? (
+              <StyledImg src={CarouselRio} />
+            ) : (
+              <StyledImg src={CarouselRioWebp} />
+            )}
+          </StyledCarousel>
         </CarouselWrap>
         <Box sx={styles.banner.contentBox}>
           <StyledHeading>Zvěčněte své dobrodružství</StyledHeading>
@@ -160,7 +184,15 @@ const StyledText = styled.p`
 const CarouselWrap = styled.div`
   width: 100%;
   margin-bottom: 0px;
+  // max-height: 400px;
 `;
+
+const StyledImg = styled.img`
+  max-height: 500px;
+  object-fit: contain;
+`;
+
+const StyledCarousel = styled(Carousel)``;
 
 const StyledContainer = styled(Container)`
   display: flex;

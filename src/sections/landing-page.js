@@ -95,7 +95,7 @@ export default function LandingPage() {
                 }
               >
                 <source
-                  src="/mobile_landing_short_2_ORIGINAL_compressed.mp4"
+                  src="/mobile_landing_short_low_quality.mp4"
                   type="video/mp4"
                   media="all and (max-width: 480px)"
                 />
