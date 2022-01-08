@@ -50,7 +50,7 @@ const orderInitialState = {
   activeStepNumber: 0,
   seenPopup: false,
   uploadPercentage: 0,
-  discount: { code: "", codeAccepted: false },
+  discount: { code: "LETO2021", codeAccepted: true },
   string: "",
   storeId: "",
   journeysSpecs: {
@@ -117,8 +117,12 @@ const orderInitialState = {
         id: "trip-1",
         locationIds: ["location-1", "location-4", "location-5", "location-2"],
       },
+      "trip-2": {
+        id: "trip-2",
+        locationIds: [],
+      },
     },
-    tripsOrder: ["trip-1"],
+    tripsOrder: ["trip-1", "trip-2"],
   },
 };
 
@@ -240,9 +244,11 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
         data.source.index,
         1
       );
+
       state.journeysDraggable.trips[
         data.destination.droppableId
       ].locationIds.splice(data.destination.index, 0, data.draggableId);
+
       return state;
 
     case countActionTypes.UPDATE_LOCATION:
@@ -273,6 +279,24 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
       state.journeysDraggable.locations = {};
       state.journeysDraggable.trips = {};
       state.journeysDraggable.tripsOrder = [];
+      return state;
+
+    case countActionTypes.ADD_EMPTY_TRIP:
+      const tripIdsArr_1 = Object.keys(state.journeysDraggable.trips).map(
+        (name) => name.split("-")[1]
+      );
+      const tripsMaxId_1 = Math.max(...tripIdsArr_1);
+
+      const newTripName_1 = `trip-${tripsMaxId_1 + 1}`;
+
+      state.journeysDraggable.trips[newTripName_1] = {
+        id: newTripName_1,
+        title: "__",
+        locationIds: [],
+      };
+
+      state.journeysDraggable.tripsOrder.push(newTripName_1);
+
       return state;
 
     case countActionTypes.ADD_TRIP:
@@ -380,5 +404,31 @@ export const useGetIcons = () => useSelector((store) => store.order.icons);
 
 export const useGetActiveStepNumber = () =>
   useSelector((store) => store.order.activeStepNumber);
+
+export const useMaxTripIdSelector = () =>
+  useSelector((store) => {
+    const tripIdsArr_selector = Object.keys(
+      store.order.journeysDraggable.trips
+    ).map((name) => name.split("-")[1]);
+
+    const tripsMaxId_selector = Math.max(...tripIdsArr_selector);
+
+    return `trip-${tripsMaxId_selector}`;
+  });
+
+export const useNumberOfEmptyTripsSelector = () =>
+  useSelector((store) => {
+    const arr_empty = Object.keys(store.order.journeysDraggable.trips).map(
+      (name) => {
+        if (!store.order.journeysDraggable.trips[name].locationIds.length) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    );
+
+    return eval(arr_empty.join("+"));
+  });
 
 export default order;
