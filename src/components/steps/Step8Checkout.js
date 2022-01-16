@@ -27,7 +27,9 @@ export default function Step8Checkout({
       </HeadingText>
       <StyledMaterialLi>{productRedux.materialDesc}</StyledMaterialLi>
 
-      <HeadingText>{index + 1}. Shrnutí</HeadingText>
+      <HeadingText>
+        {index + 1}. {TAB_STEPS[index + 1].full}
+      </HeadingText>
 
       <CheckoutCta
         map={map}

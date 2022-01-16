@@ -349,10 +349,6 @@ export default function StudioRootContainer() {
       // inputWrapDynamicSize = document.createElement("div");
       // inputWrapDynamicSize.setAttribute("id", "input_wrap_middle");
 
-      inputWrap.onClick = function () {
-        console.log("clicked");
-      };
-
       resizeInputsWrap({ productRef, layout: activeLayoutRedux, canvasMap });
 
       headlineInput = document.createElement("input");
@@ -546,14 +542,14 @@ export default function StudioRootContainer() {
   );
 }
 
-const StyledSection = styled.section`
-  margin-top: ${({ headerHeight, isMobile }) =>
-    isMobile ? 0 : `${headerHeight}px`};
-`;
-
 const StyledTrueContainer = styled(Container)`
   padding: 0 !important;
   max-height: 1500px;
+`;
+
+const StyledSection = styled.section`
+  margin-top: ${({ headerHeight, isMobile }) =>
+    isMobile ? 0 : `${headerHeight}px`};
 `;
 
 const ContainerBox = styled.div`

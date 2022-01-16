@@ -200,17 +200,6 @@ const EmptySpaceExpander = styled.div`
   flex-grow: 4;
 `;
 
-const ColorWrap = styled.div`
-  color: ${color("cta_color")} !important;
-  display: flex;
-`;
-
-const StyledImg = styled.img`
-  height: 120px;
-  width: 120px;
-  object-fit: cover;
-`;
-
 const StyledRotateIcon = styled(Rotate90DegreesCcwIcon)`
   transform: rotate(-45deg);
 `;
@@ -243,24 +232,6 @@ const TooltipBodyWrap = styled.div`
   }
 `;
 
-const DummyBtn = styled.div`
-  border: 1px solid lightGrey;
-  display: inline-flex;
-  padding: 3px;
-  margin: 2px;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.8);
-`;
-
-const ImagesWrap = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
-
 const TeaserButton = styled.div`
   border: 1px solid grey;
   display: flex;
@@ -285,6 +256,7 @@ const ZoomBtn = styled.div`
       ? `${BNT_RADIUS}px 0 0 ${BNT_RADIUS}px`
       : `0 ${BNT_RADIUS}px ${BNT_RADIUS}px 0`};
   border-right: ${({ isLeft }) => isLeft && "0px solid lightGrey"};
+  color: black;
 `;
 
 const RotateBtn = styled.div`

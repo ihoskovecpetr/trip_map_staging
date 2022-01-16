@@ -88,16 +88,16 @@ export default function StepFraming({ index }) {
         <ContainerVariants>
           {variantsPrintfulForSize.map(
             ({ id: variantId, shipping }, varIndex) => (
-              <ItemWrap key={varIndex}>
+              <ItemWrap
+                key={varIndex}
+                onClick={() => setNewFrame(variantId, shipping.codeCZ)}
+              >
                 <div sx={styles.textsWrap}>
-                  <VariantDesc>
+                  <VariantDesc active={productRedux.variantId === variantId}>
                     {getVariantObject(variantId)?.frameName}
                   </VariantDesc>
                 </div>
-                <ItemVariant
-                  active={productRedux.variantId === variantId}
-                  onClick={() => setNewFrame(variantId, shipping.codeCZ)}
-                >
+                <ItemVariant active={productRedux.variantId === variantId}>
                   <div sx={styles.imageWrap}>
                     <img
                       sx={styles.variantImage}
@@ -170,29 +170,30 @@ const styles = {
   },
 };
 
-const StyledDeliveryPriceP = styled.p`
-  margin: 0;
-  font-size: ${fontSize("xxs")};
-  cursor: pointer;
-  color: ${({ active }) => (active ? color("cta_color") : color("muted"))};
-  font-weight: ${({ active }) => active && fontWeight("bold")};
-  text-align: right;
-`;
-
 const StyledPriceP = styled.p`
   margin: 0;
   font-size: ${fontSize("sm")};
   font-weight: ${({ active }) => active && fontWeight("bold")};
-  color: ${({ active }) => active && color("cta_color")};
+  // color: ${({ active }) => active && color("cta_color")};
   cursor: pointer;
-  text-align: right;
+  text-align: center;
+  margin-top: 5px;
+`;
+
+const StyledDeliveryPriceP = styled.p`
+  margin: 0;
+  font-size: ${fontSize("xxs")};
+  cursor: pointer;
+  // color: ${({ active }) => (active ? color("cta_color") : color("muted"))};
+  font-weight: ${({ active }) => active && fontWeight("bold")};
+  text-align: center;
 `;
 
 const VariantDesc = styled.p`
   color: ${color("primary")};
   line-height: 1.2;
   font-size: 0.8rem;
-  font-weight: ${fontWeight("bold")};
+  font-weight: ${({ active }) => active && fontWeight("bold")};
   padding-bottom: 5px;
   margin: 0;
 `;
@@ -208,16 +209,16 @@ const ItemWrap = styled.div`
 const ContainerVariants = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 1px;
+  cursor: pointer;
 `;
 
 const ItemVariant = styled.div`
   color: rgba(0, 0, 0, 0.1);
   border-radius: 3px;
-  box-shadow: 0px 0px 0px 1px;
+  box-shadow: 0px 0px 0px ${({ active }) => (active ? "3px" : "1px")};
   color: ${({ active }) => active && color("cta_color")};
-  cursor: pointer;
   overflow: hidden;
 
   & > p {

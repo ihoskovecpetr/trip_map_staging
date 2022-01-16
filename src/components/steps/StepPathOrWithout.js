@@ -44,7 +44,7 @@ export default function StepPathOrWithout({ map, index }) {
           active={!isJourneysEnabled}
         >
           <StyledImg active={!isJourneysEnabled} src={noPathUrl} />
-          <ItemHeading active={!isJourneysEnabled}>Mapa bez trasy</ItemHeading>
+          <ItemHeading active={!isJourneysEnabled}>Bez trasy</ItemHeading>
         </OptionItem>
         <OptionItem
           onClick={() => {
@@ -54,9 +54,7 @@ export default function StepPathOrWithout({ map, index }) {
           active={isJourneysEnabled}
         >
           <StyledImg active={isJourneysEnabled} src={withPathUrl} />
-          <ItemHeading active={isJourneysEnabled}>
-            Mapa s trasou a body
-          </ItemHeading>
+          <ItemHeading active={isJourneysEnabled}>S trasou a body</ItemHeading>
         </OptionItem>
       </OptionContainer>
     </StepContainer>
@@ -85,19 +83,18 @@ const OptionItem = styled.div`
   padding: 5px;
   flex-direction: column;
   justify-content: space-between;
-  background-color: ${({ active }) => "white"};
-  box-shadow: ${({ active }) =>
-    active ? "0px 0px 0px 1px" : "0px 0px 0px 1px"};
-  color: ${({ active }) => (active ? color("cta_color") : "lightGrey")};
+  // background-color: ${({ active }) => "white"};
+  // color: ${({ active }) => (active ? color("cta_color") : "lightGrey")};
 `;
+// box-shadow: ${({ active }) => active ? "0px 0px 0px 1px" : "0px 0px 0px 1px"};
 
 const ItemHeading = styled.p`
-  color: ${({ active }) => (active ? color("primary") : color("muted"))};
+  // color: ${({ active }) => (active ? color("primary") : color("muted"))};
   line-height: 1.2;
   font-size: 0.8rem;
-  font-weight: ${fontWeight("bold")};
+  font-weight: ${({ active }) => active && fontWeight("bold")};
   padding-top: 5px;
-  margin: 0;
+  margin: 5px 0;
 `;
 
 const StyledImg = styled.img`
@@ -106,6 +103,9 @@ const StyledImg = styled.img`
   object-fit: cover;
   border-radius: 3px;
   color: ${color("muted")};
+  box-shadow: ${({ active }) =>
+    active ? "0px 0px 0px 3px" : "0px 0px 0px 0px"};
+  color: ${({ active }) => active && color("cta_color")};
 `;
 // box-shadow: ${({ active }) =>
 //   active ? "0px 0px 0px 3px" : "0px 0px 0px 1px"};

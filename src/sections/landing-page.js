@@ -20,23 +20,15 @@ import { useDisplayPNG } from "Hooks/useDisplayPNG";
 import { useIsSafari } from "Hooks/useIsSafari";
 import { mobile, color } from "utils";
 
-import Carousel1 from "assets/landing-page/webp/1.webp";
-import Carousel2 from "assets/landing-page/webp/2.webp";
-import Carousel3 from "assets/landing-page/webp/3.webp";
-import Carousel4 from "assets/landing-page/webp/4.webp";
-import Carousel5 from "assets/landing-page/webp/5.webp";
-// import Carousel6 from "assets/landing-page/webp/6.webp";
-// import Carousel7 from "assets/landing-page/webp/7.webp";
-// import Carousel8 from "assets/landing-page/webp/8.webp";
+import Carousel1 from "assets/carousel_landing/webp/1.webp";
+import Carousel2 from "assets/carousel_landing/webp/2.webp";
+import Carousel3 from "assets/carousel_landing/webp/3.webp";
+import Carousel4 from "assets/carousel_landing/webp/4.webp";
 
-import Carousel1PNG from "assets/landing-page/png/1.png";
-import Carousel2PNG from "assets/landing-page/png/2.png";
-import Carousel3PNG from "assets/landing-page/png/3.png";
-import Carousel4PNG from "assets/landing-page/png/4.png";
-import Carousel5PNG from "assets/landing-page/png/5.png";
-// import Carousel6PNG from "assets/landing-page/png/6.png";
-// import Carousel7PNG from "assets/landing-page/png/7.png";
-// import Carousel8PNG from "assets/landing-page/png/8.png";
+import Carousel1PNG from "assets/carousel_landing/png/1.png";
+import Carousel2PNG from "assets/carousel_landing/png/2.png";
+import Carousel3PNG from "assets/carousel_landing/png/3.png";
+import Carousel4PNG from "assets/carousel_landing/png/4.png";
 
 const data = {
   subTitle: "",
@@ -123,10 +115,6 @@ export default function LandingPage() {
                   <img src={displayPNG ? Carousel2PNG : Carousel2} />
                   <img src={displayPNG ? Carousel3PNG : Carousel3} />
                   <img src={displayPNG ? Carousel4PNG : Carousel4} />
-                  <img src={displayPNG ? Carousel5PNG : Carousel5} />
-                  {/* <img src={displayPNG ? Carousel6PNG : Carousel6} /> */}
-                  {/* <img src={displayPNG ? Carousel7PNG : Carousel7} /> */}
-                  {/* <img src={displayPNG ? Carousel8PNG : Carousel8} /> */}
                 </Carousel>
                 <ZeroHeightWrap>
                   <motion.div

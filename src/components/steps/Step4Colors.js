@@ -114,7 +114,10 @@ export default function Step4Colors({ index }) {
                 onClick={changeActiveStyle(style)}
               />
             </ImageWrap>
-            <ItemStyleText onClick={changeActiveStyle(style)}>
+            <ItemStyleText
+              active={activeMapStyleName === style}
+              onClick={changeActiveStyle(style)}
+            >
               {!isMobile && style}
             </ItemStyleText>
           </div>
@@ -132,9 +135,9 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     cursor: "pointer",
-    "&.active p": {
-      color: "cta_color",
-    },
+    // "&.active p": {
+    //   color: "cta_color",
+    // },
   },
 };
 const ColorsWrap = styled.div`
@@ -169,7 +172,8 @@ const ItemStyleText = styled.p`
   height: 100%;
   width: 100%;
   margin: 0;
-  margin-top: 12px;
+  margin-top: 15px;
+  margin-bottom: 8px;
   text-align: center;
   vertical-align: middle;
   line-height: 1.2;
@@ -177,7 +181,8 @@ const ItemStyleText = styled.p`
   font-weight: 500;
   text-transform: uppercase;
   font-size: 12px;
-  color: ${color("muted")};
+  // color: ${color("muted")};
+  font-weight: ${({ active }) => active && fontWeight("bold")};
 
   ${mobile`
     width: unset;

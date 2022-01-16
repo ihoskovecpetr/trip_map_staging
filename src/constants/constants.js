@@ -580,7 +580,7 @@ const OFFICIAL_EMAIL = "tripmapshopinfo@gmail.com";
 const TAB_STEPS = [
   { full: "__null__", short: "null" },
   { full: "Vyberte variantu mapy", short: "Varianta" },
-  { full: "Zadejte body cesty", short: "Cesta" },
+  { full: "Zadejte lokalitu", short: "Cesta" },
   { full: "Orientace", short: "Orientace" },
   { full: "Popisky", short: "Popisky" },
   { full: "Ohraničení", short: "Ohraničení" },
@@ -588,6 +588,7 @@ const TAB_STEPS = [
   { full: "Barevná kombinace", short: "Barvy" },
   { full: "Rozměry", short: "Rozměry" },
   { full: "Rámování", short: "Rámování" },
+  { full: "Materiál", short: "Materiál" },
   { full: "Checkout", short: "Checkout" },
 ];
 

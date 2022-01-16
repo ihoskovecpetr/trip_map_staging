@@ -3,7 +3,7 @@ import React from "react";
 import { jsx } from "theme-ui";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { mobile } from "utils";
+import { mobile, fontWeight } from "utils";
 
 import borderBlurredLayoutImgPNG from "assets/mapLayouts/png/borderBlurredLayout.png";
 import bottomBlurredLayoutImgPNG from "assets/mapLayouts/png/bottomBlurredLayout.png";
@@ -75,7 +75,9 @@ export default function StepLayout({ index }) {
                 id={`image_id_${index}`}
               />
             </ImageWrap>
-            <p sx={styles.layoutItemText}>{layoutObj.name}</p>
+            <LayoutItemText active={activeLayoutNameRedux === layoutObj.name}>
+              {layoutObj.name}
+            </LayoutItemText>
           </div>
         ))}
       </AllLayoutsContainer>
@@ -100,27 +102,23 @@ const styles = {
     justifyContent: "center",
     flexDirection: "column",
     cursor: "pointer",
-
-    "&.active img": {},
-    "&.active p": {
-      color: "cta_color",
-    },
-  },
-
-  layoutItemText: {
-    overflow: "hidden",
-    height: "100%",
-    margin: "0",
-    marginTop: "10px",
-    textAlign: "center",
-    verticalAlign: "middle",
-    lineHeight: "100%",
-    letterSpacing: "1.1px",
-    fontWeight: 400,
-    textTransform: "uppercase",
-    fontSize: "14px",
   },
 };
+
+const LayoutItemText = styled.p`
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  margin-top: 10px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 100%;
+  letter-spacing: 1.1px;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: ${({ active }) => active && fontWeight("bold")};
+`;
 
 const ImageWrap = styled.div`
   display: flex;

@@ -16,11 +16,11 @@ import { getIsProduction } from "LibGlobal/getIsProduction";
 import Stepper from "./Stepper";
 import StepPathOrWithout from "../steps/StepPathOrWithout";
 import Step1Location from "../steps/StepLocation";
-import Step2Orientation from "../steps/Step2Orientation";
-import StepLayout from "../steps/Step3Layout";
+import Step2Orientation from "../steps/StepOrientation";
+import StepLayout from "../steps/StepLayout";
 import StepLayoutColorSwitch from "../steps/Step3BLayoutColorSwitch";
 import StepColors from "../steps/Step4Colors";
-import Step5Size from "../steps/Step5Size";
+import StepSize from "../steps/StepSize";
 import StepFraming from "../steps/StepFraming";
 import Step8Checkout from "../steps/Step8Checkout";
 import StepTitles from "../steps/StepTitles";
@@ -131,7 +131,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
       <StepColors index={7} />,
     ],
 
-    [<Step5Size index={8} />, <StepFraming map={map} index={9} />],
+    [<StepSize index={8} />, <StepFraming map={map} index={9} />],
     [
       <Step8Checkout
         map={map}
@@ -151,7 +151,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
     [<StepColors index={5} />],
     [<StepLayout index={6} />],
     [<StepLayoutColorSwitch index={7} />],
-    [<Step5Size index={8} />],
+    [<StepSize index={8} />],
     [<StepFraming map={map} index={9} />],
     [
       <Step8Checkout

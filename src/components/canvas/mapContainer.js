@@ -11,6 +11,8 @@ import { useIsMobile } from "Hooks/useIsMobile";
 import BackdropLoader from "components/backdropLoader";
 import { color, fontWeight, mobile } from "utils";
 import { useScreenSize } from "Hooks/useScreenSize";
+import { getDirectionCoordinates } from "LibGlobal/getDirectionCoordinates";
+import MapLineComponent from "./mapLineComponent";
 
 import iconChat from "assets/mapIcons/pin2D.svg";
 
@@ -92,7 +94,6 @@ export default function MapContainer({
   const isJourneysEnabled = useJourneysEnabledSelector();
   const icons = useGetIcons();
   const { height: screenHeight } = useScreenSize();
-
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const [draggedPoint, setDraggedPoint] = useState();
   const [lightbox, setLightbox] = useState({
@@ -415,24 +416,31 @@ const PrintLocations = ({
                 </Layer>
 
                 {previousPoint && (
-                  <Layer
-                    type="line"
-                    layout={lineLayout}
-                    key={`${pointIndex}_2_${groupIndex}`}
-                    paint={{
-                      "line-color":
-                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
-                          .colorMain,
-                      "line-width": lineWidth,
-                    }}
-                  >
-                    <Feature
-                      coordinates={getGeoArc(
-                        currentPoint.location,
-                        previousPoint.location
-                      )}
-                    />
-                  </Layer>
+                  <>
+                    {/* <MapLineComponent
+                      fromLocation={currentPoint.location}
+                      toLocation={previousPoint.location}
+                    /> */}
+
+                    <Layer
+                      type="line"
+                      layout={lineLayout}
+                      key={`${pointIndex}_2_${groupIndex}`}
+                      paint={{
+                        "line-color":
+                          MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName]
+                            .colorMain,
+                        "line-width": lineWidth,
+                      }}
+                    >
+                      <Feature
+                        coordinates={getGeoArc(
+                          currentPoint.location,
+                          previousPoint.location
+                        )}
+                      />
+                    </Layer>
+                  </>
                 )}
                 {currentPoint.titleLabelDisplayed && (
                   <Layer

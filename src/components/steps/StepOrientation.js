@@ -13,7 +13,7 @@ import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
 
-export default function Step2Orientation({ index }) {
+export default function StepOrientation({ index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
@@ -45,7 +45,7 @@ export default function Step2Orientation({ index }) {
           active={!isProductWide(productRedux)}
         >
           <IconWrap>
-            <HighMock />
+            <HighMock active={!isProductWide(productRedux)} />
           </IconWrap>
 
           <StyledDescriptionP
@@ -62,7 +62,7 @@ export default function Step2Orientation({ index }) {
           active={isProductWide(productRedux)}
         >
           <IconWrap>
-            <WideMock />
+            <WideMock active={isProductWide(productRedux)} />
           </IconWrap>
 
           <StyledDescriptionP
@@ -93,9 +93,6 @@ const SingleOrientationItem = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-color: ${({ active }) => active && color("cta_color")};
-  background-color: white;
 `;
 
 const IconWrap = styled.div`
@@ -104,31 +101,34 @@ const IconWrap = styled.div`
   justify-content: center;
   align-items: center;
   cursor: ${({ active }) => !active && "pointer"};
-
-  & > div {
-    color: ${color("muted")};
-    box-shadow: 0 0 0 3px;
-  }
 `;
 
 const WideMock = styled.div`
-  height: 30px;
-  width: 50px;
+  height: 40px;
+  width: 70px;
   color: ${({ active }) => active && color("cta_color")};
-  background-color: ${color("muted")};
+  background-color: lightGrey;
+  border: 3px solid rgba(0, 0, 0, 0);
+  border-radius: 3px;
+  border-color: ${({ active }) => active && color("cta_color")};
 `;
 
 const HighMock = styled.div`
-  height: 50px;
-  width: 30px;
-  color: ${({ active }) => active && color("cta_color")};
+  height: 70px;
+  width: 40px;
+  color: blue;
   pointer-events: ${({ active }) => active && "none"};
-  background-color: ${color("muted")};
+  background-color: lightGrey;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  border-color: ${({ active }) => active && color("cta_color")};
 `;
+// box-shadow: ${({ active }) =>
+//   active ? "0px 0px 0px 8px" : "0px 0px 0px 1px"};
 
 const StyledDescriptionP = styled.p`
   text-align: center;
-  color: ${({ active }) => active && color("cta_color")};
-  font-weight: ${fontWeight("regular")};
+  // color: ${({ active }) => !active && color("muted")};
+  font-weight: ${({ active }) => active && fontWeight("bold")};
   margin: 3px 0;
 `;

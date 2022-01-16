@@ -98,14 +98,15 @@ export default function Step5Size({ index }) {
     });
   };
 
-  const getSizeIcon = (sizeName) => {
+  const getSizeIcon = (sizeName, active) => {
+    console.log({ active });
     switch (sizeName) {
       case SIZE_NAMES["30X40cm"]:
-        return <SizeIconSmall />;
+        return <SizeIconSmall active={active} />;
       case SIZE_NAMES["50X70cm"]:
-        return <SizeIconMedium />;
+        return <SizeIconMedium active={active} />;
       case SIZE_NAMES["61X91cm"]:
-        return <SizeIconLarge />;
+        return <SizeIconLarge active={active} />;
     }
   };
 
@@ -156,15 +157,28 @@ export default function Step5Size({ index }) {
                   isDisabled={isDisabledBtn}
                   onClick={() => !isDisabledBtn && setNewSize(sizeNameLocal)}
                 >
-                  <SizeIconWrap>{getSizeIcon(sizeObject?.code)}</SizeIconWrap>
-                  <p sx={styles.itemDimensions}>{sizeObject?.name}</p>
+                  <SizeIconWrap>
+                    {getSizeIcon(
+                      sizeObject?.code,
+                      productRedux.sizeObject.acceptableSizes.includes(
+                        sizeNameLocal
+                      )
+                    )}
+                  </SizeIconWrap>
+                  <SizeName
+                    active={productRedux.sizeObject.acceptableSizes.includes(
+                      sizeNameLocal
+                    )}
+                  >
+                    {sizeObject?.name}
+                  </SizeName>
                 </StyledItem>
                 <StyledPriceP
                   active={productRedux.sizeObject.acceptableSizes.includes(
                     sizeNameLocal
                   )}
                 >
-                  {`${getFormattedPrice(priceWithDeliveryNoFrame)}`}
+                  {`(${getFormattedPrice(priceWithDeliveryNoFrame)})`}
                 </StyledPriceP>
                 <DevicesItem>
                   {isDisabledBtn && <StyledDevicesImg src={disabledAndroid} />}
@@ -178,13 +192,6 @@ export default function Step5Size({ index }) {
 }
 
 const styles = {
-  itemDimensions: {
-    margin: 0,
-    paddingTop: "5px",
-    display: "block",
-    textAlign: "center",
-  },
-
   loaderWrap: {
     display: "flex",
     width: "100%",
@@ -194,6 +201,15 @@ const styles = {
     alignItems: "center",
   },
 };
+
+const SizeName = styled.p`
+  margin: 0;
+  padding-top: 5px;
+  display: block;
+  text-align: center;
+  color: ${({ active }) => (active ? "black" : "grey")};
+  font-weight: ${({ active }) => active && fontWeight("bold")};
+`;
 
 const ContainerSizes = styled.div`
   display: flex;
@@ -214,9 +230,9 @@ const StyledItem = styled.div`
   background-color: white;
   background-color: ${({ isDisabled }) => isDisabled && "lightGrey"};
   color: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  box-shadow: 0px 0px 0px 1px;
-  color: ${({ active }) => active && color("cta_color")};
+  // border-radius: 4px;
+  // box-shadow: 0px 0px 0px 1px;
+  // color: ${({ active }) => active && color("cta_color")};
   cursor: ${({ isDisabled }) => !isDisabled && "pointer"};
 
   & > p {
@@ -225,9 +241,9 @@ const StyledItem = styled.div`
   }
 `;
 const StyledPriceP = styled.p`
-  color: ${({ active }) => (active ? color("cta_color") : "grey")};
+  color: ${({ active }) => (active ? "black" : "grey")};
   font-weight: ${({ active }) => active && fontWeight("bold")};
-  text-align: right;
+  text-align: center;
   margin: 5px 0px;
 `;
 
@@ -236,10 +252,6 @@ const DevicesItem = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-`;
-
-const StyledDoneIcon = styled(DoneIcon)`
-  color: #01c301;
 `;
 
 const StyledDevicesImg = styled.img`
@@ -260,17 +272,20 @@ const SizeIconWrap = styled.div`
 const SizeIconSmall = styled.div`
   width: 40px;
   height: 30px;
-  border: 2px solid rgba(0, 0, 0, 0.4);
+  border: ${({ active }) => (active ? "5px" : "2px")} solid rgba(0, 0, 0, 0.4);
+  border-color: ${({ active }) => active && color("cta_color")};
 `;
 
 const SizeIconMedium = styled.div`
   width: 70px;
   height: 50px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  border: ${({ active }) => (active ? "5px" : "2px")} solid rgba(0, 0, 0, 0.4);
+  border-color: ${({ active }) => active && color("cta_color")};
 `;
 
 const SizeIconLarge = styled.div`
   width: 91px;
   height: 61px;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  border: ${({ active }) => (active ? "5px" : "2px")} solid rgba(0, 0, 0, 0.4);
+  border-color: ${({ active }) => active && color("cta_color")};
 `;
