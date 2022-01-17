@@ -169,9 +169,9 @@ const Rio_raw = {
 
 const Bostom_raw = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1600,c_scale/boston_qnyx1u.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1600,c_scale/Finished%20Interiers/boston_o7texj.png",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/boston_qnyx1u.png",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/boston_o7texj.png",
 };
 
 const Bostom_interier = {
@@ -212,14 +212,14 @@ const Germany_interier = {
 const imagesArr = [
   Bostom_interier,
   Bostom_raw,
+  Hong_Kong,
+  HK_raw,
   Germany_interier,
   Germany_raw,
-  HK_raw,
   SF_interier,
   SF_raw,
   Rio_interier,
   Rio_raw,
-  Hong_Kong,
   // Prague,
   Manhattan_interier,
 
