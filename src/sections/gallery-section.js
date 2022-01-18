@@ -106,9 +106,16 @@ const Manhattan_interier = {
 
 const Europe_nice = {
   src:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/europe_grey_ceqxm4.webp",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1400,c_scale/Finished%20Interiers/europe_interier_vb4pjf.png",
   thumbnail:
-    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/europe_grey_ceqxm4.webp",
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/europe_interier_vb4pjf.png",
+};
+
+const Europe_raw = {
+  src:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_1400,c_scale/Finished%20Interiers/europe_d03fol.png",
+  thumbnail:
+    "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/europe_d03fol.png",
 };
 
 const Iceland = {
@@ -228,6 +235,7 @@ const imagesArr = [
   Italy_red_raw,
   Manhattan_bike,
   Europe_nice,
+  Europe_raw,
   Europe,
   Iceland,
 
