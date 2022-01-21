@@ -167,7 +167,7 @@ export default function CheckoutCta({
               setBackdropOpen(true);
               lazyUploadImage();
             }}
-            price={priceWithDelivery} //TODO add big.js
+            price={priceWithDelivery}
           >
             Shrnutí objednávky
           </NextTabBtn>

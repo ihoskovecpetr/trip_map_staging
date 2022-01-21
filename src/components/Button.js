@@ -25,8 +25,8 @@ const StyledButton = styled.button`
   font-weight: ${fontWeight("bold")};
 
   &:disabled {
-    border-color: ${color("muted")};
-    color: ${color("muted")};
+    border-color: ${color("background_almost_white")};
+    color: ${color("background_almost_white")};
     cursor: default;
   }
 

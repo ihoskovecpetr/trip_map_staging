@@ -16,7 +16,6 @@ const port = process.env.PORT || 3000;
     await app.prepare();
     const server = express();
 
-    console.log("Running_server.js");
     server.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
     server.use("api/*", connectDB());
     server.use(cookieParser());

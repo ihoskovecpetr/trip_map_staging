@@ -19,6 +19,7 @@ import { useIsMobile } from "Hooks/useIsMobile";
 import { useDisplayPNG } from "Hooks/useDisplayPNG";
 import { useIsSafari } from "Hooks/useIsSafari";
 import { mobile, color } from "utils";
+import DiscountBanner from "components/discount-banner";
 
 import Carousel1 from "assets/carousel_landing/webp/1.webp";
 import Carousel2 from "assets/carousel_landing/webp/2.webp";
@@ -68,8 +69,10 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <section sx={styles.sectionContainer}>
-      <Container sx={styles.containerBox}>
+    <SectionContainer>
+      <DiscountBanner />
+
+      <ContainerBox headerHeight={headerHeight}>
         <Box sx={styles.carouselBox}>
           <LandingCarouselWrap id="carousel_wrapper">
             {!isMobile && !isSafari && (
@@ -176,8 +179,8 @@ export default function LandingPage() {
             {/* </motion.div> */}
           </Grid>
         </Box>
-      </Container>
-    </section>
+      </ContainerBox>
+    </SectionContainer>
   );
 }
 
@@ -215,7 +218,7 @@ function CtaComponent() {
   return (
     <CtaBtn onClick={onClick} isLoading={isLoading}>
       <StyledText>
-        Začít navrhovat {isLoading && <UnderlineLoader />}
+        Začít&nbsp;navrhovat {isLoading && <UnderlineLoader />}
       </StyledText>
     </CtaBtn>
   );
@@ -269,24 +272,34 @@ const CtaBtn = styled(Button)`
   border-radius: 10px;
 `;
 
+const SectionContainer = styled.section`
+  position: relative;
+  padding-top: ${({ headerHeight }) =>
+    headerHeight ? `${headerHeight}px` : "60px"};
+
+  ${mobile`
+    height: 100vh;
+    max-height: 1000px;
+  `};
+`;
+
+const ContainerBox = styled(Container)`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 0 !important;
+
+  ${mobile`
+    height: ${({ headerHeight }) =>
+      headerHeight ? `calc(100vh - ${headerHeight}px - 30px)` : "80vh"};
+    flex-Direction: row;
+  `};
+`;
+
 const styles = {
-  sectionContainer: {
-    py: [null, null, null, 5, null, 6],
-    pt: [8, null, null, "unset"],
-    position: "relative",
-    height: ["unset", null, null, "100vh"],
-    maxHeight: [null, null, null, "1000px"],
-  },
   onlyMobile: {
     display: ["block", null, null, "none"],
-  },
-  containerBox: {
-    p: [0, 0],
-    display: "flex",
-    height: ["unset", null, null, "100%"],
-    alignItems: ["center"],
-    justifyContent: ["space-around"], //"space-between"
-    flexDirection: ["column", null, null, "row"],
   },
   carouselBox: {
     width: ["100%", "100%", "100%", 450, 450, 570],
