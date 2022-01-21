@@ -124,6 +124,7 @@ const orderInitialState = {
     },
     tripsOrder: ["trip-1", "trip-2"],
   },
+  languageServer: "default",
 };
 
 const order = produce((state = orderInitialState, { type, data, payload }) => {

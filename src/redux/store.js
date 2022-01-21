@@ -9,8 +9,6 @@ const bindMiddleware = (middleware) => {
     const { composeWithDevTools } = require("redux-devtools-extension");
     return composeWithDevTools(applyMiddleware(...middleware));
   }
-  console.log("redux-devtools-extension_skipped");
-
   return applyMiddleware(...middleware);
 };
 
@@ -21,7 +19,12 @@ const combinedReducer = combineReducers({
 const initStore = (props) => {
   return createStore(
     combinedReducer,
-    { order: { ...props?.ctx?.req.meta } },
+    {
+      order: {
+        ...props?.ctx?.req.meta,
+        languageServer: props?.ctx?.res.language,
+      },
+    },
     bindMiddleware([thunkMiddleware])
   );
 };

@@ -11,7 +11,7 @@ export default function DiscountBanner() {
   return (
     <BannerContainer>
       <StyledParagraph>
-        Sleva {discountPercentage}% s kodem:{"  "}
+        Sleva {discountPercentage}% s kódem:{"  "}
         <b>{VALID_DISCOUNT_CODES[0].code}</b>, Doprava zdarma!
       </StyledParagraph>
     </BannerContainer>
