@@ -5,76 +5,7 @@ import Gallery from "react-grid-gallery";
 import { useIsMobile } from "Hooks/useIsMobile";
 
 import SectionHeader from "../components/section-header";
-
-// const InterierBike1 = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/interior_bike_white_wjcag7.png",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/interior_bike_white_wjcag7.png",
-// };
-
-// const InterierChair2 = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_800,c_scale/interior_wide_chair_yellow_uuaihd.png",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/interior_wide_chair_yellow_uuaihd.png",
-// };
-
-// const RedWallBoston = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/red_window_white_pslvnb.jpg",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/red_window_white_pslvnb.jpg",
-// };
-
-// const Italy_inside = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/pexels-max-vakhtbovych-6585763_2_avwvrj.jpg",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/pexels-max-vakhtbovych-6585763_2_avwvrj.jpg",
-// };
-
-// const World_White = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/pexels-maksim-goncharenok-4352247_2_k1lw0i.jpg",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/pexels-maksim-goncharenok-4352247_2_k1lw0i.jpg",
-// };
-
-// const Europe_White = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/Evropa_elzyg9.jpg",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/Evropa_elzyg9.jpg",
-// };
-
-// const Greek_Black = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/blank-1868502_1920_3_m3elzu.jpg",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/blank-1868502_1920_3_m3elzu.jpg",
-// };
-
-// const Rio_green = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/restaurant_rio_vmp3ck.jpg",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/restaurant_rio_vmp3ck.jpg",
-// };
-
-// const Japan_cottage = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/japan-interier_mhqq5t.jpg",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/japan-interier_mhqq5t.jpg",
-// };
-
-// const Japan_table = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/blank-1868502_1920_2_fc4itd.jpg",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/blank-1868502_1920_2_fc4itd.jpg",
-// };
+import { useTranslation } from "Hooks/useTranslation";
 
 const Europe = {
   src:
@@ -82,13 +13,6 @@ const Europe = {
   thumbnail:
     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/europe_interier_gvweep.webp",
 };
-
-// const Prague = {
-//   src:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interior_prague_rhpmtd.png",
-//   thumbnail:
-//     "https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interior_prague_rhpmtd.png",
-// };
 
 const Manhattan_bike = {
   src:
@@ -227,7 +151,6 @@ const imagesArr = [
   SF_raw,
   Rio_interier,
   Rio_raw,
-  // Prague,
   Manhattan_interier,
 
   Manhattan_raw,
@@ -238,8 +161,6 @@ const imagesArr = [
   Europe_raw,
   Europe,
   Iceland,
-
-  // Manhattan_balck_sofa,
 ];
 
 const imagesWithOptions = imagesArr.map((image) => ({
@@ -250,18 +171,18 @@ const imagesWithOptions = imagesArr.map((image) => ({
 
 export default function KeyFeature() {
   const { isMobile } = useIsMobile();
+  const t = useTranslation();
 
   return (
     <section sx={{ variant: "section.keyFeature" }} id="feature">
       <Container sx={styles.containerThemUI}>
         <SectionHeader
-          slogan="Něco pro inspiraci"
-          title="Galerie povedených interiérů"
+          slogan={t("gallery.subtitle")}
+          title={t("gallery.title")}
         />
         <Grid sx={styles.gridCenter}>
           <Gallery
             images={imagesWithOptions}
-            // width={"100%"}
             backdropClosesModal={true}
             rowHeight={isMobile ? 120 : 180}
           />

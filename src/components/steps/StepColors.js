@@ -38,6 +38,7 @@ import { useActiveMapStyleSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 import {
   setActiveMapStyleAction,
@@ -47,6 +48,7 @@ import {
 export default function Step4Colors({ index }) {
   const dispatch = useDispatch();
   const activeMapStyleName = useActiveMapStyleSelector();
+  const t = useTranslation();
 
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG();
@@ -96,7 +98,7 @@ export default function Step4Colors({ index }) {
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
       <ColorsWrap>
         {Object.values(MAP_STYLES_NAMES).map((style, index) => (

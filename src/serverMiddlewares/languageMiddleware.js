@@ -15,6 +15,7 @@ class LanguageMiddleware {
       );
 
       res.language = language; //'en'
+      req.language = language; //'en'
       next();
     };
   }

@@ -8,9 +8,11 @@ import { useIsMobile } from "Hooks/useIsMobile";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 export default function StepJourneys({ map, index }) {
   const { isMobile } = useIsMobile();
+  const t = useTranslation();
 
   useEffect(() => {
     map?.on("error", function (e) {
@@ -23,7 +25,7 @@ export default function StepJourneys({ map, index }) {
   return (
     <StepContainer isMobile={isMobile} isSolidBg={isMobile ? true : false}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
 
       <TripsAll map={map} />

@@ -4,12 +4,13 @@ import { Draggable } from "react-beautiful-dnd";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import DeleteForeverIcon from "@material-ui/icons/Clear";
 import { color, fontSize, fontWeight } from "utils";
 
 import GeocoderInput from "components/GeocoderInput_new";
 import { updateLocation, removeLocation } from "redux/order/actions";
 import { useDebounce } from "Hooks/useDebounce";
+import { useTranslation } from "Hooks/useTranslation";
 
 const Container = styled.div`
   margin-bottom: 16px;
@@ -25,14 +26,6 @@ const InputsRow = styled.div`
   border-radius: 5px;
   width: 98%;
   margin: 0 1%;
-`;
-
-const IconColumn = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: flex-end;
-  padding-bottom: 5px;
 `;
 
 const StyledIconShuffle = styled(CompareArrowsIcon)`
@@ -90,7 +83,7 @@ export default function LocationLine({
   setActiveLocationId,
 }) {
   const dispatch = useDispatch();
-
+  const t = useTranslation();
   const [locationInput, setLocationInput] = useState(true);
   const [activeGeocoder, setActiveGeocoder] = useState(false);
   const debounce = useDebounce({ delayInMS: 1000 });
@@ -146,13 +139,13 @@ export default function LocationLine({
                   isActive={locationInput}
                   onClick={() => setLocationInput(true)}
                 >
-                  lokalita
+                  {t("steps.locality.locality")}
                 </LocLblBtn>
                 <LocLblBtn
                   isActive={!locationInput}
                   onClick={() => setLocationInput(false)}
                 >
-                  popisek
+                  {t("steps.locality.label")}
                 </LocLblBtn>
               </BtnsRow>
               <InputsRow>

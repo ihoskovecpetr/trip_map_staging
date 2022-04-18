@@ -3,16 +3,20 @@ import styled from "styled-components";
 import { color } from "utils";
 import Big from "big.js";
 import { VALID_DISCOUNT_CODES } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 export default function DiscountBanner() {
+  const t = useTranslation();
   const discKoef = new Big(VALID_DISCOUNT_CODES[0].discountKoef);
   const discountPercentage = discKoef.sub(1).times(-100).toString();
 
   return (
     <BannerContainer>
       <StyledParagraph>
-        Sleva {discountPercentage}% s kódem:{"  "}
-        <b>{VALID_DISCOUNT_CODES[0].code}</b>, Doprava zdarma!
+        {t("saleLine", {
+          discountPercentage,
+          code: <b>{VALID_DISCOUNT_CODES[0].code}</b>,
+        })}
       </StyledParagraph>
     </BannerContainer>
   );

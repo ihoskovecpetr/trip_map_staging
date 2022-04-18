@@ -9,6 +9,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 import TripSingle from "./TripSingle";
 import { color, fontSize, mobile } from "utils";
+import { useTranslation } from "Hooks/useTranslation";
 
 import {
   useGetJourneysDraggable,
@@ -28,6 +29,7 @@ export default function TripsAll({ map }) {
   const journeysDraggable = useGetJourneysDraggable();
   const [activeTripId, setActiveTripId] = useState();
   const [activeLocationId, setActiveLocationId] = useState();
+  const t = useTranslation();
 
   const maxTripIdString = useMaxTripIdSelector();
   const numberOfEmptyTrips = useNumberOfEmptyTripsSelector();
@@ -94,7 +96,7 @@ export default function TripsAll({ map }) {
               <Droppable droppableId={tripObj.id}>
                 {(provided) => (
                   <EmptyJourneyContainer ref={provided.innerRef}>
-                    přetáhnutím bodu separujete lokaci
+                    {t("steps.splitText")}
                   </EmptyJourneyContainer>
                 )}
               </Droppable>

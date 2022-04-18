@@ -20,8 +20,6 @@ const connectToMongoose = async () => {
   }
 };
 
-let counter = 0;
-
 const initDataMiddleware = () => async (req, res, next) => {
   if (
     req.url.includes("/_next/") ||
@@ -31,7 +29,6 @@ const initDataMiddleware = () => async (req, res, next) => {
     return next();
   }
 
-  counter++;
   await connectToMongoose();
 
   const cookieStoreId = req.cookies[REDUX_COOKIE_NAME];
@@ -74,9 +71,14 @@ const initDataMiddleware = () => async (req, res, next) => {
 
     if (!foundStoreFromQuery && req && req.query.id != cookieStoreId) {
       const newStoreId = v4();
-      const newStore = new FullStore({
-        storeId: newStoreId,
-      });
+      const newStore = new FullStore(
+        {
+          storeId: newStoreId,
+        },
+        { strict: false }
+      );
+
+      console.log({ newStore_2: newStore, FullStore });
 
       await newStore.save();
 
@@ -102,9 +104,12 @@ const initDataMiddleware = () => async (req, res, next) => {
       };
     } else {
       const newStoreId2 = v4();
-      const newStore = new FullStore({
-        storeId: newStoreId2,
-      });
+      const newStore = new FullStore(
+        {
+          storeId: newStoreId2,
+        },
+        { strict: false }
+      );
 
       await newStore.save();
 

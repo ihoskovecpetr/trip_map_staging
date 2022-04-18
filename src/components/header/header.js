@@ -8,27 +8,41 @@ import Logo from "components/logo";
 import LogoBlack from "assets/logo_black.png";
 import LogoWhite from "assets/logo_while.png";
 import { DrawerProvider } from "../../contexts/drawer/drawer.provider";
-import MobileDrawer from "./mobile-drawer";
-import menuItems from "./header.data";
+import NavItems from "./nav-items";
 import { useIsMobile } from "Hooks/useIsMobile";
 import { useRouter } from "next/router";
 import { PATHS } from "@constants";
-import { useElementDimensions } from "Hooks/useElementDimensions";
+import Link from "next/link";
 
-export default function Header({ className }) {
-  const router = useRouter();
+export default function Header() {
+  const { locale, pathname } = useRouter();
   const { isMobile } = useIsMobile();
-  const { height: headerHeight } = useElementDimensions("header");
+  const isStudio = pathname === PATHS.studio;
 
-  const isStudio = router.pathname === PATHS.studio;
+  console.log({ locale: locale });
 
   return (
     <DrawerProvider>
       <HeaderContainer isStudio={isStudio} isMobile={isMobile} id="header">
         <StyledContainer>
+          {/* <LogoWrap> */}
           <Logo src={LogoBlack} />
+          {/* </LogoWrap> */}
+          <Flex1 />
+          <NavItems />
+          <LanguageLinksWrap>
+            <Link href={pathname} locale="en">
+              <StyledLanguageLink isActive={locale == "en"}>
+                english
+              </StyledLanguageLink>
+            </Link>
 
-          <MobileDrawer />
+            <Link href={pathname} locale="cs">
+              <StyledLanguageLink isActive={locale == "cs"}>
+                czech
+              </StyledLanguageLink>
+            </Link>
+          </LanguageLinksWrap>
         </StyledContainer>
       </HeaderContainer>
     </DrawerProvider>
@@ -66,5 +80,25 @@ const HeaderContainer = styled.div`
 const StyledContainer = styled(Container)`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  // justify-content: space-between;
+`;
+
+const StyledLanguageLink = styled.a`
+  // text-decoration: none !important;
+  font-size: ${({ isActive }) => (isActive ? "1rem" : "0.7rem")};
+  margin-left: 0.3rem;
+  // color: ${({ isActive }) => (isActive ? "black" : "grey")};
+  color: black;
+  cursor: ${({ isActive }) => (isActive ? "" : "pointer")};
+  text-decoration: ${({ isActive }) =>
+    isActive ? "none !important" : "underline"};
+  pointer-events: ${({ isActive }) => (isActive ? "none" : "auto")};
+`;
+
+const Flex1 = styled.span`
+  flex: 1;
+`;
+
+const LanguageLinksWrap = styled.span`
+  flex: 0;
 `;

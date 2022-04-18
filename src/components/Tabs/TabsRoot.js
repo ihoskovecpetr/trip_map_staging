@@ -12,17 +12,18 @@ import { useElementDimensions } from "Hooks/useElementDimensions";
 import { color, fontWeight, mobile } from "utils";
 import { ORIENTATIONS, TAB_STEPS } from "@constants";
 import { getIsProduction } from "LibGlobal/getIsProduction";
+import { useTranslation } from "Hooks/useTranslation";
 
 import Stepper from "./Stepper";
 import StepPathOrWithout from "../steps/StepPathOrWithout";
 import Step1Location from "../steps/StepLocation";
 import Step2Orientation from "../steps/StepOrientation";
 import StepLayout from "../steps/StepLayout";
-import StepLayoutColorSwitch from "../steps/Step3BLayoutColorSwitch";
-import StepColors from "../steps/Step4Colors";
+import StepLayoutColorSwitch from "../steps/StepLayoutColorSwitch";
+import StepColors from "../steps/StepColors";
 import StepSize from "../steps/StepSize";
 import StepFraming from "../steps/StepFraming";
-import Step8Checkout from "../steps/Step8Checkout";
+import Step8Checkout from "../steps/StepCheckout";
 import StepTitles from "../steps/StepTitles";
 import StepJourneys from "../steps/StepJourneys";
 import StepAddIcon from "../steps/StepAddIcon";
@@ -51,6 +52,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
   const sendSaveBlueprint = useSendSaveBlueprint();
   const { height: screenHeight } = useScreenSize();
   const mapTitles = useTitlesSelector();
+  const t = useTranslation();
 
   const productRedux = useProductSelector();
   const isJourneysEnabled = useJourneysEnabledSelector();
@@ -189,29 +191,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
       isWideOrientation={isWideOrientation}
       screenHeight={screenHeight}
     >
-      {/* {isMobile && (
-        <>
-          <OverflowSectionWrap>
-            <Price>
-              <StyledParagraph>{`celkem:
-          ${getFormattedPrice(
-            dataPrintful?.[productRedux.variantId]?.priceWithDeliveryAndProfit
-              .netPrice ?? 0
-          )}`}</StyledParagraph>
-            </Price>
-            <ArrowWrap>
-              <StyledKeyboardArrowRight
-                isOpen={isOpen}
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                }}
-              />
-            </ArrowWrap>
-            <Dummy_item></Dummy_item>
-          </OverflowSectionWrap>
-        </>
-      )} */}
-
       {!isMobile && (
         <StepperWrap>
           <Stepper
@@ -270,7 +249,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
                   setIsOpen(!isOpen);
                 }}
               >
-                {TAB_STEPS[activeStepNumber + 1].short}
+                {t(TAB_STEPS[activeStepNumber + 1].short)}
                 <StyledKeyboardArrowRight isOpen={isOpen} />
               </ArrowWrap>
             </NullHeightWrap>

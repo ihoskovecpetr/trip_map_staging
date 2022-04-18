@@ -6,8 +6,8 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 
 import { color, fontWeight } from "utils";
-import AboutComponent from "components/o-nas/AboutComponent";
-import Contact from "components/o-nas/Contact";
+import AboutComponent from "components/about/AboutComponent";
+import Contact from "components/about/Contact";
 import {
   sectionTags,
   sectionObjectsAbout,

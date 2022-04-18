@@ -132,7 +132,7 @@ const sendErrorEmail = async ({
 
     const promises = [
       smtpTransportNotice.sendMail({
-        from: "Brekkie",
+        from: "Admin Trap Map Shop",
         to: process.env.EMAIL_RECIPIENT,
         subject: emailHeadingAdminNotice,
         template: "./src/pages/api/orderAdminNotice",
@@ -141,7 +141,7 @@ const sendErrorEmail = async ({
         },
       }),
       smtpTransportCustommer.sendMail({
-        from: "No",
+        from: "Admin Trap Map Shop",
         to: session.customer_details.email,
         subject: emailHeadingCustomer,
         template: "./src/pages/api/orderCustommerConfirmation",
@@ -151,9 +151,10 @@ const sendErrorEmail = async ({
           productDescription,
           mapTitles,
           sessionId: session.id,
-          sessionAmountTotal: getFormattedPrice(
-            priceAlgorithm.divide(session.amount_total, 100) ?? 0
-          ),
+          sessionAmountTotal: getFormattedPrice({
+            amount: priceAlgorithm.divide(session.amount_total, 100) ?? 0,
+            currency: "CZK",
+          }),
         },
         attachments: [
           {

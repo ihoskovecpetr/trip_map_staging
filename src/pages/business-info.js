@@ -4,7 +4,7 @@ import { StickyProvider } from "contexts/app/app.provider";
 import theme from "theme";
 import SEO from "components/seo";
 import Layout from "components/layout";
-import About from "sections/about";
+import ObchodniInformace from "sections/obchodniInformace";
 
 import Faq from "sections/faq";
 
@@ -14,21 +14,18 @@ const IndexPage = (props) => {
       <StickyProvider>
         <Layout>
           <SEO
-            title="Trip Map - O nás"
-            description="Informace o nás"
+            title="Trip Map - Obchodni Informace"
+            description="Dokumentace"
             author="TripMap.shop"
           />
-          {/* <LandingSection /> */}
         </Layout>
 
-        {/* <IndexContainer /> */}
         <Layout withFooter>
-          <About />
+          <ObchodniInformace />
         </Layout>
       </StickyProvider>
     </ThemeProvider>
   );
 };
 
-// export default connect((state) => state, {})(IndexPage);
 export default IndexPage;

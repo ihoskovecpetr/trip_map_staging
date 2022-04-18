@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import React, { useState, useEffect } from "react";
 import { jsx, Container, Box, Grid, Text, Heading } from "theme-ui";
-import Link from "next/link";
 import TextFeature from "components/text-feature";
 import Image from "components/image";
 import Carousel from "nuka-carousel";
@@ -20,6 +19,8 @@ import { useDisplayPNG } from "Hooks/useDisplayPNG";
 import { useIsSafari } from "Hooks/useIsSafari";
 import { mobile, color } from "utils";
 import DiscountBanner from "components/discount-banner";
+import { useTranslation } from "Hooks/useTranslation";
+import { fontWeight } from "utils";
 
 import Carousel1 from "assets/carousel_landing/webp/1.webp";
 import Carousel2 from "assets/carousel_landing/webp/2.webp";
@@ -33,23 +34,21 @@ import Carousel4PNG from "assets/carousel_landing/png/4.png";
 
 const data = {
   subTitle: "",
-  title: "Vytvořte si stylovou památku na cesty", //"Vytvořte si stylovou mapu na památku", // "Vytvořte si stylovou vzpomínku na cesty",  "Vytvořte si vlastní mapu na vzpomínku",
+  title: "landingPage.title", //"Vytvořte si stylovou mapu na památku", // "Vytvořte si stylovou vzpomínku na cesty",  "Vytvořte si vlastní mapu na vzpomínku",
   features: [
     {
       id: 1,
       imgSrc: Briefcase,
-      altText: "Vlastní design",
-      title: "Vlastní design",
-      text:
-        "V našem online studiu si můžete připravit mapu dle vlastních preferencí",
+      altText: "landingPage.1.alttext",
+      title: "landingPage.1.title",
+      text: "landingPage.1.text",
     },
     {
       id: 2,
       imgSrc: Secure,
-      altText: "Vlastní zpracování",
-      title: "Vlastní zpracování",
-      text:
-        "Přejete si zpracování s rámem či bez rámu? Žádný problém, jsme připraveni!",
+      altText: "landingPage.2.alttext",
+      title: "landingPage.2.title",
+      text: "landingPage.2.text",
     },
   ],
 };
@@ -60,6 +59,7 @@ export default function LandingPage() {
   const { isMobile } = useIsMobile();
   const { displayPNG } = useDisplayPNG();
   const isSafari = useIsSafari();
+  const t = useTranslation();
 
   useEffect(() => {
     const vh = window.innerHeight * 0.01;
@@ -140,43 +140,29 @@ export default function LandingPage() {
         </Box>
 
         <Box sx={styles.contentBox}>
-          {/* <motion.div
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0 }}
-            initial={{ opacity: 0 }}
-          > */}
           <Box sx={styles.headingTop}>
-            <TextFeature subTitle={data.subTitle} title={data.title} />
+            <TextFeature subTitle={t(data.subTitle)} title={t(data.title)} />
           </Box>
-          {/* </motion.div> */}
 
           <Grid gap="15px 0" columns={1} sx={styles.gridCards}>
             {data.features.map((item, index) => (
-              // <motion.div
-              //   animate={{ opacity: 1 }}
-              //   transition={{ duration: 1, delay: (index + 1) * 0.6 }}
-              //   initial={{ opacity: 0 }}
-              // >
               <Box sx={styles.card} key={item.id}>
-                <Image src={item.imgSrc} alt={item.altText} sx={styles.img} />
+                <Image
+                  src={item.imgSrc}
+                  alt={t(item.altText)}
+                  sx={styles.img}
+                />
 
                 <Box sx={styles.wrapper}>
-                  <div sx={styles.wrapper.title}>{item.title}</div>
-                  <Text sx={styles.wrapper.subTitle}>{item.text}</Text>
+                  <div sx={styles.wrapper.title}>{t(item.title)}</div>
+                  <Text sx={styles.wrapper.subTitle}>{t(item.text)}</Text>
                 </Box>
               </Box>
-              // </motion.div>
             ))}
 
-            {/* <motion.div
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.6 }}
-              initial={{ opacity: 0 }}
-            > */}
             <Box sx={styles.ctaOnlyLarge}>
               <CtaComponent />
             </Box>
-            {/* </motion.div> */}
           </Grid>
         </Box>
       </ContainerBox>
@@ -187,6 +173,9 @@ export default function LandingPage() {
 function CtaComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { locale } = router;
+
+  const t = useTranslation();
 
   useEffect(() => {
     setIsLoading(false);
@@ -218,7 +207,15 @@ function CtaComponent() {
   return (
     <CtaBtn onClick={onClick} isLoading={isLoading}>
       <StyledText>
-        Začít&nbsp;navrhovat {isLoading && <UnderlineLoader />}
+        {t("landingPage.cta", {
+          value: (
+            <span>
+              {locale === "cs" ? "Začít" : "Start"}&nbsp;
+              {locale === "cs" ? "navrhovat" : "designing"}
+            </span>
+          ),
+        })}
+        {isLoading && <UnderlineLoader />}
       </StyledText>
     </CtaBtn>
   );
@@ -232,6 +229,7 @@ const StyledText = styled.p`
   display: inline-block;
   margin: 0;
   transform: translateX(0);
+  font-weight: ${fontWeight("bold")};
 `;
 
 const ZeroHeightWrap = styled.div`

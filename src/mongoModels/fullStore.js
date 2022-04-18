@@ -31,6 +31,8 @@ const fullStoreScehma = new Schema(
     journeysSpecs: { type: Object },
     icons: { type: Object },
     journeysDraggable: { type: Object },
+    locale: { type: String },
+    defaultLocale: { type: String },
   },
   { timestamps: true }
 );

@@ -3,14 +3,18 @@ import { jsx, Container, Flex } from "theme-ui";
 import SectionHeader from "components/section-header";
 import PatternBG from "assets/patternBG.png";
 import styled from "styled-components";
+import { useTranslation } from "Hooks/useTranslation";
+import useIntersectionObserver from "@react-hook/intersection-observer";
 
 export default function VideoFull() {
+  const t = useTranslation();
+
   return (
     <section id="packages" sx={styles.packages}>
       <Container>
         <SectionHeader
-          slogan="Co obdržíte poštou?"
-          title="Varianta bez rámu"
+          slogan={t("videoFull.subtitle")}
+          title={t("videoFull.title")}
           isWhite={true}
         />
         <Flex

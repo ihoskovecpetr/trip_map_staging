@@ -4,7 +4,6 @@ import { jsx } from "theme-ui";
 
 import styled from "styled-components";
 
-import { color } from "utils";
 import { OFFICIAL_EMAIL } from "@constants";
 
 export default function GDPR({ name }) {

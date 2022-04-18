@@ -11,6 +11,7 @@ import {
   VARIANTS_PRINTFUL,
   LAYOUT_STYLE_NAMES,
   MAP_STYLES_NAMES,
+  VALID_DISCOUNT_CODES,
 } from "constants/constants";
 
 const _getDefaultLocation = (id, index) => {
@@ -29,13 +30,13 @@ const _getDefaultLocation = (id, index) => {
 
 const orderInitialState = {
   product: {
-    name: "Zakázková mapa dle vlastní konfigurace",
+    // name: "Zakázková mapa dle vlastní konfigurace",
     price: null,
     currency: "CZK",
     sizeObject: SIZES[3],
     variantId: VARIANTS_PRINTFUL[3].id,
-    materialDesc: "Matný vylepšený papír",
-    shippingCode: VARIANTS_PRINTFUL[3].shipping.codeCZ,
+    materialDesc: "product.material",
+    shippingCode: VARIANTS_PRINTFUL[3].shipping["CZK"].codeCZ,
     isLayoutColorSwitched: false,
     densityConstant: 2,
   },
@@ -50,7 +51,7 @@ const orderInitialState = {
   activeStepNumber: 0,
   seenPopup: false,
   uploadPercentage: 0,
-  discount: { code: "LETO2021", codeAccepted: true },
+  discount: { code: VALID_DISCOUNT_CODES[0].code, codeAccepted: true },
   string: "",
   storeId: "",
   journeysSpecs: {
@@ -360,7 +361,8 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
   }
 });
 
-export const useFullStoreSelector = () => useSelector((store) => store.order);
+export const useFullStoreSelector = () =>
+  useSelector((store) => ({ ...store.order, ...store.intl }));
 
 export const useProductSelector = () =>
   useSelector((store) => store.order.product);

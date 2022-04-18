@@ -15,6 +15,7 @@ import { setMapCoordinatesAction } from "redux/order/actions";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN;
 let geocoder = new MapboxGeocoder({
@@ -27,6 +28,7 @@ let geocoder = new MapboxGeocoder({
 });
 
 export default function StepLocation({ map, index }) {
+  const t = useTranslation();
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -84,7 +86,7 @@ export default function StepLocation({ map, index }) {
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
 
       <div

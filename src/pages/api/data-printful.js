@@ -5,11 +5,12 @@ const {
 export default async (req, res) => {
   switch (req.method) {
     case "POST":
-      const { variantIdsArr } = req.body;
+      const { variantIdsArr, currency } = req.body;
+
       try {
         const finalResult = await fetchAndTransformDataPrintful(
           variantIdsArr,
-          res
+          currency
         );
         res.status(200).json({
           finalResult,

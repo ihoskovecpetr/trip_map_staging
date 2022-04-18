@@ -1,5 +1,5 @@
-const obch_info_path = "/obchodni-informace";
-const about_path = "/o-nas";
+const obch_info_path = "/business-info";
+const about_path = "/about";
 
 export const sectionTags = {
   GDPR: "gdpr",
@@ -22,20 +22,20 @@ export const sectionObjectsAbout = [
 
 export const footerObj = [
   {
-    header: "Obchodní informace",
+    header: "businessInformation.title",
     pathHeader: `${obch_info_path}?section=${sectionTags.GDPR}`,
     items: [
       {
         path: `${obch_info_path}?section=${sectionTags.GDPR}`,
-        label: "Podmínky ochrany osobních údajů",
+        label: "businessInformation.subtitle_1",
       },
       {
         path: `${obch_info_path}?section=${sectionTags.Objection}`,
-        label: "Reklamace / odstoupení od smlouvy",
+        label: "businessInformation.subtitle_2",
       },
       {
         path: `${obch_info_path}?section=${sectionTags.ToSale}`,
-        label: "Obchodní podmínky",
+        label: "businessInformation.subtitle_3",
       },
       // {
       //   path: "/",
@@ -48,16 +48,16 @@ export const footerObj = [
     ],
   },
   {
-    header: "O nás",
+    header: "about.title",
     pathHeader: `${about_path}?section=${sectionTags.About}`,
     items: [
       {
         path: `${about_path}?section=${sectionTags.About}`,
-        label: "O nás",
+        label: "about.subtitle_about",
       },
       {
         path: `${about_path}?section=${sectionTags.Contact}`,
-        label: "Kontaktujte nás",
+        label: "about.subtitle_contact",
       },
       // {
       //   path: "/",

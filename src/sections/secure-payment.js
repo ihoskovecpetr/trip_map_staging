@@ -3,20 +3,22 @@ import { jsx } from "theme-ui";
 import { Container, Box } from "theme-ui";
 import TextFeature from "components/text-feature";
 import Image from "components/image";
+import { useTranslation } from "Hooks/useTranslation";
 
 import PaymentThumb from "assets/paymentThumb.png";
 // import PaymentPattern from "assets/payment-pattern.png";
 
 const data = {
-  subTitle: "POHODLNÁ PLATBA",
-  title: "Pro veškeré platby spoléháme na společnost Stripe, lídra v oboru",
-  description:
-    "Akceptujeme platby kartou VISA, Mastercard, American Express či digitální peněženkou Apple Pay a Google Pay",
-  btnName: "více o Stripe",
+  subTitle: "payment.subtitle",
+  title: "payment.title",
+  description: "payment.description",
+  btnName: "payment.btnName",
   btnURL: "https://stripe.com/en-cz",
 };
 
 export default function SecurePayment() {
+  const t = useTranslation();
+
   return (
     <section sx={{ variant: "section.securePayment" }}>
       <Box sx={styles.bgOverlay} />
@@ -26,15 +28,15 @@ export default function SecurePayment() {
             src={
               "https://res.cloudinary.com/dkyt8girl/image/upload/v1640486987/Finished%20Interiers/payment_tcqmvi.webp"
             }
-            alt={data.title}
+            alt={t(data.title)}
           />
         </Box>
         <Box sx={styles.contentBox}>
           <TextFeature
-            subTitle={data.subTitle}
-            title={data.title}
-            description={data.description}
-            btnName={data.btnName}
+            subTitle={t(data.subTitle)}
+            title={t(data.title)}
+            description={t(data.description)}
+            btnName={t(data.btnName)}
             btnURL={data.btnURL}
           />
         </Box>

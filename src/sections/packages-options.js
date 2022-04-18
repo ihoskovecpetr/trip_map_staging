@@ -6,6 +6,9 @@ import { IoIosCheckmarkCircle, IoIosCloseCircle } from "react-icons/io";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
+import { useTranslation } from "Hooks/useTranslation";
+import { useGetCurrency } from "Hooks/useGetCurrency";
+import styled from "styled-components";
 
 import PatternBG from "assets/patternBG.png";
 import ProductFramedPNG from "assets/packages/static_san_francisco.png";
@@ -15,24 +18,23 @@ import ProductNoFrameWebp from "assets/packages/static_iceland.webp";
 
 const packages = [
   {
-    header: "Doporučujeme",
-    name: "Zarámovaná varianta",
-    description: "Skvělé jako hotový dárek, stačí rozbalit",
-    priceWithUnit: "$79.99", //TODO add price
+    header: "variants.1.header",
+    name: "variants.1.name",
+    description: "variants.1.description",
     variantId: 9357,
-    buttonText: "Pokračovat v návrhu",
-    buttonUri: "studio?id=486e6724-b48e-4170-a374-7f3ce843ccdd",
+    buttonText: "variants.1.buttonText",
+    buttonUri: "/studio?id=486e6724-b48e-4170-a374-7f3ce843ccdd",
     imgPNG: ProductFramedPNG,
     imgWebp: ProductFramedWebp,
     points: [
       {
         icon: <IoIosCheckmarkCircle />,
-        text: "Dostupné všechny barevné varianty",
+        text: "variants.feature.1",
         isAvailable: true,
       },
       {
         icon: <IoIosCheckmarkCircle />,
-        text: "Dostupná všechna grafická rozvržení",
+        text: "variants.feature.2",
         isAvailable: true,
       },
       // {
@@ -42,7 +44,7 @@ const packages = [
       // },
       {
         icon: <IoIosCheckmarkCircle />,
-        text: "Zarámování",
+        text: "variants.feature.3",
         isAvailable: true,
       },
       // {
@@ -53,47 +55,47 @@ const packages = [
     ],
   },
   {
-    name: "Provedení bez rámu",
-    description: "Pro vlastní zarámování či jako plakát na zeď",
-    buttonText: "Pokračovat v návrhu",
-    buttonUri: "studio?id=a2d50948-8979-42db-914b-c12b6a096926",
-    priceWithUnit: "$29.99", //TODO add price
+    name: "variants.2.name",
+    description: "variants.2.description",
+    buttonText: "variants.2.buttonText",
+    buttonUri: "/studio?id=a2d50948-8979-42db-914b-c12b6a096926",
     variantId: 8948,
     imgPNG: ProductNoFramePNG,
     imgWebp: ProductNoFrameWebp,
     points: [
       {
         icon: <IoIosCheckmarkCircle />,
-        text: "Dostupné všechny barevné varianty",
+        text: "variants.feature.1",
         isAvailable: true,
       },
       {
         icon: <IoIosCheckmarkCircle />,
-        text: "Dostupná všechny grafická rozvržení",
+        text: "variants.feature.2",
         isAvailable: true,
       },
       {
         icon: <IoIosCheckmarkCircle />,
-        text: "Zarámování",
+        text: "variants.feature.3",
         isAvailable: false,
       },
     ],
   },
 ];
 
-const priceAlgorithm = getPriceAlgorithm();
-
 export default function PackagesOptions() {
   const IdsArr = packages.map((item) => item.variantId);
-
+  const t = useTranslation();
   const { dataPrintful } = useGetDataPrintful(IdsArr);
+  const currency = useGetCurrency();
+
+  console.log({ dataPrintful });
 
   return (
     <section id="packages" sx={styles.packages}>
       <Container>
         <SectionHeader
-          title="Varianty provedení"
-          slogan="Vyberte si zpracování"
+          title={t("packages.title")}
+          slogan={t("packages.subtitle")}
           isWhite={true}
         />
         <Flex
@@ -102,19 +104,24 @@ export default function PackagesOptions() {
             flexWrap: ["wrap", null, null, "nowrap"],
           }}
         >
-          {dataPrintful
-            ? packages.map((packageData) => (
-                <PackageCard
-                  data={packageData}
-                  key={packageData.name}
-                  priceFresh={`${getFormattedPrice(
-                    dataPrintful?.[packageData.variantId]
-                      ?.priceWithDeliveryAndProfit.netPrice ?? 0
-                  )}`}
-                  deliveryPrice={`doprava zdarma`}
-                />
-              ))
-            : "...loading packages"}
+          {/* {dataPrintful ? ( */}
+          {packages.map((packageData) => (
+            <PackageCard
+              data={packageData}
+              key={t(packageData.name)}
+              isLoadingPrices={!!dataPrintful}
+              priceFresh={`${getFormattedPrice({
+                amount:
+                  dataPrintful?.[packageData.variantId]
+                    ?.priceWithDeliveryAndProfit.netPrice ?? 0,
+                currency: currency,
+              })}`}
+              deliveryPrice={t("packages.freeDelivery")}
+            />
+          ))}
+          {/* ) : (
+            <WhiteText>...loading packages</WhiteText>
+          )} */}
         </Flex>
       </Container>
     </section>
@@ -145,3 +152,7 @@ const styles = {
     },
   },
 };
+
+const WhiteText = styled.span`
+  color: white;
+`;

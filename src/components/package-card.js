@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Box, Card, Text, Flex, Heading, Image } from "theme-ui";
 import List from "./list";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import styled from "styled-components";
 
 import UnderlineLoader from "./UnderlineLoader";
 import { useDisplayPNG } from "Hooks/useDisplayPNG";
+import { useTranslation } from "Hooks/useTranslation";
 import Button from "components/Button";
+import { color } from "utils";
 
 export default function PriceCard({
   data: {
@@ -23,29 +25,33 @@ export default function PriceCard({
   },
   deliveryPrice,
   priceFresh,
+  isLoadingPrices,
 }) {
   const { displayPNG } = useDisplayPNG();
-  const router = useRouter();
+  const { locale } = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const t = useTranslation();
 
   return (
     <Card className={header ? "active" : null} sx={styles.packageBox}>
-      {header && <Text sx={styles.header}>{header}</Text>}
+      {header && <Text sx={styles.header}>{t(header)}</Text>}
       {
-        <Image
-          src={displayPNG ? imgPNG : imgWebp}
-          alt={"item.title"}
-          onClick={() => {
-            window.location = window.location.href + buttonUri;
-          }}
-          style={{ cursor: "pointer" }}
-        />
+        <Link href={buttonUri} locale={locale}>
+          <Image
+            src={displayPNG ? imgPNG : imgWebp}
+            alt={"item.title"}
+            // onClick={() => {
+            //   window.location = window.location.href + buttonUri;
+            // }}
+            style={{ cursor: "pointer" }}
+          />
+        </Link>
       }
       <Box>
         <Flex sx={styles.pricingHeader}>
-          <Box>
+          <Flex1>
             <Heading className="package__name" sx={styles.heading}>
-              {name}
+              {t(name)}
             </Heading>
             <Text
               as="p"
@@ -56,20 +62,20 @@ export default function PriceCard({
                 lineHeight: 1.3,
               }}
             >
-              {description}
+              {t(description)}
             </Text>
-          </Box>
-          {priceWithUnit && (
-            <Text className="package__price" sx={styles.price}>
-              <span>Cena od</span>
-              <div className="price">
-                {/* {priceWithUnit} */}
-                {priceFresh}
-                {/* <sub>mo</sub> */}
-              </div>
-              <div className="deliveryPrice">{deliveryPrice}</div>
-            </Text>
-          )}
+          </Flex1>
+          <Flex1>
+            {isLoadingPrices ? (
+              <Text className="package__price" sx={styles.price}>
+                <span>{t("packages.priceFrom")}</span>
+                <div className="price">{priceFresh}</div>
+                <div className="deliveryPrice">{deliveryPrice}</div>
+              </Text>
+            ) : (
+              <CenteredText>...loading</CenteredText>
+            )}
+          </Flex1>
         </Flex>
         <List items={points} childStyle={styles.listItem} />
         <Box
@@ -80,14 +86,14 @@ export default function PriceCard({
         >
           <StyledButton
             variant={header ? "primary" : "whiteButton"}
-            aria-label={buttonText}
+            aria-label={t(buttonText)}
             onClick={() => {
               window.location = window.location.href + buttonUri;
               setIsLoading(true);
             }}
           >
             <StyledText>
-              {buttonText} {isLoading && <UnderlineLoader />}
+              {t(buttonText)} {isLoading && <UnderlineLoader />}
             </StyledText>
           </StyledButton>
         </Box>
@@ -234,4 +240,14 @@ const StyledText = styled.p`
   display: inline-block;
   margin: 0;
   transform: translateX(0);
+`;
+
+const Flex1 = styled.div`
+  flex: 1;
+`;
+
+const CenteredText = styled.p`
+  width: 100%;
+  text-align: center;
+  color: ${color("secondary")};
 `;

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const FullStore = require("../../mongoModels/fullStore.js");
-const { REDUX_COOKIE_NAME } = require("../../constants/constants.js");
+const FullStore = require("../../mongoModels/fullStore");
+const { REDUX_COOKIE_NAME } = require("../../constants/constants");
 const { v4 } = require("uuid");
 
 const connectToMongoose = async () => {

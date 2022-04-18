@@ -3,6 +3,7 @@ import { jsx } from "theme-ui";
 import { Container, Grid, Box, Heading, Text } from "theme-ui";
 import SectionHeader from "components/section-header";
 import { useRouter } from "next/router";
+import { useTranslation } from "Hooks/useTranslation";
 
 import PatternBG from "assets/patternBG.png";
 import ArrowOdd from "assets/arrowOdd.png";
@@ -11,39 +12,36 @@ import ArrowEven from "assets/arrowEven.png";
 const data = [
   {
     id: 1,
-    title: "Začínáme v sekci STUDIO zadáním hledané lokality",
-    text:
-      "Do sekce studio se dostanete proklikem z horní lišty nebo kliknutím na vysouvací menu v případě mobilního uživatele",
+    title: "workflow.feature.1.title",
+    text: "workflow.feature.1.text",
   },
   {
     id: 2,
-    title: "Následně máte možnost upravit výsledný produkt",
-    text:
-      "Velikost, rozložení, orientace či berevná kombinace mapy, toto všechno a další atributy je možné nastavit v našem studiu",
+    title: "workflow.feature.2.title",
+    text: "workflow.feature.2.text",
   },
   {
     id: 3,
-    title: "Pro platbu jste přesměrováni na platformu Stripe",
-    text:
-      "Po kontrole všech zvolených parametrů a mapy v tiskové kvalitě jste přesměrování na platební bránu Stripe kde doplníte doručovací adresu a vyberete preferovaný způsob platby",
+    title: "workflow.feature.3.title",
+    text: "workflow.feature.3.text",
   },
   {
     id: 4,
-    title: "Potvrzení o zaplacení a souhrn objednávky",
-    text:
-      "Potvrzení o zaplacení spolu se souhrnem objednávky dostanete ihned emailem a fyzický produkt k Vám dorazí poštou do několika dní",
+    title: "workflow.feature.4.title",
+    text: "workflow.feature.4.text",
   },
 ];
 
 export default function WorkFlow() {
   const router = useRouter();
+  const t = useTranslation();
 
   return (
     <section sx={styles.workflow}>
       <Container>
         <SectionHeader
-          slogan="Workflow"
-          title="Jak vše funguje?"
+          slogan={t("workflow.title")}
+          title={t("workflow.subtitle")}
           isWhite={true}
         />
 
@@ -52,8 +50,8 @@ export default function WorkFlow() {
             <Box sx={styles.card} key={item.id}>
               <Box sx={styles.iconBox}>{`0${item.id}`}</Box>
               <Box sx={styles.wrapper}>
-                <Heading sx={styles.wrapper.title}>{item.title}</Heading>
-                <Text sx={styles.wrapper.subTitle}>{item.text}</Text>
+                <Heading sx={styles.wrapper.title}>{t(item.title)}</Heading>
+                <Text sx={styles.wrapper.subTitle}>{t(item.text)}</Text>
               </Box>
             </Box>
           ))}

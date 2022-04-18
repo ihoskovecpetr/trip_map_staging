@@ -1,6 +1,6 @@
 let promise = null;
 
-const resetPendingPromise = () => {
+const forceResetPendingPromise = () => {
   promise = null;
 };
 
@@ -10,7 +10,6 @@ const getLazyUploader = (getResult, getPromise) => {
 
     if (result) {
       promise = null;
-      console.log("Giving him saved result");
 
       return result;
     }
@@ -28,5 +27,5 @@ const getLazyUploader = (getResult, getPromise) => {
 
 module.exports = {
   getLazyUploader,
-  resetPendingPromise,
+  forceResetPendingPromise,
 };

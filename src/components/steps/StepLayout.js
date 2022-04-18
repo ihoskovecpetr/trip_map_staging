@@ -20,10 +20,12 @@ import { useActiveLayoutSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 import { LAYOUT_STYLE_NAMES, LAYOUTS } from "constants/constants";
 
 export default function StepLayout({ index }) {
+  const t = useTranslation();
   const dispatch = useDispatch();
   const activeLayoutNameRedux = useActiveLayoutSelector();
   const { isMobile } = useIsMobile();
@@ -57,7 +59,7 @@ export default function StepLayout({ index }) {
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
       <AllLayoutsContainer>
         {Object.values(LAYOUTS).map((layoutObj, index) => (
@@ -75,7 +77,10 @@ export default function StepLayout({ index }) {
                 id={`image_id_${index}`}
               />
             </ImageWrap>
-            <LayoutItemText active={activeLayoutNameRedux === layoutObj.name}>
+            <LayoutItemText
+              active={activeLayoutNameRedux === layoutObj.name}
+              fontFamily={layoutObj.text.title_font}
+            >
               {layoutObj.name}
             </LayoutItemText>
           </div>
@@ -118,6 +123,7 @@ const LayoutItemText = styled.p`
   text-transform: uppercase;
   font-size: 14px;
   font-weight: ${({ active }) => active && fontWeight("bold")};
+  font-family: ${({ fontFamily }) => fontFamily ?? "inherited"};
 `;
 
 const ImageWrap = styled.div`

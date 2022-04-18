@@ -50,7 +50,7 @@ export default async (req, res) => {
         await connectToMongoose();
 
         console.log(
-          "✅ mongo connected_connestions?",
+          "✅ mongo connected_connections: ",
           mongoose.connections[0].readyState
         );
 
@@ -61,18 +61,22 @@ export default async (req, res) => {
           discountCode,
           mapTitles,
           storeId,
+          currency,
+          locale,
+          defaultLocale,
         } = req.body;
 
-        const responsePrintful = await fetchAndTransformDataPrintful([
-          clientProduct.variantId,
-        ]);
+        const responsePrintful = await fetchAndTransformDataPrintful(
+          [clientProduct.variantId],
+          currency
+        );
 
-        const netPriceWithDeliv =
+        const netPriceWithDelivery =
           responsePrintful?.[clientProduct.variantId]
             ?.priceWithDeliveryAndProfit.netPrice;
 
         const priceDiscounted = priceAlgorithm.getDiscountedPrice(
-          netPriceWithDeliv,
+          netPriceWithDelivery,
           discountCode
         );
 
@@ -85,25 +89,25 @@ export default async (req, res) => {
             checkoutShownPrices.netPriceWithDelivery
           );
           res.status(406);
-          res.json({ error: "❌ Prices coming from browser are wrong" });
+          return res.json({ error: "❌ Prices coming from browser are wrong" });
         } else {
           console.log("💰✅ Prices coming from browser are correct");
         }
 
         const product = await stripe.products.create({
-          name: clientProduct.name,
+          name: "Custom maps",
           images: [imageObj.url],
         });
 
         const price = await stripe.prices.create({
           unit_amount: priceDiscounted.netPrice * 100,
-          currency: "czk",
+          currency: currency,
           product: product.id,
         });
 
-        const SHIPPING_RATE_CODE = IS_PRODUCTION
-          ? [clientProduct.shippingCode]
-          : test_shipping_code_czk;
+        // const SHIPPING_RATE_CODE = IS_PRODUCTION
+        //   ? [clientProduct.shippingCode]
+        //   : test_shipping_code_czk;
 
         const BASE_DOMAIN = IS_PRODUCTION
           ? "http://www.tripmap.shop"
@@ -116,14 +120,14 @@ export default async (req, res) => {
           success_url:
             BASE_DOMAIN + "/api/checkout-success?id={CHECKOUT_SESSION_ID}",
 
-          locale: "cs",
+          locale: locale,
           metadata: {},
           mode: "payment",
           payment_method_options: {},
           payment_method_types: ["card"],
           // shipping_rates: SHIPPING_RATE_CODE,
           shipping_address_collection: {
-            allowed_countries: ["CZ"], //"PL", "DE"
+            allowed_countries: ["CZ", "US", "AU"], //"PL", "DE"
           },
 
           line_items: [

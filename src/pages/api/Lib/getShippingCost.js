@@ -1,11 +1,13 @@
+import { Euro } from "@material-ui/icons";
+
 const axios = require("axios");
 const Big = require("big.js");
 
-const { getCurrencyRateToCZK } = require("./getCurrencyRateToCZK");
+const { getExchangeRateFromTo } = require("./getExchangeRateFromTo");
 
 const { VARIANTS_PRINTFUL } = require("../../../constants/constants");
 
-export const getShippingCostCZ = async (variantId) => {
+export const getShippingCost = async (variantId, currency) => {
   const axiosConfig = {
     headers: {
       Authorization: `Basic ${process.env.AUTH_KEY_PRINTFUL}`,
@@ -28,38 +30,37 @@ export const getShippingCostCZ = async (variantId) => {
     ],
   };
 
+  //TODO: cache this call to redis
   const response = await axios.post(
     `https://api.printful.com/shipping/rates`,
     body,
     axiosConfig
   );
 
-  const exchangeRateCZKEUR = await getCurrencyRateToCZK({
-    currency: "EUR",
+  const exchangeRateCurrencyFromEUR = await getExchangeRateFromTo({
+    from: "EUR",
+    to: currency,
   });
 
   const costPriceEUR = new Big(response.data.result[0].rate);
-  const costPriceCZK = costPriceEUR
-    .times(exchangeRateCZKEUR)
-    .div(10)
-    .add(1)
+  const deliveryCostCurrency = costPriceEUR
+    .times(exchangeRateCurrencyFromEUR)
     .round(0)
-    .times(10)
     .toString();
 
   const constantVariant = VARIANTS_PRINTFUL.find(
     (variant) => variant.id == variantId
   );
 
-  const constantVariantPrice = constantVariant?.shipping.price;
+  const constantVariantPrice = constantVariant?.shipping[currency].price;
 
-  if (Number(constantVariantPrice) > Number(costPriceCZK)) {
+  if (Number(constantVariantPrice) > Number(deliveryCostCurrency)) {
     console.log("✅ it is OK, shipping cost Printfull is in limit");
   } else {
     console.log(
       "❌ Btw. PROBLEM, shipping cost Printfull is too high",
       constantVariantPrice,
-      costPriceCZK,
+      deliveryCostCurrency,
       variantId,
       { raw: response.data.result[0] }
     );
@@ -68,8 +69,8 @@ export const getShippingCostCZ = async (variantId) => {
   return {
     ...response.data.result[0],
     rate: constantVariantPrice,
-    currency: "CZK",
+    currency: currency,
     variantId: variantId,
-    cost: costPriceCZK,
+    cost: deliveryCostCurrency,
   };
 };

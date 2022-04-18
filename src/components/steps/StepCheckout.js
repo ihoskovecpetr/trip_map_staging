@@ -7,14 +7,16 @@ import { useProductSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
-export default function Step8Checkout({
+export default function StepCheckout({
   map,
   activeMapStyleName,
   snapMapInstance,
   index,
   children,
 }) {
+  const t = useTranslation();
   const { isMobile } = useIsMobile();
   const productRedux = useProductSelector();
 
@@ -23,12 +25,12 @@ export default function Step8Checkout({
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
-      <StyledMaterialLi>{productRedux.materialDesc}</StyledMaterialLi>
+      <StyledMaterialLi>{t(productRedux.materialDesc)}</StyledMaterialLi>
 
       <HeadingText>
-        {index + 1}. {TAB_STEPS[index + 1].full}
+        {index + 1}. {t(TAB_STEPS[index + 1].full)}
       </HeadingText>
 
       <CheckoutCta

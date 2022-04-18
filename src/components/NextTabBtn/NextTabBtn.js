@@ -8,9 +8,12 @@ import styled from "styled-components";
 import { color } from "utils";
 import UnderlineLoader from "components/UnderlineLoader";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
+import { useGetCurrency } from "Hooks/useGetCurrency";
 
-const getFormatedPriceString = (amount) => {
-  return amount ? `| ${getFormattedPrice(amount)}` : "";
+const getFormatedPriceString = (amount, currency) => {
+  return amount
+    ? `| ${getFormattedPrice({ amount: amount, currency: currency })}`
+    : "";
 };
 
 function NextTabBtn({
@@ -24,6 +27,7 @@ function NextTabBtn({
   price,
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const currency = useGetCurrency();
 
   useEffect(() => {
     return () => {
@@ -59,7 +63,11 @@ function NextTabBtn({
         ) : (
           <TextWrap>
             {`${children}`}{" "}
-            {price && <span>{price ? getFormatedPriceString(price) : ""}</span>}
+            {price && (
+              <span>
+                {price ? getFormatedPriceString(price, currency) : ""}
+              </span>
+            )}
             {isLoading && <UnderlineLoader />}
           </TextWrap>
         )}

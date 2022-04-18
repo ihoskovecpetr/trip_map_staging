@@ -11,6 +11,7 @@ import { setProductAction } from "redux/order/actions";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 import {
   useProductSelector,
@@ -18,6 +19,7 @@ import {
 } from "redux/order/reducer";
 
 export default function StepLayoutColorSwitch({ index }) {
+  const t = useTranslation();
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
@@ -32,7 +34,7 @@ export default function StepLayoutColorSwitch({ index }) {
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
       {activeMapStyleObject.layoutColor && activeMapStyleObject.textColor && (
         <ItemContainer>

@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import React, { useState } from "react";
 import { jsx, Image } from "theme-ui";
-import { Link } from "components/link";
 import { useRouter } from "next/router";
 import UnderlineLoader from "./UnderlineLoader";
 import { PlayCircleFilledWhite } from "@material-ui/icons";
@@ -13,19 +12,6 @@ export default function Logo({ src, ...rest }) {
   const router = useRouter();
 
   return (
-    // <Link
-    //   path="/"
-    //   sx={{
-    //     variant: "links.logo",
-    //     display: "flex",
-    //     cursor: "pointer",
-    //     mr: 15,
-    //     height: "100%",
-    //     position: "relative",
-    //     zIndex: 10,
-    //   }}
-    //   {...rest}
-    // >
     <div
       sx={{
         variant: "links.logo",
@@ -36,6 +22,8 @@ export default function Logo({ src, ...rest }) {
         position: "relative",
         zIndex: 10,
         color: "white",
+        flex: 0,
+        flexBasis: "150px",
       }}
     >
       <Image
@@ -56,7 +44,6 @@ export default function Logo({ src, ...rest }) {
         }}
       />
       {isLoading && <UnderlineLoader />}
-      {/* </Link> */}
     </div>
   );
 }

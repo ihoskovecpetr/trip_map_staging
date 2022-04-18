@@ -12,9 +12,11 @@ import { useProductSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 export default function StepOrientation({ index }) {
   const { isMobile } = useIsMobile();
+  const t = useTranslation();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
 
@@ -36,7 +38,7 @@ export default function StepOrientation({ index }) {
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
 
       <OrientationWrap>
@@ -54,7 +56,7 @@ export default function StepOrientation({ index }) {
               isProductWide(productRedux) ? switchOrientation : undefined
             }
           >
-            Na výšku
+            {t("steps.highOrientation")}
           </StyledDescriptionP>
         </SingleOrientationItem>
         <SingleOrientationItem
@@ -71,7 +73,7 @@ export default function StepOrientation({ index }) {
             }
             active={isProductWide(productRedux)}
           >
-            Na šířku
+            {t("steps.lowOrientation")}
           </StyledDescriptionP>
         </SingleOrientationItem>
       </OrientationWrap>

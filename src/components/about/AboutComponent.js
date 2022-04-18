@@ -4,20 +4,18 @@ import { jsx } from "theme-ui";
 
 import styled from "styled-components";
 
-import { color } from "utils";
-
 export default function AboutComponent({ name }) {
   return (
     <Container>
       <div>
         <h1>{name}</h1>
         Posláním TripMap.shop je tvorba obrazů či plakátů pro zvěčnění Vašich
-        vzpomínek z cest.
+        vzpomínek na cesty.
         <br />
-        Společnost je nástroj na tvorbu krásné nástěnné vizualizace Vaší cesty
-        ať už jste se vydali kamkoli.
+        Aplikace je nástroj na tvorbu krásné nástěnné vizualizace Vaší cesty ať
+        už jste se vydali kamkoli.
         <br /> TripMap je stále ve stavu vývoje a proto lze v budoucnu očekávat
-        zlepseni uživatelskeho rozhraní či navýšení uživatelské
+        zlepšení uživatelského rozhraní či navýšení uživatelské
         kustomizovatelnosti mapy.
       </div>
     </Container>

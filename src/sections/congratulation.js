@@ -8,12 +8,12 @@ import TextFeatureCongratulation from "components/text-feature-congratulation";
 import Image from "components/image";
 import PaymentThumb from "assets/congratulation.png";
 // import PaymentPattern from "assets/payment-pattern.png";
+import { useTranslation } from "Hooks/useTranslation";
 
 const data = {
-  subTitle: "Informace na závěr",
-  title: "Vaše mapa je na cestě",
-  description:
-    "Platba proběhla úspěšně a v současnosti pracujeme na zhotovení výsledného produktu. Potvrzení o platbě a shrnutí objednávky obdržíte do několika sekund na email zadaný v předchozím kroku. Pokud si nás přejete dále kontaktovat, použijte prosím sessionID pro identifikaci objednávky. Jménem společnosti TripMap Vám děkuji a přeji příjemný den.",
+  subTitle: "congratulation.information",
+  title: "congratulation.informationTitle",
+  description: "congratulation.description",
   btnName: "Learn More",
   btnURL: "#",
 };
@@ -23,6 +23,7 @@ export default function Congratulation() {
   const [isOrdered, setIsOrdered] = useState(false);
   const [isOrdering, setIsOrdering] = useState(false);
   const [isSessionMissing, setIsSessionMissing] = useState(false);
+  const t = useTranslation();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -39,13 +40,13 @@ export default function Congratulation() {
       <Box sx={styles.bgOverlay} />
       <Container sx={styles.containerBox}>
         <Box sx={styles.thumbnail}>
-          <Image src={PaymentThumb} alt={data.title} />
+          <Image src={PaymentThumb} alt={t(data.title)} />
         </Box>
         <Box sx={styles.contentBox}>
           <TextFeatureCongratulation
-            subTitle={data.subTitle}
-            title={data.title}
-            description={data.description}
+            subTitle={t(data.subTitle)}
+            title={t(data.title)}
+            description={t(data.description)}
             sessionId={sessionId}
           />
           {!sessionId && "sessionId is missing"}

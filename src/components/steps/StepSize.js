@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React from "react";
+import React, { useEffect } from "react";
 import { jsx, Text } from "theme-ui";
 import styled from "styled-components";
 import DoneIcon from "@material-ui/icons/Done";
@@ -17,19 +17,26 @@ import { useProductSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
+import { useRouter } from "next/router";
+import { useGetCurrency } from "Hooks/useGetCurrency";
 
 import {
   VARIANTS_PRINTFUL,
   SIZES,
   SIZE_NAMES,
   FRAME_OPTION_NAMES,
+  LANGUAGE_CURRENCY_TABLE,
 } from "constants/constants";
 
-export default function Step5Size({ index }) {
+export default function StepSize({ index }) {
+  const t = useTranslation();
   const { isMobile } = useIsMobile();
   const { isLargeSizeCapable, isMidSizeCapable } = useIsSizeWebGLSizeCapable();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
+  const { locale } = useRouter();
+  const currency = useGetCurrency();
 
   const { dataPrintful } = useGetDataPrintful(
     VARIANTS_PRINTFUL.map((variant) => variant.id)
@@ -69,7 +76,8 @@ export default function Step5Size({ index }) {
         variantId: newVariant.id,
         // price: dataPrintful[newVariant.id]?.price,
         priceWithDelivery: priceWithDelivery,
-        shippingCode: newVariant.shipping.codeCZ,
+        shippingCode:
+          newVariant.shipping[LANGUAGE_CURRENCY_TABLE[locale]].codeCZ,
       })
     );
   };
@@ -99,7 +107,6 @@ export default function Step5Size({ index }) {
   };
 
   const getSizeIcon = (sizeName, active) => {
-    console.log({ active });
     switch (sizeName) {
       case SIZE_NAMES["30X40cm"]:
         return <SizeIconSmall active={active} />;
@@ -114,7 +121,7 @@ export default function Step5Size({ index }) {
     <StepContainer isMobile={isMobile}>
       {/* {!isMobile && ( */}
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
       {/* )} */}
 
@@ -178,7 +185,10 @@ export default function Step5Size({ index }) {
                     sizeNameLocal
                   )}
                 >
-                  {`(${getFormattedPrice(priceWithDeliveryNoFrame)})`}
+                  {`(${getFormattedPrice({
+                    amount: priceWithDeliveryNoFrame,
+                    currency,
+                  })})`}
                 </StyledPriceP>
                 <DevicesItem>
                   {isDisabledBtn && <StyledDevicesImg src={disabledAndroid} />}
@@ -263,6 +273,7 @@ const SizeIconWrap = styled.div`
   flex-basis: 70px;
   justify-content: center;
   align-items: center;
+  min-height: 100px;
 
   & > div {
     transform: scale(0.8);
@@ -270,22 +281,31 @@ const SizeIconWrap = styled.div`
 `;
 
 const SizeIconSmall = styled.div`
-  width: 40px;
-  height: 30px;
-  border: ${({ active }) => (active ? "5px" : "2px")} solid rgba(0, 0, 0, 0.4);
-  border-color: ${({ active }) => active && color("cta_color")};
+  width: 30px;
+  height: 40px;
+  border: 5px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 0px 5px;
+  color: ${({ active }) => (active ? color("cta_color") : "transparent")};
+  border-color: rgba(0, 0, 0, 0.4);
 `;
 
+// border: ${({ active }) =>
+// active ? "5px" : "2px"} solid rgba(0, 0, 0, 0.4);
+
 const SizeIconMedium = styled.div`
-  width: 70px;
-  height: 50px;
-  border: ${({ active }) => (active ? "5px" : "2px")} solid rgba(0, 0, 0, 0.4);
-  border-color: ${({ active }) => active && color("cta_color")};
+  width: 50px;
+  height: 70px;
+  border: 5px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 0px 5px;
+  color: ${({ active }) => (active ? color("cta_color") : "transparent")};
+  border-color: rgba(0, 0, 0, 0.4);
 `;
 
 const SizeIconLarge = styled.div`
-  width: 91px;
-  height: 61px;
-  border: ${({ active }) => (active ? "5px" : "2px")} solid rgba(0, 0, 0, 0.4);
-  border-color: ${({ active }) => active && color("cta_color")};
+  width: 61px;
+  height: 91px;
+  border: 5px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 0px 5px;
+  color: ${({ active }) => (active ? color("cta_color") : "transparent")};
+  border-color: rgba(0, 0, 0, 0.4);
 `;

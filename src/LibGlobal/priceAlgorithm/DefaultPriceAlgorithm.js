@@ -2,7 +2,6 @@ const BasePriceAlgorithm = require("./BasePriceAlgorithm");
 const { isDiscountCodeValid } = require("LibGlobal/isDiscountCodeValid");
 const { getDiscountKoef } = require("LibGlobal/getDiscountKoef");
 
-const DISCOUNT_KOEF = 0.9;
 class DefaultPriceAlgorithm extends BasePriceAlgorithm {
   constructor({ roundingPrecision, taxPercentage, profitPercentage }) {
     super({ roundingPrecision, taxPercentage });

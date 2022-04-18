@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { color } from "utils";
+import { useTranslation } from "Hooks/useTranslation";
 
 import CheckoutCta from "../checkout-btn/CheckoutCta";
 
@@ -27,6 +28,7 @@ export default function Stepper({
 }) {
   const classes = useStyles();
   const theme = useTheme();
+  const t = useTranslation();
 
   const isLastStep = activeStep === stepElements.length - 1;
 
@@ -50,10 +52,10 @@ export default function Stepper({
               activeMapStyleName={activeMapStyleName}
               isCustomUI
             >
-              Shrnutí
+              <>{t("stepper.summary")}</>
             </CheckoutCta>
           ) : (
-            "Další"
+            <>{t("stepper.next")}</>
           )}
           {theme.direction === "rtl" ? (
             <KeyboardArrowLeft />
@@ -73,7 +75,7 @@ export default function Stepper({
           ) : (
             <KeyboardArrowLeft />
           )}
-          Zpět
+          <>{t("stepper.back")}</>
         </StyledButtonBack>
       }
     />

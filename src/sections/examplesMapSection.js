@@ -11,6 +11,7 @@ import { fontSize, mobile } from "utils";
 import UnderlineLoader from "components/UnderlineLoader";
 import Button from "components/Button";
 import { useIsMobile } from "Hooks/useIsMobile";
+import { useTranslation } from "Hooks/useTranslation";
 
 import CarouselSanFrancisco from "assets/mapExamples/static_san_francisco.png";
 import CarouselSanFranciscoWebp from "assets/mapExamples/static_san_francisco.webp";
@@ -48,6 +49,7 @@ export default function Examples() {
   const router = useRouter();
   const { displayPNG } = useDisplayPNG();
   const { isMobile } = useIsMobile();
+  const t = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -108,10 +110,9 @@ export default function Examples() {
           </StyledCarousel>
         </CarouselWrap>
         <Box sx={styles.banner.contentBox}>
-          <StyledHeading>Zvěčněte své dobrodružství</StyledHeading>
+          <StyledHeading>{t("examples.title")}</StyledHeading>
           <Text as="p" variant="heroSecondary">
-            Připoměňte si neopakovatelné okamžiky vašeho života a vytvořte si
-            osobitou mapu.
+            {t("examples.subtitle")}
           </Text>
           <CtaBtn
             onClick={() => {
@@ -121,7 +122,8 @@ export default function Examples() {
             aria-label="Get Started"
           >
             <StyledText>
-              Začít navrhovat {isLoading && <UnderlineLoader />}
+              {t("examples.cta")}
+              {isLoading && <UnderlineLoader />}
             </StyledText>
           </CtaBtn>
         </Box>

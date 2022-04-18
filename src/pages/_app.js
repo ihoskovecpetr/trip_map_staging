@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import Head from "next/head";
 import NextApp from "next/app";
 import axios from "axios";
+import { IntlProvider } from "react-intl";
 
 import CookieConsent from "react-cookie-consent";
 import styled, { ThemeProvider } from "styled-components";
 import { useCookies } from "react-cookie";
-
 import { color } from "utils";
 
 // import { initGA, logPageView } from "analytics";
@@ -30,10 +29,14 @@ import { GlobalStyle } from "../theme/global";
 import { useFullStoreSelector } from "redux/order/reducer";
 
 import { REDUX_COOKIE_NAME, IS_CLIENT } from "constants/constants";
+import * as locales from "../languages";
 
 const MyApp = ({ Component, pageProps, err, ...props }) => {
   const router = useRouter();
-  const [cookie, setCookie] = useCookies([REDUX_COOKIE_NAME]);
+  const { locale, defaultLocale, pathname } = router;
+  const localeCopy = locales[locale];
+  const messages = localeCopy[pathname];
+  const [cookie, _] = useCookies([REDUX_COOKIE_NAME]);
 
   const fullReduxStore = useFullStoreSelector();
 
@@ -42,7 +45,11 @@ const MyApp = ({ Component, pageProps, err, ...props }) => {
 
     const saveReduxStore = async (store) => {
       const response = await axios.post("api/save-redux-store", {
-        reduxStore: store,
+        reduxStore: {
+          ...store,
+          defaultLocale: router.defaultLocale,
+          locale: router.locale,
+        },
         storeId: storedCookie,
       });
 
@@ -73,38 +80,37 @@ const MyApp = ({ Component, pageProps, err, ...props }) => {
 
   return (
     <>
-      {/* <Head>
-        <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1"
-      ></meta>
-      </Head> */}
-
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <ThemeProviderMaterialUI theme={themeMaterialUI}>
-          <CookieConsent
-            location="bottom"
-            buttonText="Souhlasím"
-            cookieName="myAwesomeCookieName2"
-            style={{ background: "#2B373B" }}
-            buttonStyle={{
-              background: "#f6aa1c",
-              color: "#4e503b",
-              fontSize: "13px",
-            }}
-            expires={150}
+          <IntlProvider
+            locale={locale}
+            defaultLocale={defaultLocale}
+            messages={messages} //{pageProps.intlMessages}
           >
-            Tento web používá k poskytování služeb, personalizaci reklam a
-            analýze návštěvnosti soubory cookie. Používáním tohoto webu s tím
-            souhlasíte.{" "}
-            <span style={{ fontSize: "10px" }}>
-              Více o GDPR se dočtete{" "}
-              <StyledA href="/obchodni-informace">zde</StyledA>
-            </span>
-          </CookieConsent>
+            <CookieConsent
+              location="bottom"
+              buttonText="Souhlasím"
+              cookieName="myAwesomeCookieName2"
+              style={{ background: "#2B373B" }}
+              buttonStyle={{
+                background: "#f6aa1c",
+                color: "#4e503b",
+                fontSize: "13px",
+              }}
+              expires={150}
+            >
+              Tento web používá k poskytování služeb, personalizaci reklam a
+              analýze návštěvnosti soubory cookie. Používáním tohoto webu s tím
+              souhlasíte.{" "}
+              <span style={{ fontSize: "10px" }}>
+                Více o GDPR se dočtete{" "}
+                <StyledA href="/business-info">zde</StyledA>
+              </span>
+            </CookieConsent>
 
-          <Component {...pageProps} />
+            <Component {...pageProps} />
+          </IntlProvider>
         </ThemeProviderMaterialUI>
       </ThemeProvider>
     </>
@@ -140,4 +146,4 @@ const StyledA = styled.a`
   color: ${color("cta_color")};
 `;
 
-export default wrapper.withRedux(MyApp);
+export default wrapper.withRedux(MyApp); //appWithTranslation(MyApp)

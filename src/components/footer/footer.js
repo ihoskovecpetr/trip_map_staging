@@ -1,8 +1,15 @@
 /** @jsx jsx */
 import { jsx, Heading, Box, Container, Text } from "theme-ui";
-import { Link } from "components/link";
+import { NavLink as Link } from "components/link";
 import { footerObj } from "./footer.data";
+import { useRouter } from "next/router";
+import NextLinkOrig from "next/link";
+import { useTranslation } from "Hooks/useTranslation";
+
 export default function Footer() {
+  const { locale } = useRouter();
+  const t = useTranslation();
+
   return (
     <footer sx={styles.footer}>
       <Container sx={styles.footer.container}>
@@ -10,13 +17,8 @@ export default function Footer() {
           {footerObj.map(({ header, items, pathHeader }, i) => (
             <Box sx={styles.footer.menus} key={i}>
               <Heading sx={styles.footer.heading}>
-                <Link
-                  path={pathHeader}
-                  key={i}
-                  label={header}
-                  // sx={styles.footer.link}
-                >
-                  {header}
+                <Link path={pathHeader} key={i} label={header} locale={locale}>
+                  {t(header)}
                 </Link>
               </Heading>
               <nav>
@@ -24,8 +26,9 @@ export default function Footer() {
                   <Link
                     path={path}
                     key={i}
-                    label={label}
+                    label={t(label)}
                     sx={styles.footer.link}
+                    locale={locale}
                   />
                 ))}
               </nav>

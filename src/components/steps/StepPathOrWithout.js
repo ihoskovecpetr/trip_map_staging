@@ -10,6 +10,7 @@ import HeadingText from "./atoms/HeadingText";
 import { setJourneysIsEnabled } from "redux/order/actions";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 import {
   useGetJourneysDraggable,
@@ -20,6 +21,7 @@ export default function StepPathOrWithout({ map, index }) {
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const journeysDragable = useGetJourneysDraggable();
+  const t = useTranslation();
 
   const isJourneysEnabled = useJourneysEnabledSelector();
 
@@ -34,7 +36,7 @@ export default function StepPathOrWithout({ map, index }) {
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
       <OptionContainer>
         <OptionItem
@@ -44,7 +46,9 @@ export default function StepPathOrWithout({ map, index }) {
           active={!isJourneysEnabled}
         >
           <StyledImg active={!isJourneysEnabled} src={noPathUrl} />
-          <ItemHeading active={!isJourneysEnabled}>Bez trasy</ItemHeading>
+          <ItemHeading active={!isJourneysEnabled}>
+            {t("step.withoutPath")}
+          </ItemHeading>
         </OptionItem>
         <OptionItem
           onClick={() => {
@@ -54,7 +58,9 @@ export default function StepPathOrWithout({ map, index }) {
           active={isJourneysEnabled}
         >
           <StyledImg active={isJourneysEnabled} src={withPathUrl} />
-          <ItemHeading active={isJourneysEnabled}>S trasou a body</ItemHeading>
+          <ItemHeading active={isJourneysEnabled}>
+            {t("step.withPath")}
+          </ItemHeading>
         </OptionItem>
       </OptionContainer>
     </StepContainer>

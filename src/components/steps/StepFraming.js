@@ -16,7 +16,11 @@ import { setProductAction } from "redux/order/actions";
 import { useProductSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
-import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
+import { useRouter } from "next/router";
+import { useGetCurrency } from "Hooks/useGetCurrency";
+
+import { TAB_STEPS, LANGUAGE_CURRENCY_TABLE } from "@constants";
 
 import {
   getPriceAlgorithm,
@@ -28,9 +32,13 @@ import { VARIANTS_PRINTFUL, FRAME_OPTION_NAMES } from "constants/constants";
 const priceAlgorithm = getPriceAlgorithm();
 
 export default function StepFraming({ index }) {
+  const t = useTranslation();
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
   const productRedux = useProductSelector();
+  const router = useRouter();
+  const { locale } = router;
+  const currency = useGetCurrency();
 
   const [lightbox, setLightbox] = useState({
     open: false,
@@ -77,24 +85,30 @@ export default function StepFraming({ index }) {
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
       {variantsPrintfulForSize.length === 0 && (
         <div sx={styles.loaderWrap}>
           <CustomLoader />
         </div>
       )}
+      {console.log({ THIISS_SS: LANGUAGE_CURRENCY_TABLE[locale], locale })}
       {variantsPrintfulForSize.length > 0 && (
         <ContainerVariants>
           {variantsPrintfulForSize.map(
             ({ id: variantId, shipping }, varIndex) => (
               <ItemWrap
                 key={varIndex}
-                onClick={() => setNewFrame(variantId, shipping.codeCZ)}
+                onClick={() =>
+                  setNewFrame(
+                    variantId,
+                    shipping[LANGUAGE_CURRENCY_TABLE[locale]].codeCZ
+                  )
+                }
               >
                 <div sx={styles.textsWrap}>
                   <VariantDesc active={productRedux.variantId === variantId}>
-                    {getVariantObject(variantId)?.frameName}
+                    {t(getVariantObject(variantId)?.frameName)}
                   </VariantDesc>
                 </div>
                 <ItemVariant active={productRedux.variantId === variantId}>
@@ -108,23 +122,26 @@ export default function StepFraming({ index }) {
                 <div sx={styles.textsWrap}>
                   <StyledPriceP active={productRedux.variantId === variantId}>
                     {`+ 
-                  ${getFormattedPrice(
-                    basePriceAlgorithm.subtract([
+                  ${getFormattedPrice({
+                    amount: basePriceAlgorithm.subtract([
                       dataPrintful?.[variantId]?.priceWithDeliveryAndProfit
                         .netPrice ?? 0,
                       dataPrintful?.[variantObjectNoFrame.id]
                         ?.priceWithDeliveryAndProfit.netPrice ?? 0,
-                    ])
-                  )}`}
+                    ]),
+                    currency,
+                  })}`}
                   </StyledPriceP>
 
                   <StyledDeliveryPriceP
                     active={productRedux.variantId === variantId}
                   >
-                    {`(+ ${getFormattedPrice(
-                      priceAlgorithm.getPriceOfDelivery(variantId, dataPrintful)
-                        .netPrice
-                    )} doprava)`}
+                    {t("steps.transportPrice", {
+                      price: priceAlgorithm.getPriceOfDelivery(
+                        variantId,
+                        dataPrintful
+                      ).netPrice,
+                    })}
                   </StyledDeliveryPriceP>
                 </div>
               </ItemWrap>

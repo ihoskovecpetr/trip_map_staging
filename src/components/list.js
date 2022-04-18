@@ -1,12 +1,15 @@
-import React from 'react';
-import { Flex, Box, IconButton } from 'theme-ui';
+import React from "react";
+import { Flex, Box, IconButton } from "theme-ui";
+import { useTranslation } from "Hooks/useTranslation";
 
 export default function List({ items = [], parentStyle, childStyle }) {
+  const t = useTranslation();
+
   return (
     <Box
       as="ul"
       sx={{
-        listStyleType: 'none',
+        listStyleType: "none",
         margin: 0,
         padding: 0,
         ...parentStyle,
@@ -14,7 +17,7 @@ export default function List({ items = [], parentStyle, childStyle }) {
     >
       {items.map(({ icon, text, isAvailable }, i) => (
         <Flex
-          className={isAvailable ? 'open' : 'closed'}
+          className={isAvailable ? "open" : "closed"}
           as="li"
           sx={{ ...childStyle }}
           key={i}
@@ -22,7 +25,7 @@ export default function List({ items = [], parentStyle, childStyle }) {
           <IconButton sx={styles.listIcon} aria-label="list icon">
             {icon}
           </IconButton>
-          {text}
+          {t(text)}
         </Flex>
       ))}
     </Box>
@@ -30,14 +33,14 @@ export default function List({ items = [], parentStyle, childStyle }) {
 }
 const styles = {
   listIcon: {
-    width: [25, '35px'],
-    height: 'auto',
-    color: 'secondary',
+    width: [25, "35px"],
+    height: "auto",
+    color: "secondary",
     padding: 0,
     fontSize: [2, 5],
-    marginLeft: '-1px',
+    marginLeft: "-1px",
     flexShrink: 0,
-    justifyContent: 'flex-start',
-    marginTop: [1, '2px'],
+    justifyContent: "flex-start",
+    marginTop: [1, "2px"],
   },
 };

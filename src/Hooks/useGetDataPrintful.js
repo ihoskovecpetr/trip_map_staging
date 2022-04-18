@@ -1,21 +1,26 @@
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
-import { VARIANTS_PRINTFUL } from "../constants/constants";
+import { useRouter } from "next/router";
 
-import {
-  getLazyDownloader,
-  resetPendingPromise,
-} from "../LibGlobal/getLazyDownloader";
+import { VARIANTS_PRINTFUL } from "constants/constants";
 
-let cachedResponse = null;
+import { getLazyDownloader } from "LibGlobal/getLazyDownloader";
+import { getCurrencyFromLocale } from "LibGlobal/getCurrencyFromLocale";
 
-const fetchDataPrintful = async (variantIdsArr) => {
-  const resp = await axios.post(`api/data-printful`, { variantIdsArr });
+let cachedResponse = {};
+
+const fetchDataPrintful = async (variantIdsArr, currency) => {
+  const resp = await axios.post(`api/data-printful`, {
+    variantIdsArr,
+    currency,
+  });
+
   return resp;
 };
 
 export function useGetDataPrintful() {
   const [data, setData] = useState(null);
+  const { locale } = useRouter();
 
   const variantIdsArr = VARIANTS_PRINTFUL.map((variant) => variant.id);
 
@@ -23,24 +28,26 @@ export function useGetDataPrintful() {
     try {
       const lazyDownloadDataPrintfull = () => {
         return getLazyDownloader(
-          () => cachedResponse,
-          () => fetchDataPrintful(variantIdsArr)
+          () => cachedResponse[locale],
+          () => fetchDataPrintful(variantIdsArr, getCurrencyFromLocale(locale)),
+          getCurrencyFromLocale(locale)
         )();
       };
       const response = await lazyDownloadDataPrintfull();
 
+      cachedResponse = { [locale]: response, ...cachedResponse };
+
       setData(response.data.finalResult);
     } catch (e) {
-      console.log({ e });
+      console.log({ getSetPrice_error: e });
     }
   };
 
   useEffect(() => {
-    // if (!data) {
-    //   getSetPrice();
-    // }
+    console.log({ new_locale: locale });
+    setData(null);
     getSetPrice();
-  }, [JSON.stringify(variantIdsArr)]);
+  }, [JSON.stringify(variantIdsArr), locale]);
 
   const data_memo = useMemo(() => {
     return data;

@@ -31,7 +31,7 @@ const BOTTOM_BANNER = 0.09;
 const BOTTOM_BANNER_BIGGER = 0.1;
 const BLURRED_AREA_HEIGHT = 0.09;
 const TITLES_FONT_DEFAULT = "RobotoMono_local";
-const TITLES_DEFAULT = ["Itálie léto 2021", "— Řím - Toskánsko - Neapol —"];
+const TITLES_DEFAULT = ["Italy summer 2021", "— Roma - Toscany - Naples —"];
 
 const FRAME_COLOR_WHITE = "#F5F5F5";
 const FRAME_COLOR_BLACK = "black";
@@ -50,9 +50,9 @@ const SIZE_NAMES = {
 };
 
 const FRAME_OPTION_NAMES = {
-  NO_FRAME: "Bez rámu",
-  WHITE_FRAME: "Bílý rám",
-  BLACK_FRAME: "Černý rám",
+  NO_FRAME: "steps.frame.withoutFrame",
+  WHITE_FRAME: "steps.frame.whiteFrame",
+  BLACK_FRAME: "steps.frame.blackFrame",
 };
 
 const ORIENTATIONS = { wide: "wide", tall: "tall" };
@@ -126,9 +126,14 @@ const SHIPMENT_CODES = {
   SMALL_FRAMED_OR_NO_FRAME_CZK: "shr_1JMc02CVDm94CHWQejExsrb9",
 };
 
-const SHIPMENT_PRICES = {
-  LARGE_CZK: 800,
-  SMALL_CZK: 250,
+const SHIPMENT_PRICES_CZK = {
+  LARGE: 800,
+  SMALL: 250,
+};
+
+const SHIPMENT_PRICES_USD = {
+  LARGE: 36,
+  SMALL: 11,
 };
 
 const VARIANTS_PRINTFUL = [
@@ -141,9 +146,14 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_SM,
     shipping: {
-      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: SHIPMENT_PRICES.SMALL_CZK,
-      currency: "CZK",
+      CZK: {
+        codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+        price: SHIPMENT_PRICES_CZK.SMALL,
+        currency: "CZK",
+      },
+      USD: {
+        price: SHIPMENT_PRICES_USD.SMALL,
+      },
     },
   },
   {
@@ -155,9 +165,14 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_SM,
     shipping: {
-      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: SHIPMENT_PRICES.SMALL_CZK,
-      currency: "CZK",
+      CZK: {
+        codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+        price: SHIPMENT_PRICES_CZK.SMALL,
+        currency: "CZK",
+      },
+      USD: {
+        price: SHIPMENT_PRICES_USD.SMALL,
+      },
     },
   },
   {
@@ -169,9 +184,14 @@ const VARIANTS_PRINTFUL = [
     PIXEL_RATIO: PIXEL_RATIO_SM,
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     shipping: {
-      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: SHIPMENT_PRICES.SMALL_CZK,
-      currency: "CZK",
+      CZK: {
+        codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+        price: SHIPMENT_PRICES_CZK.SMALL,
+        currency: "CZK",
+      },
+      USD: {
+        price: SHIPMENT_PRICES_USD.SMALL,
+      },
     },
   },
 
@@ -184,9 +204,14 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
-      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: SHIPMENT_PRICES.SMALL_CZK,
-      currency: "CZK",
+      CZK: {
+        codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+        price: SHIPMENT_PRICES_CZK.SMALL,
+        currency: "CZK",
+      },
+      USD: {
+        price: SHIPMENT_PRICES_USD.SMALL,
+      },
     },
   },
   {
@@ -198,9 +223,14 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
-      codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
-      price: SHIPMENT_PRICES.LARGE_CZK,
-      currency: "CZK",
+      CZK: {
+        codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
+        price: SHIPMENT_PRICES_CZK.LARGE,
+        currency: "CZK",
+      },
+      USD: {
+        price: SHIPMENT_PRICES_USD.LARGE,
+      },
     },
   },
   {
@@ -212,9 +242,14 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_MD,
     shipping: {
-      codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
-      price: SHIPMENT_PRICES.LARGE_CZK,
-      currency: "CZK",
+      CZK: {
+        codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
+        price: SHIPMENT_PRICES_CZK.LARGE,
+        currency: "CZK",
+      },
+      USD: {
+        price: SHIPMENT_PRICES_USD.LARGE,
+      },
     },
   },
 
@@ -227,9 +262,14 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.NO_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
-      codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
-      price: SHIPMENT_PRICES.SMALL_CZK,
-      currency: "CZK",
+      CZK: {
+        codeCZ: SHIPMENT_CODES.SMALL_FRAMED_OR_NO_FRAME_CZK,
+        price: SHIPMENT_PRICES_CZK.SMALL,
+        currency: "CZK",
+      },
+      USD: {
+        price: SHIPMENT_PRICES_USD.SMALL,
+      },
     },
   },
   {
@@ -241,9 +281,14 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.BLACK_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
-      codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
-      price: SHIPMENT_PRICES.LARGE_CZK,
-      currency: "CZK",
+      CZK: {
+        codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
+        price: SHIPMENT_PRICES_CZK.LARGE,
+        currency: "CZK",
+      },
+      USD: {
+        price: SHIPMENT_PRICES_USD.LARGE,
+      },
     },
   },
   {
@@ -255,9 +300,14 @@ const VARIANTS_PRINTFUL = [
     frameName: FRAME_OPTION_NAMES.WHITE_FRAME,
     PIXEL_RATIO: PIXEL_RATIO_LG,
     shipping: {
-      codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
-      price: SHIPMENT_PRICES.LARGE_CZK,
-      currency: "CZK",
+      CZK: {
+        codeCZ: SHIPMENT_CODES.LARGE_FRAMED_CZK,
+        price: SHIPMENT_PRICES_CZK.LARGE,
+        currency: "CZK",
+      },
+      USD: {
+        price: SHIPMENT_PRICES_USD.LARGE,
+      },
     },
   },
 ];
@@ -562,7 +612,7 @@ const FAKE_DIV_IDS = {
 };
 
 const VALID_DISCOUNT_CODES = [
-  { code: "LETO2021", discountKoef: 0.9 },
+  { code: "SUMMER2022", discountKoef: 0.9 },
   { code: "RODINNAPOUTA", discountKoef: 0.5 },
   { code: "TESTERBUNNY", discountKoef: 0.7 },
 ];
@@ -579,18 +629,23 @@ const OFFICIAL_EMAIL = "tripmapshopinfo@gmail.com";
 
 const TAB_STEPS = [
   { full: "__null__", short: "null" },
-  { full: "Vyberte variantu mapy", short: "Varianta" },
-  { full: "Zadejte lokalitu", short: "Cesta" },
-  { full: "Orientace", short: "Orientace" },
-  { full: "Popisky", short: "Popisky" },
-  { full: "Ohraničení", short: "Ohraničení" },
-  { full: "Výplň ohraničení", short: "Výplň" },
-  { full: "Barevná kombinace", short: "Barvy" },
-  { full: "Rozměry", short: "Rozměry" },
-  { full: "Rámování", short: "Rámování" },
-  { full: "Materiál", short: "Materiál" },
-  { full: "Checkout", short: "Checkout" },
+  { full: "step.variants.full", short: "step.variants.short" },
+  { full: "step.location.full", short: "step.location.short" },
+  { full: "step.orientation.full", short: "step.orientation.short" },
+  { full: "step.titles.full", short: "step.titles.short" },
+  { full: "step.layout.full", short: "step.layout.short" },
+  { full: "step.layoutColor.full", short: "step.layoutColor.short" },
+  { full: "step.colors.full", short: "step.colors.short" },
+  { full: "step.size.full", short: "step.size.short" },
+  { full: "step.framing.full", short: "step.framing.short" },
+  { full: "step.material.full", short: "step.material.short" },
+  { full: "step.checkout.full", short: "step.checkout.short" },
 ];
+
+const LANGUAGE_CURRENCY_TABLE = {
+  en: "USD",
+  cs: "CZK",
+};
 
 module.exports = {
   IS_CLIENT,
@@ -634,4 +689,5 @@ module.exports = {
   PATHS,
   OFFICIAL_EMAIL,
   TAB_STEPS,
+  LANGUAGE_CURRENCY_TABLE,
 };

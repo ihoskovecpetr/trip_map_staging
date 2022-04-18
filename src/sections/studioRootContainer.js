@@ -19,6 +19,7 @@ import { color, mobile, desktop } from "utils";
 import { useScreenSize } from "Hooks/useScreenSize";
 import { useDebounce } from "Hooks/useDebounce";
 import { Container } from "theme-ui";
+import white_wall from "assets/studio_bg/white_wall.jpg";
 
 import {
   useTitlesSelector,
@@ -211,15 +212,11 @@ export default function StudioRootContainer() {
 
   const { height: headerHeight } = useElementDimensions("header");
 
-  const {
-    height: mapAvailSpaceHeight,
-    width: mapAvailSpaceWidth,
-  } = useElementDimensions("map_available_space_id");
+  const { height: mapAvailSpaceHeight, width: mapAvailSpaceWidth } =
+    useElementDimensions("map_available_space_id");
 
-  const {
-    height: mapWrapperHeight,
-    width: mapWrapperWidth,
-  } = useElementDimensions("map_wrap_id");
+  const { height: mapWrapperHeight, width: mapWrapperWidth } =
+    useElementDimensions("map_wrap_id");
 
   const { isMobile } = useIsMobile();
 
@@ -238,16 +235,13 @@ export default function StudioRootContainer() {
     width: mapWrapperWidth,
   });
 
-  const {
-    paddingWidth,
-    layoutObj,
-    baseLongSize,
-  } = getCenteringLayoutDimensions({
-    product: productRef.current,
-    layout: activeLayoutRedux,
-    elWidth: canvasMap?.width,
-    elHeight: canvasMap?.height,
-  });
+  const { paddingWidth, layoutObj, baseLongSize } =
+    getCenteringLayoutDimensions({
+      product: productRef.current,
+      layout: activeLayoutRedux,
+      elWidth: canvasMap?.width,
+      elHeight: canvasMap?.height,
+    });
 
   useEffect(() => {
     setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
@@ -324,12 +318,10 @@ export default function StudioRootContainer() {
 
       canvasMap = mapInstance.getCanvas();
       ctxMap = canvasMap.getContext("webgl");
-      const mapWrapDivElement = document.getElementsByClassName(
-        "mapboxgl-map"
-      )[0];
-      trueMapCanvasElement = document.getElementsByClassName(
-        "mapboxgl-canvas"
-      )[0];
+      const mapWrapDivElement =
+        document.getElementsByClassName("mapboxgl-map")[0];
+      trueMapCanvasElement =
+        document.getElementsByClassName("mapboxgl-canvas")[0];
 
       const mapCanvasWrapElement = document.getElementsByClassName(
         "mapboxgl-canvas-container"
@@ -555,11 +547,13 @@ const StyledSection = styled.section`
 const ContainerBox = styled.div`
   display: block;
   width: 100%;
-  background-color: ${color("background_almost_white")};
+  // background-color: ${color("background_almost_white")};
+  background: ${`url(${white_wall})`};
+  background-size: cover;
 
   ${mobile`
     display: flex;
-  `}
+  `};
 `;
 
 const CanvasBox = styled.div`

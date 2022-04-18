@@ -7,10 +7,9 @@ import styled from "styled-components";
 import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
+import { useTranslation } from "Hooks/useTranslation";
 
-import menuItems from "./header.data";
 import { DrawerContext } from "../../contexts/drawer/drawer.context";
-import LinkRouter from "components/LinkRouter";
 import { fontWeight, color } from "utils";
 import UnderlineLoader from "components/UnderlineLoader";
 
@@ -21,9 +20,21 @@ const social = [
   },
 ];
 
-const MobileDrawer = () => {
+const menuItems = [
+  {
+    path: "/",
+    label: "navigation.home",
+  },
+  {
+    path: "/studio",
+    label: "navigation.studio",
+  },
+];
+const NavItems = () => {
   const { state, dispatch } = useContext(DrawerContext);
   const router = useRouter();
+  const { locale } = router;
+  const t = useTranslation();
 
   const [loadingIndex, setLoadingIndex] = useState(null);
 
@@ -54,25 +65,33 @@ const MobileDrawer = () => {
       >
         <Scrollbars autoHide>
           <Box sx={styles.content}>
+            {/* Mobile */}
             <Box sx={styles.menu}>
               {menuItems.map(({ path, label }, i) => {
                 return (
-                  <LinkRouter activeClass="active" path={path} key={i}>
-                    <ListItemP
-                      onClick={path === router.pathname && toggleHandler}
-                    >
-                      {label}
-                    </ListItemP>
-                  </LinkRouter>
+                  <Link
+                    activeClass="active"
+                    href={path}
+                    locale={locale}
+                    key={i}
+                  >
+                    <LinkMobileStyled>
+                      <ListItemP
+                        onClick={path === router.pathname && toggleHandler}
+                      >
+                        {t(label)}
+                      </ListItemP>
+                    </LinkMobileStyled>
+                  </Link>
                 );
               })}
             </Box>
-
+            {/* Social */}
             <Box sx={styles.menuFooter}>
               <Box sx={styles.social}>
                 {social.map(({ path, icon }, i) => (
                   <Box as="span" key={i} sx={styles.social.icon}>
-                    <Link href={path}>
+                    <Link href={path} locale={locale}>
                       <a target="_blank"> {icon}</a>
                     </Link>
                   </Box>
@@ -90,7 +109,7 @@ const MobileDrawer = () => {
                 setLoadingIndex(index);
               }}
             >
-              <StyledAncor>{label}</StyledAncor>
+              <StyledAncor>{t(label)}</StyledAncor>
               {index === loadingIndex && <UnderlineLoader />}
             </StyledContainer>
           </Link>
@@ -99,6 +118,10 @@ const MobileDrawer = () => {
     </>
   );
 };
+
+const Wrap = styled.span`
+  flex: 0;
+`;
 
 const StyledAncor = styled.a`
   font-weight: ${fontWeight("regular")} !important;
@@ -115,6 +138,24 @@ const StyledContainer = styled.div`
 const ListItemP = styled.p`
   letter-spacing: 0.3rem;
   margin: 0;
+`;
+
+const LinkMobileStyled = styled.div`
+  font-size: 16px;
+  font-weight: 300;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: ${color("whitish_paper_blue")};
+  padding: 15px 30px;
+  cursor: pointer;
+  border-bottom: 1px solid #e8e5e5;
+  transition: all 0.25s;
+  // &:hover: {
+  //   color: secondary;
+  // };
+  // &.active: {
+  //   color: secondary;
+  // };
 `;
 
 const styles = {
@@ -163,24 +204,6 @@ const styles = {
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    div: {
-      fontSize: "16px",
-      fontWeight: "300",
-      textDecoration: "none",
-      textTransform: "uppercase",
-      color: "whitish_paper_blue",
-      py: "15px",
-      px: "30px",
-      cursor: "pointer",
-      borderBottom: "1px solid #e8e5e5",
-      transition: "all 0.25s",
-      "&:hover": {
-        color: "secondary",
-      },
-      "&.active": {
-        color: "secondary",
-      },
-    },
   },
 
   menuFooter: {
@@ -254,4 +277,4 @@ const styles = {
   },
 };
 
-export default MobileDrawer;
+export default NavItems;

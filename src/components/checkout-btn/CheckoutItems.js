@@ -12,6 +12,9 @@ import { isDiscountCodeValid } from "LibGlobal/isDiscountCodeValid";
 import { getDiscountPercentage } from "LibGlobal/getDiscountPercentage";
 import { setDiscountCode, setDiscountCodeAccepted } from "redux/order/actions";
 import { VALID_DISCOUNT_CODES } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
+import { useGetCurrency } from "Hooks/useGetCurrency";
+
 import {
   useTitlesSelector,
   useProductSelector,
@@ -28,13 +31,16 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
   const discountPercentage = getDiscountPercentage(discount.code);
   const [discountInputOpen, setDiscountInputOpen] = useState(false);
   const [checkingCode, setCheckingCode] = useState(false);
+  const t = useTranslation();
+  const currency = useGetCurrency();
 
   useEffect(() => {
     setDiscountInputOpen(discount.code ? true : false);
   }, []);
 
-  const productDescription = getVariantObject(productRedux.variantId)
-    ?.frameName;
+  const productDescription = t(
+    getVariantObject(productRedux.variantId)?.frameName
+  );
 
   const dataPrintfulVariant =
     dataPrintful && dataPrintful[productRedux.variantId];
@@ -75,8 +81,6 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
   };
 
   const focusOnInput = (e) => {
-    console.log("FOcusL ", e);
-
     const input = document.getElementById("cupon_input");
 
     input.placeholder = "";
@@ -90,20 +94,25 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
           <BoldText>{`${productDescription} ${productRedux.sizeObject.code}`}</BoldText>
           <span>
             <RegularText>{`${mapTitles?.heading?.text} ${mapTitles?.subtitle?.text}`}</RegularText>
-            <RegularText>{`${productRedux.materialDesc}`}</RegularText>
-            <RegularText>{`rozvržení: ${activeLayoutNameRedux}, zbarvení: ${activeMapStyleName}`}</RegularText>
+            <RegularText>{t(productRedux.materialDesc)}</RegularText>
+            <RegularText>
+              {t("checkout.layoutAndColorsText", {
+                activeLayoutNameRedux,
+                activeMapStyleName,
+              })}
+            </RegularText>
           </span>
         </LineTextContainer>
         <StyledPriceSpan>
           <StyledSpan isCrossed={discount.codeAccepted && !checkingCode}>
             {priceWithDelivery
-              ? getFormattedPrice(priceWithDelivery)
-              : "ZJIŠTUJI..."}
+              ? getFormattedPrice({ amount: priceWithDelivery, currency })
+              : t("checkout.loading")}
           </StyledSpan>
           <span>
             {discount.codeAccepted &&
               !checkingCode &&
-              getFormattedPrice(priceDiscounted.netPrice)}
+              getFormattedPrice({ amount: priceDiscounted.netPrice, currency })}
           </span>
         </StyledPriceSpan>
       </CheckoutLine>
@@ -114,11 +123,16 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
           <StyledImage src={deliveryTruck} />
         </ImageContainer> */}
         <LineTextContainer>
-          <BoldText>{`Doprava`}</BoldText>
-          <RegularText>{`Doručení do ${dataPrintfulVariant?.shipping.minDeliveryDays} - ${dataPrintfulVariant?.shipping.maxDeliveryDays} dní`}</RegularText>
+          <BoldText>{t("checkout.delivery")}</BoldText>
+          <RegularText>
+            {t("checkout.deliveryMessage", {
+              from: dataPrintfulVariant?.shipping.minDeliveryDays,
+              to: dataPrintfulVariant?.shipping.maxDeliveryDays,
+            })}
+          </RegularText>
         </LineTextContainer>
         <StyledPriceSpan>
-          {getFormattedPrice(priceOfDelivery.netPrice)}
+          {getFormattedPrice({ amount: priceOfDelivery.netPrice, currency })}
         </StyledPriceSpan>
       </CheckoutLine>
       <NewLine />
@@ -127,7 +141,7 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
       <CheckoutLine>
         <LineTextContainer>
           <BoldText>
-            {`Mám slevový kód? `}
+            {t("checkout.haveCode")}
             <input
               type="checkbox"
               checked={discountInputOpen}
@@ -143,7 +157,7 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
                 id="cupon_input"
                 value={discount.code}
                 onChange={typingDiscountCode}
-                placeholder="VÁŠ KÓD"
+                placeholder={t("checkout.yourDiscountCode")}
                 onFocus={focusOnInput}
               />
             </span>
@@ -155,25 +169,26 @@ export default function CheckoutItems({ dataPrintful, activeMapStyleName }) {
 
       <CheckoutLine>
         <LineTextContainer>
-          <BoldText
-            isCrossed={discount.codeAccepted && !checkingCode}
-            isLarge
-          >{`Celkem`}</BoldText>
+          <BoldText isCrossed={discount.codeAccepted && !checkingCode} isLarge>
+            {t("checkout.total")}
+          </BoldText>
           {discount.codeAccepted && !checkingCode && (
-            <BoldText
-              isLarge
-            >{`Celkem po slevě ${discountPercentage}%`}</BoldText>
+            <BoldText isLarge>
+              {t("checkout.totalWithDiscount", {
+                discountPercentage,
+              })}
+            </BoldText>
           )}
-          <RegularText>{`Celková cena včetně dopravy a zpracování`}</RegularText>
+          <RegularText>{t("checkout.totalPriceText")}</RegularText>
         </LineTextContainer>
         <StyledPriceSpan isLargePrice>
           <StyledSpan isCrossed={discount.codeAccepted && !checkingCode}>
-            {getFormattedPrice(priceWithDelivery)}
+            {getFormattedPrice({ amount: priceWithDelivery, currency })}
           </StyledSpan>
           <span>
             {discount.codeAccepted &&
               !checkingCode &&
-              getFormattedPrice(priceDiscounted.netPrice)}
+              getFormattedPrice({ amount: priceDiscounted.netPrice, currency })}
           </span>
         </StyledPriceSpan>
       </CheckoutLine>

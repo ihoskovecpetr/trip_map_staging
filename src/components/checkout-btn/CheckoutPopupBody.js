@@ -13,10 +13,13 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { color, mobile, desktop } from "utils";
 import { getIsProduction } from "LibGlobal/getIsProduction";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { useGetCurrency } from "Hooks/useGetCurrency";
+import { useTranslation } from "Hooks/useTranslation";
 import { getPriceAlgorithm } from "LibGlobal/priceAlgorithm/getPriceAlgorithm";
 import CheckoutItems from "./CheckoutItems";
 import NextTabBtn from "../NextTabBtn/NextTabBtn";
 import ImageUploadSteps from "./ImageUploadSteps";
+import { useRouter } from "next/router";
 
 import {
   useProductSelector,
@@ -46,6 +49,11 @@ export default function CheckoutPopupBody({
   const discount = useDiscountSelector();
   const mapTitles = useTitlesSelector();
   const storeId = useStoreIdSelector();
+  const t = useTranslation();
+  const currency = useGetCurrency();
+  const { locale, defaultLocale } = useRouter();
+
+  console.log({ defaultLocale });
 
   const [lightbox, setLightbox] = useState({
     open: false,
@@ -83,16 +91,14 @@ export default function CheckoutPopupBody({
         discountCode: discount.code,
         mapTitles: mapTitles,
         storeId,
+        currency: currency,
+        locale: locale,
+        defaultLocale: defaultLocale,
       });
 
-      if (response?.data?.error) {
-        toast.error(
-          "Error: Odlišné ceny, kontaktujte prosím technickou podporu",
-          {
-            position: "top-left",
-          }
-        );
-      } else if (response?.data?.id) {
+      console.log("Get_Error_resp", { response });
+
+      if (response?.data?.id) {
         Stripe.redirectToCheckout({
           sessionId: response.data.id,
         });
@@ -102,9 +108,13 @@ export default function CheckoutPopupBody({
         });
       }
     } catch (e) {
-      alert(
-        "Info: Něco se pokazilo při kontaktování platební brány. Po zavření a otevřete této webové stránky budete moci mapu objednat."
-      );
+      if (e.response?.data?.error) {
+        console.log({ responseError: e.response });
+        alert(e.response?.data?.error);
+      } else {
+        alert(t("error.contactingStripe"));
+        //TODO: log here message to admin that redirect is broken
+      }
     }
   }
 
@@ -162,7 +172,7 @@ export default function CheckoutPopupBody({
           isLoadingOnClick
           isDisabled={isUploadPending}
         >
-          Adresa doručení & platba
+          {t("cta.addressAndDetails")}
         </NextTabBtn>
       </NextTabContainer>
     </Card>

@@ -3,33 +3,35 @@ import { jsx } from "theme-ui";
 import { Container, Box } from "theme-ui";
 import TextFeature from "components/text-feature";
 import Image from "components/image";
+import { useTranslation } from "Hooks/useTranslation";
 
 import PrintfulHIW from "assets/how-printful-works-3.svg";
 // import PaymentPattern from "assets/payment-pattern.png";
 
 const data = {
-  subTitle: "Tisk a zpracování",
-  title: "Tisk a zaslání výsledného produktu zprostředkuje Printful",
-  description:
-    "Společnost Printful je celosvětový poskytovatel tisku na zakázku a důvěřují mu i takové společnosti jako je Amazon, Shopify, Ebay nebo Square",
-  btnName: "více o Printful",
+  subTitle: "print.subtitle",
+  title: "print.title",
+  description: "print.description",
+  btnName: "print.btnName",
   btnURL: "https://www.printful.com/",
 };
 
 export default function PrintfulPrint() {
+  const t = useTranslation();
+
   return (
     <section sx={{ variant: "section.securePayment" }}>
       <Box sx={styles.bgOverlay} />
       <Container sx={styles.containerBox}>
         <Box sx={styles.thumbnail}>
-          <Image src={PrintfulHIW} alt={data.title} />
+          <Image src={PrintfulHIW} alt={t(data.title)} />
         </Box>
         <Box sx={styles.contentBox}>
           <TextFeature
-            subTitle={data.subTitle}
-            title={data.title}
-            description={data.description}
-            btnName={data.btnName}
+            subTitle={t(data.subTitle)}
+            title={t(data.title)}
+            description={t(data.description)}
+            btnName={t(data.btnName)}
             btnURL={data.btnURL}
           />
         </Box>

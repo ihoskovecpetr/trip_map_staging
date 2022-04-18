@@ -6,9 +6,9 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 
 import { color, fontWeight } from "utils";
-import GDPR from "components/obchodni-informace/GDPR";
-import Objection from "components/obchodni-informace/Objection";
-import TermsOfTrade from "components/obchodni-informace/TermsOfTrade";
+import GDPR from "components/business/GDPR";
+import Objection from "components/business/Objection";
+import TermsOfTrade from "components/business/TermsOfTrade";
 import {
   sectionTags,
   sectionObjectsObchInfo,

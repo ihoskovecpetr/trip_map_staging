@@ -1,5 +1,7 @@
-import React from 'react';
-import { BaseAccordion } from './base-accordion';
+import React from "react";
+import { BaseAccordion } from "./base-accordion";
+import { useTranslation } from "Hooks/useTranslation";
+
 import {
   AccordionButton,
   AccordionItem,
@@ -7,9 +9,11 @@ import {
   single,
   preventClose,
   combineReducers,
-} from './shared';
+} from "./shared";
 
 export default function Accordion({ items, ...props }) {
+  const t = useTranslation();
+
   return (
     <BaseAccordion
       stateReducer={combineReducers(single, preventClose)}
@@ -24,12 +28,12 @@ export default function Accordion({ items, ...props }) {
             >
               <AccordionButton onClick={() => handleItemClick(index)}>
                 <span
-                  className={openIndexes.includes(index) ? 'open' : 'closed'}
+                  className={openIndexes.includes(index) ? "open" : "closed"}
                 ></span>
-                {item.title}
+                {t(item.title)}
               </AccordionButton>
               <AccordionContents isOpen={openIndexes.includes(index)}>
-                {item.contents}
+                {t(item.contents)}
               </AccordionContents>
             </AccordionItem>
           ))}

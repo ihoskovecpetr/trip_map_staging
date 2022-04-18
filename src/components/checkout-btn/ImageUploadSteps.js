@@ -10,6 +10,7 @@ import StepLabel from "@material-ui/core/StepLabel";
 import { color, fontWeight, mobile, font } from "utils";
 import UploadPercentageString from "./UploadPercentageString";
 import UnderlineLoader from "components/UnderlineLoader";
+import { useTranslation } from "Hooks/useTranslation";
 
 export default function ImageUploadSteps({
   isUploadPending,
@@ -20,6 +21,7 @@ export default function ImageUploadSteps({
 }) {
   const [activeStep, setActiveStep] = useState(0);
   const [designDisplayed, setDesignDisplayed] = useState(false);
+  const t = useTranslation();
 
   useEffect(() => {
     if (imageBase64Created) {
@@ -53,7 +55,9 @@ export default function ImageUploadSteps({
             <StyledStepLabel>
               <StepsText>
                 {`${
-                  imageBase64Created ? "Design vytvořen" : "Zpracovávám design"
+                  imageBase64Created
+                    ? t("checkout.designCreated")
+                    : t("checkout.processingDesign")
                 }`}
                 {!imageBase64Created && (
                   <WrapSpan>
@@ -68,10 +72,10 @@ export default function ImageUploadSteps({
               <StepsText>
                 {`${
                   !imageBase64Created
-                    ? "Čekám na design"
+                    ? t("checkout.waitingForDesign")
                     : designDisplayed
-                    ? "Design zobrazen"
-                    : "Zobrazuji design"
+                    ? t("checkout.designDisplayed")
+                    : t("checkout.displayingDesign")
                 }`}
                 {imageBase64Created && !designDisplayed && (
                   <WrapSpan>
@@ -85,8 +89,12 @@ export default function ImageUploadSteps({
             <StyledStepLabel>
               <StepsText>
                 {imageBase64Created
-                  ? `${isUploadPending ? "Ukládám " : "Uloženo "}`
-                  : "Čekám na deisgn"}
+                  ? `${
+                      isUploadPending
+                        ? t("checkout.saving")
+                        : t("checkout.saved")
+                    }`
+                  : t("checkout.waitingForDesign")}
                 {imageBase64Created && <UploadPercentageString />}
                 {imageBase64Created &&
                   `%\u00A0/\u00A0${fileSizeMB && fileSizeMB + "MB"}`}

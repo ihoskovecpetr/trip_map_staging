@@ -14,6 +14,7 @@ import { useTitlesSelector } from "redux/order/reducer";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS, TITLE_NAMES } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +59,7 @@ export default function StepTitles({ index }) {
   const dispatch = useDispatch();
   const mapTitles = useTitlesSelector();
   const debounce = useDebounce({ delayInMS: 1000 });
+  const t = useTranslation();
 
   const [defaultVal, setDefault] = useState({
     title: mapTitles.heading.text,
@@ -92,7 +94,9 @@ export default function StepTitles({ index }) {
   };
   return (
     <StepContainer isMobile={isMobile}>
-      <HeadingText isMobile={isMobile}>{index}. Popisky</HeadingText>
+      <HeadingText isMobile={isMobile}>
+        {index}. {t(TAB_STEPS[index].full)}
+      </HeadingText>
       <TextFieldsConteiner>
         <TextField
           classes={{
@@ -113,7 +117,7 @@ export default function StepTitles({ index }) {
             },
           }}
           id="outlined-basic"
-          label="Hlavní nadpis"
+          label={t("steps.titles.title")}
           variant="outlined"
           color="cta_color"
           name="heading"
@@ -138,19 +142,19 @@ export default function StepTitles({ index }) {
             },
           }}
           id="outlined-basic"
-          label="Vedlejší nadpis"
+          label={t("steps.titles.subtitle")}
           variant="outlined"
           name="subtitle"
           defaultValue={defaultVal.subtitle}
           onChange={handleTitleChange}
         />
       </TextFieldsConteiner>
-      {!isMobile && (
+      {/* {!isMobile && (
         <TipParagraph>
           <StyledBold>Tip!</StyledBold> Hlavní a vedlejší nadpis můžete upravit
           také přímo na mapě.
         </TipParagraph>
-      )}
+      )} */}
     </StepContainer>
   );
 }

@@ -3,6 +3,7 @@ import { jsx, Box, Heading, Text, Button, Link } from "theme-ui";
 import styled from "styled-components";
 import { color, font, fontSize, fontWeight } from "utils";
 import Typography from "@material-ui/core/Typography";
+import { useTranslation } from "Hooks/useTranslation";
 
 export default function TextFeature({
   subTitle,
@@ -12,14 +13,16 @@ export default function TextFeature({
   btnName,
   btnURL = "#",
 }) {
-  function copyFunction() {
+  const t = useTranslation();
+
+  const copyFunction = () => {
     var copyText = document.getElementById("myInput");
 
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     document.execCommand("copy");
-    alert("Zkopírován text: " + copyText.value);
-  }
+    alert(t("congratulation.textCopied") + copyText.value);
+  };
   return (
     <Box sx={styles.card}>
       <Box>
@@ -49,7 +52,9 @@ export default function TextFeature({
               sx={styles.sessionIdStyle}
               value={sessionId}
             />
-            <p sx={styles.sessionIdDescription}>kopírujte poklikem</p>
+            <p sx={styles.sessionIdDescription}>
+              {t("congratulation.byClicking")}
+            </p>
           </span>
         )}
       </Box>

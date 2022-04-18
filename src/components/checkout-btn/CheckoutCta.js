@@ -16,6 +16,7 @@ import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useTitlesSelector } from "redux/order/reducer";
 import { useProductSelector } from "redux/order/reducer";
+import { useTranslation } from "Hooks/useTranslation";
 
 import {
   useActiveLayoutSelector,
@@ -26,7 +27,7 @@ import { setUploadPercentage } from "redux/order/actions";
 
 import {
   getLazyUploader,
-  resetPendingPromise,
+  forceResetPendingPromise,
 } from "LibGlobal/getLazyUploader";
 
 const CancelToken = axios.CancelToken;
@@ -39,6 +40,7 @@ export default function CheckoutCta({
 }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const t = useTranslation();
 
   const mapTitles = useTitlesSelector();
   const productRedux = useProductSelector();
@@ -64,7 +66,7 @@ export default function CheckoutCta({
   useEffect(() => {
     setImageSavedResponse(null);
     setImageBase64Created(null);
-    resetPendingPromise();
+    forceResetPendingPromise();
     dispatch(setUploadPercentage(0));
   }, [
     map,
@@ -139,7 +141,7 @@ export default function CheckoutCta({
 
   const backdropClose = () => {
     setBackdropOpen(false);
-    resetPendingPromise();
+    forceResetPendingPromise();
     axiosCancelTokenSource?.cancel("Request canceled on users order");
     setAxiosCancelTokenSource(CancelToken.source());
   };
@@ -169,7 +171,7 @@ export default function CheckoutCta({
             }}
             price={priceWithDelivery}
           >
-            Shrnutí objednávky
+            {t("cta.sumUp")}
           </NextTabBtn>
         </DefaultUI>
       )}

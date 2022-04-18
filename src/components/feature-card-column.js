@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import { jsx, Image, Box, Heading, Text } from 'theme-ui';
+import { jsx, Image, Box, Heading, Text } from "theme-ui";
 
 export default function FeatureCardColumn({
   src,
-  altText = 'default alt text',
+  altText = "default alt text",
   title,
   text,
 }) {
@@ -21,23 +21,23 @@ export default function FeatureCardColumn({
 
 const styles = {
   card: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    textAlign: 'center',
-    flexDirection: 'column',
+    display: "flex",
+    alignItems: "flex-start",
+    textAlign: "center",
+    flexDirection: "column",
   },
   img: {
-    mx: 'auto',
+    mx: "auto",
     mb: [3, null, 4, null, null, 5],
-    width: ['80px', '90px', null, null, null, '100px', 'auto'],
+    width: ["80px", "90px", null, null, null, "100px", "auto"],
   },
   wrapper: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
     title: {
       fontSize: [3, null, null, null, null, 4],
-      color: 'heading_secondary',
+      color: "heading_secondary",
       lineHeight: 1.4,
       fontWeight: 700,
       mb: [2, null, null, null, null, 3],

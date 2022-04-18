@@ -4,6 +4,7 @@ import SectionHeader from "components/section-header";
 import Rating from "components/rating";
 import ButtonGroup from "components/button-group";
 import Carousel from "react-multi-carousel";
+import { useTranslation } from "Hooks/useTranslation";
 
 import Avatar1 from "assets/testimonial/avatar1.png";
 import Avatar2 from "assets/testimonial/avatar2.png";
@@ -17,50 +18,46 @@ import Woman3 from "assets/testimonial/woman_3.jpg";
 const data = [
   {
     id: 1,
-    title: "Moderní vzhled a design",
-    description: "Super dar na svatbu, osobitost mapy je k nezaplacení",
+    title: "experience.custommer1.title",
+    description: "experience.custommer1.text",
     avatar: Woman1,
-    name: "Jana Strolená",
+    name: "experience.custommer1.name",
     designation: "@jana.s",
     review: 5,
   },
   {
     id: 2,
-    title: "Krásné barvy a zpracování",
-    description:
-      "Myslím že se jedná o velmi povedený doplněk do domu, zakoupila jsem pouze mapu bez rámu kterou jsem následně s pomocí manžela a nákupu v JISKu jednoduše osadila do rámu",
+    title: "experience.custommer2.title",
+    description: "experience.custommer2.text",
     avatar: Woman2,
-    name: "Anna Krásná",
+    name: "experience.custommer2.name",
     designation: "@anickak",
     review: 5,
   },
   {
     id: 3,
-    title: "Potěšil jsem svou přítelkyni",
-    description:
-      "Super mapa jako věčná vzpomínka na naše líbánky. Doporučuji 👍",
+    title: "experience.custommer3.title",
+    description: "experience.custommer3.text",
     avatar: Man1,
-    name: "Jan Klíma",
+    name: "experience.custommer3.name",
     designation: "@klimaj",
     review: 5,
   },
   {
     id: 4,
-    title: "Provedení letecké dráhy",
-    description:
-      "Dárek pro bratra který velmi rád cestuje, zaoblení letu dle zakřivení planety vypadá skvěle. Mapa přišla kvalitně zabalená a snad během prvního týdne po objednání",
+    title: "experience.custommer4.title",
+    description: "experience.custommer4.text",
     avatar: Avatar4,
-    name: "Daniel Karch",
+    name: "experience.custommer4.name",
     designation: "@dankarch",
     review: 4,
   },
   {
-    id: 4,
-    title: "Dárek pro bratra",
-    description:
-      "Bratr ocenil originalitu dárku já jsem ocenila rychlost dodání :)",
+    id: 5,
+    title: "experience.custommer5.title",
+    description: "experience.custommer5.text",
     avatar: Woman3,
-    name: "Romana Jelínková",
+    name: "experience.custommer5.name",
     designation: "@romcajelinkova",
     review: 4,
   },
@@ -90,12 +87,14 @@ const responsive = {
 };
 
 export default function TestimonialCard() {
+  const t = useTranslation();
+
   return (
     <section id="testimonial" sx={{ variant: "section.testimonial" }}>
       <Container>
         <SectionHeader
-          slogan="Svědectví zákazníků"
-          title="Zkušenosti našich zákazníků"
+          slogan={t("experience.subtitle")}
+          title={t("experience.title")}
         />
       </Container>
       <Box sx={styles.carouselWrapper}>
@@ -125,16 +124,16 @@ export default function TestimonialCard() {
             <Box sx={styles.reviewCard} key={`testimonial--key${item.id}`}>
               <Rating rating={item.review} />
               <Heading as="h3" sx={styles.title}>
-                {item.title}
+                {t(item.title)}
               </Heading>
-              <Text sx={styles.description}>{item.description}</Text>
+              <Text sx={styles.description}>{t(item.description)}</Text>
               <div className="card-footer">
                 <div className="image">
                   <Image src={item.avatar} alt="Client Image" />
                 </div>
                 <div className="reviewer-info">
                   <Heading as="h4" sx={styles.heading}>
-                    {item.name}
+                    {t(item.name)}
                   </Heading>
                   <Text sx={styles.designation}>{item.designation}</Text>
                 </div>

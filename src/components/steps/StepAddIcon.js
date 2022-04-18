@@ -20,6 +20,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HeadingText from "./atoms/HeadingText";
 import StepContainer from "./atoms/StepContainer";
 import { TAB_STEPS } from "@constants";
+import { useTranslation } from "Hooks/useTranslation";
 
 import { color, fontSize, fontWeight, mobile } from "utils";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -31,6 +32,7 @@ import { addNewIcon } from "redux/order/actions";
 import { useGetIcons, useActiveMapStyleSelector } from "redux/order/reducer";
 
 export default function StepAddRoute({ map, index }) {
+  const t = useTranslation();
   const [updatingSourceId, setUpdatingSourceId] = useState();
   const { isMobile } = useIsMobile();
   const dispatch = useDispatch();
@@ -86,7 +88,7 @@ export default function StepAddRoute({ map, index }) {
   return (
     <StepContainer isMobile={isMobile}>
       <HeadingText isMobile={isMobile}>
-        {index}. {TAB_STEPS[index].full}
+        {index}. {t(TAB_STEPS[index].full)}
       </HeadingText>
       <StyledButton
         onClick={() => {

@@ -2,35 +2,25 @@
 import { jsx, Container, Box } from "theme-ui";
 import SectionHeader from "components/section-header";
 import Accordion from "components/accordion/accordion";
+import { useTranslation } from "Hooks/useTranslation";
+
 const faqs = [
   {
-    title: "Jakou kvalitu tisku a papíru mohu očekávat?",
-    contents: (
-      <div>
-        Kvalta tisku je hodná muzea, tisk je proveden na matný trvanlivý papír s
-        vysokou gramáží. Každý plakát je tištěn pigmentovou technologií na
-        archivovatelný, bez-acidický papír který tím získá skvělý výsledný
-        vzhled. Konečný produkt rozzáří každou místnost.
-      </div>
-    ),
+    title: "faq.1.title",
+    contents: "faq.1.text",
   },
   {
-    title: "Jakou příjde mapa zabalena?",
-    contents: (
-      <div>
-        Způsob jakým bude finální produkt zabalen se liší dle varianty kterou si
-        vyberete. Varianty s rámem příjdou zabaleny ve velikém boxu plnně
-        zakryty. Varianta bez rámu příjde v tubusu s trojuhelníkovým průřezem.
-        Mapa je smotaná a obalená v ochranném papíru.
-      </div>
-    ),
+    title: "faq.2.title",
+    contents: "faq.2.title",
   },
 ];
 export default function Faq() {
+  const t = useTranslation();
+
   return (
     <section sx={{ variant: "section.faq" }}>
       <Container>
-        <SectionHeader title="Často kladené otázky" slogan="Získej odpovědi" />
+        <SectionHeader title={t("faq.title")} slogan={t("faq.subtitle")} />
         <Box
           sx={{
             display: "flex",

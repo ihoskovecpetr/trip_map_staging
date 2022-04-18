@@ -9,8 +9,6 @@ import AddIcon from "@material-ui/icons/Add";
 import Rotate90DegreesCcwIcon from "@material-ui/icons/Rotate90DegreesCcw";
 import OpenWithIcon from "@material-ui/icons/OpenWith";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
-import Popper from "@material-ui/core/Popper";
 
 import { getFlippedSizeObject } from "LibGlobal/getFlippedSizeObject";
 import { useIsMobile } from "Hooks/useIsMobile";
@@ -20,9 +18,11 @@ import BackdropLoader from "components/backdropLoader";
 import LogoWhite from "assets/logo_black.png";
 import { useQualityImageCreator } from "Hooks/useQualityImageCreator";
 import { useGetDataPrintful } from "Hooks/useGetDataPrintful";
+import { useTranslation } from "Hooks/useTranslation";
 import { getFormattedPrice } from "LibGlobal/getFormattedPrice";
-
 import { setProductAction, setPopupSeenAction } from "redux/order/actions";
+import { VARIANTS_PRINTFUL } from "constants/constants";
+import { useGetCurrency } from "Hooks/useGetCurrency";
 
 import {
   useProductSelector,
@@ -31,10 +31,10 @@ import {
   useSeenPopupSelector,
 } from "redux/order/reducer";
 
-import { VARIANTS_PRINTFUL } from "constants/constants";
-
-const getFormatedPriceString = (amount) => {
-  return amount ? `| ${getFormattedPrice(amount)}` : "";
+const getFormatedPriceString = (amount, currency) => {
+  return amount
+    ? `| ${getFormattedPrice({ amount: amount, currency: currency })}`
+    : "";
 };
 
 export default function MapContainer({
@@ -50,6 +50,8 @@ export default function MapContainer({
   const activeMapStyleName = useActiveMapStyleSelector();
   const seenPopup = useSeenPopupSelector();
   const [openBackdrop, setOpenBackdrop] = useState(false);
+  const t = useTranslation();
+  const currency = useGetCurrency();
 
   const [isCreatingImage, setIsCreatingImage] = useState(false);
   const [lightbox, setLightbox] = useState({
@@ -65,17 +67,6 @@ export default function MapContainer({
   );
 
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = () => {
-    openTeaserImage();
-  };
-
-  const handleClose = (e) => {
-    setAnchorEl(null);
-    localStorage.setItem("seenPopup", true);
-    dispatch(setPopupSeenAction(true));
-    e.stopPropagation();
-  };
 
   const isPopupOpen = Boolean(anchorEl) && map;
   const id = isPopupOpen ? "simple-popper" : undefined;
@@ -142,8 +133,8 @@ export default function MapContainer({
         )}
         {!isMobile && (
           <StyledText size="small">
-            {`cena 
-            ${getFormatedPriceString(priceWithDelivery)}`}
+            {`${t("studio.price")} 
+            ${getFormatedPriceString(priceWithDelivery, currency)}`}
           </StyledText>
         )}
 
@@ -161,20 +152,6 @@ export default function MapContainer({
         <RotateBtn>
           <StyledRotateIcon onClick={changeOrientation} />
         </RotateBtn>
-
-        {/* <TeaserButton
-          aria-describedby={id}
-          id="full_screen_button"
-          onClick={handleClick}
-        >
-          {isCreatingImage ? (
-            <ColorWrap>
-              <StyledCircularProgress />
-            </ColorWrap>
-          ) : (
-            <OpenWithIcon />
-          )}
-        </TeaserButton> */}
       </AllBtnWrapper>
 
       {lightbox.open && (

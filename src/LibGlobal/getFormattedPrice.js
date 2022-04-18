@@ -3,15 +3,15 @@ const formatNumber = require("number-format.js");
 const NON_BREAKING_SPACE = "\u00A0";
 
 const CODE = "CZK";
-const SYMBOL = "€";
+// const SYMBOL = "€";
 const FORMAT = "$ ### ### ###.##";
 
-const getFormattedPrice = (
+const getFormattedPrice = ({
   amount,
   format = FORMAT,
-  currencySymbol = SYMBOL,
-  currencyCode = CODE
-) => {
+  // currencySymbol = SYMBOL,
+  currency = CODE,
+}) => {
   const regex = /#.#*(?=[^#]*$)/;
   const replacer = "0";
 
@@ -23,8 +23,8 @@ const getFormattedPrice = (
     return match.replace(/#/g, replacer);
   });
 
-  const formatWithProperCurrency = currencyCode
-    ? modifiedFormat.replace("$", currencyCode)
+  const formatWithProperCurrency = currency
+    ? modifiedFormat.replace("$", currency)
     : modifiedFormat;
 
   return formatNumber(formatWithProperCurrency, amount).replace(

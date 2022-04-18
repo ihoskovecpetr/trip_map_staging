@@ -324,6 +324,19 @@ function drawText({
 
   ctx.textBaseline = "Alphabetic";
 
+  const font = `${DEFAULT_FONT_WEIGHT_BOLD} ${
+    heading?.size * 0.003 * baseLngSide
+  }px ${layoutObj.text.title_font || TITLES_FONT_DEFAULT}`;
+
+  document.fonts.ready.then(() => {
+    console.log({
+      title_font: layoutObj.text.title_font,
+      font: font,
+      font_check_loaded: document.fonts.check(font),
+      check_font: document.fonts.check("12px AppleChapple"),
+    });
+  });
+
   ctx.fillStyle = textColor;
   ctx.font = `${DEFAULT_FONT_WEIGHT_BOLD} ${
     heading?.size * 0.003 * baseLngSide

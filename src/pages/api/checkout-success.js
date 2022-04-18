@@ -3,6 +3,7 @@ const axios = require("axios");
 const hbs = require("nodemailer-express-handlebars");
 
 const Order = require("../../mongoModels/order.js");
+const FullStore = require("../../mongoModels/fullStore.js");
 const { getIsProduction } = require("../../LibGlobal/getIsProduction");
 const smtpTransportTMEmail = require("./Lib/SMTPTransportTMEmail.js");
 const { getVariantObject } = require("LibGlobal/getVariantObject");
@@ -84,7 +85,9 @@ const orderOnPrintful = async ({ shipping, product, imageObj }) => {
         recipient: {
           name: shipping.name,
           address1: shipping.address.line1,
+          address2: shipping.address.line2,
           city: shipping.address.city,
+          state_code: shipping.address.state,
           country_code: shipping.address.country,
           zip: shipping.address.postal_code,
         },
@@ -114,7 +117,10 @@ const orderOnPrintful = async ({ shipping, product, imageObj }) => {
 
     return responsePrintful;
   } catch (e) {
-    console.error("❌ checkout-to-printful error", JSON.stringify(e, null, 4));
+    console.error(
+      "❌ checkout-to-printful error",
+      JSON.stringify({ e }, null, 4)
+    );
     throw e;
   }
 };
@@ -126,8 +132,6 @@ const sendEmailsHandler = async ({
   mapTitles,
 }) => {
   try {
-    console.log({ getHighSession: session });
-
     const productDescription = getVariantObject(product.variantId)?.frameName;
 
     const promises = [
@@ -144,16 +148,17 @@ const sendEmailsHandler = async ({
         from: "No",
         to: session.customer_details.email,
         subject: emailHeadingCustomer,
-        template: "./src/pages/api/orderCustommerConfirmation",
+        template: "./src/pages/api/orderCustomerConfirmation",
         context: {
           // dashboard_url_printful: responsePrintful.data.result.dashboard_url,
           product: product,
           productDescription,
           mapTitles,
           sessionId: session.id,
-          sessionAmountTotal: getFormattedPrice(
-            priceAlgorithm.divide(session.amount_total, 100) ?? 0
-          ),
+          sessionAmountTotal: getFormattedPrice({
+            amount: priceAlgorithm.divide(session.amount_total, 100) ?? 0,
+            currency: "CZK",
+          }),
         },
         attachments: [
           {
@@ -203,9 +208,13 @@ export default async (req, res) => {
 
         const sessionId = req.query.id;
         const session = await stripe.checkout.sessions.retrieve(sessionId);
-        const { clientProductObj, imageObj, mapTitles } = await Order.findOne({
-          sessionId: sessionId,
-        });
+        const { clientProductObj, imageObj, mapTitles, storeId } =
+          await Order.findOne({
+            sessionId: sessionId,
+          });
+
+        const FoundFullStore = await FullStore.findOne({ storeId });
+        const { defaultLocale, locale } = FoundFullStore;
 
         if (!clientProductObj || !imageObj) {
           console.log("❌ Data not found in MongoDB");
@@ -224,13 +233,15 @@ export default async (req, res) => {
           mapTitles,
         });
 
+        const inPathLocale = defaultLocale === locale ? "" : `/${locale}`;
+
         if (responsePrintful) {
-          res.redirect(`/congratulation?id=${sessionId}`);
+          res.redirect(`${inPathLocale}/congratulation?id=${sessionId}`);
           return;
         }
         return res.json({ id: "failed to order print" });
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error in checkout-success:", error);
         const message = error.message || "random failure";
         res.status(402);
         res.json({ message, error });
