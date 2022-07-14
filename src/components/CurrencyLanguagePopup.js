@@ -7,8 +7,8 @@ import BackdropFromScratch from 'components/BackdropFromScratch'
 import { mobile, color, fontSize } from 'utils'
 import closeIcon from 'assets/close.png'
 import { setCurrencyRegion } from 'redux/order/actions'
-import { useGetCurrency } from 'hooks/useGetCurrency'
-import { useGetDeliveryRegion } from 'hooks/useGetDeliveryRegion'
+import { useGetCurrency } from 'Hooks/useGetCurrency'
+import { useGetDeliveryRegion } from 'Hooks/useGetDeliveryReg'
 
 import { LOCALE_TO_LANGUAGE_SHORTCUT, AVAILABLE_CURRENCIES, AVAILABLE_DESTINATIONS } from '@constants'
 

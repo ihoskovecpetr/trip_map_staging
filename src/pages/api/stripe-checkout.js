@@ -106,7 +106,7 @@ export default async (req, res) => {
                     payment_method_types: ['card'],
                     // shipping_rates: SHIPPING_RATE_CODE,
                     shipping_address_collection: {
-                        allowed_countries: ['CZ', 'SK', 'DE', 'US', 'AU'] //"PL", "DE"
+                        allowed_countries: ['CZ', 'SK', 'DE', 'US', 'AU'] //"PL",
                     },
 
                     line_items: [

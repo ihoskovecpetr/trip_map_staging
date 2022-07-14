@@ -6,7 +6,7 @@ import { VARIANTS_PRINTFUL } from 'constants/constants'
 
 import { getLazyDownloader } from 'LibGlobal/getLazyDownloader'
 import { useProductSelector } from 'redux/order/reducer'
-import { useGetCurrency } from 'hooks/useGetCurrency'
+import { useGetCurrency } from 'Hooks/useGetCurrency'
 
 let cachedResponse = {}
 

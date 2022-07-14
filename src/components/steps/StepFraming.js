@@ -19,7 +19,7 @@ import StepContainer from './atoms/StepContainer'
 import { useTranslation } from 'Hooks/useTranslation'
 import { useRouter } from 'next/router'
 import { useGetCurrency } from 'Hooks/useGetCurrency'
-import { useGetDeliveryRegion } from 'Hooks/useGetDeliveryRegion'
+import { useGetDeliveryRegion } from 'Hooks/useGetDeliveryReg'
 
 import { TAB_STEPS, LANGUAGE_CURRENCY_TABLE } from '@constants'
 

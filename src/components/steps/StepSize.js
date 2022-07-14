@@ -20,7 +20,7 @@ import { TAB_STEPS } from '@constants'
 import { useTranslation } from 'Hooks/useTranslation'
 import { useRouter } from 'next/router'
 import { useGetCurrency } from 'Hooks/useGetCurrency'
-import { useGetDeliveryRegion } from 'Hooks/useGetDeliveryRegion'
+import { useGetDeliveryRegion } from 'Hooks/useGetDeliveryReg'
 
 import { VARIANTS_PRINTFUL, SIZES, SIZE_NAMES, FRAME_OPTION_NAMES, LANGUAGE_CURRENCY_TABLE } from 'constants/constants'
 
