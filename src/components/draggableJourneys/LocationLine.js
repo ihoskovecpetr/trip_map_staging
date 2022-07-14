@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
 import { useDispatch } from "react-redux";
-import TextField from "@material-ui/core/TextField";
 import DeleteForeverIcon from "@material-ui/icons/Clear";
 import { color, fontSize, fontWeight } from "utils";
 

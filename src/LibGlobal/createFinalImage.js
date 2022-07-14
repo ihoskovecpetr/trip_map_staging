@@ -1,17 +1,12 @@
 // import request from "superagent";
-import mapboxgl from "mapbox-gl";
+import mapboxgl from 'mapbox-gl'
 
-import { drawLayout } from "./drawLayout";
-import { setDevicePixelRatio } from "LibGlobal/setDevicePixelRatio";
-import { getScreenshot } from "LibGlobal/getScreenshot";
+import { drawLayout } from './drawLayout'
+import { setDevicePixelRatio } from 'LibGlobal/setDevicePixelRatio'
+import { getScreenshot } from 'LibGlobal/getScreenshot'
 // import { getCurrentPixelRatio } from "LibGlobal/getCurrentPixelRatio";
 
-import {
-  MAP_STYLES,
-  ORIENTATIONS,
-  RUNTIME_PIXEL_RATIO,
-  PRINT_CANVAS_BASE_PX,
-} from "constants/constants";
+import { MAP_STYLES, ORIENTATIONS, RUNTIME_PIXEL_RATIO, PRINT_CANVAS_BASE_PX } from 'constants/constants'
 
 // let snapshotMapObject;
 
@@ -28,129 +23,125 @@ import {
 // }
 
 const fitBoundsMapPromise = async ({ originalMapObject, snapMapObject }) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const originalBounds = originalMapObject.getBounds();
+    return new Promise(async (resolve, reject) => {
+        try {
+            const originalBounds = originalMapObject.getBounds()
 
-      snapMapObject.fitBounds(originalBounds, {
-        animate: false,
-      });
+            snapMapObject.fitBounds(originalBounds, {
+                animate: false
+            })
 
-      snapMapObject.on("idle", function (e) {
-        //TODO: find another event after fully loading map to avoid setTimeout.
+            snapMapObject.on('idle', function (e) {
+                //TODO: find another event after fully loading map to avoid setTimeout.
 
-        resolve();
-        setTimeout(() => {}, 1000);
-      });
-    } catch (e) {
-      console.log({ e });
-      alert("resizing Error", e);
-    }
-  });
-};
+                resolve()
+                setTimeout(() => {}, 1000)
+            })
+        } catch (e) {
+            console.log({ e })
+            alert('resizing Error', e)
+        }
+    })
+}
 
-const addDelay = (delay) =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(true);
-    }, delay);
-  });
+const addDelay = delay =>
+    new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(true)
+        }, delay)
+    })
 
 export const createFinalImage = async ({
-  originalMapObject,
-  snapMapInstance,
-  activeLayoutName,
-  mapTitles,
-  product,
-  activeMapStyleName,
-  options,
+    originalMapObject,
+    snapMapInstance,
+    activeLayoutName,
+    mapTitles,
+    product,
+    activeMapStyleName,
+    options
 }) => {
-  const { computedPixelRatio } = options;
-  return new Promise(async (resolve, reject) => {
-    setDevicePixelRatio(computedPixelRatio);
-    snapMapInstance.resize();
+    const { computedPixelRatio } = options
+    return new Promise(async (resolve, reject) => {
+        setDevicePixelRatio(computedPixelRatio)
+        snapMapInstance.resize()
 
-    await fitBoundsMapPromise({
-      originalMapObject,
-      snapMapObject: snapMapInstance,
-    });
+        await fitBoundsMapPromise({
+            originalMapObject,
+            snapMapObject: snapMapInstance
+        })
 
-    // await addDelay(3000);
+        // await addDelay(3000);
 
-    getScreenshot(snapMapInstance).then(async function (data) {
-      try {
-        const snapshotWrapper = document.getElementById("snapshot_map_wrapper");
+        getScreenshot(snapMapInstance).then(async function (data) {
+            try {
+                const snapshotWrapper = document.getElementById('snapshot_map_wrapper')
 
-        Object.assign(snapshotWrapper.style, {
-          display: "none",
-        });
+                Object.assign(snapshotWrapper.style, {
+                    display: 'none'
+                })
 
-        const image = await getImageFromBase64(data);
+                const image = await getImageFromBase64(data)
 
-        const mergerCanvas = document.getElementById("canvas_merging");
+                const mergerCanvas = document.getElementById('canvas_merging')
 
-        mergerCanvas.setAttribute("height", image.height);
-        mergerCanvas.setAttribute("width", image.width);
+                mergerCanvas.setAttribute('height', image.height)
+                mergerCanvas.setAttribute('width', image.width)
 
-        var ctx = mergerCanvas.getContext("2d");
+                var ctx = mergerCanvas.getContext('2d')
 
-        ctx.drawImage(image, 0, 0);
+                ctx.drawImage(image, 0, 0)
 
-        drawLayout(ctx, {
-          width: image.width,
-          height: image.height,
-          activeLayoutName,
-          mapTitles,
-          product,
-          isProductionPrint: true,
-          activeMapStyleName,
-          localPixelRatio: computedPixelRatio,
-        });
+                drawLayout(ctx, {
+                    width: image.width,
+                    height: image.height,
+                    activeLayoutName,
+                    mapTitles,
+                    product,
+                    isProductionPrint: true,
+                    activeMapStyleName,
+                    localPixelRatio: computedPixelRatio
+                })
 
-        const finalImgWithLayout = mergerCanvas.toDataURL();
+                const finalImgWithLayout = mergerCanvas.toDataURL()
 
-        resolve(finalImgWithLayout);
+                resolve(finalImgWithLayout)
 
-        setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
-      } catch (e) {
-        alert(
-          "Failed while taking screenshot and creating Image" +
-            JSON.stringify(e)
-        );
-        console.log({ e });
-        setDevicePixelRatio(RUNTIME_PIXEL_RATIO);
-        reject(e);
-      }
-    });
-  });
-};
+                setDevicePixelRatio(RUNTIME_PIXEL_RATIO)
+            } catch (e) {
+                alert('Failed while taking screenshot and creating Image' + JSON.stringify(e))
+                console.log({ e })
+                setDevicePixelRatio(RUNTIME_PIXEL_RATIO)
+                reject(e)
+            }
+        })
+    })
+}
 
-const getImageFromBase64 = async (data) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const imgEl = new Image();
+const getImageFromBase64 = async data => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const imgEl = new Image()
 
-      imgEl.onload = () => {
-        resolve(imgEl);
-      };
+            imgEl.onload = () => {
+                resolve(imgEl)
+            }
 
-      imgEl.onerror = function (e) {
-        alert("ImageOn_Error:_", JSON.stringify(e));
-        console.log("Error loading image", e);
+            imgEl.onerror = function (e) {
+                alert('ImageOn_Error:_', JSON.stringify(e))
+                console.log('Error loading image', e)
 
-        reject("Failed to create image");
-      };
+                reject('Failed to create image')
+            }
 
-      // console.log(JSON.stringify(data));
-      // const theBlob = new Blob([atobX(data)], {
-      //   type: "image/png",
-      // });
+            // const theBlob = new Blob([atobX(data)], {
+            //   type: "image/png",
+            // });
 
-      // const objectURL = URL.createObjectURL(theBlob);
+            // const objectURL = URL.createObjectURL(theBlob);
 
-      imgEl.src = data;
-    } catch (Error) {
-      console.log("Error in getImageFromBase64", { Error });
-    }
-  });
-};
+            imgEl.src = data
+        } catch (Error) {
+            console.log('Error in getImageFromBase64', { Error })
+        }
+    })
+}

@@ -1,9 +1,8 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { LANGUAGE_CURRENCY_TABLE } from "constants/constants";
+import React from 'react'
+import { useGetCurrencySelector } from 'redux/order/reducer'
 
 export function useGetCurrency() {
-  const { locale } = useRouter();
+    const currency = useGetCurrencySelector()
 
-  return LANGUAGE_CURRENCY_TABLE[locale];
+    return currency
 }

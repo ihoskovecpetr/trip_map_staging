@@ -1,35 +1,34 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
-import { createWrapper } from "next-redux-wrapper";
-import thunkMiddleware from "redux-thunk";
-import { intlReducer } from "react-intl-redux";
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { createWrapper } from 'next-redux-wrapper'
+import thunkMiddleware from 'redux-thunk'
+import { intlReducer } from 'react-intl-redux'
 
-import order from "./order/reducer";
+import order from './order/reducer'
 
-const bindMiddleware = (middleware) => {
-  if (process.env.NODE_ENV !== "production") {
-    console.log("redux-devtools-extension_required");
-    const { composeWithDevTools } = require("redux-devtools-extension");
-    return composeWithDevTools(applyMiddleware(...middleware));
-  }
-  return applyMiddleware(...middleware);
-};
+const bindMiddleware = middleware => {
+    if (process.env.NODE_ENV !== 'production') {
+        const { composeWithDevTools } = require('redux-devtools-extension')
+        return composeWithDevTools(applyMiddleware(...middleware))
+    }
+    return applyMiddleware(...middleware)
+}
 
 const combinedReducer = combineReducers({
-  order,
-  intl: intlReducer,
-});
+    order,
+    intl: intlReducer
+})
 
-const initStore = (props) => {
-  return createStore(
-    combinedReducer,
-    {
-      order: {
-        ...props?.ctx?.req.meta,
-        languageServer: props?.ctx?.res.language,
-      },
-    },
-    bindMiddleware([thunkMiddleware])
-  );
-};
+const initStore = props => {
+    return createStore(
+        combinedReducer,
+        {
+            order: {
+                ...props?.ctx?.req.meta,
+                languageServer: props?.ctx?.res.language
+            }
+        },
+        bindMiddleware([thunkMiddleware])
+    )
+}
 
-export const wrapper = createWrapper(initStore);
+export const wrapper = createWrapper(initStore)

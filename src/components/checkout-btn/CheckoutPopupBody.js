@@ -53,8 +53,6 @@ export default function CheckoutPopupBody({
   const currency = useGetCurrency();
   const { locale, defaultLocale } = useRouter();
 
-  console.log({ defaultLocale });
-
   const [lightbox, setLightbox] = useState({
     open: false,
     activeSrc: null,

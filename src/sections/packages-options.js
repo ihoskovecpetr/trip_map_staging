@@ -88,7 +88,7 @@ export default function PackagesOptions() {
   const { dataPrintful } = useGetDataPrintful(IdsArr);
   const currency = useGetCurrency();
 
-  console.log({ dataPrintful });
+  console.log({ packages });
 
   return (
     <section id="packages" sx={styles.packages}>

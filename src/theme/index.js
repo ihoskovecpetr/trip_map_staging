@@ -64,13 +64,13 @@ export default {
         "100%",
         null,
         null,
-        "780px",
-        "1020px",
+        null,
+        null,
         "1200px",
         null,
         "1310px",
       ],
-      px: [4, 6],
+      px: [4]
     },
     header: {
       color: "#02073E",

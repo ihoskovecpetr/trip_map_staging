@@ -27,7 +27,7 @@ const common = {
     "Do you wish you map to be fitted in a frame or not? You can choose.",
   "landingPage.cta": "{value}",
 
-  "examples.title": "Make you adventure last forever",
+  "examples.title": "Make yourp adventure last forever",
   "examples.subtitle":
     "Remember you unique moments of your life by creating personalized map.",
   "examples.cta": "Start designing",
