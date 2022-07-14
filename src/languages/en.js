@@ -16,7 +16,7 @@ const common = {
   "faq.2.title": "What package can I expect?",
   "faq.2.text":
     "The way how our product will be packed depends on product you are going to receive. Framed variants will be wrapped in a box fully covered and stuffed to avoid any damage. Posters without frame will be rolled inside the triangle shaped tube.",
-  saleLine: "Sale {discountPercentage}% with code: {code}, Delivery for FREE!",
+  saleLine: "Sale {discountPercentage}% with code:  {code} , Delivery for FREE!",
   "landingPage.title": "Create beautiful map as a memory for your trip",
   "landingPage.1.title": "Own design",
   "landingPage.1.alttext": "Own design",
@@ -27,7 +27,7 @@ const common = {
     "Do you wish you map to be fitted in a frame or not? You can choose.",
   "landingPage.cta": "{value}",
 
-  "examples.title": "Make you adventure last forever",
+  "examples.title": "Make your adventure last forever",
   "examples.subtitle":
     "Remember you unique moments of your life by creating personalized map.",
   "examples.cta": "Start designing",

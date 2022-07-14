@@ -1,57 +1,58 @@
-import { useState, useEffect, useMemo } from "react";
-import axios from "axios";
-import { useRouter } from "next/router";
+import { useState, useEffect, useMemo } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
-import { VARIANTS_PRINTFUL } from "constants/constants";
+import { VARIANTS_PRINTFUL } from 'constants/constants'
 
-import { getLazyDownloader } from "LibGlobal/getLazyDownloader";
-import { getCurrencyFromLocale } from "LibGlobal/getCurrencyFromLocale";
+import { getLazyDownloader } from 'LibGlobal/getLazyDownloader'
+import { useProductSelector } from 'redux/order/reducer'
+import { useGetCurrency } from 'hooks/useGetCurrency'
 
-let cachedResponse = {};
+let cachedResponse = {}
 
 const fetchDataPrintful = async (variantIdsArr, currency) => {
-  const resp = await axios.post(`api/data-printful`, {
-    variantIdsArr,
-    currency,
-  });
+    const resp = await axios.post(`api/data-printful`, {
+        variantIdsArr,
+        currency
+    })
 
-  return resp;
-};
+    return resp
+}
 
 export function useGetDataPrintful() {
-  const [data, setData] = useState(null);
-  const { locale } = useRouter();
+    const [data, setData] = useState(null)
+    const { locale } = useRouter()
+    const currency = useGetCurrency()
 
-  const variantIdsArr = VARIANTS_PRINTFUL.map((variant) => variant.id);
+    const variantIdsArr = VARIANTS_PRINTFUL.map(variant => variant.id)
 
-  const getSetPrice = async () => {
-    try {
-      const lazyDownloadDataPrintfull = () => {
-        return getLazyDownloader(
-          () => cachedResponse[locale],
-          () => fetchDataPrintful(variantIdsArr, getCurrencyFromLocale(locale)),
-          getCurrencyFromLocale(locale)
-        )();
-      };
-      const response = await lazyDownloadDataPrintfull();
+    const getSetPrice = async () => {
+        try {
+            const lazyDownloadDataPrintfull = () => {
+                return getLazyDownloader(
+                    () => cachedResponse[currency],
+                    () => fetchDataPrintful(variantIdsArr, currency),
+                    currency
+                )()
+            }
+            const response = await lazyDownloadDataPrintfull()
 
-      cachedResponse = { [locale]: response, ...cachedResponse };
+            cachedResponse = { [locale]: response, ...cachedResponse }
 
-      setData(response.data.finalResult);
-    } catch (e) {
-      console.log({ getSetPrice_error: e });
+            setData(response.data.finalResult)
+        } catch (e) {
+            console.log({ getSetPrice_error: e })
+        }
     }
-  };
 
-  useEffect(() => {
-    console.log({ new_locale: locale });
-    setData(null);
-    getSetPrice();
-  }, [JSON.stringify(variantIdsArr), locale]);
+    useEffect(() => {
+        setData(null)
+        getSetPrice()
+    }, [JSON.stringify(variantIdsArr), currency])
 
-  const data_memo = useMemo(() => {
-    return data;
-  }, [data]);
+    const data_memo = useMemo(() => {
+        return data
+    }, [data])
 
-  return { dataPrintful: data_memo };
+    return { dataPrintful: data_memo }
 }

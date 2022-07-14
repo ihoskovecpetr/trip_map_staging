@@ -76,8 +76,6 @@
     "react-intl-redux": "^2.2.0",
     "react-mapbox-gl": "^5.1.1",
     "react-multi-carousel": "^2.5.5",
-    "react-scroll": "^1.8.0",
-    "react-stickynode": "^3.0.3",
     "react-stripe-checkout": "^2.6.3",
     "react-thunk": "^1.0.0",
     "react-toastify": "^7.0.3",
