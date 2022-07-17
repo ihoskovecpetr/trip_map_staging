@@ -20,7 +20,6 @@ import { useIsSafari } from 'Hooks/useIsSafari'
 import { mobile, color } from 'utils'
 import DiscountBanner from 'components/DiscountBanner'
 import { useTranslation } from 'Hooks/useTranslation'
-import { getIsProduction } from 'LibGlobal/getIsProduction'
 import { fontWeight } from 'utils'
 
 import Carousel1 from 'assets/carousel_landing/webp/1.webp'
@@ -61,7 +60,6 @@ export default function LandingPage() {
     const { displayPNG } = useDisplayPNG()
     const isSafari = useIsSafari()
     const t = useTranslation()
-    const isProduction = getIsProduction()
 
     useEffect(() => {
         const vh = window.innerHeight * 0.01
@@ -140,7 +138,6 @@ export default function LandingPage() {
                 <Box sx={styles.contentBox}>
                     <Box sx={styles.headingTop}>
                         <TextFeature subTitle={t(data.subTitle)} title={t(data.title)} />
-                        {!isProduction ? 'stg' : 'prod'}
                     </Box>
 
                     <Grid gap="15px 0" columns={1} sx={styles.gridCards}>
