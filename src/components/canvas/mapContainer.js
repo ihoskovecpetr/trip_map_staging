@@ -9,11 +9,12 @@ import Backdrop from '@material-ui/core/Backdrop'
 
 import { mobile } from 'utils'
 import { useScreenSize } from 'Hooks/useScreenSize'
-
+import { getBbox } from 'LibGlobal/getBbox'
 import iconChat from 'assets/mapIcons/pin2D.svg'
 import { useElementDimensions } from 'Hooks/useElementDimensions'
 import { getSortedArraysDraggable } from 'LibGlobal/getSortedArraysDraggable'
 import { getGeoArc } from 'LibGlobal/getGeoArc'
+import RoadMapLines from 'components/RoadMapLines'
 import { getCenteringLayoutDimensions } from 'LibGlobal/getCenteringLayoutDimensions'
 import MapButtons from './mapButtons'
 
@@ -38,7 +39,8 @@ import {
     VARIANTS_PRINTFUL,
     MAP_STYLES,
     MAP_STYLED_AND_FLIGHT_COLOR,
-    LABEL_SIZE_KOEF
+    LABEL_SIZE_KOEF,
+    MODE_OF_TRANSPORT
 } from 'constants/constants'
 
 const NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN =
@@ -70,17 +72,13 @@ export default function MapContainer({
     const productRedux = useProductSelector()
     const activeLayoutNameRedux = useActiveLayoutSelector()
     const activeMapStyleName = useActiveMapStyleSelector()
-    const seenPopup = useSeenPopupSelector()
     const journeysDragable = useGetJourneysDraggable()
     const sortedGroupsJourneys = getSortedArraysDraggable(journeysDragable)
-
     const mapZoom = useMapZoomSelector()
     const mapCenterCoordinates = useMapCoordinatesSelector()
     const journeysSpecs = useGetJourneysSpecsSelector()
     const isJourneysEnabled = useJourneysEnabledSelector()
-    const icons = useGetIcons()
     const { height: screenHeight } = useScreenSize()
-    const [isCreatingImage, setIsCreatingImage] = useState(false)
     const [draggedPoint, setDraggedPoint] = useState()
     const [lightbox, setLightbox] = useState({
         open: false,
@@ -152,9 +150,8 @@ export default function MapContainer({
     useEffect(() => {
         map?.resize()
         if (map && Object.values(journeysDragable.locations).length > 0) {
-            // map.fitBounds(getBbox(journeysDragable), { padding: 80 });
+            // map.fitBounds(getBbox(journeysDragable), { padding: 80 })
         }
-        console.log('Map_resize')
     }, [journeysDragable])
 
     useEffect(() => {
@@ -394,19 +391,32 @@ const PrintLocations = ({
                       toLocation={previousPoint.location}
                     /> */}
 
-                                        <Layer
-                                            type="line"
-                                            layout={lineLayout}
-                                            key={`${pointIndex}_2_${groupIndex}`}
-                                            paint={{
-                                                'line-color': MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain,
-                                                'line-width': lineWidth
-                                            }}
-                                        >
-                                            <Feature
-                                                coordinates={getGeoArc(currentPoint.location, previousPoint.location)}
+                                        {currentPoint.modeOfTransport === MODE_OF_TRANSPORT.flying && (
+                                            <Layer
+                                                type="line"
+                                                layout={lineLayout}
+                                                key={`${pointIndex}_2_${groupIndex}`}
+                                                paint={{
+                                                    'line-color':
+                                                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain,
+                                                    'line-width': lineWidth
+                                                }}
+                                            >
+                                                <Feature
+                                                    coordinates={getGeoArc(
+                                                        currentPoint.location,
+                                                        previousPoint.location
+                                                    )}
+                                                />
+                                            </Layer>
+                                        )}
+                                        {currentPoint.modeOfTransport === MODE_OF_TRANSPORT.driving && (
+                                            <RoadMapLines
+                                                lineWidth={lineWidth}
+                                                currentPoint={currentPoint}
+                                                previousPoint={previousPoint}
                                             />
-                                        </Layer>
+                                        )}
                                     </>
                                 )}
                                 {currentPoint.titleLabelDisplayed && (

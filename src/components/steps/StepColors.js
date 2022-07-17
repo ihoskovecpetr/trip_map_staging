@@ -41,6 +41,7 @@ import { TAB_STEPS } from '@constants'
 import { useTranslation } from 'Hooks/useTranslation'
 
 import { setActiveMapStyleAction, setJourneysIsEnabled } from 'redux/order/actions'
+import { useCachedDirectionApiRequest } from 'Hooks/useCachedDirectionApiRequest'
 
 export default function Step4Colors({ index }) {
     const dispatch = useDispatch()

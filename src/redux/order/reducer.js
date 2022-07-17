@@ -2,7 +2,7 @@ import { countActionTypes } from './actions'
 import produce from 'immer'
 import { useSelector } from 'react-redux'
 import { HYDRATE } from 'next-redux-wrapper' // ADD HYDRATE!!
-
+import { MODE_OF_TRANSPORT } from 'constants/constants'
 import { getMaxLocationIndex } from 'LibGlobal/getMaxLocationIndex'
 
 import {
@@ -71,12 +71,13 @@ const orderInitialState = {
             'location-1': {
                 id: 'location-1',
                 index: 1,
-                location: [12.4, 45.45],
-                sourceId: 'SourceId_0.8124203642234944',
-                title: 'Venice',
-                titleLabel: 'Venice',
+                location: [14.421253, 50.087465],
+                sourceId: 'SourceId_0.900301282366442',
+                title: 'Praha',
+                titleLabel: 'Praha',
+                modeOfTransport: MODE_OF_TRANSPORT.driving,
                 titleLabelDisplayed: true,
-                titleLocation: [12.4, 45.45],
+                titleLocation: [14.421253, 50.087465],
                 titleSourceId: 'TitleSourceId_0.9464388321842834'
             },
             'location-2': {
@@ -86,6 +87,7 @@ const orderInitialState = {
                 sourceId: 'SourceId_0.0578665585636553',
                 title: 'Pompeii',
                 titleLabel: 'Pompeii',
+                modeOfTransport: MODE_OF_TRANSPORT.driving,
                 titleLabelDisplayed: true,
                 titleLocation: [14.48972, 40.75056],
                 titleSourceId: 'TitleSourceId_0.53453sdf'
@@ -97,6 +99,7 @@ const orderInitialState = {
                 sourceId: 'SourceId_0.35696641244013017',
                 title: 'Pisa',
                 titleLabel: 'Pisa',
+                modeOfTransport: MODE_OF_TRANSPORT.flying,
                 titleLabelDisplayed: true,
                 titleLocation: [10.4, 43.71667],
                 titleSourceId: 'TitleSourceId_0.16435689126355468'
@@ -109,6 +112,8 @@ const orderInitialState = {
                 titleSourceId: 'TitleSourceId_0.5097616552704971',
                 title: 'Roma',
                 titleLabel: 'Roma',
+                modeOfTransport: MODE_OF_TRANSPORT.driving,
+
                 titleLabelDisplayed: true,
                 titleLocation: [12.48278, 41.89306]
             }
@@ -137,7 +142,7 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
                 // WHY checking name??
                 metaPayload = payload.order
             } else {
-                metaPayload = metaPayloadStripped
+                metaPayload = payload.order //metaPayloadStripped
             }
 
             if (typeof window !== 'undefined') {
@@ -246,7 +251,7 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
             return state
 
         case countActionTypes.UPDATE_LOCATION:
-            state.journeysDraggable.locations[data.id] = data
+            state.journeysDraggable.locations[data.id] = { ...state.journeysDraggable.locations[data.id], ...data }
             return state
 
         case countActionTypes.REMOVE_LOCATION:
@@ -302,7 +307,6 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
 
             state.journeysDraggable.trips[newTripName] = {
                 id: newTripName,
-                title: 'Spojený trip 2',
                 locationIds: [newLocationId]
             }
 
@@ -338,7 +342,6 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
         case countActionTypes.SET_CURRENCY_REGION:
             state = { ...state, ...data }
 
-            console.log({ newSatte: state })
             return state
 
         default:

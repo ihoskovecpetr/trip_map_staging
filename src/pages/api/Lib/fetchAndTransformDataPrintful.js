@@ -56,7 +56,7 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, currency) => {
                 return {
                     ...acc,
                     [cur.data.result.variant.id]: {
-                        price: productCostCurrency,
+                        // price: productCostCurrency,
                         // costProductWithDelivery: costWithShipping,
                         priceWithDeliveryAndProfit: priceWithDeliveryAndProfit, // using this one
                         url: cur.data.result.variant.image, // using this one

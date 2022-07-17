@@ -62,8 +62,6 @@ export default function StepFraming({ index }) {
         //TODO there has to be price, otherwise return?
     }
 
-    console.log({ dataPrintful })
-
     const variantsPrintfulForSize = VARIANTS_PRINTFUL.filter(variant => {
         const availableRegions = dataPrintful && dataPrintful[variant.id]?.availableRegions
 
@@ -75,16 +73,8 @@ export default function StepFraming({ index }) {
             isAvailableRegionsArray &&
             availableRegions?.includes(deliveryRegion)
 
-        console.log({
-            isVariantForOffer,
-            cond_1: productRedux.sizeObject.acceptableSizes.includes(variant.sizeName),
-            availableRegions: availableRegions,
-            deliveryRegion
-        })
         return isVariantForOffer
     })
-
-    console.log({ variantsPrintfulForSize })
 
     const variantObjectNoFrame = variantsPrintfulForSize.find(
         variant => variant.frameName === FRAME_OPTION_NAMES.NO_FRAME

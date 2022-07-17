@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 
+import { useTranslation } from 'Hooks/useTranslation'
+import { MODE_OF_TRANSPORT } from '@constants'
 import LocationLine from './LocationLine'
 import GeocoderInput from 'components/GeocoderInput_new'
 
@@ -63,6 +65,7 @@ export default function TripSingle({
 }) {
     const dispatch = useDispatch()
     const [thisActiveNewInput, setThisActiveNewInput] = useState(false)
+    const t = useTranslation()
 
     const setGeocoderResult = (tripId, result) => {
         const sourceId = 'SourceId_' + Math.random()
@@ -79,6 +82,7 @@ export default function TripSingle({
                     title: newTitle,
                     titleLabel: newTitle,
                     titleLabelDisplayed: true,
+                    modeOfTransport: MODE_OF_TRANSPORT.driving,
                     titleLocation: result.geometry.coordinates
                 },
                 tripId: tripId
@@ -144,7 +148,7 @@ export default function TripSingle({
                                     boxShadow: '0px 0px 5px grey',
                                     width: '100%'
                                 }}
-                                placeholder={'Další bod tripu'}
+                                placeholder={t('steps.locality.nextDestination')}
                                 setResult={e => setGeocoderResult(tripObj.id, e)}
                                 clearOnFocus
                                 onClick={() => {

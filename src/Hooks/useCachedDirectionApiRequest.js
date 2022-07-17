@@ -4,23 +4,29 @@ import { getDirectionCoordinates } from 'LibGlobal/getDirectionCoordinates'
 const cachedResults = {}
 let promise = null
 
-export function useCachedAjaxRequest({ fromLocation, toLocation }) {
+export function useCachedDirectionApiRequest(fromLng, fromLat, toLng, toLat) {
     const [result, setResult] = useState(null)
+
+    const fromLocation = [fromLng, fromLat]
+    const toLocation = [toLng, toLat]
 
     const asyncGetDirection = async (fromLocation, toLocation, encodedLocation) => {
         const direction = await getDirectionCoordinates(fromLocation, toLocation)
         cachedResults[encodedLocation] = direction
+
         setResult(direction)
+        return direction
     }
 
     const exec = async () => {
         const encodedLocation = encodeURIComponent(`${fromLocation};${toLocation}`)
-        const result = cachedResults[encodedLocation]
+        const cachedResult = cachedResults[encodedLocation]
 
-        if (result) {
+        if (cachedResult) {
             promise = null
 
-            setResult(result)
+            setResult(cachedResult)
+            return cachedResult
         }
 
         if (promise) {
@@ -28,14 +34,14 @@ export function useCachedAjaxRequest({ fromLocation, toLocation }) {
         }
 
         promise = true
-        asyncGetDirection(fromLocation, toLocation, encodedLocation)
         setResult([])
+        return await asyncGetDirection(fromLocation, toLocation, encodedLocation)
     }
 
     useEffect(() => {
         setResult(null)
         exec()
-    }, [fromLocation, toLocation])
+    }, [fromLng, fromLat, toLng, toLat])
 
     return result
 }

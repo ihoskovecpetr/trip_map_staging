@@ -1,39 +1,37 @@
-let promise = {};
+let promise = {}
 
 const resetPendingPromise = () => {
-  promise = {};
-};
+    promise = {}
+}
 
-let count = 0;
+let count = 0
 
-const getLazyDownloader = (getResult, getPromise, uniqueString = "unique") => {
-  console.log({ uniqueString });
-  return async () => {
-    const result = getResult();
+const getLazyDownloader = (getResult, getPromise, uniqueString = 'unique') => {
+    return async () => {
+        const result = getResult()
 
-    console.log({ count });
-    count++;
+        count++
 
-    if (result) {
-      console.log("returning_result");
+        if (result) {
+            console.log('returning_result')
 
-      promise = {};
-      return result;
+            promise = {}
+            return result
+        }
+
+        if (promise[uniqueString]) {
+            console.log('returning_existing_promisse')
+            return promise[uniqueString]
+        }
+
+        console.log('returning_new_promisse')
+
+        promise[uniqueString] = getPromise()
+        return promise[uniqueString]
     }
-
-    if (promise[uniqueString]) {
-      console.log("returning_existing_promisse");
-      return promise[uniqueString];
-    }
-
-    console.log("returning_new_promisse");
-
-    promise[uniqueString] = getPromise();
-    return promise[uniqueString];
-  };
-};
+}
 
 module.exports = {
-  getLazyDownloader,
-  resetPendingPromise,
-};
+    getLazyDownloader,
+    resetPendingPromise
+}

@@ -31,7 +31,7 @@ const BOTTOM_BANNER = 0.09
 const BOTTOM_BANNER_BIGGER = 0.1
 const BLURRED_AREA_HEIGHT = 0.09
 const TITLES_FONT_DEFAULT = 'RobotoMono_local'
-const TITLES_DEFAULT = ['Italy summer 2021', '— Roma - Toscany - Naples —']
+const TITLES_DEFAULT = ['Italy summer 2022', '— Roma - Toscany - Naples —']
 
 const FRAME_COLOR_WHITE = '#F5F5F5'
 const FRAME_COLOR_BLACK = 'black'
@@ -541,7 +541,7 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
         colorMain: 'black',
         colorSecondary: 'white',
         colorText: 'rgba(00,00,00,1)',
-        colorHalo: 'white'
+        colorHalo: '#e2dd7e'
     },
     [MAP_STYLES_NAMES.WHITE_BLUE]: {
         colorMain: 'black',
@@ -714,6 +714,8 @@ const AVAILABLE_DESTINATIONS = [
     { country: 'USA', region: 'US' },
     { country: 'Australia', region: 'AU' }
 ]
+
+const MODE_OF_TRANSPORT = { driving: 'driving', flying: 'flying' }
 // JP, UK, EU_LV, EU_ES
 
 module.exports = {
@@ -762,5 +764,6 @@ module.exports = {
     LOCALE_TO_LANGUAGE_SHORTCUT,
     AVAILABLE_CURRENCIES,
     AVAILABLE_REGIONS,
-    AVAILABLE_DESTINATIONS
+    AVAILABLE_DESTINATIONS,
+    MODE_OF_TRANSPORT
 }

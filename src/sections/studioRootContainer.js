@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React, { useEffect, useRef, useState } from 'react'
-import { jsx, Box } from 'theme-ui'
+import { jsx, Container } from 'theme-ui'
 import TabsRoot from 'components/Tabs/TabsRoot'
 import MapContainer from 'components/canvas/mapContainer'
 import styled from 'styled-components'
@@ -18,7 +18,6 @@ import { setDevicePixelRatio } from 'LibGlobal/setDevicePixelRatio'
 import { color, mobile, desktop } from 'utils'
 import { useScreenSize } from 'Hooks/useScreenSize'
 import { useDebounce } from 'Hooks/useDebounce'
-import { Container } from 'theme-ui'
 import white_wall from 'assets/studio_bg/white_wall.jpg'
 
 import {
@@ -148,6 +147,7 @@ const resizeInputs = ({ mapTitles, saveTitlesValue, mapHeight, mapWidth, layout,
         layout,
         color: textLayoutColor
     })
+
     prepareTextInput({
         element: subtitleInput,
         name: 'subtitle',
@@ -197,7 +197,6 @@ export default function StudioRootContainer() {
     const debounce = useDebounce({ delayInMS: 1000 })
 
     const { height: headerHeight } = useElementDimensions('header')
-    const { height: bannerHeight } = useElementDimensions('discountBanner')
 
     const { height: mapAvailSpaceHeight, width: mapAvailSpaceWidth } = useElementDimensions('map_available_space_id')
 

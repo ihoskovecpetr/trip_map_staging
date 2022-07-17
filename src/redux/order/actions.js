@@ -195,7 +195,6 @@ export const setActiveStepNumber = number => dispatch => {
 }
 
 export const setCurrencyRegion = obj => dispatch => {
-    console.log({ new_obj: obj })
     return dispatch({
         type: countActionTypes.SET_CURRENCY_REGION,
         data: obj
