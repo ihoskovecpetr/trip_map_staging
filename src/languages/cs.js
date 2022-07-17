@@ -96,7 +96,12 @@ const common = {
     'experience.custommer5.name': 'Romana Jelínková',
     'error.contactingStripe':
         'Info: Něco se pokazilo při kontaktování platební brány. Po zavření a otevřete této webové stránky můžete mapu objednat.',
-    'product.material': 'Matný vylepšený papír'
+    'product.material': 'Matný vylepšený papír',
+    'cookies.text':
+        'Tento web používá k poskytování služeb, personalizaci reklam a analýze návštěvnosti soubory cookie. Používáním tohoto webu s tím souhlasíte.',
+    'cookies.readMore': 'Více o GDPR se dočtete ',
+    'cookies.consent': 'Souhlasím',
+    'cookies.here': 'zde'
 }
 
 export const cs = {

@@ -1,149 +1,122 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
-import NextApp from "next/app";
-import axios from "axios";
-import { IntlProvider } from "react-intl";
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import NextApp from 'next/app'
+import axios from 'axios'
+import { IntlProvider } from 'react-intl'
 
-import CookieConsent from "react-cookie-consent";
-import styled, { ThemeProvider } from "styled-components";
-import { useCookies } from "react-cookie";
-import { color } from "utils";
+import styled, { ThemeProvider } from 'styled-components'
+import { useCookies } from 'react-cookie'
 
 // import { initGA, logPageView } from "analytics";
 // Load DM Sans typeface
-import "typeface-dm-sans";
-import { ThemeProvider as ThemeProviderMaterialUI } from "@material-ui/styles";
-import { wrapper } from "../redux/store";
+import 'typeface-dm-sans'
+import { ThemeProvider as ThemeProviderMaterialUI } from '@material-ui/styles'
+import { wrapper } from '../redux/store'
 
 // Load other package css file
-import "react-multi-carousel/lib/styles.css";
-import "rc-drawer/assets/index.css";
-import "./style.css";
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import "react-toastify/dist/ReactToastify.css";
-import "react-image-lightbox/style.css";
-import theme from "../theme/theme.js";
-import themeMaterialUI from "../theme/themeMaterialUI.js";
-import { GlobalStyle } from "../theme/global";
+import 'react-multi-carousel/lib/styles.css'
+import 'rc-drawer/assets/index.css'
+import './style.css'
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import 'react-toastify/dist/ReactToastify.css'
+import 'react-image-lightbox/style.css'
+import theme from '../theme/theme.js'
+import themeMaterialUI from '../theme/themeMaterialUI.js'
+import { GlobalStyle } from '../theme/global'
+import { useTranslation } from 'Hooks/useTranslation'
 
-import { useFullStoreSelector } from "redux/order/reducer";
+import { useFullStoreSelector } from 'redux/order/reducer'
 
-import { REDUX_COOKIE_NAME, IS_CLIENT } from "constants/constants";
-import * as locales from "../languages";
+import { REDUX_COOKIE_NAME, IS_CLIENT } from 'constants/constants'
+import Cookies from 'components/Cookies'
+import * as locales from '../languages'
 
 const MyApp = ({ Component, pageProps, err, ...props }) => {
-  const router = useRouter();
-  const { locale, defaultLocale, pathname } = router;
-  const localeCopy = locales[locale];
-  const messages = localeCopy[pathname];
-  const [cookie, _] = useCookies([REDUX_COOKIE_NAME]);
+    const router = useRouter()
+    const { locale, defaultLocale, pathname } = router
+    const localeCopy = locales[locale]
+    const messages = localeCopy[pathname]
+    const [cookie, _] = useCookies([REDUX_COOKIE_NAME])
+    // const t = useTranslation()
 
-  const fullReduxStore = useFullStoreSelector();
+    const fullReduxStore = useFullStoreSelector()
 
-  useEffect(() => {
-    const storedCookie = cookie[REDUX_COOKIE_NAME];
+    useEffect(() => {
+        const storedCookie = cookie[REDUX_COOKIE_NAME]
 
-    const saveReduxStore = async (store) => {
-      const response = await axios.post("api/save-redux-store", {
-        reduxStore: {
-          ...store,
-          defaultLocale: router.defaultLocale,
-          locale: router.locale,
-        },
-        storeId: storedCookie,
-      });
+        const saveReduxStore = async store => {
+            const response = await axios.post('api/save-redux-store', {
+                reduxStore: {
+                    ...store,
+                    defaultLocale: router.defaultLocale,
+                    locale: router.locale
+                },
+                storeId: storedCookie
+            })
 
-      if (response.status === 203) {
-        const URLWithoutQuery =
-          window.location.origin + window.location.pathname;
+            if (response.status === 203) {
+                const URLWithoutQuery = window.location.origin + window.location.pathname
 
-        window.location.href = URLWithoutQuery;
-      }
-    };
+                window.location.href = URLWithoutQuery
+            }
+        }
 
-    saveReduxStore(fullReduxStore);
-  }, [fullReduxStore]);
+        saveReduxStore(fullReduxStore)
+    }, [fullReduxStore])
 
-  useEffect(() => {
-    if (router.pathname === "/studio") {
-      const storedCookie = cookie[REDUX_COOKIE_NAME];
+    useEffect(() => {
+        if (router.pathname === '/studio') {
+            const storedCookie = cookie[REDUX_COOKIE_NAME]
 
-      const NonCookieOwner = storedCookie != router?.query?.id;
-      const isMissingQueryID = !router?.query?.id;
+            const NonCookieOwner = storedCookie != router?.query?.id
+            const isMissingQueryID = !router?.query?.id
 
-      if (NonCookieOwner || isMissingQueryID) {
-        router.query.id = storedCookie;
-        router.push(router);
-      }
-    }
-  }, [router.pathname]);
+            if (NonCookieOwner || isMissingQueryID) {
+                router.query.id = storedCookie
+                router.push(router)
+            }
+        }
+    }, [router.pathname])
 
-  return (
-    <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <ThemeProviderMaterialUI theme={themeMaterialUI}>
-          <IntlProvider
-            locale={locale}
-            defaultLocale={defaultLocale}
-            messages={messages} //{pageProps.intlMessages}
-          >
-            <CookieConsent
-              location="bottom"
-              buttonText="Souhlasím"
-              cookieName="myAwesomeCookieName2"
-              style={{ background: "#2B373B" }}
-              buttonStyle={{
-                background: "#f6aa1c",
-                color: "#4e503b",
-                fontSize: "13px",
-              }}
-              expires={150}
-            >
-              Tento web používá k poskytování služeb, personalizaci reklam a
-              analýze návštěvnosti soubory cookie. Používáním tohoto webu s tím
-              souhlasíte.{" "}
-              <span style={{ fontSize: "10px" }}>
-                Více o GDPR se dočtete{" "}
-                <StyledA href="/business-info">zde</StyledA>
-              </span>
-            </CookieConsent>
+    return (
+        <>
+            <GlobalStyle />
+            <ThemeProvider theme={theme}>
+                <ThemeProviderMaterialUI theme={themeMaterialUI}>
+                    <IntlProvider
+                        locale={locale}
+                        defaultLocale={defaultLocale}
+                        messages={messages} //{pageProps.intlMessages}
+                    >
+                        <Cookies /> <Component {...pageProps} />
+                    </IntlProvider>
+                </ThemeProviderMaterialUI>
+            </ThemeProvider>
+        </>
+    )
+}
 
-            <Component {...pageProps} />
-          </IntlProvider>
-        </ThemeProviderMaterialUI>
-      </ThemeProvider>
-    </>
-  );
-};
+MyApp.getInitialProps = wrapper.getInitialPageProps(store => async appContext => {
+    const { ctx } = appContext
 
-MyApp.getInitialProps = wrapper.getInitialPageProps(
-  (store) => async (appContext) => {
-    const { ctx } = appContext;
-
-    const { pathname, req, res, router } = ctx;
+    const { pathname, req, res, router } = ctx
 
     if (IS_CLIENT) {
-      return;
+        return
     }
 
-    const { meta } = req;
+    const { meta } = req
 
     if (meta?.storeId && res.cookie[REDUX_COOKIE_NAME] != meta.storeId) {
-      res.cookie(REDUX_COOKIE_NAME, meta.storeId, {
-        maxAge: 900000,
-        httpOnly: false,
-      });
+        res.cookie(REDUX_COOKIE_NAME, meta.storeId, {
+            maxAge: 900000,
+            httpOnly: false
+        })
     }
 
-    const appProps = await NextApp.getInitialProps(appContext);
+    const appProps = await NextApp.getInitialProps(appContext)
 
-    return { ...appProps, storeId: meta?.storeId };
-  }
-);
+    return { ...appProps, storeId: meta?.storeId }
+})
 
-const StyledA = styled.a`
-  color: ${color("cta_color")};
-`;
-
-export default wrapper.withRedux(MyApp); //appWithTranslation(MyApp)
+export default wrapper.withRedux(MyApp) //appWithTranslation(MyApp)

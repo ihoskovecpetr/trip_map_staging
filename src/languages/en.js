@@ -73,7 +73,12 @@ const common = {
     'print.btnName': 'more about Printful',
     'error.contactingStripe':
         'Info: Something went wrong while contacting your payment gate, try to make you payment again or contact the administrator',
-    'product.material': 'high quality matted paper'
+    'product.material': 'high quality matted paper',
+    'cookies.text':
+        'This web is using Cookies for personalisation of advertisement, tracking visits and saving your current cart status. By using of this web you agree with those conditions.',
+    'cookies.readMore': 'More about GDPR ',
+    'cookies.consent': 'OK',
+    'cookies.here': 'here'
 }
 
 export const en = {

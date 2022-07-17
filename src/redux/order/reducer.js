@@ -33,7 +33,7 @@ const orderInitialState = {
         price: null,
         sizeObject: SIZES[3],
         variantId: VARIANTS_PRINTFUL[3].id,
-        materialDesc: 'product.material',
+        materialDesc: 'Matted paper',
         shippingCode: VARIANTS_PRINTFUL[3].shipping['CZK'].codeCZ,
         isLayoutColorSwitched: false,
         densityConstant: 2
@@ -52,7 +52,7 @@ const orderInitialState = {
     discount: { code: VALID_DISCOUNT_CODES[0].code, codeAccepted: true },
     string: '',
     storeId: '',
-    currency: 'CZK',
+    currency: 'EUR',
     deliveryRegion: 'EU',
     journeysSpecs: {
         labelSizePrint: 10,
@@ -147,7 +147,6 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
 
             if (typeof window !== 'undefined') {
                 const storedPopupState = localStorage.getItem('seenPopup')
-                console.log({ metaPayload })
                 return {
                     ...orderInitialState,
                     ...state,

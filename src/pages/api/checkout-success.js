@@ -30,35 +30,6 @@ const axiosConfig = {
     }
 }
 
-const smtpTransportNotice = smtpTransportTMEmail.getSmtpTransport()
-const smtpTransportCustommer = smtpTransportTMEmail.getSmtpTransport()
-
-smtpTransportNotice.use(
-    'compile',
-    hbs({
-        viewEngine: {
-            extName: '.handlebars',
-            partialsDir: './',
-            layoutsDir: './',
-            defaultLayout: './src/pages/api/orderAdminNotice.handlebars'
-        },
-        viewPath: ''
-    })
-)
-
-smtpTransportCustommer.use(
-    'compile',
-    hbs({
-        viewEngine: {
-            extName: '.handlebars',
-            partialsDir: './',
-            layoutsDir: './',
-            defaultLayout: './src/pages/api/orderCustomerConfirmation.handlebars'
-        },
-        viewPath: ''
-    })
-)
-
 const connectToMongoose = async () => {
     try {
         const data = await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
@@ -119,6 +90,35 @@ const orderOnPrintful = async ({ shipping, product, imageObj }) => {
 const sendEmailsHandler = async ({ session, responsePrintful, product, mapTitles }) => {
     try {
         const productDescription = getVariantObject(product.variantId)?.frameName
+
+        const smtpTransportNotice = await smtpTransportTMEmail.getSmtpTransport()
+        const smtpTransportCustommer = await smtpTransportTMEmail.getSmtpTransport()
+
+        smtpTransportNotice.use(
+            'compile',
+            hbs({
+                viewEngine: {
+                    extName: '.handlebars',
+                    partialsDir: './',
+                    layoutsDir: './',
+                    defaultLayout: './src/pages/api/orderAdminNotice.handlebars'
+                },
+                viewPath: ''
+            })
+        )
+
+        smtpTransportCustommer.use(
+            'compile',
+            hbs({
+                viewEngine: {
+                    extName: '.handlebars',
+                    partialsDir: './',
+                    layoutsDir: './',
+                    defaultLayout: './src/pages/api/orderCustomerConfirmation.handlebars'
+                },
+                viewPath: ''
+            })
+        )
 
         const promises = [
             smtpTransportNotice.sendMail({

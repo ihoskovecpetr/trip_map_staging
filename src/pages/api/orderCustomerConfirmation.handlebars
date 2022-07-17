@@ -11,11 +11,11 @@
 
     <body>
         <ul>
-            <h3>Děkujeme za objednávku.</h3>
+            <h3>Thank you or your order</h3>
 
-            <h4>Vaše objednávka byla přijata a předána ke zhotovení.</h4>
+            <h4>Your order has been handed to the company</h4>
 
-            <b>Shrnutí</b>
+            <b>Summary</b>
 
             <table style='width:300px'>
                 <tr>
@@ -23,32 +23,32 @@
                     <td><b>{{sessionId}}</b></td>
                 </tr>
                 <tr>
-                    <td>Varianta</td>
+                    <td>Variant</td>
                     <td><b>{{productDescription}}</b></td>
                 </tr>
                 <tr>
-                    <td>Titul</td>
+                    <td>Title</td>
                     <td><b>{{mapTitles.heading.text}}</b></td>
                 </tr>
                 <tr>
-                    <td>Podtitul</td>
+                    <td>Subtitle</td>
                     <td><b>{{mapTitles.subtitle.text}}</b></td>
                 </tr>
                 <tr>
-                    <td>Materiál</td>
+                    <td>Material</td>
                     <td><b>{{product.materialDesc}}</b></td>
                 </tr>
                 <tr>
-                    <td>Rozměry</td>
+                    <td>Dimentions</td>
                     <td><b>{{product.sizeObject.name}} [{{product.sizeObject.unit}}]</b></td>
                 </tr>
                 <tr>
-                    <td>Cena včetně dopravy</td>
+                    <td>Total price</td>
                     <td><b>{{sessionAmountTotal}} (bez možnosti odečtu DPH)</b></td>
                 </tr>
             </table>
 
-            <p>Veškeré aktuální obchodní dokumenty připojeny v příloze</p>
+            {{! <p>Veškeré aktuální obchodní dokumenty připojeny v příloze</p> }}
             {{!-- {{#each headlines}}
         <li><b>🇦🇺 🦘 {{text}}</b> ☞ <a class="btn" href={{url}} target="_blank">open</a></li>
         <p>{{date}}</p>
