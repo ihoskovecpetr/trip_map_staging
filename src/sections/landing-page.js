@@ -140,7 +140,7 @@ export default function LandingPage() {
                 <Box sx={styles.contentBox}>
                     <Box sx={styles.headingTop}>
                         <TextFeature subTitle={t(data.subTitle)} title={t(data.title)} />
-                        {!isProduction && 'stg'}
+                        {!isProduction ? 'stg' : 'prod'}
                     </Box>
 
                     <Grid gap="15px 0" columns={1} sx={styles.gridCards}>
