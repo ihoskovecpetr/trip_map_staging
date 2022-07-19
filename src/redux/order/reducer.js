@@ -18,12 +18,12 @@ const _getDefaultLocation = (id, index) => {
     return {
         id: id,
         index: index,
-        location: [14.42139, 50.08861],
+        location: [2.35183, 48.85658],
         sourceId: 'SourceId_' + Math.random(),
-        title: 'Prague',
-        titleLabel: 'Praha',
+        title: 'Paris',
+        titleLabel: 'Paris',
         titleLabelDisplayed: true,
-        titleLocation: [14.42139, 50.08861],
+        titleLocation: [2.35183, 48.85658],
         titleSourceId: 'TitleSourceId_' + Math.random()
     }
 }
@@ -271,7 +271,7 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
             }
             return state
 
-        case countActionTypes.REMOVE_ALL_LOCATIONS:
+        case countActionTypes.REMOVE_ALL_JOURNEYS:
             state.journeysDraggable.locations = {}
             state.journeysDraggable.trips = {}
             state.journeysDraggable.tripsOrder = []

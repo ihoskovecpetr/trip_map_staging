@@ -18,6 +18,7 @@ import { setDevicePixelRatio } from 'LibGlobal/setDevicePixelRatio'
 import { color, mobile, desktop } from 'utils'
 import { useScreenSize } from 'Hooks/useScreenSize'
 import { useDebounce } from 'Hooks/useDebounce'
+
 import white_wall from 'assets/studio_bg/white_wall.jpg'
 
 import {

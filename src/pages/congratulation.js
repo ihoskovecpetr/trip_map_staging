@@ -15,7 +15,7 @@ export default function CongratulationPage() {
                 <SEO
                     title="Trip Map Congratulation"
                     description="Gratulace k vyřízené objednávce"
-                    author="TripMap.shop"
+                    author="TripMap.org"
                 />
 
                 <Layout withFooter invertHeaderColor>

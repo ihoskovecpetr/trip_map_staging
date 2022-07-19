@@ -91,7 +91,7 @@ export default async (req, res) => {
                 //   ? [clientProduct.shippingCode]
                 //   : test_shipping_code_czk;
 
-                const BASE_DOMAIN = IS_PRODUCTION ? 'http://www.tripmap.shop' : 'http://localhost:3000'
+                const BASE_DOMAIN = IS_PRODUCTION ? 'http://www.tripmap.org' : 'http://localhost:3000'
 
                 const cookieStoreId = req.cookies[REDUX_COOKIE_NAME]
 

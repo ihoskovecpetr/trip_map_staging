@@ -13,7 +13,7 @@ import { useTranslation } from 'Hooks/useTranslation'
 
 import { useGetJourneysDraggable, useMaxTripIdSelector, useNumberOfEmptyTripsSelector } from 'redux/order/reducer'
 
-import { updateLocationSequence, addTrip, addEmptyTrip, removeAllLocations } from 'redux/order/actions'
+import { updateLocationSequence, addTrip, addEmptyTrip, removeAllJourneys } from 'redux/order/actions'
 
 export default function TripsAll({ map }) {
     const dispatch = useDispatch()
@@ -59,17 +59,29 @@ export default function TripsAll({ map }) {
 
     return (
         <>
-            <BtnWrap
-                onClick={() => {
-                    dispatch(addTrip())
-                }}
-            >
-                <AddIcon
-                    style={{
-                        fill: 'green'
+            <BtnContainer>
+                <NewTripBtn
+                    onClick={() => {
+                        dispatch(addTrip())
                     }}
-                />
-            </BtnWrap>
+                >
+                    <StyledAddCircleOutlineIcon
+                        style={{
+                            fill: 'green'
+                        }}
+                    />
+                    <p>{t('steps.newTrip')}</p>
+                </NewTripBtn>
+                <DeleteBtn
+                    onClick={() => {
+                        dispatch(removeAllJourneys())
+                    }}
+                >
+                    <p>{t('steps.removeAll')}</p>
+                    <StyledDeleteForeverIcon />
+                </DeleteBtn>
+            </BtnContainer>
+
             <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
                 {journeysDraggable?.tripsOrder?.map(tripId => {
                     const tripObj = journeysDraggable?.trips[tripId]
@@ -113,25 +125,62 @@ const EmptyJourneyContainer = styled.div`
     margin-bottom: 10px;
 `
 
-const BtnWrap = styled.div`
+const BtnContainer = styled.div`
     display: flex;
-    justify-content: center;
-    border: 1px solid green;
-    margin: 25px 0 !important;
-    cursor: pointer;
+    width: 100%;
+    justify-content: space-between;
 `
 
-const StyledButton = styled(Button)`
-    color: ${color('heading_secondary')} !important;
-    border: 1px solid ${color('heading_secondary')} !important;
-    text-transform: unset !important;
-    margin-bottom: 0px !important;
-    padding: 2px 3px !important;
-    font-size: ${fontSize('xs')} !important;
+const NewTripBtn = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 2px solid green; */
+    border-radius: 5px;
+    height: 30px;
+    color: green;
+    margin: 15px 2px !important;
+    padding: 0 5px;
+    cursor: pointer;
+    box-shadow: 0 0 5px lightgrey;
 
-    ${mobile`
-    margin-bottom: 20px !important;
-  `};
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    p {
+        margin: 0;
+        margin-top: 3px;
+    }
+`
+
+const DeleteBtn = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    height: 30px;
+    color: red;
+    padding: 5px;
+    margin: 15px 2px !important;
+    padding: 0 5px;
+    cursor: pointer;
+    box-shadow: 0 0 5px lightgrey;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    p {
+        margin: 0;
+        margin-top: 3px;
+    }
+`
+const StyledDeleteForeverIcon = styled(DeleteForeverIcon)`
+    margin-left: 5px;
+`
+
+const StyledAddCircleOutlineIcon = styled(AddIcon)`
+    cursor: pointer;
+    position: relative;
 `
 
 const StyledButtonDelAll = styled(Button)`
@@ -146,8 +195,4 @@ const StyledButtonDelAll = styled(Button)`
     ${mobile`
     margin-bottom: 20px !important;
   `}
-`
-
-const StyledDeleteForeverIcon = styled(DeleteForeverIcon)`
-    margin-left: 5px;
 `

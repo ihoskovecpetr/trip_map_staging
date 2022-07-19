@@ -16,7 +16,8 @@ const common = {
     'faq.2.title': 'What package can I expect?',
     'faq.2.text':
         'The way how our product will be packed depends on product you are going to receive. Framed variants will be wrapped in a box fully covered and stuffed to avoid any damage. Posters without frame will be rolled inside the triangle shaped tube.',
-    'saleLine': 'Sale {discountPercentage}% with code:  {code} , Delivery for FREE!',
+    'saleLine': 'Sale {discountPercentage}% with code:  {code} , FREE delivery!',
+    'saleLineMobile': 'Sale {discountPercentage}% with code:  {code}',
     'landingPage.title': 'Create beautiful map as a memory for your trip',
     'landingPage.1.title': 'Own design',
     'landingPage.1.alttext': 'Own design',
@@ -29,7 +30,7 @@ const common = {
     'examples.title': 'Make your adventure last forever',
     'examples.subtitle': 'Remember you unique moments of your life by creating personalized map.',
     'examples.cta': 'Start designing',
-    'gallery.title': 'Gallery of well done examples',
+    'gallery.title': 'Gallery of finished products',
     'gallery.subtitle': 'Something for inspiration',
     'packages.title': 'Variants of finish',
     'packages.subtitle': 'Choose your variant',
@@ -88,7 +89,7 @@ export const en = {
     '/': {
         ...common,
         'experience.subtitle': 'What our customers think about us?',
-        'experience.title': 'Experience with TripMap.shop',
+        'experience.title': 'Experience with TripMap.org',
         'experience.custommer1.title': 'Modern design',
         'experience.custommer1.text': 'Great gift for friends wedding, this gift has a personality in it',
         'experience.custommer1.name': 'Jana Strolena',
@@ -148,6 +149,9 @@ export const en = {
         'steps.locality.driving': 'Driving',
         'steps.locality.flying': 'Flying',
 
+        'steps.removeAll': 'Clear all',
+        'steps.newTrip': 'New trip',
+
         'steps.splitText': 'By dragging here you separate the point',
         'steps.highOrientation': 'High',
         'steps.lowOrientation': 'Wide',
@@ -181,7 +185,7 @@ export const en = {
         'congratulation.information': 'Final information',
         'congratulation.informationTitle': 'Your map is on the way',
         'congratulation.description':
-            'Payment has been successful, your map is being processed. Payment confirmation and order summary is on the way to your email inbox. If you wish to contact us, refer to your sessionID in the request. In behalf of TripMap.shop, Thank you',
+            'Payment has been successful, your map is being processed. Payment confirmation and order summary is on the way to your email inbox. If you wish to contact us, refer to your sessionID in the request. In behalf of TripMap.org, Thank you',
         'congratulation.byClicking': 'Copy by clicking',
         'congratulation.textCopied': 'Text copied: '
     }

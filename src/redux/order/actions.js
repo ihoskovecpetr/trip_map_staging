@@ -14,7 +14,7 @@ export const countActionTypes = {
     UPDATE_LOCATION_SEQUENCE: 'UPDATE_LOCATION_SEQUENCE',
     UPDATE_LOCATION: 'UPDATE_LOCATION',
     REMOVE_LOCATION: 'REMOVE_LOCATION',
-    REMOVE_ALL_LOCATIONS: 'REMOVE_ALL_LOCATIONS',
+    REMOVE_ALL_JOURNEYS: 'REMOVE_ALL_JOURNEYS',
     ADD_TRIP: 'ADD_TRIP',
     ADD_EMPTY_TRIP: 'ADD_EMPTY_TRIP',
     SET_JOURNEYS_SPECS: 'SET_JOURNEYS_SPECS',
@@ -138,9 +138,9 @@ export const removeLocation = data => dispatch => {
     })
 }
 
-export const removeAllLocations = data => dispatch => {
+export const removeAllJourneys = data => dispatch => {
     return dispatch({
-        type: countActionTypes.REMOVE_ALL_LOCATIONS,
+        type: countActionTypes.REMOVE_ALL_JOURNEYS,
         data
     })
 }

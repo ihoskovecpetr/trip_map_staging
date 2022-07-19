@@ -18,7 +18,7 @@ export default function DiscountBanner() {
         <BannerContainer id="discountBanner">
             <InnerContainer>
                 <StyledParagraph>
-                    {t('saleLine', {
+                    {t(isMobile ? 'saleLineMobile' : 'saleLine', {
                         discountPercentage,
                         code: <b>{VALID_DISCOUNT_CODES[0].code}</b>
                     })}

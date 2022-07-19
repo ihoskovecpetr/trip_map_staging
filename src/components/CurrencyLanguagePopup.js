@@ -52,9 +52,9 @@ export default function CurrencyLanguagePopup() {
 
     return (
         <>
-            <LabelContainer
-                onClick={() => setOpen(!open)}
-            >{`${LOCALE_TO_LANGUAGE_SHORTCUT[locale]} (${currency})`}</LabelContainer>
+            <LabelContainer onClick={() => setOpen(!open)}>
+                {`${LOCALE_TO_LANGUAGE_SHORTCUT[locale]}`}&nbsp;{`(${currency})`}
+            </LabelContainer>
             {open && (
                 <BackdropFromScratch open={open} onClick={() => setOpen(!open)}>
                     <BoxWrap onClick={onCLickBox}>
@@ -111,7 +111,7 @@ export default function CurrencyLanguagePopup() {
                                     }}
                                 >
                                     {router.locales.map(localeName => (
-                                        <option>{localeName}</option>
+                                        <option value={localeName}>{LOCALE_TO_LANGUAGE_SHORTCUT[localeName]}</option>
                                     ))}
                                 </StyledSelect>
                             </SelectColumn>

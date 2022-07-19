@@ -17,6 +17,7 @@ const common = {
     'faq.2.text':
         'Způsob jakým bude finální produkt zabalen se liší dle varianty kterou si vyberete. Varianty s rámem příjdou zabaleny ve velikém boxu plnně zakryty. Varianta bez rámu příjde v tubusu s trojuhelníkovým průřezem. Mapa je smotaná a obalená v ochranném papíru.',
     'saleLine': 'Sleva {discountPercentage}% s kódem: {code}, Doprava zdarma!',
+    'saleLineMobile': 'Sleva {discountPercentage}% s kódem: {code}',
     'landingPage.title': 'Vytvořte si stylovou památku na cesty',
     'landingPage.1.title': 'Vlastní design',
     'landingPage.1.alttext': 'Vlastní design',
@@ -150,6 +151,8 @@ export const cs = {
         'steps.locality.nextDestination': 'Další zastávka',
         'steps.locality.driving': 'Autem',
         'steps.locality.flying': 'Letadlem',
+        'steps.removeAll': 'Odstranit vše',
+        'steps.newTrip': 'Nový trip',
         'steps.splitText': 'Přetažením bodu separujete trip',
         'steps.highOrientation': 'Na výšku',
         'steps.lowOrientation': 'Na šířku',

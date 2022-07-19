@@ -4,6 +4,7 @@ import { Droppable } from 'react-beautiful-dnd'
 import { useDispatch } from 'react-redux'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import AddIcon from '@material-ui/icons/Add'
 
 import { useTranslation } from 'Hooks/useTranslation'
 import { MODE_OF_TRANSPORT } from '@constants'
@@ -44,6 +45,13 @@ const Flex2 = styled.div`
 const Flex3 = styled.div`
     flex: 1;
     flex-basis: 30px;
+`
+const BtnWrap = styled.div`
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    border: 1px solid green;
+    cursor: pointer;
 `
 
 const StyledAddCircleOutlineIcon = styled(AddCircleOutlineIcon)`
@@ -123,13 +131,13 @@ export default function TripSingle({
                             }}
                         />
                     ) : (
-                        <StyledAddCircleOutlineIcon
-                            onClick={() => !isTripActive && activateNewLocationGeoInput(tripObj.id)}
-                            style={{
-                                fill: isTripActive ? 'green' : 'green'
-                            }}
-                            isTripActive={isTripActive}
-                        />
+                        <BtnWrap onClick={() => !isTripActive && activateNewLocationGeoInput(tripObj.id)}>
+                            <AddIcon
+                                style={{
+                                    fill: 'green'
+                                }}
+                            />
+                        </BtnWrap>
                     )}
                 </Flex1>
 

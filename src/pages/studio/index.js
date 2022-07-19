@@ -59,7 +59,7 @@ const StudioPage = () => {
                             <SEO
                                 title="Trip Map - Studio"
                                 description="Designove studio pro tvorbu map"
-                                author="TripMap.shop"
+                                author="TripMap.org"
                             />
                         </ErrorBoundary>
                     </Layout>
