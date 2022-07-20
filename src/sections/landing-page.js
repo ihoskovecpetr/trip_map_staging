@@ -22,15 +22,16 @@ import DiscountBanner from 'components/DiscountBanner'
 import { useTranslation } from 'Hooks/useTranslation'
 import { fontWeight } from 'utils'
 
-import Carousel1 from 'assets/carousel_landing/webp/1.webp'
-import Carousel2 from 'assets/carousel_landing/webp/2.webp'
-import Carousel3 from 'assets/carousel_landing/webp/3.webp'
-import Carousel4 from 'assets/carousel_landing/webp/4.webp'
+// import Carousel1 from 'assets/carousel_landing/webp/1.webp'
+// import Carousel2 from 'assets/carousel_landing/webp/2.webp'
+// import Carousel3 from 'assets/carousel_landing/webp/3.webp'
+// import Carousel4 from 'assets/carousel_landing/webp/4.webp'
 
 import Carousel1PNG from 'assets/carousel_landing/png/1.png'
 import Carousel2PNG from 'assets/carousel_landing/png/2.png'
 import Carousel3PNG from 'assets/carousel_landing/png/3.png'
 import Carousel4PNG from 'assets/carousel_landing/png/4.png'
+import Carousel5PNG from 'assets/carousel_landing/png/5.png'
 
 const data = {
     subTitle: '',
@@ -73,7 +74,7 @@ export default function LandingPage() {
             <ContainerBox headerHeight={headerHeight}>
                 <Box sx={styles.carouselBox}>
                     <LandingCarouselWrap id="carousel_wrapper">
-                        {!isMobile && !isSafari && (
+                        {/* {!isMobile && !isSafari && (
                             <StyledVideo
                                 muted
                                 id="vid"
@@ -92,46 +93,43 @@ export default function LandingPage() {
                                 />
                                 Your browser does not support the video tag.
                             </StyledVideo>
-                        )}
+                        )} */}
 
-                        {(isMobile || isSafari) && (
-                            <>
-                                <Carousel
-                                    autoplay={true}
-                                    cellAlign="center"
-                                    heightMode="max"
-                                    autoplayInterval={3000}
-                                    // heightMode={current}
-                                    initialSlideHeight={90}
-                                    // frameOverflow="visible"
-                                    // withoutControls
-                                    wrapAround
-                                    swiping
-                                    renderCenterLeftControls={() => null}
-                                    renderCenterRightControls={() => null}
+                        {/* {(isMobile || isSafari) && ( */}
+                        <>
+                            <Carousel
+                                autoplay={true}
+                                cellAlign="center"
+                                heightMode="max"
+                                autoplayInterval={3000}
+                                // heightMode={current}
+                                initialSlideHeight={90}
+                                // frameOverflow="visible"
+                                // withoutControls
+                                wrapAround
+                                swiping
+                                renderCenterLeftControls={() => null}
+                                renderCenterRightControls={() => null}
+                            >
+                                <img src={displayPNG ? Carousel3PNG : Carousel3PNG} />
+                                <img src={displayPNG ? Carousel4PNG : Carousel4PNG} />
+                                <img src={displayPNG ? Carousel5PNG : Carousel5PNG} />
+                                <img src={displayPNG ? Carousel2PNG : Carousel2PNG} />
+                            </Carousel>
+                            <ZeroHeightWrap>
+                                <motion.div
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 1, delay: 0.6 }}
+                                    initial={{ opacity: 0 }}
                                 >
-                                    <img src={displayPNG ? Carousel1PNG : Carousel1} />
-                                    <img src={displayPNG ? Carousel2PNG : Carousel2} />
-                                    <img src={displayPNG ? Carousel3PNG : Carousel3} />
-                                    <img src={displayPNG ? Carousel4PNG : Carousel4} />
-                                </Carousel>
-                                <ZeroHeightWrap>
-                                    <motion.div
-                                        animate={{ opacity: 1 }}
-                                        transition={{ duration: 1, delay: 0.6 }}
-                                        initial={{ opacity: 0 }}
-                                    >
-                                        <ScrollDownWrapper
-                                            maxHeightTop={headerHeight + carouselHeight}
-                                            id="pure_cta_box"
-                                        >
-                                            <ScrollAnimatedIcon />
-                                            {/* <CtaComponent /> */}
-                                        </ScrollDownWrapper>
-                                    </motion.div>
-                                </ZeroHeightWrap>
-                            </>
-                        )}
+                                    <ScrollDownWrapper maxHeightTop={headerHeight + carouselHeight} id="pure_cta_box">
+                                        <ScrollAnimatedIcon />
+                                        {/* <CtaComponent /> */}
+                                    </ScrollDownWrapper>
+                                </motion.div>
+                            </ZeroHeightWrap>
+                        </>
+                        {/* )} */}
                     </LandingCarouselWrap>
                 </Box>
 

@@ -18,7 +18,7 @@ const common = {
         'The way how our product will be packed depends on product you are going to receive. Framed variants will be wrapped in a box fully covered and stuffed to avoid any damage. Posters without frame will be rolled inside the triangle shaped tube.',
     'saleLine': 'Sale {discountPercentage}% with code:  {code} , FREE delivery!',
     'saleLineMobile': 'Sale {discountPercentage}% with code:  {code}',
-    'landingPage.title': 'Create beautiful map as a memory for your trip',
+    'landingPage.title': 'Get custom map to remember your adventure',
     'landingPage.1.title': 'Own design',
     'landingPage.1.alttext': 'Own design',
     'landingPage.1.text': 'You can prepare your own map in our online studio',
