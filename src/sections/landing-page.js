@@ -22,10 +22,11 @@ import DiscountBanner from 'components/DiscountBanner'
 import { useTranslation } from 'Hooks/useTranslation'
 import { fontWeight } from 'utils'
 
-// import Carousel1 from 'assets/carousel_landing/webp/1.webp'
-// import Carousel2 from 'assets/carousel_landing/webp/2.webp'
-// import Carousel3 from 'assets/carousel_landing/webp/3.webp'
-// import Carousel4 from 'assets/carousel_landing/webp/4.webp'
+import Carousel1Webp from 'assets/carousel_landing/webp/1.webp'
+import Carousel2Webp from 'assets/carousel_landing/webp/2.webp'
+import Carousel3Webp from 'assets/carousel_landing/webp/3.webp'
+import Carousel4Webp from 'assets/carousel_landing/webp/4.webp'
+import Carousel5Webp from 'assets/carousel_landing/webp/5.webp'
 
 import Carousel1PNG from 'assets/carousel_landing/png/1.png'
 import Carousel2PNG from 'assets/carousel_landing/png/2.png'
@@ -111,10 +112,10 @@ export default function LandingPage() {
                                 renderCenterLeftControls={() => null}
                                 renderCenterRightControls={() => null}
                             >
-                                <img src={displayPNG ? Carousel3PNG : Carousel3PNG} />
-                                <img src={displayPNG ? Carousel4PNG : Carousel4PNG} />
-                                <img src={displayPNG ? Carousel5PNG : Carousel5PNG} />
-                                <img src={displayPNG ? Carousel2PNG : Carousel2PNG} />
+                                <img src={displayPNG ? Carousel2PNG : Carousel2Webp} />
+                                <img src={displayPNG ? Carousel5PNG : Carousel5Webp} />
+                                <img src={displayPNG ? Carousel3PNG : Carousel3Webp} />
+                                <img src={displayPNG ? Carousel4PNG : Carousel4Webp} />
                             </Carousel>
                             <ZeroHeightWrap>
                                 <motion.div
