@@ -20,7 +20,11 @@ const IndexPage = () => {
     return (
         <ThemeProvider theme={theme}>
             <StickyProvider>
-                <SEO title="Trip Map - Hlavní stránka" description="Všekeré informace" author="TripMap.org" />
+                <SEO
+                    title="Trip Map - Landing page"
+                    description="Landing page, all the information about TripMap.org"
+                    author="TripMap.org"
+                />
 
                 <Layout withFooter>
                     <LandingPage />

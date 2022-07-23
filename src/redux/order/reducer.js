@@ -71,10 +71,10 @@ const orderInitialState = {
             'location-1': {
                 id: 'location-1',
                 index: 1,
-                location: [14.421253, 50.087465],
+                location: [8.541042, 47.374449],
                 sourceId: 'SourceId_0.900301282366442',
-                title: 'Praha',
-                titleLabel: 'Praha',
+                title: 'Zurich',
+                titleLabel: 'Zurich',
                 modeOfTransport: MODE_OF_TRANSPORT.driving,
                 titleLabelDisplayed: true,
                 titleLocation: [14.421253, 50.087465],

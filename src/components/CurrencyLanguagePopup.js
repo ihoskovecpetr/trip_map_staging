@@ -133,8 +133,8 @@ export default function CurrencyLanguagePopup() {
                             </SelectColumn>
                         </SelectBox>
                         <ButtonsBox>
-                            <StyledButtonConfirm onClick={handleConfirmSelection}>Confirm</StyledButtonConfirm>
                             <StyledButton onClick={handleClose}>Close</StyledButton>
+                            <StyledButtonConfirm onClick={handleConfirmSelection}>Confirm</StyledButtonConfirm>
                         </ButtonsBox>
                     </BoxWrap>
                 </BackdropFromScratch>
