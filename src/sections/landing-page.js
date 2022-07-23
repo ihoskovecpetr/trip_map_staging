@@ -70,6 +70,8 @@ export default function LandingPage() {
         document.getElementById('vid')?.play()
     }, [])
 
+    console.log('rerender')
+
     return (
         <SectionContainer>
             <ContainerBox headerHeight={headerHeight}>
