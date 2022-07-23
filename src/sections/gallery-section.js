@@ -10,7 +10,8 @@ import { useTranslation } from 'Hooks/useTranslation'
 const Italy_red = {
     src: 'https://res.cloudinary.com/dkyt8girl/image/upload/h_1200,c_scale/Finished%20Interiers/interier_italy_to3eh3.png',
     thumbnail:
-        'https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interier_italy_to3eh3.png'
+        'https://res.cloudinary.com/dkyt8girl/image/upload/h_300,c_scale/Finished%20Interiers/interier_italy_to3eh3.png',
+    lazy: true
 }
 
 const Manhattan_bike = {
@@ -168,7 +169,12 @@ export default function KeyFeature() {
             <Container sx={styles.containerThemUI}>
                 <SectionHeader slogan={t('gallery.subtitle')} title={t('gallery.title')} />
                 <Grid sx={styles.gridCenter}>
-                    <Gallery images={imagesWithOptions} backdropClosesModal={true} rowHeight={isMobile ? 120 : 180} />
+                    <Gallery
+                        images={imagesWithOptions}
+                        backdropClosesModal={true}
+                        rowHeight={isMobile ? 120 : 180}
+                        thumbnailImageComponent={({ imageProps }) => <img {...imageProps} loading="lazy" />}
+                    />
                 </Grid>
             </Container>
         </section>

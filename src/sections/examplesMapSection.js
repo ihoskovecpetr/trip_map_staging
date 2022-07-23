@@ -54,22 +54,22 @@ export default function Examples() {
                         renderCenterLeftControls={() => null}
                         renderCenterRightControls={() => null}
                     >
-                        {displayPNG ? <StyledImg src={CarouselHKpng} /> : <StyledImg src={CarouselHKpng} />}
-                        {displayPNG ? <StyledImg src={USAWatPNG} /> : <StyledImg src={USAWatPNG} />}
-                        {displayPNG ? <StyledImg src={JapanPNG} /> : <StyledImg src={JapanPNG} />}
-                        {displayPNG ? <StyledImg src={GermanyPNG} /> : <StyledImg src={GermanyPNG} />}
-                        {displayPNG ? <StyledImg src={ItalyPNG} /> : <StyledImg src={ItalyPNG} />}
+                        {displayPNG ? <GalleryImg src={CarouselHKpng} /> : <GalleryImg src={CarouselHKpng} />}
+                        {displayPNG ? <GalleryImg src={USAWatPNG} /> : <GalleryImg src={USAWatPNG} />}
+                        {displayPNG ? <GalleryImg src={JapanPNG} /> : <GalleryImg src={JapanPNG} />}
+                        {displayPNG ? <GalleryImg src={GermanyPNG} /> : <GalleryImg src={GermanyPNG} />}
+                        {displayPNG ? <GalleryImg src={ItalyPNG} /> : <GalleryImg src={ItalyPNG} />}
 
                         {displayPNG ? (
-                            <StyledImg src={CarouselManhattanBikeBlack} />
+                            <GalleryImg src={CarouselManhattanBikeBlack} />
                         ) : (
-                            <StyledImg src={CarouselManhattanBikeBlack} />
+                            <GalleryImg src={CarouselManhattanBikeBlack} />
                         )}
 
                         {/* {displayPNG ? (
-              <StyledImg src={CarouselRio} />
+              <GalleryImg src={CarouselRio} />
             ) : (
-              <StyledImg src={CarouselRioWebp} />
+              <GalleryImg src={CarouselRioWebp} />
             )} */}
                     </StyledCarousel>
                 </CarouselWrap>
@@ -94,6 +94,10 @@ export default function Examples() {
             </StyledContainer>
         </section>
     )
+}
+
+const GalleryImg = ({ src }) => {
+    return <StyledImg src={src} loading="lazy" />
 }
 
 const styles = {
