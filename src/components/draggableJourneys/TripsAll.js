@@ -69,6 +69,7 @@ export default function TripsAll({ map }) {
                         style={{
                             fill: 'green'
                         }}
+                        fontSize="small"
                     />
                     <p>{t('steps.newTrip')}</p>
                 </NewTripBtn>
@@ -78,7 +79,7 @@ export default function TripsAll({ map }) {
                     }}
                 >
                     <p>{t('steps.removeAll')}</p>
-                    <StyledDeleteForeverIcon />
+                    <StyledDeleteForeverIcon fontSize="small" />
                 </DeleteBtn>
             </BtnContainer>
 
@@ -150,6 +151,7 @@ const NewTripBtn = styled.div`
     p {
         margin: 0;
         margin-top: 3px;
+        margin-bottom: -3px;
     }
 `
 
@@ -172,6 +174,7 @@ const DeleteBtn = styled.div`
     p {
         margin: 0;
         margin-top: 3px;
+        margin-bottom: -3px;
     }
 `
 const StyledDeleteForeverIcon = styled(DeleteForeverIcon)`

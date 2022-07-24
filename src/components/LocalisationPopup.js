@@ -12,7 +12,7 @@ import { useGetDeliveryRegion } from 'Hooks/useGetDeliveryReg'
 
 import { LOCALE_TO_LANGUAGE_SHORTCUT, AVAILABLE_CURRENCIES, AVAILABLE_DESTINATIONS } from '@constants'
 
-export default function CurrencyLanguagePopup() {
+export default function LocalisationPopup() {
     const router = useRouter()
     const { locale, pathname, asPath } = router
     const currency = useGetCurrency()

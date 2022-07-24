@@ -102,7 +102,8 @@ const common = {
         'Tento web používá k poskytování služeb, personalizaci reklam a analýze návštěvnosti soubory cookie. Používáním tohoto webu s tím souhlasíte.',
     'cookies.readMore': 'Více o GDPR se dočtete ',
     'cookies.consent': 'Souhlasím',
-    'cookies.here': 'zde'
+    'cookies.here': 'zde',
+    'material.mattedPaper': 'Premium matný fotopapír'
 }
 
 export const cs = {

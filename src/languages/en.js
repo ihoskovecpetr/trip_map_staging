@@ -79,7 +79,8 @@ const common = {
         'This web is using Cookies for personalisation of advertisement, tracking visits and saving your current cart status. By using of this web you agree with those conditions.',
     'cookies.readMore': 'More about GDPR ',
     'cookies.consent': 'OK',
-    'cookies.here': 'here'
+    'cookies.here': 'here',
+    'material.mattedPaper': 'Matted paper'
 }
 
 export const en = {
@@ -117,7 +118,7 @@ export const en = {
         'studio.price': 'price',
         'step.variants.short': 'Variant',
         'step.variants.full': 'Choose variant',
-        'step.location.full': 'Choose locality',
+        'step.location.full': 'Choose locations',
         'step.location.short': 'Path',
         'step.orientation.full': 'Orientation',
         'step.orientation.short': 'Orientation',
@@ -143,7 +144,7 @@ export const en = {
         'stepper.summary': 'Summary',
         'step.withPath': 'With path',
         'step.withoutPath': 'Without path',
-        'steps.locality.locality': 'locality',
+        'steps.locality.locality': 'location',
         'steps.locality.label': 'title',
         'steps.locality.nextDestination': 'Next stop',
         'steps.locality.driving': 'Driving',

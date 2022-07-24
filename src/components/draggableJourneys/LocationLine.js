@@ -1,9 +1,13 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Draggable } from 'react-beautiful-dnd'
-import CompareArrowsIcon from '@material-ui/icons/CompareArrows'
+import TouchSwipe from '@material-ui/icons/TouchApp'
 import { useDispatch } from 'react-redux'
 import DeleteForeverIcon from '@material-ui/icons/Clear'
+import FlightIcon from '@material-ui/icons/Flight'
+import DriveEtaIcon from '@material-ui/icons/DriveEta'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+
 import { color, fontSize, fontWeight } from 'utils'
 
 import GeocoderInput from 'components/GeocoderInput_new'
@@ -11,85 +15,6 @@ import { updateLocation, removeLocation } from 'redux/order/actions'
 import { useDebounce } from 'Hooks/useDebounce'
 import { useTranslation } from 'Hooks/useTranslation'
 import { MODE_OF_TRANSPORT } from '@constants'
-
-const Container = styled.div`
-    margin-bottom: 16px;
-    display: flex;
-    flex-direction: column;
-`
-
-const InputsRow = styled.div`
-    display: flex;
-    align-items: center;
-    background-color: white;
-    box-shadow: 0 0 4px lightGrey;
-    border-radius: 5px;
-    width: 98%;
-    margin: 0 1%;
-`
-
-const StyledIconShuffle = styled(CompareArrowsIcon)`
-    flex: 1;
-    transform: rotate(90deg);
-    font-size: 1.5rem !important;
-`
-
-const StyledDeleteIcon = styled(DeleteForeverIcon)`
-    flex: 1;
-    font-size: 1.5rem !important;
-    // border-left: 1px solid black;
-    fill: red !important;
-`
-
-const BtnsRow = styled.div`
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    padding: 0 10px;
-`
-
-const LocLblBtn = styled.div`
-    background-color: ${({ isActive }) => (isActive ? 'black' : 'white')};
-    color: ${({ isActive }) => (isActive ? 'white' : 'black')};
-    border: 1px solid lightGrey;
-    border-bottom-color: transparent;
-
-    padding: 0 5px;
-    font-size: ${fontSize('xs')};
-    font-weight: ${fontWeight('light')};
-`
-
-const ModeOfTransportBtn = styled.div`
-    /* background-color: ${({ isActive }) => (isActive ? 'black' : 'white')}; */
-    /* color: ${({ isActive }) => (isActive ? 'white' : 'black')}; */
-    text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
-    /* border: 1px solid lightGrey; */
-    /* border-bottom-color: transparent; */
-    padding: 0 5px;
-    font-size: ${fontSize('xs')};
-    font-weight: ${fontWeight('light')};
-`
-
-const StyledGeocoderInput = styled(GeocoderInput)``
-
-const InputWrap = styled.div`
-    flex: 5;
-`
-
-const Flex1 = styled.div`
-    flex: 1;
-`
-
-const StyledInput = styled.input`
-    width: 100%;
-    padding: 10px 10px;
-    font-size: ${fontSize('default')};
-    font-weight: ${fontWeight('regular')};
-    border: none;
-    border-left: 1px solid lightGrey;
-    border-right: 1px solid lightGrey;
-    border-radius: 0px;
-`
 
 export default function LocationLine({ location, index, tripId, activeLocationId, setActiveLocationId }) {
     const dispatch = useDispatch()
@@ -144,6 +69,9 @@ export default function LocationLine({ location, index, tripId, activeLocationId
         )
     }
 
+    const isDrivingActive = location.modeOfTransport === MODE_OF_TRANSPORT.driving
+    const isFlyingActive = location.modeOfTransport === MODE_OF_TRANSPORT.flying
+
     return (
         <Draggable draggableId={location.id} index={index}>
             {provided => {
@@ -153,35 +81,52 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                             <BtnsRow>
                                 {index > 0 && (
                                     <>
+                                        <Flex1 />
                                         <ModeOfTransportBtn
-                                            isActive={location.modeOfTransport === MODE_OF_TRANSPORT.driving}
                                             onClick={() =>
                                                 dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.driving, location)
                                             }
                                         >
-                                            {t('steps.locality.driving')}
+                                            {/* {t('steps.locality.driving')} */}
+                                            <DriveEtaIcon
+                                                color={isDrivingActive ? 'secondary' : 'disabled'}
+                                                fontSize="small"
+                                                style={{
+                                                    backgroundColor: isDrivingActive && 'black',
+                                                    border: !isDrivingActive && '1px solid lightGrey',
+                                                    borderRadius: '10px',
+                                                    padding: '3px',
+                                                    marginBottom: '-5px'
+                                                }}
+                                            />
                                         </ModeOfTransportBtn>
                                         <ModeOfTransportBtn
-                                            isActive={location.modeOfTransport === MODE_OF_TRANSPORT.flying}
                                             onClick={() =>
                                                 dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.flying, location)
                                             }
                                         >
-                                            {t('steps.locality.flying')}
+                                            <FlightIcon
+                                                color={isFlyingActive ? 'secondary' : 'disabled'}
+                                                fontSize="small"
+                                                style={{
+                                                    backgroundColor: isFlyingActive && 'black',
+                                                    border: !isFlyingActive && '1px solid lightGrey',
+                                                    borderRadius: '10px',
+                                                    padding: '3px',
+                                                    marginBottom: '-5px'
+                                                }}
+                                            />
                                         </ModeOfTransportBtn>
                                     </>
                                 )}
                                 <Flex1 />
-
-                                <LocLblBtn isActive={locationInput} onClick={() => setLocationInput(true)}>
-                                    {t('steps.locality.locality')}
-                                </LocLblBtn>
-                                <LocLblBtn isActive={!locationInput} onClick={() => setLocationInput(false)}>
-                                    {t('steps.locality.label')}
-                                </LocLblBtn>
+                                <StyledDeleteIcon
+                                    onClick={() => dispatch(removeThisLocation(location.id, tripId))}
+                                    fontSize="small"
+                                />
                             </BtnsRow>
                             <InputsRow>
-                                <StyledIconShuffle />
+                                <StyledIconSwipe fontSize="small" />
 
                                 {locationInput ? (
                                     <StyledGeocoderInput
@@ -208,7 +153,20 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                         />
                                     </InputWrap>
                                 )}
-                                <StyledDeleteIcon onClick={() => dispatch(removeThisLocation(location.id, tripId))} />
+                                {/* <StyledDeleteIcon
+                                    onClick={() => dispatch(removeThisLocation(location.id, tripId))}
+                                    fontSize="small"
+                                /> */}
+                                <LocationBtnWrap>
+                                    <LocLblBtn isActive={locationInput} onClick={() => setLocationInput(true)}>
+                                        <StyledChevronLeftIcon isActive={locationInput} />
+                                        {t('steps.locality.locality')}
+                                    </LocLblBtn>
+                                    <LocLblBtn isActive={!locationInput} onClick={() => setLocationInput(false)}>
+                                        <StyledChevronLeftIcon isActive={!locationInput} />
+                                        {t('steps.locality.label')}
+                                    </LocLblBtn>
+                                </LocationBtnWrap>
                             </InputsRow>
                         </Container>
                     </>
@@ -217,3 +175,87 @@ export default function LocationLine({ location, index, tripId, activeLocationId
         </Draggable>
     )
 }
+
+const Container = styled.div`
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+`
+
+const StyledChevronLeftIcon = styled(ChevronLeftIcon)`
+    font-size: 0.8rem;
+    fill: ${({ isActive }) => (isActive ? 'black' : 'lightGrey')} !important;
+    margin-bottom: 0px;
+`
+
+const InputsRow = styled.div`
+    display: flex;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 0 4px lightGrey;
+    border-radius: 5px;
+    width: 98%;
+    margin: 0 1%;
+`
+
+const StyledIconSwipe = styled(TouchSwipe)`
+    flex: 1;
+    font-size: 1.1rem !important;
+    fill: grey !important;
+`
+
+const StyledDeleteIcon = styled(DeleteForeverIcon)`
+    /* flex: 1; */
+    /* font-size: 1rem !important; */
+    // border-left: 1px solid black;
+    fill: red !important;
+`
+
+const BtnsRow = styled.div`
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 3px;
+`
+
+const LocLblBtn = styled.div`
+    display: flex;
+    align-items: center;
+    text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
+    border-bottom-color: transparent;
+    margin: 0;
+    margin-bottom: -2px;
+    padding: 0 5px;
+    font-size: ${fontSize('xs')};
+    font-weight: ${fontWeight('regular')};
+`
+
+const ModeOfTransportBtn = styled.div`
+    padding: 0 5px;
+`
+
+const StyledGeocoderInput = styled(GeocoderInput)``
+
+const InputWrap = styled.div`
+    flex: 5;
+`
+
+const Flex1 = styled.div`
+    flex: 1;
+`
+
+const StyledInput = styled.input`
+    width: 100%;
+    padding: 10px 10px;
+    font-size: ${fontSize('default')};
+    font-weight: ${fontWeight('regular')};
+    border: none;
+    border-left: 1px solid lightGrey;
+    border-right: 1px solid lightGrey;
+    border-radius: 0px;
+`
+const LocationBtnWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+`

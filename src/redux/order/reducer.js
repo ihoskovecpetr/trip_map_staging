@@ -33,7 +33,7 @@ const orderInitialState = {
         price: null,
         sizeObject: SIZES[3],
         variantId: VARIANTS_PRINTFUL[3].id,
-        materialDesc: 'Matted paper',
+        materialDesc: 'material.mattedPaper',
         shippingCode: VARIANTS_PRINTFUL[3].shipping['CZK'].codeCZ,
         isLayoutColorSwitched: false,
         densityConstant: 2
@@ -77,7 +77,7 @@ const orderInitialState = {
                 titleLabel: 'Zurich',
                 modeOfTransport: MODE_OF_TRANSPORT.driving,
                 titleLabelDisplayed: true,
-                titleLocation: [14.421253, 50.087465],
+                titleLocation: [8.571921669882101, 47.14074969054528],
                 titleSourceId: 'TitleSourceId_0.9464388321842834'
             },
             'location-2': {

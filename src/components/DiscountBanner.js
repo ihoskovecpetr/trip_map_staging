@@ -6,7 +6,7 @@ import { VALID_DISCOUNT_CODES } from '@constants'
 import { useTranslation } from 'Hooks/useTranslation'
 import { useIsMobile } from 'Hooks/useIsMobile'
 import { Container } from 'theme-ui'
-import CurrencyLanguagePopup from './CurrencyLanguagePopup'
+import LocalisationPopup from './LocalisationPopup'
 
 export default function DiscountBanner() {
     const t = useTranslation()
@@ -24,7 +24,7 @@ export default function DiscountBanner() {
                     })}
                 </StyledParagraph>
 
-                <CurrencyLanguagePopup />
+                <LocalisationPopup />
             </InnerContainer>
         </BannerContainer>
     )
