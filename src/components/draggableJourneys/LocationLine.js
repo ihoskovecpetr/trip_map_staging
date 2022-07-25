@@ -5,6 +5,8 @@ import TouchSwipe from '@material-ui/icons/TouchApp'
 import { useDispatch } from 'react-redux'
 import DeleteForeverIcon from '@material-ui/icons/Clear'
 import FlightIcon from '@material-ui/icons/Flight'
+import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk'
+
 import DriveEtaIcon from '@material-ui/icons/DriveEta'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
@@ -71,6 +73,7 @@ export default function LocationLine({ location, index, tripId, activeLocationId
 
     const isDrivingActive = location.modeOfTransport === MODE_OF_TRANSPORT.driving
     const isFlyingActive = location.modeOfTransport === MODE_OF_TRANSPORT.flying
+    const isWalkingActive = location.modeOfTransport === MODE_OF_TRANSPORT.walking
 
     return (
         <Draggable draggableId={location.id} index={index}>
@@ -84,10 +87,26 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                         <Flex1 />
                                         <ModeOfTransportBtn
                                             onClick={() =>
+                                                dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.walking, location)
+                                            }
+                                        >
+                                            <DirectionsWalkIcon
+                                                color={isWalkingActive ? 'secondary' : 'disabled'}
+                                                fontSize="small"
+                                                style={{
+                                                    backgroundColor: isWalkingActive && 'black',
+                                                    border: !isWalkingActive && '1px solid lightGrey',
+                                                    borderRadius: '10px',
+                                                    padding: '3px',
+                                                    marginBottom: '-5px'
+                                                }}
+                                            />
+                                        </ModeOfTransportBtn>
+                                        <ModeOfTransportBtn
+                                            onClick={() =>
                                                 dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.driving, location)
                                             }
                                         >
-                                            {/* {t('steps.locality.driving')} */}
                                             <DriveEtaIcon
                                                 color={isDrivingActive ? 'secondary' : 'disabled'}
                                                 fontSize="small"

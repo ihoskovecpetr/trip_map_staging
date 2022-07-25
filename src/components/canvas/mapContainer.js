@@ -410,7 +410,9 @@ const PrintLocations = ({
                                                 />
                                             </Layer>
                                         )}
-                                        {currentPoint.modeOfTransport === MODE_OF_TRANSPORT.driving && (
+                                        {[MODE_OF_TRANSPORT.driving, MODE_OF_TRANSPORT.walking].includes(
+                                            currentPoint.modeOfTransport
+                                        ) && (
                                             <RoadMapLines
                                                 lineWidth={lineWidth}
                                                 currentPoint={currentPoint}

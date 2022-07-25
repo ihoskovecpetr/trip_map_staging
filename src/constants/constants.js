@@ -487,66 +487,77 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
         colorMain: 'lightGrey',
         colorSecondary: 'white',
         colorText: '#000000',
+        colorPath: 'white',
         colorHalo: 'white'
     },
     [MAP_STYLES_NAMES.YELLOW_GREEN]: {
         colorMain: 'black',
         colorSecondary: 'white',
         colorText: 'black',
+        colorPath: 'black',
         colorHalo: '#e4bf45'
     },
     [MAP_STYLES_NAMES.BLUE_YELLOW]: {
         colorMain: '#a62703',
         colorSecondary: 'white',
         colorText: 'rgba(166, 39, 3, 1)',
+        colorPath: '#a62703',
         colorHalo: 'white'
     },
     [MAP_STYLES_NAMES.GREEN_ORANGE]: {
         colorMain: 'black',
         colorSecondary: 'white',
         colorText: '#000000',
+        colorPath: 'black',
         colorHalo: 'white'
     },
     [MAP_STYLES_NAMES.BLACK_LAND]: {
         colorMain: '#a62703',
         colorSecondary: 'white',
         colorText: 'black',
+        colorPath: '#a62703',
         colorHalo: 'white' // #a62703 but in rgba
     },
     [MAP_STYLES_NAMES.BLACK_WHITE]: {
         colorMain: '#a62703',
         colorSecondary: 'white',
         colorText: '#000000',
+        colorPath: '#a62703',
         colorHalo: 'white'
     },
     [MAP_STYLES_NAMES.RED_WHITE]: {
         colorMain: 'black',
         colorSecondary: 'white',
         colorText: '#000000',
+        colorPath: 'black',
         colorHalo: 'white'
     },
     [MAP_STYLES_NAMES.DOUBLE_BLUE]: {
         colorMain: 'black',
         colorSecondary: 'white',
         colorText: 'white',
+        colorPath: 'black',
         colorHalo: '#000000'
     },
     [MAP_STYLES_NAMES.PALE_BLUE]: {
         colorMain: 'black',
         colorSecondary: 'white',
         colorText: 'black',
+        colorPath: 'black',
         colorHalo: '#e6d398'
     },
     [MAP_STYLES_NAMES.SANDY_DARK]: {
         colorMain: 'black',
         colorSecondary: 'white',
         colorText: 'rgba(00,00,00,1)',
+        colorPath: 'black',
         colorHalo: '#e2dd7e'
     },
     [MAP_STYLES_NAMES.WHITE_BLUE]: {
         colorMain: 'black',
         colorSecondary: 'white',
         colorText: 'rgba(00,00,00,1)',
+        colorPath: 'black',
         colorHalo: 'white'
     }
 }
@@ -715,7 +726,7 @@ const AVAILABLE_DESTINATIONS = [
     { country: 'Australia', region: 'AU' }
 ]
 
-const MODE_OF_TRANSPORT = { driving: 'driving', flying: 'flying' }
+const MODE_OF_TRANSPORT = { driving: 'driving', flying: 'flying', walking: 'walking' }
 // JP, UK, EU_LV, EU_ES
 
 module.exports = {

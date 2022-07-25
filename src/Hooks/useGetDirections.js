@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { getDirectionCoordinates } from 'LibGlobal/getDirectionCoordinates'
+import { getDirectionWalkingCoordinates } from 'LibGlobal/getDirectionWalkingCoordinates'
+import { getDirectionDrivingCoordinates } from 'LibGlobal/getDirectionCoordinates'
+import { MODE_OF_TRANSPORT } from 'constants/constants'
 
 const cachedResults = {}
 const cachedPromises = {}
 
-export function useGetDirections() {
+const getDirectionByMode = mode => {
+    if (mode === MODE_OF_TRANSPORT.walking) {
+        return getDirectionWalkingCoordinates
+    }
+    if (mode === MODE_OF_TRANSPORT.driving) {
+        return getDirectionDrivingCoordinates
+    }
+}
+
+export function useGetDirections(modeOfTransport) {
     const asyncGetDirection = async (fromLocation, toLocation, encodedLocation) => {
-        const direction = await getDirectionCoordinates(fromLocation, toLocation)
-        cachedResults[encodedLocation] = direction
+        const direction = await getDirectionByMode(modeOfTransport)(fromLocation, toLocation)
+        cachedResults[`${encodedLocation}_${modeOfTransport}`] = direction
 
         return direction
     }
@@ -16,12 +27,12 @@ export function useGetDirections() {
         const fromLocation = [fromLng, fromLat]
         const toLocation = [toLng, toLat]
         const encodedLocation = encodeURIComponent(`${fromLocation};${toLocation}`)
-        const cachedResult = cachedResults[encodedLocation]
+        const foundCachedResult = cachedResults[`${encodedLocation}_${modeOfTransport}`]
 
-        if (cachedResult) {
+        if (foundCachedResult) {
             cachedPromises[encodedLocation] = null
 
-            return cachedResult
+            return foundCachedResult
         }
 
         if (cachedPromises[encodedLocation]) {

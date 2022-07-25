@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getDirectionCoordinates } from 'LibGlobal/getDirectionCoordinates'
+import { getDirectionCoordinates } from 'LibGlobal/getDirectionWalkingCoordinates'
 
 const cachedResults = {}
 let promise = null

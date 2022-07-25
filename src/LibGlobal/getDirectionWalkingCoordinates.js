@@ -1,10 +1,9 @@
-const getDirectionDrivingCoordinates = async (fromLocation, toLocation) => {
+const getDirectionWalkingCoordinates = async (fromLocation, toLocation, travelMode) => {
     const encodedLocation = encodeURIComponent(`${fromLocation};${toLocation}`)
 
     try {
-        const endpoint = `https://api.mapbox.com/directions/v5/mapbox/driving/${encodedLocation}?alternatives=true&continue_straight=true&geometries=geojson&overview=full&steps=false&access_token=${process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN}`
+        const endpoint = `https://api.mapbox.com/directions/v5/mapbox/walking/${encodedLocation}?alternatives=true&continue_straight=true&geometries=geojson&language=en&exclude=ferry&overview=full&steps=true&access_token=${process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN}`
         const response = await fetch(endpoint)
-
         const result = await response.json()
 
         const routeCoordinates = result.routes[0].geometry.coordinates
@@ -16,5 +15,5 @@ const getDirectionDrivingCoordinates = async (fromLocation, toLocation) => {
 }
 
 module.exports = {
-    getDirectionDrivingCoordinates
+    getDirectionWalkingCoordinates
 }

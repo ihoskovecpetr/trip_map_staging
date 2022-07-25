@@ -75,7 +75,7 @@ export default function TripSingle({
     const [thisActiveNewInput, setThisActiveNewInput] = useState(false)
     const t = useTranslation()
 
-    const setGeocoderResult = (tripId, result) => {
+    const setGeocoderResult = (tripId, result, modeOfTransport) => {
         const sourceId = 'SourceId_' + Math.random()
         const titleSourceId = 'TitleSourceId_' + Math.random()
         const placeNameArr = result.place_name.split(',')
@@ -90,7 +90,7 @@ export default function TripSingle({
                     title: newTitle,
                     titleLabel: newTitle,
                     titleLabelDisplayed: true,
-                    modeOfTransport: MODE_OF_TRANSPORT.driving,
+                    modeOfTransport: modeOfTransport ?? MODE_OF_TRANSPORT.driving,
                     titleLocation: result.geometry.coordinates
                 },
                 tripId: tripId
@@ -102,6 +102,8 @@ export default function TripSingle({
         setActiveTripId(tripId)
         setActiveLocationId(null)
     }
+
+    const lastModeOfTransport = locations[locations.length - 1].modeOfTransport
 
     return (
         <Container>
@@ -157,7 +159,7 @@ export default function TripSingle({
                                     width: '100%'
                                 }}
                                 placeholder={t('steps.locality.nextDestination')}
-                                setResult={e => setGeocoderResult(tripObj.id, e)}
+                                setResult={e => setGeocoderResult(tripObj.id, e, lastModeOfTransport)}
                                 clearOnFocus
                                 onClick={() => {
                                     setThisActiveNewInput(true)
