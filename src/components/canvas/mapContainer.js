@@ -205,7 +205,6 @@ export default function MapContainer({
                 bannerHeight={bannerHeight}
                 mapButtonsHeight={mapButtonsHeight}
             >
-                {console.log({ mapZoom })}
                 <div style={{ display: 'none' }} id="map_wrap_id">
                     <Map
                         onStyleLoad={onMapLoad}
@@ -501,7 +500,7 @@ const MapAvailableSpace = styled.div`
     justify-content: center;
     width: 100%;
     align-items: flex-start;
-    height: ${({ screenHeight }) => `calc(${screenHeight}px - 0px)`};
+    height: ${({ screenHeight, mapButtonsHeight }) => `calc(${screenHeight}px - ${mapButtonsHeight}px)`};
     padding-top: 14px;
 
     ${mobile`
