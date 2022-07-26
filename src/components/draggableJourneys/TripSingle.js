@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/Add'
 import { useTranslation } from 'Hooks/useTranslation'
 import { MODE_OF_TRANSPORT } from '@constants'
 import LocationLine from './LocationLine'
-import GeocoderInput from 'components/GeocoderInput_new'
+import GeocoderInput from 'components/GeocoderInput'
 
 import { addNewLocationDraggable } from 'redux/order/actions'
 import { color } from 'utils'
@@ -54,12 +54,6 @@ const BtnWrap = styled.div`
     cursor: pointer;
 `
 
-const StyledAddCircleOutlineIcon = styled(AddCircleOutlineIcon)`
-    cursor: pointer;
-    position: relative;
-    top: ${({ isTripActive }) => !isTripActive && '-10px'};
-`
-
 const LocationsList = styled.div``
 
 export default function TripSingle({
@@ -74,6 +68,8 @@ export default function TripSingle({
     const dispatch = useDispatch()
     const [thisActiveNewInput, setThisActiveNewInput] = useState(false)
     const t = useTranslation()
+
+    console.log({ map })
 
     const setGeocoderResult = (tripId, result, modeOfTransport) => {
         const sourceId = 'SourceId_' + Math.random()
@@ -118,6 +114,7 @@ export default function TripSingle({
                                 tripId={tripObj.id}
                                 activeLocationId={activeLocationId}
                                 setActiveLocationId={setActiveLocationId}
+                                map={map}
                             />
                         ))}
                         {provided.placeholder}
@@ -147,7 +144,6 @@ export default function TripSingle({
                     <>
                         <Flex2>
                             <GeocoderInput
-                                map={map}
                                 style={{
                                     display: 'inline',
                                     width: '100%',
@@ -167,6 +163,7 @@ export default function TripSingle({
                                 onBlur={() => {
                                     setThisActiveNewInput(false)
                                 }}
+                                map={map}
                             />
                         </Flex2>
                         <Flex3></Flex3>

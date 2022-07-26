@@ -28,8 +28,8 @@ const useStyles = makeStyles(theme => ({
     },
 
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
         width: 200
     },
 
@@ -119,7 +119,6 @@ export default function StepTitles({ index }) {
                     id="outlined-basic"
                     label={t('steps.titles.title')}
                     variant="outlined"
-                    color="cta_color"
                     name="heading"
                     defaultValue={defaultVal.title}
                     onChange={handleTitleChange}

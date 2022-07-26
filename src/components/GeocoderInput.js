@@ -1,87 +1,150 @@
 import React, { useEffect, useRef } from 'react'
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import mapboxgl from 'mapbox-gl'
 import styled from 'styled-components'
+import useGeocodeInput from 'Hooks/useGeocodeInput'
 
-import { color } from 'utils'
-
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN
-let geocoder
-
-export default function GeocoderInput({
-    id,
-    value,
-    setResult,
-    placeholder,
-    clearAfterResult = true,
-    style,
-    focusCallback,
-    blurCallback
-}) {
-    const ref = useRef()
-
-    useEffect(() => {
-        geocoder = new MapboxGeocoder({
-            accessToken: mapboxgl.accessToken,
-            mapboxgl: mapboxgl,
-            marker: {
-                // color: "transparent",
-            },
-            placeholder: placeholder ?? 'Další bod cesty'
-        })
-        // document.getElementById(id).appendChild(geocoder.onAdd(map));
-
-        geocoder.addTo(ref.current)
-
-        geocoder._inputEl.addEventListener('focus', focusCallback)
-
-        return () => {
-            geocoder._inputEl.removeEventListener('focus', focusCallback)
-        }
-    }, [id])
+const GeocoderInput = props => {
+    const {
+        map,
+        id,
+        value,
+        setResult,
+        placeholder,
+        clearAfterResult = true,
+        style,
+        inputStyle,
+        onClick,
+        clearOnFocus = false,
+        onBlur = () => {}
+    } = props
+    const address = useGeocodeInput(value, map)
+    const dropdownRef = useRef(null)
 
     useEffect(() => {
-        // document.getElementsByClassName("mapboxgl-ctrl-geocoder--input")[0].focus();
+        address.setValue(placeholder)
     }, [])
 
     useEffect(() => {
-        const childNodes = ref.current?.childNodes
+        const onClickAway = event => {
+            if (dropdownRef.current?.contains(event.target) || event.target === dropdownRef.current) {
+                return
+            }
 
-        if (childNodes && value) {
-            childNodes[0].childNodes[1].value = value
+            address.setSuggestions([])
         }
 
-        geocoder.on('result', transformResult)
-        geocoder.on('init', () => {})
+        document.addEventListener('click', onClickAway, true)
 
         return () => {
-            geocoder.off('result', transformResult)
+            document.removeEventListener('click', onClickAway, true)
         }
     }, [])
 
-    const transformResult = e => {
-        setResult(e)
-
-        if (clearAfterResult) {
-            console.log('Clearing_result')
-            geocoder.clear() // to remove blue dot
-        }
-        // document.getElementById(id).innerHTML = "Filled";
-        // document.getElementById(id).innerHTML = value;
-    }
-
-    return <StyledDiv id={id} ref={ref} style={style}></StyledDiv>
+    return (
+        <Wrapper key={id} style={style}>
+            <Input
+                placeholder={value}
+                {...address}
+                isTyping={address.value !== ''}
+                onClick={onClick}
+                onFocus={e => {
+                    clearOnFocus && address.setValue('')
+                }}
+                style={inputStyle}
+                onBlur={onBlur}
+            />
+            {address.suggestions?.length > 0 && (
+                <WrapperWrapSug>
+                    <SuggestionWrapper ref={dropdownRef}>
+                        {address.suggestions.map((suggestion, index) => {
+                            return (
+                                <Suggestion
+                                    key={index}
+                                    onClick={() => {
+                                        console.log({ suggestion })
+                                        setResult(suggestion)
+                                        address.setValue(
+                                            clearOnFocus ? placeholder : suggestion.place_name.split(',')[0]
+                                        )
+                                        address.setSuggestions([])
+                                    }}
+                                >
+                                    <HalfName>{suggestion.place_name.split(',')[0]}</HalfName>
+                                    <FullName>{suggestion.place_name}</FullName>
+                                </Suggestion>
+                            )
+                        })}
+                    </SuggestionWrapper>
+                </WrapperWrapSug>
+            )}
+        </Wrapper>
+    )
 }
 
-const StyledDiv = styled.div`
-    input {
-        // border: 1px solid ${color('cta_color')};
-        // border-radius: 5px;
+export default GeocoderInput
+
+const Wrapper = styled.div`
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+        'Helvetica Neue', sans-serif;
+    margin: 0 auto;
+    background: white;
+    position: relative;
+`
+
+const Input = styled.input`
+    border: none;
+    padding: 5px 10px;
+    font: inherit;
+    position: relative;
+    display: grid;
+    justify-self: center;
+    &:focus {
+        outline: none;
     }
-    :nth-child(1) {
-        box-shadow: 0 0 0;
-        border-bottom: 1px solid black;
-        border-radius: 0px;
-        width: 100%;
+`
+
+const WrapperWrapSug = styled.div`
+    max-width: 250px;
+    position: relative;
+    height: 0px;
+`
+
+const SuggestionWrapper = styled.div`
+    width: 100%;
+    z-index: 22;
+    background: white;
+    position: relative;
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 0px 10px 20px grey;
+    margin-bottom: 150px;
+`
+
+const Suggestion = styled.p`
+    cursor: pointer;
+    max-width: 400px;
+    margin: 5px 0;
+    padding: 0 10px;
+    font-size: 14px;
+
+    & :hover {
+        background: lightGrey;
     }
+`
+
+const HalfName = styled.p`
+    font-weight: 600;
+    padding: 0;
+    margin: 0;
+    margin-bottom: -10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`
+
+const FullName = styled.p`
+    font-weight: 300;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `

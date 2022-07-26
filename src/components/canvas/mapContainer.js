@@ -47,10 +47,11 @@ const NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN =
     'pk.eyJ1IjoiaWhvc2tvdmVjcGV0ciIsImEiOiJja3g1dmtqdXYwZHY3MnBxbzkycW5veGF5In0.e_D0Bd6v_28G4cIJJn65EA'
 
 const Map = ReactMapboxGl({
-    accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN
+    accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN,
+    maxZoom: 10 // avoiding file size over 12MB
 })
 
-const Map2 = ReactMapboxGl({
+const MapPrint = ReactMapboxGl({
     accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN
 })
 
@@ -149,8 +150,8 @@ export default function MapContainer({
 
     useEffect(() => {
         map?.resize()
-        if (map && Object.values(journeysDragable.locations).length > 0) {
-            // map.fitBounds(getBbox(journeysDragable), { padding: 80 })
+        if (map && Object.values(journeysDragable.locations).length > 1) {
+            map.fitBounds(getBbox(journeysDragable), { padding: 80 })
         }
     }, [journeysDragable])
 
@@ -204,6 +205,7 @@ export default function MapContainer({
                 bannerHeight={bannerHeight}
                 mapButtonsHeight={mapButtonsHeight}
             >
+                {console.log({ mapZoom })}
                 <div style={{ display: 'none' }} id="map_wrap_id">
                     <Map
                         onStyleLoad={onMapLoad}
@@ -275,7 +277,7 @@ export default function MapContainer({
                 </div>
                 <Backdrop open={false}>
                     <NeverDisplayContainer id="snapshot_map_wrapper">
-                        <Map2
+                        <MapPrint
                             onStyleLoad={onMapSnapshotLoad}
                             style={getMapStyleObj(MAP_STYLES[activeMapStyleName].mapId, true)}
                             containerStyle={{
@@ -296,7 +298,7 @@ export default function MapContainer({
                                 lineWidth={2}
                                 baseCircleRadius={5}
                             />
-                        </Map2>
+                        </MapPrint>
                     </NeverDisplayContainer>
                 </Backdrop>
 

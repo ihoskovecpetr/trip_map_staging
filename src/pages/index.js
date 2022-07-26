@@ -21,8 +21,8 @@ const IndexPage = () => {
         <ThemeProvider theme={theme}>
             <StickyProvider>
                 <SEO
-                    title="Trip Map - Landing page"
-                    description="Landing page, all the information about TripMap.org"
+                    title="Trip Map Introduction"
+                    description="Beautifuly designed maps with your custom trip created in seconds. Design you original custom map."
                     author="TripMap.org"
                 />
 

@@ -12,13 +12,13 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
 import { color, fontSize, fontWeight } from 'utils'
 
-import GeocoderInput from 'components/GeocoderInput_new'
+import GeocoderInput from 'components/GeocoderInput'
 import { updateLocation, removeLocation } from 'redux/order/actions'
 import { useDebounce } from 'Hooks/useDebounce'
 import { useTranslation } from 'Hooks/useTranslation'
 import { MODE_OF_TRANSPORT } from '@constants'
 
-export default function LocationLine({ location, index, tripId, activeLocationId, setActiveLocationId }) {
+export default function LocationLine({ location, index, tripId, activeLocationId, setActiveLocationId, map }) {
     const dispatch = useDispatch()
     const t = useTranslation()
     const [locationInput, setLocationInput] = useState(true)
@@ -148,7 +148,7 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                 <StyledIconSwipe fontSize="small" />
 
                                 {locationInput ? (
-                                    <StyledGeocoderInput
+                                    <GeocoderInput
                                         style={{
                                             // display: "inline",
                                             flex: 5,
@@ -162,6 +162,7 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                         onClick={() => {
                                             setActiveLocationId(location.id)
                                         }}
+                                        map={map}
                                     />
                                 ) : (
                                     <InputWrap>
@@ -253,8 +254,6 @@ const LocLblBtn = styled.div`
 const ModeOfTransportBtn = styled.div`
     padding: 0 5px;
 `
-
-const StyledGeocoderInput = styled(GeocoderInput)``
 
 const InputWrap = styled.div`
     flex: 5;
