@@ -181,7 +181,7 @@ export default function MapContainer({
                 tiles: [
                     `https://api.mapbox.com/styles/v1/ihoskovecpetr/${mapId}/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN}`
                 ],
-                tileSize: isSnapshot ? 128 : 64, //128
+                tileSize: isSnapshot ? 128 : 128, //128 64
                 minzoom: 0,
                 maxzoom: 22
             }

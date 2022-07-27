@@ -104,7 +104,7 @@ export default function LandingPage() {
                                 autoplay={true}
                                 cellAlign="center"
                                 heightMode="max"
-                                autoplayInterval={3000}
+                                autoplayInterval={2000}
                                 // heightMode={current}
                                 initialSlideHeight={90}
                                 // frameOverflow="visible"
@@ -115,9 +115,9 @@ export default function LandingPage() {
                                 renderCenterRightControls={() => null}
                             >
                                 <img src={displayPNG ? Carousel2PNG : Carousel2Webp} />
-                                <img src={displayPNG ? Carousel5PNG : Carousel5Webp} />
-                                <img src={displayPNG ? Carousel3PNG : Carousel3Webp} />
-                                <img src={displayPNG ? Carousel4PNG : Carousel4Webp} />
+                                <img src={displayPNG ? Carousel5PNG : Carousel5Webp} loading="lazy" />
+                                <img src={displayPNG ? Carousel3PNG : Carousel3Webp} loading="lazy" />
+                                <img src={displayPNG ? Carousel4PNG : Carousel4Webp} loading="lazy" />
                             </Carousel>
                             <ZeroHeightWrap>
                                 <motion.div
