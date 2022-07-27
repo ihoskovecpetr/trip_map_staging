@@ -46,10 +46,6 @@ export default function LocalisationPopup() {
         )
     }
 
-    const handleClose = () => {
-        setOpen(false)
-    }
-
     return (
         <>
             <LabelContainer onClick={() => setOpen(!open)}>
@@ -133,7 +129,6 @@ export default function LocalisationPopup() {
                             </SelectColumn>
                         </SelectBox>
                         <ButtonsBox>
-                            <StyledButton onClick={handleClose}>Close</StyledButton>
                             <StyledButtonConfirm onClick={handleConfirmSelection}>Confirm</StyledButtonConfirm>
                         </ButtonsBox>
                     </BoxWrap>
@@ -243,16 +238,6 @@ const ButtonsBox = styled.div`
 const StyledButtonConfirm = styled.button`
     background-color: ${color('primary')};
     color: white;
-    width: 100%;
-    padding: 10px 20px;
-    min-height: unset;
-    font-weight: 300;
-    border: none;
-    cursor: pointer;
-`
-
-const StyledButton = styled.button`
-    background-color: lightGrey;
     width: 100%;
     padding: 10px 20px;
     min-height: unset;

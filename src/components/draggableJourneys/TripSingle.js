@@ -69,8 +69,6 @@ export default function TripSingle({
     const [thisActiveNewInput, setThisActiveNewInput] = useState(false)
     const t = useTranslation()
 
-    console.log({ map })
-
     const setGeocoderResult = (tripId, result, modeOfTransport) => {
         const sourceId = 'SourceId_' + Math.random()
         const titleSourceId = 'TitleSourceId_' + Math.random()

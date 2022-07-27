@@ -150,10 +150,24 @@ export default function MapContainer({
 
     useEffect(() => {
         map?.resize()
+        const modifiedLocations = getModifiedLocations(journeysDragable.locations)
         if (map && Object.values(journeysDragable.locations).length > 1) {
-            map.fitBounds(getBbox(journeysDragable), { padding: 80 })
+            map.fitBounds(getBbox({ locations: modifiedLocations }), { padding: 80 })
         }
     }, [journeysDragable])
+
+    const getModifiedLocations = locations => {
+        const keysArr = Object.keys(locations)
+        const newestLocationKey = keysArr[keysArr.length - 1]
+
+        if (locations[newestLocationKey].title === 'Paris, Tour Eiffel') {
+            let { [newestLocationKey]: _, ...rest } = locations
+
+            return rest
+        } else {
+            return locations
+        }
+    }
 
     useEffect(() => {
         map?.resize()
@@ -487,7 +501,6 @@ const NeverDisplayContainer = styled.div`
 `
 
 const StudioMapSection = styled.div`
-    px: 0 !important;
     display: flex;
     flex-direction: column;
     transform: translateX(0);

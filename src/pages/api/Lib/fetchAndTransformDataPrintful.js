@@ -31,12 +31,19 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, currency) => {
             to: currency
         })
 
+        console.log({ exchangeRateUSDtoCurrency })
+
         const finalResult = responsesProductCost.reduce((acc, cur) => {
             try {
                 const productCostUSD = new Big(cur.data.result.variant.price)
 
                 const productCostCurrency = productCostUSD.times(exchangeRateUSDtoCurrency).round(0).toString()
 
+                console.log({
+                    productCostUSD: productCostUSD.toString(),
+                    productCostCurrency,
+                    id: cur.data.result.variant.id
+                })
                 const shippingVariantObj = responsesShippingCost.find(
                     item => item.variantId === cur.data.result.variant.id
                 )
@@ -45,6 +52,8 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, currency) => {
                     .filter(({ region, status }) => status === 'in_stock' && AVAILABLE_REGIONS.includes(region))
                     .map(item => item.region)
 
+                console.log({ shippingVariantObj_cost: shippingVariantObj.cost })
+
                 const costWithShipping = priceAlgorithm.add([productCostCurrency, shippingVariantObj.cost])
 
                 const priceWithDeliveryAndProfit = priceAlgorithm.getPrice(
@@ -52,6 +61,7 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, currency) => {
                     TAX_PERCENTAGE,
                     GROSS_PROFIT_PERCENTAGE
                 )
+                console.log(costWithShipping, TAX_PERCENTAGE, GROSS_PROFIT_PERCENTAGE, priceWithDeliveryAndProfit)
 
                 return {
                     ...acc,

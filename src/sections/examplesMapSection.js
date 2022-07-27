@@ -43,7 +43,7 @@ export default function Examples() {
                     <StyledCarousel
                         autoplay={true}
                         cellAlign="center"
-                        autoplayInterval={2000}
+                        autoplayInterval={1200}
                         // heightMode="max"
                         // heightMode={current}
                         // initialSlideHeight={10}

@@ -1,54 +1,50 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from 'react'
 
 export function useElementDimensions(element_id) {
-  const [dimensions, setDimensions] = useState({ height: 0, width: 0 });
+    const [dimensions, setDimensions] = useState({ height: 0, width: 0 })
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (!window) {
-        return;
-      }
+    useEffect(() => {
+        const handleResize = () => {
+            if (!window) {
+                return
+            }
 
-      setDimensions({
-        height:
-          document.getElementById(element_id)?.getBoundingClientRect().height ||
-          0,
-        width:
-          document.getElementById(element_id)?.getBoundingClientRect().width ||
-          0,
-      });
-    };
+            setDimensions({
+                height: document.getElementById(element_id)?.getBoundingClientRect()?.height || 0,
+                width: document.getElementById(element_id)?.getBoundingClientRect()?.width || 0
+            })
+        }
 
-    handleResize();
+        handleResize()
 
-    const measuredElement = document.getElementById(element_id);
-    const resizeObserver = new ResizeObserver(handleResize);
+        const measuredElement = document.getElementById(element_id)
+        const resizeObserver = new ResizeObserver(handleResize)
 
-    if (measuredElement) {
-      resizeObserver?.observe(measuredElement);
-    }
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("load", handleResize);
+        if (measuredElement) {
+            resizeObserver?.observe(measuredElement)
+        }
+        window.addEventListener('resize', handleResize)
+        window.addEventListener('load', handleResize)
 
-    const timeout = setTimeout(() => {
-      handleResize();
-    }, 500);
+        const timeout = setTimeout(() => {
+            handleResize()
+        }, 500)
 
-    return () => {
-      if (measuredElement) {
-        resizeObserver?.unobserve(measuredElement);
-      }
+        return () => {
+            if (measuredElement) {
+                resizeObserver?.unobserve(measuredElement)
+            }
 
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("load", handleResize);
+            window.removeEventListener('resize', handleResize)
+            window.removeEventListener('load', handleResize)
 
-      clearTimeout(timeout);
-    };
-  }, []);
+            clearTimeout(timeout)
+        }
+    }, [])
 
-  const dimensions_memo = useMemo(() => {
-    return dimensions;
-  }, [dimensions]);
+    const dimensions_memo = useMemo(() => {
+        return dimensions
+    }, [dimensions])
 
-  return dimensions_memo;
+    return dimensions_memo
 }
