@@ -150,8 +150,8 @@ export default function MapContainer({
 
     useEffect(() => {
         map?.resize()
-        const modifiedLocations = getModifiedLocations(journeysDragable.locations)
         if (map && Object.values(journeysDragable.locations).length > 1) {
+            const modifiedLocations = getModifiedLocations(journeysDragable.locations)
             map.fitBounds(getBbox({ locations: modifiedLocations }), { padding: 80 })
         }
     }, [journeysDragable])
