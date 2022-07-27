@@ -43,12 +43,13 @@ export default function Examples() {
                     <StyledCarousel
                         autoplay={true}
                         cellAlign="center"
-                        autoplayInterval={1200}
+                        autoplayInterval={2000}
                         // heightMode="max"
                         // heightMode={current}
                         // initialSlideHeight={10}
                         // frameOverflow="visible"
                         withoutControls
+                        pauseOnHover={false}
                         wrapAround
                         swiping
                         renderCenterLeftControls={() => null}

@@ -109,6 +109,7 @@ export default function LandingPage() {
                                 initialSlideHeight={90}
                                 // frameOverflow="visible"
                                 // withoutControls
+                                pauseOnHover={false}
                                 wrapAround
                                 swiping
                                 renderCenterLeftControls={() => null}

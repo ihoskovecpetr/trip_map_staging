@@ -413,7 +413,7 @@ const PrintLocations = ({
                                                 key={`${pointIndex}_2_${groupIndex}`}
                                                 paint={{
                                                     'line-color':
-                                                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain,
+                                                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorPath,
                                                     'line-width': lineWidth
                                                 }}
                                             >

@@ -550,7 +550,7 @@ const MAP_STYLED_AND_FLIGHT_COLOR = {
         colorMain: 'black',
         colorSecondary: 'white',
         colorText: 'rgba(00,00,00,1)',
-        colorPath: 'black',
+        colorPath: 'white',
         colorHalo: '#e2dd7e'
     },
     [MAP_STYLES_NAMES.WHITE_BLUE]: {

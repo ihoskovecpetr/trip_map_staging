@@ -138,11 +138,11 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
         case HYDRATE:
             const { product: metaProduct, mapTitles: metaMapTitles, ...metaPayloadStripped } = payload.order //This is fixing that recurring error on DEV
             let metaPayload
-            if (metaProduct?.name) {
-                // WHY checking name??
+            const isProductPropperlySaved = metaProduct?.name && metaMapTitles?.heading
+            if (isProductPropperlySaved) {
                 metaPayload = payload.order
             } else {
-                metaPayload = payload.order //metaPayloadStripped
+                metaPayload = { ...orderInitialState, ...metaPayloadStripped }
             }
 
             if (typeof window !== 'undefined') {
