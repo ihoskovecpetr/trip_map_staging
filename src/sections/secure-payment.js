@@ -4,9 +4,9 @@ import { Container, Box } from 'theme-ui'
 import TextFeature from 'components/text-feature'
 import Image from 'components/image'
 import { useTranslation } from 'Hooks/useTranslation'
+import styled from 'styled-components'
 
 import PaymentThumb from 'assets/paymentThumb.png'
-// import PaymentPattern from "assets/payment-pattern.png";
 
 const data = {
     subTitle: 'payment.subtitle',
@@ -79,6 +79,7 @@ const styles = {
         ml: [-4, '-40px', null, null, 0],
         order: [2, null, null, 0],
         pr: [6, null, 7, 0]
+        // height: ['100px', null, null]
     },
     contentBox: {
         width: ['100%', 420, 480, 380, 500, 570],
@@ -91,3 +92,5 @@ const styles = {
         pr: [0, null, null, null, null, 6]
     }
 }
+
+const ThumbnailBox = styled.div``

@@ -27,7 +27,7 @@ const IndexPage = () => {
                 />
 
                 <Layout withFooter>
-                    <LandingPage />
+                    {/* <LandingPage />
                     <ExamplesMapSection />
                     <GallerySection />
                     <PackagesOptions />
@@ -35,9 +35,9 @@ const IndexPage = () => {
                     <WorkFlow />
                     <SecurePayment />
                     <PrintfulPrint />
-                    {/* <Feature /> */}
+                    //<Feature />
                     <TestimonialCard />
-                    <Faq />
+                    <Faq /> */}
                 </Layout>
             </StickyProvider>
         </ThemeProvider>
