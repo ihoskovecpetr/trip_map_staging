@@ -3,6 +3,7 @@ import { jsx } from 'theme-ui'
 import { Container, Grid } from 'theme-ui'
 import Gallery from 'react-grid-gallery'
 import { useIsMobile } from 'Hooks/useIsMobile'
+import { Lazy } from 'react-lazy'
 
 import SectionHeader from '../components/section-header'
 import { useTranslation } from 'Hooks/useTranslation'
@@ -173,7 +174,16 @@ export default function KeyFeature() {
                         images={imagesWithOptions}
                         backdropClosesModal={true}
                         rowHeight={isMobile ? 120 : 180}
-                        thumbnailImageComponent={({ imageProps }) => <img {...imageProps} loading="lazy" />}
+                        thumbnailImageComponent={({ imageProps }) => (
+                            <Lazy component="a" href="/" className="image-link image-link--100px" ltIE9>
+                                <img
+                                    alt="My Lazy Loaded Image"
+                                    className="image-link__image"
+                                    src="my-lazy-loaded-image.png"
+                                    {...imageProps}
+                                />
+                            </Lazy>
+                        )}
                     />
                 </Grid>
             </Container>

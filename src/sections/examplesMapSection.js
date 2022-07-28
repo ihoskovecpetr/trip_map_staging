@@ -13,7 +13,7 @@ import Button from 'components/Button'
 import { useIsMobile } from 'Hooks/useIsMobile'
 import { useTranslation } from 'Hooks/useTranslation'
 
-import CarouselHKpng from 'assets/mapExamples/new_hk.png'
+import USA_east from 'assets/mapExamples/usa_east.png'
 
 import CarouselManhattanBikeBlack from 'assets/mapExamples/new_manhattan.png'
 
@@ -23,6 +23,7 @@ import USAWatPNG from 'assets/mapExamples/new_usa.png'
 
 import GermanyPNG from 'assets/mapExamples/new_germany.png'
 import ItalyPNG from 'assets/mapExamples/new_italy.png'
+import ItalyWhitePNG from 'assets/mapExamples/italy_white.png'
 
 export default function Examples() {
     const router = useRouter()
@@ -55,17 +56,19 @@ export default function Examples() {
                         renderCenterLeftControls={() => null}
                         renderCenterRightControls={() => null}
                     >
-                        {displayPNG ? <GalleryImg src={CarouselHKpng} /> : <GalleryImg src={CarouselHKpng} />}
-                        {displayPNG ? <GalleryImg src={USAWatPNG} /> : <GalleryImg src={USAWatPNG} />}
-                        {displayPNG ? <GalleryImg src={JapanPNG} /> : <GalleryImg src={JapanPNG} />}
+                        {/* {displayPNG ? <GalleryImg src={CarouselHKpng} /> : <GalleryImg src={CarouselHKpng} />} */}
+                        {/* {displayPNG ? <GalleryImg src={USAWatPNG} /> : <GalleryImg src={USAWatPNG} />} */}
                         {displayPNG ? <GalleryImg src={GermanyPNG} /> : <GalleryImg src={GermanyPNG} />}
-                        {displayPNG ? <GalleryImg src={ItalyPNG} /> : <GalleryImg src={ItalyPNG} />}
+                        {displayPNG ? <GalleryImg src={JapanPNG} /> : <GalleryImg src={JapanPNG} />}
+                        {/* {displayPNG ? <GalleryImg src={ItalyPNG} /> : <GalleryImg src={ItalyPNG} />} */}
+                        {displayPNG ? <GalleryImg src={ItalyWhitePNG} /> : <GalleryImg src={ItalyWhitePNG} />}
+                        {displayPNG ? <GalleryImg src={USA_east} /> : <GalleryImg src={USA_east} />}
 
-                        {displayPNG ? (
+                        {/* {displayPNG ? (
                             <GalleryImg src={CarouselManhattanBikeBlack} />
                         ) : (
                             <GalleryImg src={CarouselManhattanBikeBlack} />
-                        )}
+                        )} */}
 
                         {/* {displayPNG ? (
               <GalleryImg src={CarouselRio} />

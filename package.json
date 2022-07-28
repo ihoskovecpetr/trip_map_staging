@@ -74,6 +74,7 @@
         "react-image-lightbox": "^5.1.1",
         "react-intl": "^5.24.3",
         "react-intl-redux": "^2.2.0",
+        "react-lazy": "^1.1.0",
         "react-mapbox-gl": "^5.1.1",
         "react-multi-carousel": "^2.5.5",
         "react-stripe-checkout": "^2.6.3",
