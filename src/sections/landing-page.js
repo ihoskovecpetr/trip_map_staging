@@ -71,8 +71,6 @@ export default function LandingPage() {
         document.getElementById('vid')?.play()
     }, [])
 
-    console.log('rerender')
-
     return (
         <SectionContainer>
             <ContainerBox headerHeight={headerHeight}>
@@ -112,53 +110,55 @@ export default function LandingPage() {
                                     />
                                 </>
                             )}
-                            <Carousel
-                                autoplay={true}
-                                cellAlign="center"
-                                heightMode="max"
-                                autoplayInterval={2000}
-                                // heightMode={current}
-                                initialSlideHeight={90}
-                                // frameOverflow="visible"
-                                // withoutControls
-                                pauseOnHover={false}
-                                wrapAround
-                                swiping
-                                renderCenterLeftControls={() => null}
-                                renderCenterRightControls={() => null}
-                            >
-                                <img
-                                    src={
-                                        displayPNG
-                                            ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/2_uviwc9.png'
-                                            : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/2_w1nh1j.webp'
-                                    }
-                                />
-                                <img
-                                    src={
-                                        displayPNG
-                                            ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/3_pnme0a.png'
-                                            : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/3_yuo2x8.webp'
-                                    }
-                                    loading="lazy"
-                                />
-                                <img
-                                    src={
-                                        displayPNG
-                                            ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/5_hkwd2x.png'
-                                            : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/5_phvfaq.webp'
-                                    }
-                                    loading="lazy"
-                                />
-                                <img
-                                    src={
-                                        displayPNG
-                                            ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/4_hhpxi5.png'
-                                            : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/4_r0mbcs.webp'
-                                    }
-                                    loading="lazy"
-                                />
-                            </Carousel>
+                            {IS_CLIENT && (
+                                <Carousel
+                                    autoplay={true}
+                                    cellAlign="center"
+                                    heightMode="max"
+                                    autoplayInterval={2000}
+                                    // heightMode={current}
+                                    initialSlideHeight={90}
+                                    // frameOverflow="visible"
+                                    // withoutControls
+                                    pauseOnHover={false}
+                                    wrapAround
+                                    swiping
+                                    renderCenterLeftControls={() => null}
+                                    renderCenterRightControls={() => null}
+                                >
+                                    <img
+                                        src={
+                                            displayPNG
+                                                ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/2_uviwc9.png'
+                                                : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/2_w1nh1j.webp'
+                                        }
+                                    />
+                                    <img
+                                        src={
+                                            displayPNG
+                                                ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/3_pnme0a.png'
+                                                : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/3_yuo2x8.webp'
+                                        }
+                                        loading="lazy"
+                                    />
+                                    <img
+                                        src={
+                                            displayPNG
+                                                ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/5_hkwd2x.png'
+                                                : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/5_phvfaq.webp'
+                                        }
+                                        loading="lazy"
+                                    />
+                                    <img
+                                        src={
+                                            displayPNG
+                                                ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/4_hhpxi5.png'
+                                                : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/4_r0mbcs.webp'
+                                        }
+                                        loading="lazy"
+                                    />
+                                </Carousel>
+                            )}
                             <ZeroHeightWrap>
                                 <motion.div
                                     animate={{ opacity: 1 }}
