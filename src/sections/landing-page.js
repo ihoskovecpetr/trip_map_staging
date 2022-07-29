@@ -21,6 +21,7 @@ import { mobile, color } from 'utils'
 import DiscountBanner from 'components/DiscountBanner'
 import { useTranslation } from 'Hooks/useTranslation'
 import { fontWeight } from 'utils'
+import { IS_CLIENT } from 'constants/constants'
 
 import Carousel1Webp from 'assets/carousel_landing/webp/1.webp'
 import Carousel2Webp from 'assets/carousel_landing/webp/2.webp'
@@ -100,6 +101,17 @@ export default function LandingPage() {
 
                         {/* {(isMobile || isSafari) && ( */}
                         <>
+                            {!IS_CLIENT && (
+                                <>
+                                    <StyledTestImage
+                                        src={
+                                            displayPNG
+                                                ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/5_hkwd2x.png'
+                                                : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/5_phvfaq.webp'
+                                        }
+                                    />
+                                </>
+                            )}
                             <Carousel
                                 autoplay={true}
                                 cellAlign="center"
@@ -251,8 +263,8 @@ const SectionContainer = styled.section`
   `};
 `
 
-const StyledVideo = styled.video`
-    height: 100%;
+const StyledTestImage = styled.img`
+    width: 100%;
 `
 
 const StyledText = styled.p`

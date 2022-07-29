@@ -12,11 +12,8 @@ const IndexPage = props => {
     return (
         <ThemeProvider theme={theme}>
             <StickyProvider>
-                <Layout>
-                    <SEO title="Trip Map - Obchodni Informace" description="Dokumentace" author="TripMap.org" />
-                </Layout>
-
                 <Layout withFooter>
+                    <SEO title="Trip Map - Obchodni Informace" description="Dokumentace" author="TripMap.org" />
                     <ObchodniInformace />
                 </Layout>
             </StickyProvider>

@@ -12,11 +12,8 @@ const AboutPage = props => {
     return (
         <ThemeProvider theme={theme}>
             <StickyProvider>
-                <Layout>
-                    <SEO title="Trip Map - O nás" description="Informace o nás" author="TripMap.org" />
-                </Layout>
-
                 <Layout withFooter>
+                    <SEO title="Trip Map - O nás" description="Informace o nás" author="TripMap.org" />
                     <About />
                 </Layout>
             </StickyProvider>

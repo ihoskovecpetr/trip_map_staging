@@ -55,7 +55,7 @@ export const getShippingCost = async (variantId, currency) => {
     const constantVariantPrice = constantVariant?.shipping[currency].price
 
     if (Number(constantVariantPrice) > Number(deliveryCostCurrency)) {
-        console.log('✅ it is OK, shipping cost Printfull is in limit', constantVariant, constantVariantPrice)
+        console.log('✅ it is OK, shipping cost Printfull is in limit')
     } else {
         console.log(
             '❌ Btw. PROBLEM, shipping cost Printfull is too high',
