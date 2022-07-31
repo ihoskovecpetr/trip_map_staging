@@ -104,8 +104,8 @@ export default function LandingPage() {
                                     <StyledTestImage
                                         src={
                                             displayPNG
-                                                ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/5_hkwd2x.png'
-                                                : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/5_phvfaq.webp'
+                                                ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/2_uviwc9.png'
+                                                : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/2_w1nh1j.webp'
                                         }
                                     />
                                 </>
@@ -123,8 +123,10 @@ export default function LandingPage() {
                                 pauseOnHover={false}
                                 wrapAround
                                 swiping
+                                defaultControlsConfig={{ containerClassName: 'nukaCarouserContainer' }}
                                 renderCenterLeftControls={() => null}
                                 renderCenterRightControls={() => null}
+                                style={{ opacity: IS_CLIENT ? 0 : 1 }}
                             >
                                 <img
                                     src={
