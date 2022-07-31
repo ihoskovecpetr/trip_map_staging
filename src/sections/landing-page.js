@@ -117,7 +117,7 @@ export default function LandingPage() {
                                 heightMode="max"
                                 autoplayInterval={2000}
                                 // heightMode={current}
-                                initialSlideHeight={90}
+                                initialSlideHeight={0}
                                 // frameOverflow="visible"
                                 // withoutControls
                                 pauseOnHover={false}
@@ -126,7 +126,7 @@ export default function LandingPage() {
                                 defaultControlsConfig={{ containerClassName: 'nukaCarouserContainer' }}
                                 renderCenterLeftControls={() => null}
                                 renderCenterRightControls={() => null}
-                                style={{ opacity: IS_CLIENT ? 0 : 1 }}
+                                // style={{ height: IS_CLIENT ? 0 : 'inherit' }}
                             >
                                 <img
                                     src={
