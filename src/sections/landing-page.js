@@ -140,19 +140,24 @@ export default function LandingPage() {
         if (!fromLocation) {
             setFromLocation(e)
             dispatch(removeAllJourneys())
-            dispatch(setMapBboxAction([]))
+            dispatch(
+                setMapBboxAction([
+                    // [e.center[0], e.center[1]],
+                    // [e.center[0], e.center[1]]
+                ])
+            )
             addTripLocation('trip-1', e)
-            updateTitleSubtitle(e)
+            updateTitleSubtitle(e, toLocation)
             // dispatch(setMapCoordinatesAction([e.center[0], e.center[1]]))
         } else {
             updateTripLocation(e, 'location-1', 1)
-            updateTitleSubtitle(e)
+            updateTitleSubtitle(e, toLocation)
         }
     }
 
     const setResultToLocation = e => {
         if (!toLocation) {
-            setToLocation(e.place_name)
+            setToLocation(e)
             addTripLocation('trip-1', e)
             updateTitleSubtitle(fromLocation, e)
         } else {
@@ -376,12 +381,9 @@ export default function LandingPage() {
                         {toLocation && (
                             <>
                                 <Subtitle>Mode of transport:</Subtitle>
-                                <Row>
-                                    <ModeOfTransportSelect location={secondLocation} />
-                                </Row>
+                                <Row>{secondLocation && <ModeOfTransportSelect location={secondLocation} />}</Row>
                             </>
                         )}
-                        {/* <CtaBtn> See result </CtaBtn> */}
                         {fromLocation && <CtaComponent />}
                     </BoxWrapper>
                     {/* </Box> */}

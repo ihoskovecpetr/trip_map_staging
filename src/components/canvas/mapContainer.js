@@ -163,15 +163,9 @@ export default function MapContainer({
     }, [journeysDragable])
 
     useEffect(() => {
-        console.log('Fitting_bbox_effect')
-        // map?.setCenter(mapCenterCoordinates)
         if (map && mapBbox.length) {
-            console.log('Fitting_bbox')
-
             map.fitBounds(mapBbox)
-        } else if (map && Object.values(journeysDragable.locations).length > 1) {
-            console.log('Fitting_locations')
-
+        } else if (map && Object.values(journeysDragable.locations).length > 0) {
             const locationsNoDummy = getLocationsWithoutDummy(journeysDragable.locations)
             map.fitBounds(getBbox({ locations: locationsNoDummy }), { padding: 60 })
         }
@@ -189,8 +183,6 @@ export default function MapContainer({
             return locations
         }
     }
-
-    console.log('Map_rerender')
 
     useEffect(() => {
         map?.resize()

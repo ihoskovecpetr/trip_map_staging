@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useGeocodeInput from 'Hooks/useGeocodeInput'
 import { node } from 'prop-types'
+import SuggestionsWrapper from './SuggestionsWrapper'
 
 const GeocoderInput = props => {
     const {
@@ -20,25 +21,58 @@ const GeocoderInput = props => {
     const address = useGeocodeInput(initValue, map)
     const dropdownRef = useRef(null)
 
+    const [hoveringIndex, setHoveringIndex] = useState(0)
+    const hoveringIndexRef = useRef(hoveringIndex)
+
+    React.useEffect(() => {
+        hoveringIndexRef.current = hoveringIndex
+    }, [hoveringIndex])
+
+    // const handleArrows = e => {
+    //     if (e.keyCode === 40) {
+    //         setHoveringIndex(prev => prev + 1)
+    //     } else if (e.keyCode === 38) {
+    //         setHoveringIndex(prev => prev - 1)
+    //     } else if (e.keyCode === 13) {
+    //         console.log({
+    //             Choosen_option: address.suggestions[hoveringIndexRef.current],
+    //             suggestions: address.suggestions
+    //         })
+
+    //         console.log({ enter_Key: e.keyCode, hoveringIndex, refCUr: hoveringIndexRef.current })
+
+    //         clickOnSuggestion(address.suggestions[hoveringIndexRef.current])
+    //     }
+    // }
+
     // useEffect(() => {
-    //     address.setValue(placeholder)
+    //     document.addEventListener('keydown', handleArrows)
+    //     return () => {
+    //         document.removeEventListener('keydown', handleArrows)
+    //     }
+    // }, [address])
+
+    // useEffect(() => {
+    //     const onClickAway = event => {
+    //         if (dropdownRef.current?.contains(event.target) || event.target === dropdownRef.current) {
+    //             return
+    //         }
+
+    //         address.setSuggestions([])
+    //     }
+
+    //     document.addEventListener('click', onClickAway, true)
+
+    //     return () => {
+    //         document.removeEventListener('click', onClickAway, true)
+    //     }
     // }, [])
 
-    useEffect(() => {
-        const onClickAway = event => {
-            if (dropdownRef.current?.contains(event.target) || event.target === dropdownRef.current) {
-                return
-            }
-
-            address.setSuggestions([])
-        }
-
-        document.addEventListener('click', onClickAway, true)
-
-        return () => {
-            document.removeEventListener('click', onClickAway, true)
-        }
-    }, [])
+    // const clickOnSuggestion = suggestion => {
+    //     setResult(suggestion)
+    //     address.setValue(clearOnFocus ? placeholder : suggestion.place_name.split(',')[0])
+    //     address.setSuggestions([])
+    // }
 
     return (
         <Wrapper key={id} style={style}>
@@ -55,18 +89,14 @@ const GeocoderInput = props => {
             />
             {address.suggestions?.length > 0 && (
                 <WrapperWrapSug>
-                    <SuggestionWrapper ref={dropdownRef}>
+                    {/* <SuggestionWrapper ref={dropdownRef}>
                         {address.suggestions.map((suggestion, index) => {
                             return (
                                 <Suggestion
                                     key={index}
+                                    isHovering={hoveringIndex === index}
                                     onClick={() => {
-                                        console.log({ suggestion })
-                                        setResult(suggestion)
-                                        address.setValue(
-                                            clearOnFocus ? placeholder : suggestion.place_name.split(',')[0]
-                                        )
-                                        address.setSuggestions([])
+                                        clickOnSuggestion(suggestion)
                                     }}
                                 >
                                     <HalfName>{suggestion.place_name.split(',')[0]}</HalfName>
@@ -74,7 +104,8 @@ const GeocoderInput = props => {
                                 </Suggestion>
                             )
                         })}
-                    </SuggestionWrapper>
+                    </SuggestionWrapper> */}
+                    <SuggestionsWrapper address={address} setResult={setResult} placeholder={placeholder} />
                 </WrapperWrapSug>
             )}
         </Wrapper>
@@ -148,6 +179,7 @@ const Suggestion = styled.p`
     margin: 5px 0;
     padding: 0 10px;
     font-size: 14px;
+    background: ${({ isHovering }) => (isHovering ? 'lightGrey' : 'transparent')};
 
     & :hover {
         background: lightGrey;
