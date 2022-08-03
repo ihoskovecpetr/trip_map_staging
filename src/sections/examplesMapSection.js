@@ -169,6 +169,7 @@ const CarouselWrap = styled.div`
     margin-bottom: 0px;
     // max-height: 400px;
     padding: 60px;
+    max-width: 600px;
 `
 
 const StyledImg = styled.img`
