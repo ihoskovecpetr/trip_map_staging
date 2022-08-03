@@ -573,7 +573,7 @@ const styles = {
         height: ['unset', null, null, '100%'], //"100vh"
         // pl: [0, 0, 0, 5, 7, 95],
         // pr: [0, 0, 0, 5, null, 75, 95],
-        pt: [6, null, 0],
+        pt: [8, null, 0],
         order: [0, null, null, 0],
         cursor: 'default',
         display: 'flex',
@@ -581,7 +581,7 @@ const styles = {
     },
     contentBox: {
         width: ['100%', 450, 350, 350, 500, 570],
-        pt: [2, null, 0],
+        pt: [0, null, 0],
         pr: [2, null, 'auto', null, null],
         pl: [2, null, 'auto', null, null],
         flexShrink: 0,
