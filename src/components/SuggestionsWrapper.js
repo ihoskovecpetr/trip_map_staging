@@ -17,8 +17,6 @@ const SuggestionsWrapper = ({ setResult, address, clearOnFocus = false, placehol
         } else if (e.keyCode === 38) {
             setHoveringIndex(prev => prev - 1)
         } else if (e.keyCode === 13) {
-            console.log({ enter_Key: e.keyCode, hoveringIndex, refCUr: hoveringIndexRef.current })
-
             clickOnSuggestion(address.suggestions[hoveringIndexRef.current])
         }
     }

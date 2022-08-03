@@ -62,8 +62,6 @@ const MapPrint = ReactMapboxGl({
     accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN
 })
 
-console.log('map_new_instance')
-
 const lineLayout = {
     'line-cap': 'round',
     'line-join': 'round'
@@ -252,7 +250,6 @@ export default function MapContainer({
                         }}
                         onMoveEnd={(_, e) => {
                             // dispatch(setMapCoordinatesAction([e.target.getCenter().lng, e.target.getCenter().lat]))
-                            console.log({ e_trg: e.target, bounds: e.target.getBounds(), sw: e.target.getBounds()._sw })
                             dispatch(
                                 setMapBboxAction([
                                     [e.target.getBounds()._sw.lng, e.target.getBounds()._sw.lat],
