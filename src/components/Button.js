@@ -16,7 +16,7 @@ const StyledButton = styled.button`
     font-size: ${({ textSize }) => fontSize(textSize ?? 'default')};
     padding: 1.25rem 2rem;
     min-height: 4rem;
-    min-width: 12.5rem;
+    /* min-width: 12.5rem; */
     transition: background-color 0.2s ease-in-out;
     font-weight: ${fontWeight('bold')};
 

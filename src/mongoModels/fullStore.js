@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+var lngLatArr = new Schema([String, String])
+
 const fullStoreScehma = new Schema(
     {
         storeId: { type: String },
@@ -22,6 +24,7 @@ const fullStoreScehma = new Schema(
         activeMapStyleName: { type: String },
         mapCenterCoordinates: { type: Object },
         mapZoom: { type: Number },
+        mapBbox: { type: Array },
         activeStepNumber: { type: Number },
         seenPopup: { type: Boolean },
         uploadPercentage: { type: Number },

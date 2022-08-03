@@ -13,19 +13,19 @@ import { useRouter } from 'next/router'
 import { PATHS } from '@constants'
 import DiscountBanner from 'components/DiscountBanner'
 
-export default function Header() {
+export default function Header({ isRelative }) {
     const { pathname } = useRouter()
     const { isMobile } = useIsMobile()
     const isStudio = pathname === PATHS.studio
 
     return (
         <DrawerProvider>
-            <HeaderContainer isStudio={isStudio} isMobile={isMobile} id="header">
+            <HeaderContainer isStudio={isStudio} isMobile={isMobile} isRelative={isRelative} id="header">
                 <DiscountBanner />
                 <StyledContainer>
-                    <Logo src={LogoBlack} />
+                    <Logo src={isStudio ? LogoBlack : LogoWhite} />
                     <Flex1 />
-                    <NavItems />
+                    <NavItems isStudio={isStudio} />
                 </StyledContainer>
             </HeaderContainer>
         </DrawerProvider>
@@ -40,6 +40,7 @@ const HeaderContainer = styled.div`
     z-index: 5;
     color: black;
     background-color: transparent;
+    position: ${({ isRelative }) => (isRelative ? 'relative' : 'absolute')};
 `
 
 const StyledContainer = styled(Container)`

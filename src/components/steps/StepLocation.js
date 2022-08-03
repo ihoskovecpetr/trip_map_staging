@@ -21,8 +21,7 @@ let geocoder = new MapboxGeocoder({
     mapboxgl: mapboxgl,
     marker: {
         // color: "transparent",
-    },
-    placeholder: 'Zadejte lokalitu'
+    }
 })
 
 export default function StepLocation({ map, index }) {
@@ -36,6 +35,7 @@ export default function StepLocation({ map, index }) {
         document.getElementById('geocoder').appendChild(geocoder.onAdd(map))
 
         geocoder.container.style.width = '100%'
+        geocoder.setPlaceholder(t('step.location.placeholder'))
     }, [])
 
     useEffect(() => {

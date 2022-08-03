@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import useGeocodeInput from 'Hooks/useGeocodeInput'
+import { node } from 'prop-types'
 
 const GeocoderInput = props => {
     const {
         map,
         id,
-        value,
+        initValue,
         setResult,
         placeholder,
         clearAfterResult = true,
@@ -16,12 +17,12 @@ const GeocoderInput = props => {
         clearOnFocus = false,
         onBlur = () => {}
     } = props
-    const address = useGeocodeInput(value, map)
+    const address = useGeocodeInput(initValue, map)
     const dropdownRef = useRef(null)
 
-    useEffect(() => {
-        address.setValue(placeholder)
-    }, [])
+    // useEffect(() => {
+    //     address.setValue(placeholder)
+    // }, [])
 
     useEffect(() => {
         const onClickAway = event => {
@@ -42,7 +43,7 @@ const GeocoderInput = props => {
     return (
         <Wrapper key={id} style={style}>
             <Input
-                placeholder={value}
+                placeholder={placeholder}
                 {...address}
                 isTyping={address.value !== ''}
                 onClick={onClick}
@@ -80,6 +81,27 @@ const GeocoderInput = props => {
     )
 }
 
+GeocoderInput.propTypes = {
+    // children: node.isRequired,
+    map: node.isRequired
+    // id,
+    // value,
+    // setResult,
+    // placeholder,
+    // clearAfterResult = true,
+    // style,
+    // inputStyle,
+    // onClick,
+    // clearOnFocus = false,
+    // onBlur = () => {}
+    // customColor: string,
+    // disabled: bool,
+    // inverted: bool,
+    // withBorder: bool,
+    // isLoading: bool,
+    // onClick: func
+}
+
 export default GeocoderInput
 
 const Wrapper = styled.div`
@@ -88,6 +110,8 @@ const Wrapper = styled.div`
     margin: 0 auto;
     background: white;
     position: relative;
+    /* display: flex;
+    align-items: center; */
 `
 
 const Input = styled.input`

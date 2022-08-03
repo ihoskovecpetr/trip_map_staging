@@ -22,6 +22,8 @@ const StudioPage = () => {
     const dispatch = useDispatch()
     const { isMobile } = useIsMobile()
 
+    console.log('studio_index_red')
+
     function ErrorFallback({ error }) {
         console.log('ErrorFallback_reseting_store', { error })
 
@@ -54,7 +56,7 @@ const StudioPage = () => {
             </Head>
             <StickyProvider>
                 {!isMobile && (
-                    <Layout>
+                    <Layout isRelative>
                         <ErrorBoundary FallbackComponent={ErrorFallback}>
                             <SEO
                                 title="Trip Map - Studio"

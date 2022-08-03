@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { createWrapper } from 'next-redux-wrapper'
 import thunkMiddleware from 'redux-thunk'
-import { intlReducer } from 'react-intl-redux'
 
 import order from './order/reducer'
 
@@ -14,8 +13,7 @@ const bindMiddleware = middleware => {
 }
 
 const combinedReducer = combineReducers({
-    order,
-    intl: intlReducer
+    order
 })
 
 const initStore = props => {

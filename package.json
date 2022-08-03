@@ -23,7 +23,6 @@
         "@material-ui/core": "^4.12.3",
         "@material-ui/icons": "^4.11.2",
         "@next/bundle-analyzer": "^11.0.0",
-        "@react-hook/intersection-observer": "^3.1.1",
         "@stripe/react-stripe-js": "^1.4.0",
         "@stripe/stripe-js": "^1.14.0",
         "@turf/turf": "^6.5.0",
@@ -74,7 +73,6 @@
         "react-icons": "^3.10.0",
         "react-image-lightbox": "^5.1.1",
         "react-intl": "^5.24.3",
-        "react-intl-redux": "^2.2.0",
         "react-lazy": "^1.1.0",
         "react-mapbox-gl": "^5.1.1",
         "react-multi-carousel": "^2.5.5",
@@ -99,7 +97,8 @@
         "imagemin-optipng": "^8.0.0",
         "imagemin-svgo": "^8.0.0",
         "next-sitemap": "^1.2.4",
-        "prettier": "2.5.1"
+        "prettier": "2.5.1",
+        "typescript": "^4.7.4"
     },
     "repository": {
         "type": "git",

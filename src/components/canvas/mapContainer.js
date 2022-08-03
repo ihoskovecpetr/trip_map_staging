@@ -18,7 +18,13 @@ import RoadMapLines from 'components/RoadMapLines'
 import { getCenteringLayoutDimensions } from 'LibGlobal/getCenteringLayoutDimensions'
 import MapButtons from './mapButtons'
 
-import { setMapZoomAction, setMapCoordinatesAction, updateIcon, updateLocation } from 'redux/order/actions'
+import {
+    setMapZoomAction,
+    setMapCoordinatesAction,
+    updateIcon,
+    updateLocation,
+    setMapBboxAction
+} from 'redux/order/actions'
 
 import {
     useProductSelector,
@@ -27,7 +33,8 @@ import {
     useSeenPopupSelector,
     useMapCoordinatesSelector,
     useMapZoomSelector,
-    useGetJourneysDraggable,
+    useMapBboxSelector,
+    useGetJourneysDraggableSelector,
     useGetJourneysSpecsSelector,
     useJourneysEnabledSelector,
     useGetIcons
@@ -55,6 +62,8 @@ const MapPrint = ReactMapboxGl({
     accessToken: NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN
 })
 
+console.log('map_new_instance')
+
 const lineLayout = {
     'line-cap': 'round',
     'line-join': 'round'
@@ -73,9 +82,10 @@ export default function MapContainer({
     const productRedux = useProductSelector()
     const activeLayoutNameRedux = useActiveLayoutSelector()
     const activeMapStyleName = useActiveMapStyleSelector()
-    const journeysDragable = useGetJourneysDraggable()
+    const journeysDragable = useGetJourneysDraggableSelector()
     const sortedGroupsJourneys = getSortedArraysDraggable(journeysDragable)
     const mapZoom = useMapZoomSelector()
+    const mapBbox = useMapBboxSelector()
     const mapCenterCoordinates = useMapCoordinatesSelector()
     const journeysSpecs = useGetJourneysSpecsSelector()
     const isJourneysEnabled = useJourneysEnabledSelector()
@@ -141,22 +151,33 @@ export default function MapContainer({
         dispatch(updateIcon({ ...originalIconObj, location: [coords.lng, coords.lat] }))
     }
 
-    useEffect(() => {
-        const image = new Image(100, 100)
-        image.src = iconChat
+    // useEffect(() => {
+    //     const image = new Image(100, 100)
+    //     image.src = iconChat
 
-        setImages(['myImage', image])
+    //     setImages(['myImage', image])
+    // }, [journeysDragable])
+
+    useEffect(() => {
+        map?.resize() // in order to apply route changes to map
     }, [journeysDragable])
 
     useEffect(() => {
-        map?.resize()
-        if (map && Object.values(journeysDragable.locations).length > 1) {
-            const modifiedLocations = getModifiedLocations(journeysDragable.locations)
-            map.fitBounds(getBbox({ locations: modifiedLocations }), { padding: 80 })
+        console.log('Fitting_bbox_effect')
+        // map?.setCenter(mapCenterCoordinates)
+        if (map && mapBbox.length) {
+            console.log('Fitting_bbox')
+
+            map.fitBounds(mapBbox)
+        } else if (map && Object.values(journeysDragable.locations).length > 1) {
+            console.log('Fitting_locations')
+
+            const locationsNoDummy = getLocationsWithoutDummy(journeysDragable.locations)
+            map.fitBounds(getBbox({ locations: locationsNoDummy }), { padding: 60 })
         }
-    }, [journeysDragable])
+    }, [map])
 
-    const getModifiedLocations = locations => {
+    const getLocationsWithoutDummy = locations => {
         const keysArr = Object.keys(locations)
         const newestLocationKey = keysArr[keysArr.length - 1]
 
@@ -168,6 +189,8 @@ export default function MapContainer({
             return locations
         }
     }
+
+    console.log('Map_rerender')
 
     useEffect(() => {
         map?.resize()
@@ -181,7 +204,7 @@ export default function MapContainer({
                 tiles: [
                     `https://api.mapbox.com/styles/v1/ihoskovecpetr/${mapId}/tiles/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPBOX_REFRESH_TOKEN}`
                 ],
-                tileSize: isSnapshot ? 128 : 128, //128 64
+                tileSize: isSnapshot ? 128 : 64, //128 64
                 minzoom: 0,
                 maxzoom: 22
             }
@@ -230,12 +253,20 @@ export default function MapContainer({
                             overflow: 'visible'
                         }}
                         center={mapCenterCoordinates}
-                        zoom={[mapZoom]}
+                        // zoom={[mapZoom]}
+                        // fitBounds={mapBbox}
                         onZoomEnd={(_, e) => {
-                            dispatch(setMapZoomAction(e.target.getZoom()))
+                            // dispatch(setMapZoomAction(e.target.getZoom()))
                         }}
                         onMoveEnd={(_, e) => {
-                            dispatch(setMapCoordinatesAction([e.target.getCenter().lng, e.target.getCenter().lat]))
+                            // dispatch(setMapCoordinatesAction([e.target.getCenter().lng, e.target.getCenter().lat]))
+                            console.log({ e_trg: e.target, bounds: e.target.getBounds(), sw: e.target.getBounds()._sw })
+                            dispatch(
+                                setMapBboxAction([
+                                    [e.target.getBounds()._sw.lng, e.target.getBounds()._sw.lat],
+                                    [e.target.getBounds()._ne.lng, e.target.getBounds()._ne.lat]
+                                ])
+                            )
                         }}
                         onError={(map, e) => {
                             console.log({ Map_errror: e, map })

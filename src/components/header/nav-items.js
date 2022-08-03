@@ -30,7 +30,7 @@ const menuItems = [
         label: 'navigation.studio'
     }
 ]
-const NavItems = () => {
+const NavItems = ({ isStudio }) => {
     const { state, dispatch } = useContext(DrawerContext)
     const router = useRouter()
     const { locale } = router
@@ -102,7 +102,7 @@ const NavItems = () => {
                                 setLoadingIndex(index)
                             }}
                         >
-                            <StyledAncor>{t(label)}</StyledAncor>
+                            <StyledAncor isStudio={isStudio}>{t(label)}</StyledAncor>
                             {index === loadingIndex && <UnderlineLoader />}
                         </StyledContainer>
                     </Link>
@@ -118,7 +118,7 @@ const Wrap = styled.span`
 
 const StyledAncor = styled.a`
     font-weight: ${fontWeight('regular')} !important;
-    color: black !important;
+    color: ${({ isStudio }) => (isStudio ? 'black' : 'white')} !important;
     position: relative;
 `
 

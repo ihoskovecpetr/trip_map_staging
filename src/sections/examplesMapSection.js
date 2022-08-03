@@ -14,15 +14,8 @@ import { useIsMobile } from 'Hooks/useIsMobile'
 import { useTranslation } from 'Hooks/useTranslation'
 
 import USA_east from 'assets/mapExamples/usa_east.png'
-
-import CarouselManhattanBikeBlack from 'assets/mapExamples/new_manhattan.png'
-
 import JapanPNG from 'assets/mapExamples/new_japan.png'
-
-import USAWatPNG from 'assets/mapExamples/new_usa.png'
-
 import GermanyPNG from 'assets/mapExamples/new_germany.png'
-import ItalyPNG from 'assets/mapExamples/new_italy.png'
 import ItalyWhitePNG from 'assets/mapExamples/italy_white.png'
 
 export default function Examples() {
@@ -41,7 +34,7 @@ export default function Examples() {
         <section sx={styles.banner} id="home">
             <StyledContainer>
                 <CarouselWrap>
-                    <StyledCarousel
+                    <Carousel
                         autoplay={true}
                         cellAlign="center"
                         autoplayInterval={2000}
@@ -56,26 +49,11 @@ export default function Examples() {
                         renderCenterLeftControls={() => null}
                         renderCenterRightControls={() => null}
                     >
-                        {/* {displayPNG ? <GalleryImg src={CarouselHKpng} /> : <GalleryImg src={CarouselHKpng} />} */}
-                        {/* {displayPNG ? <GalleryImg src={USAWatPNG} /> : <GalleryImg src={USAWatPNG} />} */}
                         {displayPNG ? <GalleryImg src={GermanyPNG} /> : <GalleryImg src={GermanyPNG} />}
                         {displayPNG ? <GalleryImg src={JapanPNG} /> : <GalleryImg src={JapanPNG} />}
-                        {/* {displayPNG ? <GalleryImg src={ItalyPNG} /> : <GalleryImg src={ItalyPNG} />} */}
                         {displayPNG ? <GalleryImg src={ItalyWhitePNG} /> : <GalleryImg src={ItalyWhitePNG} />}
                         {displayPNG ? <GalleryImg src={USA_east} /> : <GalleryImg src={USA_east} />}
-
-                        {/* {displayPNG ? (
-                            <GalleryImg src={CarouselManhattanBikeBlack} />
-                        ) : (
-                            <GalleryImg src={CarouselManhattanBikeBlack} />
-                        )} */}
-
-                        {/* {displayPNG ? (
-              <GalleryImg src={CarouselRio} />
-            ) : (
-              <GalleryImg src={CarouselRioWebp} />
-            )} */}
-                    </StyledCarousel>
+                    </Carousel>
                 </CarouselWrap>
                 <Box sx={styles.banner.contentBox}>
                     <StyledHeading>{t('examples.title')}</StyledHeading>
@@ -165,8 +143,6 @@ const StyledImg = styled.img`
     max-height: 500px;
     object-fit: contain;
 `
-
-const StyledCarousel = styled(Carousel)``
 
 const StyledContainer = styled(Container)`
     display: flex;

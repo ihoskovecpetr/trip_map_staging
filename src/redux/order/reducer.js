@@ -46,6 +46,7 @@ const orderInitialState = {
     activeMapStyleName: MAP_STYLES_NAMES.SANDY_DARK,
     mapCenterCoordinates: [13.303958804602132, 41.47437924957853],
     mapZoom: 5,
+    mapBbox: [],
     activeStepNumber: 0,
     seenPopup: false,
     uploadPercentage: 0,
@@ -138,10 +139,14 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
         case HYDRATE:
             const { product: metaProduct, mapTitles: metaMapTitles, ...metaPayloadStripped } = payload.order //This is fixing that recurring error on DEV
             let metaPayload
-            const isProductPropperlySaved = metaProduct?.name && metaMapTitles?.heading
+            const isProductPropperlySaved = metaMapTitles?.heading
+            // const isProductPropperlySaved = metaProduct?.name && metaMapTitles?.heading
             if (isProductPropperlySaved) {
+                console.log('PROPER_YES')
+
                 metaPayload = payload.order
             } else {
+                console.log('PROPER_NO', { metaMapTitles, metaProduct })
                 metaPayload = { ...orderInitialState, ...metaPayloadStripped }
             }
 
@@ -165,9 +170,9 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
                 // ...payload.order, // this was coming with empty product: {} // in payload is server store state !!!!
             }
 
-        case countActionTypes.RESET_STORE:
-            state = {}
-            return state
+        // case countActionTypes.RESET_STORE:
+        //     state = {}
+        //     return state
 
         case countActionTypes.SET_PRODUCT:
             state.product = {
@@ -215,6 +220,10 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
             state.mapZoom = data
             return state
 
+        case countActionTypes.SET_MAP_BBOX:
+            state.mapBbox = data
+            return state
+
         case countActionTypes.SET_UPLOAD_PERCENTAGE:
             state.uploadPercentage = data
             return state
@@ -230,12 +239,19 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
         case countActionTypes.ADD_NEW_LOCATION_DRAGGABLE:
             const nextLocationIndex = getMaxLocationIndex(state.journeysDraggable.locations)
             const nextLocationId = 'location-' + nextLocationIndex
+
             state.journeysDraggable.locations[nextLocationId] = {
                 index: nextLocationIndex,
                 id: nextLocationId,
                 ...data.body
             }
-            state.journeysDraggable.trips[data.tripId].locationIds.push(nextLocationId)
+
+            if (data.reverse) {
+                state.journeysDraggable.trips[data.tripId].locationIds.unshift(nextLocationId)
+            } else {
+                state.journeysDraggable.trips[data.tripId].locationIds.push(nextLocationId)
+            }
+
             return state
 
         case countActionTypes.UPDATE_LOCATION_SEQUENCE:
@@ -273,8 +289,13 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
 
         case countActionTypes.REMOVE_ALL_JOURNEYS:
             state.journeysDraggable.locations = {}
-            state.journeysDraggable.trips = {}
-            state.journeysDraggable.tripsOrder = []
+            state.journeysDraggable.trips = {
+                'trip-1': {
+                    id: 'trip-1',
+                    locationIds: []
+                }
+            }
+            state.journeysDraggable.tripsOrder = ['trip-1']
             return state
 
         case countActionTypes.ADD_EMPTY_TRIP:
@@ -309,7 +330,7 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
                 locationIds: [newLocationId]
             }
 
-            state.journeysDraggable.tripsOrder.unshift(newTripName)
+            state.journeysDraggable.tripsOrder.push(newTripName)
 
             return state
 
@@ -355,12 +376,11 @@ export const useProductSelector = () => useSelector(store => store.order.product
 export const useTitlesSelector = () => useSelector(store => store.order.mapTitles)
 
 export const useActiveLayoutSelector = () => useSelector(store => store.order.activeLayoutName)
-
 export const useActiveMapStyleSelector = () => useSelector(store => store.order.activeMapStyleName)
 
 export const useMapCoordinatesSelector = () => useSelector(store => store.order.mapCenterCoordinates)
-
 export const useMapZoomSelector = () => useSelector(store => store.order.mapZoom)
+export const useMapBboxSelector = () => useSelector(store => store.order.mapBbox)
 
 export const useUploadPercentageSelector = () => useSelector(store => store.order.uploadPercentage)
 
@@ -368,7 +388,7 @@ export const useDiscountSelector = () => useSelector(store => store.order.discou
 
 export const useSeenPopupSelector = () => useSelector(store => store.order.seenPopup)
 
-export const useGetJourneysDraggable = () => useSelector(store => store.order.journeysDraggable)
+export const useGetJourneysDraggableSelector = () => useSelector(store => store.order.journeysDraggable)
 
 export const useGetJourneysSpecsSelector = () => useSelector(store => store.order.journeysSpecs)
 

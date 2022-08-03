@@ -17,12 +17,12 @@ import { updateLocation, removeLocation } from 'redux/order/actions'
 import { useDebounce } from 'Hooks/useDebounce'
 import { useTranslation } from 'Hooks/useTranslation'
 import { MODE_OF_TRANSPORT } from '@constants'
+import ModeOfTransportSelect from 'components/draggableJourneys/ModeOfTransportSelect'
 
 export default function LocationLine({ location, index, tripId, activeLocationId, setActiveLocationId, map }) {
     const dispatch = useDispatch()
     const t = useTranslation()
     const [locationInput, setLocationInput] = useState(true)
-    const [activeGeocoder, setActiveGeocoder] = useState(false)
     const debounce = useDebounce({ delayInMS: 1000 })
 
     const setGeocoderResult = (locationObj, result) => {
@@ -85,7 +85,9 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                 {index > 0 && (
                                     <>
                                         <Flex1 />
-                                        <ModeOfTransportBtn
+                                        <ModeOfTransportSelect location={location} />
+
+                                        {/* <ModeOfTransportBtn
                                             onClick={() =>
                                                 dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.walking, location)
                                             }
@@ -135,13 +137,24 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                                     marginBottom: '-5px'
                                                 }}
                                             />
-                                        </ModeOfTransportBtn>
+                                        </ModeOfTransportBtn> */}
                                     </>
                                 )}
                                 <Flex1 />
                                 <StyledDeleteIcon
                                     onClick={() => dispatch(removeThisLocation(location.id, tripId))}
                                     fontSize="small"
+                                    // style={{
+                                    //     backgroundColor: isWalkingActive && 'black',
+                                    //     border: !isWalkingActive && '1px solid lightGrey',
+                                    //     borderRadius: '10px',
+                                    //     padding: '1px',
+                                    //     // marginBottom: '-5px',
+                                    //     // position: 'relative',
+                                    //     top: '5px',
+                                    //     left: '2px',
+                                    //     zIndex: 10
+                                    // }}
                                 />
                             </BtnsRow>
                             <InputsRow>
@@ -156,7 +169,7 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                             borderRight: '1px solid lightGrey',
                                             zIndex: activeLocationId === location.id ? 10 : 1
                                         }}
-                                        value={location.title}
+                                        initValue={location.title}
                                         setResult={e => setGeocoderResult(location, e)}
                                         clearAfterResult={false}
                                         onClick={() => {

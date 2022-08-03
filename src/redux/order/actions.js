@@ -5,6 +5,7 @@ export const countActionTypes = {
     NEW_SUBTITLE: 'NEW_SUBTITLE',
     SET_ACTIVE_LAYOUT: 'SET_ACTIVE_LAYOUT',
     SET_MAP_COORDINATES: 'SET_MAP_COORDINATES',
+    SET_MAP_BBOX: 'SET_MAP_BBOX',
     SET_MAP_ZOOM: 'SET_MAP_ZOOM',
     SET_ACTIVE_MAP_STYLE: 'SET_ACTIVE_MAP_STYLE',
     SET_UPLOAD_PERCENTAGE: 'SET_UPLOAD_PERCENTAGE',
@@ -72,6 +73,13 @@ export const setMapCoordinatesAction = newCoordinates => dispatch => {
     return dispatch({
         type: countActionTypes.SET_MAP_COORDINATES,
         data: newCoordinates
+    })
+}
+
+export const setMapBboxAction = newBbox => dispatch => {
+    return dispatch({
+        type: countActionTypes.SET_MAP_BBOX,
+        data: newBbox
     })
 }
 

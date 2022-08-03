@@ -12,12 +12,12 @@ import StepContainer from './atoms/StepContainer'
 import { TAB_STEPS } from '@constants'
 import { useTranslation } from 'Hooks/useTranslation'
 
-import { useGetJourneysDraggable, useJourneysEnabledSelector } from 'redux/order/reducer'
+import { useGetJourneysDraggableSelector, useJourneysEnabledSelector } from 'redux/order/reducer'
 
 export default function StepPathOrWithout({ map, index }) {
     const { isMobile } = useIsMobile()
     const dispatch = useDispatch()
-    const journeysDragable = useGetJourneysDraggable()
+    const journeysDragable = useGetJourneysDraggableSelector()
     const t = useTranslation()
 
     const isJourneysEnabled = useJourneysEnabledSelector()

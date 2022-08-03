@@ -454,6 +454,7 @@ export default function StudioRootContainer() {
     }
 
     const dispatchNewSubTitle = value => {
+        console.log('Setting_new')
         dispatch(setNewSubtitle(value ?? ''))
     }
 
@@ -516,8 +517,8 @@ const ContainerBox = styled.div`
     background-size: cover;
 
     ${mobile`
-    display: flex;
-  `};
+        display: flex;
+    `};
 `
 
 const CanvasBox = styled.div`
@@ -526,23 +527,23 @@ const CanvasBox = styled.div`
     border-left: 1px solid lightGrey;
 
     ${mobile`
-    order: 1;
-    width: 60%;
-  `};
+        order: 1;
+        width: 60%;
+    `};
 
     ${desktop`
-    width: 70%;
-  `}
+        width: 70%;
+    `}
 `
 
 const SettingsBox = styled.div`
     ${mobile`
-    order: 0;
-    width: 40%;
-    background-color: white;
-  `}
+        order: 0;
+        width: 40%;
+        background-color: white;
+    `}
 
     ${desktop`
-    width: 30%;
-  `}
+        width: 30%;
+    `}
 `

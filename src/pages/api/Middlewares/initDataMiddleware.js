@@ -25,6 +25,8 @@ const initDataMiddleware = () => async (req, res, next) => {
         return next()
     }
 
+    console.log('Hitting_initDataMiddleware')
+
     await connectToMongoose()
 
     const cookieStoreId = req.cookies[REDUX_COOKIE_NAME]
@@ -34,6 +36,7 @@ const initDataMiddleware = () => async (req, res, next) => {
             storeId: req.query.id
         })
 
+        console.log({ foundStoreFromQuery })
         if (foundStoreFromQuery) {
             const foundStoreWithout_secrets = { ...foundStoreFromQuery._doc } // this
 

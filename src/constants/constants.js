@@ -694,7 +694,7 @@ const OFFICIAL_EMAIL = 'tripmapshopinfo@gmail.com'
 
 const TAB_STEPS = [
     { full: '__null__', short: 'null' },
-    { full: 'step.variants.full', short: 'step.variants.short' },
+    // { full: 'step.variants.full', short: 'step.variants.short' },
     { full: 'step.location.full', short: 'step.location.short' },
     { full: 'step.orientation.full', short: 'step.orientation.short' },
     { full: 'step.titles.full', short: 'step.titles.short' },
@@ -726,7 +726,7 @@ const AVAILABLE_DESTINATIONS = [
     { country: 'Australia', region: 'AU' }
 ]
 
-const MODE_OF_TRANSPORT = { driving: 'driving', flying: 'flying', walking: 'walking' }
+const MODE_OF_TRANSPORT = { driving: 'driving', flying: 'flying', walking: 'walking', noJourney: 'noJourney' }
 // JP, UK, EU_LV, EU_ES
 
 module.exports = {

@@ -11,13 +11,17 @@ import TripSingle from './TripSingle'
 import { color, fontSize, mobile } from 'utils'
 import { useTranslation } from 'Hooks/useTranslation'
 
-import { useGetJourneysDraggable, useMaxTripIdSelector, useNumberOfEmptyTripsSelector } from 'redux/order/reducer'
+import {
+    useGetJourneysDraggableSelector,
+    useMaxTripIdSelector,
+    useNumberOfEmptyTripsSelector
+} from 'redux/order/reducer'
 
 import { updateLocationSequence, addTrip, addEmptyTrip, removeAllJourneys } from 'redux/order/actions'
 
 export default function TripsAll({ map }) {
     const dispatch = useDispatch()
-    const journeysDraggable = useGetJourneysDraggable()
+    const journeysDraggable = useGetJourneysDraggableSelector()
     const [activeTripId, setActiveTripId] = useState()
     const [activeLocationId, setActiveLocationId] = useState()
     const t = useTranslation()
@@ -59,7 +63,7 @@ export default function TripsAll({ map }) {
 
     return (
         <>
-            <BtnContainer>
+            {/* <BtnContainer>
                 <NewTripBtn
                     onClick={() => {
                         dispatch(addTrip())
@@ -81,7 +85,7 @@ export default function TripsAll({ map }) {
                     <p>{t('steps.removeAll')}</p>
                     <StyledDeleteForeverIcon fontSize="small" />
                 </DeleteBtn>
-            </BtnContainer>
+            </BtnContainer> */}
 
             <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
                 {journeysDraggable?.tripsOrder?.map(tripId => {
@@ -89,6 +93,7 @@ export default function TripsAll({ map }) {
                     const locations = tripObj.locationIds.map(taskId => journeysDraggable?.locations[taskId])
 
                     if (!locations.length) {
+                        return null
                         return (
                             <Droppable droppableId={tripObj.id}>
                                 {provided => (
