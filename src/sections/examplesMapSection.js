@@ -49,10 +49,41 @@ export default function Examples() {
                         renderCenterLeftControls={() => null}
                         renderCenterRightControls={() => null}
                     >
-                        {displayPNG ? <GalleryImg src={GermanyPNG} /> : <GalleryImg src={GermanyPNG} />}
+                        {/* {displayPNG ? <GalleryImg src={GermanyPNG} /> : <GalleryImg src={GermanyPNG} />}
                         {displayPNG ? <GalleryImg src={JapanPNG} /> : <GalleryImg src={JapanPNG} />}
                         {displayPNG ? <GalleryImg src={ItalyWhitePNG} /> : <GalleryImg src={ItalyWhitePNG} />}
-                        {displayPNG ? <GalleryImg src={USA_east} /> : <GalleryImg src={USA_east} />}
+                        {displayPNG ? <GalleryImg src={USA_east} /> : <GalleryImg src={USA_east} />} */}
+                        <img
+                            src={
+                                displayPNG
+                                    ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/2_uviwc9.png'
+                                    : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/2_w1nh1j.webp'
+                            }
+                        />
+                        <img
+                            src={
+                                displayPNG
+                                    ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/3_pnme0a.png'
+                                    : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/3_yuo2x8.webp'
+                            }
+                            loading="lazy"
+                        />
+                        <img
+                            src={
+                                displayPNG
+                                    ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/5_hkwd2x.png'
+                                    : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/5_phvfaq.webp'
+                            }
+                            loading="lazy"
+                        />
+                        <img
+                            src={
+                                displayPNG
+                                    ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/4_hhpxi5.png'
+                                    : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/4_r0mbcs.webp'
+                            }
+                            loading="lazy"
+                        />
                     </Carousel>
                 </CarouselWrap>
                 <Box sx={styles.banner.contentBox}>
@@ -137,6 +168,7 @@ const CarouselWrap = styled.div`
     width: 100%;
     margin-bottom: 0px;
     // max-height: 400px;
+    padding: 60px;
 `
 
 const StyledImg = styled.img`

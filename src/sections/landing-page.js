@@ -545,7 +545,7 @@ const styles = {
     contentBox: {
         width: ['100%', 450, 350, 350, 500, 570],
         pt: [7, null, 0],
-        pr: [0, null, 'auto', null, null, 80],
+        pr: [2, null, 'auto', null, null, 80],
         pl: 'auto',
         flexShrink: 0,
         display: ['block']
