@@ -196,8 +196,8 @@ export default function LandingPage() {
                                     <StyledTestImage
                                         src={
                                             displayPNG
-                                                ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659053297/assets/2_uviwc9.png'
-                                                : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659052989/assets/2_w1nh1j.webp'
+                                                ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516535/assets/new_japan_yq1gcm.png'
+                                                : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516692/assets/new_japan_ubkxmy.webp'
                                         }
                                     />
                                 </>
@@ -268,10 +268,46 @@ export default function LandingPage() {
                                 renderCenterLeftControls={() => null}
                                 renderCenterRightControls={() => null}
                             >
-                                {displayPNG ? <GalleryImg src={GermanyPNG} /> : <GalleryImg src={GermanyPNG} />}
+                                <img
+                                    src={
+                                        displayPNG
+                                            ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516536/assets/new_germany_lif81o.png'
+                                            : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516691/assets/new_germany_fpuvo4.webp'
+                                    }
+                                    loading="lazy"
+                                />
+
+                                <img
+                                    src={
+                                        displayPNG
+                                            ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516535/assets/new_japan_yq1gcm.png'
+                                            : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516692/assets/new_japan_ubkxmy.webp'
+                                    }
+                                    loading="lazy"
+                                />
+
+                                <img
+                                    src={
+                                        displayPNG
+                                            ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516536/assets/italy_white_cl8pgw.png'
+                                            : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516691/assets/italy_white_qfszgs.webp'
+                                    }
+                                    loading="lazy"
+                                />
+
+                                <img
+                                    src={
+                                        displayPNG
+                                            ? 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516536/assets/usa_east_cwkc48.png'
+                                            : 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659516692/assets/usa_east_uyf7il.webp'
+                                    }
+                                    loading="lazy"
+                                />
+
+                                {/* {displayPNG ? <GalleryImg src={GermanyPNG} /> : <GalleryImg src={GermanyPNG} />}
                                 {displayPNG ? <GalleryImg src={JapanPNG} /> : <GalleryImg src={JapanPNG} />}
                                 {displayPNG ? <GalleryImg src={ItalyWhitePNG} /> : <GalleryImg src={ItalyWhitePNG} />}
-                                {displayPNG ? <GalleryImg src={USA_east} /> : <GalleryImg src={USA_east} />}
+                                {displayPNG ? <GalleryImg src={USA_east} /> : <GalleryImg src={USA_east} />} */}
                             </Carousel>
 
                             <ZeroHeightWrap>
@@ -537,6 +573,7 @@ const styles = {
         height: ['unset', null, null, '100%'], //"100vh"
         // pl: [0, 0, 0, 5, 7, 95],
         // pr: [0, 0, 0, 5, null, 75, 95],
+        pt: [6, null, 0],
         order: [0, null, null, 0],
         cursor: 'default',
         display: 'flex',
@@ -544,9 +581,9 @@ const styles = {
     },
     contentBox: {
         width: ['100%', 450, 350, 350, 500, 570],
-        pt: [7, null, 0],
-        pr: [2, null, 'auto', null, null, 80],
-        pl: 'auto',
+        pt: [2, null, 0],
+        pr: [2, null, 'auto', null, null],
+        pl: [2, null, 'auto', null, null],
         flexShrink: 0,
         display: ['block']
     },
