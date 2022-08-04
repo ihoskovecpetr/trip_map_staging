@@ -161,8 +161,10 @@ export default function MapContainer({
     }, [journeysDragable])
 
     useEffect(() => {
-        if (map && mapBbox.length) {
-            map.fitBounds(mapBbox)
+        if (map && mapZoom) {
+            // map.fitBounds(mapBbox)
+            map.setCenter(mapCenterCoordinates)
+            map.setZoom(mapZoom)
         } else if (map && Object.values(journeysDragable.locations).length > 0) {
             const locationsNoDummy = getLocationsWithoutDummy(journeysDragable.locations)
             map.fitBounds(getBbox({ locations: locationsNoDummy }), { padding: 60 })
@@ -242,14 +244,14 @@ export default function MapContainer({
                             height: '100%',
                             overflow: 'visible'
                         }}
-                        center={mapCenterCoordinates}
+                        // center={mapCenterCoordinates}
                         // zoom={[mapZoom]}
                         // fitBounds={mapBbox}
                         onZoomEnd={(_, e) => {
-                            // dispatch(setMapZoomAction(e.target.getZoom()))
+                            dispatch(setMapZoomAction(e.target.getZoom()))
                         }}
                         onMoveEnd={(_, e) => {
-                            // dispatch(setMapCoordinatesAction([e.target.getCenter().lng, e.target.getCenter().lat]))
+                            dispatch(setMapCoordinatesAction([e.target.getCenter().lng, e.target.getCenter().lat]))
                             dispatch(
                                 setMapBboxAction([
                                     [e.target.getBounds()._sw.lng, e.target.getBounds()._sw.lat],

@@ -37,7 +37,8 @@ import {
     updateLocation,
     setNewTitle,
     setNewSubtitle,
-    setActiveStepNumber
+    setActiveStepNumber,
+    setMapZoomAction
 } from 'redux/order/actions'
 
 import Carousel1Webp from 'assets/carousel_landing/webp/1.webp'
@@ -146,6 +147,7 @@ export default function LandingPage() {
                     // [e.center[0], e.center[1]]
                 ])
             )
+            dispatch(setMapZoomAction(0))
             addTripLocation('trip-1', e)
             updateTitleSubtitle(e, toLocation)
             // dispatch(setMapCoordinatesAction([e.center[0], e.center[1]]))
