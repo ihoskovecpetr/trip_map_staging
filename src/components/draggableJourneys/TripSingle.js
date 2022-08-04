@@ -156,6 +156,7 @@ export default function TripSingle({
                                 placeholder={t('steps.locality.nextDestination')}
                                 setResult={e => setGeocoderResult(tripObj.id, e, lastModeOfTransport, true)}
                                 clearOnFocus
+                                clearAfterResult={true}
                                 onClick={() => {
                                     setThisActiveNewInput(true)
                                 }}
@@ -226,6 +227,7 @@ export default function TripSingle({
                                 placeholder={t('steps.locality.nextDestination')}
                                 setResult={e => setGeocoderResult(tripObj.id, e, lastModeOfTransport, false)}
                                 clearOnFocus
+                                clearAfterResult={true}
                                 onClick={() => {
                                     setThisActiveNewInput(true)
                                 }}

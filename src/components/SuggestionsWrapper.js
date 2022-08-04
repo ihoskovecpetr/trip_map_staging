@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
-const SuggestionsWrapper = ({ setResult, address, clearOnFocus = false, placeholder }) => {
+const SuggestionsWrapper = ({ setResult, address, clearAfterResult, placeholder }) => {
     const dropdownRef = useRef(null)
 
     const [hoveringIndex, setHoveringIndex] = useState(0)
@@ -46,7 +46,7 @@ const SuggestionsWrapper = ({ setResult, address, clearOnFocus = false, placehol
 
     const clickOnSuggestion = suggestion => {
         setResult(suggestion)
-        address.setValue(clearOnFocus ? placeholder : suggestion.place_name.split(',')[0])
+        address.setValue(clearAfterResult ? placeholder : suggestion.place_name.split(',')[0])
         address.setSuggestions([])
     }
 

@@ -29,9 +29,10 @@ export default function ModeOfTransportSelect({ location }) {
     return (
         <>
             <ModeOfTransportBtn onClick={() => dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.noJourney, location)}>
-                <ClearIcon
+                <StyledClearIcon
                     color={'secondary'}
                     fontSize="small"
+                    isActive={isNoJourneyActive}
                     style={{
                         backgroundColor: isNoJourneyActive && 'black',
                         border: !isNoJourneyActive && '1px solid grey',
@@ -42,9 +43,10 @@ export default function ModeOfTransportSelect({ location }) {
                 />
             </ModeOfTransportBtn>
             <ModeOfTransportBtn onClick={() => dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.walking, location)}>
-                <DirectionsWalkIcon
+                <StyledDirectionsWalkIcon
                     color={'secondary'}
                     fontSize="small"
+                    isActive={isWalkingActive}
                     style={{
                         backgroundColor: isWalkingActive && 'black',
                         border: !isWalkingActive && '1px solid grey',
@@ -55,9 +57,10 @@ export default function ModeOfTransportSelect({ location }) {
                 />
             </ModeOfTransportBtn>
             <ModeOfTransportBtn onClick={() => dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.driving, location)}>
-                <DriveEtaIcon
+                <StyledDriveEtaIcon
                     color={'secondary'}
                     fontSize="small"
+                    isActive={isDrivingActive}
                     style={{
                         backgroundColor: isDrivingActive && 'black',
                         border: !isDrivingActive && '1px solid grey',
@@ -68,9 +71,10 @@ export default function ModeOfTransportSelect({ location }) {
                 />
             </ModeOfTransportBtn>
             <ModeOfTransportBtn onClick={() => dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.flying, location)}>
-                <FlightIcon
+                <StyledFlightIcon
                     color={'secondary'}
                     fontSize="small"
+                    isActive={isFlyingActive}
                     style={{
                         backgroundColor: isFlyingActive && 'black',
                         border: !isFlyingActive && '1px solid grey',
@@ -86,4 +90,28 @@ export default function ModeOfTransportSelect({ location }) {
 
 const ModeOfTransportBtn = styled.div`
     padding: 0 5px;
+`
+
+const StyledFlightIcon = styled(FlightIcon)`
+    & :hover {
+        box-shadow: ${({ isActive }) => !isActive && '0px 0px 3px black;'};
+    }
+`
+
+const StyledDriveEtaIcon = styled(DriveEtaIcon)`
+    & :hover {
+        box-shadow: ${({ isActive }) => !isActive && '0px 0px 3px black;'};
+    }
+`
+
+const StyledDirectionsWalkIcon = styled(DirectionsWalkIcon)`
+    & :hover {
+        box-shadow: ${({ isActive }) => !isActive && '0px 0px 3px black;'};
+    }
+`
+
+const StyledClearIcon = styled(ClearIcon)`
+    & :hover {
+        box-shadow: ${({ isActive }) => !isActive && '0px 0px 3px black;'};
+    }
 `

@@ -20,7 +20,7 @@ import Step1Location from '../steps/StepLocation'
 import Step2Orientation from '../steps/StepOrientation'
 import StepLayout from '../steps/StepLayout'
 import StepLayoutColorSwitch from '../steps/StepLayoutColorSwitch'
-import StepColors from '../steps/StepColors'
+import StepMapDesigns from '../steps/StepMapDesigns'
 import StepSize from '../steps/StepSize'
 import StepFraming from '../steps/StepFraming'
 import Step8Checkout from '../steps/StepCheckout'
@@ -120,7 +120,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
             // <StepAddIcon map={map} index={21} />,
         ],
 
-        [<StepLayout index={4} />, <StepLayoutColorSwitch index={5} />, <StepColors index={6} />],
+        [<StepLayout index={4} />, <StepLayoutColorSwitch index={5} />, <StepMapDesigns index={6} />],
 
         [<StepSize index={7} />, <StepFraming map={map} index={8} />],
         [
@@ -139,7 +139,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
         // [<StepAddIcon map={map} index={21} />],
         [<Step2Orientation index={2} />],
         [<StepTitles index={3} />],
-        [<StepColors index={4} />],
+        [<StepMapDesigns index={4} />],
         [<StepLayout index={5} />],
         [<StepLayoutColorSwitch index={6} />],
         [<StepSize index={7} />],

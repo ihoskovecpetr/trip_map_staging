@@ -31,7 +31,6 @@ export default function TripsAll({ map }) {
     // journeysDraggable?.tripsOrder[0]
 
     const onDragEnd = result => {
-        console.log('onDragEndResult', { result })
         // if (
         //   result?.destination?.droppableId === maxTripIdString &&
         //   result?.destination?.index === 0
@@ -63,29 +62,31 @@ export default function TripsAll({ map }) {
 
     return (
         <>
-            {/* <BtnContainer>
-                <NewTripBtn
-                    onClick={() => {
-                        dispatch(addTrip())
-                    }}
-                >
-                    <StyledAddCircleOutlineIcon
-                        style={{
-                            fill: 'green'
+            {Object.keys(journeysDraggable.locations).length === 0 && (
+                <BtnContainer>
+                    <NewTripBtn
+                        onClick={() => {
+                            dispatch(addTrip())
                         }}
-                        fontSize="small"
-                    />
-                    <p>{t('steps.newTrip')}</p>
-                </NewTripBtn>
-                <DeleteBtn
-                    onClick={() => {
-                        dispatch(removeAllJourneys())
-                    }}
-                >
-                    <p>{t('steps.removeAll')}</p>
-                    <StyledDeleteForeverIcon fontSize="small" />
-                </DeleteBtn>
-            </BtnContainer> */}
+                    >
+                        <StyledAddCircleOutlineIcon
+                            style={{
+                                fill: '#f6aa1c'
+                            }}
+                            fontSize="small"
+                        />
+                        <p>{t('steps.newTrip')}</p>
+                    </NewTripBtn>
+                    {/* <DeleteBtn
+                        onClick={() => {
+                            dispatch(removeAllJourneys())
+                        }}
+                    >
+                        <p>{t('steps.removeAll')}</p>
+                        <StyledDeleteForeverIcon fontSize="small" />
+                    </DeleteBtn> */}
+                </BtnContainer>
+            )}
 
             <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
                 {journeysDraggable?.tripsOrder?.map(tripId => {
@@ -142,21 +143,23 @@ const NewTripBtn = styled.div`
     justify-content: center;
     align-items: center;
     /* border: 2px solid green; */
+    background: black;
     border-radius: 5px;
     height: 30px;
-    color: green;
+    color: #f6aa1c;
     margin: 15px 2px !important;
     padding: 0 5px;
     cursor: pointer;
-    box-shadow: 0 0 5px lightgrey;
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.3);
+        /* background-color: rgba(0, 0, 0, 0.3); */
+        box-shadow: 0 0 5px grey;
     }
     p {
         margin: 0;
         margin-top: 3px;
-        margin-bottom: -3px;
+        margin-bottom: -2px;
+        margin-right: 3px;
     }
 `
 

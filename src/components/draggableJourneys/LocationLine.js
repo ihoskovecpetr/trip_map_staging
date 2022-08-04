@@ -149,7 +149,7 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                         border: '1px solid lightGrey',
                                         borderRadius: '4px',
                                         padding: '1px',
-                                        margin: '2px',
+                                        margin: '4px',
                                         // marginBottom: '-5px',
                                         // position: 'relative',
                                         // top: '5px',
@@ -243,6 +243,10 @@ const StyledDeleteIcon = styled(DeleteForeverIcon)`
     /* font-size: 1rem !important; */
     // border-left: 1px solid black;
     fill: red !important;
+
+    & :hover {
+        box-shadow: ${({ isActive }) => !isActive && '0px 0px 3px grey;'};
+    }
 `
 
 const BtnsRow = styled.div`

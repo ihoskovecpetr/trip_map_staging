@@ -277,7 +277,7 @@ export default function MapContainer({
                                 console.log('map_error_ ', { e })
                             }}
                             lineWidth={1}
-                            baseCircleRadius={3}
+                            baseCircleRadius={2}
                         />
                         {/* 
             {icons?.map((icon) => {
@@ -331,7 +331,7 @@ export default function MapContainer({
                                 onUp={onUp}
                                 textSize={journeysSpecs.labelSizePrint}
                                 lineWidth={2}
-                                baseCircleRadius={5}
+                                baseCircleRadius={4}
                             />
                         </MapPrint>
                     </NeverDisplayContainer>
@@ -399,7 +399,7 @@ const PrintLocations = ({
                                         'circle-radius': baseCircleRadius * 1.2,
                                         'circle-radius-transition': { duration: 0 },
                                         'circle-opacity-transition': { duration: 0 },
-                                        'circle-color': MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorSecondary
+                                        'circle-color': MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorOuterCircle
                                     }}
                                 >
                                     <Feature coordinates={currentPoint.location} />
@@ -415,7 +415,7 @@ const PrintLocations = ({
                                         'circle-color':
                                             currentPoint.titleSourceId === draggedPoint
                                                 ? 'red'
-                                                : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorMain
+                                                : MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorInnerCircle
                                     }}
                                 >
                                     <Feature coordinates={currentPoint.location} />

@@ -99,7 +99,7 @@ export default function CheckoutCta({ map, snapMapInstance, isCustomUI, children
         } catch (e) {
             console.error(e)
             axios.post('api/send-notification-admin', {
-                message: 'Failed with uploading Image'
+                message: 'Failed upl' + e.message
             })
         }
     }
@@ -114,7 +114,7 @@ export default function CheckoutCta({ map, snapMapInstance, isCustomUI, children
     const backdropClose = () => {
         setBackdropOpen(false)
         forceResetPendingPromise()
-        axiosCancelTokenSource?.cancel('Request canceled on users order')
+        axiosCancelTokenSource?.cancel(' User ❌ checkout')
         setAxiosCancelTokenSource(CancelToken.source())
     }
 
