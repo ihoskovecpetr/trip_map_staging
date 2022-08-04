@@ -687,7 +687,8 @@ const REDUX_COOKIE_NAME = 'reduxStoreCookie'
 const LABEL_SIZE_KOEF = 0.009
 
 const PATHS = {
-    studio: '/studio'
+    studio: '/studio',
+    index: '/'
 }
 
 const OFFICIAL_EMAIL = 'tripmapshopinfo@gmail.com'

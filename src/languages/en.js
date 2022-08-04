@@ -155,8 +155,8 @@ export const en = {
         'steps.newTrip': 'New trip',
 
         'steps.splitText': 'By dragging here you separate the point',
-        'steps.highOrientation': 'High',
-        'steps.lowOrientation': 'Wide',
+        'steps.portrait': 'Portrait',
+        'steps.landscape': 'Landscape',
         'steps.titles.title': 'Main title',
         'steps.titles.subtitle': 'subtitle',
         'steps.frame.withoutFrame': 'No frame',

@@ -16,16 +16,18 @@ import DiscountBanner from 'components/DiscountBanner'
 export default function Header({ isRelative }) {
     const { pathname } = useRouter()
     const { isMobile } = useIsMobile()
-    const isStudio = pathname === PATHS.studio
+    const isIndex = pathname === PATHS.index
+
+    console.log({ pathname, isIndex })
 
     return (
         <DrawerProvider>
-            <HeaderContainer isStudio={isStudio} isMobile={isMobile} isRelative={isRelative} id="header">
+            <HeaderContainer isMobile={isMobile} isRelative={isRelative} id="header">
                 <DiscountBanner />
                 <StyledContainer>
-                    <Logo src={isStudio ? LogoBlack : LogoWhite} />
+                    <Logo src={isIndex ? LogoWhite : LogoBlack} />
                     <Flex1 />
-                    <NavItems isStudio={isStudio} />
+                    <NavItems isBlackLogo={!isIndex} />
                 </StyledContainer>
             </HeaderContainer>
         </DrawerProvider>

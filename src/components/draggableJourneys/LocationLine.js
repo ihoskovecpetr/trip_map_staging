@@ -84,7 +84,7 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                             <BtnsRow>
                                 {index > 0 && (
                                     <>
-                                        <Flex1 />
+                                        {/* <Flex1 /> */}
                                         <ModeOfTransportSelect location={location} />
 
                                         {/* <ModeOfTransportBtn
@@ -144,17 +144,18 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                 <StyledDeleteIcon
                                     onClick={() => dispatch(removeThisLocation(location.id, tripId))}
                                     fontSize="small"
-                                    // style={{
-                                    //     backgroundColor: isWalkingActive && 'black',
-                                    //     border: !isWalkingActive && '1px solid lightGrey',
-                                    //     borderRadius: '10px',
-                                    //     padding: '1px',
-                                    //     // marginBottom: '-5px',
-                                    //     // position: 'relative',
-                                    //     top: '5px',
-                                    //     left: '2px',
-                                    //     zIndex: 10
-                                    // }}
+                                    style={{
+                                        // backgroundColor: 'black',
+                                        border: '1px solid lightGrey',
+                                        borderRadius: '4px',
+                                        padding: '1px',
+                                        margin: '2px',
+                                        // marginBottom: '-5px',
+                                        // position: 'relative',
+                                        // top: '5px',
+                                        // left: '2px',
+                                        zIndex: 10
+                                    }}
                                 />
                             </BtnsRow>
                             <InputsRow>

@@ -53,7 +53,7 @@ const NewLocation = styled.div`
     flex: 1;
     justify-content: center;
     align-items: center;
-    border: 1px solid green;
+    background: black;
     cursor: pointer;
     margin: 0 3px;
     /* margin-top: 10px; */
@@ -123,14 +123,14 @@ export default function TripSingle({
                     {isTripActive && topOrBottom === TOP_BOTTOM.top ? (
                         <ArrowForwardIcon
                             style={{
-                                fill: isTripActive ? 'green' : 'green'
+                                fill: '#f6aa1c'
                             }}
                         />
                     ) : (
                         <NewLocation onClick={() => activateNewLocationGeoInput(tripObj.id, TOP_BOTTOM.top)}>
                             <AddIcon
                                 style={{
-                                    fill: 'green'
+                                    fill: '#f6aa1c'
                                 }}
                             />
                         </NewLocation>
@@ -145,7 +145,7 @@ export default function TripSingle({
                                     display: 'inline',
                                     width: '100%',
                                     zIndex: thisActiveNewInput ? 11 : 'unset',
-                                    border: '1px solid green',
+                                    border: '1px solid #f6aa1c',
                                     borderRadius: '5px'
                                 }}
                                 inputStyle={{
@@ -193,14 +193,14 @@ export default function TripSingle({
                     {isTripActive && topOrBottom === TOP_BOTTOM.bottom ? (
                         <ArrowForwardIcon
                             style={{
-                                fill: isTripActive ? 'green' : 'green'
+                                fill: '#f6aa1c'
                             }}
                         />
                     ) : (
                         <NewLocation onClick={() => activateNewLocationGeoInput(tripObj.id, TOP_BOTTOM.bottom)}>
                             <AddIcon
                                 style={{
-                                    fill: 'green'
+                                    fill: '#f6aa1c'
                                 }}
                             />
                         </NewLocation>
@@ -215,7 +215,7 @@ export default function TripSingle({
                                     display: 'inline',
                                     width: '100%',
                                     zIndex: thisActiveNewInput ? 11 : 'unset',
-                                    border: '1px solid green',
+                                    border: '1px solid #f6aa1c',
                                     borderRadius: '5px'
                                 }}
                                 inputStyle={{
