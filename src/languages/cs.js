@@ -1,6 +1,8 @@
 const common = {
     'navigation.home': 'domů',
     'navigation.studio': 'studio',
+    'navigation.about': 'O nás',
+    'navigation.businessInfo': 'GDPR',
     'about.title': 'O nás',
     'about.subtitle_about': 'O nás',
     'about.subtitle_contact': 'Kontaktujte nás',

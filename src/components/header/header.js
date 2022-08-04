@@ -18,8 +18,6 @@ export default function Header({ isRelative }) {
     const { isMobile } = useIsMobile()
     const isIndex = pathname === PATHS.index
 
-    console.log({ pathname, isIndex })
-
     return (
         <DrawerProvider>
             <HeaderContainer isMobile={isMobile} isRelative={isRelative} id="header">

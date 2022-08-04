@@ -334,7 +334,7 @@ export default function LandingPage() {
 
                 <Box sx={styles.contentBox}>
                     <BoxWrapper>
-                        <Title>{t('landingPage.title')}</Title>
+                        <Title>{t('landingPage.title') ?? 'Create custom map poster of your journey'}</Title>
 
                         <Subtitle>Starting location:</Subtitle>
                         <Row>

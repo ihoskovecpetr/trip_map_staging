@@ -62,26 +62,37 @@ export default function StepMapDesigns({ index }) {
     const getMapStyleImg = mapStyle => {
         switch (mapStyle) {
             case MAP_STYLES_NAMES.WHITE_BLUE:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589842/samples/WhiteBlue_ojrwe3.png'
                 return WhiteBluePNG
             case MAP_STYLES_NAMES.SANDY_DARK:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589842/samples/SandyDark_rrem8m.png'
                 return SandyDarkPNG
             case MAP_STYLES_NAMES.PALE_BLUE:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589841/samples/PaleBlue_dssijf.png'
                 return PaleBluePNG
             case MAP_STYLES_NAMES.BLACK_WHITE:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589841/samples/BlackWhite_duagr2.png'
                 return BlackWhitePNG
             case MAP_STYLES_NAMES.BLACK_LAND:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589841/samples/BlackLand_yxq9c6.png'
                 return BlackLandPNG
             case MAP_STYLES_NAMES.DOUBLE_BLUE:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589841/samples/DoubleBlue_ilfgbf.png'
                 return DoubleBluePNG
             case MAP_STYLES_NAMES.RED_BLUE:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589842/samples/RedBlue_vgzclk.png'
                 return RedBluePNG
             case MAP_STYLES_NAMES.YELLOW_GREEN:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589842/samples/YellowGreen_bjcveu.png'
                 return YellowGreenPNG
             case MAP_STYLES_NAMES.BLUE_YELLOW:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589841/samples/BlueYellow_ikblai.png'
                 return BlueYellowPNG
             case MAP_STYLES_NAMES.GREEN_ORANGE:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589841/samples/GreenOrange_evxtaw.png'
                 return GreenOrangePNG
             case MAP_STYLES_NAMES.RED_WHITE:
+                return 'https://res.cloudinary.com/dkyt8girl/image/upload/v1659589842/samples/RedWhite_edxgvi.png'
                 return RedWhitePNG
 
             default:

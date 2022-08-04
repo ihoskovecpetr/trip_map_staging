@@ -5,7 +5,7 @@ import Drawer from 'components/drawer'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import Link from 'next/link'
-import { FaInstagram } from 'react-icons/fa'
+import { FaInstagram, FaPinterest, FaFacebook } from 'react-icons/fa'
 import { IoMdClose, IoMdMenu } from 'react-icons/io'
 import { useTranslation } from 'Hooks/useTranslation'
 
@@ -17,6 +17,14 @@ const social = [
     {
         path: 'https://www.instagram.com/tripmap_org/',
         icon: <FaInstagram />
+    },
+    {
+        path: 'https://www.pinterest.com.au/tripMapOrg/',
+        icon: <FaPinterest />
+    },
+    {
+        path: 'https://www.facebook.com/tripmapapp',
+        icon: <FaFacebook />
     }
 ]
 
@@ -28,6 +36,17 @@ const menuItems = [
     {
         path: '/studio',
         label: 'navigation.studio'
+    }
+]
+
+const menuItemsMobile = [
+    {
+        path: '/about',
+        label: 'navigation.about'
+    },
+    {
+        path: '/business-info',
+        label: 'navigation.businessInfo'
     }
 ]
 const NavItems = ({ isBlackLogo }) => {
@@ -67,7 +86,7 @@ const NavItems = ({ isBlackLogo }) => {
                     <Box sx={styles.content}>
                         {/* Mobile */}
                         <Box sx={styles.menu}>
-                            {menuItems.map(({ path, label }, i) => {
+                            {[...menuItems, ...menuItemsMobile].map(({ path, label }, i) => {
                                 return (
                                     <Link activeClass="active" href={path} locale={locale} key={i}>
                                         <LinkMobileStyled>
@@ -131,6 +150,10 @@ const StyledContainer = styled.div`
 const ListItemP = styled.p`
     letter-spacing: 0.3rem;
     margin: 0;
+
+    & :hover {
+        color: #f6aa1c;
+    }
 `
 
 const LinkMobileStyled = styled.div`
@@ -217,8 +240,7 @@ const styles = {
             'display': 'flex',
             'alignItems': 'center',
             'justifyContent': 'center',
-            'color': 'whitish_paper_blue',
-            'fontSize': 14,
+            'fontSize': 20,
             'mr': '15px',
             'transition': 'all 0.25s',
             'cursor': 'pointer',
@@ -227,6 +249,13 @@ const styles = {
             },
             '&:hover': {
                 color: 'secondary'
+                // backgroundColor: "red",
+            }
+        },
+        a: {
+            'color': 'white',
+            '&:hover': {
+                color: '#f6aa1c'
                 // backgroundColor: "red",
             }
         }
@@ -266,6 +295,10 @@ const styles = {
             // "&.active": {
             //   color: "secondary",
             // },
+            '&:hover': {
+                color: '#f6aa1c'
+                // backgroundColor: "red",
+            }
         }
     }
 }

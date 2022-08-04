@@ -1,6 +1,8 @@
 const common = {
     'navigation.home': 'home',
     'navigation.studio': 'studio',
+    'navigation.about': 'About',
+    'navigation.businessInfo': 'GDPR',
     'about.title': 'About',
     'about.subtitle_about': 'About',
     'about.subtitle_contact': 'Contact',
