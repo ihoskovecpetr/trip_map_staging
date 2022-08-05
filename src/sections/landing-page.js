@@ -563,9 +563,10 @@ const ContainerBox = styled(Container)`
     padding: 0 !important;
 
     ${mobile`
-    height: ${({ headerHeight }) => (headerHeight ? `calc(100vh - ${headerHeight}px - 30px)` : '80vh')};
-    flex-Direction: row;
-  `};
+        height: ${({ headerHeight }) => (headerHeight ? `calc(100vh - ${headerHeight}px - 30px)` : '80vh')};
+        flex-Direction: row;
+        max-height: 700px;
+    `};
 `
 
 const styles = {
