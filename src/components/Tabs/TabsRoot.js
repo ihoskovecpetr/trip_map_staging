@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 
 import { useIsMobile } from 'Hooks/useIsMobile'
 import { useElementDimensions } from 'Hooks/useElementDimensions'
-import { color, fontWeight, mobile } from 'utils'
+import { mobile, color } from 'utils'
 import { ORIENTATIONS, TAB_STEPS } from '@constants'
 import { getIsProduction } from 'LibGlobal/getIsProduction'
 import { useTranslation } from 'Hooks/useTranslation'
@@ -27,12 +27,38 @@ import Step8Checkout from '../steps/StepCheckout'
 import StepTitles from '../steps/StepTitles'
 import StepJourneys from '../steps/StepJourneys'
 import StepAddIcon from '../steps/StepAddIcon'
+import TopBackdropElement from './TopBackdropElement'
 
 import { useGetDataPrintful } from 'Hooks/useGetDataPrintful'
 import { useSendSaveBlueprint } from 'Hooks/useSendSaveBlueprint'
 import { useScreenSize } from 'Hooks/useScreenSize'
-import { getFormattedPrice } from 'LibGlobal/getFormattedPrice'
 import { setActiveStepNumber } from 'redux/order/actions'
+
+import PaleBluePNG from 'assets/mapStyles/png/PaleBlue.png'
+import SandyDarkPNG from 'assets/mapStyles/png/SandyDark.png'
+import WhiteBluePNG from 'assets/mapStyles/png/WhiteBlue.png'
+import BlackWhitePNG from 'assets/mapStyles/png/BlackWhite.png'
+import BlackLandPNG from 'assets/mapStyles/png/BlackLand.png'
+import DoubleBluePNG from 'assets/mapStyles/png/DoubleBlue.png'
+import RedBluePNG from 'assets/mapStyles/png/RedBlue.png'
+import GreenOrangePNG from 'assets/mapStyles/png/GreenOrange.png'
+import BlueYellowPNG from 'assets/mapStyles/png/BlueYellow.png'
+import YellowGreenPNG from 'assets/mapStyles/png/YellowGreen.png'
+import RedWhitePNG from 'assets/mapStyles/png/RedWhite.png'
+
+const imagesArr = {
+    PaleBluePNG: PaleBluePNG,
+    SandyDarkPNG: SandyDarkPNG,
+    WhiteBluePNG: WhiteBluePNG,
+    BlackWhitePNG: BlackWhitePNG,
+    BlackLandPNG: BlackLandPNG,
+    DoubleBluePNG: DoubleBluePNG,
+    RedBluePNG: RedBluePNG,
+    GreenOrangePNG: GreenOrangePNG,
+    BlueYellowPNG: BlueYellowPNG,
+    YellowGreenPNG: YellowGreenPNG,
+    RedWhitePNG: RedWhitePNG
+}
 
 import {
     useProductSelector,
@@ -120,7 +146,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
             // <StepAddIcon map={map} index={21} />,
         ],
 
-        [<StepLayout index={4} />, <StepLayoutColorSwitch index={5} />, <StepMapDesigns index={6} />],
+        [<StepLayout index={4} />, <StepLayoutColorSwitch index={5} />, <StepMapDesigns index={6} {...imagesArr} />],
 
         [<StepSize index={7} />, <StepFraming map={map} index={8} />],
         [
@@ -139,7 +165,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
         // [<StepAddIcon map={map} index={21} />],
         [<Step2Orientation index={2} />],
         [<StepTitles index={3} />],
-        [<StepMapDesigns index={4} />],
+        [<StepMapDesigns index={4} {...imagesArr} />],
         [<StepLayout index={5} />],
         [<StepLayoutColorSwitch index={6} />],
         [<StepSize index={7} />],
@@ -200,12 +226,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
                 screenHeight={screenHeight}
                 stepperHeight={stepper_height}
             >
-                <TopBackdropSpace
-                    isOpen={isOpen}
-                    onClick={() => {
-                        setIsOpen(false)
-                    }}
-                ></TopBackdropSpace>
+                {isOpen && <TopBackdropElement setIsOpen={setIsOpen} />}
                 <StepperContentWrap
                     topElementsHeight={stepper_height + header_height}
                     stepperHeight={stepper_height}
@@ -228,7 +249,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
 
             {isMobile && (
                 <StepperWrap>
-                    {isMobile && (
+                    {isMobile && activeStepNumber != -1 && (
                         <NullHeightWrap>
                             <ArrowWrap
                                 onClick={() => {
@@ -294,26 +315,18 @@ const MainContainer = styled.div`
     width: 100%;
 `
 
-// top: ${({ isOpen, screenHeight, stepperHeight }) =>
-//   isOpen
-//     ? `calc(${0.3 * screenHeight}px)`
-//     : `calc(${screenHeight}px - ${stepperHeight}px - 40px)`};
-
 const TabSegmentWrap = styled.div`
-    // display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     width: 100%;
-    padding: 0;
     position: ${({ isOpen }) => (isOpen ? 'absolute' : 'relative')};
     top: 0px;
 
     ${mobile`
-  position: relative;
-    height: unset;
-    top: 0;
-    padding: 0 0.5rem;
-
-  `}
+        position: relative;
+        height: unset;
+        top: 0;
+        padding: 0 0.5rem;
+    `}
 `
 
 const NullHeightWrap = styled.div`
@@ -350,69 +363,30 @@ const StepperWrap = styled.div`
 `}
 `
 
-const StyledParagraph = styled.p`
-    margin: 0;
-    display: inline;
-`
-
-const OverflowSectionWrap = styled.div`
-    display: inline-flex;
-    height: 0;
-    justify-content: space-between;
-    gap: 15px;
-
-    width: 100%;
-    position: relative;
-    top: -20px;
-
-    ${mobile`
-`}
-`
-
-const Price = styled.div`
-  position: relative;
-  flex: 1 0; 
-  min-width: 145px; 
-  padding-left: 5px;
-  color: ${color('primary')};
-  font-Weight ${fontWeight('bold')}
-`
-
 const ArrowWrap = styled.div`
     background-color: ${color('background_almost_white')};
     box-shadow: 0px -2px 6px lightGrey;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border: 2px solid black;
-    border-color: ${color('cta_color')};
+    /* border: 1px solid black; */
+    /* border-color: ${color('cta_color')}; */
     border-bottom: unset;
     position: relative;
-    height: 28px;
+    height: 25px;
     display: flex;
     justify-content: center;
-    color: black;
-    top: -28px;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 14px;
+    top: -25px;
     flex-basis: 50%;
 `
 
-const TopBackdropSpace = styled.div`
-    padding-top: ${({ isOpen }) => (isOpen ? '200px' : '0px')};
-    background-color: rgba(0, 0, 0, 0.1);
-
-    ${mobile`
-    display: none
-  `}
-`
-
-const Dummy_item = styled.div`
-    flex: 1 2;
-`
-
 const StyledKeyboardArrowRight = styled(KeyboardArrowRight)`
-    height: 44px !important;
-    width: 44px !important;
+    height: 30px !important;
+    width: 30px !important;
+    color: ${color('cta_color')};
     transform: ${({ isOpen }) => (isOpen ? 'rotate(90deg)' : 'rotate(-90deg)')};
-    margin: -6px 0;
+    margin: -3px 0;
 `
 
 const useStyles = makeStyles(theme => ({

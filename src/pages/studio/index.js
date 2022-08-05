@@ -22,8 +22,6 @@ const StudioPage = () => {
     const dispatch = useDispatch()
     const { isMobile } = useIsMobile()
 
-    console.log('studio_index_red')
-
     function ErrorFallback({ error }) {
         console.log('ErrorFallback_reseting_store', { error })
 

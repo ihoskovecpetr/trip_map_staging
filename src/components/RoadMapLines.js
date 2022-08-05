@@ -23,7 +23,6 @@ export default function RoadMapLines({ lineWidth, currentPoint, previousPoint })
                 ...prevPointLocation
                 // currentPoint.modeOfTransport
             )
-            console.log('currentPoint_modeOfTransport', currentPoint.modeOfTransport)
             setDirections(directionsLocal)
         } catch (e) {
             console.log('Catched_no_road_warning')

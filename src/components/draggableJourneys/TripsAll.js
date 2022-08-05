@@ -19,6 +19,10 @@ import {
 
 import { updateLocationSequence, addTrip, addEmptyTrip, removeAllJourneys } from 'redux/order/actions'
 
+const stopPropagNow = e => {
+    e.stopImmediatePropagation()
+}
+
 export default function TripsAll({ map }) {
     const dispatch = useDispatch()
     const journeysDraggable = useGetJourneysDraggableSelector()
@@ -60,8 +64,18 @@ export default function TripsAll({ map }) {
         }
     }, [numberOfEmptyTrips])
 
+    useEffect(() => {
+        document.getElementById('single_trip_container').addEventListener('touchstart', stopPropagNow)
+
+        document.getElementById('single_trip_container').addEventListener('touchend', stopPropagNow)
+        return () => {
+            document.getElementById('single_trip_container').removeEventListener('touchstart', stopPropagNow)
+            document.getElementById('single_trip_container').removeEventListener('touchend', stopPropagNow)
+        }
+    }, [])
+
     return (
-        <>
+        <div id="single_trip_container">
             {Object.keys(journeysDraggable.locations).length === 0 && (
                 <BtnContainer>
                     <NewTripBtn
@@ -120,7 +134,7 @@ export default function TripsAll({ map }) {
                     )
                 })}
             </DragDropContext>
-        </>
+        </div>
     )
 }
 
