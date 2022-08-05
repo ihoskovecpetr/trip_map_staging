@@ -21,7 +21,7 @@ const packages = [
         description: 'variants.1.description',
         variantId: 9357,
         buttonText: 'variants.1.buttonText',
-        buttonUri: '/studio?id=a380a578-7174-4694-a547-7ec8e9b4118emap',
+        buttonUri: 'studio?id=33b6934b-d505-41f2-8acb-e6fc5af67389',
         imgPNG: ProductFramedPNG,
         // imgWebp: ProductFramedWebp,
         points: [
@@ -56,7 +56,7 @@ const packages = [
         name: 'variants.2.name',
         description: 'variants.2.description',
         buttonText: 'variants.2.buttonText',
-        buttonUri: '/studio?id=c4627679-5e09-46a2-8378-ab8f523d7933',
+        buttonUri: 'studio?id=c4627679-5e09-46a2-8378-ab8f523d7933',
         variantId: 8948,
         imgPNG: ProductNoFramePNG,
         // imgWebp: ProductNoFrameWebp,
