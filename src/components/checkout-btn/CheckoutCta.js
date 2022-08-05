@@ -11,12 +11,14 @@ import { useDispatch } from 'react-redux'
 import { VARIANTS_PRINTFUL } from 'constants/constants'
 import { createUploadRequest } from 'LibGlobal/createUploadRequest'
 import CheckoutPopupBody from './CheckoutPopupBody'
+import CheckoutDrawer from './CheckoutDrawer'
 import NextTabBtn from '../NextTabBtn/NextTabBtn'
 import { useGetDataPrintful } from 'Hooks/useGetDataPrintful'
 import { useQualityImageCreator } from 'Hooks/useQualityImageCreator'
 import { useTitlesSelector } from 'redux/order/reducer'
 import { useProductSelector } from 'redux/order/reducer'
 import { useTranslation } from 'Hooks/useTranslation'
+import { CheckoutDrawerProvider } from 'contexts/checkoutDrawer/checkout.provider'
 
 import { useActiveLayoutSelector, useActiveMapStyleSelector } from 'redux/order/reducer'
 
@@ -148,23 +150,33 @@ export default function CheckoutCta({ map, snapMapInstance, isCustomUI, children
 
             <img id="img_screen_shot" sx={styles.resultImage} />
             {backdropOpen && (
-                <Backdrop
-                    className={classes.backdrop}
-                    classes={{
-                        root: classes.rootBackdrop // class name, e.g. `classes-nesting-root-x`
-                    }}
-                    open={backdropOpen}
-                    onClick={backdropClose}
-                >
-                    <CheckoutPopupBody
+                // <Backdrop
+                //     className={classes.backdrop}
+                //     classes={{
+                //         root: classes.rootBackdrop // class name, e.g. `classes-nesting-root-x`
+                //     }}
+                //     open={backdropOpen}
+                //     onClick={backdropClose}
+                // >
+                //     <CheckoutPopupBody
+                //         isUploadPending={isUploadPending}
+                //         imageSavedResponse={imageSavedResponse}
+                //         imageBase64Created={imageBase64Created}
+                //         backdropClose={backdropClose}
+                //         activeMapStyleName={activeMapStyleName}
+                //         fileSizeMB={fileSizeMB}
+                //     />
+                // </Backdrop>
+                <CheckoutDrawerProvider>
+                    <CheckoutDrawer
                         isUploadPending={isUploadPending}
                         imageSavedResponse={imageSavedResponse}
                         imageBase64Created={imageBase64Created}
                         backdropClose={backdropClose}
                         activeMapStyleName={activeMapStyleName}
                         fileSizeMB={fileSizeMB}
-                    />
-                </Backdrop>
+                    ></CheckoutDrawer>
+                </CheckoutDrawerProvider>
             )}
         </CheckoutWrap>
     )

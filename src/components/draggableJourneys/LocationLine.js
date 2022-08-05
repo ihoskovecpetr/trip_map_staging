@@ -145,15 +145,11 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                     onClick={() => dispatch(removeThisLocation(location.id, tripId))}
                                     fontSize="small"
                                     style={{
-                                        // backgroundColor: 'black',
                                         border: '1px solid lightGrey',
                                         borderRadius: '4px',
                                         padding: '1px',
                                         margin: '4px',
-                                        // marginBottom: '-5px',
-                                        // position: 'relative',
-                                        // top: '5px',
-                                        // left: '2px',
+                                        marginTop: '0px',
                                         zIndex: 10
                                     }}
                                 />

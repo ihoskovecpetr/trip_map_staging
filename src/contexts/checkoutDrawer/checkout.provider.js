@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react'
-import { DrawerContext } from './drawer.context'
+import { CheckoutDrawerContext } from './checkout.context'
 const initialState = {
-    isOpen: false
+    isOpen: true
 }
 
 function reducer(state, action) {
@@ -15,7 +15,7 @@ function reducer(state, action) {
             return state
     }
 }
-export const DrawerProvider = ({ children }) => {
+export const CheckoutDrawerProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
-    return <DrawerContext.Provider value={{ state, dispatch }}>{children}</DrawerContext.Provider>
+    return <CheckoutDrawerContext.Provider value={{ state, dispatch }}>{children}</CheckoutDrawerContext.Provider>
 }
