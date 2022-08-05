@@ -388,6 +388,52 @@ const PrintLocations = ({
 
                         const previousPoint = sortedGroupsJourneys[groupIndex][pointIndex - 1]
                         const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex]
+                        return (
+                            <span key={`${pointIndex}_X_${groupIndex}`}>
+                                {previousPoint && (
+                                    <>
+                                        {currentPoint.modeOfTransport === MODE_OF_TRANSPORT.flying && (
+                                            <Layer
+                                                type="line"
+                                                layout={lineLayout}
+                                                key={`${pointIndex}_2_${groupIndex}`}
+                                                paint={{
+                                                    'line-color':
+                                                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorPath,
+                                                    'line-width': lineWidth
+                                                }}
+                                            >
+                                                <Feature
+                                                    coordinates={getGeoArc(
+                                                        currentPoint.location,
+                                                        previousPoint.location
+                                                    )}
+                                                />
+                                            </Layer>
+                                        )}
+                                        {[MODE_OF_TRANSPORT.driving, MODE_OF_TRANSPORT.walking].includes(
+                                            currentPoint.modeOfTransport
+                                        ) && (
+                                            <RoadMapLines
+                                                lineWidth={lineWidth}
+                                                currentPoint={currentPoint}
+                                                previousPoint={previousPoint}
+                                            />
+                                        )}
+                                    </>
+                                )}
+                            </span>
+                        )
+                    })
+                })}
+            {isJourneysEnabled &&
+                sortedGroupsJourneys.map((group, groupIndex) => {
+                    return group.map((_, pointIndex) => {
+                        if (!sortedGroupsJourneys[groupIndex][pointIndex]) {
+                            return
+                        }
+
+                        const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex]
 
                         return (
                             <span key={`${pointIndex}_X_${groupIndex}`}>
@@ -421,43 +467,6 @@ const PrintLocations = ({
                                     <Feature coordinates={currentPoint.location} />
                                 </Layer>
 
-                                {previousPoint && (
-                                    <>
-                                        {/* <MapLineComponent
-                      fromLocation={currentPoint.location}
-                      toLocation={previousPoint.location}
-                    /> */}
-
-                                        {currentPoint.modeOfTransport === MODE_OF_TRANSPORT.flying && (
-                                            <Layer
-                                                type="line"
-                                                layout={lineLayout}
-                                                key={`${pointIndex}_2_${groupIndex}`}
-                                                paint={{
-                                                    'line-color':
-                                                        MAP_STYLED_AND_FLIGHT_COLOR[activeMapStyleName].colorPath,
-                                                    'line-width': lineWidth
-                                                }}
-                                            >
-                                                <Feature
-                                                    coordinates={getGeoArc(
-                                                        currentPoint.location,
-                                                        previousPoint.location
-                                                    )}
-                                                />
-                                            </Layer>
-                                        )}
-                                        {[MODE_OF_TRANSPORT.driving, MODE_OF_TRANSPORT.walking].includes(
-                                            currentPoint.modeOfTransport
-                                        ) && (
-                                            <RoadMapLines
-                                                lineWidth={lineWidth}
-                                                currentPoint={currentPoint}
-                                                previousPoint={previousPoint}
-                                            />
-                                        )}
-                                    </>
-                                )}
                                 {currentPoint.titleLabelDisplayed && (
                                     <Layer
                                         type="symbol"
@@ -473,7 +482,7 @@ const PrintLocations = ({
                                             'text-anchor': 'bottom-right',
                                             // "text-translate": [0, 10],
                                             // "text-translate-anchor": "map",
-                                            // "text-padding": 15,
+                                            'text-padding': 10,
                                             // "text-line-height": 1.5,
                                             'text-offset': [-1, 0],
                                             // anchor: ["top-right"],

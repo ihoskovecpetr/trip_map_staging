@@ -142,11 +142,8 @@ const order = produce((state = orderInitialState, { type, data, payload }) => {
             const isProductPropperlySaved = metaMapTitles?.heading
             // const isProductPropperlySaved = metaProduct?.name && metaMapTitles?.heading
             if (isProductPropperlySaved) {
-                console.log('PROPER_YES')
-
                 metaPayload = payload.order
             } else {
-                console.log('PROPER_NO', { metaMapTitles, metaProduct })
                 metaPayload = { ...orderInitialState, ...metaPayloadStripped }
             }
 
