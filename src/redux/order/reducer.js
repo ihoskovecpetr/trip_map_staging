@@ -47,7 +47,7 @@ const orderInitialState = {
     mapCenterCoordinates: [13.303958804602132, 41.47437924957853],
     mapZoom: 5,
     mapBbox: [],
-    activeStepNumber: -1,
+    activeStepNumber: 0,
     seenPopup: false,
     uploadPercentage: 0,
     discount: { code: VALID_DISCOUNT_CODES[0].code, codeAccepted: true },

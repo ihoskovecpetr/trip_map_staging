@@ -432,7 +432,7 @@ function CtaComponent() {
     const onClick = () => {
         if (!isLoading) {
             setIsLoading(true)
-            dispatch(setActiveStepNumber(-1))
+            dispatch(setActiveStepNumber(0))
             router.push('/studio')
         }
     }

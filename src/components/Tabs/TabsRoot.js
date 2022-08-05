@@ -85,7 +85,7 @@ export default function TabsRoot({ map, snapMapInstance }) {
     const activeStepNumber = useGetActiveStepNumber()
 
     // const [activeStepNumber, setActiveStepNumber] = React.useState(0);
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(isMobile ? true : false)
 
     const { height: map_segment_height } = useElementDimensions('map_studio_segment')
 
@@ -121,6 +121,9 @@ export default function TabsRoot({ map, snapMapInstance }) {
         }
 
         setIsOpen(true)
+
+        console.log({ isOpen })
+
         dispatch(setActiveStepNumber(activeStepNumber + 1))
     }
 
