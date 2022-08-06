@@ -10,6 +10,7 @@ import { useTranslation } from 'Hooks/useTranslation'
 import { MODE_OF_TRANSPORT } from '@constants'
 import LocationLine from './LocationLine'
 import GeocoderInput from 'components/GeocoderInput'
+import { getNewTitleLabel } from 'LibGlobal/getNewTitleLabel'
 
 import { addNewLocationDraggable } from 'redux/order/actions'
 import { color } from 'utils'
@@ -86,8 +87,7 @@ export default function TripSingle({
     const setGeocoderResult = (tripId, result, modeOfTransport, reverse) => {
         const sourceId = 'SourceId_' + Math.random()
         const titleSourceId = 'TitleSourceId_' + Math.random()
-        const placeNameArr = result.place_name.split(',')
-        const newTitle = placeNameArr[0]
+        const newTitleLabel = getNewTitleLabel(result.place_name)
 
         dispatch(
             addNewLocationDraggable({
@@ -95,8 +95,8 @@ export default function TripSingle({
                     location: result.geometry.coordinates,
                     sourceId: sourceId,
                     titleSourceId: titleSourceId,
-                    title: newTitle,
-                    titleLabel: newTitle,
+                    title: newTitleLabel,
+                    titleLabel: newTitleLabel,
                     titleLabelDisplayed: true,
                     modeOfTransport: modeOfTransport ?? MODE_OF_TRANSPORT.driving,
                     titleLocation: result.geometry.coordinates
@@ -108,7 +108,6 @@ export default function TripSingle({
     }
 
     const activateNewLocationGeoInput = (tripId, topBottom) => {
-        console.log({ topBottom })
         setActiveTripId(tripId)
         setActiveLocationId(null)
         setTopOrBottom(topBottom)

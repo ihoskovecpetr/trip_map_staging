@@ -28,6 +28,7 @@ import GeocoderInput from 'components/GeocoderInput'
 import ModeOfTransportSelect from 'components/draggableJourneys/ModeOfTransportSelect'
 import { useGetJourneysDraggableSelector } from 'redux/order/reducer'
 import { getNewTitleSubtitle } from 'LibGlobal/getNewTitleSubtitle'
+import { getNewTitleLabel } from 'LibGlobal/getNewTitleLabel'
 
 import {
     setMapCoordinatesAction,
@@ -40,23 +41,6 @@ import {
     setActiveStepNumber,
     setMapZoomAction
 } from 'redux/order/actions'
-
-import Carousel1Webp from 'assets/carousel_landing/webp/1.webp'
-import Carousel2Webp from 'assets/carousel_landing/webp/2.webp'
-import Carousel3Webp from 'assets/carousel_landing/webp/3.webp'
-import Carousel4Webp from 'assets/carousel_landing/webp/4.webp'
-import Carousel5Webp from 'assets/carousel_landing/webp/5.webp'
-
-import Carousel1PNG from 'assets/carousel_landing/png/1.png'
-import Carousel2PNG from 'assets/carousel_landing/png/2.png'
-import Carousel3PNG from 'assets/carousel_landing/png/3.png'
-import Carousel4PNG from 'assets/carousel_landing/png/4.png'
-import Carousel5PNG from 'assets/carousel_landing/png/5.png'
-
-import USA_east from 'assets/mapExamples/usa_east.png'
-import JapanPNG from 'assets/mapExamples/new_japan.png'
-import GermanyPNG from 'assets/mapExamples/new_germany.png'
-import ItalyWhitePNG from 'assets/mapExamples/italy_white.png'
 
 const data = {
     subTitle: '',
@@ -102,8 +86,7 @@ export default function LandingPage() {
     const createLocationBody = result => {
         const sourceId = 'SourceId_' + Math.random()
         const titleSourceId = 'TitleSourceId_' + Math.random()
-        const placeNameArr = result.place_name.split(',')
-        const newTitle = placeNameArr[0]
+        const newTitle = getNewTitleLabel(result.place_name)
 
         return {
             location: result.geometry.coordinates,

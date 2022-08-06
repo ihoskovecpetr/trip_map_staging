@@ -7,8 +7,6 @@ const getDirectionDrivingCoordinates = async (fromLocation, toLocation) => {
 
         const result = await response.json()
 
-        console.log({ result })
-
         const routeCoordinates = result.routes[0].geometry.coordinates
         return routeCoordinates
     } catch (error) {

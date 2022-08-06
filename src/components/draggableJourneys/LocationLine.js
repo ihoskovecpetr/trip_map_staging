@@ -4,10 +4,6 @@ import { Draggable } from 'react-beautiful-dnd'
 import TouchSwipe from '@material-ui/icons/TouchApp'
 import { useDispatch } from 'react-redux'
 import DeleteForeverIcon from '@material-ui/icons/Clear'
-import FlightIcon from '@material-ui/icons/Flight'
-import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk'
-
-import DriveEtaIcon from '@material-ui/icons/DriveEta'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
 import { color, fontSize, fontWeight } from 'utils'
@@ -18,6 +14,7 @@ import { useDebounce } from 'Hooks/useDebounce'
 import { useTranslation } from 'Hooks/useTranslation'
 import { MODE_OF_TRANSPORT } from '@constants'
 import ModeOfTransportSelect from 'components/draggableJourneys/ModeOfTransportSelect'
+import { getNewTitleLabel } from 'LibGlobal/getNewTitleLabel'
 
 export default function LocationLine({ location, index, tripId, activeLocationId, setActiveLocationId, map }) {
     const dispatch = useDispatch()
@@ -28,8 +25,7 @@ export default function LocationLine({ location, index, tripId, activeLocationId
     const setGeocoderResult = (locationObj, result) => {
         const sourceId = 'SourceId_' + Math.random()
         const titleSourceId = 'TitleSourceId_' + Math.random()
-        const placeNameArr = result.place_name.split(',')
-        const newTitle = placeNameArr[0]
+        const newTitle = getNewTitleLabel(result.place_name)
 
         dispatch(
             updateLocation({

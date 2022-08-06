@@ -244,7 +244,7 @@ export default function MapContainer({
                             height: '100%',
                             overflow: 'visible'
                         }}
-                        // center={mapCenterCoordinates}
+                        center={mapCenterCoordinates}
                         // zoom={[mapZoom]}
                         // fitBounds={mapBbox}
                         onZoomEnd={(_, e) => {
@@ -389,7 +389,7 @@ const PrintLocations = ({
                         const previousPoint = sortedGroupsJourneys[groupIndex][pointIndex - 1]
                         const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex]
                         return (
-                            <span key={`${pointIndex}_X_${groupIndex}`}>
+                            <>
                                 {previousPoint && (
                                     <>
                                         {currentPoint.modeOfTransport === MODE_OF_TRANSPORT.flying && (
@@ -422,7 +422,7 @@ const PrintLocations = ({
                                         )}
                                     </>
                                 )}
-                            </span>
+                            </>
                         )
                     })
                 })}
@@ -436,7 +436,8 @@ const PrintLocations = ({
                         const currentPoint = sortedGroupsJourneys[groupIndex][pointIndex]
 
                         return (
-                            <span key={`${pointIndex}_X_${groupIndex}`}>
+                            // <span key={`${pointIndex}_X_${groupIndex}`}>
+                            <>
                                 <Layer
                                     id={'point-blip' + groupIndex + pointIndex}
                                     key={`${pointIndex}_${groupIndex}`}
@@ -517,7 +518,7 @@ const PrintLocations = ({
                                         />
                                     </Layer>
                                 )}
-                            </span>
+                            </>
                         )
                     })
                 })}

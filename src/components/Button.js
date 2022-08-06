@@ -2,21 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 import { node, bool, string, func } from 'prop-types'
 
-import CustomLoader from './CustomLoader'
-
 import { color, font, fontSize, fontWeight } from 'utils'
 
 const StyledButton = styled.button`
     position: relative;
-    background: ${color('cta_color')};
     border: solid 2px ${({ withBorder }) => (withBorder ? color('background_almost_white') : 'transparent')};
-    border-radius: 0px;
+    border-radius: 2px;
     color: ${({ inverted, primaryColor }) => (inverted ? color('background_almost_white') : primaryColor)};
     cursor: pointer;
     font-size: ${({ textSize }) => fontSize(textSize ?? 'default')};
     padding: 1.25rem 2rem;
     min-height: 4rem;
-    /* min-width: 12.5rem; */
     transition: background-color 0.2s ease-in-out;
     font-weight: ${fontWeight('bold')};
 
