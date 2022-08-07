@@ -82,58 +82,6 @@ export default function LocationLine({ location, index, tripId, activeLocationId
                                     <>
                                         {/* <Flex1 /> */}
                                         <ModeOfTransportSelect location={location} />
-
-                                        {/* <ModeOfTransportBtn
-                                            onClick={() =>
-                                                dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.walking, location)
-                                            }
-                                        >
-                                            <DirectionsWalkIcon
-                                                color={isWalkingActive ? 'secondary' : 'disabled'}
-                                                fontSize="small"
-                                                style={{
-                                                    backgroundColor: isWalkingActive && 'black',
-                                                    border: !isWalkingActive && '1px solid lightGrey',
-                                                    borderRadius: '10px',
-                                                    padding: '3px',
-                                                    marginBottom: '-5px'
-                                                }}
-                                            />
-                                        </ModeOfTransportBtn>
-                                        <ModeOfTransportBtn
-                                            onClick={() =>
-                                                dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.driving, location)
-                                            }
-                                        >
-                                            <DriveEtaIcon
-                                                color={isDrivingActive ? 'secondary' : 'disabled'}
-                                                fontSize="small"
-                                                style={{
-                                                    backgroundColor: isDrivingActive && 'black',
-                                                    border: !isDrivingActive && '1px solid lightGrey',
-                                                    borderRadius: '10px',
-                                                    padding: '3px',
-                                                    marginBottom: '-5px'
-                                                }}
-                                            />
-                                        </ModeOfTransportBtn>
-                                        <ModeOfTransportBtn
-                                            onClick={() =>
-                                                dispatchUpdateModeOfTransport(MODE_OF_TRANSPORT.flying, location)
-                                            }
-                                        >
-                                            <FlightIcon
-                                                color={isFlyingActive ? 'secondary' : 'disabled'}
-                                                fontSize="small"
-                                                style={{
-                                                    backgroundColor: isFlyingActive && 'black',
-                                                    border: !isFlyingActive && '1px solid lightGrey',
-                                                    borderRadius: '10px',
-                                                    padding: '3px',
-                                                    marginBottom: '-5px'
-                                                }}
-                                            />
-                                        </ModeOfTransportBtn> */}
                                     </>
                                 )}
                                 <Flex1 />
@@ -270,7 +218,7 @@ const ModeOfTransportBtn = styled.div`
 `
 
 const InputWrap = styled.div`
-    flex: 5;
+    flex: 7;
 `
 
 const Flex1 = styled.div`

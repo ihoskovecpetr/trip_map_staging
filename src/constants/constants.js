@@ -683,6 +683,7 @@ const VALID_DISCOUNT_CODES = [
 ]
 
 const REDUX_COOKIE_NAME = 'reduxStoreCookie'
+const ADJUST_LABEL_COOKIE_NAME = 'adjustLabelSeen'
 
 const LABEL_SIZE_KOEF = 0.009
 
@@ -768,6 +769,7 @@ module.exports = {
     FAKE_DIV_IDS,
     VALID_DISCOUNT_CODES,
     REDUX_COOKIE_NAME,
+    ADJUST_LABEL_COOKIE_NAME,
     LABEL_SIZE_KOEF,
     PATHS,
     OFFICIAL_EMAIL,

@@ -49,7 +49,9 @@ export default function LocalisationPopup() {
     return (
         <>
             <LabelContainer onClick={() => setOpen(!open)}>
-                {`${LOCALE_TO_LANGUAGE_SHORTCUT[locale]}`}&nbsp;{`(${currency})`}
+                <p>
+                    {`${LOCALE_TO_LANGUAGE_SHORTCUT[locale]}`}&nbsp;{`(${currency})`}
+                </p>
             </LabelContainer>
             {open && (
                 <BackdropFromScratch open={open} onClick={() => setOpen(!open)}>
@@ -140,6 +142,13 @@ export default function LocalisationPopup() {
 
 const LabelContainer = styled.div`
     cursor: pointer;
+    font-weight: 300;
+    border-bottom: 1px solid white;
+
+    && p {
+        margin: 0;
+        margin-bottom: -5px;
+    }
 `
 
 const BoxWrap = styled.div`

@@ -26,8 +26,8 @@ import StepFraming from '../steps/StepFraming'
 import Step8Checkout from '../steps/StepCheckout'
 import StepTitles from '../steps/StepTitles'
 import StepJourneys from '../steps/StepJourneys'
-import StepAddIcon from '../steps/StepAddIcon'
 import TopBackdropElement from './TopBackdropElement'
+import LabelAdjustPopup from 'components/LabelAdjustPopup'
 
 import { useGetDataPrintful } from 'Hooks/useGetDataPrintful'
 import { useSendSaveBlueprint } from 'Hooks/useSendSaveBlueprint'
@@ -121,9 +121,6 @@ export default function TabsRoot({ map, snapMapInstance }) {
         }
 
         setIsOpen(true)
-
-        console.log({ isOpen })
-
         dispatch(setActiveStepNumber(activeStepNumber + 1))
     }
 
@@ -249,6 +246,8 @@ export default function TabsRoot({ map, snapMapInstance }) {
                     )}
                 </StepperContentWrap>
             </TabSegmentWrap>
+
+            {activeStepNumber === 1 && <LabelAdjustPopup />}
 
             {isMobile && (
                 <StepperWrap>

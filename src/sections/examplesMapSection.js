@@ -121,8 +121,8 @@ const styles = {
         backgroundPosition: 'top left',
         backgroundSize: 'cover',
         borderBottomRightRadius: [100, 150, null, null, null, 250],
-        pt: ['150px', null, null, null, null, null, '140px', '130px'],
-        pb: ['100px', null, null, '110px', null, 10, '150px'],
+        pt: ['50px', null, null, '150px', null, null, '140px', '130px'],
+        pb: ['50px', null, null, '110px', null, 10, '150px'],
         backgroundColor: 'primary',
         contentBox: {
             width: ['100%', null, '70%', '35%', '30%', '30%'],

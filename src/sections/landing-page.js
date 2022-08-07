@@ -174,27 +174,6 @@ export default function LandingPage() {
             <ContainerBox headerHeight={headerHeight}>
                 <Box sx={styles.carouselBox}>
                     <LandingCarouselWrap id="carousel_wrapper">
-                        {/* {!isMobile && !isSafari && (
-                            <StyledVideo
-                                muted
-                                id="vid"
-                                width="100%"
-                                height="100%"
-                                autoplay
-                                playsinline
-                                // controls="true"
-                                loop
-                                poster={displayPNG ? '/video_fallback.png' : '/video_fallback.webp'}
-                            >
-                                <source
-                                    src="/mobile_landing_short_low_quality.mp4"
-                                    type="video/mp4"
-                                    media="all and (max-width: 480px)"
-                                />
-                                Your browser does not support the video tag.
-                            </StyledVideo>
-                        )} */}
-
                         {/* {(isMobile || isSafari) && ( */}
                         <>
                             {!IS_CLIENT && (
@@ -525,10 +504,11 @@ const ScrollDownWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    width: 100%;
+    /* width: 100%; */
     position: relative;
-    top: -170px;
-    z-index: 90;
+    height: 0;
+    top: -100px;
+    z-index: 4;
 
     ${mobile`
         display: none;

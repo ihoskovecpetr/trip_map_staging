@@ -1,6 +1,6 @@
 const common = {
     'navigation.home': 'home',
-    'navigation.studio': 'studio',
+    'navigation.studio': 'studio 🗺',
     'navigation.about': 'About',
     'navigation.businessInfo': 'GDPR',
     'about.title': 'About',
@@ -123,6 +123,9 @@ export const en = {
         'step.location.full': 'Journey stops',
         'step.location.short': 'Path',
         'step.location.placeholder': 'Type location..',
+        'step.location.popupTitle': 'Adjust your labels',
+        'step.location.popupSubtitle': 'Drag labels directly on the map',
+
         'step.orientation.full': 'Orientation',
         'step.orientation.short': 'Orientation',
         'step.titles.full': 'Titles',
@@ -148,7 +151,7 @@ export const en = {
         'step.withPath': 'Your journey',
         'step.withoutPath': 'Favourite place',
         'steps.locality.locality': 'location',
-        'steps.locality.label': 'title',
+        'steps.locality.label': 'label',
         'steps.locality.nextDestination': 'Next stop',
         'steps.locality.driving': 'Driving',
         'steps.locality.flying': 'Flying',

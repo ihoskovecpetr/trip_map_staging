@@ -34,7 +34,10 @@ const useStyles = makeStyles(theme => ({
     },
 
     cssLabel: {
-        color: 'black'
+        color: 'black',
+        backgroundColor: 'white',
+        padding: '0 5px',
+        borderRadius: '3px'
     },
 
     cssOutlinedInput: {
