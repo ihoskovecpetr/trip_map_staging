@@ -133,7 +133,7 @@ const StyledStepLabel = styled(StepLabel)`
         }
     }
     .MuiStepIcon-completed {
-        color: ${color('primary')} !important;
+        color: grey !important;
         text {
             fill: white !important;
         }

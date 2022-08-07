@@ -168,9 +168,11 @@ export default function CheckoutPopupBody({
 }
 
 const Card = styled.div`
-    background: ${color('heading_secondary')};
+    /* background: ${color('heading_secondary')}; */
+    background: white;
+    color: black;
     width: 400px;
-    max-height: 85vh;
+    max-height: 100vh;
     overflow: auto;
     text-transform: unset;
     border-radius: 5px;
@@ -183,7 +185,9 @@ const HeadingContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: ${({ isUploadPending }) => (isUploadPending ? color('cta_color') : '#f6aa1ca9')};
+    background-color: ${({ isUploadPending }) => (isUploadPending ? 'transparent' : 'rgba(230,230,230)')};
+    border: 1px solid lightGrey;
+    box-shadow: 0 0 5px lightgrey;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 `
@@ -192,7 +196,7 @@ const StyledCloseIcon = styled(CloseIcon)`
     padding: 0.1rem;
     color: ${color('primary')};
     border-radius: 5px;
-    border: 2px solid;
+    border: 1px solid;
     pointer-events: auto;
     cursor: pointer;
     margin-top: 15px;
