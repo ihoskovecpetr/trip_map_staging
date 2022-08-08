@@ -454,7 +454,7 @@ const SectionContainer = styled.section`
     padding-top: 5%;
 
     ${mobile`
-        padding-top: 10%;
+        padding-top: min(60px, 10%);
         height: 100vh;
         max-height: 1000px;
     `};
@@ -544,6 +544,7 @@ const ContainerBox = styled(Container)`
 
     ${mobile`
     height: ${({ headerHeight }) => (headerHeight ? `calc(100vh - ${headerHeight}px - 30px)` : '80vh')};
+    max-height: 1000px;
     flex-Direction: row;
   `};
 `
