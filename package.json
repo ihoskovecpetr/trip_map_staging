@@ -87,11 +87,11 @@
         "superagent": "^6.1.0",
         "theme-ui": "^0.3.1",
         "typeface-dm-sans": "^1.1.3",
-        "uuid": "^8.3.2"
+        "uuid": "^8.3.2",
+        "compression-webpack-plugin": "^10.0.0"
     },
     "devDependencies": {
         "babel-plugin-styled-components": "^1.13.2",
-        "compression-webpack-plugin": "^10.0.0",
         "husky": "^7.0.0",
         "imagemin-mozjpeg": "^9.0.0",
         "imagemin-optipng": "^8.0.0",
