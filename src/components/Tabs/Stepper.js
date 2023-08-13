@@ -14,11 +14,11 @@ const useStyles = makeStyles({
     root: {
         'width': '100%',
         'padding': '15px 5px',
-        '& .MuiMobileStepper-dot': {
+        '& .MuiLinearProgress-bar': {
             background: 'rgba(0,0,0,0.1)'
         },
-        '& .MuiMobileStepper-dotActive': {
-            background: 'rgba(0,0,0,0.4)'
+        '& .MuiLinearProgress-colorPrimary': {
+            background: 'rgb(158, 165, 172,0.2)'
         }
     }
 })
@@ -40,18 +40,11 @@ export default function Stepper({
 
     return (
         <MobileStepper
-            variant="dots"
+            variant="progress"
             steps={stepElements.length}
             position="static"
             activeStep={activeStep}
             className={classes.root}
-            sx={{
-                'background': 'red',
-                '& .MuiMobileStepper-dot': {
-                    borderRadius: '1px',
-                    background: 'red'
-                }
-            }}
             id="tabs_stepper"
             nextButton={
                 <StyledButton size="small" onClick={!isLastStep ? handleNext : () => {}}>
@@ -62,7 +55,7 @@ export default function Stepper({
                             activeMapStyleName={activeMapStyleName}
                             isCustomUI
                         >
-                            <>{t('stepper.summary')}</>
+                            <>{t('stepper.next')}</>
                         </CheckoutCta>
                     ) : (
                         <>{t('stepper.next')}</>

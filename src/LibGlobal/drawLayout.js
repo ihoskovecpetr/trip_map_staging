@@ -13,7 +13,7 @@ import {
 
 // import { getCurrentPixelRatio } from "./getCurrentPixelRatio";
 import { getSizeOfTitle } from './getSizeOfTitle'
-import { getIsProduction } from './getIsProduction'
+import { getIsProduction } from './utils'
 import { getLayoutColors } from './getLayoutColors'
 
 // let CURRENT_PIXEL_RATIO;

@@ -1,0 +1,24 @@
+info  - Loaded env from /Users/petrhoskovec/Desktop/code/trip_map_staging/.env
+info  - Using webpack 4. Reason: future.webpack5 option disabled https://nextjs.org/docs/messages/webpack5
+info  - Using external babel configuration from /Users/petrhoskovec/Desktop/code/trip_map_staging/.babelrc
+event - compiled successfully
+> Ready on localhost:3000 - env: dev
+✅ Connected successfully, callback
+✅ Created new connection to MongoDB
+Cookie_same_as_ID
+✅ Printful connection validated
+event - build page: /studio
+wait  - compiling...
+event - compiled successfully
+Cookie_same_as_ID
+Cookie_same_as_ID
+event - build page: /api/data-printful
+wait  - compiling...
+event - build page: /api/save-redux-store
+event - build page: /api/save-redux-store
+event - build page: /api/save-redux-store
+event - build page: /api/save-redux-store
+event - compiled successfully
+TransformDataPrintful_Error
+wait  - compiling...
+event - compiled successfully

@@ -4,11 +4,11 @@ const hbs = require('nodemailer-express-handlebars')
 
 const Order = require('../../mongoModels/order.js')
 const FullStore = require('../../mongoModels/fullStore.js')
-const { getIsProduction } = require('../../LibGlobal/getIsProduction')
-const smtpTransportTMEmail = require('./Lib/SMTPTransportTMEmail.js')
-const { getVariantObject } = require('LibGlobal/getVariantObject')
-const { getFormattedPrice } = require('LibGlobal/getFormattedPrice')
-const { getPriceAlgorithm } = require('LibGlobal/priceAlgorithm/getPriceAlgorithm')
+const smtpTransportTMEmail = require('pages/api/library/SMTPTransportTMEmail.js')
+const { getIsProduction } = require('LibGlobal/utils.js')
+const { getVariantObject } = require('LibGlobal/getVariantObject.js')
+const { getFormattedPrice } = require('LibGlobal/getFormattedPrice.js')
+const { getPriceAlgorithm } = require('LibGlobal/priceAlgorithm/getPriceAlgorithm.js')
 
 const IS_PRODUCTION = getIsProduction()
 
@@ -26,19 +26,7 @@ const stripe = require('stripe')(API_KEY)
 
 const axiosConfig = {
     headers: {
-        Authorization: `Basic ${process.env.AUTH_KEY_PRINTFUL}`
-    }
-}
-
-const connectToMongoose = async () => {
-    try {
-        const data = await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        })
-        return data
-    } catch (err) {
-        console.error('❌ could not connect to DB ', { err })
+        Authorization: `Bearer ${process.env.ACCESS_KEY_PRINTFUL}`
     }
 }
 
@@ -190,8 +178,6 @@ export default async (req, res) => {
     switch (req.method) {
         case 'GET':
             try {
-                await connectToMongoose()
-
                 const sessionId = req.query.id
                 const session = await stripe.checkout.sessions.retrieve(sessionId)
                 const { clientProductObj, imageObj, mapTitles, storeId } = await Order.findOne({

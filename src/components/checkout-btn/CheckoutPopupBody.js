@@ -11,7 +11,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { color, mobile, desktop } from 'utils'
-import { getIsProduction } from 'LibGlobal/getIsProduction'
+import { getIsProduction } from 'LibGlobal/utils'
 import { useGetDataPrintful } from 'Hooks/useGetDataPrintful'
 import { useGetCurrency } from 'Hooks/useGetCurrency'
 import { useTranslation } from 'Hooks/useTranslation'

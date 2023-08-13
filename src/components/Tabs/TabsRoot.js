@@ -11,7 +11,7 @@ import { useIsMobile } from 'Hooks/useIsMobile'
 import { useElementDimensions } from 'Hooks/useElementDimensions'
 import { mobile, color } from 'utils'
 import { ORIENTATIONS, TAB_STEPS } from '@constants'
-import { getIsProduction } from 'LibGlobal/getIsProduction'
+import { getIsProduction } from 'LibGlobal/utils'
 import { useTranslation } from 'Hooks/useTranslation'
 
 import Stepper from './Stepper'

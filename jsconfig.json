@@ -1,8 +1,8 @@
 {
-  "compilerOptions": {
-    "baseUrl": "src",
-    "paths": {
-      "@constants": ["./constants/constants.js"]
+    "compilerOptions": {
+        "baseUrl": "src",
+        "paths": {
+            "@constants": ["./constants/constants.js"]
+        }
     }
-  }
 }

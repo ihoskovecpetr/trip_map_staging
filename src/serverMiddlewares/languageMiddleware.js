@@ -1,24 +1,19 @@
-const {
-  getLanguageFromAcceptLanguageHeader,
-} = require("../LibGlobal/getLanguageFromAcceptLanguageHeader");
+const { getLanguageFromAcceptLanguageHeader } = require('../LibGlobal/getLanguageFromAcceptLanguageHeader')
 
 class LanguageMiddleware {
-  constructor(getConfig) {
-    this.getConfig = getConfig;
-  }
+    constructor(getConfig) {
+        this.getConfig = getConfig
+    }
 
-  getMiddleware() {
-    return async (req, res, next) => {
-      const language = getLanguageFromAcceptLanguageHeader(
-        req.headers["accept-language"],
-        ["cs", "en"]
-      );
+    getMiddleware() {
+        return async (req, res, next) => {
+            const language = getLanguageFromAcceptLanguageHeader(req.headers['accept-language'], ['cs', 'en'])
 
-      res.language = language; //'en'
-      req.language = language; //'en'
-      next();
-    };
-  }
+            res.language = language //'en'
+            req.language = language //'en'
+            next()
+        }
+    }
 }
 
-module.exports = LanguageMiddleware;
+module.exports = LanguageMiddleware

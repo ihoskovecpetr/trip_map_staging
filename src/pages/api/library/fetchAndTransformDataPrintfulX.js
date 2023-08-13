@@ -1,6 +1,6 @@
 const axios = require('axios')
-const { getShippingCost } = require('./getShippingCost')
-const { getExchangeRateFromTo } = require('./getExchangeRateFromTo')
+const { getShippingCost } = require('./getShipCost')
+const { getExchangeRateFromTo } = require('./getExchRateFromTo')
 const { getPriceAlgorithm } = require('LibGlobal/priceAlgorithm/getPriceAlgorithm')
 const Big = require('big.js')
 
@@ -10,8 +10,7 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, currency) => {
     try {
         const axiosConfig = {
             headers: {
-                'Authorization': `Basic ${process.env.AUTH_KEY_PRINTFUL}`,
-                'Access-Control-Allow-Origin': '*'
+                Authorization: `Bearer ${process.env.ACCESS_KEY_PRINTFUL}`
             }
         }
 
@@ -24,6 +23,7 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, currency) => {
         const promisesShippingCost = variantIdsArr.map(variantId => getShippingCost(variantId, currency)) //TODO: is there way how to query all in one request?
 
         const responsesProductCost = await Promise.all(promisesProductCost)
+
         const responsesShippingCost = await Promise.all(promisesShippingCost)
 
         const exchangeRateUSDtoCurrency = await getExchangeRateFromTo({
@@ -69,13 +69,13 @@ const fetchAndTransformDataPrintful = async (variantIdsArr, currency) => {
                     }
                 }
             } catch (e) {
-                console.log({ error_in_reducer: e })
+                console.log({ error_in_reducer: e.message })
             }
         }, {})
 
         return finalResult
     } catch (e) {
-        console.log('TransformDataPrintful_Error', { e })
+        console.log('TransformDataPrintful_Error')
         throw e
     }
 }

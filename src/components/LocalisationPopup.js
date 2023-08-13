@@ -64,24 +64,19 @@ export default function LocalisationPopup() {
                         <SelectBox>
                             <SelectColumn>
                                 <StyledLabel for="region">Delivery region:</StyledLabel>
-                                {console.log({ value_region: values.region })}
                                 <StyledSelect
                                     name="region"
                                     id="region"
                                     value={
-                                        AVAILABLE_DESTINATIONS.filter(
-                                            destination => destination.region === values.region
-                                        )[0].country
+                                        AVAILABLE_DESTINATIONS.find(destination => destination.region === values.region)
+                                            .country
                                     }
                                     onChange={e => {
                                         const newCountry = e.target.value
-                                        const newDestination = AVAILABLE_DESTINATIONS.filter(
+                                        const newDestination = AVAILABLE_DESTINATIONS.find(
                                             destination => destination.country === newCountry
-                                        )[0]
-                                        console.log({
-                                            newCountry,
-                                            newDestination
-                                        })
+                                        )
+
                                         setValues(prev => ({
                                             ...prev,
                                             region: newDestination.region,

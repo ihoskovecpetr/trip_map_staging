@@ -4,9 +4,10 @@ const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
 var cookieParser = require('cookie-parser')
 const compression = require('compression')
 
-const { connectDB } = require('./pages/api/Middlewares/connectDB')
-const initDataMiddleware = require('./pages/api/Middlewares/initDataMiddleware')
+const { connectDB } = require('./middleware/createDatabaseConnection')
+const attachInitData = require('./middleware/attachInitData')
 const LanguageMiddleware = require('./serverMiddlewares/languageMiddleware')
+const { validatePrintfulConnection } = require('./middleware/validatePrintfulConnection')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -22,9 +23,10 @@ const port = process.env.PORT || 3000
 
         server.use(compression())
         server.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301))
-        server.use('api/*', connectDB())
+        server.use(connectDB())
         server.use(cookieParser())
-        server.use(initDataMiddleware())
+        server.use(attachInitData())
+        server.use(validatePrintfulConnection())
 
         server.use(languageMiddleware.getMiddleware())
 

@@ -1,9 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-var lngLatArr = new Schema([String, String])
-
-const fullStoreScehma = new Schema(
+const fullStoreSchema = new Schema(
     {
         storeId: { type: String },
         product: {
@@ -41,4 +39,4 @@ const fullStoreScehma = new Schema(
     { timestamps: true }
 )
 
-module.exports = mongoose.models.fullStore || mongoose.model('fullStore', fullStoreScehma)
+module.exports = mongoose.models.fullStore || mongoose.model('fullStore', fullStoreSchema)

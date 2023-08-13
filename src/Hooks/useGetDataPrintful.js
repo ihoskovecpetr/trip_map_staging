@@ -41,7 +41,7 @@ export function useGetDataPrintful() {
 
             setData(response.data.finalResult)
         } catch (e) {
-            console.log({ getSetPrice_error: e })
+            console.log({ getSetPrice_error: 'e' })
         }
     }
 

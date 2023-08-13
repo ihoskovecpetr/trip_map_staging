@@ -1,30 +1,12 @@
 const mongoose = require('mongoose')
 const FullStore = require('../../mongoModels/fullStore')
 
-const connectToMongoose = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 5000
-        })
-
-        console.log('✅ Connected to DB')
-        return
-    } catch (err) {
-        console.error('❌ could not connect to DB ', { err })
-        throw err
-    }
-}
-
 export default async (req, res) => {
     switch (req.method) {
         case 'POST':
             const { reduxStore, storeId } = req.body
 
             try {
-                await connectToMongoose()
-
                 const updatedStore = await FullStore.findOneAndUpdate(
                     {
                         storeId: storeId

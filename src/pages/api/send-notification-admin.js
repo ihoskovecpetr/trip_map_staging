@@ -1,7 +1,7 @@
 const hbs = require('nodemailer-express-handlebars')
 
-const { getIsProduction } = require('../../LibGlobal/getIsProduction')
-const smtpTransportTMEmail = require('./Lib/SMTPTransportTMEmail.js')
+const { getIsProduction } = require('LibGlobal/utils')
+const smtpTransportTMEmail = require('pages/api/library/SMTPTransportTMEmail.js')
 
 const IS_PRODUCTION = getIsProduction()
 

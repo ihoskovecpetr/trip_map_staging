@@ -29,7 +29,7 @@ import { useFullStoreSelector } from 'redux/order/reducer'
 
 import { REDUX_COOKIE_NAME, IS_CLIENT } from 'constants/constants'
 import Cookies from 'components/Cookies'
-import * as locales from '../languages'
+import * as locales from '../translations'
 
 const MyApp = ({ Component, pageProps, err, ...props }) => {
     const router = useRouter()

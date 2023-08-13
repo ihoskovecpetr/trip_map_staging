@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 const Order = require('../../mongoModels/order.js')
-const { getIsProduction } = require('../../LibGlobal/getIsProduction')
+const { getIsProduction } = require('LibGlobal/utils.js')
 
-const { getPriceAlgorithm } = require('LibGlobal/priceAlgorithm/getPriceAlgorithm')
+const { getPriceAlgorithm } = require('LibGlobal/priceAlgorithm/getPriceAlgorithm.js')
 
-const { fetchAndTransformDataPrintful } = require('./Lib/fetchAndTransformDataPrintful')
+const { fetchAndTransformDataPrintful } = require('pages/api/library/fetchAndTransformDataPrintfulX.js')
 
 const { REDUX_COOKIE_NAME } = require('../../constants/constants.js')
 
@@ -15,22 +15,6 @@ const API_KEY = IS_PRODUCTION ? process.env.STRIPE_API_KEY : process.env.STRIPE_
 
 const stripe = require('stripe')(API_KEY)
 
-const connectToMongoose = async () => {
-    try {
-        const data = await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 5000
-        })
-
-        console.log('✅ Connected to DB')
-        return data
-    } catch (err) {
-        console.error('❌ could not connect to DB ', { err })
-        throw err
-    }
-}
-
 const test_shipping_code_czk = ['shr_1JMc7WCVDm94CHWQTFxCa4yY']
 
 const priceAlgorithm = getPriceAlgorithm()
@@ -39,12 +23,6 @@ export default async (req, res) => {
     switch (req.method) {
         case 'POST':
             try {
-                console.log('Hitting stripe-checkout, await MONGO connection')
-
-                await connectToMongoose()
-
-                console.log('✅ mongo connected_connections: ', mongoose.connections[0].readyState)
-
                 const {
                     product: clientProduct,
                     imageObj,

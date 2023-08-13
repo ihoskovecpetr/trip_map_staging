@@ -677,7 +677,7 @@ const FAKE_DIV_IDS = {
 }
 
 const VALID_DISCOUNT_CODES = [
-    { code: 'SUMMER2022', discountKoef: 0.9 },
+    { code: 'SUMMER2023', discountKoef: 0.9 },
     { code: 'RODINNAPOUTA', discountKoef: 0.5 },
     { code: 'TESTERBUNNY', discountKoef: 0.7 }
 ]

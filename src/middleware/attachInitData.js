@@ -1,36 +1,19 @@
-const mongoose = require('mongoose')
 const { v4 } = require('uuid')
 
-const FullStore = require('../../../mongoModels/fullStore.js')
-const { REDUX_COOKIE_NAME } = require('../../../constants/constants.js')
-
-const connectToMongoose = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 5000
-        })
-
-        console.log('✅ Connected to DB')
-        return
-    } catch (err) {
-        console.error('❌ could not connect to DB ', { err })
-        throw err
-    }
-}
+const fullStoreModel = require('../mongoModels/fullStore.js')
+const { REDUX_COOKIE_NAME } = require('../constants/constants.js')
 
 const initDataMiddleware = () => async (req, res, next) => {
     if (req.url.includes('/_next/') || req.url.includes('/api/') || req.url.includes('/favicon.ico')) {
         return next()
     }
 
-    await connectToMongoose()
+    // Let pass only on first request before rendering first page (i guess)
 
     const cookieStoreId = req.cookies[REDUX_COOKIE_NAME]
 
     if (req && req.query && req.query.id) {
-        const foundStoreFromQuery = await FullStore.findOne({
+        const foundStoreFromQuery = await fullStoreModel.findOne({
             storeId: req.query.id
         })
 
@@ -51,7 +34,7 @@ const initDataMiddleware = () => async (req, res, next) => {
             if (req && req.query.id != cookieStoreId) {
                 const newStoreId0 = v4()
 
-                const newStore = new FullStore({
+                const newStore = new fullStoreModel({
                     storeId: newStoreId0
                 })
 
@@ -67,7 +50,7 @@ const initDataMiddleware = () => async (req, res, next) => {
 
         if (!foundStoreFromQuery && req && req.query.id != cookieStoreId) {
             const newStoreId = v4()
-            const newStore = new FullStore(
+            const newStore = new fullStoreModel(
                 {
                     storeId: newStoreId
                 },
@@ -81,7 +64,7 @@ const initDataMiddleware = () => async (req, res, next) => {
             }
         }
     } else {
-        const foundStoreCookie = await FullStore.findOne({
+        const foundStoreCookie = await fullStoreModel.findOne({
             storeId: cookieStoreId
         })
 
@@ -91,12 +74,10 @@ const initDataMiddleware = () => async (req, res, next) => {
             delete foundStoreCookieDoc.createdAt
             delete foundStoreCookieDoc.updatedAt
 
-            req.meta = {
-                ...foundStoreCookieDoc
-            }
+            req.meta = foundStoreCookieDoc
         } else {
             const newStoreId2 = v4()
-            const newStore = new FullStore(
+            const newStore = new fullStoreModel(
                 {
                     storeId: newStoreId2
                 },

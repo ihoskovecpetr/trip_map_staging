@@ -31,11 +31,11 @@ export default function LabelAdjustPopup() {
     return (
         <>
             {open && !isSeenPopup && (
-                <BackdropFromScratch open={open} onClick={() => setOpen(!open)}>
+                <BackdropFromScratch open={open} onClick={handleOK}>
                     <BoxWrap onClick={onCLickBox}>
                         <h1>{t('step.location.popupTitle')}</h1>
                         <CloseIconWrap>
-                            <StyledCloseIcon onClick={() => setOpen(!open)} src={closeIcon} />
+                            <StyledCloseIcon onClick={handleOK} src={closeIcon} />
                         </CloseIconWrap>
                         <h3>{t('step.location.popupSubtitle')}</h3>
 
