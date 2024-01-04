@@ -1,6 +1,6 @@
 {
     "name": "trip-map",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).",
     "main": "next-sitemap.js",
     "scripts": {

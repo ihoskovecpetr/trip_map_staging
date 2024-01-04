@@ -7,7 +7,7 @@ const nextConfiguration = {
         locales: ['en', 'cs'],
         defaultLocale: 'en'
     },
-    distDir: 'build',
+    // distDir: 'build',
     async rewrites() {
         return [
             {
